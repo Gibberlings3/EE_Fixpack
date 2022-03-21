@@ -1,0 +1,117 @@
+BACKUP ~weidu_external/eefixpack/backup~ // location to store files for uninstall
+SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
+AUTO_EVAL_STRINGS
+
+ALWAYS
+
+  ACTION_FOR_EACH var IN game_includes_sod game_is_bgee game_is_bg2ee game_is_iwdee game_is_pstee BEGIN
+    OUTER_SET ~%var%~ = 0
+  END  
+  
+  ACTION_IF GAME_IS bgee BEGIN 
+    ACTION_IF GAME_INCLUDES sod BEGIN 
+      ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @3 END // DLC Merger check
+      OUTER_SET game_includes_sod = 1  
+      PRINT @7      
+    END ELSE BEGIN
+      PRINT @6
+    END
+    OUTER_SPRINT game ~bgee~
+  END ELSE  
+  ACTION_IF GAME_IS bg2ee BEGIN OUTER_SPRINT game ~bg2ee~ PRINT @8 END ELSE
+  ACTION_IF GAME_IS iwdee BEGIN OUTER_SPRINT game ~iwdee~ PRINT @9 END ELSE
+  ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END
+  
+  OUTER_SET ~game_is_%game%~ = 1
+  LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
+  
+END
+
+VERSION ~Beta 1~
+
+README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
+
+AUTO_TRA ~eefixpack/languages/%LANGUAGE%/%s~
+
+LANGUAGE
+  ~English~
+  ~en_us~
+  ~eefixpack/languages/en_us/weidu.tra~
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// Core Fixes                                       \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN @0 DESIGNATED 0
+REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee.tph~)) OR
+                   ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee.tph~)) OR
+                   ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee.tph~)) OR
+                   ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee.tph~))) @4
+
+WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+  INCLUDE ~eefixpack/files/tph/%game%.tph~
+END  
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// Beta Core Fixes                                  \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN @1 DESIGNATED 1  
+REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee_beta.tph~)) OR
+                   ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee_beta.tph~)) OR
+                   ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee_beta.tph~)) OR
+                   ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee_beta.tph~))) @4
+
+// none of these files have been created yet, as the initial releases will be betass
+WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+  INCLUDE ~eefixpack/files/tph/%game%_beta.tph~
+END  
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// Game Text Update                                 \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN @2 DESIGNATED 2
+REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tra~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tra~))) OR
+                   ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tra~)) OR
+                   ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tra~)) OR
+                   ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tra~))) @5
+
+<<<<<<<<./inlined/gtu.tph
+>>>>>>>>
+COPY ~./inlined/gtu.tph~ ~weidu_external/eefixpack/gtu.tph~
+
+// this is tested and working, but no strings to update just yet
+ACTION_FOR_EACH tra IN ~%game%~ ~%game%_sod~ BEGIN
+
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ BEGIN // skip sod for non-bgee
+  
+    APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ "WITH_TRA ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ BEGIN STRING_SET"
+    
+    COPY ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~
+      REPLACE_EVALUATE ~^\([ %TAB%]*@\)\([0-9]+\)\([ %TAB%]*=\)~ BEGIN
+        INNER_ACTION BEGIN
+          APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ ~  %MATCH2% @%MATCH2%~
+        END  
+      END ~%MATCH1%%MATCH2%%MATCH3%~
+      BUT_ONLY
+      
+    APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ ~END~
+    
+  END
+
+END  
+
+INCLUDE ~weidu_external/eefixpack/gtu.tph~

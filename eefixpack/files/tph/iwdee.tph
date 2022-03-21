@@ -1,0 +1,3 @@
+// fixes for iwdee
+
+COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // fix light crossbow BAM
