@@ -1,3 +1,15 @@
 // fixes for bgee
 
+// string fixes, processed automatically if tra file exists
+LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
+          output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
+END
+ACTION_IF game_contains_sod BEGIN
+  LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+    STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tra~ // tra file to process
+            output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%_sod.tph~ // tph being built; use weidu_external for this
+  END
+END
+
 COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // fix light crossbow BAM

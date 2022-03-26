@@ -24,6 +24,8 @@ ALWAYS
   
   OUTER_SET ~game_is_%game%~ = 1
   LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
+  INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
+  INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
   
 END
 
@@ -89,29 +91,16 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LA
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tra~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tra~))) @5
 
-<<<<<<<<./inlined/gtu.tph
->>>>>>>>
-COPY ~./inlined/gtu.tph~ ~weidu_external/eefixpack/gtu.tph~
+LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tra~ // tra file to process
+          output_tph = EVAL ~weidu_external/eefixpack/gtu_%game%.tph~ // tph being built; use weidu_external for this
+END
 
-// this is tested and working, but no strings to update just yet
-ACTION_FOR_EACH tra IN ~%game%~ ~%game%_sod~ BEGIN
+ACTION_IF game_includes_sod BEGIN
 
-  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ BEGIN // skip sod for non-bgee
-  
-    APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ "WITH_TRA ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ BEGIN STRING_SET"
-    
-    COPY ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~ ~eefixpack/languages/%LANGUAGE%/gtu_%tra%.tra~
-      REPLACE_EVALUATE ~^\([ %TAB%]*@\)\([0-9]+\)\([ %TAB%]*=\)~ BEGIN
-        INNER_ACTION BEGIN
-          APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ ~  %MATCH2% @%MATCH2%~
-        END  
-      END ~%MATCH1%%MATCH2%%MATCH3%~
-      BUT_ONLY
-      
-    APPEND_OUTER ~weidu_external/eefixpack/gtu.tph~ ~END~
-    
+  LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+    STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tra~ // tra file to process
+            output_tph = EVAL ~weidu_external/eefixpack/gtu_%game%_sod.tph~ // tph being built; use weidu_external for this
   END
-
-END  
-
-INCLUDE ~weidu_external/eefixpack/gtu.tph~
+  
+END

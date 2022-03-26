@@ -1,0 +1,34 @@
+/////                                                  \\\\\
+///// cd_string_set_from_tra                           \\\\\
+/////                                                  \\\\\
+
+// this function process a tra file into string_sets based on the tra reference, e.g. @123 is used as STRING_SET 123 @123
+// this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
+DEFINE_ACTION_FUNCTION cd_string_set_from_tra
+  STR_VAR input_tra  = ~~ // tra file to process
+          output_tph = ~~ // tph being built; use weidu_external for this
+BEGIN
+
+  ACTION_IF FILE_EXISTS ~%input_tra%~ BEGIN // skip sod for non-bgee
+  
+    <<<<<<<<./inlined/blank.txt
+    >>>>>>>>
+    COPY ~./inlined/blank.txt~ ~%output_tph%~
+    
+    APPEND_OUTER ~%output_tph%~ "WITH_TRA ~%input_tra%~ BEGIN STRING_SET"
+    
+    COPY ~%input_tra%~ ~%input_tra%~
+      REPLACE_EVALUATE ~^\([ %TAB%]*@\)\([0-9]+\)\([ %TAB%]*=\)~ BEGIN
+        INNER_ACTION BEGIN
+          APPEND_OUTER ~%output_tph%~ ~  %MATCH2% @%MATCH2%~
+        END  
+      END ~%MATCH1%%MATCH2%%MATCH3%~
+      BUT_ONLY
+      
+    APPEND_OUTER ~%output_tph%~ ~END~
+      
+    INCLUDE ~%output_tph%~
+    
+  END
+
+END

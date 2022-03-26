@@ -1,3 +1,9 @@
 // fixes for bg2ee
 
+// string fixes, processed automatically if tra file exists
+LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
+          output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
+END
+
 COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // fix light crossbow BAM
