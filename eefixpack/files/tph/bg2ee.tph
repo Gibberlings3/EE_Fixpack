@@ -1,4 +1,6 @@
-// fixes for bg2ee
+/////                                                  \\\\\
+///// string fixes                                     \\\\\
+/////                                                  \\\\\
 
 // string fixes, processed automatically if tra file exists
 LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
@@ -6,4 +8,95 @@ LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
           output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
 END
 
-COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // fix light crossbow BAM
+/////                                                  \\\\\
+///// ids/2da fixes                                    \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// mass copy/includes actions                       \\\\\
+/////                                                  \\\\\
+
+COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
+              ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
+              ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
+              ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
+
+/////                                                  \\\\\
+///// dialogue fixes                                   \\\\\
+/////                                                  \\\\\
+
+COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
+
+/////                                                  \\\\\
+///// script fixes                                     \\\\\
+/////                                                  \\\\\
+
+// ie-5948, cam
+// Generic cleric AI script can hang
+COPY_EXISTING ~pries14a.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(IF[ %TAB%%LNL%%MNL%%WNL%]See(NearestEnemyOf(Myself))[ %TAB%%LNL%%MNL%%WNL%]+HaveSpell(CLERIC_CONFUSION)[ %TAB%%LNL%%MNL%%WNL%]+THEN[ %TAB%%LNL%%MNL%%WNL%]+RESPONSE #100[ %TAB%%LNL%%MNL%%WNL%]\)\(END\)~
+      ~\1 Spell(NearestEnemyOf(Myself),CLERIC_CONFUSION) \2~
+END
+BUT_ONLY
+
+
+
+// ie-5281, cam
+// bp2: Golem fight is well-nigh impossible on Legacy of Bhaal difficulty
+COPY_EXISTING ~ohb_t302.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~LevelGT(Myself,10)~ ~HasItem("immune1",Myself)~
+  END
+  BUT_ONLY
+
+
+
+// tbd, cam (two issues here, see bysohim in main d compile)
+// Yoshimo Should Have Follow-Up Banters with the PC
+EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add script prompt for third banter
+
+
+/////                                                  \\\\\
+///// area fixes                                       \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// creature file fixes                              \\\\\
+/////                                                  \\\\\
+
+// ie-3658, cam
+// Jassar (and others) shouldn't drop identified magic armor
+COPY_EXISTING ~ohbgit01.cre~ ~override~
+              ~ohbthr01.cre~ ~override~
+              ~ohdcru04.cre~ ~override~
+              ~ohdlufpl.cre~ ~override~
+              ~ohnvgc.cre~   ~override~
+              ~ohrjassa.cre~ ~override~
+  REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
+
+/////                                                  \\\\\
+///// item file fixes                                  \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// spell fixes                                      \\\\\
+/////                                                  \\\\\
+
+// ie-5931, cam
+// Stoneskin from Demogorgon & Melissan cannot be breached
+COPY_EXISTING ~melstone.spl~ ~override~
+  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// store fixes                                      \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// misc/other fixes                                 \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// final batch of INCLUDEs and cross-patching       \\\\\
+/////                                                  \\\\\

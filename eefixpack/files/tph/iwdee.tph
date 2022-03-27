@@ -24,9 +24,11 @@ COPY_EXISTING ~7eyes.2da~ ~override~
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
 
-COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // tbd, cam: fix light crossbow BAM
-              ~eefixpack/files/bam/ixbow09.bam~ ~override~ // tbd, cam: fix HQ light crossbow BAM
-              ~eefixpack/files/wav/#choke.wav~  ~override~ // ie-6009, cam: missing sound for talonite poison
+COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
+              ~eefixpack/files/bam/ixbow09.bam~  ~override~ // tbd, cam: fix HQ light crossbow BAM
+              ~eefixpack/files/wav/#choke.wav~   ~override~ // ie-6009, cam: missing sound for talonite poison
+              ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
+              ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
 
 // there's another section of INCLUDEs at the bottom if it should be late in the process
 INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~      // ie-5943 , cam: lots of mold touch fixes

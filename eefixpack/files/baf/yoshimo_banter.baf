@@ -1,0 +1,12 @@
+IF
+	InParty(Myself)
+	GlobalTimerExpired("YoshimoTalksPC2","GLOBAL")
+	Global("PCYosh","LOCALS",2)
+	See(Player1)
+	!StateCheck(Player1,STATE_SLEEPING)
+	CombatCounter(0)
+	Global("BYoshimo5","LOCALS",0)
+THEN
+	RESPONSE #100
+		Interact(Player1)
+END
