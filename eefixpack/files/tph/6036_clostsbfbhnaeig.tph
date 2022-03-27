@@ -1,0 +1,106 @@
+// ie-6036, cam (also two issues in the main fixes d file)
+// this is an umbrella ticket with lots of small, probably-not-game-affecting bugs 
+
+// ie-6036 cont: remove durations from permanent effects
+ACTION_FOR_EACH file IN
+  bknight gberry potn13 
+BEGIN
+
+  COPY_EXISTING ~%file%.itm~ ~override~
+    LPF ALTER_EFFECT INT_VAR silent = 1 check_globals = 0 match_timing = 1 duration = 0 END
+    LPF ALTER_EFFECT INT_VAR silent = 1 check_globals = 0 match_timing = 9 duration = 0 END
+    BUT_ONLY IF_EXISTS
+
+END
+
+// ie-6036 cont: Several items have 'breakable' flags set in their melee headers, even though this flag isn't used in IWDEE
+ACTION_FOR_EACH item IN // remove breakable flags
+  2haxe amaunat auril ax1h01 axemino axlizman axyuanti bael bess biron biteme blckswd bloodgf 
+  blun02 blun04 blun08 blyuanti cairn cattac1 celebra cynicis dagg01 dagg06 dagg07 dagg08 
+  daggshit days diver doves ehdag erevain fanggf fayr firekis fistgf fkiller flailsk gsleep 
+  gullwyn halb01 halbrd01 hamm01 handgf hellpik hq2hswd hqaxe hqbswrd hqdagg hqhalb hqhamm 
+  hqlswrd hqmace hqsswrd iax1h01 iblun04 ihamm01 intrces isw1h07 j2haxe jhoswd2 jhoswd3 
+  kinetic kissgf kreswrd kris lalizman lonesom longclev lshand mae maul mslizman myrloch 
+  nalizman nymdagg peasrew pikeman poker polizman power ranax ranbswd reaver redemt relian 
+  serrate shlswrd2 shmace2 shsswrd slayer sper01 sper04 sw1h01 sw1h04 sw1h07 sw1h12 sw1h17 
+  sw2h01 sw2h01b sw2h05 swyuanti tasloiil telizman tomb tonggf tongue turodah u1hax1a u1hax2a 
+  u1hax3a u1hax3b u1hax4a u1hax4b u2ham2a u2ham3a u2ham4a u2ham4b u2ham5a u2hax1a u2hax2a 
+  u2hax3a u2hax3b u2hax4a u2hax4b u2hax5a ubswd1a ubswd2a ubswd2b ubswd3a ubswd3b ubswd4a 
+  ubswd4b ubswd4c ubswd5a ubswd5b udagg1a udagg1b udagg2a udagg2b udagg3a udagg3b udagg3c 
+  udagg4a udagg4b udagg5a ulswd1a wsword xu2ham3 xvartil young zz14in zz36dgd zz57pj zzc8hb 
+  zze6pe zzg7ts zzj6sp zzn6gc zzu6cs zzz6bc 
+  bdwaki1 cdgloom cdmyr cdyoung comps01 enmace ensw1h01 ensw1h02 ensw2h i#axe sw1h20 sw1h43 
+  sw1h44 sw1h45 sw1h46 sw1h47 sw1h48 sw1h49 sw1h51 sw1h55
+BEGIN
+
+  COPY_EXISTING ~%item%.itm~ ~override~ 
+    LPF ALTER_ITEM_HEADER INT_VAR flag_break = 0 END // should not be flagged as breakable
+    BUT_ONLY IF_EXISTS
+
+END
+
+// ie-6036 cont: seems unused, but fix anyway
+COPY_EXISTING ~clck18.itm~ ~override~ 
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 0 target = 1 parameter1 = 1 parameter2 = BIT3 timing = 2 END // +1 AC vs slashing
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 33 target = 1 parameter1 = 1  timing = 2 END // +1 save vs. death
+  BUT_ONLY
+
+// ie-6036 cont: Two spell scrolls have the wrong target on the header to learn the spell, though this doesn't seem to affect anything in-game. 
+COPY_EXISTING ~scrl3g.itm~ ~override~
+              ~scrl70.itm~ ~override~
+  LPF ALTER_ITEM_HEADER INT_VAR header = 2 target = 5 END // change second header to target caster
+  BUT_ONLY  
+  
+// ie-6036 cont: block ancillary hold effects from creatures not held
+COPY_EXISTING ~%TRAP_HOLD_PERSON%.spl~ ~override~ // trap_hold_person sppr989 (ar2501 and elsewhere via gnt1989)
+  LPF CLONE_EFFECT INT_VAR match_opcode = 175 opcode = 318 parameter1 = 0 parameter2 = 6 timing = 0 duration = 0 STR_VAR insert = first resource = sppr989 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 175 parameter1 = 0 END
+  BUT_ONLY 
+  
+// ie-6036 cont: Cleaning up some cruft in the EFFs for Three White Doves
+COPY_EXISTING ~cddovdie.eff~ ~override~
+              ~cddovme2.eff~ ~override~
+              ~cddovmes.eff~ ~override~
+  WRITE_LONG 0x38 0 // num dice
+  WRITE_LONG 0x3c 0 // dice size
+  WRITE_LONG 0x60 0 // param3
+  
+// ie-6036 cont: Power level fixes: one 139 has resist/dispel = 0
+COPY_EXISTING ~potn20.itm~ ~override~ // antidote
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 resist_dispel = 3 END
+  BUT_ONLY
+
+// ie-6036 cont: summons shouldn't have power levels
+COPY_EXISTING ~wand10.itm~ ~override~ // wand of monster summoning
+  LPF ALTER_EFFECT INT_VAR power = 0 END 
+  BUT_ONLY 
+
+// ie-6036 cont: summons should always bypass spell protections, cosmetics on wrong target
+COPY_EXISTING ~%WIZARD_CONTACT_OTHER_PLANE%.spl~ ~override~ // spwi528
+  LPF ALTER_EFFECT INT_VAR power = 0 target = 1 END
+  BUT_ONLY
+  
+// ie-6036 cont: bad caster effects shouldn't be blocked
+COPY_EXISTING ~%CLERIC_CHAMPIONS_STRENGTH%.spl~ ~override~ // sppr507
+  LPF ALTER_EFFECT INT_VAR match_target = 1 power = 0 END
+  BUT_ONLY
+
+// ie-6036 cont: self-visuals and movement speed shouldn't be blocked
+COPY_EXISTING ~%CLERIC_CIRCLE_OF_BONES%.spl~ ~override~ // sppr323
+  LPF ALTER_EFFECT INT_VAR match_target = 1 power = 0 END
+  BUT_ONLY
+
+// ie-6036 cont: self-visuals and movement speed shouldn't be blocked
+COPY_EXISTING ~%CLERIC_BLADE_BARRIER%.spl~ ~override~ // sppr603
+  LPF ALTER_EFFECT INT_VAR match_target = 1 power = 0 END
+  BUT_ONLY
+
+// ie-6036 cont: caster pause shouldn't be blocked by spell protections, deafness string bypassing save
+COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431 shout
+              ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
+  LPF ALTER_EFFECT INT_VAR match_target = 1 power = 0 END
+  BUT_ONLY 
+  
+// ie-6036 cont: redundant power, MR checks  
+COPY_EXISTING ~blakblad.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR power = 0 resist_dispel = 0 END // these are already checked in the on-hit effect

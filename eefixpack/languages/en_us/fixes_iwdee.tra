@@ -16,6 +16,113 @@ Saving Throw: Neg.
 
 Symbol, Pain is a powerful enchantment that allows the priest to inscribe a symbol on the ground or any other surface. The symbol will remain there until someone comes too close, at which point it will explode, causing all those within the area of effect to make a Saving Throw vs. Spell. Those who fail their Saving Throws are overwhelmed by pain, suffering a -4 penalty to their attack rolls, a -2 penalty to their Dexterity scores, and a -2 penalty to their Armor Class.~
 
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8712, 8911, 40639, 25818, 27373
+// Weapon damage corrections
+@8663 = ~Made during the golden age between the elves of the Seldarine's Hand and the dwarves of Dorn's Deep.
+
+STATISTICS:
+
+THAC0: +2
+Damage: +3 (missile)
+Speed Factor: 7
+Proficiency Type: Longbow
+Type: Two-handed
+Requires:
+ 15 Strength
+
+Weight: 3~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8911, 40639, 25818, 27373
+// Weapon damage corrections
+@8712 = ~This bow belonged to Kaylessa, weapons master of the Seldarine's Hand. Her prowess in archery only bested by her beauty, Kaylessa was devoted to honing the battle skills of any elf under her. If there were any heroes at the Battle of Seldarine's Hand, Kaylessa was one of them. She was a shining example of courage in the face of impending doom as she fearlessly led her people against orc and goblin hordes. Even after the fall of the Hand, her commitment to battle and her people remained strong. Her last wish was to die in glorious battle.
+
+STATISTICS:
+
+Equipped abilities:
+– Dexterity: +1
+
+THAC0: +3
+Damage: +4
+Speed Factor: 7
+Proficiency Type: Longbow
+Type: Two-handed
+Requires:
+ 15 Strength
+
+Weight: 3~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 40639, 25818, 27373
+// Weapon damage corrections
+@8911 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
+
+STATISTICS:
+
+THAC0: +5
+Damage: +3
+Speed Factor: 4
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 8 Strength
+
+Weight: 7~
+
+// ie-6024, cam - see also string 18095, patches to uhxbw2a.itm and xbow01.itm
+// Two crossbows have the wrong strength requirement
+@14432 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller. The bow is usually made of ash or yew. The crossbow fires a quarrel (also called a bolt).
+
+STATISTICS:
+
+THAC0: +4
+Damage: +2 (missile)
+Speed Factor: 10
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 11 Strength
+
+Weight: 14~
+
+// ie-6026, cam - see also string updates to 21627 and thrym.itm, u1ham5b.itm
+// Revert changes to Thrym Extract and War Hammer +4: Defender (had wrong effects which were documented as if intended)
+@14913 = ~Like others of its type, this war hammer is made entirely of steel, with a bone-crushing hammer mounted upon an eighteen-inch shaft. It has also been bestowed with a small number of magical properties, however, making it more effective in combat. 
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +2
+– Piercing Resistance: +15%
+– Slashing Resistance: +15%
+– Crushing Resistance: +15%
+– Magic Resistance: +15%
+– Save vs. Spell: +3
+
+THAC0: +4
+Damage: 1d4+5 (crushing)
+Speed Factor: 3
+Proficiency Type: War Hammer
+Type: One-handed
+Requires:
+ 9 Strength
+
+Weight: 6~
+
+// ie-6024, cam - see also string 14432, patches to uhxbw2a.itm and xbow01.itm
+// Two crossbows have the wrong strength requirement
+@18095 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller. The bow is usually made of ash or yew. The crossbow fires a quarrel (also called a bolt).
+
+STATISTICS:
+
+THAC0: +2
+Damage: +2 (missile)
+Speed Factor: 10
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 11 Strength
+
+Weight: 14~
+
 // ie-5925, cam
 // cause disease is an abjuration spell, not necromancy
 @21478 = ~Cause Disease
@@ -30,3 +137,79 @@ Area of Effect: 1 creature
 Saving Throw: Neg.
 
 This spell afflicts one creature the priest touches with a disease that saps the target of 5d4 points of Strength. A successful Save vs. Spell negates the effects. This spell has no effect on undead, constructs, or extraplanar creatures. It cannot be cast by good-aligned characters.~
+
+// ie-6026, cam - see also string updates to 14913 and thrym.itm, u1ham5b.itm
+// Revert changes to Thrym Extract and War Hammer +4: Defender (had wrong effects which were documented as if intended)
+@21627 = ~This thick liquid is harvested and distilled from the glands of dead polar worms. It is the substance that helps keep the huge creatures warm in the desolate North. Drinking the liquid straight from the creature's body is almost always fatal, so alchemists attempt to distill the substance until it is relatively safe to consume. Even in its current state, however, it can still be deadly.
+
+STATISTICS:
+
+If the user fails a save vs. death at -4, they take 8-48 points of fire damage. If the user makes his or her save, their Cold Resistance is set to 100% for 4 rounds.
+
+Weight: 1~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 27373
+// Weapon damage corrections
+@25818 = ~This weapon is holy to warriors in the service of Talos, god of storms and destruction, and has seen decades of use in their capable hands. A shortbow made of many composite layers of wood, the Storm Bow has been used against the myriad enemies of the church of Talos. Most recently, the bow was in the possession of a Storm Knight named Kalassan Brevered, who was killed after striking down a number of rangers and druids on the Moonshae Isles.
+
+STATISTICS:
+
+Charge abilities:
+– Storm Shell once per day
+  Fire, Cold, and Electrical Resistance: +50%
+  Duration: 1 turn
+  Area of Effect: The wielder
+
+THAC0: +2
+Damage: +2
+Speed Factor: 3
+Proficiency Type: Shortbow
+Type: Two-handed
+Requires:
+ 15 Strength
+
+Weight: 3~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 25818
+// Weapon damage corrections
+@27373 = ~Skullflail, or "The Flail of Teeth" as it is more commonly known, was constructed in 1035 DR for the barbarian warlord Wychgar. During a battle in the northern wastes which became known as Hallowed Pass, Wychgar lost his three brothers to the orc army led by Kraag the Mighty. Wychgar was distraught and during the night he wandered the battlefield looking for their bodies to take away for proper burial. He stumbled across them and was visited by the brothers' spirits who were trapped between the land of the living and the land of the dead. Unable to help them leave he had their souls stored in the flail with the help of a shaman.
+
+The three heads of the flail are his brother's skulls, which are attached to the shaft by silver chains. The three skull-heads grin maniacally at their new life. When the flail is used in combat the three heads bite the target, tearing and rending flesh.
+
+STATISTICS:
+
+Combat abilities:
+– 10% chance of an additional 1d6 piercing damage
+
+THAC0: +4
+Damage: 1d6+5, +1d4 piercing from the biting skulls
+Damage Type: Crushing
+Speed Factor: 5
+Proficiency Type: Flail/Morning Star
+Type: One-handed
+Requires:
+ 13 Strength
+
+Weight: 4~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 25818, 27373
+// Weapon damage corrections
+@40639 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
+
+After contacting another plane and learning about Bren Muller, you have learned a new ability of the weapon. Once per day, it can dramatically increase accuracy for two rounds.
+
+STATISTICS:
+
+Charge abilities:
+– Deadeye once per day
+  Wielder gains an additional +5 to-hit for two rounds
+
+THAC0: +5
+Damage: +3
+Speed Factor: 4
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 8 Strength
+
+Weight: 7~

@@ -1,0 +1,9 @@
+IF
+  HasItem("%params_0%","%params_2%")
+  Global("cd_charge_%params_0%","%area%",0)
+THEN  
+  RESPONSE #100
+    ActionOverride("%params_2%",DestroyItem("%params_0%"))
+    GiveItemCreate("%params_0%","%params_2%",%params_1%,0,0)
+    SetGlobal("cd_charge_%params_0%","%area%",1)
+END

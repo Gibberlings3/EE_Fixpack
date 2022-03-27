@@ -1,0 +1,22 @@
+// ie-6018, cam
+// Summoned lizardmen lack visible weapons
+COPY_EXISTING ~ms2lizm.cre~ ~override~ // Lizard Man (monster summoning)
+              ~ss1liz3.cre~ ~override~ // Lizard Man (summon shadow monsters)
+              ~ss1liz4.cre~ ~override~ // Lizard Man (summon shadow monsters)
+  REPLACE_CRE_ITEM ms2lizm #0 #0 #0 NONE WEAPON1 EQUIP
+  BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~s1-12.itm~ ~override/ms2lizm.itm~ // create new lizardman weapon
+  WRITE_ASCII 0x22 HB #2 // halberd animation
+  
+COPY_EXISTING ~ms3tliz.cre~ ~override~ // Tough Lizard Man (monster summoning)
+              ~ss2liz5.cre~ ~override~ // Tough Lizard Man (summon shadow monsters)
+              ~ss2liz6.cre~ ~override~ // Tough Lizard Man (summon shadow monsters)
+              ~ss2liz7.cre~ ~override~ // Tough Lizard Man (summon shadow monsters)
+  REPLACE_CRE_ITEM ms3tliz #0 #0 #0 NONE WEAPON1 EQUIP
+  BUT_ONLY
+
+COPY_EXISTING ~b1-12.itm~ ~override/ms3tliz.itm~ // create new tough lizardman weapon
+  WRITE_ASCII 0x22 QS #2 // staff animation
+  
+COPY_EXISTING_REGEXP GLOB ~^mliz\([QqHh].+\)\.bam$~ ~override/mli2\1.bam~ // create missing BAMs from existing animations

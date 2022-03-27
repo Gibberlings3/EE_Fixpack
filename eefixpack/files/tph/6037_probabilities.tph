@@ -1,0 +1,282 @@
+// ie-6021, cam: Weapon probability fixes
+// 1% chance for bonus 1d4 cold damage
+COPY_EXISTING ~ctouch.itm~ ~override~
+  LPF DELETE_EFFECT INT_VAR check_globals = 0 match_opcode = 12 END // damage applied in spwi117b; still has 1% chance to fire
+  BUT_ONLY
+
+// dazer has wrong percentage on one effect, so do manually
+COPY_EXISTING ~dazer.itm~ ~override~
+              ~xclub.itm~ ~override~ // undroppable version used by spectral hero
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 1 probability1 = 5 END // one effect has prob=6, others all prob=5
+  BUT_ONLY
+ 
+// blindness is correct 25%, other effects (string, icon, cosmetics) are at 10%
+COPY_EXISTING ~udart3b.itm~  ~override~ // blinding darts +2: 25% blind
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 2 probability1 = 25 END
+  BUT_ONLY
+  
+// supposed to be electric damage 50%, stun 25%, but was actually 40% and 20%  
+COPY_EXISTING ~utswd5a.itm~  ~override~ // static two handed sword +4: 50% electric damage, 25% stun, fixed elsewhere
+  LPF ALTER_EFFECT INT_VAR header_type = 1                   probability1 = 51 probability2 = 75 END // stun effects
+  LPF ALTER_EFFECT INT_VAR header_type = 1 match_opcode = 12 probability1 =  0 probability2 = 50 END // reset electrical damage
+  BUT_ONLY
+  
+  
+  
+// ie-6037, cam: Systematic probability fixes  
+COPY_EXISTING ~ohbrac01.eff~ ~override~
+  WRITE_SHORT 0x2c 24 // The Flaming Fists of Lin Mei: 25% fire damage
+
+COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burning blood
+              ~axemino.itm~  ~override~ // axe of the minotaur lord: 25% stun 
+//            ~bardic.itm~   ~override~ // Bardic Horn of Valhalla, unused: 2-4 summons, but fine as is
+//            ~behwep.itm~   ~override~ // belhifet's weapon: 50% disease, 50% poison, already correct
+              ~bess.itm~     ~override~ // the love of black bess: 10% bad luck
+              ~biteme.itm~   ~override~ // spear of kerish: 5% cold damage
+              ~blakblad.itm~ ~override~ // black blade of disaster: 10% level drain
+              ~blast.itm~    ~override~ // bracers of blasting: 10% chance to explode
+              ~bloodgf.itm~  ~override~ // blood of the gloomfrost: 5% chance to heal
+              ~cdfampsd.itm~ ~override~ // pseudo-dragon attack: (helf)elven resistance
+//            ~ctouch.itm~   ~override~ // chill touch: supposed to be 0%, effect deleted above in ie-6021
+              ~cwreve.itm~   ~override~ // revenant: 50% stun
+              ~cwszomb.itm~  ~override~ // slime zombie: 10% poison
+              ~cynicis.itm~  ~override~ // cynicism: display stringheads
+              ~days.itm~     ~override~ // the sword of days: 25% slow
+              ~dazer.itm~    ~override~ // dazer: 5% stun, fixed elsewhere
+              ~debian.itm~   ~override~ // debian's rod of smiting: 5% destroy golem, 5% extra damage to extraplanar
+              ~deva.itm~     ~override~ // deva weapon: 25% dispel magic on hit
+              ~diver.itm~    ~override~ // spell diver: 50% to block spellcasting
+              ~doves.itm~    ~override~ // Three White Doves +3: undead/extraplanr destruction
+              ~firekis.itm~  ~override~ // fire kiss: 5% shroud of flame
+              ~fistgf.itm~   ~override~ // fist of the gloomfrost: 5% chance for extra crush damage 
+              ~fkiller.itm~  ~override~ // faith killer: 5% dispel magic
+              ~flailsk.itm~  ~override~ // skullflail: 10% piercing damage
+//            ~gasp.itm~     ~override~ // stalker weapon: seems correct already
+              ~ghoul1.itm~   ~override~ // ghoul touch: (helf)elven resistance
+              ~ghoult.itm~   ~override~ // ghoul touch: (helf)elven resistance
+              ~giving.itm~   ~override~ // the giving star: 10% cure and str bonus
+              ~gvalor2.itm~  ~override~ // gauntlet of valor: 12% extra damage and stun
+              ~handgf.itm~   ~override~ // hand of the gloomfrost: 5% suffocate
+              ~hlydeck.itm~  ~override~ // holy chaos! deck: 50% bless, 25% prayer, 15% recitation, 10% RWotF
+              ~holding.itm~  ~override~ // jester's bag of holding: all inventory creation effects
+              ~icegolem.itm~ ~override~ // ice golem weapon: 10% stun
+//            ~icetrl.itm~   ~override~ // ice golem weapon: 33% stun, percentages fine
+              ~kinetic.itm~  ~override~ // kinetic spear: 5% lance of disruption
+              ~kissgf.itm~   ~override~ // kiss of the gloomfrost: 5% cold damage
+              ~kris.itm~     ~override~ // bone kris of black ichor: 20% poison
+              ~lizspear.itm~ ~override~ // no such index: 10% extra piercing damage 
+              ~mae.itm~      ~override~ // flail of mae: 5% petrification 
+              ~pest.itm~     ~override~ // pestilent dawn: 25% cause disease
+              ~planetar.itm~ ~override~ // planetar weapon: 25% dispel magic on hit, 25% vorpal hit
+//            ~poq2-16.itm~  ~override~ // no such index: 33% stun chance, existing is fine
+              ~reaver.itm~   ~override~ // the snow maiden's reaver: 2% freezing target
+              ~remorha.itm~  ~override~ // remorhaz weapon: 5% fire damage
+              ~ring03.itm~   ~override~ // ring of animal friendship: (helf)elven resistance
+              ~sbowebu.itm~  ~override~ // short bow of ebullience: 25% fire damage
+              ~serrate.itm~  ~override~ // serrated bone blade: 20% cold damage
+              ~sflail.itm~   ~override~ // conrnugon: 50% bleed, 25% stun 
+              ~shax4d4c.itm~ ~override~ // shadowed orc weapon: 40% cold damage
+              ~shaxe2c.itm~  ~override~ // shadowed orc weapon: 40% cold damage
+              ~shmblr.itm~   ~override~ // shambler weapon: 5% entangle
+//            ~sorb.itm~     ~override~ // sol's searing orb, unused: simulates 1d6 poorly
+              ~sw1h51.itm~   ~override~ // solemn duty: 3% decapitation
+              ~talongf.itm~  ~override~ // talon of the gloomfrost: 15% entangle
+              ~tonggf.itm~   ~override~ // tongue of the gloomfrost: 3% cone of cold 
+              ~tongue.itm~   ~override~ // the salamander's tongue: 20% fire damage
+              ~u1ham3a.itm~  ~override~ // corrosive hammer: 30% acid damage
+              ~u1ham3b.itm~  ~override~ // war hammer of sparks +2: 50% electrical damage, 10% stun 
+              ~u1ham4a.itm~  ~override~ // war hammer +3: life giver: 20% heal
+              ~u1ham5a.itm~  ~override~ // war hammer of phasing +3: 15% phase, 25% cold damage
+//            ~u1ham5b.itm~  ~override~ // War Hammer +4: Defender: 20% heal, but should be deleted instead in ie-6026
+              ~u1hax2a.itm~  ~override~ // charged battle axe +2: 50% electrical damage, 15% stun
+              ~u1hax3a.itm~  ~override~ // poisonous battle axe +2: 25% poison
+              ~u1hax4a.itm~  ~override~ // battle axe +3: fatigue: 20% slow 
+              ~u1hax4b.itm~  ~override~ // benorg's truth: 10% stun
+              ~u2ham4b.itm~  ~override~ // war hammer of phasing +2: 10% disease, 15% cold damage
+              ~u2ham5a.itm~  ~override~ // demon's breath +3: 50% fire damage, 20% fireball
+              ~u2hax2a.itm~  ~override~ // two handed fire axe +1: 50% fire damage
+              ~u2hax3a.itm~  ~override~ // infected two handed axe +2: 15% disease
+              ~u2hax3b.itm~  ~override~ // two handed axe +2: life giver: 10% heal
+              ~u2hax4a.itm~  ~override~ // 2h axe of greater phasing +2: 15% phased, 25% cold damage
+              ~u2hax5a.itm~  ~override~ // foe's fate: 25% berserk, 25% electric damage
+              ~uarow3a.itm~  ~override~ // confusion arrows +3: 10% confusion
+              ~uarow3b.itm~  ~override~ // hammer arrow +1: 10% stun
+              ~ubswd1a.itm~  ~override~ // fang: 25% acid damage
+              ~ubswd2a.itm~  ~override~ // phasing bastard sword +1: 15% phased
+              ~ubswd2b.itm~  ~override~ // flaming bastard sword +1: 25% fire damage
+              ~ubswd3a.itm~  ~override~ // bastard sword +2: life giver: 5% heal
+              ~ubswd4b.itm~  ~override~ // bastard sword of greater phasing: 15% phased 
+              ~ubswd4c.itm~  ~override~ // bastard sword +2: conflagration: 10% fireball
+              ~ubswd5a.itm~  ~override~ // cancerous bastard sword +4: 15% disease 
+              ~ubswd5b.itm~  ~override~ // bastard sword +3: incinerator: 50% fire damage, 10% stun              
+              ~ubull4a.itm~  ~override~ // bullets of fire +2: 50% fire damage
+              ~udagg1a.itm~  ~override~ // fire dagger: 15% fire damage
+              ~udagg1b.itm~  ~override~ // phase dagger: 15% phased
+              ~udagg2a.itm~  ~override~ // static dagger +1: 50% electric damage
+              ~udagg3a.itm~  ~override~ // fire dagger +2: 50% fire damage
+              ~udagg3c.itm~  ~override~ // life dagger +2: 15% heal
+              ~udagg4a.itm~  ~override~ // chaos dagger +3: 20% disease
+              ~udart1a.itm~  ~override~ // hammer darts: 15% stun
+              ~udart2a.itm~  ~override~ // berserker darts: 10% berserk
+              ~udart3b.itm~  ~override~ // blinding darts +2: 25% blind - some had wrong %, fixed elsewhere
+              ~udart5a.itm~  ~override~ // inferno darts +4: 20% fire damage
+              ~uflal2a.itm~  ~override~ // crooked flail: 50% pierce damage
+              ~uflal2b.itm~  ~override~ // hammer flail +2: 15% stun
+              ~uflal4a.itm~  ~override~ // fire flail +3: 50% fire damage
+              ~uflal5a.itm~  ~override~ // shocking flail +4: 50% electric damage, 10% stun 
+              ~uhalb1a.itm~  ~override~ // halberd of sparks +1: 15% electric damage
+              ~uhalb2a.itm~  ~override~ // diseased halberd +1: 10% disease
+              ~uhalb3b.itm~  ~override~ // darig's rest: 10% sleep
+              ~uhalb3c.itm~  ~override~ // life halberd +2: 10% heal
+              ~uhalb4a.itm~  ~override~ // doom halberd +3: 50% fire damage, 15% stun
+              ~uhalb4b.itm~  ~override~ // star forged halberd +3: 15% stun
+              ~uhalb5a.itm~  ~override~ // great halberd +4: 50% acid damage
+              ~ulswd2b.itm~  ~override~ // spiked long sword +1: 25% pierce damage
+              ~ulswd3b.itm~  ~override~ // long sword of confusion +2: 25% confusion
+              ~ulswd3c.itm~  ~override~ // life's gift: 15% heal
+              ~ulswd4a.itm~  ~override~ // hold fast: 15% hold
+              ~ulswd5b.itm~  ~override~ // bhaal's fire: 15% stun
+              ~umstr2a.itm~  ~override~ // morning star of confusion +1: 10% confusion
+              ~umstr2b.itm~  ~override~ // lesser static star +1: 20% electric damage, 10% stun
+              ~umstr3a.itm~  ~override~ // morning star +2: hammer: 20% stun
+              ~umstr3c.itm~  ~override~ // morning star of lesser phasing: 15% phase, 25% cold
+              ~umstr4b.itm~  ~override~ // static star +3: 15% slow, 25% electric damage
+              ~umstr5a.itm~  ~override~ // morning star of action +4: 5% stun
+              ~usswd2a.itm~  ~override~ // flaming short sword +1: 50% fire damage
+              ~usswd2b.itm~  ~override~ // short sword of lesser phasing: 10% phased
+              ~usswd3a.itm~  ~override~ // sloth: 10% slow
+              ~usswd3b.itm~  ~override~ // some god's lesser promise: 5% heal
+              ~usswd5a.itm~  ~override~ // short sword of health +4: 15% heal
+              ~usswd5b.itm~  ~override~ // short sword +4: hammer: 20% stun 
+              ~utswd2b.itm~  ~override~ // two handed sword +1: hammering: 20% stun
+              ~utswd3a.itm~  ~override~ // two handed sword +2: hammering: 20% stun
+              ~utswd4a.itm~  ~override~ // two handed sword +4: backbiter: 25% user takes piercing
+              ~utswd4b.itm~  ~override~ // two handed sword +3: bane: 25% disease
+              ~utswd5a.itm~  ~override~ // static two handed sword +4: 50% electric damage, 25% stun
+              ~utswd5b.itm~  ~override~ // two handed sword +4: life giver: 5% heal
+              ~wand08.itm~   ~override~ // wand of sleep: (helf)elven resistance
+//            ~wepwyv.itm~   ~override~ // wyvern attack: 50% poison, already correct
+              ~whtash.itm~   ~override~ // the spear of white ash: 5% extra damage
+              ~withery.itm~  ~override~ // ol' withery: 2% finger of death
+//            ~wranged.itm~  ~override~ // wailing virgin attack: existing splits are fine
+              ~xclub.itm~    ~override~ // dazer: 5% stun, fixed elsewhere
+              ~young.itm~    ~override~ // young rage: 5% berserk
+              ~zz05we.itm~   ~override~ // the mace of weal and woe: 13% curse
+              ~zze6pe.itm~   ~override~ // pig's eye: 50% blinds orcs
+              ~zzj6sp.itm~   ~override~ // selune's promise: 2% morale failure
+              ~zzm5mh.itm~   ~override~ // misery's herald: 10% horror
+
+// this was written before we went to using IDS names, so just raw file names instead of stuff like BARD_SONG_KAUDIES
+//            ~demochm.spl~  ~override~ // demogorgon charm, unused: (helf)elven resistance
+//            ~gasp.spl~     ~override~ // unused
+//            ~holding.spl~  ~override~ // jester's bag of holding, unused: all inventory creation effects
+//            ~insanity.spl~ ~override~ // unused
+              ~ohtmps2d.spl~ ~override~ // chaos of battle: misc effects
+              ~ohtmps2e.spl~ ~override~ // chaos of battle: misc effects
+//            ~sareveff.spl~ ~override~ // sarevok deathbringer, unused
+//            ~spauru.spl~   ~override~ // 1/4 elemental damage, unused
+              ~spcl117.spl~  ~override~ // song of kaudies: 50% spell resistance
+              ~spcl118.spl~  ~override~ // siren's yearning: (helf)elven resistance
+//            ~spcl132.spl~  ~override~ // unused
+              ~spcl311.spl~  ~override~ // charm animal: (helf)elven resistance
+              ~spcl641.spl~  ~override~ // charm person or mammal: (helf)elven resistance
+//            ~spcl918.spl~  ~override~ // alchemy, unused: items
+//            ~spcl919.spl~  ~override~ // scribe scrolls, unused: items
+//            ~spdm108b.spl~ ~override~ // unused
+//            ~spin106a.spl~ ~override~ // unused
+//            ~spin106b.spl~ ~override~ // unused
+//            ~spin115.spl~  ~override~ // mournful wail: percntages already OK
+              ~spin139.spl~  ~override~ // harpy wail: (helf)elven resistance              
+              ~spin141.spl~  ~override~ // charm person: (helf)elven resistance
+              ~spin142.spl~  ~override~ // sleep: (helf)elven resistance
+              ~spin161.spl~  ~override~ // jackalwere gaze: (helf)elven resistance
+//            ~spin188.spl~  ~override~ // INNATE_MYCONID_SPORES: percentages already OK
+//            ~spin190.spl~  ~override~ // INNATE_ZOMBIE_LORD_AURA, unused
+              ~spin191.spl~  ~override~ // INNATE_BOMBARDIER_BEETLE_CLOUD: 20% stun, 20% deaf       
+              ~spitm99.spl~  ~override~ // charm fire elemental kin: (helf)elven resistance
+              ~sppr102.spl~  ~override~ // command: (helf)elven resistance
+              ~sppr204.spl~  ~override~ // charm person or mammal: (helf)elven resistance
+              ~sppr250.spl~  ~override~ // writhing fog: 20% slow
+              ~sppr320.spl~  ~override~ // cause disease: 5-20 strength drain
+              ~sppr325.spl~  ~override~ // cloudburst: 50% lightning strike
+              ~sppr426.spl~  ~override~ // smashing wave: 5% sleep, 25% stun
+//            ~sppr450.spl~  ~override~ // spirit fire: 33% doom
+              ~sppr507.spl~  ~override~ // champion's strength: 25% each to set strength to 20-23
+              ~sppr512.spl~  ~override~ // greater command: (helf)elven resistance
+              ~sppr522b.spl~ ~override~ // animal rage: 5% berserk
+              ~sppr608.spl~  ~override~ // harm: reduces HP to 1d4
+              ~sppr699.spl~  ~override~ // harm, enemy: reduces HP to 1d4
+//            ~sppr723.spl~  ~override~ // elemental summoning, unused
+//            ~sppr724.spl~  ~override~ // greater elemental summoning, unused
+              ~sppr982.spl~  ~override~ // dire charm: (helf)elven resistance
+//            ~spsh004.spl~  ~override~ // shaman dance, already correct
+              ~spwi104.spl~  ~override~ // charm person: (helf)elven resistance
+              ~spwi116.spl~  ~override~ // sleep: (helf)elven resistance
+              ~spwi220.spl~  ~override~ // pw sleep: (helf)elven resistance
+//            ~spwi314b.spl~ ~override~ // unused
+              ~spwi316.spl~  ~override~ // dire charm: (helf)elven resistance
+              ~spwi423.spl~  ~override~ // spider spawn: 20% for two spiders
+              ~spwi506.spl~  ~override~ // domination: (helf)elven resistance
+//            ~spwi621.spl~  ~override~ // conjure air elemental, unused
+              ~spwi623.spl~  ~override~ // carrion summons: 35% for two
+              ~spwi711.spl~  ~override~ // sphere of chaos: multiple effects 
+              ~spwi714.spl~  ~override~ // prismatic spray: 1/6 chances for effects
+              ~spwish13.spl~ ~override~ // alchemy, wish: items
+              ~spwish14.spl~ ~override~ // create wand, wish: items
+              ~spwm130.spl~  ~override~ // wild magic surge: 1/10 cosmetics
+              ~spwm136.spl~  ~override~ // wild magic surge: create gems
+              ~spwm179.spl~  ~override~ // wild magic surge, charm: (helf)elven resistance
+//            ~talongf.spl~  ~override~ // unused
+  READ_ASCII 0x00 type (3)
+  SET min_size = 0
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "spl" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x28
+    SET global_loop    = 0
+    SET fx_type        = 0
+    SET min_size       = 0x72
+  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "itm" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x38
+    SET global_loop    = 1
+    SET fx_type        = 0
+    SET min_size       = 0x72
+/*  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "cre" = 0) BEGIN
+    READ_LONG  0x2c4 fx_off ELSE 0
+    READ_BYTE 0x33 fx_type ELSE 2
+    SET abil_off       = 0
+    SET abil_num       = 0
+    SET counter_offset = 0x2c8
+    SET abil_length    = 0
+    SET global_loop    = 1
+    SET min_size       = 0x2d4
+    SET cosmetic       = 0 */
+  END
+  PATCH_IF ((SOURCE_SIZE >= min_size) AND (min_size != 0)) BEGIN // min_size must get set by file type detection
+    FOR (index = (0 - global_loop) ; index < abil_num ; ++index) BEGIN
+      PATCH_IF (index < 0) BEGIN // if loop through globals needed
+        SET abil_fx_idx = 0
+      END ELSE BEGIN // otherwise normal ability
+        SET counter_offset = (abil_off + 0x1e + (abil_length * index))
+        READ_SHORT  (abil_off + 0x20 + (abil_length * index)) abil_fx_idx
+      END
+      READ_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
+      FOR (index2 = 0 ; index2 < counter ; ++index2) BEGIN
+        PATCH_FOR_EACH offset IN 0x12 0x13 BEGIN
+          READ_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) prob
+          PATCH_IF (prob > 0) AND (prob < 100) BEGIN
+            WRITE_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (prob - 1)
+          END
+        END
+      END
+    END
+  END
+  BUT_ONLY

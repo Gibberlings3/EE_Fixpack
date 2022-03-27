@@ -1,0 +1,14 @@
+// ie-6020, cam
+// Bullets +1 and Bullets +2 use the same projectile
+COPY_EXISTING ~bull03.itm~  ~override~ // bullet +2
+              ~xbull03.itm~ ~override~ // bullet +2
+  LPF ALTER_ITEM_HEADER INT_VAR projectile = 306 END // 1pp bullet+2
+  BUT_ONLY
+
+COPY_EXISTING ~%CLERIC_PHYSICAL_MIRROR%.spl~ ~override~ // sppr613, physical mirror
+  LPF CLONE_EFFECT INT_VAR match_opcode = 197 match_parameter2 = 332 parameter2 = 305 END // clone into new reflection
+  BUT_ONLY
+  
+COPY_EXISTING ~%CLERIC_ENTROPY_SHIELD%.spl~ ~override~ // sppr615, entropy shield
+  LPF CLONE_EFFECT INT_VAR match_opcode = 83 match_parameter2 = 332 parameter2 = 305 END // clone into new protection
+  BUT_ONLY
