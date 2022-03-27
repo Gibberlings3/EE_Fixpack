@@ -15,3 +15,18 @@ Area of Effect: 12-ft. radius
 Saving Throw: Neg.
 
 Symbol, Pain is a powerful enchantment that allows the priest to inscribe a symbol on the ground or any other surface. The symbol will remain there until someone comes too close, at which point it will explode, causing all those within the area of effect to make a Saving Throw vs. Spell. Those who fail their Saving Throws are overwhelmed by pain, suffering a -4 penalty to their attack rolls, a -2 penalty to their Dexterity scores, and a -2 penalty to their Armor Class.~
+
+// ie-5925, cam
+// cause disease is an abjuration spell, not necromancy
+@21478 = ~Cause Disease
+(Abjuration)
+
+Level: 3
+Sphere: Healing
+Range: Touch
+Duration: 8 hours
+Casting Time: 9
+Area of Effect: 1 creature
+Saving Throw: Neg.
+
+This spell afflicts one creature the priest touches with a disease that saps the target of 5d4 points of Strength. A successful Save vs. Spell negates the effects. This spell has no effect on undead, constructs, or extraplanar creatures. It cannot be cast by good-aligned characters.~
