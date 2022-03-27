@@ -1,7 +1,57 @@
 // fixes for pstee; rename without underscore when we have our first fix
 
+/////                                                  \\\\\
+///// string fixes                                     \\\\\
+/////                                                  \\\\\
+
 // string fixes, processed automatically if tra file exists
 LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
   STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
           output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
 END
+
+/////                                                  \\\\\
+///// ids/2da fixes                                    \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// mass copy/includes actions                       \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// dialogue fixes                                   \\\\\
+/////                                                  \\\\\
+
+COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
+
+/////                                                  \\\\\
+///// script fixes                                     \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// area fixes                                       \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// creature file fixes                              \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// item file fixes                                  \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// spell fixes                                      \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// store fixes                                      \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// misc/other fixes                                 \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// final batch of INCLUDEs and cross-patching       \\\\\
+/////                                                  \\\\\

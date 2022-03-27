@@ -1,4 +1,6 @@
-// fixes for bgee
+/////                                                  \\\\\
+///// string fixes                                     \\\\\
+/////                                                  \\\\\
 
 // string fixes, processed automatically if tra file exists
 LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
@@ -12,4 +14,57 @@ ACTION_IF game_contains_sod BEGIN
   END
 END
 
-COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~ ~override~ // fix light crossbow BAM
+/////                                                  \\\\\
+///// ids/2da fixes                                    \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// mass copy/includes actions                       \\\\\
+/////                                                  \\\\\
+
+COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
+              ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
+              ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
+              ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
+
+/////                                                  \\\\\
+///// dialogue fixes                                   \\\\\
+/////                                                  \\\\\
+
+COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
+
+ACTION_IF game_contains_sod BEGIN
+  COMPILE ~eefixpack/files/d/%game%_sod_core_fixes.d~ // misc dialogue fixes
+END
+
+/////                                                  \\\\\
+///// script fixes                                     \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// area fixes                                       \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// creature file fixes                              \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// item file fixes                                  \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// spell fixes                                      \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// store fixes                                      \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// misc/other fixes                                 \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
+///// final batch of INCLUDEs and cross-patching       \\\\\
+/////                                                  \\\\\
