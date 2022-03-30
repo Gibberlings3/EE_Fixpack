@@ -1,0 +1,11 @@
+DEFINE_ACTION_FUNCTION ghoul_touch_elven_immunity BEGIN
+
+	ACTION_FOR_EACH item IN ghoult ghoul1 BEGIN
+
+		COPY_EXISTING "%item%.itm" override
+			LPF CLONE_EFFECT INT_VAR match_opcode=109 opcode=324 timing=0 duration=0 parameter1=0 parameter2=15 STR_VAR resource="%SOURCE_RES%" END
+		BUT_ONLY
+
+	END
+
+END

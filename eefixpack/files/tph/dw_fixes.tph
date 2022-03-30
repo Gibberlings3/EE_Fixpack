@@ -1,0 +1,61 @@
+OUTER_SPRINT "library_path" "%MOD_FOLDER%/files/tph/dw"
+
+/// This block is in order - mostly it doesn't matter but immunities_via_324 needs to go last
+/// Use write=1 to autogenerate (and save) lists of resources to edit,
+/// write=0 to use the saved lists.
+
+OUTER_SET write=0
+
+// some misc fixes
+
+INCLUDE "%library_path%/dw_misc.tph"
+LAF dw_misc END
+
+// Remove duplicated blocks (mostly due to automated code in FP)
+// This has no in-game consequence, but tidies up and avoids further duplication later when we start making clones
+
+INCLUDE "%library_path%/declutter.tph"
+LAF declutter INT_VAR write END
+
+// Sort out the various issues with 109/175/185 (this is the conservative bit) 
+
+INCLUDE "%library_path%/paralyzation_fixes.tph"
+LAF paralyzation_fixes END
+
+// standardize death magic protection (BG2 only)
+
+ACTION_IF GAME_IS "bg2ee" BEGIN
+	INCLUDE "%library_path%/death_magic_immunity.tph"
+	LAF death_magic_immunity END
+END
+
+// clear up the mass of 177s in Holy Smite/Unholy Blight
+// (arguably not necessary, but smoother to handle)
+
+ACTION_IF GAME_IS "bgee bg2ee" BEGIN
+	INCLUDE "%library_path%/holy_unholy.tph"
+	LAF holy_unholy END
+END
+
+// DEBATABLE - include elven immunity to ghoul paralysis
+// I have done only elven immunity since half-elf 70% immunity
+// isn't in BG/BG2. 
+
+ACTION_IF GAME_IS "bgee bg2ee" BEGIN
+	INCLUDE "%library_path%/ghoul_touch_elven_immunity.tph"
+	LAF ghoul_touch_elven_immunity END
+END
+
+// DEBATABLE - my more radical 109/175 fixes.
+// I have only done BG/BG2, but most of this applies to IWD too
+// - I just haven't had a chance to comb through its files
+
+ACTION_IF GAME_IS "bgee bg2ee" BEGIN
+	INCLUDE "%library_path%/speculative_109_175.tph"
+	LAF speculative_109_175 END
+END
+
+/// 324-ify spell immunities.
+
+INCLUDE "%library_path%/immunities_via_324.tph"
+LAF immunities_via_324 INT_VAR write END

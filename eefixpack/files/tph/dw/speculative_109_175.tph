@@ -1,0 +1,54 @@
+/* This implements my somewhat-more-radical 109/175 fixes, as documented at https://www.gibberlings3.net/forums/topic/34971-bug-chaotic-commands-blocks-109-and-175/. I am ambivalent as to
+whether we should actually to (any/all of) this.
+*/
+
+DEFINE_ACTION_FUNCTION speculative_109_175 BEGIN
+
+	///////////////////////////////////////////////////////////
+	/// 'hold immunity' doesn't mean paralyzation immunity
+	///////////////////////////////////////////////////////////
+
+	ACTION_CLEAR_ARRAY resources
+	ACTION_DEFINE_ARRAY resources BEGIN
+			amul17.itm // greenstone amulet
+	END
+	ACTION_IF GAME_IS BG2EE BEGIN
+		ACTION_DEFINE_ARRAY resources BEGIN
+			shld25.itm // shield of harmony
+			spcl152.spl // barbarian rage
+			spcl321.spl // berserker rage
+			ohrrage.spl // animal rage
+			spin117.spl // minsc berserk
+			spcl233b.spl // inquisitor immunity
+		END
+	END
+	ACTION_PHP_EACH resources AS ind=>resource BEGIN
+		COPY_EXISTING "%resource%" override
+			LPF DELETE_EFFECT INT_VAR match_opcode=109 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=169 match_parameter2=13 END // hold icon
+	END
+
+	///////////////////////////////////////////////////////////
+	/// Undead hunters should be immune to paralysis, not Hold
+	///////////////////////////////////////////////////////////
+
+	///... the problem is, this requires editing a kit description.
+	/// is that a bridge too far?
+
+	// here's the code for the mechanical change, anyway
+
+	COPY_EXISTING spcl242.spl override 
+		LPF DELETE_EFFECT INT_VAR match_opcode=175 END
+
+	///////////////////////////////////////////////////////////
+	/// Chaotic Commands shouldn't cover paralysis or hold
+	// (no description evidence of either)
+	///////////////////////////////////////////////////////////
+
+	COPY_EXISTING sppr508.spl override
+			LPF DELETE_EFFECT INT_VAR match_opcode=109 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=175 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=169 match_parameter2=13 END // hold icon
+	BUT_ONLY
+
+END

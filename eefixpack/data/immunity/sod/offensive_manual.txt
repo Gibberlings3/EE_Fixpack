@@ -1,0 +1,27 @@
+resource	clone	protect
+SPWI312.spl	40	40	slow
+SPWISH25.spl	40	40
+SPIN983.spl	40	40
+SPWM164.spl	40	40
+SPIN977.spl	40	40	Golem slow
+SPPR105.spl	154	154	Entangle
+SPWM111.spl	154	154
+SPIN688.spl	154	154	Black dragon plant growth
+MOUND.itm	154	154	Shambling mound attack
+SPWI305.spl	16	16	Haste
+SPRA301.spl	16	16
+SPIN828.spl	16	16
+SPIN572.spl	16	16
+SPWI613.spl	16	16	Improved haste
+SPIN575.spl	40	16	Vortex web (web effect, but no 157)
+SPCL103.spl	73	24	Aura of Despair (fear, but not always a 24)
+SPIN892.spl	39	39
+SPPR102.spl	39	39
+SPPR512.spl	39	39
+SPWI116.spl	39	39
+SLAYLIVE.itm	55	55	Slay living
+SPPR599.spl	55	55	NPC slay living
+SPWI713.spl	55	55	Finger of death
+SPIN961.spl	55	55	Finger of death
+SPPR708.spl	55	55	Finger of death
+SPWI054.spl	55	55	Finger of death

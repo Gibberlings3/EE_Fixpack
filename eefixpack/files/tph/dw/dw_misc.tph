@@ -1,0 +1,17 @@
+DEFINE_ACTION_FUNCTION dw_misc BEGIN
+
+	// fix stupid problem on (unused!) #bonecir
+	
+	ACTION_IF GAME_IS IWDEE BEGIN
+		COPY_EXISTING "#BONECIR.SPL" override
+			WRITE_ASCII 0x0 "SPL " (4)
+	END
+
+	// put generic scimitar +2 in the Cloakwoodk
+	
+	ACTION_IF GAME_INCLUDES SOD BEGIN
+		COPY_EXISTING "AR2100.are" override
+			REPLACE_TEXTUALLY "SW1H23" "BDSW1H23" (8) // crude? sure. 
+	END
+
+END

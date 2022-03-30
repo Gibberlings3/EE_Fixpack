@@ -1,0 +1,141 @@
+/*
+This clears out repeated blocks
+
+write=1 to autogenerate and write the list of affected files
+write=0 to use saved lists
+*/
+
+
+DEFINE_ACTION_FUNCTION declutter INT_VAR write=0 BEGIN
+
+	ACTION_IF GAME_IS iwdee BEGIN
+		OUTER_SPRINT path "iwd"
+	END ELSE
+	ACTION_IF GAME_IS bgee BEGIN
+		ACTION_IF GAME_INCLUDES sod BEGIN
+			OUTER_SPRINT path "sod"
+		END ELSE BEGIN
+			OUTER_SPRINT path "bg1"
+		END
+	END ELSE BEGIN
+		OUTER_SPRINT path "bg2"
+	END
+	OUTER_SPRINT path "%MOD_FOLDER%/data/declutter/%path%"
+
+	ACTION_IF write BEGIN
+		OUTER_SPRINT output ""
+		COPY_EXISTING_REGEXP ".*\.\(SPL\|ITM\)" override
+			LPF remove_redundant_fx INT_VAR write=1 RET altered END
+			PATCH_IF altered BEGIN
+				SPRINT output "%output%%SOURCE_FILE%%WNL%"
+			END
+		BUT_ONLY
+		COPY + ".../fp-inline/blank" "%path%/files.txt"
+			INSERT_BYTES 0x0 STRING_LENGTH "%output%"
+			WRITE_ASCII 0x0 "%output%"
+	END ELSE BEGIN
+		ACTION_IF FILE_EXISTS "%path%/files.txt" BEGIN
+			COPY - "%path%/files.txt" nowhere
+				READ_2DA_ENTRIES_NOW cluttered_files 1
+				PATCH_PRINT "Patching %cluttered_files% files..."
+				PATCH_SILENT
+				FOR (row=0;row<cluttered_files;++row) BEGIN
+					READ_2DA_ENTRY_FORMER cluttered_files row 0 resource
+					INNER_ACTION BEGIN
+						COPY_EXISTING "%resource%" override
+							LPF remove_redundant_fx RET altered END
+					END
+				END
+				PATCH_VERBOSE
+				PATCH_PRINT "...done"
+		END ELSE BEGIN
+			FAIL "declutter is running in read mode (write=0) but files.txt was not found at %path%"
+		END
+	END
+ 
+END
+
+// this function assumes we've got the array of fx indices in fx_array
+// it then marks any repeated block (from a list of opcodes that shouldn't be repeated) with a 999 opcode. Note that 'repeated' means
+// 'the entire block is repeated unchanged', not just 'the same opcode is covered' - we're not idiots.
+
+DEFINE_PATCH_FUNCTION remove_redundant_fx_patch INT_VAR telemetry=0 RET altered BEGIN
+	altered=0
+	PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+		READ_SHORT fx_off master_opcode
+		PATCH_MATCH "%master_opcode%" WITH
+		61 83 101 109 141 142 144 169 172 174 197 206 215 233 240 267 282 296 328 BEGIN
+			PATCH_MATCH "%master_opcode%" WITH
+			233 BEGIN
+				READ_ASCII fx_off+0x4 parameter
+			END
+			267 BEGIN
+				READ_SHORT fx_off+0x4 parameter
+			END 
+			206 172 296 BEGIN
+				READ_ASCII fx_off+0x14 parameter
+			END
+			101 144 169 197 215 240 328 BEGIN
+				READ_SHORT fx_off+0x8 parameter
+			END
+			DEFAULT
+				parameter="-1"
+			END
+			READ_ASCII fx_off data (0x30)
+			PATCH_IF (master_opcode=101 || master_opcode=169 || master_opcode=267) BEGIN
+				INNER_PATCH_SAVE data "%data%" BEGIN
+					WRITE_ASCII 0x14 "" (8)
+				END
+			END ELSE
+			
+			PATCH_IF master_opcode=296 BEGIN
+				INNER_PATCH_SAVE data "%data%" BEGIN
+					WRITE_LONG 0x4 0
+					WRITE_LONG 0x8 0
+				END
+			END
+			SPRINT data_old $"%master_opcode%_data"("%parameter%")
+			PATCH_IF "%data%" STR_EQ "%data_old%" BEGIN
+				WRITE_SHORT fx_off 999
+				altered=1
+				PATCH_IF telemetry BEGIN
+					PATCH_PRINT "Removing redundant %master_opcode% immunity to %parameter% from %SOURCE_FILE%"
+				END	
+			END ELSE BEGIN
+				SPRINT $"%master_opcode%_data"("%parameter%") "%data%"
+			END
+		END
+		DEFAULT
+		END
+	END
+	
+END
+
+
+DEFINE_PATCH_FUNCTION remove_redundant_fx
+	RET altered
+BEGIN
+	telemetry=0
+	altered=0
+	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
+		GET_OFFSET_ARRAY fx_arr ITM_V10_GEN_EFFECTS
+		LPF remove_redundant_fx_patch INT_VAR telemetry RET altered END
+	END		
+	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
+		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
+	END ELSE BEGIN
+		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+	END
+	PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+		PATCH_IF ab_ind=0 BEGIN
+			GET_OFFSET_ARRAY2 fx_arr ab_off ITM_V10_HEAD_EFFECTS
+			LPF remove_redundant_fx_patch INT_VAR telemetry RET altered_here=altered END
+			altered=altered OR altered_here
+		END
+	END
+	LPF DELETE_EFFECT INT_VAR match_opcode=999 END
+END
+
+
+<<<<<<<<.../fp-inline/blank
+>>>>>>>>

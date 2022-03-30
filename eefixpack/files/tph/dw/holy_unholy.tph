@@ -1,0 +1,35 @@
+/*
+This function moves Holy Smite and Unholy Blight so as to use 324 magic rather than a big block of 101s.
+In the process it also handles EE save-for-half functionality.
+*/
+
+DEFINE_ACTION_FUNCTION holy_unholy BEGIN
+
+
+	COPY_EXISTING 
+	"SPPR313.spl" override
+	"SPPR314.spl" override
+		LPF DELETE_EFFECT END
+		// level-independent effects
+		splprot_param="%SOURCE_RES%" STR_EQ sppr313 ? 38 : 36
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=324 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=141 target=2 parameter2=26 END // lighting effect
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=174 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=325 target=2 duration=24 parameter1="-2" parameter2=2 savingthrow=BIT0 END // save penalty
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=54 target=2 parameter1="-2" duration=24 savingthrow=BIT0 END // THAC0 penalty
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=142 target=2 duration=24 parameter2=35 savingthrow=BIT0 END // 'cursed' icon
+		// level-dependent blocks
+		LPF ADD_SPELL_EFFECT INT_VAR opcode=12 target=2 parameter2=64*0x10000 dicesize=4 savingthrow=BIT0+BIT24 special=BIT8 END
+		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+		PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+			level=SHORT_AT (0x10+ab_off)
+			level=level=1?5:level
+			LPF ALTER_EFFECT INT_VAR header=ab_ind match_opcode=12 dicenumber=level END
+		END
+	BUT_ONLY
+	
+	//unholy blight
+	
+	
+
+END
