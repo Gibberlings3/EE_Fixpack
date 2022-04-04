@@ -4,5 +4,5 @@
 
 // any strings < 34000 are non-sod strings and should go into the gtu_bgee.tra file instead. 
 
-// strref #34567, updating because "X is misspelled"
-@34567 = ~This is a test replacement string.~
+// removing extra space at the end
+@53484 = ~Go away. Go away!~

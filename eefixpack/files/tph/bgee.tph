@@ -41,6 +41,74 @@ END
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// referring to wrong DV for Imoen
+COPY_EXISTING ~bd6200.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"bdimoen"~ ~"imoen"~
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+
+// tbd, cam
+// referring to wrong DV for Corwin
+COPY_EXISTING ~bd7300.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+
+// tbd, cam
+// possibly missing Minsc-rasaad banter due to typo
+COPY_EXISTING ~bdminsc.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"rasaad'"~ ~"rasaad"~
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+
+// tbd, cam
+// sod imoen missing xp-matching scripting, among other things
+ACTION_IF game_contains_sod BEGIN
+  EXTEND_BOTTOM ~imoen.bcs~ ~eefixpack/files/baf/sod_imoen_bottom.baf~
+END
+
+
+
+// tbd, cam
+// bad string refs for AI scripting
+COPY_EXISTING ~bdimoenc.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~DisplayString(Myself,46150)~ ~DisplayString(Myself,31249)~ // *quaffs a potion*
+  END
+  BUT_ONLY
+  
+COPY_EXISTING ~bdeldotc.bcs~ ~override~
+              ~bdgarrcc.bcs~ ~override~
+              ~bdgarric.bcs~ ~override~
+              ~bdkivanc.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~DisplayString(Myself,56560)~ ~DisplayString(Myself,31249)~ // *quaffs a potion*
+  END
+  BUT_ONLY
+ 
+SET use_wand = RESOLVE_STR_REF (@100)
+COPY_EXISTING ~bddefai.bcs~  ~override~
+              ~bddynac.bcs~  ~override~
+              ~bdedwinc.bcs~ ~override~
+              ~bdxzarc.bcs~  ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~DisplayString(Myself,66959)~ ~DisplayString(Myself,%use_wand%)~ // *uses a wand*
+  END
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
@@ -48,6 +116,17 @@ END
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
+
+// tbd, cam
+// crusaders with the wrong DV
+COPY_EXISTING ~bdcrus21.cre~ ~override~
+              ~bdcrus22.cre~ ~override~
+              ~bdcrus6d.cre~ ~override~
+              ~bdcrus7d.cre~ ~override~
+              ~bdcrus8d.cre~ ~override~
+              ~bdcrus9d.cre~ ~override~
+  WRITE_ASCIIE 0x280 ~%SOURCE_RES%~ #32 // was bdcrus20
+  BUT_ONLY IF_EXISTS // sod
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\

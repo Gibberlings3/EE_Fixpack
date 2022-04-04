@@ -1,0 +1,105 @@
+IF
+  Die()
+  !InParty(Myself)
+  OR(12)
+    AreaCheck("OH1000")  // Dorn - Random Encounter Area
+    AreaCheck("ar5600")  // Random encounter area
+    AreaCheck("ar5601")  // Random encounter area
+    AreaCheck("ar5700")  // Random encounter area
+    AreaCheck("ar5701")  // Random encounter area
+    AreaCheck("ar5800")  // Random encounter area
+    AreaCheck("ar5801")  // Random encounter area
+    AreaCheck("ar5900")  // Random encounter area
+    AreaCheck("ar5901")  // Random encounter area
+    AreaCheck("ar6000")  // Random encounter area
+    AreaCheck("ar6001")  // Random encounter area
+    AreaCheck("ar6100")  // Random encounter area
+THEN
+  RESPONSE #100
+    DestroySelf()
+END
+
+IF
+  !InParty(Myself)
+  CheckSpellState(Myself,STORY_MODE)
+THEN
+  RESPONSE #100
+    ReallyForceSpellDeadRES("OHSMODE3",Myself)  // No such index
+    Continue()
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+  XPGT(Player1,31999)
+  XPLT(Myself,32000)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    ChangeStat(Myself,XP,32000,SET)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+  XPGT(Player1,15999)
+  XPLT(Myself,16000)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    ChangeStat(Myself,XP,16000,SET)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+  XPGT(Player1,7999)
+  XPLT(Myself,8000)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    ChangeStat(Myself,XP,8000,SET)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+  XPGT(Player1,3999)
+  XPLT(Myself,4000)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    ChangeStat(Myself,XP,4000,SET)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+  XPGT(Player1,1999)
+  XPLT(Myself,2000)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    ChangeStat(Myself,XP,2000,SET)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Global("BD_JOINXP","LOCALS",0)
+  InParty(Myself)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("BD_JOINXP","LOCALS",1)
+    SetInterrupt(TRUE)
+END
+
