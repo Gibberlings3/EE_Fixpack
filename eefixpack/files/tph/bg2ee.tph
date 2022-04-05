@@ -100,3 +100,5 @@ COPY_EXISTING ~melstone.spl~ ~override~
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more

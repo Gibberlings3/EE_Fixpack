@@ -557,4 +557,5 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/6037_probabilities.tph~ // ie-6021 & ie-6037 , cam: probability fixes
+INCLUDE ~eefixpack/files/tph/6037_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
+INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
