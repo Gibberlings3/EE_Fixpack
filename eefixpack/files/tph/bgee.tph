@@ -50,6 +50,29 @@ END
 /////                                                  \\\\\
 
 // tbd, cam
+// can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
+COPY_EXISTING ~bd0120.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+// tbd, cam
+// referring to wrong DV for Halatathlaer
+// wrong variable scope for timer
+COPY_EXISTING ~bd5300.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~DisplayStringHead("bdhalat")~ ~DisplayStringHead("bdhalata")~ // script has a createcreature bdhalat, so need to extra bit of trigger to match
+    REPLACE_TEXTUALLY ~"bd_sdd350b_ot_timer","bd2000"~ ~"bd_sdd350b_ot_timer","bd5300"~ // wrong variable scope
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+
+// tbd, cam
 // referring to wrong DV for Imoen
 COPY_EXISTING ~bd6200.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
@@ -76,6 +99,16 @@ COPY_EXISTING ~bd7300.bcs~ ~override~
 COPY_EXISTING ~bdminsc.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~"rasaad'"~ ~"rasaad"~
+  END
+  BUT_ONLY IF_EXISTS // sod
+  
+  
+
+// tbd, cam
+// spike trigger is a little too happy to murderize everyone, swap trigger
+COPY_EXISTING ~bdlever2.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~WalkedToTrigger~ ~Clicked~
   END
   BUT_ONLY IF_EXISTS // sod
 
