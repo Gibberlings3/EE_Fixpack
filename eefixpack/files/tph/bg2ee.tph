@@ -84,6 +84,23 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// fixing paperdoll animations
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_paperdoll_animations BEGIN 
+  misc9q   => sc // Habib's Mighty Scimitar uses a katana paperdoll animation instead of scimitar 
+  rodsword => fs // The Flaming Long Sword +1 from the Rod of Lordly Might (rodsword) should use the flaming sword animation
+  sw1h66   => ss // Yamato +4 uses a scimitar animation instead of short sword (like other wakizashi) 
+  sw1h67   => s1 // Usuno's Blade uses a scimitar animation instead of long sword (like other ninja-to) 
+  sw1h68a  => s2 // The undroppable copy of the Spectral brand has no animation 
+END
+
+ACTION_PHP_EACH cd_paperdoll_animations AS item => anim BEGIN
+
+  COPY_EXISTING ~%item%.itm~ ~override~
+    WRITE_ASCIIE 0x22 "%anim%" #2
+
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
