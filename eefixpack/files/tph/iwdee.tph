@@ -36,6 +36,14 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
               ~eefixpack/files/bam/mwdr~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
               ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
 
+// tbd, sam.
+// merging multi-part area animations to eliminate issues
+ACTION_BASH_FOR ~eefixpack/files/bam/area_anim~ ~^.+\.bam$~ BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME ~%BASH_FOR_RES%.bam~ BEGIN
+    COPY ~eefixpack/files/bam/area_anim/%BASH_FOR_RES%.bam~ ~override~
+  END
+END  
+
 // there's another section of INCLUDEs at the bottom if it should be late in the process
 INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~      // ie-5943 , cam: lots of mold touch fixes
 INCLUDE ~eefixpack/files/tph/6018_lizardmen.tph~       // ie-6018 , cam: Summoned lizardmen lack visible weapons

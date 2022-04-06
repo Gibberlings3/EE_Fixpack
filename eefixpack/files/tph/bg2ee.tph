@@ -26,6 +26,14 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
               ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
               ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
 
+// tbd, sam.
+// merging multi-part area animations to eliminate issues
+ACTION_BASH_FOR ~eefixpack/files/bam/area_anim~ ~^.+\.bam$~ BEGIN
+  ACTION_IF FILE_EXISTS_IN_GAME ~%BASH_FOR_RES%.bam~ BEGIN
+    COPY ~eefixpack/files/bam/area_anim/%BASH_FOR_RES%.bam~ ~override~
+  END
+END  
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
