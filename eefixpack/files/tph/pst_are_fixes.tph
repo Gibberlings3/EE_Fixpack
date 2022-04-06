@@ -1,0 +1,59 @@
+// fixing area flags
+COPY_EXISTING ~ar0402.are~ ~override~
+  // clear bit 1 (Reform Party not allowed)
+  // set bit 4 (Player1 can die), bit 7 ("You cannot rest here.")
+  WRITE_LONG 0x14 (THIS BAND BNOT BIT1
+                        BOR BIT4
+                        BOR BIT7)
+BUT_ONLY
+
+// fixing offsets
+COPY_EXISTING ~ar0501.are~ ~override~
+  SET bytes = (LONG_AT 0xac) * 76 // # bytes of animation block
+  WRITE_LONG 0xbc (THIS + bytes)  // songs offset
+BUT_ONLY
+
+// fixing offsets
+COPY_EXISTING ~ar1001.are~ ~override~
+              ~ar3017.are~ ~override~
+  READ_LONG 0xb0 anim_off
+  SET bytes = (LONG_AT 0xac) * 76 // # bytes of animation block
+  
+    // offsets: tiled objects, songs, rest encounters, automap notes, projectile traps
+  PATCH_FOR_EACH off IN 0xb8 0xbc 0xc0 0xc4 0xcc BEGIN
+    PATCH_IF (LONG_AT off >= anim_off) BEGIN
+      WRITE_LONG off (THIS + bytes)
+    END
+  END
+BUT_ONLY
+
+// removing bogus data
+COPY_EXISTING ~ar13wz.are~ ~override~
+  READ_LONG 0xac anim_num
+  PATCH_IF (anim_num = 6 AND SOURCE_SIZE = 4016) BEGIN  // sanity check
+    // removing duplicate block of 6 animation entries
+    READ_LONG 0xb0 anim_off
+    SET bytes = 6 * 76  // # bytes of animation block
+    DELETE_BYTES (anim_off + bytes) bytes
+
+    // clearing bogus animation flags
+    FOR (i = 0; i < anim_num; ++i) BEGIN
+      SET off = anim_off + (i * 76)
+      WRITE_LONG (off + 0x34) (THIS BAND BNOT (BIT13 + BIT16))
+    END
+  END
+BUT_ONLY
+
+// making Pillar of Skulls shadow animation visible
+COPY_EXISTING ~ar1001.are~ ~override~
+              ~ar3017.are~ ~override~
+  READ_LONG 0xac anim_num
+  READ_LONG 0xb0 anim_off
+  FOR (i = 0; i < anim_num; ++i) BEGIN
+    SET off = anim_off + (i * 76)
+    READ_ASCII (off + 0x28) resref (8) NULL // animation resref
+    PATCH_IF (~%resref%~ STR_EQ ~POSSHAD~) BEGIN
+      WRITE_LONG (off + 0x34) (THIS BAND BNOT BIT8) // animation flags
+    END
+  END
+BUT_ONLY

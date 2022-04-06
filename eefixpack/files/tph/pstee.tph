@@ -1,5 +1,3 @@
-// fixes for pstee; rename without underscore when we have our first fix
-
 /////                                                  \\\\\
 ///// string fixes                                     \\\\\
 /////                                                  \\\\\
@@ -32,9 +30,19 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/pst_are_fixes.tph~ // ARE-specific fixes
+INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
+
+COPY_EXISTING ~apprent2.cre~ ~override~
+              ~apprent3.cre~ ~override~
+              ~apprent4.cre~ ~override~
+              ~apprent5.cre~ ~override~
+  WRITE_ASCII DEATHVAR ~None~ (32)
+BUT_ONLY
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
@@ -51,6 +59,11 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
+
+// removing reference to invalid game file
+DISABLE_FROM_KEY ~.bcs~
+
+INCLUDE ~eefixpack/files/tph/pst_bam_fixes.tph~ // BAM-specific fixes
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\

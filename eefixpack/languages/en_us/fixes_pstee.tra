@@ -2,5 +2,5 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
-// strref #12345, updating because "X is misspelled"
-@12345 = ~This is a test replacement string.~
+// fixes invalid store item trigger
+@51352 = ~Global("Trias_DEAD_KAPUTZ", "GLOBAL", 1)~
