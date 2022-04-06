@@ -1,0 +1,39 @@
+// Wrapper function to patch uncompressed BAM data
+DEFINE_PATCH_FUNCTION a7_process_bam_data
+STR_VAR
+  // Name of function to call for processing uncompressed BAM data.
+  function = ~~
+BEGIN
+  READ_ASCII 0x0 sig (8)
+  SET is_bamc = ~%sig%~ STR_EQ ~BAMCV1  ~
+
+  PATCH_IF (is_bamc) BEGIN
+    READ_LONG 0x8 unc_size  // uncompressed size
+    DECOMPRESS_REPLACE_FILE 0xc (SOURCE_SIZE - 0xc) unc_size
+  END
+
+  PATCH_IF (NOT ~%function%~ STR_EQ ~~) BEGIN
+    LPF ~%function%~ END
+  END
+
+  PATCH_IF (is_bamc) BEGIN
+    COMPRESS_REPLACE_FILE 0 unc_size 6
+    INSERT_BYTES 0x0 0xc
+    WRITE_ASCII 0x0 ~BAMCV1  ~ (8)
+    WRITE_LONG 0x8 unc_size
+  END
+
+END
+
+// Patches alpha of palette entry 1
+DEFINE_PATCH_FUNCTION a7_bam_patch_pos_shadow
+BEGIN
+  READ_LONG 0x10 ofs_palette
+  WRITE_BYTE (ofs_palette + 4 + 3) 192
+END
+
+
+// semi-transparent Pillar of Skulls shadow
+COPY_EXISTING ~posshad.bam~ ~override~
+  LPF a7_process_bam_data STR_VAR function = ~a7_bam_patch_pos_shadow~ END
+BUT_ONLY
