@@ -20,6 +20,11 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
               ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
               ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
               ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
+              ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
+              ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
+              ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
+              ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
+              ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
 
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
