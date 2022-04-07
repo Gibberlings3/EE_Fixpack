@@ -290,6 +290,24 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+
+
+// luke
+// Night Club +1 => THAC0: +2 at night (implemented via op232)
+// 1) Remember that "blun38.spl" will be cast immediately whenever you load, and twice as often with haste, so you cannot avoid an overlapping duration without applying a leading op321 effect.
+// 2) Similarly, remember that Slow will reduce the trigger of op232 to 200 ticks!
+// As a result, we will double the duration of op54. I.e., We will not allow Slow and Haste to impact it (really, it does not make sense in this case)
+// Additionally, sectype should be 0|NONE
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~blun38.spl~ ~override~
+    // Header
+    WRITE_BYTE 0x27 0 // Secondary type: NONE
+    // Feature blocks
+    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 1 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 54 "duration" = 13 END // Base THAC0 bonus => Some random duration value strictly greater than 200 ticks...
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\

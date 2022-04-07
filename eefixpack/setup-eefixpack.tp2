@@ -1,7 +1,7 @@
 BACKUP ~weidu_external/eefixpack/backup~ // location to store files for uninstall
 SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
 AUTO_EVAL_STRINGS
-MODDER missing_eval fail fun_args fail
+MODDER fun_args fail
 
 ALWAYS
 
