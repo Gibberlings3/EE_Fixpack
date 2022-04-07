@@ -218,13 +218,65 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
   WRITE_ASCIIE 0x280 ~%SOURCE_RES%~ #32 // was bdcrus20
   BUT_ONLY IF_EXISTS // sod
 
+
+
+// BGCS-483, luke
+// CRE files should not use non-existing resources
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bdmcarri.cre~ ~override~ // Mutated Crawler – currently equipped with the non-existing "bdmcarri.itm"
+    REPLACE_CRE_ITEM ~carrio1~ #0 #0 #0 ~none~ ~weapon~ EQUIP // the other mutated crawler file "bdcrawmu.cre" uses "carrio1", so we'll put "carrio1" here as well...
+  BUT_ONLY IF_EXISTS // sod
+END
+
+WITH_SCOPE BEGIN
+  // ~mepmag01.cre~ (Magma Mephit) – currently equipped with the non-existing "mepmag.itm"
+  // Since there's no other Magma Mephit file, let us make "mepmag.itm" from scratch (based on BG2:EE)
+  COPY_EXISTING "b1-4.itm" "override/mepmag.itm"
+    // Header
+    WRITE_LONG NAME1 "-1"
+    WRITE_LONG NAME2 "-1"
+    WRITE_LONG UNIDENTIFIED_DESC "-1"
+    WRITE_LONG DESC "-1"
+    // Extended header
+    LPF "ALTER_ITEM_HEADER" INT_VAR "dicenumber" = 1 "dicesize" = 2 "damage_type" = 3 END // 1d2 (slashing)
+    // Feature block
+    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 12 "target" = 2 "parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE") "timing" = 1 "dicenumber" = 1 "dicesize" = 8 END // 1d8 (fire)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ption41.itm~ ~override~ // Potion of Power
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%ERINYES_CHARM%.spl~ ~override~ // Charm Person
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Mimic Glue should not set the GREASE stat
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

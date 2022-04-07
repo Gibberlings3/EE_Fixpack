@@ -88,9 +88,28 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
 
+
+
+// BGCS-469, luke
+// Lizard Men should be flagged as 'LIZARDMAN'
+WITH_SCOPE BEGIN
+  COPY_EXISTING_REGEXP ~ohbliz0[1-3].cre~ ~override~ // The Black Pits 2
+    WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "LIZARDMAN")
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~hamm06.itm~ ~override~ // Dwarven Thrower +3
+                ~staf01.itm~ ~override~ // Quarterstaff
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 // tbd, cam
 // fixing paperdoll animations
@@ -118,6 +137,27 @@ END
 COPY_EXISTING ~melstone.spl~ ~override~
   WRITE_BYTE 0x27 7 // change secondary to Combat Protections
   BUT_ONLY
+
+
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ohbwi302.spl~ ~override~ // Remove Magic
+                ~ohbwi304.spl~ ~override~ // Fireball
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Mimic Glue should not set the GREASE stat
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

@@ -416,6 +416,29 @@ COPY_EXISTING ~%CLERIC_WALL_OF_MOONLIGHT%a.spl~ ~override~ // sppr428a
 
 
 
+// luke
+// 1) Grease should not interact with spell protections
+// 2) Grease (in particular "spwi101b.spl" and "spwi101c.spl") should apply the GREASE stat.
+///// As you can see, those two subspells are not applying the aforementioned stat, nor the GREASE spell state. This might confuse both later patches and AI.
+///// As a result, I suggest replacing op215 with op158 (param2=1|custom overlay; resource="greaseb" on "spwi101b" and resource="greasec" on "spwi101c").
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%WIZARD_GREASE%b.spl~ ~override~ // spwi101b
+                ~%WIZARD_GREASE%c.spl~ ~override~ // spwi101c
+    LPF ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 215 ~opcode~ = 158 END // Play visual effect => Grease overlay
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Chill Touch should correctly affect UNDEAD without permanently removing their immunity to Panic (op24)
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/wizard_chill_touch.tph"
+  LAF "WIZARD_CHILL_TOUCH" END
+END
+
+
 // ie-5947, cam
 // Cloudburst should remove Fireshields
 COPY_EXISTING ~%CLERIC_CLOUDBURST%.spl~ ~override~ // sppr325
