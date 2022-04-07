@@ -256,6 +256,18 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+
+
+// luke
+// – Neera's Staff +1 => When the staff strikes a target, there is a 10% chance that either the target or the wielder will take 1 point of fire damage
+//// This isn't implemented properly since the two op12 effects share the same probability range... Also, whilw we're at it, make sure it's 10% chance and not 11% chance...
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~stafn1.itm~ ~override~ // Neera's Staff +1
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 9 END // 10% chance (target)
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 10 ~probability1~ = 19 END // 10% chance (wielder)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
