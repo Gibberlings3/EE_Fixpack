@@ -169,6 +169,16 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+
+
+// luke
+// Spirit Fire => should not interact with spell protections
+// As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
+  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
+END
+
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\

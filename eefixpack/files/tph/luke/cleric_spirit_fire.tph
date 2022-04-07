@@ -1,0 +1,41 @@
+DEFINE_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE"
+BEGIN
+	// Make a clone of "bddoom.spl" and edit it accordingly
+	WITH_SCOPE BEGIN
+		COPY_EXISTING ~bddoom.spl~ ~override/%CLERIC_SPIRIT_FIRE%a.spl~
+			// Header
+			WRITE_SHORT 0x1C 2 // Spell type: Priest (as the main SPL file)
+			// Feature blocks
+			LPF "ALTER_EFFECT"
+			INT_VAR
+				"power" = 0
+			END
+			LPF "ALTER_EFFECT"
+			STR_VAR
+				"match_resource" = "%SOURCE_RES%" // old resref
+				"resource" = "%DEST_RES%" // new resref
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Main SPL
+	WITH_SCOPE BEGIN
+		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%.spl~ ~override~
+			// Feature blocks
+			LPF "ALTER_EFFECT"
+			STR_VAR
+				"match_resource" = "bddoom" // old resref
+				"resource" = "%DEST_RES%a" // new resref
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Spirits, fey creatures, elementals, and spectral undead take double damage
+	WITH_SCOPE BEGIN
+		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%b.spl~ ~override~
+			// Feature blocks
+			LPF "ALTER_EFFECT"
+			INT_VAR
+				"power" = 0
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END
