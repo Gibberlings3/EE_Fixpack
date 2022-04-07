@@ -224,7 +224,7 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
 // CRE files should not use non-existing resources
 WITH_SCOPE BEGIN
   COPY_EXISTING ~bdmcarri.cre~ ~override~ // Mutated Crawler – currently equipped with the non-existing "bdmcarri.itm"
-    REPLACE_CRE_ITEM ~carrio1~ #0 #0 #0 ~none~ ~weapon~ EQUIP // the other mutated crawler file "bdcrawmu.cre" uses "carrio1", so we'll put "carrio1" here as well...
+    REPLACE_CRE_ITEM ~carrio1~ #0 #0 #0 ~unstealable&undroppable~ ~weapon~ EQUIP // the other mutated crawler file "bdcrawmu.cre" uses "carrio1", so we'll put "carrio1" here as well...
   BUT_ONLY IF_EXISTS // sod
 END
 
