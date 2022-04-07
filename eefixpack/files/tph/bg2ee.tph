@@ -88,9 +88,38 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
 
+
+
+// BGCS-469, luke
+// Lizard Men should be flagged as 'LIZARDMAN'
+WITH_SCOPE BEGIN
+  COPY_EXISTING_REGEXP ~ohbliz0[1-3].cre~ ~override~ // The Black Pits 2
+    WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "LIZARDMAN")
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~hamm06.itm~ ~override~ // Dwarven Thrower +3
+                ~staf01.itm~ ~override~ // Quarterstaff
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+// luke
+// – Neera's Staff +1 => When the staff strikes a target, there is a 10% chance that either the target or the wielder will take 1 point of fire damage
+//// This isn't implemented properly since the two op12 effects share the same probability range... Also, whilw we're at it, make sure it's 10% chance and not 11% chance...
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~stafn1.itm~ ~override~ // Neera's Staff +1
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 9 END // 10% chance (target)
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 10 ~probability1~ = 19 END // 10% chance (wielder)
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 // tbd, cam
 // fixing paperdoll animations
@@ -118,6 +147,52 @@ END
 COPY_EXISTING ~melstone.spl~ ~override~
   WRITE_BYTE 0x27 7 // change secondary to Combat Protections
   BUT_ONLY
+
+
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ohbwi302.spl~ ~override~ // Remove Magic
+                ~ohbwi304.spl~ ~override~ // Fireball
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Mimic Glue should not set the GREASE stat
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Spirit Fire => should not interact with spell protections
+// As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
+  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
+END
+
+
+
+// luke
+// Nature's Beauty – permanent blindness (until dispelled)
+// 1) Timing Mode 1 will permanently set the creature's STATE_BLIND flag, leaving no removable effect.
+// 2) Related: the -4 penalty to AC and THAC0 are apparently tied to the effect (op74), not STATE_BLIND.
+// As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
+// Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
+    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

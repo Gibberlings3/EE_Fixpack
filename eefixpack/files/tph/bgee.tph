@@ -218,13 +218,120 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
   WRITE_ASCIIE 0x280 ~%SOURCE_RES%~ #32 // was bdcrus20
   BUT_ONLY IF_EXISTS // sod
 
+
+
+// BGCS-483, luke
+// CRE files should not use non-existing resources
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bdmcarri.cre~ ~override~ // Mutated Crawler – currently equipped with the non-existing "bdmcarri.itm"
+    REPLACE_CRE_ITEM ~carrio1~ #0 #0 #0 ~unstealable&undroppable~ ~weapon~ EQUIP // the other mutated crawler file "bdcrawmu.cre" uses "carrio1", so we'll put "carrio1" here as well...
+  BUT_ONLY IF_EXISTS // sod
+END
+
+WITH_SCOPE BEGIN
+  // ~mepmag01.cre~ (Magma Mephit) – currently equipped with the non-existing "mepmag.itm"
+  // Since there's no other Magma Mephit file, let us make "mepmag.itm" from scratch (based on BG2:EE)
+  COPY_EXISTING "b1-4.itm" "override/mepmag.itm"
+    // Header
+    WRITE_LONG NAME1 "-1"
+    WRITE_LONG NAME2 "-1"
+    WRITE_LONG UNIDENTIFIED_DESC "-1"
+    WRITE_LONG DESC "-1"
+    // Extended header
+    LPF "ALTER_ITEM_HEADER" INT_VAR "dicenumber" = 1 "dicesize" = 2 "damage_type" = 3 END // 1d2 (slashing)
+    // Feature block
+    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 12 "target" = 2 "parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE") "timing" = 1 "dicenumber" = 1 "dicesize" = 8 END // 1d8 (fire)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ption41.itm~ ~override~ // Potion of Power
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// – Neera's Staff +1 => When the staff strikes a target, there is a 10% chance that either the target or the wielder will take 1 point of fire damage
+//// This isn't implemented properly since the two op12 effects share the same probability range... Also, whilw we're at it, make sure it's 10% chance and not 11% chance...
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~stafn1.itm~ ~override~ // Neera's Staff +1
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 9 END // 10% chance (target)
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 10 ~probability1~ = 19 END // 10% chance (wielder)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+// luke
+// Mis-indexed effects
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%ERINYES_CHARM%.spl~ ~override~ // Charm Person
+    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Mimic Glue should not set the GREASE stat
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Night Club +1 => THAC0: +2 at night (implemented via op232)
+// 1) Remember that "blun38.spl" will be cast immediately whenever you load, and twice as often with haste, so you cannot avoid an overlapping duration without applying a leading op321 effect.
+// 2) Similarly, remember that Slow will reduce the trigger of op232 to 200 ticks!
+// As a result, we will double the duration of op54. I.e., We will not allow Slow and Haste to impact it (really, it does not make sense in this case)
+// Additionally, sectype should be 0|NONE
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~blun38.spl~ ~override~
+    // Header
+    WRITE_BYTE 0x27 0 // Secondary type: NONE
+    // Feature blocks
+    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 1 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 54 "duration" = 13 END // Base THAC0 bonus => Some random duration value strictly greater than 200 ticks...
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+
+
+// luke
+// Spirit Fire => should not interact with spell protections
+// As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
+  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
+END
+
+
+
+// luke
+// Nature's Beauty – permanent blindness (until dispelled)
+// 1) Timing Mode 1 will permanently set the creature's STATE_BLIND flag, leaving no removable effect.
+// 2) Related: the -4 penalty to AC and THAC0 are apparently tied to the effect (op74), not STATE_BLIND.
+// As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
+// Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
+    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
