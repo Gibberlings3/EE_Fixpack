@@ -179,6 +179,21 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
 END
 
+
+
+// luke
+// Nature's Beauty – permanent blindness (until dispelled)
+// 1) Timing Mode 1 will permanently set the creature's STATE_BLIND flag, leaving no removable effect.
+// 2) Related: the -4 penalty to AC and THAC0 are apparently tied to the effect (op74), not STATE_BLIND.
+// As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
+// Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
+    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
