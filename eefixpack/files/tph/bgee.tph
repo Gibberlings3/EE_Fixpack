@@ -7,7 +7,7 @@ LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
   STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
           output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
 END
-ACTION_IF game_contains_sod BEGIN
+ACTION_IF game_includes_sod BEGIN
   LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
     STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tra~ // tra file to process
             output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%_sod.tph~ // tph being built; use weidu_external for this
@@ -29,7 +29,7 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
               ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
               ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
 
-ACTION_IF game_contains_sod BEGIN
+ACTION_IF game_includes_sod BEGIN
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
   
@@ -49,7 +49,7 @@ END
 
 COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 
-ACTION_IF game_contains_sod BEGIN
+ACTION_IF game_includes_sod BEGIN
   COMPILE ~eefixpack/files/d/%game%_sod_core_fixes.d~ // misc dialogue fixes
 END
 
@@ -109,7 +109,48 @@ COPY_EXISTING ~bdminsc.bcs~ ~override~
     REPLACE_TEXTUALLY ~"rasaad'"~ ~"rasaad"~
   END
   BUT_ONLY IF_EXISTS // sod
-  
+
+
+
+
+// tbd, cam
+// saying 'go back to the crypt entrance' in korlasz crypt doesn't make NPCs do anything
+COPY_EXISTING ~bdparty.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // dynaheir save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // edwin save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // baeloth save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // khalid save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[870.1710])~ // safana save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // dorn save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // minsc save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // neera save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // jaheira save location
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // viconia save location
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move dynaheir
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move edwin
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move baeloth
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move khalid
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",870,1710,NE)~ // move safana
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~     ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move dorn
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move minsc
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move neera
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move jaheira
+    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move viconia
+  END
+  BUT_ONLY IF_EXISTS // sod
+ 
+
   
 
 // tbd, cam
@@ -125,7 +166,7 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
 
 // tbd, cam
 // sod imoen missing xp-matching scripting, among other things
-ACTION_IF game_contains_sod BEGIN
+ACTION_IF game_includes_sod BEGIN
   EXTEND_BOTTOM ~imoen.bcs~ ~eefixpack/files/baf/sod_imoen_bottom.baf~
 END
 
@@ -148,7 +189,7 @@ COPY_EXISTING ~bdeldotc.bcs~ ~override~
   END
   BUT_ONLY
  
-SET use_wand = RESOLVE_STR_REF (@100)
+OUTER_SET use_wand = RESOLVE_STR_REF (@100)
 COPY_EXISTING ~bddefai.bcs~  ~override~
               ~bddynac.bcs~  ~override~
               ~bdedwinc.bcs~ ~override~
