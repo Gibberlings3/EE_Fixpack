@@ -562,6 +562,7 @@ WITH_SCOPE BEGIN
   COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
     LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
+    LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // op74 naturally provides the "Blind" portrait icon
   BUT_ONLY_IF_IT_CHANGES
 END
 
