@@ -61,6 +61,30 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
   
+// tbd, cam
+// player ai checks if magical weapon present before casting shillelagh, but checks old resources
+COPY ~scripts/cleric1.bs~ ~scripts/cleric1.bs~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!HasItem("SGRASP",Myself)~ // shocking grasp just does direct damage in iwdee, no item
+      ~!HasItem("bclaw",Myself) !HasItem("moonbla",Myself) !HasItem("smcudge",Myself)~ // change instead to druid spells: beast claw, moonblade, star metal cudgel
+    REPLACE_TEXTUALLY ~!HasItem("shille",Myself)~ ~!HasItem("shillel",Myself)~ // wrong resref for shillelagh
+    REPLACE_TEXTUALLY ~!HasItem("SHAMMR",Myself)~ ~!HasItem("shamme1",Myself) !HasItem("shamme2",Myself) !HasItem("shamme3",Myself)~ // wrong resrefs for spiritual hammer
+    REPLACE_TEXTUALLY ~!HasItem("chillt",Myself)~ ~!HasItem("ctouch",Myself)~ // wrong resref for chill touch
+  END
+  BUT_ONLY
+  
+  
+  
+// tbd, cam
+// checking for ambients which don't exist
+COPY_EXISTING ~eepoqct1.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~AmbientActivate("1105MS1[0-7]",FALSE)~ ~~ 
+  END
+  BUT_ONLY
+  
+  
+  
 // ie-6015, cam
 // Jorn should heal all fellow barbarians (allies are BARBARIAN_1 to 8, script checks 0-7)
 COPY_EXISTING ~iljorn.bcs~ ~override~
