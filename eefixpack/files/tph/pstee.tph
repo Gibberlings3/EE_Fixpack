@@ -68,3 +68,5 @@ INCLUDE ~eefixpack/files/tph/pst_bam_fixes.tph~ // BAM-specific fixes
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_pstee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes

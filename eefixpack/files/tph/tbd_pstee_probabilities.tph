@@ -1,0 +1,196 @@
+// tbd, cam: probability fixes
+
+// delete leftover effects (319 unless indicated otherwise)
+COPY_EXISTING ~aclue.itm~    ~override~ // a clue!: 0% 
+              ~acontrac.itm~ ~override~ // angyar's dead contract: 0% 
+              ~agoody.itm~   ~override~ // a goody!: 0% 319
+              ~agscroll.itm~ ~override~ // scroll of agril-shanak: 0% 
+              ~baatorsk.itm~ ~override~ // baator spell key: 0%
+              ~bagocoin.itm~ ~override~ // bag of coins: 0%
+              ~bagteeth.itm~ ~override~ // bag of teeth: 0%
+              ~bhanky.itm~   ~override~ // bloody handkerchief: 0%
+              ~bseed1.itm~   ~override~ // black-barbed seed: 0%
+              ~carcersk.itm~ ~override~ // carceri spell key: 0%
+              ~cheese.itm~   ~override~ // cheese: 0%
+              ~circle02.itm~ ~override~ // second circle of zerthimon: 0%
+              ~circle03.itm~ ~override~ // third circle of zerthimon: 0%
+              ~circle04.itm~ ~override~ // fourth circle of zerthimon: 0%
+              ~circle05.itm~ ~override~ // fifth circle of zerthimon: 0%
+              ~circle06.itm~ ~override~ // sixth circle of zerthimon: 0%
+              ~circle07.itm~ ~override~ // seventh circle of zerthimon: 0%
+              ~circle08.itm~ ~override~ // eighth circle of zerthimon: 0%
+              ~copearc.itm~  ~override~ // ancient copper earring (closed): 0%
+              ~copperco.itm~ ~override~ // copper-eyes dead contract: 0%
+              ~cpencil.itm~  ~override~ // charcoal pencil: 0%
+              ~crags.itm~    ~override~ // cleaning rags: 0%
+              ~crstbone.itm~ ~override~ // finger bone key: 0%
+              ~crumleg.itm~  ~override~ // crumplepunch's legacy: 0%
+              ~cveil.itm~    ~override~ // crimson veil: 0%
+              ~dgem.itm~     ~override~ // moridor's ruby: 0%
+              ~dlegacy1.itm~ ~override~ // deionarra's legacy: 0%
+              ~dlrakey.itm~  ~override~ // dolora's keys: 0%
+              ~doornote.itm~ ~override~ // scrawled note: 0%
+              ~dremind.itm~  ~override~ // mortuary reminder message: 0%
+              ~drequest.itm~ ~override~ // dustman request: 0%
+              ~drmkey.itm~   ~override~ // dream key: 0%
+              ~drmvial.itm~  ~override~ // dream vial: 0%
+              ~dtears.itm~   ~override~ // deva's tears: 0%
+              ~ecnote.itm~   ~override~ // promissory note: 0%
+              ~elixirs.itm~  ~override~ // elixir of horrific separation: 0%
+              ~enoll.itm~    ~override~ // twisted gear of enoll eva: 0%
+              ~evidence.itm~ ~override~ // scroll of evidence: 0%
+              ~falsecon.itm~ ~override~ // forged dead contract: 0%
+              ~fingbone.itm~ ~override~ // crooked finger bone: 0%
+              ~giltbill.itm~ ~override~ // giltspur's handbill: 0%
+              ~giltnote.itm~ ~override~ // giltspur's note: 0%
+              ~giltpost.itm~ ~override~ // giltspur's posting handbill: 0%
+              ~gtoken.itm~   ~override~ // godsman token: 0%
+              ~hanky.itm~    ~override~ // handkerchief: 0%
+              ~iannikey.itm~ ~override~ // iannis' vault key: 0%
+              ~ignus01.itm~  ~override~ // ignus' charm: 0%
+              ~ignus02.itm~  ~override~ // ignus' eye: 0%
+              ~ignus03.itm~  ~override~ // ignus' innards: 0%
+              ~ignus04.itm~  ~override~ // ignus' hand: 0%
+              ~inkwell.itm~  ~override~ // inkwell: 0%
+              ~junk.itm~     ~override~ // junk: 0%
+              ~kestleg.itm~  ~override~ // kester's legacy: 0%
+              ~keydn.itm~    ~override~ // dead nations key: 0%
+              ~keyem.itm~    ~override~ // embalming room key: 0%
+              ~keymo.itm~    ~override~ // mortuary key: 0%
+              ~keymo2.itm~   ~override~ // mortuary sanctum key: 0%
+              ~keypr.itm~    ~override~ // preparation room key: 0%
+              ~loandoc.itm~  ~override~ // loan document: 0%
+              ~logpage.itm~  ~override~ // receiving log page: 0%
+              ~loveltr.itm~  ~override~ // love letter: 0%
+              ~magitm.itm~   ~override~ // a magic item!: 0%
+              ~modmite.itm~  ~override~ // rod of modron might: 0%
+              ~monjug.itm~   ~override~ // monster jug: 0%
+              ~n1201.itm~    ~override~ // note from corpse #1201: 0%
+              ~negmatsk.itm~ ~override~ // negative material plane spell key: 0%
+              ~npharod.itm~  ~override~ // ragged note from pharod: 0%
+              ~obsidian.itm~ ~override~ // obsidian: 0%
+              ~parch.itm~    ~override~ // parchment: 0%
+              ~pcheese.itm~  ~override~ // cheese: 0%
+              ~pennote.itm~  ~override~ // penn's note: 0%
+              ~phinkey.itm~  ~override~ // phineas' key: 0%
+              ~porlens.itm~  ~override~ // portal lens: 0%
+              ~porneck.itm~  ~override~ // prayer beads: 0%
+              ~pouch.itm~    ~override~ // pouch: 0%
+              ~ptkey1.itm~   ~override~ // tomb key one: 0%
+              ~ptkey2.itm~   ~override~ // tomb key two: 0%
+              ~ptkey3.itm~   ~override~ // tomb key three: 0%
+              ~ptkey4.itm~   ~override~ // tomb key four: 0%
+              ~purse.itm~    ~override~ // leather purse: 0%
+              ~ravelhai.itm~ ~override~ // ravel's gray hair: 0%
+              ~receipt.itm~  ~override~ // godsman receipt: 0%
+              ~receipt2.itm~ ~override~ // receipt: 0%
+              ~recipe01.itm~ ~override~ // recipe: chromatic orb: 0%
+              ~recipe02.itm~ ~override~ // recipe: identify: 0%
+              ~recipe03.itm~ ~override~ // recipe: blood bridge: 0%
+              ~repelun.itm~  ~override~ // repel undead: 0%
+              ~sctrap.itm~   ~override~ // suspicious sealed scroll: 0%
+              ~skinscrp.itm~ ~override~ // reminder note: 0%
+              ~skregret.itm~ ~override~ // skin of regrets: 0%
+              ~skscrap.itm~  ~override~ // strip of skin: 0%
+              ~skulpend.itm~ ~override~ // pendant of yemeth: 0%
+              ~soul.itm~     ~override~ // soul exodus: 0%
+              ~strap.itm~    ~override~ // leather strap: 0%
+              ~sveil.itm~    ~override~ // scented veil: 0%
+              ~tail.itm~     ~override~ // cranium rat tail: 0%
+              ~tails.itm~    ~override~ // cranium rat tails: 0%
+              ~tasklist.itm~ ~override~ // mortuary task list: 0%
+              ~tawl.itm~     ~override~ // thildon's awl: 0%
+              ~tombplan.itm~ ~override~ // tomb plans: 0%
+              ~vkey.itm~     ~override~ // vlask's portal key: 0%
+              ~wscroll.itm~  ~override~ // ancient scroll: 0%
+              
+              ~cddetevl.spl~ ~override~ // <invalid strref -1>: leftover detect evil shell, has 0% visuals
+              ~dhell.spl~    ~override~ // <no text>: 0% tint screen
+              ~exodie.spl~   ~override~ // <invalid strref -1>: 0% visuals
+  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END 
+  BUT_ONLY 
+              
+COPY_EXISTING ~amace.itm~    ~override~ // blind terror: 35% blind
+              ~bolt01.itm~   ~override~ // bolts of acheron: 50% stun
+//            ~bsider.itm~   ~override~ // blindsider: 34% flash screen; probabilities fine as-is
+              ~club2.itm~    ~override~ // vrock club: 25% poison
+              ~ddmace.itm~   ~override~ // death of desire: 40% stun
+              ~devildue.itm~ ~override~ // "devil's due": 50% acid to self & target
+              ~fdag.itm~     ~override~ // fiend's blood dagger: 50% poison
+              ~fdteeth.itm~  ~override~ // teeth of the fire drake: 50% fire
+              ~grinder.itm~  ~override~ // "heartgrinder": 50% electrical damage
+              ~iron2.itm~    ~override~ // siphon knuckles: 75% hp drain
+              ~iron3.itm~    ~override~ // assassin's knuckles: 25% stun, poison, blind
+//            ~jester.itm~   ~override~ // axe of the jester: just, like, everything - needs a complete review on its own
+//            ~m3cteeth.itm~ ~override~ // ingress' teeth: 34% paralysis; probabilities fine as-is
+//            ~m3pteeth.itm~ ~override~ // ingress' teeth: 34% paralysis; probabilities fine as-is
+              ~nettles.itm~  ~override~ // club of nettles: 50% confusion
+              ~ntoken.itm~   ~override~ // negative token: 75%/50% chance to paralyze 
+//            ~shadow1.itm~  ~override~ // shadow 1 attack: 34% str drain; probabilities fine as-is
+//            ~shadow2.itm~  ~override~ // shadow 2 attack: 34% str drain; probabilities fine as-is
+//            ~shadow3.itm~  ~override~ // shadow 3 attack: 34% str drain; probabilities fine as-is
+              ~shard.itm~    ~override~ // shards of fate: 75% damage to self
+              ~tpunch.itm~   ~override~ // punch daggers of true death: 25% poison
+//            ~vteeth.itm~   ~override~ // teeth of the viper: 34% poison; probabilities fine as-is
+              
+              ~bstorm.spl~   ~override~ // unk: 5% extra damage
+//            ~igarm.spl~    ~override~ // <invalid strref -1>: 33/67 split is fine
+//            ~spwi101.spl~  ~override~ // chromatic orb: 1d4 rolled for paralysis diration; probabilities fine as-is
+              ~spwi107.spl~  ~override~ // magic missile: upper levels have 25/50/75/100% chance to shake screen
+              ~spwi116.spl~  ~override~ // tongues of flame: upper levels have 25/50/75/100% chance to shake screen
+              ~spwi121.spl~  ~override~ // reign of anger: upper levels have 25/50/75/100% chance to shake screen
+//            ~spwi214.spl~  ~override~ // luck: 5%: simulates 2d4 roll; probabilities fine as-is
+//            ~spwi307.spl~  ~override~ // hold undead: adds 1d4*5 to duration; probabilities fine as-is
+  READ_ASCII 0x00 type (3)
+  SET min_size = 0
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "spl" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x28
+    SET global_loop    = 0
+    SET fx_type        = 0
+    SET min_size       = 0x72
+  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "itm" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x38
+    SET global_loop    = 1
+    SET fx_type        = 0
+    SET min_size       = 0x72
+/*  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "cre" = 0) BEGIN
+    READ_LONG  0x2c4 fx_off ELSE 0
+    READ_BYTE 0x33 fx_type ELSE 2
+    SET abil_off       = 0
+    SET abil_num       = 0
+    SET counter_offset = 0x2c8
+    SET abil_length    = 0
+    SET global_loop    = 1
+    SET min_size       = 0x2d4
+    SET cosmetic       = 0 */
+  END
+  PATCH_IF ((SOURCE_SIZE >= min_size) AND (min_size != 0)) BEGIN // min_size must get set by file type detection
+    FOR (index = (0 - global_loop) ; index < abil_num ; ++index) BEGIN
+      PATCH_IF (index < 0) BEGIN // if loop through globals needed
+        SET abil_fx_idx = 0
+      END ELSE BEGIN // otherwise normal ability
+        SET counter_offset = (abil_off + 0x1e + (abil_length * index))
+        READ_SHORT  (abil_off + 0x20 + (abil_length * index)) abil_fx_idx
+      END
+      READ_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
+      FOR (index2 = 0 ; index2 < counter ; ++index2) BEGIN
+        PATCH_FOR_EACH offset IN 0x12 0x13 BEGIN
+          READ_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) prob
+          PATCH_IF (prob > 0) AND (prob < 100) BEGIN
+            WRITE_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (prob - 1)
+          END
+        END
+      END
+    END
+  END
+  BUT_ONLY IF_EXISTS // sod assets
