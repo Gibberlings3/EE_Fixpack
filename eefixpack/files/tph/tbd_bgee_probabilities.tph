@@ -1,0 +1,293 @@
+// tbd, cam: probability fixes
+
+// delete leftover effects (these ones technically have 1% chance)
+COPY_EXISTING ~bdephrik.cre~ ~override~ // leftover 293
+//            ~bdghbrsu.cre~ ~override~ // ghost bear: 10% to cast unsummoning on itself, creature appears unused
+//            ~bdkeg.cre~    ~override~ // barrel: 30% to change animation; probabilities fine as-is
+//            ~bdkeg2.cre~   ~override~ // barrel: 30% to change animation; probabilities fine as-is
+
+              ~bddagg06.itm~ ~override~ // dagger +2: leftover sleep
+              ~bdtroll1.itm~ ~override~ // appears unused, has 1% sleep immunity
+              ~bdwolfd1.itm~ ~override~ // dread wolf, has 1% sleep immunity
+              ~helm35.itm~   ~override~ // mirror helm: 1% immunity to gaze
+              ~sprngb01.itm~ ~override~ // old polymorph immunity
+              ~sprngb02.itm~ ~override~ // old polymorph immunity
+              ~sprngb03.itm~ ~override~ // old polymorph immunity
+              ~sprngb04.itm~ ~override~ // old polymorph immunity
+              ~sprngl01.itm~ ~override~ // old polymorph immunity
+              ~sprngl02.itm~ ~override~ // old polymorph immunity
+              ~sprngl03.itm~ ~override~ // old polymorph immunity
+              ~sprngl04.itm~ ~override~ // old polymorph immunity
+              ~sprngs01.itm~ ~override~ // old polymorph immunity
+              ~sprngs02.itm~ ~override~ // old polymorph immunity
+              ~sprngs03.itm~ ~override~ // old polymorph immunity
+              ~sprngs04.itm~ ~override~ // old polymorph immunity
+              ~sprngw01.itm~ ~override~ // old polymorph immunity
+              ~sprngw02.itm~ ~override~ // old polymorph immunity
+              ~sprngw03.itm~ ~override~ // old polymorph immunity
+              ~sprngw04.itm~ ~override~ // old polymorph immunity
+              ~sprngz05.itm~ ~override~ // old polymorph immunity
+              
+              ~bdfinal.spl~  ~override~ // ambush spell: leftover min hp effect
+              ~spin848.spl~  ~override~ // leftover display string
+  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END 
+  BUT_ONLY IF_EXISTS // sod assets
+ 
+COPY_EXISTING ~baring.itm~   ~override~ // barrityl's burden: 1-in3 chance for damage; 1-3 in each 1-3 for item
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  33 match_probability2 =  1 probability1 =  33 probability2 =  0 dicesize = 2 END // fire damage was 1-33, should be 0-33; damge to 1d2 instead of 1d1
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  67 match_probability2 =  0 probability1 =  67 probability2 = 34 END // cold damage was 0-67, should be 34-67
+  LPF ALTER_EFFECT INT_VAR match_probability1 = 100 match_probability2 = 88 probability1 = 100 probability2 = 87 END // other gems have 13% chance, not 12%
+  BUT_ONLY 
+ 
+COPY_EXISTING ~bdbelhi2.itm~ ~override~ // belhifet: 50% poison; probabilities fine but other issues fixed above
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 probability2 =  0 END // poisons on all hits, but only shows icon 50% of the time
+  BUT_ONLY IF_EXISTS // sod assets
+  
+COPY_EXISTING ~bdwyrmli.itm~ ~override~ // blind albino wyrmling: 15% thac0 drain, portrait icon is 100%
+  LPF ALTER_EFFECT INT_VAR probability1 = 14 END // sleep, thac0 drain are 16% and portrait icon 100%, all should be 15%
+  BUT_ONLY IF_EXISTS // sod assets
+  
+COPY_EXISTING ~finsol01.itm~ ~override~ // fallen solar: vorpal probs wrong, should still dispel on hit for failed vorpal
+  LPF ALTER_EFFECT INT_VAR match_probability2 = 16 probability2 =  0 END // dispel effects
+  LPF ALTER_EFFECT INT_VAR match_probability1 = 15 probability1 = 14 END // vorpal hit
+  BUT_ONLY 
+  
+COPY_EXISTING ~gorsnake.itm~ ~override~ // giant snake (wk poison lab):30% stun, 40% poison; stun is correct but not poison so fix manually
+  LPF ALTER_EFFECT INT_VAR match_probability1 = 40 probability1 = 39 END // poison and associated effects
+  BUT_ONLY 
+
+COPY_EXISTING ~spwi714.spl~ ~override~ // prismatic spray adjustments - all rays overlapped by 3%, which is preserved
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  14 match_probability2 =  0 probability1 =  16 probability2 =  0  END // red ray:    was 15% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  29 match_probability2 = 12 probability1 =  30 probability2 = 14  END // orange ray: was 18% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  44 match_probability2 = 27 probability1 =  44 probability2 = 28  END // yellow ray: was 19% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  59 match_probability2 = 42 probability1 =  58 probability2 = 42  END // green ray:  was 18% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  73 match_probability2 = 57 probability1 =  72 probability2 = 56  END // blue ray:   was 17% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  87 match_probability2 = 71 probability1 =  86 probability2 = 70  END // indigo ray: was 17% now 17%
+  LPF ALTER_EFFECT INT_VAR match_probability1 = 100 match_probability2 = 85 probability1 = 100 probability2 = 84  END // violet ray: was 15% now 17%
+  BUT_ONLY
+              
+COPY_EXISTING ~ax1h01.itm~   ~override~ // battle axe: 1% to break
+              ~ax1h19.itm~   ~override~ // golden axe +1: 10% to dispel
+              ~balor.itm~    ~override~ // balor weapon: 15% vorpal hit
+//            ~baring.itm~   ~override~ // barrityl's burden: 1-in3 chance for damage; 1-3 in each 1-3 for item; fixed above
+//            ~bdabisha.itm~ ~override~ // abishai: 33% poison; probabilities fine as-is
+              ~bdax1h02.itm~ ~override~ // axe of kruntur +2: 33% poison
+              ~bdax1h03.itm~ ~override~ // chill axe +2: 2% berserk
+              ~bdax1h05.itm~ ~override~ // grubdoubler's axe +1: 20% confusion
+//            ~bdbelhi2.itm~ ~override~ // belhifet: 50% poison; probabilities fine but other issues fixed above
+              ~bdblun02.itm~ ~override~ // cudgel of montgomer +1: 10% CLW
+              ~bdblun05.itm~ ~override~ // the hydra +2: 33% chance of bonus damage
+              ~bdblun08.itm~ ~override~ // glimmer of hope +2: 10% bless
+              ~bdblun09.itm~ ~override~ // blazing glory +3: 10% chant
+              ~bdbonefi.itm~ ~override~ // bone fiend: 25% disease
+              ~bdbow01.itm~  ~override~ // blightbringer +1: 10% disease/slow
+              ~bdbow03.itm~  ~override~ // fleshripper +2: 5% haste
+              ~bdbow04.itm~  ~override~ // bow of the banshee +2: 10% cloak of fear
+              ~bdbow06.itm~  ~override~ // corwin's bow +1: 10% entangle
+              ~bdclck06.itm~ ~override~ // cloak of minor arcana: should be 1-in-20 equal chances for item creation
+              ~bddagg01.itm~ ~override~ // elements' fury +2: 1-in-4 random elemental damage
+              ~bddagg03.itm~ ~override~ // gemblade +1: 20% of gem; total probability is 21%
+              ~bddagg05.itm~ ~override~ // acid-etched dagger +2: 15% acid damage
+              ~bddart01.itm~ ~override~ // biter dart: 10% chance of -1 ac
+              ~bddcor01.itm~ ~override~ // cornugon: 50/50 for stun/extra damage
+              ~bddraggh.itm~ ~override~ // halatathlaer: 50% disease
+//            ~bdgibbbr.itm~ ~override~ // brood gibberling: 50% disease; probabilities fine as-is
+              ~bdhalb01.itm~ ~override~ // storm pike +2: 15% stun
+//            ~bdhamat1.itm~ ~override~ // Hamatula: 1-in-3 chance to bdimpale; probabilities fine as-is
+              ~bdhamm01.itm~ ~override~ // sundermaul +3: 15% AC penalty, 2% earthquake
+//            ~bdneo1.itm~   ~override~ // neothelid: 33% panic; probabilities fine as-is
+//            ~bdneo2.itm~   ~override~ // neothelid: 33% panic; probabilities fine as-is
+              ~bdneo3.itm~   ~override~ // neothelid: 50% panic
+              ~bdsper01.itm~ ~override~ // shadowed spear +2: 20% teleport, 5% different teleport
+              ~bdstaf03.itm~ ~override~ // echo of the fiend +3: 5% sunfire
+              ~bdstsnak.itm~ ~override~ // stone snake: 50% petrification
+              ~bdsw1h02.itm~ ~override~ // tongue of acid +3: 10% slow
+              ~bdsw1h14.itm~ ~override~ // fractal blade +3: 50% to dispel illusions
+              ~bdsw1h20.itm~ ~override~ // ophyllis's short sword +2: 20% deafness
+              ~bdsw1h22.itm~ ~override~ // severance +2: 15% hp drain
+              ~bdxbow02.itm~ ~override~ // harold +2: 15% dooooooooooooooooooooooooooom
+              ~blakblad.itm~ ~override~ // black blade o' disaster: 10% level drain
+              ~blun02.itm~   ~override~ // flail: 1% to break
+              ~blun04.itm~   ~override~ // mace: 1% to break
+              ~blun06.itm~   ~override~ // morning star: 1% to break
+              ~blun08.itm~   ~override~ // flail: 1% to break
+              ~blun41.itm~   ~override~ // the stupefier +1: 10% stun
+              ~bonedag.itm~  ~override~ // bone blades: 25% to slow
+              ~bonefd.itm~   ~override~ // bone fiend: 30% to str/dex drain
+              ~cattac1.itm~  ~override~ // two-handed sword: 1% to break
+              ~cdfampsd.itm~ ~override~ // pseudodragon familiar: (half)elven resistance 
+//            ~chalcy2.itm~  ~override~ // favored of cyric: 50% blind; probabilities fine as-is
+              ~clck07.itm~   ~override~ // nymph cloak: (half)elven resistance 
+              ~clck08.itm~   ~override~ // algernon's cloak: (half)elven resistance 
+              ~dagg01.itm~   ~override~ // dagger: 1% to break
+              ~dagg06.itm~   ~override~ // nester's dagger: 1% to break
+              ~dagg07.itm~   ~override~ // kylee's dagger: 1% to break
+              ~demmau01.itm~ ~override~ // maurezhi: 15% to paralyze 
+              ~deva.itm~     ~override~ // deva: 25% dispel magic
+              ~devaevil.itm~ ~override~ // evil deva: 25% dispel magic
+              ~devmon01.itm~ ~override~ // monadic deva: 10% extra crushing damage
+              ~dogwawp.itm~  ~override~ // astral hound: 20% slow, 20% level drain
+              ~dwbolt01.itm~ ~override~ // drow bolt of sleep: (half)elven resistance 
+              ~dwdart01.itm~ ~override~ // drow dart of sleep +1: (half)elven resistance 
+//            ~finsol01.itm~ ~override~ // fallen solar: fixed above
+              ~finsol02.itm~ ~override~ // fallen solar: 25% slay
+//            ~gorsnake.itm~ ~override~ // giant snake (wk poison lab): 30% stun, 40% poison; fixed above
+              ~gorwom1.itm~  ~override~ // nalmarissa: 50% charm, plus (half)elven resistance to same
+              ~halb01.itm~   ~override~ // halberd: 1% to break
+              ~hamm01.itm~   ~override~ // war hammer: 1% to break
+              ~hamm13.itm~   ~override~ // hammer of dawn +1: 10% wing buffet
+              ~hgnymph.itm~  ~override~ // nymph: (half)elven resistance 
+//            ~icetrl.itm~   ~override~ // blizzard troll: 33% slow; probabilities fine as-is
+              ~marili.itm~   ~override~ // marilith: multiple damage types
+              ~misc2p.itm~   ~override~ // the captive audience: (half)elven resistance 
+              ~mistice.itm~  ~override~ // ice mist: 30% fear
+              ~mistva2.itm~  ~override~ // vampiric wraith: 50% level drain
+              ~mound.itm~    ~override~ // shambling mond: 50% for entangle + damage
+              ~planetar.itm~ ~override~ // planetar: 25% dispel
+              ~psdclaw.itm~  ~override~ // pseudodragon: (half)elven resistance 
+//            ~pstafm0.itm~  ~override~ // narbucchad's demise +4: 6% MM, seems fine
+//            ~pstafm0b.itm~ ~override~ // narbucchad's demise +3: 6% MM, seems fine
+//            ~pstafm0c.itm~ ~override~ // narbucchad's demise +2: 5% MM, seems fine
+//            ~pstafm0d.itm~ ~override~ // narbucchad's demise +1: 4% MM, seems fine
+//            ~pstafm1.itm~  ~override~ // narbucchad's demise +5: 7% MM, seems fine
+              ~ravag01.itm~  ~override~ // the ravager: 50% wingbuffet/damage
+              ~ring03.itm~   ~override~ // druid's ring: (half)elven resistance 
+              ~sharswd.itm~  ~override~ // xei win toh: 50/50 con/dex drain
+              ~shld08p.itm~  ~override~ // tarloc's contingency +1: 5% invis, 20% spell recovery
+              ~slimed2.itm~  ~override~ // unk: 20% poison death
+              ~sorb.itm~     ~override~ // sol's searing orb: poor approximation of 1d6
+              ~sper01.itm~   ~override~ // spear: 1% to break
+              ~spermel.itm~  ~override~ // mellisan: 25% stun
+//            ~stafn1.itm~   ~override~ // neera's staff +1: 10% for extra fire damage; fixed elsewhere
+              ~sw1h01.itm~   ~override~ // bastard sword: 1% to break
+              ~sw1h04.itm~   ~override~ // long sword: 1% to break
+              ~sw1h07.itm~   ~override~ // short sword: 1% to break
+              ~sw1h12.itm~   ~override~ // hull's long sword: 1% to break
+              ~sw1h17.itm~   ~override~ // perdue's short sword: 1% to break
+              ~sw1h20.itm~   ~override~ // scimitar: 1% to break
+              ~sw1h21.itm~   ~override~ // short sword: 1% to break
+              ~sw1h99.itm~   ~override~ // sword of chaos: 10% vorpal
+//            ~sw1p01.itm~   ~override~ // viper's edge +2: lots of random effects, seems fine
+              ~sw2h01.itm~   ~override~ // two-handed sword: 1% to break
+              ~sw2h01b.itm~  ~override~ // two-handed sword: 1% to break
+              ~sw2hdeat.itm~ ~override~ // demon knight: 50% level drain
+              ~telslav.itm~  ~override~ // slave wraith: 15% slay, 85% level drain
+              ~telwrai.itm~  ~override~ // demon wraith: 50/50 for 1 or 2 levels drained
+              ~wand08.itm~   ~override~ // wand of sleep: (half)elven resistance  
+              
+              ~bdclck03.spl~ ~override~ // Crommus's Capelet: 5% blur
+              ~bdcrimsn.spl~ ~override~ // Crimson Dawn +2: 15% haste on kill
+              ~bddragg2.spl~ ~override~ // dragon fear: 1d4 fatigue penalty
+              ~bddraggh.spl~ ~override~ // ghost dragon breath: 1d10 fatiue penalty
+              ~bdfractl.spl~ ~override~ // Fractal Blade +3: 10% mirror image
+              ~bdghbrsu.spl~ ~override~ // leftover ghost bear stuff, 1d10 duration
+              ~bdhamadc.spl~ ~override~ // hamadryad charm person: (half)elven resistance  
+              ~bdhelm17.spl~ ~override~ // Voghiln's Helmet: 15% stun
+//            ~bdkeg.spl~    ~override~ // <invalid strref -1>: 70% to vary animation; probabilities fine as-is
+              ~bdnerau2.spl~ ~override~ // nereid's beguiling aura: (half)elven resistance
+              ~bdshld02.spl~ ~override~ // The Suncatcher +2: 15% blind+damage
+              ~bdshriek.spl~ ~override~ // piercing shriek: various effects; probabilities fine as-is
+              ~bdsw1h08.spl~ ~override~ // Dervish Crescent +2: 10% fireshield on kill
+              ~bdwynan.spl~  ~override~ // wynan visuals: 1-in-8 visual effect
+              ~ohtmps2d.spl~ ~override~ // chaos of battle: various effects
+              ~ohtmps2e.spl~ ~override~ // chaos of battle: various effects
+              ~spcl311.spl~  ~override~ // ranger charm animal: (half)elven resistance
+              ~spcl641.spl~  ~override~ // charm person or animal: (half)elven resistance
+              ~spin106b.spl~ ~override~ // innate vampiric touch: 1d10 max hp
+              ~spin108.spl~  ~override~ // charm animal: (half)elven resistance
+              ~spin119.spl~  ~override~ // safana's kiss: (half)elven resistance
+              ~spin191.spl~  ~override~ // bombardier beetle cloud: 20% stun, 20% deaf
+              ~spin205.spl~  ~override~ // summon ghostly defender: 60% for two summons, 40% for three
+              ~spin412.spl~  ~override~ // set snare: 70% damage
+              ~spin558.spl~  ~override~ // charm person: (half)elven resistance
+              ~spin787.spl~  ~override~ // small_damage_spell: equal chances for four damage types
+              ~spin883.spl~  ~override~ // vampire domination: (half)elven resistance
+              ~spin980.spl~  ~override~ // beholder charm person: (half)elven resistance
+              ~spin985.spl~  ~override~ // beholder domination: (half)elven resistance
+              ~spogre01.spl~ ~override~ // earthquake: 2% chance to summon elemental
+              ~sppr102.spl~  ~override~ // command: (half)elven resistance
+              ~sppr204.spl~  ~override~ // charm person or animal: (half)elven resistance
+              ~sppr250.spl~  ~override~ // writhing fog: 20% chance to slow
+              ~sppr450.spl~  ~override~ // spirit fire: 33% chance for dooooooooooooooooooooooooooom
+              ~sppr512.spl~  ~override~ // greater command: (half)elven resistance
+              ~sppr605.spl~  ~override~ // conjure fire elemental: sliding chances to summon x hd elemental
+              ~sppr702.spl~  ~override~ // conjure earth elemental: sliding chances to summon x hd elemental
+              ~sppr720.spl~  ~override~ // earthquake: 2% chance to summon elemental
+              ~sppr982.spl~  ~override~ // dire charm (trap): (half)elven resistance
+//            ~spsh004.spl~  ~override~ // shaman dance; probabilities fine as-is
+              ~spwi104.spl~  ~override~ // charm person: (half)elven resistance
+              ~spwi116.spl~  ~override~ // sleep: (half)elven resistance
+//            ~spwi126.spl~  ~override~ // dancing lights: 50/50 summons; probabilities fine as-is
+              ~spwi220.spl~  ~override~ // power word, sleep: (half)elven resistance
+              ~spwi309.spl~  ~override~ // monster summoning i: 60% for one monsters, 40% chance for two
+              ~spwi314b.spl~ ~override~ // arcane vampiric touch: 1d10 max hp
+              ~spwi316.spl~  ~override~ // dire charm: (half)elven resistance
+              ~spwi407.spl~  ~override~ // monster summoning ii: 60% for one monsters, 40% chance for two
+              ~spwi423.spl~  ~override~ // spider spawn: 20% for two spiders
+              ~spwi504.spl~  ~override~ // monster summoning iii: 60% for one monsters, 40% chance for two
+              ~spwi506.spl~  ~override~ // domination: (half)elven resistance
+              ~spwi620.spl~  ~override~ // conjure fire elemental: sliding chances to summon x hd elemental
+              ~spwi621.spl~  ~override~ // conjure air elemental: sliding chances to summon x hd elemental
+              ~spwi622.spl~  ~override~ // conjure earth elemental: sliding chances to summon x hd elemental
+              ~spwi623.spl~  ~override~ // carrion summons: 35% for two crawlers instead of one
+              ~spwi711.spl~  ~override~ // sphere of chaos: multiple effects 
+//            ~spwi714.spl~  ~override~ // prismatic spray: needs fixing elsewhere
+              ~spwi929.spl~  ~override~ // charm person: (half)elven resistance
+              ~spwi930.spl~  ~override~ // charm person: (half)elven resistance
+              ~spwi943.spl~  ~override~ // dire charm: (half)elven resistance
+              ~spwm130.spl~  ~override~ // wild magic surge: 1/10 cosmetics
+              ~spwm136.spl~  ~override~ // wild magic surge: create gems
+              ~spwm179.spl~  ~override~ // wild magic surge, charm: (half)elven resistance
+  READ_ASCII 0x00 type (3)
+  SET min_size = 0
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "spl" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x28
+    SET global_loop    = 0
+    SET fx_type        = 0
+    SET min_size       = 0x72
+  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "itm" = 0) BEGIN
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT 0x68 abil_num ELSE 0
+    READ_LONG  0x6a fx_off   ELSE 0
+    SET counter_offset = 0x70
+    SET abil_length    = 0x38
+    SET global_loop    = 1
+    SET fx_type        = 0
+    SET min_size       = 0x72
+/*  END ELSE
+  PATCH_IF ("%type%" STRING_COMPARE_CASE "cre" = 0) BEGIN
+    READ_LONG  0x2c4 fx_off ELSE 0
+    READ_BYTE 0x33 fx_type ELSE 2
+    SET abil_off       = 0
+    SET abil_num       = 0
+    SET counter_offset = 0x2c8
+    SET abil_length    = 0
+    SET global_loop    = 1
+    SET min_size       = 0x2d4
+    SET cosmetic       = 0 */
+  END
+  PATCH_IF ((SOURCE_SIZE >= min_size) AND (min_size != 0)) BEGIN // min_size must get set by file type detection
+    FOR (index = (0 - global_loop) ; index < abil_num ; ++index) BEGIN
+      PATCH_IF (index < 0) BEGIN // if loop through globals needed
+        SET abil_fx_idx = 0
+      END ELSE BEGIN // otherwise normal ability
+        SET counter_offset = (abil_off + 0x1e + (abil_length * index))
+        READ_SHORT  (abil_off + 0x20 + (abil_length * index)) abil_fx_idx
+      END
+      READ_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
+      FOR (index2 = 0 ; index2 < counter ; ++index2) BEGIN
+        PATCH_FOR_EACH offset IN 0x12 0x13 BEGIN
+          READ_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) prob
+          PATCH_IF (prob > 0) AND (prob < 100) BEGIN
+            WRITE_BYTE  (fx_off + offset + (offset * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (prob - 1)
+          END
+        END
+      END
+    END
+  END
+  BUT_ONLY IF_EXISTS // sod assets

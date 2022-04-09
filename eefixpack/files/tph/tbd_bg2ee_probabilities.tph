@@ -82,6 +82,12 @@ COPY_EXISTING ~wand15.itm~   ~override~ // wand of the apprenti: should be 1/3 r
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 probability1 = 100 probability2 = 67 STR_VAR match_resource = spwi308 END // lightning bolt on 33%, was 29%
   BUT_ONLY
 
+COPY_EXISTING ~spwi220.spl~ ~override~ // pw: sleep lacks (half)elven immunities
+  LPF CLONE_EFFECT INT_VAR match_opcode = 217 opcode = 324 parameter1 = 0 parameter2 = 19 timing = 0 resist_dispel = 1 probability1 = 29 
+    dicenumber = 0 dicesize  = 0 savingthrow = 0 savebonus = 0 special = 0 STR_VAR insert = first resource = spwi220 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 324 match_parameter2 = 19 parameter2 = 15 probability1 = 89 END
+  BUT_ONLY
+
 COPY_EXISTING ~spwi714.spl~ ~override~ // prismatic spray adjustments - all rays overlapped by 3%, which is preserved
   LPF ALTER_EFFECT INT_VAR match_probability1 =  14 match_probability2 =  0 probability1 =  16 probability2 =  0  END // red ray:    was 15% now 17%
   LPF ALTER_EFFECT INT_VAR match_probability1 =  29 match_probability2 = 12 probability1 =  30 probability2 = 14  END // orange ray: was 18% now 17%
@@ -102,7 +108,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~blakblad.itm~ ~override~ // black blade o' disaster: 10% level drain
               ~blun14.itm~   ~override~ // flail of ages +3, 33% chance to slow
               ~blun26.itm~   ~override~ // club of detonation +3: 20% extra fire damage, 7% fireball
-//              ~blun27.itm~   ~override~ // club of detonation +5: 30% extra fire damage, 5% fireball; fixed above
+//            ~blun27.itm~   ~override~ // club of detonation +5: 30% extra fire damage, 5% fireball; fixed above
               ~blun29.itm~   ~override~ // storm star +5: 5% chance of chain lightning
               ~blun30.itm~   ~override~ // flail of ages +5, 33% chance to slow
               ~blun30c.itm~  ~override~ // flail of ages +4 (poison), 33% chance to slow
@@ -123,8 +129,10 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~devmon01.itm~ ~override~ // monadic deva: 10% extra crushing damage
               ~dogwawp.itm~  ~override~ // astral hound: 20% slow, 20% level drain
               ~dwbolt01.itm~ ~override~ // drow bolt of sleep: (half)elven resistance 
+//            ~dwwhip.itm~   ~override~ // drow whip weapon: fixed above
 //            ~dwwhip01.itm~ ~override~ // drow whip weapon: fixed above
 //            ~finsol01.itm~ ~override~ // fallen solar: fixed above
+              ~finsol02.itm~ ~override~ // fallen solar: 25% slay
               ~gith.itm~     ~override~ // silver sword (githyanki): 25% vorpal 
               ~gorcamb.itm~  ~override~ // aesgareth: 50% chance to stun, 50% chance to drain abilities
 //            ~gorsnake.itm~ ~override~ // giant snake (wk poison lab):30% stun, 40% poison; fixed above
@@ -133,7 +141,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~halb09.itm~   ~override~ // wave +4: 15% chance of extra damage
               ~halb11.itm~   ~override~ // ravager +6: 10% vorpal
               ~hgnymph.itm~  ~override~ // nymph: (half)elven resistance 
-              ~icetrl.itm~   ~override~ // blizzard troll: 33% slow; probabilities fine as-is
+//            ~icetrl.itm~   ~override~ // blizzard troll: 33% slow; probabilities fine as-is
               ~marili.itm~   ~override~ // marilith: multiple damage types
               ~misc2p.itm~   ~override~ // the captive audience: (half)elven resistance 
 //            ~misc3a.itm~   ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
@@ -145,7 +153,6 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
 //            ~misc3a6.itm~  ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
 //            ~misc3a7.itm~  ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
 //            ~misc3a8.itm~  ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
-//            ~misc3a9.itm~  ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
 //            ~misc3aa.itm~  ~override~ // book of infinite spells: 1-in-10 chance to change spells; probabilities fine as-is
               ~misc9x.itm~   ~override~ // control circlet: (half)elven resistance 
               ~miscbc.itm~   ~override~ // blackrazor: 15% hp/level drain
@@ -171,7 +178,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~ohrwilc3.itm~ ~override~ // wilson: 15% extra crushing damage 
               ~ohrwilc4.itm~ ~override~ // wilson: 15% extra crushing damage 
               ~ohrwilc5.itm~ ~override~ // wilson: 15% extra crushing damage 
-              ~planetar.itm~ ~override~ // planetar: 25% vorpal
+              ~planetar.itm~ ~override~ // planetar: 25% dispel
               ~psdclaw.itm~  ~override~ // pseudodragon: (half)elven resistance 
               ~ravag01.itm~  ~override~ // the ravager: 50% wingbuffet/damage
 //            ~ravag02.itm~  ~override~ // ravager: 1-in-3 chance for cold/poison/stun; probabilities already ok 
@@ -189,6 +196,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~staf09.itm~   ~override~ // staff of command: (half)elven resistance 
               ~staf13.itm~   ~override~ // staff of thunder and lightning: 10% stun
               ~staf14.itm~   ~override~ // staff of the woodlands: (half)elven resistance 
+              ~staf15.itm~   ~override~ // staff of air +2: (half)elven resistance 
               ~staf21.itm~   ~override~ // staff of the ram +4: 10% knockback
               ~staf22.itm~   ~override~ // staff of the ram +6: 15% knockback
               ~staf23.itm~   ~override~ // serpent staff: 50% poison
@@ -201,6 +209,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~sw2h07.itm~   ~override~ // harbinger: 5% fireball
               ~sw2h15.itm~   ~override~ // silver sword: 25% vorpal
               ~sw2h17.itm~   ~override~ // gram the sword of grief +5: 10% poison
+              ~sw2h18.itm~   ~override~ // gram the sword of grief +5: 10% poison
               ~sw2hdeat.itm~ ~override~ // demon knight: 50% level drain
               ~telslav.itm~  ~override~ // slave wraith: 15% slay, 85% level drain
 //            ~telwrai.itm~  ~override~ // demon wraith: 50% level drain; probabilities already ok 
@@ -230,7 +239,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
 //            ~spcl919.spl~  ~override~ // scribe scrolls: equal chances at 1-in-9 scrolls; probabilities fine as-is
               ~spin106b.spl~ ~override~ // innate vampiric touch: 1d10 max hp
               ~spin108.spl~  ~override~ // charm animal: (half)elven resistance
-              ~spin119.spl~  ~override~ // charm person: (half)elven resistance
+              ~spin119.spl~  ~override~ // safana's kiss: (half)elven resistance
               ~spin534.spl~  ~override~ // call dark horde: 60% chance to summon devil shade
               ~spin553.spl~  ~override~ // charm person: (half)elven resistance
               ~spin558.spl~  ~override~ // charm person: (half)elven resistance
@@ -243,6 +252,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~sppr204.spl~  ~override~ // charm person or animal: (half)elven resistance
               ~sppr250.spl~  ~override~ // writhing fog: 20% chance to slow
               ~sppr450.spl~  ~override~ // spirit fire: 33% chance for dooooooooooooooooooooooooooom
+              ~sppr512.spl~  ~override~ // greater command: (half)elven resistance
               ~sppr605.spl~  ~override~ // conjure fire elemental: sliding chances to summon x hd elemental
               ~sppr702.spl~  ~override~ // conjure earth elemental: sliding chances to summon x hd elemental
               ~sppr720.spl~  ~override~ // earthquake: 2% chance to summon elemental

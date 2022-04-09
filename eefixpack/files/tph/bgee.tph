@@ -345,4 +345,5 @@ END
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
