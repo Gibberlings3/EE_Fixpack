@@ -17,7 +17,13 @@ END
 COPY_EXISTING ~7eyes.2da~ ~override~
   REPLACE_TEXTUALLY "12\*0x8000000" "*"
   PRETTY_PRINT_2DA
-  
+
+
+
+INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+
+
+ 
 // CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\

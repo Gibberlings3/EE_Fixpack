@@ -12,6 +12,8 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
