@@ -1,0 +1,14 @@
+// strings uesed only by the installer
+  @0 = ~Core Fixes~
+  @1 = ~Beta Core Fixes~
+  @2 = ~Game Text Update~
+  @3 = ~DLC Merger is required before mods can be installed on this game. Check the readme for more information and a link to download DLC Merger.~
+  @4 = ~No fixes detected for your game.~
+  @5 = ~No Game Text Update is available for your game in your language.~
+  @6 = ~BGEE detected.~
+  @7 = ~BGEE with SoD detected.~
+  @8 = ~BG2EE detected.~
+  @9 = ~IWDEE detected.~
+ @10 = ~PsTEE detected.~
+ 
+// translators, feel free to put your weidu command prompt strings here (e.g. @-1000 et al)

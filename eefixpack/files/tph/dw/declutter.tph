@@ -25,7 +25,7 @@ DEFINE_ACTION_FUNCTION declutter INT_VAR write=0 BEGIN
 	ACTION_IF write BEGIN
 		OUTER_SPRINT output ""
 		COPY_EXISTING_REGEXP ".*\.\(SPL\|ITM\)" override
-			LPF remove_redundant_fx INT_VAR write=1 RET altered END
+			LPF remove_redundant_fx RET altered END
 			PATCH_IF altered BEGIN
 				SPRINT output "%output%%SOURCE_FILE%%WNL%"
 			END

@@ -1,0 +1,6 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes invalid store item trigger
+@51352 = ~Global("Trias_DEAD_KAPUTZ", "GLOBAL", 1)~

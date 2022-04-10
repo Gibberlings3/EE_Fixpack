@@ -1,0 +1,4 @@
+COPY_EXISTING ~clswpbon.2da~ ~override~
+  REPLACE_TEXTUALLY ~^\(SHADOWDANCER[ %TAB%]+[0-9]+[ %TAB%]+[0-9]+[ %TAB%]+\)[0-9]+~ ~\13~ // should have -3 for non-prof penalty, not -5
+  REPLACE_TEXTUALLY ~^\(MAGE_THIEF[ %TAB%]+[0-9]+[ %TAB%]+[0-9]+[ %TAB%]+\)[0-9]+~   ~\13~ // should have -3 for non-prof penalty, not -5
+  BUT_ONLY

@@ -18,6 +18,8 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
@@ -169,6 +171,124 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
 ACTION_IF game_includes_sod BEGIN
   EXTEND_BOTTOM ~imoen.bcs~ ~eefixpack/files/baf/sod_imoen_bottom.baf~
 END
+
+
+
+// tbd, cam
+// NPCs should get their better starting equipment when doing the level-up thing; must follow the imoen.bcs script extension fix for sod games (currently immediately above)
+COPY_EXISTING ~ajantis.bcs~ ~override~ // ajantis gets better armor
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
+      ~\1 DestroyItem("chan01") CreateItem("plat01",0,0,0) XEquipItem("plat01",Myself,SLOT_ARMOR,EQUIP)~ // chain > plate
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~
+      ~\1 DestroyItem("chan01") CreateItem("chan04",0,0,0) XEquipItem("chan04",Myself,SLOT_ARMOR,EQUIP)~ // chain > splint
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~dorn.bcs~ ~override~ // dorn gets helmet at 9k, plate at 36k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
+      ~\1 DestroyItem("chan04") CreateItem("plat01",0,0,0) XEquipItem("plat01",Myself,SLOT_ARMOR,EQUIP)~ // splint > plate
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~ 
+      ~\1 CreateItem("helm01",0,0,0) XEquipItem("helm01",Myself,SLOT_HELMET,EQUIP)~ // add helmet
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~edwin.bcs~ ~override~ // edwin gets throwing daggers at 41k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
+      ~\1 CreateItem("dagg05",10,0,0) XEquipItem("dagg05",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing daggers
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~eldoth.bcs~ ~override~ // eldoth gets bow & arrows at 10k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~ 
+      ~\1 CreateItem("arow01",20,0,0) XEquipItem("arow01",Myself,SLOT_AMMO0,EQUIP) CreateItem("bow03",0,0,0) XEquipItem("bow03",Myself,SLOT_WEAPON1,EQUIP)~ // add bow, arrows
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~imoen.bcs~ ~override~ // imoen short sword at 1300, studded leather at 20k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 CreateItem("sw1h07",0,0,0) XEquipItem("sw1h07",Myself,SLOT_WEAPON1,EQUIP)~ // add short sword
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+      ~\1 CreateItem("leat04",0,0,0) XEquipItem("leat04",Myself,SLOT_ARMOR,EQUIP)~ // add studded leather
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~jaheira.bcs~ ~override~ // jaheira gets sling & bullets at 16k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+      ~\1 CreateItem("bull01",20,0,0) XEquipItem("bull01",Myself,SLOT_AMMO0,EQUIP) CreateItem("slng01",0,0,0) XEquipItem("slng01",Myself,SLOT_WEAPON1,EQUIP)~ // add sling & bullets
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~kagain.bcs~ ~override~ // kagain gets throwing axes at 2k, armor upgrades at 8 and 32
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 CreateItem("ax1h04",10,0,0) XEquipItem("ax1h04",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing axes
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~ 
+      ~\1 DestroyItem("leat04") CreateItem("chan01",0,0,0) XEquipItem("chan01",Myself,SLOT_ARMOR,EQUIP)~ // studded leather > chain
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
+      ~\1 DestroyItem("leat04") CreateItem("chan04",0,0,0) XEquipItem("chan04",Myself,SLOT_ARMOR,EQUIP)~ // studded leather > splint
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~khalid.bcs~ ~override~ // khalid gets bow & arrows at 2k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 CreateItem("arow01",20,0,0) XEquipItem("arow01",Myself,SLOT_AMMO0,EQUIP) CreateItem("bow03",0,0,0) XEquipItem("bow03",Myself,SLOT_WEAPON1,EQUIP)~ // add bow, arrows
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~minsc.bcs~ ~override~ // minsc gets studded leather at 2k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 DestroyItem("leat01") CreateItem("leat04",0,0,0) XEquipItem("leat04",Myself,SLOT_ARMOR,EQUIP)~ // leather > studded leather
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~montaron.bcs~ ~override~ // montaron gets throwing axes at 16k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+      ~\1 CreateItem("ax1h04",10,0,0) XEquipItem("ax1h04",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing axes
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~safana.bcs~ ~override~ // montaron gets darts at 4k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\)000,SET)\)~ 
+      ~\1 CreateItem("dart01",20,0,0) XEquipItem("dart01",Myself,SLOT_WEAPON1,EQUIP)~ // add darts
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~sharteel.bcs~ ~override~ // shar-teel gets xbow & bolts at 8k, armor upgrades at 8 and 32k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 CreateItem("bolt01",20,0,0) XEquipItem("bolt01",Myself,SLOT_AMMO0,EQUIP) CreateItem("xbow04",0,0,0) XEquipItem("xbow04",Myself,SLOT_WEAPON1,EQUIP)~ // add sling & bullets
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~ 
+      ~\1 DestroyItem("leat04") CreateItem("chan04",0,0,0) XEquipItem("chan04",Myself,SLOT_ARMOR,EQUIP)~ // studded leather > splint
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
+      ~\1 DestroyItem("leat04") CreateItem("plat01",0,0,0) XEquipItem("plat01",Myself,SLOT_ARMOR,EQUIP)~ // studded leather > plate
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~skie.bcs~ ~override~ // skie gets short sword at 16k
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+      ~\1 CreateItem("sw1h07",0,0,0) XEquipItem("sw1h07",Myself,SLOT_WEAPON1,EQUIP)~ // add short sword
+  END
+  BUT_ONLY 
+  
+COPY_EXISTING ~viconia.bcs~ ~override~ // viconia gets armor upgrades at 8k, 16k 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,8000,SET)\)~ 
+      ~\1 DestroyItem("leat01") CreateItem("leat04",0,0,0) XEquipItem("leat04",Myself,SLOT_ARMOR,EQUIP)~ // leather > studded leather 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+      ~\1 DestroyItem("leat01") CreateItem("chan01",0,0,0) XEquipItem("chan01",Myself,SLOT_ARMOR,EQUIP)~ // leather > chain
+  END
+  BUT_ONLY 
 
 
 
@@ -346,4 +466,5 @@ END
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
