@@ -1,0 +1,16 @@
+// Cloned resources are applied to specific creatures for special color effects
+ACTION_DEFINE_ASSOCIATIVE_ARRAY pst_ini_copy BEGIN
+   "F063" => "F040" // target resref => source resref
+   "F064" => "F02A"
+   "F065" => "F05C"
+   "F066" => "F05C"
+END
+
+ACTION_PHP_EACH pst_ini_copy AS target => source BEGIN
+  COPY_EXISTING ~%source%.INI~ ~%target%.INI~
+END
+
+// Extending ANIMATE.IDS
+COPY_EXISTING ~animate.ids~ ~override~
+  APPEND_FILE TEXT ~eefixpack/files/tph/a7/pst_animate.ids~
+BUT_ONLY

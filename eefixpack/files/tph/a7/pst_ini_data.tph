@@ -1,0 +1,294 @@
+// INI-related color location fixes
+ACTION_DEFINE_ASSOCIATIVE_ARRAY pst_ini_data BEGIN
+  "count" => 38             // number of INI entries
+
+  "0", "resref" => "F002"   // INI resref
+  "0", "count" => 1         // number of color location values to update
+  "0", "color", "0" => 224  // color location values
+
+  "1", "resref" => "F006"
+  "1", "count" => 4
+  "1", "color", "0" => 128
+  "1", "color", "1" => 160
+  "1", "color", "2" => 192
+  "1", "color", "3" => 224
+
+  "2", "resref" => "F00A"
+  "2", "count" => 4
+  "2", "color", "0" => 128
+  "2", "color", "1" => 160
+  "2", "color", "2" => 192
+  "2", "color", "3" => 224
+
+  "3", "resref" => "F00B"
+  "3", "count" => 4
+  "3", "color", "0" => 128
+  "3", "color", "1" => 160
+  "3", "color", "2" => 192
+  "3", "color", "3" => 224
+
+  "4", "resref" => "F00D"
+  "4", "count" => 1
+  "4", "color", "0" => 224
+
+  "5", "resref" => "F010"
+  "5", "count" => 1
+  "5", "color", "0" => 224
+
+  "6", "resref" => "F013"
+  "6", "count" => 2
+  "6", "color", "0" => 192
+  "6", "color", "1" => 224
+
+  "7", "resref" => "F014"
+  "7", "count" => 2
+  "7", "color", "0" => 192
+  "7", "color", "1" => 224
+
+  "8", "resref" => "F019"
+  "8", "count" => 4
+  "8", "color", "0" => 128
+  "8", "color", "1" => 160
+  "8", "color", "2" => 192
+  "8", "color", "3" => 224
+
+  "9", "resref" => "F01A"
+  "9", "count" => 4
+  "9", "color", "0" => 128
+  "9", "color", "1" => 160
+  "9", "color", "2" => 192
+  "9", "color", "3" => 224
+
+  "10", "resref" => "F01D"
+  "10", "count" => 4
+  "10", "color", "0" => 128
+  "10", "color", "1" => 160
+  "10", "color", "2" => 192
+  "10", "color", "3" => 224
+
+  "11", "resref" => "F01F"
+  "11", "count" => 4
+  "11", "color", "0" => 128
+  "11", "color", "1" => 160
+  "11", "color", "2" => 192
+  "11", "color", "3" => 224
+
+  "12", "resref" => "F02A"
+  "12", "count" => 4
+  "12", "color", "0" => 128
+  "12", "color", "1" => 160
+  "12", "color", "2" => 192
+  "12", "color", "3" => 224
+
+  "13", "resref" => "F037"
+  "13", "count" => 4
+  "13", "color", "0" => 128
+  "13", "color", "1" => 160
+  "13", "color", "2" => 192
+  "13", "color", "3" => 224
+
+  "14", "resref" => "F03B"
+  "14", "count" => 3
+  "14", "color", "0" => 160
+  "14", "color", "1" => 192
+  "14", "color", "2" => 224
+
+  "15", "resref" => "F03C"
+  "15", "count" => 3
+  "15", "color", "0" => 160
+  "15", "color", "1" => 192
+  "15", "color", "2" => 224
+
+  "16", "resref" => "F03D"
+  "16", "count" => 4
+  "16", "color", "0" => 128
+  "16", "color", "1" => 160
+  "16", "color", "2" => 192
+  "16", "color", "3" => 224
+
+  "17", "resref" => "F03E"
+  "17", "count" => 4
+  "17", "color", "0" => 128
+  "17", "color", "1" => 160
+  "17", "color", "2" => 192
+  "17", "color", "3" => 224
+
+  "18", "resref" => "F03F"
+  "18", "count" => 4
+  "18", "color", "0" => 128
+  "18", "color", "1" => 160
+  "18", "color", "2" => 192
+  "18", "color", "3" => 224
+
+  "19", "resref" => "F040"
+  "19", "count" => 4
+  "19", "color", "0" => 128
+  "19", "color", "1" => 160
+  "19", "color", "2" => 192
+  "19", "color", "3" => 224
+
+  "20", "resref" => "F047"
+  "20", "count" => 1
+  "20", "color", "0" => 224
+
+  "21", "resref" => "F048"
+  "21", "count" => 1
+  "21", "color", "0" => 224
+
+  "22", "resref" => "F04B"
+  "22", "count" => 4
+  "22", "color", "0" => 128
+  "22", "color", "1" => 160
+  "22", "color", "2" => 192
+  "22", "color", "3" => 224
+
+  "23", "resref" => "F04C"
+  "23", "count" => 4
+  "23", "color", "0" => 128
+  "23", "color", "1" => 160
+  "23", "color", "2" => 192
+  "23", "color", "3" => 224
+
+  "24", "resref" => "F050"
+  "24", "count" => 4
+  "24", "color", "0" => 128
+  "24", "color", "1" => 160
+  "24", "color", "2" => 192
+  "24", "color", "3" => 224
+
+  "25", "resref" => "F053"
+  "25", "count" => 4
+  "25", "color", "0" => 128
+  "25", "color", "1" => 160
+  "25", "color", "2" => 192
+  "25", "color", "3" => 224
+
+  "26", "resref" => "F054"
+  "26", "count" => 4
+  "26", "color", "0" => 128
+  "26", "color", "1" => 160
+  "26", "color", "2" => 192
+  "26", "color", "3" => 224
+
+  "27", "resref" => "F055"
+  "27", "count" => 4
+  "27", "color", "0" => 128
+  "27", "color", "1" => 160
+  "27", "color", "2" => 192
+  "27", "color", "3" => 224
+
+  "28", "resref" => "F056"
+  "28", "count" => 4
+  "28", "color", "0" => 128
+  "28", "color", "1" => 160
+  "28", "color", "2" => 192
+  "28", "color", "3" => 224
+
+  "29", "resref" => "F058"
+  "29", "count" => 4
+  "29", "color", "0" => 128
+  "29", "color", "1" => 160
+  "29", "color", "2" => 192
+  "29", "color", "3" => 224
+
+  "30", "resref" => "F059"
+  "30", "count" => 4
+  "30", "color", "0" => 128
+  "30", "color", "1" => 160
+  "30", "color", "2" => 192
+  "30", "color", "3" => 224
+
+  "31", "resref" => "F05C"
+  "31", "count" => 4
+  "31", "color", "0" => 128
+  "31", "color", "1" => 160
+  "31", "color", "2" => 192
+  "31", "color", "3" => 224
+
+  "32", "resref" => "F05F"
+  "32", "count" => 4
+  "32", "color", "0" => 128
+  "32", "color", "1" => 160
+  "32", "color", "2" => 192
+  "32", "color", "3" => 224
+
+  "33", "resref" => "F062"
+  "33", "count" => 1
+  "33", "color", "0" => 224
+
+  "34", "resref" => "F063"
+  "34", "count" => 4
+  "34", "color", "0" => 130
+  "34", "color", "1" => 162
+  "34", "color", "2" => 194
+  "34", "color", "3" => 226
+
+  "35", "resref" => "F064"
+  "35", "count" => 4
+  "35", "color", "0" => 128
+  "35", "color", "1" => 160
+  "35", "color", "2" => 193
+  "35", "color", "3" => 224
+
+  "36", "resref" => "F065"
+  "36", "count" => 4
+  "36", "color", "0" => 129
+  "36", "color", "1" => 160
+  "36", "color", "2" => 192
+  "36", "color", "3" => 224
+
+  "37", "resref" => "F066"
+  "37", "count" => 4
+  "37", "color", "0" => 128
+  "37", "color", "1" => 161
+  "37", "color", "2" => 192
+  "37", "color", "3" => 225
+END
+
+
+// Updates color location entries in the specified INI resource.
+DEFINE_ACTION_FUNCTION a7_update_ini_colors
+INT_VAR
+  count   = 0   // number of color location entries
+STR_VAR
+  resref  = ~~  // INI resref
+  array   = ~~  // name of array with color location data
+BEGIN
+  ACTION_IF (NOT ~%resref%~ STR_EQ ~~) BEGIN
+    COPY_EXISTING ~%resref%.INI~ ~override~
+      // removing existing color entries
+      FOR (i = 1; i < 8; ++i) BEGIN
+        SET pos1 = INDEX_BUFFER(~color%i%=[0-9]+~)
+        PATCH_IF (pos1 >= 0) BEGIN
+          SET pos2 = INDEX_BUFFER(~%LNL%~ pos1) + 1 // remove whole line, including line break
+          DELETE_BYTES pos1 (pos2 - pos1)
+        END ELSE BEGIN
+          SET i = 8 // terminating for-loop
+        END
+      END
+
+      // adding new entries directly after the "clown" definition
+      SET pos = INDEX_BUFFER(~clown=~)
+      PATCH_IF (pos >= 0) BEGIN
+        SET pos = INDEX_BUFFER(~%LNL%~ pos) + 1
+
+        // new line breaks should match existing line breaks
+        PATCH_IF (INDEX_BUFFER(~%WNL%~) > 0) BEGIN
+          TEXT_SPRINT NL ~%WNL%~
+        END ELSE BEGIN
+          TEXT_SPRINT NL ~%LNL%~
+        END
+
+        FOR (i = 0; i < count; ++i) BEGIN
+          SET value = $EVAL ~%array%~(~%i%~)
+          SET idx = i + 1 // key name expects one-based index
+          TEXT_SPRINT line ~color%idx%=%value%%NL%~
+          SET len = STRING_LENGTH ~%line%~
+          INSERT_BYTES pos len
+          WRITE_ASCIIE pos ~%line%~ (len)
+          SET pos += len
+        END
+      END
+    BUT_ONLY
+  END
+END

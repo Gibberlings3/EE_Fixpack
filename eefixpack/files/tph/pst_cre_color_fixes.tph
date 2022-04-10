@@ -1,0 +1,50 @@
+// Fixing color location data in animation ini files
+INCLUDE ~eefixpack/files/tph/a7/pst_ini_data.tph~
+OUTER_SET num_entries = $pst_ini_data(~count~)
+OUTER_FOR (idx = 0; idx < num_entries; ++idx) BEGIN
+  OUTER_TEXT_SPRINT resref $pst_ini_data(~%idx%~ ~resref~)
+
+  // fetching color location values
+  OUTER_SET count = $pst_ini_data(~%idx%~ ~count~)
+  OUTER_FOR (i = 0; i < count; ++i) BEGIN
+    OUTER_SET $colors(~%i%~) = $pst_ini_data(~%idx%~ ~color~ ~%i%~)
+  END
+
+  LAF a7_update_ini_colors
+  INT_VAR
+    count
+  STR_VAR
+    resref
+    array = ~colors~
+  END
+END
+
+
+// Fixing color and animation data in creature files
+INCLUDE ~eefixpack/files/tph/a7/pst_cre_data.tph~
+OUTER_SET num_entries = $pst_cre_data(~count~)
+OUTER_FOR (idx = 0; idx < num_entries; ++idx) BEGIN
+  OUTER_TEXT_SPRINT resref $pst_cre_data(~%idx%~ ~resref~)
+
+  // should animation id be updated?
+  ACTION_IF (VARIABLE_IS_SET $pst_cre_data(~%idx%~ ~id~)) BEGIN
+    OUTER_SET animation_id = $pst_cre_data(~%idx%~ ~id~)
+  END ELSE BEGIN
+    OUTER_SET animation_id = 0  // no update
+  END
+
+  // fetching color values
+  OUTER_SET count = $pst_cre_data(~%idx%~ ~count~)
+  OUTER_FOR (i = 0; i < count; ++i) BEGIN
+    OUTER_SET $colors(~%i%~) = $pst_cre_data(~%idx%~ ~color~ ~%i%~)
+  END
+
+  LAF a7_update_cre_colors
+  INT_VAR
+    count
+    animation_id
+  STR_VAR
+    resref
+    array = ~colors~
+  END
+END

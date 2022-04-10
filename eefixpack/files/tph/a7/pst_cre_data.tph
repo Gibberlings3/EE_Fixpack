@@ -1,0 +1,795 @@
+// CRE-related color and animation fixes
+ACTION_DEFINE_ASSOCIATIVE_ARRAY pst_cre_data BEGIN
+  "count" => 109            // number of CRE entries
+
+  "0", "resref" => "AAALEK" // CRE resref
+  "0", "count" => 4         // number of color values to update
+  "0", "color", "0" => 9    // color values
+  "0", "color", "1" => 87
+  "0", "color", "2" => 42
+  "0", "color", "3" => 86
+
+  "1", "resref" => "ANIZIUS"
+  "1", "count" => 4
+  "1", "color", "0" => 10
+  "1", "color", "1" => 95
+  "1", "color", "2" => 34
+  "1", "color", "3" => 83
+
+  "2", "resref" => "BARIA"
+  "2", "count" => 4
+  "2", "color", "0" => 6
+  "2", "color", "1" => 130
+  "2", "color", "2" => 41
+  "2", "color", "3" => 91
+
+  "3", "resref" => "BARIH"
+  "3", "count" => 4
+  "3", "color", "0" => 8
+  "3", "color", "1" => 128
+  "3", "color", "2" => 40
+  "3", "color", "3" => 76
+
+  "4", "resref" => "BARKIS"
+  "4", "count" => 4
+  "4", "color", "0" => 19
+  "4", "color", "1" => 77
+  "4", "color", "2" => 90
+  "4", "color", "3" => 78
+
+  "5", "resref" => "BRASKEN"
+  "5", "count" => 4
+  "5", "color", "0" => 5
+  "5", "color", "1" => 77
+  "5", "color", "2" => 40
+  "5", "color", "3" => 75
+
+  "6", "resref" => "BURGHER"
+  "6", "count" => 4
+  "6", "color", "0" => 11
+  "6", "color", "1" => 73
+  "6", "color", "2" => 34
+  "6", "color", "3" => 71
+
+  "7", "resref" => "CMERCH1"
+  "7", "count" => 4
+  "7", "color", "0" => 10
+  "7", "color", "1" => 86
+  "7", "color", "2" => 35
+  "7", "color", "3" => 77
+
+  "8", "resref" => "CMERCH2"
+  "8", "count" => 4
+  "8", "color", "0" => 10
+  "8", "color", "1" => 44
+  "8", "color", "2" => 35
+  "8", "color", "3" => 84
+
+  "9", "resref" => "CMERCH3"
+  "9", "count" => 4
+  "9", "color", "0" => 18
+  "9", "color", "1" => 78
+  "9", "color", "2" => 35
+  "9", "color", "3" => 82
+
+  "10", "resref" => "DLGPROXY"
+  "10", "count" => 4
+  "10", "color", "0" => 89
+  "10", "color", "1" => 46
+  "10", "color", "2" => 5
+  "10", "color", "3" => 10
+
+  "11", "resref" => "DNDOUBT"
+  "11", "count" => 3
+  "11", "color", "0" => 78
+  "11", "color", "1" => 76
+  "11", "color", "2" => 93
+
+  "12", "resref" => "DN_ZOMF"
+  "12", "count" => 4
+  "12", "color", "0" => 19
+  "12", "color", "1" => 76
+  "12", "color", "2" => 36
+  "12", "color", "3" => 78
+
+  "13", "resref" => "DN_ZOMF1"
+  "13", "count" => 4
+  "13", "color", "0" => 19
+  "13", "color", "1" => 76
+  "13", "color", "2" => 36
+  "13", "color", "3" => 78
+
+  "14", "resref" => "DN_ZOMF2"
+  "14", "count" => 4
+  "14", "color", "0" => 9
+  "14", "color", "1" => 91
+  "14", "color", "2" => 37
+  "14", "color", "3" => 90
+
+  "15", "resref" => "DN_ZOMF3"
+  "15", "count" => 4
+  "15", "color", "0" => 19
+  "15", "color", "1" => 199
+  "15", "color", "2" => 38
+  "15", "color", "3" => 79
+
+  "16", "resref" => "DN_ZOMF4"
+  "16", "count" => 4
+  "16", "color", "0" => 39
+  "16", "color", "1" => 33
+  "16", "color", "2" => 78
+  "16", "color", "3" => 34
+
+  "17", "resref" => "DN_ZOMF5"
+  "17", "count" => 4
+  "17", "color", "0" => 9
+  "17", "color", "1" => 42
+  "17", "color", "2" => 45
+  "17", "color", "3" => 34
+
+  "18", "resref" => "DN_ZOMF6"
+  "18", "count" => 4
+  "18", "color", "0" => 10
+  "18", "color", "1" => 19
+  "18", "color", "2" => 36
+  "18", "color", "3" => 77
+
+  "19", "resref" => "DN_ZOMM"
+  "19", "count" => 4
+  "19", "color", "0" => 76
+  "19", "color", "1" => 77
+  "19", "color", "2" => 36
+  "19", "color", "3" => 75
+
+  "20", "resref" => "DN_ZOMM1"
+  "20", "count" => 4
+  "20", "color", "0" => 76
+  "20", "color", "1" => 77
+  "20", "color", "2" => 36
+  "20", "color", "3" => 75
+
+  "21", "resref" => "DN_ZOMM2"
+  "21", "count" => 4
+  "21", "color", "0" => 93
+  "21", "color", "1" => 92
+  "21", "color", "2" => 37
+  "21", "color", "3" => 198
+
+  "22", "resref" => "DN_ZOMM3"
+  "22", "count" => 4
+  "22", "color", "0" => 91
+  "22", "color", "1" => 79
+  "22", "color", "2" => 36
+  "22", "color", "3" => 80
+
+  "23", "resref" => "DN_ZOMM4"
+  "23", "count" => 4
+  "23", "color", "0" => 39
+  "23", "color", "1" => 85
+  "23", "color", "2" => 78
+  "23", "color", "3" => 34
+
+  "24", "resref" => "DN_ZOMM5"
+  "24", "count" => 4
+  "24", "color", "0" => 19
+  "24", "color", "1" => 18
+  "24", "color", "2" => 36
+  "24", "color", "3" => 18
+
+  "25", "resref" => "DN_ZOMM6"
+  "25", "count" => 4
+  "25", "color", "0" => 8
+  "25", "color", "1" => 75
+  "25", "color", "2" => 42
+  "25", "color", "3" => 76
+
+  "26", "resref" => "FLEECE"
+  "26", "count" => 4
+  "26", "color", "0" => 7
+  "26", "color", "1" => 37
+  "26", "color", "2" => 40
+  "26", "color", "3" => 86
+
+  "27", "resref" => "GAOHA"
+  "27", "count" => 4
+  "27", "color", "0" => 5
+  "27", "color", "1" => 80
+  "27", "color", "2" => 42
+  "27", "color", "3" => 85
+
+  "28", "resref" => "GITH"
+  "28", "count" => 4
+  "28", "color", "0" => 8
+  "28", "color", "1" => 78
+  "28", "color", "2" => 42
+  "28", "color", "3" => 93
+
+  "29", "resref" => "GITH2"
+  "29", "count" => 4
+  "29", "color", "0" => 5
+  "29", "color", "1" => 75
+  "29", "color", "2" => 42
+  "29", "color", "3" => 15
+
+  "30", "resref" => "GSPIRIT"
+  "30", "id" => 0xf063
+  "30", "count" => 4
+  "30", "color", "0" => 129
+  "30", "color", "1" => 83
+  "30", "color", "2" => 38
+  "30", "color", "3" => 83
+
+  "31", "resref" => "ILQUIX"
+  "31", "count" => 4
+  "31", "color", "0" => 8
+  "31", "color", "1" => 91
+  "31", "color", "2" => 39
+  "31", "color", "3" => 16
+
+  "32", "resref" => "ILQUIXN"
+  "32", "count" => 4
+  "32", "color", "0" => 8
+  "32", "color", "1" => 91
+  "32", "color", "2" => 39
+  "32", "color", "3" => 16
+
+  "33", "resref" => "JHELAI"
+  "33", "count" => 4
+  "33", "color", "0" => 12
+  "33", "color", "1" => 76
+  "33", "color", "2" => 33
+  "33", "color", "3" => 75
+
+  "34", "resref" => "JUMBLE"
+  "34", "count" => 4
+  "34", "color", "0" => 17
+  "34", "color", "1" => 74
+  "34", "color", "2" => 40
+  "34", "color", "3" => 88
+
+  "35", "resref" => "MERCHMO"
+  "35", "count" => 4
+  "35", "color", "0" => 10
+  "35", "color", "1" => 76
+  "35", "color", "2" => 40
+  "35", "color", "3" => 77
+
+  "36", "resref" => "MERCHMO2"
+  "36", "count" => 4
+  "36", "color", "0" => 13
+  "36", "color", "1" => 79
+  "36", "color", "2" => 41
+  "36", "color", "3" => 93
+
+  "37", "resref" => "MFTREE"
+  "37", "count" => 4
+  "37", "color", "0" => 10
+  "37", "color", "1" => 75
+  "37", "color", "2" => 39
+  "37", "color", "3" => 15
+
+  "38", "resref" => "NONAMEZ"
+  "38", "count" => 4
+  "38", "color", "0" => 19
+  "38", "color", "1" => 199
+  "38", "color", "2" => 38
+  "38", "color", "3" => 79
+
+  "39", "resref" => "PHINEAS"
+  "39", "count" => 4
+  "39", "color", "0" => 8
+  "39", "color", "1" => 86
+  "39", "color", "2" => 40
+  "39", "color", "3" => 91
+
+  "40", "resref" => "PK"
+  "40", "id" => 0xf064
+  "40", "count" => 4
+  "40", "color", "0" => 6
+  "40", "color", "1" => 75
+  "40", "color", "2" => 40
+  "40", "color", "3" => 87
+
+  "41", "resref" => "POST"
+  "41", "count" => 4
+  "41", "color", "0" => 76
+  "41", "color", "1" => 93
+  "41", "color", "2" => 78
+  "41", "color", "3" => 85
+
+  "42", "resref" => "PTHUG1"
+  "42", "count" => 4
+  "42", "color", "0" => 90
+  "42", "color", "1" => 90
+  "42", "color", "2" => 90
+  "42", "color", "3" => 90
+
+  "43", "resref" => "QUELL"
+  "43", "id" => 0xf065
+  "43", "count" => 4
+  "43", "color", "0" => 9
+  "43", "color", "1" => 69
+  "43", "color", "2" => 40
+  "43", "color", "3" => 68
+
+  "44", "resref" => "QUINT"
+  "44", "count" => 4
+  "44", "color", "0" => 93
+  "44", "color", "1" => 77
+  "44", "color", "2" => 40
+  "44", "color", "3" => 76
+
+  "45", "resref" => "SBAUR"
+  "45", "count" => 4
+  "45", "color", "0" => 16
+  "45", "color", "1" => 129
+  "45", "color", "2" => 40
+  "45", "color", "3" => 93
+
+  "46", "resref" => "SDMAGE"
+  "46", "id" => 0xf066
+  "46", "count" => 4
+  "46", "color", "0" => 19
+  "46", "color", "1" => 73
+  "46", "color", "2" => 35
+  "46", "color", "3" => 74
+
+  "47", "resref" => "SIABHA"
+  "47", "count" => 4
+  "47", "color", "0" => 12
+  "47", "color", "1" => 66
+  "47", "color", "2" => 40
+  "47", "color", "3" => 84
+
+  "48", "resref" => "SKELBAR"
+  "48", "count" => 3
+  "48", "color", "0" => 6
+  "48", "color", "1" => 78
+  "48", "color", "2" => 76
+
+  "49", "resref" => "STALEMA"
+  "49", "count" => 4
+  "49", "color", "0" => 197
+  "49", "color", "1" => 78
+  "49", "color", "2" => 36
+  "49", "color", "3" => 89
+
+  "50", "resref" => "THUGOE"
+  "50", "count" => 4
+  "50", "color", "0" => 16
+  "50", "color", "1" => 77
+  "50", "color", "2" => 42
+  "50", "color", "3" => 76
+
+  "51", "resref" => "TOUTHVD"
+  "51", "count" => 4
+  "51", "color", "0" => 11
+  "51", "color", "1" => 72
+  "51", "color", "2" => 41
+  "51", "color", "3" => 71
+
+  "52", "resref" => "VAXIS"
+  "52", "count" => 4
+  "52", "color", "0" => 93
+  "52", "color", "1" => 85
+  "52", "color", "2" => 89
+  "52", "color", "3" => 77
+
+  "53", "resref" => "WARR5"
+  "53", "count" => 4
+  "53", "color", "0" => 7
+  "53", "color", "1" => 128
+  "53", "color", "2" => 40
+  "53", "color", "3" => 133
+
+  "54", "resref" => "XACH"
+  "54", "count" => 4
+  "54", "color", "0" => 93
+  "54", "color", "1" => 84
+  "54", "color", "2" => 36
+  "54", "color", "3" => 93
+
+  "55", "resref" => "Z569"
+  "55", "count" => 4
+  "55", "color", "0" => 78
+  "55", "color", "1" => 93
+  "55", "color", "2" => 36
+  "55", "color", "3" => 92
+
+  "56", "resref" => "Z825"
+  "56", "count" => 4
+  "56", "color", "0" => 85
+  "56", "color", "1" => 93
+  "56", "color", "2" => 36
+  "56", "color", "3" => 85
+
+  "57", "resref" => "ZF1072"
+  "57", "count" => 4
+  "57", "color", "0" => 10
+  "57", "color", "1" => 78
+  "57", "color", "2" => 36
+  "57", "color", "3" => 77
+
+  "58", "resref" => "ZF1096"
+  "58", "count" => 4
+  "58", "color", "0" => 10
+  "58", "color", "1" => 78
+  "58", "color", "2" => 36
+  "58", "color", "3" => 77
+
+  "59", "resref" => "ZF114"
+  "59", "count" => 4
+  "59", "color", "0" => 10
+  "59", "color", "1" => 78
+  "59", "color", "2" => 36
+  "59", "color", "3" => 77
+
+  "60", "resref" => "ZF1148"
+  "60", "count" => 4
+  "60", "color", "0" => 10
+  "60", "color", "1" => 78
+  "60", "color", "2" => 36
+  "60", "color", "3" => 77
+
+  "61", "resref" => "ZF444"
+  "61", "count" => 4
+  "61", "color", "0" => 10
+  "61", "color", "1" => 78
+  "61", "color", "2" => 36
+  "61", "color", "3" => 77
+
+  "62", "resref" => "ZF594"
+  "62", "count" => 4
+  "62", "color", "0" => 10
+  "62", "color", "1" => 78
+  "62", "color", "2" => 36
+  "62", "color", "3" => 77
+
+  "63", "resref" => "ZF626"
+  "63", "count" => 4
+  "63", "color", "0" => 10
+  "63", "color", "1" => 78
+  "63", "color", "2" => 36
+  "63", "color", "3" => 77
+
+  "64", "resref" => "ZF679"
+  "64", "count" => 4
+  "64", "color", "0" => 10
+  "64", "color", "1" => 78
+  "64", "color", "2" => 36
+  "64", "color", "3" => 77
+
+  "65", "resref" => "ZF832"
+  "65", "count" => 4
+  "65", "color", "0" => 10
+  "65", "color", "1" => 78
+  "65", "color", "2" => 36
+  "65", "color", "3" => 77
+
+  "66", "resref" => "ZF891"
+  "66", "count" => 4
+  "66", "color", "0" => 10
+  "66", "color", "1" => 78
+  "66", "color", "2" => 36
+  "66", "color", "3" => 77
+
+  "67", "resref" => "ZF916"
+  "67", "count" => 4
+  "67", "color", "0" => 10
+  "67", "color", "1" => 78
+  "67", "color", "2" => 36
+  "67", "color", "3" => 77
+
+  "68", "resref" => "ZFWEAK"
+  "68", "count" => 4
+  "68", "color", "0" => 10
+  "68", "color", "1" => 78
+  "68", "color", "2" => 36
+  "68", "color", "3" => 77
+
+  "69", "resref" => "ZM1041"
+  "69", "count" => 4
+  "69", "color", "0" => 78
+  "69", "color", "1" => 93
+  "69", "color", "2" => 36
+  "69", "color", "3" => 92
+
+  "70", "resref" => "ZM1094"
+  "70", "count" => 4
+  "70", "color", "0" => 85
+  "70", "color", "1" => 93
+  "70", "color", "2" => 36
+  "70", "color", "3" => 85
+
+  "71", "resref" => "ZM1146"
+  "71", "count" => 4
+  "71", "color", "0" => 85
+  "71", "color", "1" => 85
+  "71", "color", "2" => 32
+  "71", "color", "3" => 85
+
+  "72", "resref" => "ZM1201"
+  "72", "count" => 4
+  "72", "color", "0" => 78
+  "72", "color", "1" => 93
+  "72", "color", "2" => 36
+  "72", "color", "3" => 92
+
+  "73", "resref" => "ZM1445"
+  "73", "count" => 4
+  "73", "color", "0" => 78
+  "73", "color", "1" => 93
+  "73", "color", "2" => 36
+  "73", "color", "3" => 92
+
+  "74", "resref" => "ZM1508"
+  "74", "count" => 4
+  "74", "color", "0" => 78
+  "74", "color", "1" => 93
+  "74", "color", "2" => 36
+  "74", "color", "3" => 92
+
+  "75", "resref" => "ZM1664"
+  "75", "count" => 4
+  "75", "color", "0" => 78
+  "75", "color", "1" => 93
+  "75", "color", "2" => 36
+  "75", "color", "3" => 92
+
+  "76", "resref" => "ZM199"
+  "76", "count" => 4
+  "76", "color", "0" => 78
+  "76", "color", "1" => 93
+  "76", "color", "2" => 36
+  "76", "color", "3" => 92
+
+  "77", "resref" => "ZM257"
+  "77", "count" => 4
+  "77", "color", "0" => 78
+  "77", "color", "1" => 93
+  "77", "color", "2" => 36
+  "77", "color", "3" => 92
+
+  "78", "resref" => "ZM310"
+  "78", "count" => 4
+  "78", "color", "0" => 78
+  "78", "color", "1" => 93
+  "78", "color", "2" => 36
+  "78", "color", "3" => 92
+
+  "79", "resref" => "ZM396"
+  "79", "count" => 4
+  "79", "color", "0" => 78
+  "79", "color", "1" => 93
+  "79", "color", "2" => 36
+  "79", "color", "3" => 92
+
+  "80", "resref" => "ZM463"
+  "80", "count" => 4
+  "80", "color", "0" => 78
+  "80", "color", "1" => 93
+  "80", "color", "2" => 36
+  "80", "color", "3" => 92
+
+  "81", "resref" => "ZM475"
+  "81", "count" => 4
+  "81", "color", "0" => 78
+  "81", "color", "1" => 93
+  "81", "color", "2" => 36
+  "81", "color", "3" => 92
+
+  "82", "resref" => "ZM506"
+  "82", "count" => 4
+  "82", "color", "0" => 78
+  "82", "color", "1" => 93
+  "82", "color", "2" => 36
+  "82", "color", "3" => 92
+
+  "83", "resref" => "ZM569"
+  "83", "count" => 4
+  "83", "color", "0" => 78
+  "83", "color", "1" => 93
+  "83", "color", "2" => 36
+  "83", "color", "3" => 92
+
+  "84", "resref" => "ZM613"
+  "84", "count" => 4
+  "84", "color", "0" => 78
+  "84", "color", "1" => 93
+  "84", "color", "2" => 36
+  "84", "color", "3" => 92
+
+  "85", "resref" => "ZM732"
+  "85", "count" => 4
+  "85", "color", "0" => 78
+  "85", "color", "1" => 93
+  "85", "color", "2" => 36
+  "85", "color", "3" => 92
+
+  "86", "resref" => "ZM782"
+  "86", "count" => 4
+  "86", "color", "0" => 78
+  "86", "color", "1" => 93
+  "86", "color", "2" => 36
+  "86", "color", "3" => 92
+
+  "87", "resref" => "ZM79"
+  "87", "count" => 4
+  "87", "color", "0" => 78
+  "87", "color", "1" => 93
+  "87", "color", "2" => 36
+  "87", "color", "3" => 92
+
+  "88", "resref" => "ZM825"
+  "88", "count" => 4
+  "88", "color", "0" => 85
+  "88", "color", "1" => 93
+  "88", "color", "2" => 36
+  "88", "color", "3" => 85
+
+  "89", "resref" => "ZM965"
+  "89", "count" => 4
+  "89", "color", "0" => 78
+  "89", "color", "1" => 93
+  "89", "color", "2" => 36
+  "89", "color", "3" => 92
+
+  "90", "resref" => "ZM985"
+  "90", "count" => 4
+  "90", "color", "0" => 78
+  "90", "color", "1" => 93
+  "90", "color", "2" => 36
+  "90", "color", "3" => 92
+
+  "91", "resref" => "ZMWEAK"
+  "91", "count" => 4
+  "91", "color", "0" => 85
+  "91", "color", "1" => 93
+  "91", "color", "2" => 36
+  "91", "color", "3" => 85
+
+  "92", "resref" => "ZOMBIE"
+  "92", "count" => 4
+  "92", "color", "0" => 92
+  "92", "color", "1" => 84
+  "92", "color", "2" => 36
+  "92", "color", "3" => 93
+
+  "93", "resref" => "ZOMBIE2"
+  "93", "count" => 4
+  "93", "color", "0" => 85
+  "93", "color", "1" => 93
+  "93", "color", "2" => 36
+  "93", "color", "3" => 85
+
+  "94", "resref" => "ZOMBIE3"
+  "94", "count" => 4
+  "94", "color", "0" => 78
+  "94", "color", "1" => 93
+  "94", "color", "2" => 36
+  "94", "color", "3" => 92
+
+  "95", "resref" => "ZOMBIE4"
+  "95", "count" => 4
+  "95", "color", "0" => 78
+  "95", "color", "1" => 93
+  "95", "color", "2" => 38
+  "95", "color", "3" => 92
+
+  "96", "resref" => "ZOMBIEF"
+  "96", "count" => 4
+  "96", "color", "0" => 10
+  "96", "color", "1" => 78
+  "96", "color", "2" => 36
+  "96", "color", "3" => 77
+
+  "97", "resref" => "ZOMBIEF2"
+  "97", "count" => 4
+  "97", "color", "0" => 5
+  "97", "color", "1" => 84
+  "97", "color", "2" => 36
+  "97", "color", "3" => 85
+
+  "98", "resref" => "ZOMBIEF3"
+  "98", "count" => 4
+  "98", "color", "0" => 10
+  "98", "color", "1" => 93
+  "98", "color", "2" => 36
+  "98", "color", "3" => 77
+
+  "99", "resref" => "ZOMBIEW1"
+  "99", "count" => 4
+  "99", "color", "0" => 93
+  "99", "color", "1" => 19
+  "99", "color", "2" => 36
+  "99", "color", "3" => 92
+
+  "100", "resref" => "ZOMBIEW2"
+  "100", "count" => 4
+  "100", "color", "0" => 76
+  "100", "color", "1" => 77
+  "100", "color", "2" => 38
+  "100", "color", "3" => 78
+
+  "101", "resref" => "ZOMBIEW3"
+  "101", "count" => 4
+  "101", "color", "0" => 10
+  "101", "color", "1" => 19
+  "101", "color", "2" => 36
+  "101", "color", "3" => 199
+
+  "102", "resref" => "ZOMBIEW4"
+  "102", "count" => 4
+  "102", "color", "0" => 19
+  "102", "color", "1" => 42
+  "102", "color", "2" => 36
+  "102", "color", "3" => 84
+
+  "103", "resref" => "ZOMFBAR1"
+  "103", "count" => 4
+  "103", "color", "0" => 10
+  "103", "color", "1" => 90
+  "103", "color", "2" => 38
+  "103", "color", "3" => 91
+
+  "104", "resref" => "ZOMFBAR2"
+  "104", "count" => 4
+  "104", "color", "0" => 19
+  "104", "color", "1" => 93
+  "104", "color", "2" => 36
+  "104", "color", "3" => 82
+
+  "105", "resref" => "ZOMFBAR3"
+  "105", "count" => 4
+  "105", "color", "0" => 10
+  "105", "color", "1" => 44
+  "105", "color", "2" => 36
+  "105", "color", "3" => 83
+
+  "106", "resref" => "ZOMMBAR"
+  "106", "count" => 4
+  "106", "color", "0" => 77
+  "106", "color", "1" => 79
+  "106", "color", "2" => 36
+  "106", "color", "3" => 84
+
+  "107", "resref" => "ZOMMBOU"
+  "107", "count" => 4
+  "107", "color", "0" => 39
+  "107", "color", "1" => 42
+  "107", "color", "2" => 38
+  "107", "color", "3" => 72
+
+  "108", "resref" => "ZOMMBOU2"
+  "108", "count" => 4
+  "108", "color", "0" => 6
+  "108", "color", "1" => 81
+  "108", "color", "2" => 78
+  "108", "color", "3" => 35
+END
+
+
+// Updates color values and animation id in the specified CRE resource.
+DEFINE_ACTION_FUNCTION a7_update_cre_colors
+INT_VAR
+  count         = 0   // number of color definitions
+  animation_id  = 0   // new animation id (0 = no change)
+STR_VAR
+  resref        = ~~  // CRE resref
+  array         = ~~  // name of array with color data
+BEGIN
+  ACTION_IF (NOT ~%resref%~ STR_EQ ~~) BEGIN
+    COPY_EXISTING ~%resref%.CRE~ ~override~
+      // patching animation id
+      PATCH_IF (animation_id > 0) BEGIN
+        WRITE_LONG 0x28 animation_id
+      END
+
+      // patching creature colors
+      FOR (i = 0; i < count; ++i) BEGIN
+        SET value = $EVAL ~%array%~(~%i%~)
+        WRITE_BYTE (0x2c + i) value
+      END
+    BUT_ONLY
+  END
+END
