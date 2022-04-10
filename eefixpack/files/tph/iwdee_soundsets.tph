@@ -1,0 +1,215 @@
+ACTION_IF ("%LANGUAGE%" STRING_COMPARE_CASE "english" = 0) BEGIN // english-specific fixes
+
+  // string sound asignments fixed in tra file
+  MOVE ~lang/en_us/sounds/fthiefl.wav~  ~lang/en_us/sounds/fthiefm_.wav~ // female thief 1 has damage and dying sounds reversed
+       ~lang/en_us/sounds/fthiefm.wav~  ~lang/en_us/sounds/fthiefl.wav~ 
+       ~lang/en_us/sounds/fthiefm_.wav~ ~lang/en_us/sounds/fthiefm.wav~
+       
+  COPY ~eefixpack/files/wav/male3m.wav~ ~lang/en_us/sounds~ // correct Male3 sound      
+
+  COPY_EXISTING ~charsnd.2da~ ~override~
+    REPLACE_TEXTUALLY ~[ %TAB%]20007[ %TAB%]~ ~ temp20011 ~
+    REPLACE_TEXTUALLY ~[ %TAB%]20011[ %TAB%]~ ~ 20007 ~
+    REPLACE_TEXTUALLY ~[ %TAB%]temp20011[ %TAB%]~ ~ 20011 ~
+    REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying; 
+    PRETTY_PRINT_2DA
+    BUT_ONLY
+       
+END
+
+COPY_EXISTING ~charsnd.2da~ ~override~ // get column numbers in advance
+  COUNT_2DA_COLS charsnd_cols   
+  SET cols = charsnd_cols - 1 // header row has one less entry, and that's the only row we're interested in
+  FOR (index = 0 ; index < cols ; ++index) BEGIN 
+    READ_2DA_ENTRY 0 index cols header
+    TO_LOWER header
+    SET value = index + 1
+    SPRINT ~%header%~ ~%value%~
+  END  
+  PRETTY_PRINT_2DA
+  BUT_ONLY
+
+COPY ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ // read table into variables
+  COUNT_2DA_ROWS 41 rows   
+  FOR (row = 0 ; row < rows ; ++row) BEGIN
+    READ_2DA_ENTRY row 0 41 rowname
+    TO_LOWER rowname
+    FOR (col = 1 ; col < 41 ; ++col) BEGIN
+      READ_2DA_ENTRY row col 41 entry
+      SPRINT ~%rowname%_%col%~ ~%entry%~
+    END
+  END
+  BUT_ONLY  
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_iwdee_soundset_map BEGIN
+  DFF_,   female_fighter_1 => ~%ffight1%~
+  HEFC_,  female_fighter_2 => ~%ffight2%~
+  HEFF_,  female_fighter_3 => ~%ffight3%~
+  HAFF_,  female_fighter_4 => ~%ffight4%~
+  HFF_,   female_fighter_5 => ~%ffight5%~
+  DFC_,   female_mage_1    => ~%fmage1%~
+  EFM_,   female_mage_2    => ~%fmage2%~
+  GFC_,   female_mage_3    => ~%fmage3%~
+  HEFM_,  female_mage_4    => ~%fmage4%~
+  HFM_,   female_mage_5    => ~%fmage5%~
+  HAFT_,  female_thief_1   => ~%fthief1%~
+  HFT_,   female_thief_2   => ~%fthief2%~
+  HFONE0, how_female_1     => ~%female1%~
+  HFTW0,  how_female_2     => ~%female2%~
+  HFTHR0, how_female_3     => ~%female3%~
+  HMONE0, how_male_1       => ~%male1%~
+  HMTW0,  how_male_2       => ~%male2%~
+  HMTHR0, how_male_3       => ~%male3%~
+  DMC_,   male_fighter_1   => ~%mfight1%~
+  DMF_,   male_fighter_2   => ~%mfight2%~
+  HMF_,   male_fighter_3   => ~%mfight3%~
+  HEMF_,  male_fighter_4   => ~%mfight4%~
+  EMF_,   male_fighter_5   => ~%mfight5%~
+  EMM_,   male_mage_1      => ~%mmage1%~
+  GMM_,   male_mage_2      => ~%mmage2%~
+  GMT_,   male_mage_3      => ~%mmage3%~
+  HMC_,   male_mage_4      => ~%mmage4%~
+  HAMF_,  male_mage_5      => ~%mmage5%~
+  EMT_,   male_thief_1     => ~%mthief1%~
+  HEMT_,  male_thief_2     => ~%mthief2%~
+END
+ 
+ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
+
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/%params_0%01.wav~ BEGIN // language check, basically
+ 
+    ACTION_BASH_FOR ~eefixpack/languages/%LANGUAGE%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
+    
+      COPY ~eefixpack/languages/%LANGUAGE%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
+        INNER_PATCH ~%BASH_FOR_RES%~ BEGIN // grab number from file name
+          REPLACE_EVALUATE ~%params_0%\([0-9]+\)~ BEGIN
+            SET number = MATCH1
+          END ~%params_0%%MATCH1%~  
+        END
+      
+      OUTER_SET strref = ~%params_1%_%number%~ // from charstr lookups, earlier
+      ACTION_GET_STRREF strref string
+      STRING_SET_EVALUATE strref ~%string%~ [%BASH_FOR_RES%] // add sound file to existing string
+      
+      OUTER_FOR (index = 0 ; index < 7 ; ++index) BEGIN // reset row0-row6 variables
+        OUTER_SET ~row_%index%~ = "-1"
+      END  
+      
+      ACTION_IF ((number > 0) AND (number < 3)) BEGIN // morale (should have two)
+        OUTER_SET row_0 = 83 
+        OUTER_SET row_1 =  1 
+      END  
+      
+      ACTION_IF ((number > 2) AND (number < 8)) BEGIN // battle cries (should have two)
+        OUTER_SET row_0 = 13 
+        OUTER_SET row_1 = 12 
+        OUTER_SET row_2 = 11 
+        OUTER_SET row_3 = 10 
+        OUTER_SET row_4 =  9 
+      END  
+      
+      ACTION_IF ((number > 7) AND (number < 10)) BEGIN // leader (should have one)
+        OUTER_SET row_0 = 84 
+        OUTER_SET row_1 =  6 
+      END  
+      
+      ACTION_IF ((number > 9) AND (number < 12)) BEGIN // tired (should have one)
+        OUTER_SET row_0 = 85 
+        OUTER_SET row_1 =  7 
+      END  
+      
+      ACTION_IF ((number > 11) AND (number < 14)) BEGIN // bored (should have one)
+        OUTER_SET row_0 = 86 
+        OUTER_SET row_1 =  8 
+      END  
+      
+      ACTION_IF ((number > 13) AND (number < 16)) BEGIN // hurt (should have one)
+        OUTER_SET row_0 = 87 
+        OUTER_SET row_1 = 20 
+      END  
+      
+      ACTION_IF ((number > 15) AND (number < 23)) BEGIN // common select (should have three)
+        OUTER_SET row_0 = 88 
+        OUTER_SET row_1 = 31 
+        OUTER_SET row_2 = 30 
+        OUTER_SET row_3 = 29 
+        OUTER_SET row_4 = 28 
+        OUTER_SET row_5 = 27 
+        OUTER_SET row_6 = 26 
+      END  
+      
+      ACTION_IF ((number > 33) AND (number < 37)) BEGIN // damage (should have two)
+        OUTER_SET row_0 = 90 
+        OUTER_SET row_1 = 89 
+        OUTER_SET row_2 = 18 
+      END  
+      
+      ACTION_IF ((number > 36) AND (number < 39)) BEGIN // dying (should have one)
+        OUTER_SET row_0 = 91 
+        OUTER_SET row_1 = 19 
+      END  
+      
+      ACTION_IF ((number > 38) AND (number < 41)) BEGIN // party member dying (should have one)
+        OUTER_SET row_0 = 92 
+        OUTER_SET row_1 = 53 
+      END  
+      
+      // now find a home in charsnd
+      COPY_EXISTING ~charsnd.2da~ ~override~
+        FOR (index = 0 ; index < 7 ; ++index) BEGIN
+          SPRINT rowtemp ~%row_%index%%~
+          SET row = (~%rowtemp%~ - 1)
+          PATCH_IF row >= 0 BEGIN 
+            READ_2DA_ENTRY row soundset charsnd_cols check
+            PATCH_IF check < 0 BEGIN // empty entry          
+              SET_2DA_ENTRY row soundset charsnd_cols ~%strref%~
+              SET index = 7 // kill loop
+              SET added = 1
+            END  
+          END  
+        END  
+        BUT_ONLY
+        
+    END // closing a_b_f
+
+  END // closing file check
+
+END // closing php_each 
+  
+// default party uses soundsets, so update their creature files as well
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_iwdee_party_soundset_map BEGIN
+  party01 => ~%male1%~   // gorris 
+  party02 => ~%male2%~   // baern 
+  party03 => ~%mmage4%~  // cadriel 
+  party04 => ~%fthief2%~ // kirika 
+  party05 => ~%fmage2%~  // ilauna 
+  party06 => ~%female3%~ // felicia 
+END
+
+COPY_EXISTING ~charsnd.2da~ ~override~ 
+  COUNT_2DA_ROWS charsnd_cols rows
+  FOR (row = 0 ; row < rows ; ++row) BEGIN // male1 and female1 double as default male/female, so update them while we're here
+    READ_2DA_ENTRY row   male1 charsnd_cols md // read male1 entry
+    SET_2DA_ENTRY  row       1 charsnd_cols md // set to default male column
+    READ_2DA_ENTRY row female1 charsnd_cols fd // read female1 entry
+    SET_2DA_ENTRY  row       2 charsnd_cols fd // set to default female column
+  END   
+  PATCH_PHP_EACH cd_iwdee_party_soundset_map AS creature => column BEGIN
+    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN 
+      READ_2DA_ENTRY (row - 1) column charsnd_cols entry
+      SPRINT ~%creature%_%row%~ ~%entry%~
+    END
+  END      
+  PRETTY_PRINT_2DA
+  BUT_ONLY 
+  
+ACTION_PHP_EACH cd_iwdee_party_soundset_map AS creature => column BEGIN
+
+  COPY_EXISTING ~b%creature%.cre~ ~override~
+                ~h%creature%.cre~ ~override~ 
+    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN 
+      WRITE_LONG (0xa4 + (row * 0x04)) ~%%creature%_%row%%~
+    END
+    BUT_ONLY
+
+END
