@@ -6,3 +6,32 @@
 
 // removing extra space at the end
 @53484 = ~Go away. Go away!~
+
+// dejemma -> dajemma
+@61954 = ~This finely crafted axe bears the sigil of the Ice Dragon Berserker Lodge. Glowing white runes edge its cold silver blade, and a cloud of chill air trails behind the axe whenever it is swung. The most powerful rangers of the Ice Dragon Berserker Lodge carry these axes with them on their dajemmas, as protection from southern threats.
+
+STATISTICS:
+
+Equipped abilities:
+– Strength: +1
+
+Combat abilities:
+– 2% chance per hit that the wielder will become berserk, losing control of <PRO_HISHER> actions for 3 rounds
+
+THAC0: +2
+Damage: 1d8+2, +1 cold
+Damage Type: Slashing
+Speed Factor: 5
+Proficiency Type: Axe
+Type: One-handed
+Requires:
+ 10 Strength
+
+Weight: 5~
+
+// dejemma -> dajemma; also surplus spaces after "undergo." and "direction." 
+@69605 = ~MINSC proudly proclaims himself a berserker warrior from the nation of Rashemen. He is currently undertaking his dajemma, a ritual journey all young Rashemi men undergo.
+
+His companion Dynaheir, whom he protects as part of his mission, is never far from his side. Dynaheir apparently has some interest in seeing the crusade stopped, and Minsc will follow wherever she leads. Indeed, "his witch," as Minsc calls her, is one of the few people from whom he will take direction.
+
+He also gives great weight to the "words" of his miniature giant space hamster, Boo. Neither you nor your other companions can hear Boo speak. It's possible Minsc has taken too many blows to the head. Still, his great strength and berserker rage should prove a danger to the crusaders you encounter.~

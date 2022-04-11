@@ -1,0 +1,67 @@
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// capitalization
+@9055 = ~Witchy Woman~
+
+// extra newline at end
+@30599 = ~TATTOO OF GREATER WARDING
+Special: +2 to Armor Class
+Weight: 0
+Usable only by Fighters
+
+This tattoo is a minor ward against physical attacks. It hardens the wearer's skin, making them more difficult to hurt in combat.~
+
+//  tell a tell -> tell a tale 
+@39300 = ~Yves leans forward as you tell the tale of your wakening in the Dustmen's Mortuary... she seems to devour your every word. As you finish, she smiles at you. "I shall remember this tale. I, too, will tell a tale of the Dustmen - 'Chapters of Dust.'"~
+
+//  I'll the tale -> I'll hear the tale 
+@39343 = ~"I'll hear the tale another time, Yves. Farewell."~
+
+// wits end -> wits' end 
+@39505 = ~I told Mar I had opened the box after coming to my wits' end about who to deliver it to. He now refuses to pay me for my troubles. My morality is in turmoil, for I believe I should have been compensated in some small way. After all, I did try to deliver the box... it was just that no one would accept it from me. Then again, I did open the box despite Mar's warnings not to. Confused, I left Mar without payment or comment, I am just glad to be finally done with this business of the box and the fiend contained therein.~
+
+//  factol -> factor - He is just a factor and is called so elsewhere.
+@43238 = ~"The factor, Sandoz... I'm sure you're familiar with him? He was the one responsible for the development of that fiendish device in the first place. He was the one who sought out the contract, and the one who promised the deadly weapon would be created. He is the one who is truly responsible for the deaths of those other engineers. He must die."~
+
+// There are also a total of three surplus spaces in the string...
+@46667 = ~TATTOO OF THE RESTLESS DEAD
+Invokes: "Bless"
+Weight: 0
+
+This tattoo recognizes your efforts to calm the restless dead of the mausoleum. You may draw upon their gratitude to bless yourself or your companions.
+
+This tattoo has only a limited number of uses before it vanishes.~
+
+// This string has a surplus newline at the end.
+@50090 = ~A CLUE!
+Weight: 0
+
+This cryptic piece of parchment simply states:
+
+"You now have a better understanding of what is going on..."~
+
+// Area of Effect is 10 feet Radius -> Area of Effect is a 10 feet radius 
+@51329 = ~CALL LIGHTNING
+Range: 180 feet
+Duration: Instant
+Speed: 3
+Area of Effect: 10 feet radius
+Saving Throw: 1/2
+
+This spell summons nature's fury to strike your foes.
+
+The caster can call one bolt of electricity, hurling it down upon her enemies for 2-16 points of electrical damage, plus an additional 1-8 points for every level of the caster. This damage affects any creature within the 10 foot radius of where the bolt crashes down. Area of Effect is a 10 feet Radius. A Save vs. Spells results in half-damage. This spell can only be used outdoors.~
+
+//  APERATURES -> APERTURES 
+@52623 = ~The voice continues. "HELP ME TO DIVIDE. BRANCH OUT. EXPAND. NEW APERTURES WILL OPEN. YOU MAY USE THEM TO TRAVEL TO THE LOWER WARD."~
+
+// about speak -> about to speak; There is also a surplus space after "go."
+@52949 = ~The rush of emotion dies in your mind. This is the end. The words he... you... are about to speak are true, but the truth is not the truth she sees. There are no lies, only cold calculations. Of *course* he wants you to come with him, Deionarra. You understand it clearly, too clearly: He has invested too much in the poor girl to let her go.~
+
+//  belongs -> belonged 
+@64678 = ~ARKIN'S RING
+Weight: 0
+
+This ring belonged to Arkin, Sheryl's father.~

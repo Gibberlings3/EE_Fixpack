@@ -2,5 +2,217 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+// proficency Clubs -> Hammers 
+@4845 = ~POOR QUALITY SLEDGEHAMMER
+Damage: 2-7 Crushing
+Speed: 8
+Weight: 10
+Proficiency: Hammers
+Usable only by Fighters
+
+This hammer is little more than a heavy lump of metal on the end of a stout stick. It's powerful, yes, but the balance is poor and it's entirely ungraceful.~
+
+//  Piece -> Charm - changing identified name to match identified description
+@5127 = ~Clipped Copper Charm~
+
+//  RAT TAIL CHARM -> DIRTY RAT CHARM to match description
+@30450 = ~DIRTY RAT CHARM
+Special:
+   +10% Stealth Skill Bonus
+   +5% Pickpocket Skill Bonus
+   -1 to Charisma
+Weight: 0
+Usable only by Thieves
+
+This cranium rat tail charm is particularly filthy and smells faintly of vomit. The tail is stiff, like a wire, and it can be bent into different shapes... it would almost make a great lockpick, except it is too thick.
+
+When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
+
+//  RAT TAIL CHARM -> DIRTY RAT CHARM to match description
+@30450 = ~DIRTY RAT CHARM
+Special:
+   +10% Stealth Skill Bonus
+   +5% Pickpocket Skill Bonus
+   -1 to Charisma
+Weight: 0
+Usable only by Thieves
+
+This cranium rat tail charm is particularly filthy and smells faintly of vomit. The tail is stiff, like a wire, and it can be bent into different shapes... it would almost make a great lockpick, except it is too thick.
+
+When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
+
+// TATTOO OF TRIST -> TATTOO OF TRIST'S SAVIOR - Matching item name. There is also a surplus space after "individual."
+@48826 = ~TATTOO OF TRIST'S SAVIOR
+Special: +3 to Saves vs. Paralyzation
+Weight: 0
+
+This tattoo symbolizes your efforts to win Trist's freedom. When worn, it protects the wearer from chains, paralyzation, or any other attacks that chain or hold an individual.~
+
+// Bless -> Blessing 
+@48846 = ~SCROLL OF BLESSING
+Allows user to cast "Blessing"
+Level: 1 / Priest
+Range: 180 feet
+Duration: 30 seconds
+Speed: 1
+Area of Effect: 70 feet radius
+Saving Throw: None
+Weight: 0
+Usable only by Priests
+
+A boon to one's companions, granting them strength when they are in need.
+
+Blessing grants +1 to hit and +1 to saves to all friendly creatures that are in a 70 feet radius from the casting point.~
+
+// Bless -> Blessing  
+@48848 = ~SCROLL OF CURSE
+Allows user to cast "Curse"
+Level: 1 / Priest
+Range: 180 feet
+Duration: 30 seconds
+Speed: 1
+Area of Effect: 50 feet radius
+Saving Throw: None
+Weight: 0
+Usable only by Priests
+
+A bane to one's enemies, weakening them.
+
+The opposite of Blessing, Curse grants all enemy targets in a 50-ft. radius, -1 to attacks and -1 to their saving throws for 30 seconds.~
+
+// This spell surrounds the caster -> This spell surrounds the target (There is also a surplus space after "intent.") 
+@48851 = ~SCROLL OF PROTECTION FROM EVIL
+Allows user to cast "Protection from Evil"
+Level: 1 / Priest
+Range: 0
+Duration: 10 seconds per level
+Speed: 1
+Area of Effect: 1 creature
+Saving Throw: None
+Weight: 0
+Usable only by Priests
+
+This spell surrounds the target with a circle of protection that helps protect him against attacks by those with evil intent.
+
+This spell bestows protection from evil creatures through a magical barrier that surrounds the recipient of the spell. It gives a -2 penalty to attack rolls by evil creatures and bestows a +2 bonus to all saving throws that are caused by such evil attacks for a duration of 10 seconds / level of the caster.~
+
+// changing class names in table
+@51013 = ~POWER OF ONE
+Range: Touch
+Duration: 30 mins per level
+Speed: 2
+Area of Effect: Person touched
+Saving Throw: None
+
+And from Gith, the warrior-queen, came the *knowing* of oneself. And from the *knowing,* came immense power.
+
+This spell increases the target's Strength score by a certain number of points (or tenths of points above 18) which will still be qualified by race/class restrictions. The spell cannot bestow a Strength of 21 or greater. The bonus is as follows:
+
+Priest              1d6+1 points
+Thief            1d6+1 points
+Fighter            1d8+1 points
+Mage              1d4+1 points~
+
+// changing class names in table, adding a newline before it
+@51019 = ~STRENGTH
+Range: Touch
+Duration: 60 mins per level
+Speed: 2
+Area of Effect: Person touched
+Saving Throw: None
+
+Grants immense strength to the weak - or greater strength to the strong.
+
+This spell increases the target's Strength score by a certain number of points (or tenths of points above 18) which will still be qualified by race/class restrictions. The spell cannot bestow a Strength of 19 or greater. The bonus is as follows:
+
+Priest              1d6 points
+Thief            1d6 points
+Fighter            1d8 points
+Mage              1d4 points~
+
+// changing class names in table
+@51068 = ~IMPROVED STRENGTH
+Range: 0
+Duration: 5 seconds per level
+Speed: 4
+Area of Effect: creature touched
+Saving Throw: None
+
+Superhuman strength can be yours, regardless of prior limitations.
+
+This spell can bestow superhuman strength upon a creature. Furthermore, Improved Strength allows the recipient of the spell to ignore race or class restrictions on his max Strength score, possibly reaching scores as high as 25.
+
+Priest            1d6+4 (max 23)
+Thief          1d6+4 (max 23)
+Fighter         1d8+4 (max 25)
+Mage            1d4+4 (max 21)~
+
+// Bless -> Blessing 
+@51299 = ~BLESSING
+Range: 180 feet
+Duration: 30 seconds
+Speed: 1
+Area of Effect: 70 feet radius
+Saving Throw: None
+
+A boon to one's companions, granting them strength when they are in need.
+
+Blessing grants +1 to hit and +1 to saves to all friendly creatures that are in a 70 feet radius from the casting point.~
+
+// Bless -> Blessing 
+@51301 = ~CURSE
+Range: 180 feet
+Duration: 30 seconds
+Speed: 1
+Area of Effect: 50 feet radius
+Saving Throw: None
+
+A bane to one's enemies, weakening them.
+
+The opposite of Blessing, Curse grants all enemy targets in a 50-ft. radius, -1 to Attacks and -1 to their saving throws for 30 seconds.~
+
+// This spell surrounds the caster -> This spell surrounds the target; There is also a surplus space after "intent."
+@51303 = ~PROTECTION FROM EVIL
+Range: 0
+Duration: 10 seconds per level
+Speed: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+This spell surrounds the target with a circle of protection that helps protect him against attacks by those with evil intent.
+
+This spell bestows protection from evil creatures through a magical barrier that surrounds the recipient of the spell. It gives a -2 penalty to attack rolls by evil creatures and bestows a +2 bonus to all saving throws that are caused by such evil attacks for a duration of 10 seconds / level of the caster.~
+
 // fixes invalid store item trigger
 @51352 = ~Global("Trias_DEAD_KAPUTZ", "GLOBAL", 1)~
+
+// "Usable only by Nameless One" should be added after the weight.
+@52070 = ~ROD OF MODRON MIGHT
+Special: Summons 1-3 Modron Constructs
+Weight: 5
+Usable only by Nameless One
+
+This magical rod allows the user to summon Modron constructs to do battle with his enemies. From one to three constructs are summoned. The constructs will fight fearlessly to the death.~
+
+// Bless -> Blessing 
+@52837 = ~BLESSED CANDY
+Invokes: "Blessing"
+Weight: 0
+
+This piece of delicious milk chocolate has had its creamy, caramel center blessed by a powerful priest of an unnamed power of good. Eating it will confer this blessing upon the devourer.~
+
+//  Book of Tome and Ash -> Tome of Bone and Ash; The book is TomeBA.itm - Tome of Bone and Ash. There is also a surplus space after "Ash."
+@64294 = ~Compare the runes to the runes in the Tome of Bone and Ash.~
+
+//  Should be added after THAC0:, Speed: 2, Weight: 1; There is also a surplus space after "weapons."
+@66178 = ~NOTCHED DAGGER
+Damage: 1-6 Piercing
+Enchanted: +2
+Special: +2 Piercing Damage
+THAC0: +2
+Speed: 2
+Weight: 1 
+Proficiency: Edged
+Not usable by Priests
+
+This dagger has various notches strategically placed about the blade. When used correctly, this dagger has the ability to catch incoming blows from bladed weapons.~
