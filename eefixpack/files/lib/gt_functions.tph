@@ -1,0 +1,27 @@
+DEFINE_PATCH_FUNCTION "COUNT_V10_HEAD_EFFECTS"
+STR_VAR
+	"opcode" = "-1" // regexp allowed (if needed)
+	"parameter2" = "same" // regexp allowed (if needed)
+	"resource" = "same" // regexp allowed (if needed)
+RET
+	"count"
+BEGIN
+	// Initialize
+	SET "count" = 0
+	// Main
+	GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" 0x6a 4 0x1e 2 0x20 2 0x30
+	PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
+		PATCH_MATCH (SHORT_AT "%fx_off%") WITH
+			"%opcode%" BEGIN
+				READ_LONG ("%fx_off%" + 0x8) "p2"
+				PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
+					READ_ASCII ("%fx_off%" + 0x14) "resref"
+					PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
+						SET "count" += 1
+					END
+				END
+			END
+			DEFAULT
+		END
+	END
+END
