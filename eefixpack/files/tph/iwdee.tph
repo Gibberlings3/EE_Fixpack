@@ -188,6 +188,8 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
             
 // ie-5937, cam
 // darts of bone shouldn't have a saving throw on their APR boost

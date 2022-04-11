@@ -1,0 +1,30 @@
+/* code used to generate crude list of stuff to check
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+  READ_LONG  0x64 abil_off ELSE 0
+  READ_SHORT 0x68 abil_num ELSE 0
+  READ_LONG  0x6a fx_off   ELSE 0
+  FOR (index = 0 ; index < abil_num ; ++index) BEGIN
+    READ_SHORT  (abil_off + 0x1e + (0x38 * index)) abil_fx_num
+    READ_SHORT  (abil_off + 0x20 + (0x38 * index)) abil_fx_idx
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off +        (0x30 * (abil_fx_idx + index2))) opcode
+      PATCH_IF ((opcode = 146) OR (opcode = 148)) BEGIN // cast spell
+        READ_BYTE  (fx_off + 0x02 + (0x30 * (abil_fx_idx + index2))) fx_target
+        READ_ASCII (fx_off + 0x14 + (0x30 * (abil_fx_idx + index2))) spell
+        READ_BYTE  (abil_off + 0x0c + (0x38 * index)) abil_target
+        READ_SHORT (abil_off + 0x0e + (0x38 * index)) abil_range
+        PATCH_PRINT ~ == %spell%: cast by %opcode% at %fx_target% with ability target %abil_target% at %abil_range% - %SOURCE_RES%~
+      END
+    END
+  END
+  BUT_ONLY
+  
+COPY_EXISTING ~cittern.itm~ ~override~ // The Cittern of War: shouldn't require creature target for AoE spell
+  LPF ALTER_HEADER INT_VAR target = 4 range = 50 STR_VAR match_icon = icittern END // Emotion, Courage header
+  BUT_ONLY
+*/
+  
+COPY_EXISTING ~scrlpet.itm~  ~override~ // stone to flesh scroll
+              ~scrlpet2.itm~ ~override~ // stone to flesh scroll
+  LPF ALTER_HEADER INT_VAR range = 40 STR_VAR match_icon = iscrl3p END // to match scstf
+  BUT_ONLY
