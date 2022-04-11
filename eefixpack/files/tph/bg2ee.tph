@@ -634,8 +634,8 @@ WITH_SCOPE BEGIN
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-        LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "206" STR_VAR "resource" = "spra301" RET "count" END
-        LPF ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 206 ~check_headers~ = (~%count%~ == 0 ? 1 : 0) ~multi_match~ = 1 ~header~ = ~%hdr%~ STR_VAR "resource" = "spra301" END
+        LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "206" "resource" = "spra301" RET "count" END
+        LPF ~CLONE_EFFECT~ INT_VAR ~silent~ = 1 ~match_opcode~ = 206 ~check_headers~ = (~%count%~ == 0 ? 1 : 0) ~multi_match~ = 1 ~header~ = ~%hdr%~ STR_VAR "resource" = "spra301" END
       END
     END
   BUT_ONLY_IF_IT_CHANGES
