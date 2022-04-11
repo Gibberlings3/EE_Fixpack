@@ -1,0 +1,27 @@
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// do you help -> do to help 
+@30156 = ~Is there anything I can do to help you?~
+
+// +4, to hit -> +4 to hit 
+@60867 = ~The finest bow crafted by Gesen Khan, this weapon draws energy from another plane, firing spears of lightning instead of arrows... and therefore never requiring ammunition of any kind. It is said that Gesen prepared to retire from his craft after selling the invaluable weapon, only to have the bow wrested from his grasp by a thief who used it to end Gesen's own life. A side effect of the bow bestows protection from electricity upon the user.
+
+STATISTICS:
+
+Equipped abilities:
+– Electrical Resistance: +20%
+
+Combat abilities:
+– When no arrows are equipped, the bow fires missiles that are treated as +4 for the purposes of determining what enemies they can damage. The missiles receive +4 to hit including the bonus listed below, and deal a total of 2 piercing and 1d8 electrical damage
+
+THAC0: +4
+Damage: +2 piercing, +1d8 electrical
+Speed Factor: 4
+Proficiency Type: Shortbow
+Type: Two-handed
+Requires:
+ 3 Strength
+
+Weight: 2~
