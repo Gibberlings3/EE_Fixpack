@@ -13,6 +13,7 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
@@ -45,6 +46,8 @@ COPY_EXISTING ~apprent2.cre~ ~override~
               ~apprent5.cre~ ~override~
   WRITE_ASCII DEATHVAR ~None~ (32)
 BUT_ONLY
+
+INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\

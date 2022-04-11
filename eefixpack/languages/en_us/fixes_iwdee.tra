@@ -123,6 +123,12 @@ Requires:
 
 Weight: 14~
 
+// tbd, cam
+// part of the soundset restorations, these two strings have the swapped sound assignments (see also 26213-26214)
+// it is incredibly unlikely that these need to be fixed in non-English games
+@20007 = ~Unfff!~ [fthief1l]
+@20011 = ~Uhhh.~ [fthief1m]
+
 // ie-5925, cam
 // cause disease is an abjuration spell, not necromancy
 @21478 = ~Cause Disease
@@ -169,6 +175,12 @@ Requires:
  15 Strength
 
 Weight: 3~
+
+// tbd, cam
+// part of the soundset restorations, these two strings have the swapped sound assignments (see also 20007, 20011)
+// it is incredibly unlikely that these need to be fixed in non-English games
+@26213 = ~[A sword has just taken a chunk of his stomach]Ahh!~ [] // sound will be assigned via soundset fixes
+@26214 = ~[Shot through the neck with an arrow]Uggghkk!~ [male3m]
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 25818
 // Weapon damage corrections

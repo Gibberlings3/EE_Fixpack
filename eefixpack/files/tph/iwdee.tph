@@ -23,6 +23,12 @@ COPY_EXISTING ~7eyes.2da~ ~override~
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 
 
+
+// tbd, cam
+// regression: add full oiwd soundsets for iwdee now that engine fully supports them
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ BEGIN
+  INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
+END
  
 // CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
