@@ -1,0 +1,28 @@
+COPY_EXISTING ~chan20.itm~ ~override~ // White Dragon Scale: shouldn't require creature target for AoE spell
+  LPF ALTER_HEADER INT_VAR target = 4 range = 12 STR_VAR match_icon = spwi503b END // cone of cold
+  BUT_ONLY
+  
+COPY_EXISTING ~comps65.itm~ ~override~ // purifier +5 (1pp cosmetic copy): : shouldn't require creature target for AoE spell
+              ~sw1h65.itm~  ~override~ // purifier +5
+  LPF ALTER_HEADER INT_VAR target = 4 STR_VAR match_icon = sppr303b END // dispel magic
+  LPF ALTER_EFFECT INT_VAR opcode = 148 target = 1 STR_VAR match_resource = sppr303 END // actual cast
+  BUT_ONLY
+  
+COPY_EXISTING ~globpur4.itm~  ~override~ // purple globe (wk) - mass cure is self-cast, shouldn't be able to pick a target
+  LPF ALTER_HEADER INT_VAR target = 5 range = 1 STR_VAR match_icon = iglbpur1 END // dispel magic
+  LPF ALTER_EFFECT INT_VAR target = 1 STR_VAR match_resource = sppr514 END // actual cast
+  BUT_ONLY
+  
+COPY_EXISTING ~helm16.itm~ ~override~ // helm of brilliance: shouldn't require creature target for AoE spell
+  LPF ALTER_HEADER INT_VAR target = 4 range = 15 STR_VAR match_icon = spwi714b END // prismatic spray header
+  LPF ALTER_EFFECT INT_VAR opcode = 148 target = 1 STR_VAR match_resource = spwi714 END // actual cast
+  BUT_ONLY
+  
+COPY_EXISTING ~helm17.itm~ ~override~ // skull of death: shouldn't require creature target for AoE spell
+  LPF ALTER_HEADER INT_VAR target = 4 STR_VAR match_icon = spwi605b END // death spell header
+  LPF ALTER_EFFECT INT_VAR opcode = 148 target = 1 STR_VAR match_resource = spwi605 END // actual cast
+  BUT_ONLY
+  
+COPY_EXISTING ~restore.itm~ ~override~ // restoration scroll
+  LPF ALTER_HEADER INT_VAR range = 1 STR_VAR match_icon = sppr417a END // restoration: range is touch
+  BUT_ONLY

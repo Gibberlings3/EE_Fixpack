@@ -104,6 +104,8 @@ END
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
+
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN

@@ -1,0 +1,5 @@
+COPY_EXISTING ~bdamul06.itm~ ~override~ // Clasp of Helm: targeted AoE spell shouldn't be cast on caster
+  LPF ALTER_HEADER INT_VAR target = 4 range = 45 STR_VAR match_icon = spwi322b END // detect illusion
+  LPF ALTER_EFFECT INT_VAR opcode = 148 target = 1 STR_VAR match_resource = spwi322 END // actual cast
+  BUT_ONLY IF_EXISTS // sod item
+  
