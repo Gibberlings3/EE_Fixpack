@@ -473,6 +473,15 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 
+// tbd, cam
+// special wand of magic missiles shouldn't bypass shield
+COPY_EXISTING ~wand12.itm~ ~override~ // wand of missiles
+  LPF ADD_ITEM_EFFECT INT_VAR opcode = 324 target = 2 parameter1 = 126 parameter2 = 110 timing = 0 resist_dispel = 2 insert_point = 0 STR_VAR resource = wand12 END // block with shield spell
+  LPF ADD_ITEM_EFFECT INT_VAR opcode =  61 target = 2 parameter1 = ((0 << 24) + (30 << 16) + (120 << 8)) parameter2 = (25 << 16) timing = 1 resist_dispel = 1 END // rgb fade
+  BUT_ONLY
+  
+
+
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
