@@ -26,3 +26,13 @@ COPY_EXISTING ~helm17.itm~ ~override~ // skull of death: shouldn't require creat
 COPY_EXISTING ~restore.itm~ ~override~ // restoration scroll
   LPF ALTER_HEADER INT_VAR range = 1 STR_VAR match_icon = sppr417a END // restoration: range is touch
   BUT_ONLY
+  
+COPY_EXISTING ~comps34.itm~ ~override~ // albruin (1pp dupe)
+              ~npmisc1.itm~ ~override~ // Jansen Spectroscopes
+              ~sw1h32.itm~  ~override~ // peridan
+              ~sw1h34.itm~  ~override~ // albruin
+  LPF ALTER_HEADER INT_VAR range = 1 target = 5 primary = 0 secondary = 0 projectile = 1 STR_VAR match_icon = spwi203b END // just cast detect invisiblity directly
+  LPF DELETE_EFFECT INT_VAR header_type = 3 END // delete everything on the magical header
+  LPF ADD_ITEM_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 10 parameter2 = 2 timing = 1 STR_VAR resource = spwi203 END // and replace with a single cast
+  BUT_ONLY
+  
