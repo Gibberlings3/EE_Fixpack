@@ -191,6 +191,15 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
             
+// tbd, cam
+// upgraded bren muller's crossbow needs feedback that effect was activated (copy bg2 Heartseeker's visuals)
+COPY_EXISTING ~cdxbowbm.itm~ ~override~
+  LPF ADD_ITEM_EFFECT INT_VAR opcode =  61 target = 1 parameter1 = ((0 << 24) + (30 << 16) + (120 << 8)) parameter2 = (25 << 16) timing = 1 END // rgb fade
+  LPF ADD_ITEM_EFFECT INT_VAR opcode = 141 target = 1 parameter2 = 24 timing = 1 END // rgb fade
+  BUT_ONLY
+  
+  
+            
 // ie-5937, cam
 // darts of bone shouldn't have a saving throw on their APR boost
 COPY_EXISTING ~dobone.itm~ ~override~
