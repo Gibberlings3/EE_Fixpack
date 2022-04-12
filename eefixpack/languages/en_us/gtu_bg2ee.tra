@@ -2,6 +2,9 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+// https://forgottenrealms.fandom.com/wiki/Anguiliian and matching #4408, #4412, and #46299.
+@4413 = ~Call forth the anguiliians! We are overrun!~
+
 // do you help -> do to help 
 @30156 = ~Is there anything I can do to help you?~
 
