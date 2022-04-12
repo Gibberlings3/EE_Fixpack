@@ -304,10 +304,8 @@ COPY_EXISTING ~eldoth.bcs~ ~override~ // eldoth gets bow & arrows at 10k
   END
   BUT_ONLY 
   
-COPY_EXISTING ~imoen.bcs~ ~override~ // imoen short sword at 1300, studded leather at 20k
+COPY_EXISTING ~imoen.bcs~ ~override~ // imoen short sword at 1300, studded leather at 20k; imoen can still use imoen2 cre file so skip short sword
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
-      ~\1 CreateItem("sw1h07",0,0,0) XEquipItem("sw1h07",Myself,SLOT_WEAPON1,EQUIP)~ // add short sword
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
       ~\1 CreateItem("leat04",0,0,0) XEquipItem("leat04",Myself,SLOT_ARMOR,EQUIP)~ // add studded leather
   END
