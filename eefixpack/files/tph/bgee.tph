@@ -135,6 +135,27 @@ COPY_EXISTING ~bd0120.bcs~ ~override~
 
 
 // tbd, cam
+// neera checking the wrong state of the skull
+COPY_EXISTING ~bd2000.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~OpenState("Bhaal_Skull",TRUE)~ ~OpenState("Bhaal_Skull",FALSE)~ // wrong state
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+// tbd, cam
+// trying to activate a region via Ambient activate
+COPY_EXISTING ~bd2000.bcs~   ~override~
+              ~bdbarghe.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~AmbientActivate("enlightenment"~ ~TriggerActivation("Enlightment"~ // yes, it's spelled that way
+  END
+  BUT_ONLY IF_EXISTS // sod
+
+
+
+// tbd, cam
 // referring to wrong DV for Halatathlaer
 // wrong variable scope for timer
 COPY_EXISTING ~bd5300.bcs~ ~override~
