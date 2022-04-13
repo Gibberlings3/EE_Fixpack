@@ -1,7 +1,7 @@
 ![Latest Release](https://img.shields.io/github/v/release/Gibberlings3/EE_Fixpack?include_prereleases&color=blue)
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Gibberlings3/EE_Fixpack?color=gold)
 ![Platform](https://img.shields.io/static/v1?label=platform&message=windows%20%7C%20macOS%20%7C%20linux%20%7C%20Project%20Infinity&color=informational)
-![Language](https://img.shields.io/static/v1?label=language&message=English&color=limegreen)
+![Language](https://img.shields.io/static/v1?label=language&message=English%20%7C%20Russian&color=limegreen)
 
 ![Supported games](https://img.shields.io/static/v1?label=supported%20games&message=BGEE%20%7C%20BG2EE%20%7C%20IWDEE%20%7C%20PsTEE&color=dodgerblue)
 
