@@ -1,0 +1,145 @@
+// Replace instances of Attack() -> RunningAttack() in combat scripts
+
+// Controls which "Attack()" instance should be updated
+ACTION_DEFINE_ASSOCIATIVE_ARRAY pst_replace_action BEGIN
+  // script resref => space-separated list of 0-based instance indices
+  ~0402tegr~ => ~0~
+  ~0500fhgd~ => ~2~
+  ~0500mhgd~ => ~2~
+END
+
+COPY_EXISTING ~0000bxd2.bcs~ ~override~
+              ~0000hgrd.bcs~ ~override~
+              ~0000hsrg.bcs~ ~override~
+              ~0209skel.bcs~ ~override~
+              ~0209skld.bcs~ ~override~
+              ~0402tegr.bcs~ ~override~
+              ~0403blnd.bcs~ ~override~
+              ~0403drnk.bcs~ ~override~
+              ~0403gang.bcs~ ~override~
+              ~0403gdul.bcs~ ~override~
+              ~0403ggng.bcs~ ~override~
+              ~0403gngb.bcs~ ~override~
+              ~0403hivr.bcs~ ~override~
+              ~0403mage.bcs~ ~override~
+              ~0403pain.bcs~ ~override~
+              ~0403prop.bcs~ ~override~
+              ~0403sent.bcs~ ~override~
+              ~0403thg1.bcs~ ~override~
+              ~0403thg2.bcs~ ~override~
+              ~0500fhgd.bcs~ ~override~
+              ~0500mhgd.bcs~ ~override~
+              ~0700atta.bcs~ ~override~
+              ~0701atta.bcs~ ~override~
+              ~0701hgrd.bcs~ ~override~
+              ~0702cass.bcs~ ~override~
+              ~0702gar2.bcs~ ~override~
+              ~0702gar3.bcs~ ~override~
+              ~0702gard.bcs~ ~override~
+              ~0702prsn.bcs~ ~override~
+              ~0702town.bcs~ ~override~
+              ~0702tria.bcs~ ~override~
+              ~0708abas.bcs~ ~override~
+              ~0708camp.bcs~ ~override~
+              ~0708corn.bcs~ ~override~
+              ~0708ghri.bcs~ ~override~
+              ~0708lemu.bcs~ ~override~
+              ~0708nupp.bcs~ ~override~
+              ~0708tre0.bcs~ ~override~
+              ~0708tre1.bcs~ ~override~
+              ~0708tre2.bcs~ ~override~
+              ~0900avng.bcs~ ~override~
+              ~0900ctkr.bcs~ ~override~
+              ~0900gnr1.bcs~ ~override~
+              ~0900gnr2.bcs~ ~override~
+              ~0900grdg.bcs~ ~override~
+              ~0900hrmt.bcs~ ~override~
+              ~0900hrs1.bcs~ ~override~
+              ~0900hrs2.bcs~ ~override~
+              ~0900hrs3.bcs~ ~override~
+              ~0900jjog.bcs~ ~override~
+              ~0900loot.bcs~ ~override~
+              ~0900mob.bcs~ ~override~
+              ~0900slv0.bcs~ ~override~
+              ~0900tem1.bcs~ ~override~
+              ~0900tem2.bcs~ ~override~
+              ~0900tem3.bcs~ ~override~
+              ~0900tem4.bcs~ ~override~
+              ~0900tgrd.bcs~ ~override~
+              ~0900thgb.bcs~ ~override~
+              ~0901geh6.bcs~ ~override~
+              ~0901gehr.bcs~ ~override~
+              ~0901grds.bcs~ ~override~
+              ~0901loot.bcs~ ~override~
+              ~0902ana0.bcs~ ~override~
+              ~0902ana1.bcs~ ~override~
+              ~0902ana2.bcs~ ~override~
+              ~0902ana5.bcs~ ~override~
+              ~0902ana6.bcs~ ~override~
+              ~0902ebbb.bcs~ ~override~
+              ~0903thg.bcs~ ~override~
+              ~0904guy.bcs~ ~override~
+              ~1000abd2.bcs~ ~override~
+              ~1000abid.bcs~ ~override~
+              ~1000corb.bcs~ ~override~
+              ~1000corc.bcs~ ~override~
+              ~1000cut3.bcs~ ~override~
+              ~1000fnds.bcs~ ~override~
+              ~1000lemd.bcs~ ~override~
+              ~1100anim.bcs~ ~override~
+              ~1100grg0.bcs~ ~override~
+              ~1100grg4.bcs~ ~override~
+              ~1100grk0.bcs~ ~override~
+              ~1101atta.bcs~ ~override~
+              ~1101cut3.bcs~ ~override~
+              ~1101cut4.bcs~ ~override~
+              ~1101fhju.bcs~ ~override~
+              ~1201sha2.bcs~ ~override~
+              ~1201shad.bcs~ ~override~
+              ~1202vhai.bcs~ ~override~
+              ~1203inc.bcs~ ~override~
+              ~1203inc1.bcs~ ~override~
+              ~1203inc2.bcs~ ~override~
+              ~1203inc3.bcs~ ~override~
+              ~1300cons.bcs~ ~override~
+              ~2000cati.bcs~ ~override~
+              ~3015grd1.bcs~ ~override~
+              ~3015grd2.bcs~ ~override~
+              ~3015sohm.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    // preparations
+    TEXT_SPRINT action ~Attack~
+    SET action_len = STRING_LENGTH ~%action%~
+    TEXT_SPRINT new_action ~RunningAttack~
+    SET new_action_len = STRING_LENGTH ~%new_action%~
+
+    // preparing bcs resref for array search
+    TEXT_SPRINT resref ~%SOURCE_RES%~
+    TO_LOWER ~resref~
+    PATCH_IF (VARIABLE_IS_SET $pst_replace_action(~%resref%~)) BEGIN
+      TEXT_SPRINT indices $pst_replace_action(~%resref%~)
+    END ELSE BEGIN
+      TEXT_SPRINT indices ~~
+    END
+
+    // replacing actions
+    SET index = 0
+    SET pos = 0
+    WHILE (pos >= 0) BEGIN
+      SET pos = INDEX_BUFFER(CASE_SENSITIVE ~\b%action%(~ pos)
+      PATCH_IF (pos >= 0) BEGIN
+        SET pos2 = INDEX_BUFFER(~(~ pos)
+        PATCH_IF (pos2 > pos) BEGIN
+          PATCH_IF (~%indices%~ STR_EQ ~~ OR
+                    INDEX(~\b%index%\b~ ~%indices%~) >= 0) BEGIN
+            DELETE_BYTES pos (action_len)
+            INSERT_BYTES pos (new_action_len)
+            WRITE_ASCIIE pos ~%new_action%~ (new_action_len)
+          END
+        END
+        SET pos = pos2
+      END
+      SET index += 1
+    END
+  END
+BUT_ONLY

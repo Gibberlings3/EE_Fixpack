@@ -12,6 +12,11 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+COPY_EXISTING ~animate.ids~ ~override~
+  REPLACE_TEXTUALLY ~0xf005[ %TAB%]+cl_4_Collector_Thug~ ~0xf006 cl_4_Collector_Thug~
+  REPLACE_TEXTUALLY ~0xf042[ %TAB%]+Trelon~ ~0xf043 Trelon~
+BUT_ONLY
+
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
 
@@ -28,6 +33,10 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 /////                                                  \\\\\
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
+
+COMPILE ~eefixpack/files/baf/pst~
+
+INCLUDE ~eefixpack/files/tph/pst_script_fixes.tph~
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
