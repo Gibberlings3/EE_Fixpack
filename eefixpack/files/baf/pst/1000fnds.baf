@@ -1,0 +1,57 @@
+IF
+  OnCreation()
+THEN
+  RESPONSE #100
+    RandomFace()
+    SavePlace()
+END
+
+// Removed: Caused almost all creatures to disappear again immediately after spawning
+// IF
+//   Global("Destroy_Fiends","AR1000",1)
+//   !Range([PC],30)
+// THEN
+//   RESPONSE #100
+//     DestroySelf()
+// END
+
+IF
+  See([PC])
+THEN
+  RESPONSE #100
+    Enemy()
+    Help()
+    Attack(NearestEnemyOf(Myself))
+END
+
+IF
+  Help([ANYONE])
+  !Help([PC])
+THEN
+  RESPONSE #100
+    Enemy()
+    Attack(NearestEnemyOf(LastHelp))
+END
+
+IF
+  AttackedBy([PC],DEFAULT)
+THEN
+  RESPONSE #100
+    Enemy()
+    Help()
+    Attack(LastAttackerOf(Myself))
+END
+
+IF
+  !NearSavedLocationPST(10)
+THEN
+  RESPONSE #100
+    ReturnToSavedPlace()
+END
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    RandomWalk()
+END

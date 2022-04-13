@@ -7,7 +7,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY pst_ini_copy BEGIN
 END
 
 ACTION_PHP_EACH pst_ini_copy AS target => source BEGIN
-  COPY_EXISTING ~%source%.INI~ ~%target%.INI~
+  COPY_EXISTING ~%source%.INI~ ~override/%target%.INI~
 END
 
 // Extending ANIMATE.IDS
