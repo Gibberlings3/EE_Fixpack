@@ -48,6 +48,31 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
+COPY_EXISTING ~ar1100.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(NumDeadLT("rogron",6)\)~ ~\1 Global("CDDelonSpoke","GLOBAL",1)~
+  END
+  BUT_ONLY  
+  
+// tbd, cam  
+// siege camp reinforcements checking wrong blocks
+COPY_EXISTING ~ar5203.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~GlobalLT("EXTRACOUNT2","MYAREA",1)[ %TAB%%LNL%%MNL%%WNL%]+\(ActionListEmpty()[ %TAB%%LNL%%MNL%%WNL%]+InActiveArea(Myself)[ %TAB%%LNL%%MNL%%WNL%]+THEN[ %TAB%%LNL%%MNL%%WNL%]+RESPONSE #30[ %TAB%%LNL%%MNL%%WNL%]+IncrementGlobal("MaxSpawn","AR5203",1)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObjectOffScreen("YSSOLD04",Player1,0,0,0)[ %TAB%%LNL%%MNL%%WNL%]+IncrementGlobal("EXTRACOUNT3","MYAREA",1)\)~
+                      ~GlobalLT("EXTRACOUNT3","MYAREA",1) \1~
+  END
+  BUT_ONLY  
+  
+// tbd, cam  
+// love talk sets trigger for jaheira's bandits to spawn, but shouldn't occur if romance ends before timer is up
+COPY_EXISTING ~jaheira.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("JaheiraBanditPlot","GLOBAL",1)\)~ ~\1 OR(2) Global("JaheiraRomanceActive","GLOBAL",1) Global("JaheiraRomanceActive","GLOBAL",2)~
+  END
+  BUT_ONLY  
+  
 // ie-5948, cam
 // Generic cleric AI script can hang
 COPY_EXISTING ~pries14a.bcs~ ~override~
@@ -107,6 +132,46 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
+
+// tbd, cam
+// aegis fang has wrong enchantment level
+COPY_EXISTING ~aegis.itm~  ~override~ // Aegis-fang +3
+              ~aegis2.itm~ ~override~ // Aegis-fang +3
+  WRITE_LONG 0x60 3 // enchantment
+  BUT_ONLY
+  
+// basilisk petrification should force, you know, a save against petrification
+COPY_EXISTING ~basigaze.itm~ ~override~
+              ~basilg1.itm~ ~override~
+              ~basill1.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
+  
+// tbd, cam
+// set to 400% speed, not set a fixed value of 30
+COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
+  LPF ALTER_EFFECT INT_VAR match_opcode = 126 parameter1 = 400 parameter2 = 2 END 
+  
+// tbd, cam
+// protection from magic scrolls not dispelling all buffs
+COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
+  FOR (index = 0 ; index < 11 ; ++index) BEGIN
+    LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 220 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index 
+  END  
+  FOR (index = 0 ; index < 14 ; ++index) BEGIN // only 10 spell schools, but 13 secondary types
+    LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 221 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index 
+  END 
+  BUT_ONLY 
+
+// tbd, cam
+// elemental staves' sound effect should only target the specified creature
+OUTER_SET elemental_destroyed = RESOLVE_STR_REF (@100)
+COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
+              ~staf16.itm~ ~override~ // staff of earth +2
+              ~staf17.itm~ ~override~ // staff of fire +2
+  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 318 power = 0 parameter2 = 115 timing = 0 savingthrow = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END  
+  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
+  LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
+  BUT_ONLY
 
 // luke
 // Mis-indexed effects
@@ -202,6 +267,23 @@ END
 // Stoneskin from Demogorgon & Melissan cannot be breached
 COPY_EXISTING ~melstone.spl~ ~override~
   WRITE_BYTE 0x27 7 // change secondary to Combat Protections
+  BUT_ONLY
+  
+  
+
+// tbd, cam
+// shield spell shouldn't stack
+COPY_EXISTING ~spwi114.spl~ ~override~
+  LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+  BUT_ONLY
+  
+  
+
+// tbd, cam
+// know alignment's save should match description
+COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw
+              ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
+  LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
   BUT_ONLY
 
 
@@ -762,6 +844,10 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 40968 STR_VAR ~insert~ = ~below~ END // Display string
   BUT_ONLY_IF_IT_CHANGES
 END
+
+// tbd, cam
+// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
+INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\

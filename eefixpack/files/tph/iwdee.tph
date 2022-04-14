@@ -726,6 +726,10 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+// tbd, cam
+// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
+INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
+
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\

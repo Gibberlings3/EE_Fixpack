@@ -1,0 +1,18 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// last line: the ruins are west of imnesvale, not north
+@17169 = ~Wallag,
+We travel this day to search out the wolf lair. My own scouting of the region has confirmed Merella's suspicions that there is a large pack of wolves acting in this area. On the map included, I have indicated where I believe the wolf den to be located. Follow us if you can, but be cautious. We can ill-afford another mysterious disappearance. Until we meet again. 
+
+Mazzy
+
+(On the same sheet is drawn a crude but effective map which indicates the path to a forested area several hours west of the Imnesvale region.)~
+
+// second line: the ruins are west of imnesvale, not east
+@19723 = ~This is half of a page of parchment, yellowed with age, the ink faded but still legible, and reads:
+
+"This land near the Umar Hills is rich with mithral deposits, but unfortunately too many scoundrels and bandits have noted this and are preying upon the prospectors in the area with a vengeance. I have found an excellent hiding place for my mithral cache, one that those thieves are sure not to find. It is far to the west of Imnesvale village, in a forest—"
+
+Below this section, the page is torn and jagged, as if it has been ripped from its other half.~
