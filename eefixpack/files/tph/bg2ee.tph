@@ -30,10 +30,12 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
-ACTION_BASH_FOR ~eefixpack/files/bam/area_anim~ ~^.+\.bam$~ BEGIN
-  ACTION_IF FILE_EXISTS_IN_GAME ~%BASH_FOR_RES%.bam~ BEGIN
-    COPY ~eefixpack/files/bam/area_anim/%BASH_FOR_RES%.bam~ ~override~
-  END
+ACTION_FOR_EACH file IN
+  1400t001 1400t002 1400t003 1400t004 1400t005 am0602c am0602d am0602k1 am0602k2 am0602l1 am0602l2 
+  am0801b1 am0801b2 am0902l am0902l1 am0902l2 am0902l3 am0902l4 am2000a am2000a1 am2000a2 am2000a3 
+  am2000a4 am2000b am2000b1 am2000b2 am2000b3 am2000b4 am2805b am2805c am414e11 am414e12 
+BEGIN  
+  COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
 END  
 
 /////                                                  \\\\\
