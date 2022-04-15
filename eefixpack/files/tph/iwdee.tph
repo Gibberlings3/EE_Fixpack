@@ -407,6 +407,8 @@ ACTION_PHP_EACH cd_spell_schools AS spell => school BEGIN
   
 END
 
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_spider_spawn.tph~ // tbd, cam: spider spawn only summons giant spiders, should also summon phase and sword
+
 
 
 /* commenting out pending David's broader 109/175/185 review
