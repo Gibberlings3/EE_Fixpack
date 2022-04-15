@@ -424,6 +424,33 @@ COPY_EXISTING ~ltouch.spl~ ~override~
 // tbd, davidw
 // circle of bone subspell has illegal character in sig
  COPY_EXISTING "#bonecir.spl" override WRITE_ASCII 0x0 "SPL "
+
+// tbd, cam
+// crippling strike should extend t0 -10 for assassins
+COPY_EXISTING ~backstab.spl~ ~override~
+  READ_SHORT 0x68 abil_num_orig
+  LPF CD_EXTEND-O-MATIC INT_VAR base_dur = 420 step_dur = 0 level_cap = 11 END
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = abil_num_orig ; index < abil_num ; ++index) BEGIN
+    READ_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off + 0x00 + ((index2 + abil_fx_idx) * 0x30)) op
+      PATCH_IF ((op = 54) OR (op = 73)) BEGIN
+        WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (0 - index) // penalty
+        WRITE_LONG (fx_off + 0x0e + ((index2 + abil_fx_idx) * 0x30)) 70          // duration
+      END
+    END      
+  END
+  BUT_ONLY  
+  
+// tbd, cam
+// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
+APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
+COPY ~eefixpack/files/spl/spin704.spl~ ~override~
+  SPRINT NYMPH_CONFUSION ~spin704~
   
   
   
