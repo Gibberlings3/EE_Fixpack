@@ -49,6 +49,7 @@ INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
+// Fixing creature script names
 COPY_EXISTING ~apprent2.cre~ ~override~
               ~apprent3.cre~ ~override~
               ~apprent4.cre~ ~override~
@@ -56,11 +57,46 @@ COPY_EXISTING ~apprent2.cre~ ~override~
   WRITE_ASCII DEATHVAR ~None~ (32)
 BUT_ONLY
 
+// Fixing creature race
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cre_race BEGIN
+  // resref   => RACE.IDS value
+  ~bsohmien~  => 59   // SOHMIEN
+  ~hbdygrd~   => 1    // HUMAN
+  ~lady~      => 38   // LADY_OF_PAIN
+  ~trias~     => 14   // DEVA
+  ~triasa~    => 14   // DEVA
+  ~triasb~    => 14   // DEVA
+  ~triasc~    => 14   // DEVA
+  ~worm~      => 71   // WORM
+END
+
+ACTION_PHP_EACH cre_race AS resref => race BEGIN
+  COPY_EXISTING ~%resref%.cre~ ~override~
+    WRITE_BYTE 0x272 race
+  BUT_ONLY
+END
+
 INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+// The Number of Ku'u Yin should protect from Chaotic creatures
+COPY_EXISTING ~kyname.itm~ ~override~
+  LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 0 END   // Remove: AC bonus
+  LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 33 END  // Remove: Save vs. Death bonus
+  PATCH_FOR_EACH align IN ~49~ ~50~ ~51~ BEGIN // alignment: chaotic good/neutral/evil
+    LPF ADD_ITEM_EQEFFECT
+    INT_VAR
+      opcode        = 219   // AC vs. Creature Type Modifier
+      target        = 1     // Self
+      timing        = 2     // While equipped
+      parameter1    = align // IDS value
+      parameter2    = 8     // IDS target: ALIGN.IDS
+    END
+  END
+BUT_ONLY
 
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\

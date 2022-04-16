@@ -1,7 +1,7 @@
 IF
   OnCreation()
-  !Race(Myself,LEMURE)
-  !Race(Myself,NUPPERIBO)
+  !Race(Myself,CAMPATUSKANELLA)
+  !Race(Myself,WORM)
 THEN
   RESPONSE #100
     SetGlobal("Attack_Mode","LOCALS",1)
@@ -16,14 +16,13 @@ THEN
     SavePlace()
 END
 
-// Removed: Caused almost all creatures to disappear again immediately after spawning
-// IF
-//   Global("Destroy_Fiends","AR1000",1)
-//   !Range([PC],30)
-// THEN
-//   RESPONSE #100
-//     DestroySelf()
-// END
+IF
+  Global("Destroy_Cattys","AR2000",1)
+  !Range([PC],30)
+THEN
+  RESPONSE #100
+    DestroySelf()
+END
 
 IF
   See([PC])
@@ -86,7 +85,7 @@ THEN
 END
 
 IF
-  !NearSavedLocationPST(10)
+  !NearSavedLocationPST(5)
 THEN
   RESPONSE #100
     ReturnToSavedPlace()

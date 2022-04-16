@@ -14,7 +14,7 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
               ~0209skel.bcs~ ~override~
               ~0209skld.bcs~ ~override~
               ~0402tegr.bcs~ ~override~
-              ~0403blnd.bcs~ ~override~
+              // ~0403blnd.bcs~ ~override~  // Tiresias (Blind Thug): should not run
               ~0403drnk.bcs~ ~override~
               ~0403gang.bcs~ ~override~
               ~0403gdul.bcs~ ~override~
@@ -32,7 +32,7 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
               ~0700atta.bcs~ ~override~
               ~0701atta.bcs~ ~override~
               ~0701hgrd.bcs~ ~override~
-              ~0702cass.bcs~ ~override~
+              // ~0702cass.bcs~ ~override~  // Cassius: Nupperibo appearance, should not run
               ~0702gar2.bcs~ ~override~
               ~0702gar3.bcs~ ~override~
               ~0702gard.bcs~ ~override~
@@ -43,29 +43,29 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
               ~0708camp.bcs~ ~override~
               ~0708corn.bcs~ ~override~
               ~0708ghri.bcs~ ~override~
-              ~0708lemu.bcs~ ~override~
-              ~0708nupp.bcs~ ~override~
+              // ~0708lemu.bcs~ ~override~  // Lemure: should not run
+              // ~0708nupp.bcs~ ~override~  // Nupperibo: should not run
               ~0708tre0.bcs~ ~override~
               ~0708tre1.bcs~ ~override~
               ~0708tre2.bcs~ ~override~
               ~0900avng.bcs~ ~override~
-              ~0900ctkr.bcs~ ~override~
-              ~0900gnr1.bcs~ ~override~
-              ~0900gnr2.bcs~ ~override~
+              // ~0900ctkr.bcs~ ~override~  // Dump Caretaker in Curst: Old man, should not run
+              // ~0900gnr1.bcs~ ~override~  // handled elsewhere
+              // ~0900gnr2.bcs~ ~override~  // handled elsewhere
               ~0900grdg.bcs~ ~override~
-              ~0900hrmt.bcs~ ~override~
+              // ~0900hrmt.bcs~ ~override~  // Hermit: should not run
               ~0900hrs1.bcs~ ~override~
               ~0900hrs2.bcs~ ~override~
               ~0900hrs3.bcs~ ~override~
               ~0900jjog.bcs~ ~override~
               ~0900loot.bcs~ ~override~
               ~0900mob.bcs~ ~override~
-              ~0900slv0.bcs~ ~override~
+              // ~0900slv0.bcs~ ~override~  // Thokola: should not run
               ~0900tem1.bcs~ ~override~
               ~0900tem2.bcs~ ~override~
               ~0900tem3.bcs~ ~override~
               ~0900tem4.bcs~ ~override~
-              ~0900tgrd.bcs~ ~override~
+              // ~0900tgrd.bcs~ ~override~  // Thokola: should not run
               ~0900thgb.bcs~ ~override~
               ~0901geh6.bcs~ ~override~
               ~0901gehr.bcs~ ~override~
@@ -84,36 +84,30 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
               ~1000corb.bcs~ ~override~
               ~1000corc.bcs~ ~override~
               ~1000cut3.bcs~ ~override~
-              ~1000fnds.bcs~ ~override~
-              ~1000lemd.bcs~ ~override~
+              // ~1000fnds.bcs~ ~override~  // handled elsewhere
+              // ~1000lemd.bcs~ ~override~  // Lemure: should not run
               ~1100anim.bcs~ ~override~
               ~1100grg0.bcs~ ~override~
               ~1100grg4.bcs~ ~override~
-              ~1100grk0.bcs~ ~override~
+              // ~1100grk0.bcs~ ~override~  // Gronk: should not run
               ~1101atta.bcs~ ~override~
               ~1101cut3.bcs~ ~override~
               ~1101cut4.bcs~ ~override~
               ~1101fhju.bcs~ ~override~
-              ~1201sha2.bcs~ ~override~
-              ~1201shad.bcs~ ~override~
+              // ~1201sha2.bcs~ ~override~  // Greater Shadow: should not run
+              // ~1201shad.bcs~ ~override~  // Greater Shadow: should not run
               ~1202vhai.bcs~ ~override~
               ~1203inc.bcs~ ~override~
               ~1203inc1.bcs~ ~override~
               ~1203inc2.bcs~ ~override~
               ~1203inc3.bcs~ ~override~
-              ~1300cons.bcs~ ~override~
-              ~2000cati.bcs~ ~override~
+              // ~1300cons.bcs~ ~override~  // Low/Medium/High Threat Constructs: should not run
+              // ~2000cati.bcs~ ~override~  // handled elsewhere
               ~3015grd1.bcs~ ~override~
               ~3015grd2.bcs~ ~override~
               ~3015sohm.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    // preparations
-    TEXT_SPRINT action ~Attack~
-    SET action_len = STRING_LENGTH ~%action%~
-    TEXT_SPRINT new_action ~RunningAttack~
-    SET new_action_len = STRING_LENGTH ~%new_action%~
-
-    // preparing bcs resref for array search
+    // preparing instances for find-and-replace
     TEXT_SPRINT resref ~%SOURCE_RES%~
     TO_LOWER ~resref~
     PATCH_IF (VARIABLE_IS_SET $pst_replace_action(~%resref%~)) BEGIN
@@ -122,24 +116,18 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
       TEXT_SPRINT indices ~~
     END
 
-    // replacing actions
+    // Find-and-replace for selected instances: Attack -> RunningAttack
     SET index = 0
-    SET pos = 0
-    WHILE (pos >= 0) BEGIN
-      SET pos = INDEX_BUFFER(CASE_SENSITIVE ~\b%action%(~ pos)
-      PATCH_IF (pos >= 0) BEGIN
-        SET pos2 = INDEX_BUFFER(~(~ pos)
-        PATCH_IF (pos2 > pos) BEGIN
-          PATCH_IF (~%indices%~ STR_EQ ~~ OR
-                    INDEX(~\b%index%\b~ ~%indices%~) >= 0) BEGIN
-            DELETE_BYTES pos (action_len)
-            INSERT_BYTES pos (new_action_len)
-            WRITE_ASCIIE pos ~%new_action%~ (new_action_len)
-          END
+    REPLACE_EVALUATE CASE_SENSITIVE
+      ~\bAttack(~
+      BEGIN
+        PATCH_IF (~%indices%~ STR_EQ ~~ OR INDEX(~\b%index%\b~ ~%indices%~) >= 0) BEGIN
+          TEXT_SPRINT action ~RunningAttack~
+        END ELSE BEGIN
+          TEXT_SPRINT action ~Attack~
         END
-        SET pos = pos2
+        SET index += 1
       END
-      SET index += 1
-    END
+      ~%action%(~
   END
 BUT_ONLY
