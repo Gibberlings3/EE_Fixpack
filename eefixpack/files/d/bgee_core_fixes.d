@@ -22,3 +22,18 @@ APPEND tiax
     IF ~~ THEN EXIT
   END
 END
+
+
+// tbd, cam
+// glanmarie and oberan have nothing to say to you on repeat visits
+APPEND glanma 
+  IF ~!ReactionLT(LastTalkedToBy,FRIENDLY_LOWER)~ THEN BEGIN glanma_common1 SAY #4803 // use her common select as one-and-done for repeat dialogue
+    IF ~~ THEN EXIT
+  END
+END
+
+APPEND oberan 
+  IF ~True()~ THEN BEGIN oberan_common1 SAY #4875 // use his common select as one-and-done for repeat dialogue
+    IF ~~ THEN EXIT
+  END
+END
