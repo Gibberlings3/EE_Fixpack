@@ -1,0 +1,104 @@
+IF
+  OnCreation()
+  !Race(Myself,CAMPATUSKANELLA)
+THEN
+  RESPONSE #100
+    SetGlobal("Attack_Mode","LOCALS",1)
+    Continue()
+END
+
+IF
+  Die()
+  GlobalGT("Curst_Murder","GLOBAL",14)
+THEN
+  RESPONSE #100
+    SetGlobal("Curst_Force_Spawn","GLOBAL",1)
+    Continue()
+END
+
+IF
+  Die()
+  GlobalLT("Curst_Murder","GLOBAL",15)
+THEN
+  RESPONSE #100
+    IncrementGlobal("Curst_Murder","GLOBAL",1)
+    Continue()
+END
+
+IF
+  OnCreation()
+THEN
+  RESPONSE #100
+    SetGlobal("Curst_Spawn","GLOBAL",0)
+    Enemy()
+    Continue()
+END
+
+IF
+  See([PC])
+  !TimerActive(1)
+  Global("Attack_Mode","LOCALS",0)
+THEN
+  RESPONSE #25
+    Enemy()
+    Attack([PC])
+  RESPONSE #75
+    StartTimer(1,10)
+END
+
+IF
+  See([PC])
+  !TimerActive(1)
+  !Global("Attack_Mode","LOCALS",0)
+THEN
+  RESPONSE #25
+    Enemy()
+    RunningAttack([PC])
+  RESPONSE #75
+    StartTimer(1,10)
+END
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    MoveToPoint([3304.1408])
+  RESPONSE #100
+    MoveToPoint([1244.634])
+  RESPONSE #100
+    MoveToPoint([1055.681])
+  RESPONSE #100
+    MoveToPoint([1389.514])
+  RESPONSE #100
+    MoveToPoint([1290.1071])
+  RESPONSE #100
+    MoveToPoint([892.1979])
+  RESPONSE #100
+    MoveToPoint([1173.2082])
+  RESPONSE #100
+    MoveToPoint([1412.2180])
+  RESPONSE #100
+    MoveToPoint([2198.1585])
+  RESPONSE #100
+    MoveToPoint([1686.1627])
+  RESPONSE #100
+    MoveToPoint([2020.1513])
+  RESPONSE #100
+    MoveToPoint([1518.2669])
+  RESPONSE #100
+    MoveToPoint([1763.2577])
+  RESPONSE #100
+    MoveToPoint([2391.2026])
+  RESPONSE #100
+    MoveToPoint([2635.2232])
+  RESPONSE #100
+    MoveToPoint([2899.2165])
+  RESPONSE #100
+    MoveToPoint([2858.2444])
+  RESPONSE #100
+    MoveToPoint([3508.3302])
+  RESPONSE #100
+    MoveToPoint([3742.3340])
+  RESPONSE #100
+    MoveToPoint([3575.2811])
+END
