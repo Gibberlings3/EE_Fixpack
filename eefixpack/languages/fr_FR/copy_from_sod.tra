@@ -1,0 +1,98 @@
+@62005 = ~Amulette de protection +1~
+@70365 = ~Cette amulette améliore la classe d'armure et les jets de sauvegarde de son porteur contre tous les types d'attaques. Les propriétés magiques de l'amulette l'empêchent d'être portée avec d'autres objets magiques accordant une protection, dont les armures enchantées.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+– Classe d'armure : +1
+– Jets de sauvegarde : +1
+
+Poids : 1~
+@70382 = ~Ceinturon de protection contre les armes contondantes~
+@70383 = ~Orné de motifs complexes brodés dans son cuir à l'aide de fil d'or, ce ceinturon semble être, au premier abord, plus décoratif qu'utile. Néanmoins, à mieux y regarder, on comprend qu'il est bien plus précieux qu'il n'en a l'air, puisqu'il accorde à qui le porte une protection magique contre les marteaux, les gourdins et les autres armes contondantes.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Classe d'armure : +4 contre les armes contondantes
+
+Poids : 2~
+@62009 = ~Bottes de rapidité~
+@62010 = ~Ces bottes sont fabriquées à partir de la peau tannée d'un animal comme un cheval ou un guépard. Elles sont ensuite enchantées pour permettre à leur porteur de se déplacer presque aussi rapidement que cet animal. Ce type de bottes est apprécié par ceux qui souhaitent être plus agiles que leurs adversaires ou leur échapper. Le porteur n'est pas plus fatigué que s'il se déplaçait à un rythme normal.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Double la vitesse de déplacement
+
+Poids : 4~
+@62076 = ~Anneau d'action libre~
+@62077 = ~Les ennemis ont du mal à ralentir le porteur de cet anneau. Les runes gravées dans la bande d'argent protègent des sorts visant à entraver la mobilité, ce qui confère à son porteur une liberté de mouvement que les autres personnes affectées par cette magie n'ont pas.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Le porteur est immunisé contre toute action, magique ou autre, affectant sa mobilité, ce qui inclut les sorts de Hâte et de Lenteur.
+
+Poids : 0~
+@62033 = ~Anneau de résistance au feu~
+@62034 = ~Le porteur de cet anneau bénéficie d'une résistance partielle au feu, qu'il provienne de sources ordinaires, telles que les torches ou les feux de camp, ou de sources magiques, telles que le souffle d'un dragon ou les sorts.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Résistance au feu : +40 %
+
+Poids : 0~
+@61978 = ~Armure de plates +1~
+@61979 = ~L'armure de plates est une combinaison de cotte de mailles et de plaques métalliques recouvrant les zones vitales telles que le torse, l'abdomen et l'aine. De fabrication semblable à l'armure de plates en bronze, la véritable armure de plates est constituée de mailles et de cuir. Celle-ci a été enchantée et procure des bonus supplémentaires à la classe d'armure de son porteur.
+
+PARAMÈTRES :
+
+Classe d'armure : 2 (-1 contre les armes tranchantes)
+Nécessite :
+ 12 en Force
+
+Poids : 20~
+@69262 = ~Cimeterre +2~
+@69261 = ~Le cimeterre, ou « shamshir », comme il était appelé initialement, se caractérise par une lame large à simple tranchant et incurvée, et se termine par une longue pointe effilée. Certes plus lent que d'autres armes du même type, il compense par des dégâts plus importants. Ce cimeterre a été renforcé par magie afin d'améliorer les compétences de celui ou celle qui le manie.
+
+PARAMÈTRES :
+
+TAC0 : +2
+Dégâts : 1d8 +2 (tranchants)
+Facteur de vitesse : 3
+Type de compétence : cimeterre/wakizashi/ninjatō
+Type : arme à une main
+Nécessite :
+10 en Force
+
+Poids : 4~
+@70384 = ~Ceinturon de perforation~
+@70385 = ~Fabriqué à partir de cuir découpé sans soin, dépourvu de décoration, il est évident que ce ceinturon n'a pas été conçu comme un ornement ou pour être confortable, mais pour être utile. Malgré sa piètre apparence, ses enchantements se révèlent précieux, car ils protègent son porteur contre les billes de fronde et les flèches de ses ennemis.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Classe d'armure : +3 contre les projectiles et les armes perforantes
+
+Poids : 2~
+@62052 = ~Anneau de protection +2~
+@62053 = ~Un anneau de protection améliore la classe d'armure et les jets de sauvegarde de son porteur contre tous les types d'attaques. Les propriétés magiques de l'anneau l'empêchent d'être porté avec d'autres objets magiques accordant une protection, dont les armures enchantées.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Classe d'armure : +2
+- Jets de sauvegarde : +2
+
+Poids : 0~
+@70356 = ~Gantelets de Compétence~
+@70357 = ~Ces gantelets magiques améliorent le maniement des armes de leur porteur, même lorsqu'il n'a pas l'habitude de les manier.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+– TAC0 : +1
+
+Poids : 2~

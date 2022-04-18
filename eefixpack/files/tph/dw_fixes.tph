@@ -59,3 +59,13 @@ END
 
 INCLUDE "%library_path%/immunities_via_324.tph"
 LAF immunities_via_324 INT_VAR write END
+
+/// handle unique items
+
+ACTION_IF GAME_IS bgee BEGIN
+	INCLUDE "%library_path%/bg1_item_deduplication.tph"
+END
+
+ACTION_IF GAME_IS bg2ee BEGIN
+	INCLUDE "%library_path%/bg2_item_deduplication.tph"
+END

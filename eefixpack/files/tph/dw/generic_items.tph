@@ -1,0 +1,140 @@
+///////////////////////////////////////////////////////////
+//// Make the generic items
+///////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION make_generic_items BEGIN
+
+	// work out game type
+	
+	ACTION_IF game_includes_sod BEGIN
+		OUTER_SPRINT root "sod"
+	END ELSE BEGIN
+		OUTER_SPRINT root "%game%"
+	END
+
+	// get main data
+
+	COPY - "%MOD_FOLDER%/data/item_duplication/generic_items.txt" nowhere
+		COUNT_2DA_COLS colcount
+		// get header cols
+		FOR (col=1;col<colcount;++col) BEGIN
+			READ_2DA_ENTRY 0 (col - 1) (colcount - 1) col_header
+			SET $header_num("%col_header%")=col
+		END
+		// get rows
+		READ_2DA_ENTRIES_NOW generic_item_data colcount
+		FOR (row=0;row<generic_item_data;++row) BEGIN 
+			READ_2DA_ENTRY_FORMER generic_item_data row 0 resref
+			SPRINT $generic_item_list("%resref%") ""
+			PHP_EACH header_num AS var=>val BEGIN
+				READ_2DA_ENTRY_FORMER generic_item_data row val entry
+				SPRINT $generic_items("%resref%" "%var%") "%entry%"
+			END 
+		END	
+	
+	// get strref data
+	
+	COPY - "%MOD_FOLDER%/data/item_duplication/generic_item_strrefs.txt" nowhere
+		READ_2DA_ENTRIES_NOW generic_item_strref_data 3
+		FOR (row=0;row<generic_item_strref_data;++row) BEGIN
+			READ_2DA_ENTRY_FORMER generic_item_strref_data row 0 resref
+			READ_2DA_ENTRY_FORMER generic_item_strref_data row 1 name_strref
+			READ_2DA_ENTRY_FORMER generic_item_strref_data row 2 desc_strref
+			SET $generic_items("%resref%" name_strref)=name_strref
+			SET $generic_items("%resref%" desc_strref)=desc_strref
+		END
+
+	// make the items
+	
+	ACTION_PHP_EACH generic_item_list AS resref=>discard BEGIN
+		OUTER_SPRINT needed $generic_items("%resref%" needed)
+		ACTION_IF INDEX ( "%root%" "%needed%" )>=0 BEGIN
+			OUTER_SPRINT source_root $generic_items("%resref%" game)
+			OUTER_SET name_strref=$generic_items("%resref%" name_strref)
+			OUTER_SET desc_strref=$generic_items("%resref%" desc_strref)
+			OUTER_SPRINT copy_from $generic_items("%resref%" copy_from)
+			WITH_TRA "%MOD_FOLDER%/languages/%EE_LANGUAGE%/copy_from_%source_root%.tra" BEGIN
+				COPY_EXISTING "%copy_from%.itm" "override/%resref%.itm"
+					SAY 0xc (AT name_strref)
+					SAY 0x54 (AT desc_strref)
+			END
+		END
+	END
+
+
+
+END
+
+///////////////////////////////////////////////////////////
+//// Use offline to collect the strings used by generic items
+////
+//// Do not run in live code!
+///////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION collect_generic_item_data BEGIN
+
+	// work out game type
+	
+	ACTION_IF game_includes_sod BEGIN
+		OUTER_SPRINT root "sod"
+	END ELSE BEGIN
+		OUTER_SPRINT root "%game%"
+	END
+
+	// get data
+
+	COPY - "%MOD_FOLDER%/data/item_duplication/generic_items.txt" nowhere
+		COUNT_2DA_COLS colcount
+		// get header cols
+		FOR (col=1;col<colcount;++col) BEGIN
+			READ_2DA_ENTRY 0 (col - 1) (colcount - 1) col_header
+			SET $header_num("%col_header%")=col
+		END
+		// get rows
+		READ_2DA_ENTRIES_NOW generic_item_data colcount
+		FOR (row=0;row<generic_item_data;++row) BEGIN 
+			READ_2DA_ENTRY_FORMER generic_item_data row 0 resref
+			SPRINT $generic_item_list("%resref%") ""
+			PHP_EACH header_num AS var=>val BEGIN
+				READ_2DA_ENTRY_FORMER generic_item_data row val entry
+				SPRINT $generic_items("%resref%" "%var%") "%entry%"
+			END 
+		END
+		
+	// get the strref lookups
+	
+	OUTER_SPRINT data ""
+	ACTION_PHP_EACH generic_item_list AS resref=>discard BEGIN
+		OUTER_SPRINT root_required $generic_items("%resref%" game) 
+		ACTION_IF "%root_required%" STR_EQ "%root%" BEGIN
+			COPY_EXISTING - "%resref%.itm" nowhere
+				READ_LONG 0xc name_strref
+				READ_LONG 0x54 desc_strref
+				SPRINT data "%data%%resref%%TAB%%name_strref%%TAB%%desc_strref%%WNL%"
+				SPRINT $strings("%name_strref%") ""
+				SPRINT $strings("%desc_strref%") ""
+		END
+	END
+	
+	// write the strref lookups to file
+	
+	COPY + ".../fp-inline/blank" "%MOD_FOLDER%/data/item_duplication/generic_item_strrefs.txt"
+		INSERT_BYTES 0x0 STRING_LENGTH "%data%"
+		WRITE_ASCII 0x0 "%data%"
+
+	// get the actual strrefs
+
+	INCLUDE "%MOD_FOLDER%/files/tph/dw/get_strings_from_game.tph"
+	LAF get_strings_from_game STR_VAR strings="strings" END
+
+
+
+
+
+
+
+
+END
+
+<<<<<<<<.../fp-inline/blank
+>>>>>>>>

@@ -1,0 +1,175 @@
+DEFINE_ACTION_FUNCTION bg1_item_deduplication BEGIN
+
+	// make the generic items
+	
+	INCLUDE "%MOD_FOLDER%/files/tph/dw/generic_items.tph"
+	LAF make_generic_items END
+
+/*
+
+Unfixable: 
+- Necklace of Missiles (amul01)
+- Ring of Folly (ring23)
+
+
+*/
+
+
+/*
+
+General: Ghost Knights
+
+The Ghost Knights in Firewine Bridge have a bunch of gear, but are noncombatant and incorporeal. I don't think it's intentional that
+you can steal their stuff
+
+*/
+
+ACTION_FOR_EACH knight_number IN 1 2 3 4 5 6 BEGIN
+	COPY_EXISTING "knight%knight_number%.cre" override
+		GET_OFFSET_ARRAY itm_arr CRE_V10_ITEMS
+		PHP_EACH itm_arr AS itm_ind=>itm_off BEGIN
+			WRITE_BYTE (0x10+itm_off) (BIT0 || BIT3)
+		END
+END
+
+
+
+/*
+
+Amulet of protection +1, 'The Protector'
+
+Carried by Nadine (questgiver), who actively gives it to you to hand to her son, and Ragefast (questgiver), who just has it as 
+protective bling. Found loose in ar0169 (a generic home). Sold in Feldepost's Inn, the Elfsong Tavern, and Zordral's tent.
+
+Proposal: Nadine is easily the most significant/evocative.
+
+*/
+
+ACTION_FOR_EACH object IN ragefa.cre ar0169.are inn3351.sto sto0706.sto sto4906.sto BEGIN
+	COPY_EXISTING "%object%" override
+		REPLACE_TEXTUALLY "amul14" "bdamul24" (8)
+END
+
+/* 
+Boots of speed, 'the paws of the cheetah' (boot01)
+
+
+Drasus has them; so (due to a typo correction) does Lothander.
+
+Proposal: Drasus is the iconic possessor; in oBG1 Lothander doesn't even have them.
+
+*/
+
+COPY_EXISTING "lothan.cre" override
+	REPLACE_TEXTUALLY "boot01" "bdboot05" (8)
+	
+
+/* 
+Girdle of bluntness, 'Destroyer of the Hills' (belt03)
+
+Krumm the thug has it, but so do two stores: STO1117 (generic potion store) and STO4907 (Zordral's store)
+
+Proposal: Krumm is the iconic case
+
+*/
+
+ACTION_FOR_EACH store IN sto1117 sto4907 BEGIN
+	COPY_EXISTING "%store%.sto" override
+		REPLACE_TEXTUALLY "belt03" "bdbelt13" (8)
+END	
+
+/* Helm of Glory
+
+Carried by Jardak, but can also be stolen from the noncombatant version of Pride in Durlag's tower.
+
+Proposal: obvs Pride's version should be unstealable
+
+*/
+
+COPY_EXISTING "pride.cre" override
+	GET_OFFSET_ARRAY itm_arr CRE_V10_ITEMS
+		PHP_EACH itm_arr AS itm_ind=>itm_off BEGIN
+			WRITE_BYTE (0x10+itm_off) (BIT0 || BIT3)
+		END	
+
+/* 
+
+Ring of Fire Resistance, 'Batalista's Passport'
+
+Dropped in the Candlekeep catacombs, but also in the Gibberling Mountains
+
+Proposal: the critical-path (Candlekeep) location is preferable.
+
+
+*/
+
+COPY_EXISTING "ar5500.are" override
+	REPLACE_TEXTUALLY ring02 bdring12 (8)
+	
+	
+/* Ring of Free Action 'Edventar's Gift'
+
+Alai has it; so does Dushai, a gnomish questgiver
+
+Proposal: Obviously Alai is more significant
+
+*/
+
+COPY_EXISTING "dushai.cre" override
+	REPLACE_TEXTUALLY ring09 bdring09 (8)
+	
+	
+/* Plate mail +1, 'Fallorian's Plate'
+
+
+Genthore has it; so does Simmeon, a blackguard connected to Dorn.
+
+Proposal: Genthore is the original possessor; Simmeon got it by accident.
+
+
+*/
+
+COPY_EXISTING "simmeon.cre" override
+	REPLACE_TEXTUALLY plat02 plat10 (8)
+
+
+/*
+Sword +1, +3 vs undead, 'Harrower'
+
+Added by BGEE. Two copies: one is wielded by Elkart (in Skie's story) and one is randomly stuffed into the belt of Zeela the amazon cleric, who can't use it.
+
+Proposal: ??
+
+*/
+
+/*
+
+Scimitar +2, 'Rashad's Talon'
+
+Found in Durlag's tower, but duplicated by Beamdog to a newly-added loot pile in the Cloakwood.
+
+Proposal: obviously the Durlag's tower one is canonical.
+
+*/
+
+COPY_EXISTING ar2100.are override
+	REPLACE_TEXTUALLY sw1h23 bdsw1h23 (8)
+
+/*
+
+Sling of unerring accuracy (weird BD item that gives +2 to hit but +0 damage)
+
+Black Lily sells one, but it's also randomly upstairs in the Splurging Sturgeon.
+
+Proposal: BL's is the primary one. Replace the other with ordinary sling +1.
+
+
+*/
+
+COPY_EXISTING "ar0104.are" override
+	REPLACE_TEXTUALLY "slng11" "slng02" //+1 sling
+	
+	
+	
+END	
+	

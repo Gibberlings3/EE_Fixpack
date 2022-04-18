@@ -1,0 +1,98 @@
+@62005 = ~Korunma Muskası +1~
+@70365 = ~This amulet improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of the amulet prevent it from being worn with other magical items of protection, including enchanted armor.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +1
+– Saving Throws: +1
+
+Weight: 1~
+@70382 = ~Girdle of Bluntness~
+@70383 = ~Covered in intricate designs sewn into its leather with golden thread, at first glance this girdle seems more decorative than practical. Closer examination is rewarded by the realization that it functions as far more than it appears, bestowing magical protection from hammers, clubs, and other blunt weapons to its wearer.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +4 vs. crushing attacks
+
+Weight: 2~
+@62009 = ~Boots of Speed~
+@62010 = ~These boots are made from the tanned hide of an animal such as a horse or a cheetah. They are then enchanted to enable the wearer to move nearly as fast as that animal. Footgear of this sort is prized for allowing one to outmaneuver or even escape one's foes. The boots do not fatigue the wearer beyond what would result from moving at a normal rate.
+
+STATISTICS:
+
+Equipped abilities:
+– Doubles movement rate
+
+Weight: 4~
+@62076 = ~Ring of Free Action~
+@62077 = ~Enemies have a hard time slowing this ring's wearer down. The runes etched in the silver band ward off spells designed to impede movement, granting its owner a freedom of mobility others affected by such magic are denied.
+
+STATISTICS:
+
+Equipped abilities:
+– The wearer is immune to everything, magical and otherwise, that affects mobility in any way. This includes Haste and Slow spells.
+
+Weight: 0~
+@62033 = ~Ring of Fire Resistance~
+@62034 = ~The wearer of this ring enjoys partial resistance to flame, whether its origins be in mundane sources, like torches or bonfires, or magical ones, such as fiery dragon breath or spells.
+
+STATISTICS:
+
+Equipped abilities:
+– Fire Resistance: +40%
+
+Weight: 0~
+@61978 = ~Plate Mail +1~
+@61979 = ~Plate mail is a combination of chain armor with metal plates covering the vital areas such as the chest, abdomen and groin. Similar in construction to bronze plate mail, true plate mail comprises chain and leather. In addition, this suit of plate mail is enchanted and gives additional bonuses to the wearer's Armor Class.
+
+STATISTICS:
+
+Armor Class: 2 (-1 vs. slashing)
+Requires:
+ 12 Strength
+
+Weight: 20~
+@69262 = ~Scimitar +2~
+@69261 = ~The scimitar, or "shamshir" as it was originally called, has a single-edged blade with a significant curve and is tapered to an elongated, sharp point. It is perhaps slower than other weapons of the same type, though it compensates by the amount of damage it is capable of. This particular weapon has been enhanced magically to complement the skill of the wielder.
+
+STATISTICS:
+
+THAC0: +2
+Damage: 1d8+2 (slashing)
+Speed Factor: 3
+Proficiency Type: Scimitar/Wakizashi/Ninjatō
+Type: One-handed
+Requires:
+ 10 Strength
+
+Weight: 4~
+@70384 = ~Girdle of Piercing~
+@70385 = ~Fabricated from crudely cut, unadorned leather, this loin belt was obviously created with utility rather than beauty (or even comfort) in mind. Though not pretty, it is useful, enchanted with warding spells that grant its wearer some magical protection from the slings and arrows of their enemies.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +3 vs. missile and piercing attacks
+
+Weight: 2~
+@62052 = ~Ring of Protection +2~
+@62053 = ~A ring of protection improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of such a ring prevent it from being worn with other magical items of protection, including enchanted armor.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +2
+– Saving Throws: +2
+
+Weight: 0~
+@70356 = ~Gauntlets of Weapon Skill~
+@70357 = ~These magical gauntlets aid the wearer in the use of weapons. Even an unfamiliar weapon may be used with some skill.
+
+STATISTICS:
+
+Equipped abilities:
+– THAC0: +1
+
+Weight: 2~

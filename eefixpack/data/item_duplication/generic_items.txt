@@ -1,0 +1,13 @@
+2DA V1.0
+*
+		copy_from	game		needed		
+bdamul24	amul14		sod		bgee,bg2ee
+bdbelt13	belt03		sod		bgee,bg2ee
+bdboot05	boot01		sod		bgee,bg2ee
+bdring09	ring09		sod		bgee
+bdring12	ring02		sod		bgee,bg2ee
+plat10		plat02		sod		bgee
+bdsw1h23	sw1h23		sod		bgee,bg2ee
+bdbelt14	belt04		sod		bg2ee
+bdring07	ring07		sod		bg2ee
+bdbrac09	brac09		sod		bg2ee

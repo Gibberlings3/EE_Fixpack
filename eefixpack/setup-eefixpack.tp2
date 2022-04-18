@@ -1,7 +1,7 @@
 BACKUP ~weidu_external/eefixpack/backup~ // location to store files for uninstall
 SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
 AUTO_EVAL_STRINGS
-MODDER fun_args fail
+MODDER fun_args fail missing_eval none setup_tra none
 
 ALWAYS
 
@@ -110,3 +110,13 @@ ACTION_IF game_includes_sod BEGIN
   END
   
 END
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// Testing space - disable in live release          \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN "Testing space" DESIGNATED 1000

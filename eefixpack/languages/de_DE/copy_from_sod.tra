@@ -1,0 +1,98 @@
+@62005 = ~Amulett des Schutzes +1~
+@70365 = ~Dieses Amulett verbessert die Rüstungsklasse des Trägers und die Rettungswürfe gegen alle Arten von Angriffen. Aufgrund seiner magischen Eigenschaften kann es nicht zusammen mit anderen magischen Schutzgegenständen einschließlich verzauberter Rüstungen getragen werden.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Rüstungsklasse: +1
+– Rettungswürfe: +1
+
+Gewicht:1~
+@70382 = ~Gürtel der Stumpfheit~
+@70383 = ~Bedeckt mit einem komplizierten Muster, das mit goldenem Faden in das Leder genäht wurde, scheint dieser Gürtel auf den ersten Blick eher dekorativ als praktisch zu sein. Eine genauere Untersuchung führt zu der Erkenntnis, dass er viel mehr zu bieten hat, als auf den ersten Blick sichtbar wird, und seinem Träger magischen Schutz gegen Hämmer, Keulen und andere stumpfe Waffen verleiht.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Rüstungsklasse: +4 gg. Wuchtwaffen
+
+Gewicht: 2~
+@62009 = ~Stiefel der Geschwindigkeit~
+@62010 = ~Diese Stiefel bestehen aus dem gegerbtem Leder von Tieren wie Pferden oder Geparden. Ihre Verzauberung ermöglicht dem Träger, sich fast so schnell wie diese Tiere zu bewegen. Mit Schuhwerk dieser Art können Feinde ausmanövriert oder sogar abgehängt werden. Die Stiefel ermüden den Träger nicht mehr als würde er sich normal bewegen.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Verdoppelt Bewegungsgeschwindigkeit
+
+Gewicht: 4~
+@62076 = ~Ring des freien Handelns~
+@62077 = ~Feinde können den Träger dieses Ringes nur schwer bremsen. Die Runen auf dem silbernen Band wehren Zauber ab, die Bewegungen erschweren sollen und gewähren dem Besitzer die Bewegungsfreiheit, die anderen von solcher Magie Betroffenen verwehrt bleibt.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Der Träger ist gegen alles immun, magisch oder nicht, das die Beweglichkeit beeinflusst. Darunter Eil- und Verlangsamungszauber.
+
+Gewicht: 0~
+@62033 = ~Ring des Feuerwiderstands~
+@62034 = ~Der Träger dieses Rings kann Flammen zum Teil widerstehen, egal, ob von weltlicher Herkunft, wie Fackeln oder Lagerfeuer, oder magischem Feuer wie Zaubern oder dem Atem eines Drachens.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Feuerwiderstand: +40 %
+
+Gewicht: 0~
+@61978 = ~Plattenpanzer +1~
+@61979 = ~Der Plattenpanzer besteht aus einer Kettenrüstung mit Metallplatten, die überlebenswichtige Bereiche wie die Brust, den Bauch und die Leiste schützen. Die Herstellung ist ähnlich zum Bronzepanzer; richtige Plattenpanzer enthalten Ketten und Leder. Zusätzlich ist dieser Plattenpanzer verzaubert und gewährt der Rüstungsklasse des Trägers zusätzliche Boni.
+
+EIGENSCHAFTEN:
+
+Rüstungsklasse: 2 (-1 gg. Klinge)
+Mindeststärke:
+ 12
+
+Gewicht: 20~
+@69262 = ~Krummsäbel +2~
+@69261 = ~Der Krummsäbel oder „Shamshir“, wie er ursprünglich genannt wurde, hat eine einschneidige Klinge mit beträchtlicher Krümmung und verjüngt sich zu einer langgezogenen scharfen Spitze. Er ist vielleicht langsamer als andere Waffen der gleichen Art, was aber durch den hohen Schaden kompensiert wird, den er zufügen kann. Diese besondere Waffe wurde magisch verstärkt, um die Fertigkeit des Benutzers zu ergänzen.
+
+EIGENSCHAFTEN:
+
+ETW0: +2
+Schaden: 1W8+2 (Klinge)
+Initiativefaktor: 3
+Fertigkeit: Krummsäbel/Wakizashi/Ninjatō
+Typ: 1-händig
+Mindeststärke:
+ 10
+
+Gewicht: 4~
+@70384 = ~Gürtel der Durchdringung~
+@70385 = ~Aus grob geschnittenem, ungeschmücktem Leder hergestellt, ging es bei der Erschaffung dieses Hüftgürtels eher um Nützlichkeit, als um Schönheit (oder gar Tragekomfort). Er ist weniger hübsch als hilfreich und ist mit Bannsprüchen verzaubert, die seinem Träger einigen magischen Schutz gegen die Schleudern und Pfeile seiner Feinde verleihen.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Rüstungsklasse: +3 gg. Geschoss- und Stichwaffen
+
+Gewicht: 2~
+@62052 = ~Ring des Schutzes +2~
+@62053 = ~Dieser Ring verbessert die Rüstungsklasse des Trägers und die Rettungswürfe gegen alle Arten von Angriffen. Aufgrund seiner magischen Eigenschaften kann er nicht zusammen mit anderen magischen Schutzgegenständen einschließlich verzauberter Rüstungen getragen werden.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– Rüstungsklasse: +2
+– Rettungswürfe: +2
+
+Gewicht: 0~
+@70356 = ~Panzerhandschuhe der Waffenfertigkeit~
+@70357 = ~Diese magischen Panzerhandschuhe helfen dem Träger bei dem Gebrauch von Waffen. Selbst eine ungewohnte Waffe kann mit einiger Fertigkeit verwendet werden.
+
+EIGENSCHAFTEN:
+
+Ausgerüstete Fähigkeiten:
+– ETW0: +1
+
+Gewicht: 2~

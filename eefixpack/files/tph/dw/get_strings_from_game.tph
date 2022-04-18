@@ -1,0 +1,50 @@
+///////////////////////////////////////////////////////////
+//// Use offline to collect strings from all tlks in the current game
+////
+//// The collected strings should be the keys of an array 'strings' (sent as STR_VAR)
+////
+//// They are saved in %MOD_FOLDER%/%lang_dir%/[EN_US|whatever]/[copy_from_bgee|copy_from_sod|copy_from_bg2ee|copy_from_iwdee].tra
+///////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION get_strings_from_game
+	STR_VAR lang_dir="languages"
+			strings="strings"
+BEGIN
+
+	ACTION_IF game_includes_sod BEGIN 
+		OUTER_SPRINT root "sod"
+	END ELSE BEGIN
+		OUTER_SPRINT root "%game%"
+	END
+
+	ACTION_CLEAR_ARRAY new_strings 
+	GET_DIRECTORY_ARRAY ee_lang_dirs "lang" "[A-Za-z].*"
+	ACTION_PHP_EACH ee_lang_dirs AS discard=>current_lang_dir BEGIN
+		OUTER_PATCH_SAVE current_lang "%current_lang_dir%" BEGIN
+			REPLACE_TEXTUALLY "lang[/\]" ""
+		END
+		COPY - "lang/%current_lang%/dialog.tlk" nowhere
+			READ_LONG 0xe string_data_off
+			PHP_EACH "%strings%" AS strref=>discard BEGIN
+				READ_LONG (0x12+0x1a*strref+0x12) offset
+				READ_LONG (0x16+0x1a*strref+0x12) length
+				READ_ASCII (string_data_off+offset) data_here (length)
+				SPRINT $new_strings("%strref%") "%data_here%"
+			END
+		ACTION_IF FILE_EXISTS "%MOD_FOLDER%/%lang_dir%/%current_lang%/copy_from_%root%.tra" BEGIN
+			COPY "%MOD_FOLDER%/%lang_dir%/%current_lang%/copy_from_%root%.tra" "weidu_external/workspace/temp.tra"
+		END ELSE BEGIN
+			COPY ".../fp-inline/blank" "weidu_external/workspace/temp.tra"
+		END
+		COPY + "weidu_external/workspace/temp.tra" "%MOD_FOLDER%/%lang_dir%/%current_lang%/copy_from_%root%.tra"
+			PHP_EACH new_strings AS strref=>string BEGIN
+				REPLACE_TEXTUALLY "@%strref% = ~[^~]*~%WNL%" ""
+				insert_point=BUFFER_LENGTH
+				SPRINT newline "@%strref% = ~%string%~%WNL%"
+				INSERT_BYTES insert_point STRING_LENGTH "%newline%"
+				WRITE_ASCII insert_point "%newline%"			
+			END
+	END
+
+
+END

@@ -1,0 +1,298 @@
+DEFINE_ACTION_FUNCTION bg2_item_deduplication BEGIN
+
+
+	// make the generic items
+	
+	INCLUDE "%MOD_FOLDER%/files/tph/dw/generic_items.tph"
+	LAF make_generic_items END
+
+
+
+/*
+Can't fix/unsure about.
+Helm of Defense 'Gift of Peace' (helm04): a unique item in oBG1, but it appears twice (in fairly generic places) in BG2 and again in a store added in EE. NO GENERIC COPY.
+Ring of Regeneration. Unique in oBG2, cloned by BD. ??? - no generic.
+Ring of Invisibility, 'Sandthief's Ring (ring05). Cattie-Brie has it, so does the Crooked Crane lich, so does a patsy in ToB. And BD puts it into a store.
+??? My inclination is to remove all but the Grave Lich's copy.
+Boots of Grounding (boot05): sold by the wandering priest of Tempus in the fighter stronghold quest and by the temple of Lathander. NO GENERIC.
+
+*/
+
+*/
+
+/*
+War hammer +2, 'Ashideena'. (HAMM03) Can be imported from BG1 but is also found in AR0204 in a loot box. Replace the latter with a regular warhammer +2.
+
+*/
+
+COPY_EXISTING "ar0204.are" override
+	REPLACE_TEXTUALLY HAMM03 HAMM08
+
+
+/*
+
+Ring of Fire Resistance (ring02): dropped in SoA, but sold by Lazarus Librarus in ToB. Take the SoA drop as canon.
+
+*/
+
+COPY_EXISTING 
+	25spell.sto override
+	25spell2.sto override
+		REPLACE_TEXTUALLY "ring02" "bdring12" (8)
+
+/*
+
+Battleaxe +2 (ax1h03): has a generic description in oBG2, and also a generic clone, ax1h11. Its oBG1 unique description is restored in BG2EE without recognizing that it's
+multiply-used. It appears once in SoA and is carried by various mooks in ToB.; the mooks clearly should get the generic one. 
+
+*/
+
+ACTION_FOR_EACH creature IN sengua04 ysfire02 BEGIN
+	COPY_EXISTING "%creature%.cre" override
+		REPLACE_TEXTUALLY "ax1h03" "ax1h11"
+END
+
+/*
+
+Bracers of Defense AC 6: there are more than a dozen of these in BG2, always given as fairly generic bling. I think here it makes sense just to 
+make the original one generic (its unique description is just inherited from BG1). It's easy to adapt it from the AC6 description.
+
+*/
+
+COPY_EXISTING - "brac02.itm" nowhere
+	READ_STRREF 0xc name
+	READ_STRREF 0x54 desc
+	OUTER_PATCH_SAVE name "%name%" BEGIN
+		REPLACE_TEXTUALLY "7" "6"
+	END
+	OUTER_PATCH_SAVE desc "%desc%" BEGIN
+		REPLACE_TEXTUALLY "7" "6"
+	END
+COPY_EXISTING "brac03.itm" override
+	SAY 0xc "%name%"
+	SAY 0x54 "%desc%"
+
+
+/* 
+Girdle of Bluntness (belt03): appears in Irenicus's dungeon, but also cloned in two oBG2 stores (and an EE store). Fairly
+clearly the dungeon one is iconic.
+*/
+
+ACTION_FOR_EACH store IN ohnimim ppumb01 temtalos BEGIN
+	COPY_EXISTING "%store%.sto" override
+		REPLACE_TEXTUALLY belt03 bdbelt13 (8)
+END
+
+
+/* 
+Girdle of Piercing (belt04): this is unique in oBG2, but EE clones it. Make the cloned item generic.
+*/
+
+COPY_EXISTING "ohnimim.sto" override
+	REPLACE_TEXTUALLY belt04 bdbelt14 (8)
+
+
+/*
+
+Dagger +2 (dagg03). This has a generic copy (dagg15) in oBG2, but it gets duplicated a few times anyway: Arkanis Gath has a copy, 
+so does a random mercenary, so does Vaelasa the dryad. And EE adds a copy to a store.
+
+Vaelasa is probably the most critical-path person, sho she can get the unique version.
+
+*/
+
+
+ACTION_FOR_EACH object IN c6arkan.cre c6arkan3.cre termer04.cre ohngduke.sto BEGIN
+	COPY_EXISTING "%object%" override
+		REPLACE_TEXTUALLY dagg03 dagg11
+END
+
+/*
+
+Heartseeker+3 (bow10). You can get one as loot in Firkraag's lair, but Ribald also sells one. Make the lair one canonical and swap
+an ordinary bow+3 into Ribald's store.
+
+*/
+
+COPY_EXISTING "ribald3.sto" override
+	REPLACE_TEXTUALLY bow10 bow25
+
+/*
+
+Full Plate +1, 'Plate of the Dark' (plat05). This is a unique BG1 item that gets a generic description in oBG2 and has its unique
+name and description restored in the EE. It's not used at all in oSoA, but gets given to a couple of lizard men and a drow in ToB,
+and is handed to a couple of EE creatures.
+
+I don't know what BD had in mind here. On aesthetic grounds it should probably stay with the drow (it's darker-colored).
+
+*/
+
+ACTION_FOR_EACH creature IN bazliz03 bazliz04 ohnfadel ohrtorca BEGIN
+	COPY_EXISTING "%creature%.cre" override
+		REPLACE_TEXTUALLY plat05 plat14
+	BUT_ONLY
+END
+
+/*
+
+Rashad's Talon (sw1h23) - scimitar+2. It appears only once in oBG2, but BD clones it when they clone a genie. Clearly shift the EE genie one to a generic weapon.
+*/
+
+COPY_EXISTING ohhdjinn.cre override
+	REPLACE_TEXTUALLY sw1h23 bdsw1h23 (8)
+
+
+
+
+
+
+/*
+
+Suryis's Blade +2 (halberd+2; halb03). Unique item importable from BG1; also sold by Ribald, and cloned to a creature by BD. Make the BG2 versions generic.
+
+*/
+
+ACTION_FOR_EACH object IN ribald.sto ohrsgua2.cre BEGIN
+	COPY_EXISTING "%object%" override
+		REPLACE_TEXTUALLY halb03 halb07
+END
+
+
+
+/*
+
+Helm of Infravision, helm05
+
+unique in oBG2, but Beamdog clones it twice. Given that helms of infravision are largely useless, I think
+ the easiest solution is to make their helms undroppable
+
+*/
+
+ACTION_FOR_EACH creature IN ohdcru04 ohdlufpl BEGIN
+	COPY_EXISTING "%creature%.cre" override
+		GET_OFFSET_ARRAY itm_arr CRE_V10_ITEMS
+		PHP_EACH itm_arr AS itm_ind=>itm_off BEGIN
+			READ_ASCII itm_off resref
+			PATCH_IF "%resref%" STR_EQ "helm05" BEGIN
+				WRITE_BYTE (0x10 + itm_off) (THIS BOR BIT3 BOR BIT1)
+			END			
+		END
+END
+
+/*
+
+Dagger +2, longtooth: 'grave binder' (dagg04)
+
+Unique in oBG2 (only available via import) but cloned to an EE store. Check for import and manually remove.
+
+*/
+
+<<<<<<<<.../fp-inline/gravebinder.baf
+IF
+	PartyHasItem("dagg04")
+	Global("dw_gravebinder_possessed","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("dw_gravebinder_possessed","GLOBAL",1)
+		RemoveStoreItem("ohngduke","dagg04",1)
+		Continue()
+END
+	
+>>>>>>>>
+
+EXTEND_TOP "ar0602.bcs" ".../fp-inline/gravebinder.baf"
+
+
+
+
+
+/*
+
+Ring of Protection +2, 'the guard's ring' (RING07)
+Given to Aran Linvail; also given as loot in various places; also held by the Hell Dragon. This one I think is best just
+made generic.
+
+*/
+
+COPY_EXISTING "bdring07.itm" "override/ring07.itm"
+
+
+/*
+Boots of Speed (boot01)
+
+Classic BG1 loot item. In SoA, carried by Renal and by 'pbhunt05', one of the bard-quest hunters. Several locations in ToB.
+I think the reasonable interpretation is that thsi is supposed to be generic throughout.
+
+
+*/
+
+COPY_EXISTING "bdboot05.itm" "override/boot01.itm"
+
+/*
+
+Amulet of Protection +1
+This is very widely used and clearly is supposed to be non-unique.
+
+*/
+
+COPY_EXISTING "bdamul24.itm" "override/amul14.itm"
+
+
+
+/*
+Varscona: imported from BG1, but also sold by Ribald.
+
+Here I think we should explicitly check for import and remove it if imported.
+
+*/
+
+<<<<<<<<.../fp-inline/varscona.baf
+IF
+	PartyHasItem("sw1h06")
+	Global("dw_varscona_possessed","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("dw_varscona_possessed","GLOBAL",1)
+		RemoveStoreItem("ribald","sw1h06",1)
+		Continue()
+END
+	
+>>>>>>>>
+
+EXTEND_TOP "ar0602.bcs" ".../fp-inline/varscona.baf"
+
+/*
+Scimitar +3, 'Water's Edge'. (sw1h52) Unique in oSOA but present all over ToB and EE. Presumably the generic title made people think it 
+wasn't unique. SW1H76 is a truly-generic substitute.
+
+*/
+
+ACTION_FOR_EACH creature IN alufie01 amsaemon icmarili ohdazot1 ohdazoth ohdsaem telalu1 yaga03 BEGIN
+	COPY_EXISTING "%creature%.cre" override
+		REPLACE_TEXTUALLY "sw1h52" "sw1h76"
+
+END
+
+
+/*
+Bala's Axe, 'wizard slayer'. Imported but also available as a drop in ar0413. Oddly, this is an EE addition. I think just reverting it is the way to go.
+
+*/
+
+COPY_EXISTING "ar0413.are" override
+	LPF DELETE_AREA_ITEM STR_VAR item_to_delete=ax1h07 END
+
+/*
+Gauntlets of Weapon Expertise (brac09)
+
+Unique in oBG2 but added to a store in EE. The store gets the generic.
+
+*/
+
+COPY_EXISTING "ohnimim.sto" override
+	REPLACE_TEXTUALLY brac09 bdbrac09 (8)
+
+
+
+
+END

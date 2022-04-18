@@ -1,0 +1,101 @@
+@62005 = ~Amulet ochrony +1~
+@70365 = ~Amulet ten zwiększa Klasę Pancerza i rzuty obronne noszącej go osoby przeciw wszystkim formom ataku. Magiczne właściwości amuletu uniemożliwiają noszenie go wraz z innymi magicznymi przedmiotami ochronnymi, wliczając w to zaczarowaną zbroję.
+
+PARAMETRY:
+
+Specjalne:
+– Klasa Pancerza: +1
+– Rzuty obronne: +1
+
+Waga: 1~
+@70382 = ~Pas tłumienia~
+@70383 = ~Ten pas pokrywają misterne wzory, wyszyte na skórze złotą nicią, przez co wydaje się, że jest on bardziej ozdobny niż praktyczny. Dokładniejsze oględziny ujawniają, iż wbrew pozorom pas posiada znaczącą funkcjonalność: osobę, która go nosi, obdarza magiczną ochroną przeciw młotom, maczugom i innym broniom obuchowym.
+
+PARAMETRY:
+
+Specjalne:
+– Klasa Pancerza: +4 przeciw broniom obuchowym
+
+Waga: 2~
+@62009 = ~Buty szybkości~
+@62010 = ~Buty te wykonano z garbowanej skóry zwierzęcia takiego jak koń lub gepard. Zostały zaczarowane, aby osoba, która je nosi, mogła poruszać się niemal tak szybko, jak to zwierzę. Obuwie tego typu jest bardzo cenione, ponieważ pozwala ono prześcignąć wrogów lub im uciec. Posiadacz tych butów nie męczy się w nich bardziej, niż poruszając się z normalną prędkością.
+
+PARAMETRY:
+
+Specjalne:
+– Podwaja szybkość poruszania się
+
+Waga: 4~
+@62076 = ~Pierścień swobody ruchów~
+@62077 = ~Wrogowie osoby noszącej ten pierścień muszą się solidnie namęczyć, by ją spowolnić. Runy wygrawerowane na srebrnej obrączce chronią ją bowiem przed zaklęciami utrudniającymi poruszanie się, zapewniając swobodę ruchów, o jakiej inni mogą tylko pomarzyć.
+
+PARAMETRY:
+
+Specjalne:
+– Noszący pierścień jest odporny na każde magiczne, jak i naturalne działanie, które w jakikolwiek sposób wpływa na swobodę ruchów. Dotyczy to także zaklęć Spowolnienie i Przyspieszenie ruchów.
+
+Waga: 0~
+@62033 = ~Pierścień odporności na ogień~
+@62034 = ~Osoba, która włoży ten pierścień na palec, może cieszyć się częściową odpornością na ogień; zarówno ten zwykły, z pochodni czy ognisk, jak i ten magiczny, pochodzący z zaklęć czy nawet smoczego zionięcia.
+
+PARAMETRY:
+
+Specjalne:
+– Odporność na ogień: +40%
+
+Waga: 0~
+@61978 = ~Zbroja płytowa +1~
+@61979 = ~Zbroja płytowa składa się z metalowych płyt, ochraniających najważniejsze części ciała, takie jak klatka piersiowa, brzuch i podbrzusze. Prawdziwa zbroja płytowa, o budowie podobnej do zbroi płytowej z brązu, składa się z kolczugi i skórzni. Oprócz tego ten pancerz został wyposażony w magiczne właściwości, dzięki czemu jeszcze lepiej ochrania swojego właściciela.
+
+PARAMETRY:
+
+Klasa Pancerza: 2 (-1 przeciw broniom siecznym)
+
+Wymagania:
+– Siła: 12
+
+Waga: 20~
+@69262 = ~Sejmitar +2~
+@69261 = ~Sejmitar, nazywany pierwotnie „szamszirem”, posiada jednosieczne mocno zakrzywione ostrze, zakończone wydłużonym, ostrym szpicem. W efekcie jest on nieco wolniejszy niż inna broń tego rodzaju, jednak bardziej skuteczny i zabójczy w walce. Ten konkretny egzemplarz został magicznie wzmocniony, by móc uzupełniać umiejętności tego, kto nim włada.
+
+PARAMETRY:
+
+Obrażenia: 1k8 +2
+TraK0: +2
+Typ obrażeń: sieczne 
+Opóźnienie: 3
+Rodzaj biegłości: sejmitar/wakizashi/ninja-to
+Typ broni: 1-ręczna
+
+Wymagania:
+– Siła: 10
+
+Waga: 4~
+@70384 = ~Pas przebić~
+@70385 = ~Ten pas lędźwiowy stworzono z byle jak pociętej, surowej skóry, a jego twórcą zdecydowanie bardziej kierowały względy praktycznie, aniżeli estetyczne czy nawet wygoda użytkowania. Pas nie należy do najpiękniejszych, jest jednak przydatny, ponieważ zaczarowano go ochronnymi zaklęciami. Dzięki nim osoba, która nosi ten pas, otrzymuje magiczną protekcję przed pociskami i strzałami swoich wrogów.
+
+PARAMETRY:
+
+Specjalne:
+– Klasa Pancerza: +3 przeciw pociskom i broniom kłutym
+
+Waga: 2~
+@62052 = ~Pierścień ochrony +2~
+@62053 = ~U osoby, która włoży go na palec, Pierścień ochrony poprawia Klasę Pancerza oraz rzuty obronne przeciw wszystkim formom ataku. Magiczne właściwości takiego pierścienia uniemożliwiają noszenie go wraz z innymi przedmiotami nadającymi magiczną protekcję, w tym również zaczarowanymi zbrojami.
+
+PARAMETRY:
+
+Specjalne:
+– Klasa Pancerza: +2
+– Rzuty obronne: +2
+
+Waga: 0~
+@70356 = ~Rękawice biegłości~
+@70357 = ~Te magiczne rękawice poprawiają skuteczność noszącej je osoby w posługiwaniu się orężem. Nawet ktoś zupełnie nieradzący sobie do tej pory z bronią, będzie w stanie używać jej w miarę biegle.
+
+PARAMETRY:
+
+Specjalne:
+– TraK0: +1
+
+Waga: 2~
