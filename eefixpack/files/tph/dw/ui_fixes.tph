@@ -1,0 +1,30 @@
+DEFINE_ACTION_FUNCTION ui_fixes BEGIN
+
+	INCLUDE "%MOD_FOLDER%/files/lib/lib_ui.tph" // load SFO ui-edit library
+	
+	
+/////// Broken 'more confirmation prompts' option in IWDEE
+
+	ACTION_IF "%game%" STR_EQ "iwdee" BEGIN
+		COPY_EXISTING "ui.menu" override
+			LPF UI_alter_function STR_VAR function=unmemorizeSpell patch=unmemorize_spell_patch END
+		BUT_ONLY	
+	END
+
+
+
+
+END
+
+
+
+////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION unmemorize_spell_patch BEGIN
+
+	REPLACE_TEXTUALLY EXACT_MATCH 
+		~if(spell.castableCount >= spell.memorizedCount)~
+		~if(spell.castableCount >= spell.memorizedCount and Infinity_GetOption(41, 9) == 1)~
+
+
+END

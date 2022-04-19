@@ -99,7 +99,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LA
 
 LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
   STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tra~ // tra file to process
-          output_tph = EVAL ~weidu_external/eefixpack/gtu_%game%.tph~ // tph being built; use weidu_external for this
+          output_tph = EVAL ~weidu_external/data/eefixpack/gtu_%game%.tph~ // tph being built; use weidu_external for this
 END
 
 ACTION_IF game_includes_sod BEGIN
@@ -120,3 +120,6 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN "Testing space" DESIGNATED 1000
+
+INCLUDE "%MOD_FOLDER%/files/tph/dw/ui_fixes.tph"
+LAF ui_fixes END
