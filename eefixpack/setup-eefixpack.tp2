@@ -1,4 +1,4 @@
-BACKUP ~weidu_external/eefixpack/backup~ // location to store files for uninstall
+BACKUP ~weidu_external/backup/eefixpack~ // location to store files for uninstall
 SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
 AUTO_EVAL_STRINGS
 MODDER fun_args fail missing_eval none setup_tra none
@@ -106,7 +106,7 @@ ACTION_IF game_includes_sod BEGIN
 
   LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
     STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tra~ // tra file to process
-            output_tph = EVAL ~weidu_external/eefixpack/gtu_%game%_sod.tph~ // tph being built; use weidu_external for this
+            output_tph = EVAL ~weidu_external/data/eefixpack/gtu_%game%_sod.tph~ // tph being built; use weidu_external for this
   END
   
 END
