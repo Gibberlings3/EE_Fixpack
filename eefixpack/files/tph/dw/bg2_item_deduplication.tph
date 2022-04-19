@@ -18,17 +18,6 @@ Boots of Grounding (boot05): sold by the wandering priest of Tempus in the fight
 
 */
 
-*/
-
-/*
-War hammer +2, 'Ashideena'. (HAMM03) Can be imported from BG1 but is also found in AR0204 in a loot box. Replace the latter with a regular warhammer +2.
-
-*/
-
-COPY_EXISTING "ar0204.are" override
-	REPLACE_TEXTUALLY HAMM03 HAMM08
-
-
 /*
 
 Ring of Fire Resistance (ring02): dropped in SoA, but sold by Lazarus Librarus in ToB. Take the SoA drop as canon.
@@ -142,23 +131,6 @@ COPY_EXISTING ohhdjinn.cre override
 	REPLACE_TEXTUALLY sw1h23 bdsw1h23 (8)
 
 
-
-
-
-
-/*
-
-Suryis's Blade +2 (halberd+2; halb03). Unique item importable from BG1; also sold by Ribald, and cloned to a creature by BD. Make the BG2 versions generic.
-
-*/
-
-ACTION_FOR_EACH object IN ribald.sto ohrsgua2.cre BEGIN
-	COPY_EXISTING "%object%" override
-		REPLACE_TEXTUALLY halb03 halb07
-END
-
-
-
 /*
 
 Helm of Infravision, helm05
@@ -178,32 +150,6 @@ ACTION_FOR_EACH creature IN ohdcru04 ohdlufpl BEGIN
 			END			
 		END
 END
-
-/*
-
-Dagger +2, longtooth: 'grave binder' (dagg04)
-
-Unique in oBG2 (only available via import) but cloned to an EE store. Check for import and manually remove.
-
-*/
-
-<<<<<<<<.../fp-inline/gravebinder.baf
-IF
-	PartyHasItem("dagg04")
-	Global("dw_gravebinder_possessed","GLOBAL",0)
-THEN
-	RESPONSE #100
-		SetGlobal("dw_gravebinder_possessed","GLOBAL",1)
-		RemoveStoreItem("ohngduke","dagg04",1)
-		Continue()
-END
-	
->>>>>>>>
-
-EXTEND_TOP "ar0602.bcs" ".../fp-inline/gravebinder.baf"
-
-
-
 
 
 /*
@@ -238,29 +184,6 @@ This is very widely used and clearly is supposed to be non-unique.
 COPY_EXISTING "bdamul24.itm" "override/amul14.itm"
 
 
-
-/*
-Varscona: imported from BG1, but also sold by Ribald.
-
-Here I think we should explicitly check for import and remove it if imported.
-
-*/
-
-<<<<<<<<.../fp-inline/varscona.baf
-IF
-	PartyHasItem("sw1h06")
-	Global("dw_varscona_possessed","GLOBAL",0)
-THEN
-	RESPONSE #100
-		SetGlobal("dw_varscona_possessed","GLOBAL",1)
-		RemoveStoreItem("ribald","sw1h06",1)
-		Continue()
-END
-	
->>>>>>>>
-
-EXTEND_TOP "ar0602.bcs" ".../fp-inline/varscona.baf"
-
 /*
 Scimitar +3, 'Water's Edge'. (sw1h52) Unique in oSOA but present all over ToB and EE. Presumably the generic title made people think it 
 wasn't unique. SW1H76 is a truly-generic substitute.
@@ -272,15 +195,6 @@ ACTION_FOR_EACH creature IN alufie01 amsaemon icmarili ohdazot1 ohdazoth ohdsaem
 		REPLACE_TEXTUALLY "sw1h52" "sw1h76"
 
 END
-
-
-/*
-Bala's Axe, 'wizard slayer'. Imported but also available as a drop in ar0413. Oddly, this is an EE addition. I think just reverting it is the way to go.
-
-*/
-
-COPY_EXISTING "ar0413.are" override
-	LPF DELETE_AREA_ITEM STR_VAR item_to_delete=ax1h07 END
 
 /*
 Gauntlets of Weapon Expertise (brac09)

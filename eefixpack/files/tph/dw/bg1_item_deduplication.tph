@@ -98,12 +98,11 @@ Ring of Fire Resistance, 'Batalista's Passport'
 
 Dropped in the Candlekeep catacombs, but also in the Gibberling Mountains
 
-Proposal: the critical-path (Candlekeep) location is preferable.
-
+Proposal: the mountain location is iconic, the catacombs version was added late.
 
 */
 
-COPY_EXISTING "ar5500.are" override
+COPY_EXISTING "ar2615.are" override
 	REPLACE_TEXTUALLY ring02 bdring12 (8)
 	
 	
