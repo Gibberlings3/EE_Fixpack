@@ -7,6 +7,13 @@
 // removing extra space at the end
 @53484 = ~Go away. Go away!~
 
+// missing period at the very end
+@59747 = ~The Siege of Dragonspear
+
+I have some time to scout the crusader camp, but should leave soon to find a way inside Bridgefort.
+
+I followed Corwin's advice and escaped the crusade's cage without alerting the camp. We now have a chance to explore the area unchallenged. How long that will last, I don't know.~
+
 // dejemma -> dajemma
 @61954 = ~This finely crafted axe bears the sigil of the Ice Dragon Berserker Lodge. Glowing white runes edge its cold silver blade, and a cloud of chill air trails behind the axe whenever it is swung. The most powerful rangers of the Ice Dragon Berserker Lodge carry these axes with them on their dajemmas, as protection from southern threats.
 

@@ -19,8 +19,8 @@ This tattoo is a minor ward against physical attacks. It hardens the wearer's sk
 //  I'll the tale -> I'll hear the tale 
 @39343 = ~"I'll hear the tale another time, Yves. Farewell."~
 
-// wits end -> wits' end 
-@39505 = ~I told Mar I had opened the box after coming to my wits' end about who to deliver it to. He now refuses to pay me for my troubles. My morality is in turmoil, for I believe I should have been compensated in some small way. After all, I did try to deliver the box... it was just that no one would accept it from me. Then again, I did open the box despite Mar's warnings not to. Confused, I left Mar without payment or comment, I am just glad to be finally done with this business of the box and the fiend contained therein.~
+// wits end -> wit's end 
+@39505 = ~I told Mar I had opened the box after coming to my wit's end about who to deliver it to. He now refuses to pay me for my troubles. My morality is in turmoil, for I believe I should have been compensated in some small way. After all, I did try to deliver the box... it was just that no one would accept it from me. Then again, I did open the box despite Mar's warnings not to. Confused, I left Mar without payment or comment, I am just glad to be finally done with this business of the box and the fiend contained therein.~
 
 //  factol -> factor - He is just a factor and is called so elsewhere.
 @43238 = ~"The factor, Sandoz... I'm sure you're familiar with him? He was the one responsible for the development of that fiendish device in the first place. He was the one who sought out the contract, and the one who promised the deadly weapon would be created. He is the one who is truly responsible for the deaths of those other engineers. He must die."~
