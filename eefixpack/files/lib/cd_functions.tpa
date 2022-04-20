@@ -583,3 +583,53 @@ DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
   WRITE_SHORT 0x6e 0
 
 END // end of function
+
+/////                                                  \\\\\
+///// CD_EXTEND-O-MATIC, patent pending                \\\\\
+/////                                                  \\\\\
+
+// this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
+DEFINE_PATCH_FUNCTION CD_EXTEND-O-MATIC
+  INT_VAR base_dur    =  0 // constant to add to all durations
+          step_dur    =  6 // how much duration to add to each consecutive header
+          step_size   =  1 // how many levels between headers
+          level_cap   = 20 // stop extending at level
+          min_dur     =  4 // ignore effects with durations less than this (e.g. cosmetics)
+          dur_special =  0 // just add step_dur to existing effects (ignore base_dur)
+          min_lev_alt =  0 // if extending from level 1, use this value as its minimum level instead (e.g. fifth level spell with only one header, use 9 here)
+BEGIN
+
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) min_lev // read level of last ability
+  PATCH_IF ((min_lev = 1) AND (min_lev_alt != 0)) BEGIN SET min_lev = min_lev_alt END
+  FOR (index = min_lev + step_size ; index < (level_cap + 1) ; index = index + step_size) BEGIN
+    READ_ASCII (abil_off +        (0x28 * (abil_num - 1))) abil (0x28) // read entire ability
+    READ_SHORT (abil_off + 0x1e + (0x28 * (abil_num - 1))) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (0x28 * (abil_num - 1))) abil_fx_idx
+    READ_ASCII (fx_off +        (0x30 * abil_fx_idx)) effects (abil_fx_num * 0x30) // read entire fx block
+    INSERT_BYTES (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num))) (abil_fx_num * 0x30) // insert bytes for new ability
+    WRITE_ASCIIE (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num))) "%effects%"          // write in effects block
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_LONG (fx_off + 0x0e + (0x30 * (abil_fx_idx + abil_fx_num + index2))) duration
+      PATCH_IF (duration > min_dur) BEGIN // exclude instant/cosmetic efects
+        PATCH_IF dur_special = 1 BEGIN
+          SET new_dur = duration + step_dur
+        END ELSE BEGIN
+          SET new_dur = (base_dur + (index * step_dur))
+        END
+        WRITE_LONG (fx_off + 0x0e + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_dur // adjust durations
+      END
+    END
+    INSERT_BYTES (abil_off +        (0x28 * abil_num)) 0x28 // insert new ability
+    WRITE_ASCIIE (abil_off +        (0x28 * abil_num)) "%abil%"
+    WRITE_SHORT  (abil_off + 0x10 + (0x28 * abil_num)) index
+    WRITE_SHORT  (abil_off + 0x20 + (0x28 * abil_num)) (abil_fx_idx + abil_fx_num)
+    SET abil_num += 1
+    SET fx_off   += 0x28
+  END
+  WRITE_SHORT 0x68 abil_num
+  WRITE_LONG  0x6a fx_off
+
+END

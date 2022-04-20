@@ -104,11 +104,11 @@ END
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
-ACTION_BASH_FOR ~eefixpack/files/bam/area_anim~ ~^.+\.bam$~ BEGIN
-  ACTION_IF FILE_EXISTS_IN_GAME ~%BASH_FOR_RES%.bam~ BEGIN
-    COPY ~eefixpack/files/bam/area_anim/%BASH_FOR_RES%.bam~ ~override~
-  END
-END  
+ACTION_IF game_includes_sod BEGIN
+  ACTION_FOR_EACH file IN bdfug01 bdfug02 bdfug03 bdfug04 BEGIN  
+    COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
+  END  
+END
 
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
@@ -555,6 +555,19 @@ END
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+// tbd, cam
+// shield spell shouldn't stack
+COPY_EXISTING ~spwi114.spl~ ~override~
+  LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+  BUT_ONLY
+
+// tbd, cam
+// know alignment's save should match description
+COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw
+              ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
+  LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
+  BUT_ONLY
 
 // luke
 // Mis-indexed effects
@@ -1208,6 +1221,10 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 25803 STR_VAR ~insert~ = ~below~ END // Display string
   BUT_ONLY_IF_IT_CHANGES
 END
+
+// tbd, cam
+// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
+INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\

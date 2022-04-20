@@ -1,0 +1,14 @@
+COPY_EXISTING ~spidgisu.2da~ ~override/spidphsu.2da~ // phase spider summon table for spider spawn
+              ~spidgisu.2da~ ~override/spidswsu.2da~ // sword spider summon table for spider spawn
+  REPLACE_TEXTUALLY ~SPIDGISU~ ~%DEST_RES%~
+
+APPEND ~smtables.2da~ ~50_SPIDER_SPAWN_PHASE SPIDPHSU
+51_SPIDER_SPAWN_SWORD SPIDSWSU~
+
+COPY_EXISTING ~spwi423.spl~ ~override~
+  FOR (index = 2 ; index < 5 ; ++index) BEGIN
+    LPF ALTER_EFFECT INT_VAR header = index match_opcode = 331 parameter2 = 50 END // swap to pahse spiders for levels 9-11
+  END  
+  FOR (index = 5 ; index < 24 ; ++index) BEGIN
+    LPF ALTER_EFFECT INT_VAR header = index match_opcode = 331 parameter2 = 51 END // sword spiders at level 12+
+  END 

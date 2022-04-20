@@ -50,10 +50,13 @@ COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix lig
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
-ACTION_BASH_FOR ~eefixpack/files/bam/area_anim~ ~^.+\.bam$~ BEGIN
-  ACTION_IF FILE_EXISTS_IN_GAME ~%BASH_FOR_RES%.bam~ BEGIN
-    COPY ~eefixpack/files/bam/area_anim/%BASH_FOR_RES%.bam~ ~override~
-  END
+ACTION_FOR_EACH file IN
+  1000ms1 1105ms1 1201ms2 1400t001 1400t002 1400t003 1400t004 1400t005 3001ms1 3601ms1 
+  6013ms1 am0602c am0602d am0602k1 am0602k2 am0602l1 am0602l2 am0801b1 am0801b2 am0902l 
+  am0902l1 am0902l2 am0902l3 am0902l4 am2000a am2000a1 am2000a2 am2000a3 am2000a4 am2000b 
+  am2000b1 am2000b2 am2000b3 am2000b4 am2805b am2805c am414e11 am414e12 
+BEGIN  
+  COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
 END  
 
 // there's another section of INCLUDEs at the bottom if it should be late in the process
@@ -404,6 +407,8 @@ ACTION_PHP_EACH cd_spell_schools AS spell => school BEGIN
   
 END
 
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_spider_spawn.tph~ // tbd, cam: spider spawn only summons giant spiders, should also summon phase and sword
+
 
 
 /* commenting out pending David's broader 109/175/185 review
@@ -419,6 +424,33 @@ COPY_EXISTING ~ltouch.spl~ ~override~
 // tbd, davidw
 // circle of bone subspell has illegal character in sig
  COPY_EXISTING "#bonecir.spl" override WRITE_ASCII 0x0 "SPL "
+
+// tbd, cam
+// crippling strike should extend t0 -10 for assassins
+COPY_EXISTING ~backstab.spl~ ~override~
+  READ_SHORT 0x68 abil_num_orig
+  LPF CD_EXTEND-O-MATIC INT_VAR base_dur = 420 step_dur = 0 level_cap = 11 END
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = abil_num_orig ; index < abil_num ; ++index) BEGIN
+    READ_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off + 0x00 + ((index2 + abil_fx_idx) * 0x30)) op
+      PATCH_IF ((op = 54) OR (op = 73)) BEGIN
+        WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (0 - index) // penalty
+        WRITE_LONG (fx_off + 0x0e + ((index2 + abil_fx_idx) * 0x30)) 70          // duration
+      END
+    END      
+  END
+  BUT_ONLY  
+  
+// tbd, cam
+// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
+APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
+COPY ~eefixpack/files/spl/spin704.spl~ ~override~
+  SPRINT NYMPH_CONFUSION ~spin704~
   
   
   
@@ -722,6 +754,10 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // op74 naturally provides the "Blind" portrait icon
   BUT_ONLY_IF_IT_CHANGES
 END
+
+// tbd, cam
+// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
+INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

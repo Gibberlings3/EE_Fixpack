@@ -1,0 +1,40 @@
+// default bg2 strings
+OUTER_SET berserk_string1 = 20723 // When the berserk state ends, the character will take 15 points of damage.
+OUTER_SET berserk_string2 = 20726 // The berserk state has ended...
+
+ACTION_IF game_is_bgee BEGIN
+  OUTER_SET berserk_string1 = 25829
+  OUTER_SET berserk_string2 = 25830
+END
+
+ACTION_IF game_is_iwdee BEGIN
+  OUTER_SET berserk_string1 = 36021
+  OUTER_SET berserk_string2 = 36023
+END
+
+// since it's only one effect, just 177 it. No need for a 326; 318/324 won't work since there's a trailing 206
+COPY_EXISTING ~spcl321.spl~  ~override~ // berserker enrage
+              ~spcl321d.spl~ ~override~ // berserker enrage (cooldown)
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 match_parameter1 = berserk_string1 opcode = 177 parameter1 = 30 parameter2 = 2 STR_VAR resource = spin117a END // only for GOODCUTOFF
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 match_parameter1 = berserk_string2 opcode = 177 parameter1 = 30 parameter2 = 2 STR_VAR resource = spin117b END // only for GOODCUTOFF
+  BUT_ONLY
+
+COPY ~eefixpack/files/eff/spin117a.eff~ ~override~
+  WRITE_LONG 0x1c berserk_string1 // When the berserk state ends, the character will take 15 damage.
+
+COPY ~eefixpack/files/eff/spin117a.eff~ ~override/spin117b.eff~
+  WRITE_LONG 0x1c berserk_string2 // The berserk state has ended...
+
+ACTION_IF !game_is_iwdee BEGIN
+
+  COPY_EXISTING ~spin117.spl~  ~override~ // minsc's berserk (also used by, randomly, Gorf)
+    WRITE_ASCII 0x10 ~~ #8 // blank casting sound since it's beng moved to an effect
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 match_parameter1 = berserk_string1 opcode = 177 parameter1 = 30 parameter2 = 2 STR_VAR resource = spin117a END // only for GOODCUTOFF
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 match_parameter1 = berserk_string2 opcode = 177 parameter1 = 30 parameter2 = 2 STR_VAR resource = spin117b END // only for GOODCUTOFF
+    LPF CLONE_EFFECT STR_VAR match_resource = spin117a resource = spin117c END // clone into new effect for minsc's line
+    BUT_ONLY
+
+  COPY ~eefixpack/files/eff/spin117a.eff~ ~override/spin117c.eff~
+    WRITE_LONG  0x10 174 // play sound
+    WRITE_ASCII 0x30 ~minsc02~ #8
+END
