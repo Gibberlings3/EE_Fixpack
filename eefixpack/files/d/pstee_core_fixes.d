@@ -15,3 +15,8 @@ ALTER_TRANS DGRACE BEGIN 96 END BEGIN 2 END BEGIN "REPLY" "#28448" END
 // Pillar of Skulls dialog should not create duplicate journal entries
 // Note: Choosing string where "Trias the Betrayer" is enclosed in single quotes.
 ALTER_TRANS DPILLAR BEGIN 35 36 END BEGIN 3 END BEGIN "JOURNAL" "#53500" END
+
+// Ingress' teeth should preserve the correct damage type when transforming to a more powerful weapon
+ALTER_TRANS IPTEETH BEGIN 3 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("IPTeeth","M1PTeeth",1,0,0)~ END
+ALTER_TRANS IPTEETH BEGIN 4 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("M1PTeeth","M2PTeeth",1,0,0)~ END
+ALTER_TRANS IPTEETH BEGIN 5 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("M2PTeeth","M3PTeeth",1,0,0)~ END
