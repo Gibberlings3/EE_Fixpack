@@ -110,16 +110,3 @@ ACTION_IF game_includes_sod BEGIN
   END
   
 END
-
-/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
-/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
-/////                                                  \\\\\
-///// Testing space - disable in live release          \\\\\
-/////                                                  \\\\\
-/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
-/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
-
-BEGIN "Testing space" DESIGNATED 1000
-
-INCLUDE "%MOD_FOLDER%/files/tph/dw/ui_fixes.tph"
-LAF ui_fixes END

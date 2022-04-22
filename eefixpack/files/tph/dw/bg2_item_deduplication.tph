@@ -207,6 +207,64 @@ COPY_EXISTING "ohnimim.sto" override
 	REPLACE_TEXTUALLY brac09 bdbrac09 (8)
 
 
+COMPILE ~eefixpack/files/d/botsmith.d~ // to use 
 
+COPY_EXISTING ~gparcher.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(UseItem("RING05",Myself)[ %LNL%%MNL%%WNL%]+END\)~ ~\1 
+    
+IF
+	Allegiance(Myself,ENEMY)
+	Range(NearestEnemyOf(Myself),10)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+	!GlobalTimerNotExpired("RingTimer","LOCALS")
+	HasItem("bdring05",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("RingTimer","LOCALS",ONE_ROUND)
+		DisplayStringHead(Myself,46150)  // *quaffs a potion*
+		UseItem("bdring05",Myself)
+END~
+  END
+  BUT_ONLY
+
+COPY_EXISTING ~gpthief.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(UseItem("RING05",Myself)[ %LNL%%MNL%%WNL%]+END\)~ ~\1 
+    
+IF
+	!GlobalTimerNotExpired("DrankPotionTimer","LOCALS")
+	Allegiance(Myself,ENEMY)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+	!GlobalTimerNotExpired("RingTimer","LOCALS")
+	HasItem("bdring05",Myself)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("DrankPotionTimer","LOCALS",ONE_ROUND)
+		SetGlobalTimer("RingTimer","LOCALS",ONE_ROUND)
+		DisplayStringHead(Myself,46150)  // *quaffs a potion*
+		UseItem("bdring05",Myself)
+END~
+  END
+  BUT_ONLY
+
+COPY_EXISTING ~useitem.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(UseItem("RING05",Myself)[ %LNL%%MNL%%WNL%]+Continue()[ %LNL%%MNL%%WNL%]+END\)~ ~\1 
+    
+IF
+	See(NearestEnemyOf(Myself))
+	!StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HasItem("bdring05",Myself)
+THEN
+	RESPONSE #100
+		UseItem("bdring05",Myself)
+		Continue()
+END~
+  END
+  BUT_ONLY
 
 END

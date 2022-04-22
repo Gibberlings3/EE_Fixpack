@@ -294,6 +294,23 @@ COPY_EXISTING ~storm.itm~ ~override~ // storm bow
 COPY_EXISTING ~flailsk.itm~ ~override~ // skullflail
   LPF ALTER_ITEM_HEADER INT_VAR header_type = 1 damage_bonus = 5 END // is +4 weapon, base flail damage is 1d6+1, so damage should be 1d6+5
   BUT_ONLY
+  
+  
+// tbd, cam
+// sword of days doesn't block all haste/slow spells
+COPY_EXISTING ~days.itm~ ~override~ // round out slow/haste immunity; david's stuff will add the immunity spellstates
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi305 resource = spra301 insert = below END // clone haste to ranger haste
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin146 insert = below END // clone to beholder slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin977 insert = below END // clone to golem slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spwish25 insert = below END // clone to wish slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spwm164 insert = below END // clone to wild surge slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 opcode = 101 parameter2 = 40 STR_VAR match_resource = spwi312 resource = ~~ END // immune to slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 opcode = 101 parameter2 = 16 STR_VAR match_resource = spwi312 resource = ~~ END // immune to haste
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 opcode = 267 parameter1= 14023 parameter2 = 0 STR_VAR match_resource = spwi312 resource = ~~ END // immune to string hasted
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 267 match_parameter1= 14023 parameter1 = 14000 END // immune to string slow
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 267 match_parameter1= 14023 parameter1 = 14668 END // immune to string slowed
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 opcode = 169 parameter1= 0 parameter2 = 38 STR_VAR match_resource = spwi312 resource = ~~ END // immune to icon haste
+  LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 169 match_parameter2= 38 parameter2 = 41 END // immune to icon slow
 
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
@@ -407,17 +424,17 @@ ACTION_PHP_EACH cd_spell_schools AS spell => school BEGIN
   
 END
 
-INCLUDE ~eefixpack/files/tph/tbd_iwdee_spider_spawn.tph~ // tbd, cam: spider spawn only summons giant spiders, should also summon phase and sword
+INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 
 
 
-/* commenting out pending David's broader 109/175/185 review
+
 // ie-5938, cam
 // Lich Touch should paralyze, not hold
 COPY_EXISTING ~ltouch.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 109 END  
   BUT_ONLY
-*/     
+     
 
 
 
