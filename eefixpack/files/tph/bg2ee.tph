@@ -1387,7 +1387,7 @@ END
 // - use same projectile as `"%CLERIC_CREEPING_DOOM%"`
 WITH_SCOPE BEGIN
   COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override"
-    LPF "ALTER_SPELL_HEADER" INT_VAR "projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect")
+    LPF "ALTER_SPELL_HEADER" INT_VAR "projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect") END
   BUT_ONLY_IF_IT_CHANGES
 END
 
