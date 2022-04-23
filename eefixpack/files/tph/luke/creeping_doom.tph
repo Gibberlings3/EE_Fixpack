@@ -1,0 +1,90 @@
+DEFINE_ACTION_FUNCTION "CLERIC_CREEPING_DOOM"
+BEGIN
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%CLERIC_CREEPING_DOOM%.spl" "override"
+			LPF "ALTER_SPELL_HEADER"
+			INT_VAR
+				"projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect")
+			END
+			PATCH_WITH_SCOPE BEGIN
+				SET "parameter2" = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE")
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "233" "parameter2" RET "count" END
+					LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 233 ~check_globals~ = 0 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ ~match_parameter2~ = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE") END
+				END
+			END
+			LPF "ALTER_EFFECT"
+			INT_VAR
+				"match_opcode" = 272 // Use EFF file on condition
+				"opcode" = 146 // Cast spell
+				"parameter1" = 0
+				"parameter2" = 1 // Cast instantly (ignore level)
+				"timing" = 4
+				"duration" = 0
+				"savingthrow" = BIT0 // Save vs. Spell
+				"savebonus" = "-2"
+			STR_VAR
+				"match_resource" = "panic"
+				"resource" = "%CLERIC_CREEPING_DOOM%a"
+			END
+			LPF "CLONE_EFFECT"
+			INT_VAR
+				"match_opcode" = 146 // Cast spell
+				"duration" = 6
+			STR_VAR
+				"insert" = "below"
+			END
+			LPF "CLONE_EFFECT"
+			INT_VAR
+				"match_opcode" = 146 // Cast spell
+				"match_duration" = 6
+				"duration" = 12
+			STR_VAR
+				"insert" = "below"
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Subspell applying the Panic effect(s)
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%CLERIC_CREEPING_DOOM%.spl" "override/%CLERIC_CREEPING_DOOM%a.spl"
+			/* Header */
+			WRITE_LONG NAME1 "-1"
+			WRITE_ASCII 0x10 "" #8 // casting sound
+			WRITE_LONG 0x18 0 // flags
+			WRITE_LONG 0x1E 0 // exclusion flags
+			WRITE_SHORT 0x22 0 // casting animation
+			/* Extended header(s) */
+			LPF "ALTER_SPELL_HEADER"
+			INT_VAR
+				"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
+				"speed" = 0
+			END
+			/* Feature block(s) */
+			LPF "DELETE_EFFECT" END // delete current content
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 24 // Panic
+				"target" = 2 // Preset target
+				"duration" = 6
+				"resist_dispel" = BIT0 + BIT1
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 142 // Display portrait icon
+				"target" = 2 // Preset target
+				"parameter2" = 36 // Panic
+				"duration" = 6
+				"resist_dispel" = BIT0 + BIT1
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 139 // Display string
+				"target" = 2 // Preset target
+				"parameter1" = 14007  // ~Panic~
+				"timing" = 1
+				"resist_dispel" = BIT0 + BIT1
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

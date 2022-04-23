@@ -1,0 +1,364 @@
+DEFINE_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS"
+STR_VAR
+	"file_ext" = ""
+BEGIN
+	// Validate input
+	ACTION_MATCH "%file_ext%" WITH
+		"ITM" "SPL" BEGIN END
+		DEFAULT
+			FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: unexpected input => ~%file_ext%~"
+	END
+	// **Opcode 74**
+	// - It can naturally provide the "Blind" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "74" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "8" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 8 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "74" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "8" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 8 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 45**
+	// - It can naturally provide the "Stun" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "45" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "55" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 55 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "45" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "55" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 55 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 175**
+	// - It can naturally provide the "Held" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "175" RET "count" END // negative lookahead not supported, sigh...
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "13" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 13 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "175" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "13" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 13 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 25**
+	// - It can naturally provide the "Poisoned" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "25" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "6" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 6 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "25" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "6" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 6 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 98**
+	// - It can naturally provide the "Regeneration" / "Regenerating" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "98" RET "count" END
+					PATCH_IF "%count%" BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "56" RET "count" END
+						PATCH_IF "%count%" BEGIN
+							// 56: Regeneration
+							//PATCH_PRINT "Op98: patching file ~%DEST_FILE%~..." // uncomment for debugging
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 56 END
+							LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 98 ~special~ = 56 END
+						END ELSE BEGIN
+							LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "87" RET "count" END
+							PATCH_IF "%count%" BEGIN
+								// 87: Regenerating
+								//PATCH_PRINT "Op98: patching file ~%DEST_FILE%~..." // uncomment for debugging
+								LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 87 END
+								LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 98 ~special~ = 87 END
+							END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "98" RET "count" END
+				PATCH_IF "%count%" BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "56" RET "count" END
+					PATCH_IF "%count%" BEGIN
+						// 56: Regeneration
+						//PATCH_PRINT "Op98: patching file ~%DEST_FILE%~..." // uncomment for debugging
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 56 END
+						LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~check_headers~ = 0 ~match_opcode~ = 98 ~special~ = 56 END
+					END ELSE BEGIN
+						LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "87" RET "count" END
+						PATCH_IF "%count%" BEGIN
+							// 87: Regenerating
+							//PATCH_PRINT "Op98: patching file ~%DEST_FILE%~..." // uncomment for debugging
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 87 END
+							LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~check_headers~ = 0 ~match_opcode~ = 98 ~special~ = 87 END
+						END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 16 / 317**
+	// - It can naturally provide the "Haste" / "Improved Haste" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "^\(16\|317\)$" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					PATCH_IF "%count%" BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "38" RET "count" END
+						PATCH_IF "%count%" BEGIN
+							// 38: Haste
+							//PATCH_PRINT "Op16/317: patching file ~%DEST_FILE%~..." // uncomment for debugging
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 38 END
+						END ELSE BEGIN
+							LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "110" RET "count" END
+							PATCH_IF "%count%" BEGIN
+								// 110: Improved Haste
+								//PATCH_PRINT "Op16/317: patching file ~%DEST_FILE%~..." // uncomment for debugging
+								LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 110 END
+							END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "^\(16\|317\)$" RET "count" END
+				PATCH_IF "%count%" BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "38" RET "count" END
+					PATCH_IF "%count%" BEGIN
+						// 38: Haste
+						//PATCH_PRINT "Op16/317: patching file ~%DEST_FILE%~..." // uncomment for debugging
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 38 END
+					END ELSE BEGIN
+						LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "110" RET "count" END
+						PATCH_IF "%count%" BEGIN
+							// 110: Improved Haste
+							//PATCH_PRINT "Op16/317: patching file ~%DEST_FILE%~..." // uncomment for debugging
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 110 END
+						END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 40**
+	// - It can naturally provide the "Slow" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "40" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "41" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 41 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "40" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "41" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 41 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	// **Opcode 78**
+	// - It can naturally provide the "Diseased" portrait icon
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.%file_ext%$" "override"
+			// Feature block(s)
+			PATCH_WITH_SCOPE BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"ITM" BEGIN
+						GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+					END
+					"SPL" BEGIN
+						GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					END
+					DEFAULT
+						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
+				END
+				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "78" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "7" RET "count" END
+						PATCH_IF ("%count%") BEGIN
+							LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 7 END
+							LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~header~ = ~%hdr%~ ~check_globals~ = 0 ~match_opcode~ = 78 ~special~ = 7 END
+						END
+					END
+				END
+			END
+			// Global effect(s)
+			PATCH_WITH_SCOPE BEGIN
+				LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "78" RET "count" END
+				PATCH_IF ("%count%") BEGIN
+					LPF "COUNT_V10_GEN_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "7" RET "count" END
+					PATCH_IF ("%count%") BEGIN
+						LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~check_headers~ = 0 ~match_opcode~ = 142 ~match_parameter2~ = 7 END
+						LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~silent~ = 1 ~check_headers~ = 0 ~match_opcode~ = 78 ~special~ = 7 END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

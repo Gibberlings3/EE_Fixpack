@@ -26,6 +26,7 @@ ALWAYS
   OUTER_SET ~game_is_%game%~ = 1
   LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
   INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
+  INCLUDE ~eefixpack/files/lib/gt_race_ids.tph~ // sets variables such as RACE_HUMAN based on race.ids
   INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
   INCLUDE ~eefixpack/files/lib/gt_functions.tph~
 
