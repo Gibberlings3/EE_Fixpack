@@ -142,7 +142,7 @@ BEGIN
 				"opcode" = 74 // Blindness
 				"target" = 2 // Preset target
 				"duration" = 60
-				"resist_dispel" = BIT1
+				"resist_dispel" = BIT0 + BIT1
 				"savingthrow" = BIT0 // Save vs. Spell
 			END
 			LPF "ADD_SPELL_EFFECT"

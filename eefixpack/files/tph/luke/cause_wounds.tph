@@ -40,7 +40,17 @@ BEGIN
           LAUNCH_PATCH_FUNCTION ~ALTER_ITEM_HEADER~ INT_VAR ~range~ = 0 END
         END
         "SPL" BEGIN
-          LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+          PATCH_WITH_SCOPE BEGIN
+            GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+            PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN
+              PATCH_MATCH SHORT_AT ("%ab_off%" + 0x26) WITH
+                "1" BEGIN
+                  WRITE_SHORT ("%ab_off%" + 0xE) 0
+                END
+                DEFAULT
+              END
+            END
+          END
         END
         DEFAULT
       END
@@ -86,7 +96,7 @@ BEGIN
   // luke
   // **Slay Living**
   // - Make sure "Range: Touch" (i.e., `range=0`)
-  // - `op55` should not bypass Magic Resistance
+  // - Make sure all effects do not bypass Magic Resistance
   // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and other cause/heal wounds spells)
   //// - On top of that, the spell is specifically called "Slay <ins>*Living*</ins>", so it makes sense I guess...
   WITH_SCOPE BEGIN
@@ -135,7 +145,7 @@ BEGIN
         END
         DEFAULT
       END
-      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 ~match_opcode~ = 55 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 END
     BUT_ONLY_IF_IT_CHANGES
   END
 
