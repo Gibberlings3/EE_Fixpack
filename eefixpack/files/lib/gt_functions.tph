@@ -2,7 +2,7 @@ DEFINE_PATCH_FUNCTION "COUNT_V10_HEAD_EFFECTS"
 STR_VAR
 	"opcode" = "-1" // regexp allowed (if needed)
 	"parameter2" = "same" // regexp allowed (if needed)
-	"timing" = "same" // regexp allowed (if needed)
+	"timing_exclude" = "none" // regexp allowed (if needed)
 	"resource" = "same" // regexp allowed (if needed)
 RET
 	"count"
@@ -17,7 +17,7 @@ BEGIN
 				READ_LONG ("%fx_off%" + 0x8) "p2"
 				READ_BYTE ("%fx_off%" + 0xC) "tmg"
 				PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
-					PATCH_IF ("%timing%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "timing" AND "%tmg%" == "%timing%") OR (("%tmg%" STRING_MATCHES_REGEXP "%timing%") == 0) BEGIN
+					PATCH_IF ("%timing_exclude%" STRING_EQUAL_CASE "none") OR (IS_AN_INT "timing_exclude" AND "%tmg%" != "%timing_exclude%") OR ("%tmg%" STRING_MATCHES_REGEXP "%timing_exclude%") BEGIN
 						READ_ASCII ("%fx_off%" + 0x14) "resref"
 						PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
 							SET "count" += 1
@@ -59,5 +59,148 @@ BEGIN
 			END
 			DEFAULT
 		END
+	END
+END
+
+//////////////////////////////////////////////////////////
+/////// TO_HEX_NUMBER (courtesy of Argent77)
+//////////////////////////////////////////////////////////
+
+/*
+** Converts any decimal number into a hexadecimal number
+*/
+
+DEFINE_DIMORPHIC_FUNCTION ~TO_HEX_NUMBER~
+INT_VAR
+	~value~     = 0   // the decimal number
+	~minDigits~ = 1   // min. number of digits in return value (not counting sign)
+	~prefix~    = 0   // whether to return number with "0x" prefix
+	~signed~    = 1   // whether number is treated as a signed number
+	~upperCase~ = 0   // whether to represent alphabetic digits in upper case
+RET
+	~hexNumber~       // returned as string without prefix
+BEGIN
+	ACTION_IF (~%minDigits%~ < 1) BEGIN
+		OUTER_SET ~minDigits~ = 1
+	END
+	ACTION_IF ("%minDigits%" > 8) BEGIN
+		OUTER_SET ~minDigits~ = 8
+	END
+	OUTER_TEXT_SPRINT ~hexNumber~ ~~
+	ACTION_DEFINE_ARRAY ~digit~ BEGIN ~0~ ~1~ ~2~ ~3~ ~4~ ~5~ ~6~ ~7~ ~8~ ~9~ ~a~ ~b~ ~c~ ~d~ ~e~ ~f~ END
+
+	ACTION_IF ("%signed%" && "%value%" < 0) BEGIN
+		OUTER_SET ~isSigned~ = 1
+		OUTER_SET ~value~ = 0 - "%value%"
+	END ELSE BEGIN
+		OUTER_SET ~isSigned~ = 0
+	END
+
+	OUTER_WHILE ("%value%" != 0) BEGIN
+		OUTER_SET ~curDigit~ = "%value%" BAND 0xf
+		OUTER_SET ~value~ = "%value%" BLSR 4
+		OUTER_TEXT_SPRINT ~hexDigit~ $~digit~(~%curDigit%~)
+		OUTER_TEXT_SPRINT ~hexNumber~ ~%hexDigit%%hexNumber%~
+	END
+
+	OUTER_WHILE (STRING_LENGTH ~%hexNumber%~ < "%minDigits%") BEGIN
+		OUTER_TEXT_SPRINT ~hexNumber~ ~0%hexNumber%~
+	END
+
+	ACTION_IF ("%upperCase%") BEGIN
+		ACTION_TO_UPPER ~hexNumber~
+	END
+
+	ACTION_IF ("%prefix%") BEGIN
+		OUTER_TEXT_SPRINT ~hexNumber~ ~0x%hexNumber%~
+	END
+
+	ACTION_IF ("%isSigned%") BEGIN
+		OUTER_TEXT_SPRINT ~hexNumber~ ~-%hexNumber%~
+	END
+END
+
+//////////////////////////////////////////////////////////
+/////// ADD_SPLPROT_ENTRY (courtesy of Argent77)
+//////////////////////////////////////////////////////////
+
+/*
+** Adds a new entry to SPLPROT.2DA and returns its index. If an identical entry already exists it will return the index of that entry instead.
+** INT_VAR stat     A code from STATS.IDS or an extended stat code starting at 0x100 (256).
+** STR_VAR value    Either a numeric value that is evaluated by "stat", or a default value "*" for specific stats.
+**                  (Note: "-1" indicates a user-defined value.)
+** STR_VAR relation Specifies how to evaluate the value.
+**                  (Note: Not all extended stats require a relation code. Use "*" in this case.)
+** RET index        Entry number that can be used to refer to this operation in various effect opcodes.
+**                  Returns -1 on error.
+*/
+
+DEFINE_DIMORPHIC_FUNCTION "ADD_SPLPROT_ENTRY"
+INT_VAR
+	"stat"      = "-1"
+STR_VAR
+	"value"     = "*"
+	"relation"  = "*"
+	"label"     = ""
+RET
+	"index"
+BEGIN
+	// Initialize
+	OUTER_SET "index" = "-1"
+	// Main
+	ACTION_IF ("%stat%" >= 0) BEGIN
+		LAF "TO_HEX_NUMBER"
+		INT_VAR
+			"value" = "%stat%"
+			"prefix" = 1
+		RET
+			"valueHex" = "hexNumber"
+		END
+		ACTION_IF (~%value%~ STRING_EQUAL ~~) BEGIN
+			OUTER_TEXT_SPRINT "value" ~*~
+		END
+		ACTION_IF (~%relation%~ STRING_EQUAL ~~) BEGIN
+			OUTER_TEXT_SPRINT "relation" ~*~
+		END
+		// Add the specified entry or return its index if already present
+		COPY_EXISTING ~splprot.2da~ ~override~
+			READ_2DA_ENTRIES_NOW "read_splprot" 4
+			// Search for identical entries
+			FOR ("idx" = 0; "%idx%" < "%read_splprot%"; "idx" += 1) BEGIN
+				READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 1 "curStat"
+				PATCH_IF (~%stat%~ STRING_EQUAL ~%curStat%~ OR ~%valueHex%~ STRING_EQUAL_CASE ~%curStat%~) BEGIN
+					READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 2 "curValue"
+					PATCH_IF (~%value%~ STRING_EQUAL ~%curValue%~) BEGIN
+						READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 3 "curRelation"
+						PATCH_IF (~%relation%~ STRING_EQUAL ~%curRelation%~) BEGIN
+							SET "index" = "%idx%" // If already present, return its index
+							SET "idx" = "%read_splprot%" // Kill FOR-loop
+						END
+					END
+				END
+			END
+			// If not already present, add it...
+			PATCH_IF ("%index%" < 0) BEGIN
+				// Make sure we provided an identifier!
+				PATCH_IF ("%label%" STRING_COMPARE_CASE "") BEGIN
+					// Sanity check
+					INNER_PATCH_SAVE "label" "%label%" BEGIN
+						REPLACE_TEXTUALLY CASE_INSENSITIVE EVALUATE_REGEXP "[ %TAB%%WNL%%MNL%%LNL%]" ""
+					END
+					// Add new entry
+					PATCH_IF ("%stat%" >= 0x100) BEGIN
+						TEXT_SPRINT "line" ~%read_splprot%_%label% %valueHex% %value% %relation%~
+					END ELSE BEGIN
+						TEXT_SPRINT "line" ~%read_splprot%_%label% %stat% %value% %relation%~
+					END
+					INSERT_2DA_ROW "%read_splprot%" 4 ~%line%~
+					// Prettify
+					PRETTY_PRINT_2DA
+					SET "index" = "%read_splprot%"
+				END ELSE BEGIN
+					PATCH_FAIL "ADD_SPLPROT_ENTRY: ~label~ cannot be empty. Please specify a human-friendly identifier (f.i. ~ALIGNMENTBITS!=MASK_LCNEUTRAL~)"
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
 	END
 END

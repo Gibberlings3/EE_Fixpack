@@ -5,6 +5,9 @@ DEFINE_ACTION_FUNCTION "CLERIC_SOL_SEARING_ORB"
 BEGIN
 	WITH_SCOPE BEGIN
 		COPY_EXISTING "sorb.itm" "override"
+			/* Header */
+			WRITE_ASCII 0x10 ~~ #8 // Used up item
+			/* Feature blocks */
 			LPF "DELETE_EFFECT" END // let us start from scratch
 			// Visual/Cosmetic effect (no save, bypass MR)
 			LPF "ADD_ITEM_EFFECT"
@@ -53,7 +56,7 @@ BEGIN
 				"dicenumber" = 6
 				"dicesize" = 6
 				"savingthrow" = BIT0 // Save vs. Spell
-				"special" = BIT24 // Save for Half
+				"special" = BIT8 // Save for Half
 			END
 			LPF "ADD_ITEM_EFFECT"
 			INT_VAR
@@ -153,8 +156,8 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 6
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 4
-				"probability1" = 19
+				"probability2" = 0
+				"probability1" = 16
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -162,8 +165,8 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 12
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 20
-				"probability1" = 35
+				"probability2" = 17
+				"probability1" = 33
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -171,8 +174,8 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 18
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 36
-				"probability1" = 51
+				"probability2" = 34
+				"probability1" = 50
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -180,7 +183,7 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 24
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 52
+				"probability2" = 51
 				"probability1" = 67
 			END
 			LPF "ADD_SPELL_EFFECT"
@@ -190,7 +193,7 @@ BEGIN
 				"duration" = 30
 				"resist_dispel" = BIT0 + BIT1
 				"probability2" = 68
-				"probability1" = 83
+				"probability1" = 84
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -198,7 +201,7 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 36
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 84
+				"probability2" = 85
 				"probability1" = 100
 			END
 			LPF "ADD_SPELL_EFFECT"
@@ -208,8 +211,6 @@ BEGIN
 				"parameter1" = "%game_is_bgee%" ? 31786 : 14674
 				"timing" = 1
 				"resist_dispel" = BIT0 + BIT1
-				"probability2" = 4
-				"probability1" = 100
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

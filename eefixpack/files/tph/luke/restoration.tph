@@ -1,0 +1,82 @@
+DEFINE_ACTION_FUNCTION "RESTORATION"
+BEGIN
+  // luke
+  // **Lesser Restoration**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and other healing spells)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_LESSER_RESTORATION%.spl" "override"
+                  "cdpr417.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 224 "opcode" = 324 "parameter1" "parameter2" "dicenumber" = 0 "dicesize" = 0 "special" = 0 "timing" = 0 "duration" = 0 STR_VAR "insert" = "first" "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+
+  // luke
+  // **Greater Restoration**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and other healing spells)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_RESTORATION%.spl" "override"
+                  "ohbresto.spl" "override"
+                  "spwish07.spl" "override"
+                  "spwish46.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 224 "opcode" = 324 "parameter1" "parameter2" "dicenumber" = 0 "dicesize" = 0 "special" = 0 "timing" = 0 "duration" = 0 STR_VAR "insert" = "first" "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+END

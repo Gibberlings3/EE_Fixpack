@@ -25,7 +25,7 @@ BEGIN
 						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
 				END
 				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "74" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "74" "timing_exclude" = "^\(1\|4\|7\)$" RET "count" END // negative lookahead not supported, sigh...
 					PATCH_IF ("%count%") BEGIN
 						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "8" RET "count" END
 						PATCH_IF ("%count%") BEGIN
@@ -64,7 +64,7 @@ BEGIN
 						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
 				END
 				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "45" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "45" "timing_exclude" = "^\(1\|4\|7\)$" RET "count" END // negative lookahead not supported, sigh...
 					PATCH_IF ("%count%") BEGIN
 						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "55" RET "count" END
 						PATCH_IF ("%count%") BEGIN
@@ -242,7 +242,7 @@ BEGIN
 						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
 				END
 				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "^\(16\|317\)$" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "^\(16\|317\)$" "timing_exclude" = "^\(1\|4\|7\)$" RET "count" END // negative lookahead not supported, sigh...
 					PATCH_IF "%count%" BEGIN
 						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "38" RET "count" END
 						PATCH_IF "%count%" BEGIN
@@ -299,7 +299,7 @@ BEGIN
 						PATCH_FAIL "REMOVE_REDUNDANT_PORTRAIT_ICONS: should not happen => ~%DEST_FILE%~"
 				END
 				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "40" "timing" = "^\(0\|2\|3\|5\|6\|8\|9\|10\)$" RET "count" END // negative lookahead not supported, sigh...
+					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "40" "timing_exclude" = "^\(1\|4\|7\)$" RET "count" END // negative lookahead not supported, sigh...
 					PATCH_IF ("%count%") BEGIN
 						LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "142" "parameter2" = "41" RET "count" END
 						PATCH_IF ("%count%") BEGIN

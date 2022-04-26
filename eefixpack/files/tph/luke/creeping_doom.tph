@@ -14,6 +14,10 @@ BEGIN
 					LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 233 ~check_globals~ = 0 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ ~match_parameter2~ = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE") END
 				END
 			END
+			/* "For each round the victim remains inside the cloud, <PRO_HESHE> must make a Save vs. Spell at -2 or run away in fear for one round."
+			** Since the spell's projectile is coded as `# repetitions = 1`, the savingthrow check must be put in the subspell!
+			** In so doing, you'll correctly get one savingthrow check per round instead of just one savingthrow check!
+			*/
 			LPF "ALTER_EFFECT"
 			INT_VAR
 				"match_opcode" = 272 // Use EFF file on condition
@@ -22,8 +26,6 @@ BEGIN
 				"parameter2" = 1 // Cast instantly (ignore level)
 				"timing" = 4
 				"duration" = 0
-				"savingthrow" = BIT0 // Save vs. Spell
-				"savebonus" = "-2"
 			STR_VAR
 				"match_resource" = "panic"
 				"resource" = "%CLERIC_CREEPING_DOOM%a"
@@ -68,6 +70,8 @@ BEGIN
 				"target" = 2 // Preset target
 				"duration" = 6
 				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+				"savebonus" = "-2"
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -76,6 +80,8 @@ BEGIN
 				"parameter2" = 36 // Panic
 				"duration" = 6
 				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+				"savebonus" = "-2"
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -84,6 +90,8 @@ BEGIN
 				"parameter1" = 14007  // ~Panic~
 				"timing" = 1
 				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+				"savebonus" = "-2"
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

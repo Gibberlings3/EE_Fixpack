@@ -1,0 +1,319 @@
+DEFINE_ACTION_FUNCTION "CURE_WOUNDS"
+BEGIN
+  // luke
+  // **Cure Light Wounds**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and spell description)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_CURE_LIGHT_WOUNDS%.spl" "override"
+                  "%INNATE_CURE_LIGHT_WOUNDS%.spl" "override"
+                  "dw#fpplo.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 2 "power" = 1 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+
+  // luke
+  // **Good Berry**
+  // - Remove the "gulp" string (it's not a potion!)
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match the other healing spells)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "gberry.itm" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 1 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 139 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+
+  // luke
+  // **Cure Medium Wounds**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and spell description)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_CURE_MEDIUM_WOUNDS%.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 2 "power" = 3 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+
+  // luke
+  // **Cure Serious Wounds**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and spell description)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_CURE_SERIOUS_WOUNDS%.spl" "override"
+                  "%ULITHARID_CURE_SERIOUS_WOUNDS%.spl" "override"
+                  "spin200.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 2 "power" = 4 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+
+  // luke
+  // **Cure Critical Wounds**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and spell description)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_CURE_CRITICAL_WOUNDS%.spl" "override"
+                  "bdcaela3.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 2 "power" = 5 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+
+  // luke
+  // **Mass Cure**
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and spell description)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_MASS_CURE%.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT" INT_VAR "opcode" = 324 "target" = 2 "power" = 5 "parameter1" "parameter2" "insert_point" = 0 STR_VAR "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~target~ = 2 ~resist_dispel~ = BIT1 END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+
+  // luke
+  // **Heal**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and the other healing spells)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%CLERIC_HEAL%.spl" "override"
+                  "devaheal.spl" "override"
+                  "senspihe.spl" "override"
+                  "%HEAL_NO_VISUAL%.spl" "override"
+                  "%FINAL_HEAL%.spl" "override"
+                  "spwish28.spl" "override"
+                  "spwish39.spl" "override"
+                  "spwm168.spl" "override" // Wild surge
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 17 "opcode" = 324 "parameter1" "parameter2" "dicenumber" = 0 "dicesize" = 0 "special" = 0 "timing" = 0 "duration" = 0 STR_VAR "insert" = "first" "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY IF_EXISTS
+  END
+
+  // luke
+  // **Lay On Hands**
+  // - Make sure "Range: Touch" (i.e., `range=0`)
+  // - Make sure all effects are not dispellable
+  // - Make sure it cannot affect creatures without corporeal bodies, nor creatures not living or of extraplanar origin (so as to match `IWDEE` and the other healing spells)
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%PALADIN_LAY_ON_HANDS%.spl" "override"
+                  "%MONK_LAY_ON_HANDS%.spl" "override"
+                  "spin109.spl" "override"
+                  "%EVIL_LAYONHANDS%.spl" "override"
+                  "%MAZZY_LAY%.spl" "override"
+      /*
+      // Set up immunities via op324 (Immunity to resource and message)
+      PATCH_WITH_SCOPE BEGIN
+        CLEAR_ARRAY "patch_data"
+        DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+          "0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+          "%RACE_MIST%" => "104"
+          "%RACE_DEMONIC%" => "104"
+          "%RACE_IMP%" => "104"
+          "%RACE_MEPHIT%" => "104"
+          "%RACE_ELEMENTAL%" => "104"
+          "%RACE_GENIE%" => "104"
+          "%RACE_TIEFLING%" => "104"
+          "%RACE_GITHYANKI%" => "104"
+          "%RACE_AASIMAR%" => "104"
+          "%RACE_SOLAR%" => "104"
+          "%RACE_ANTISOLAR%" => "104"
+          "%RACE_PLANATAR%" => "104"
+          "%RACE_DARKPLANATAR%" => "104"
+          "%RACE_SALAMANDER%" => "104"
+        END
+        PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+          LAUNCH_PATCH_FUNCTION "CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 17 "opcode" = 324 "parameter1" "parameter2" "dicenumber" = 0 "dicesize" = 0 "special" = 0 "timing" = 0 "duration" = 0 STR_VAR "insert" = "first" "resource" = "%DEST_RES%" END
+        END
+      END
+      */
+      LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR ~range~ = 0 END
+      LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END

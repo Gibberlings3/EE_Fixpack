@@ -1,4 +1,5 @@
 // This function moves Sunray so as to use 326 magic rather than those messy 177s.
+// The new implementation takes into account the "7eyes.2da" thing... More on that on a future pull request...
 
 DEFINE_ACTION_FUNCTION "CLERIC_SUNRAY"
 BEGIN
@@ -124,17 +125,17 @@ BEGIN
 					END
 				END
 			END
+			/* Feature blocks */
 			LPF "DELETE_EFFECT" END // delete current content
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
-				"opcode" = 12 // Damage
+				"opcode" = 146 // Cast spell
 				"target" = 2 // Preset target
-				"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
+				"parameter2" = 1 // Cast instantly (ignore level)
 				"timing" = 1
 				"resist_dispel" = BIT1
-				"dicenumber" = 3
-				"dicesize" = 6
-				"savingthrow" = BIT24 // Bypass Mirror Image
+			STR_VAR
+				"resource" = "%CLERIC_SUNRAY%c"
 			END
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
@@ -152,6 +153,24 @@ BEGIN
 				"timing" = 1
 				"resist_dispel" = BIT1
 				"savingthrow" = BIT0 // Save vs. Spell
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Subspell C => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage"
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
+			/* Feature blocks */
+			LPF "DELETE_EFFECT" END // delete current content
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 12 // Damage
+				"target" = 2 // Preset target
+				"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
+				"timing" = 1
+				"resist_dispel" = BIT1
+				"dicenumber" = 3
+				"dicesize" = 6
+				"savingthrow" = BIT24 // Bypass Mirror Image
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

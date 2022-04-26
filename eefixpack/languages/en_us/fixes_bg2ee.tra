@@ -16,3 +16,6 @@ Mazzy
 "This land near the Umar Hills is rich with mithral deposits, but unfortunately too many scoundrels and bandits have noted this and are preying upon the prospectors in the area with a vengeance. I have found an excellent hiding place for my mithral cache, one that those thieves are sure not to find. It is far to the west of Imnesvale village, in a forest—"
 
 Below this section, the page is torn and jagged, as if it has been ripped from its other half.~
+
+// this item's name should state its enchantment level
+@57918 = "Paralytic Bolt +1"
