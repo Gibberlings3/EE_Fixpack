@@ -401,16 +401,6 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-
-
-// luke
-// Spirit Fire => should not interact with spell protections
-// As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
-  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
-END
-
 // luke
 // Lesser Fire Spirit – Suppress misleading "One of the spell has failed" message
 // 1) Set subspell's range to a very high value (max signed value)
@@ -918,6 +908,16 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_duration~ = 62 ~duration~ = 60 END
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 142 "match_parameter2" = 6 END // op25 naturally provides the "Poisoned" portrait icon
   BUT_ONLY_IF_IT_CHANGES
+END
+
+// luke
+// **Spirit Fire**
+// - should not interact with level-based spell protections
+//// - As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
+// - *"Spirits, fey creatures, elementals, and spectral undead take double damage."* => make sure this double damage bypasses Mirror Image (since the parent `SPL` file is an AoE spell)
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
+  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
 END
 
 // luke
