@@ -4,11 +4,14 @@ BEGIN
 	WITH_SCOPE BEGIN
 		COPY_EXISTING ~bddoom.spl~ ~override/%CLERIC_SPIRIT_FIRE%a.spl~
 			// Header
-			WRITE_SHORT 0x1C 2 // Spell type: Priest (as the main SPL file)
+			WRITE_SHORT 0x1C 2 // Spell type: Priest (same as parent SPL file)
+			WRITE_BYTE 0x25 2 // Primary type: CONJURER (same as parent SPL file)
+			WRITE_BYTE 0x27 10 // Secondary type: OFFENSIVEDAMAGE (same as parent SPL file)
 			// Feature blocks
 			LPF "ALTER_EFFECT"
 			INT_VAR
 				"power" = 0
+				"resist_dispel" = BIT0 + BIT1
 			END
 			LPF "ALTER_EFFECT"
 			STR_VAR
@@ -22,6 +25,10 @@ BEGIN
 		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%.spl~ ~override~
 			// Feature blocks
 			LPF "ALTER_EFFECT"
+			INT_VAR
+				"match_opcode" = 146 // Cast spell
+				"resist_dispel" = BIT0
+				"parameter1" = 0
 			STR_VAR
 				"match_resource" = "bddoom" // old resref
 				"resource" = "%DEST_RES%a" // new resref
@@ -29,12 +36,18 @@ BEGIN
 		BUT_ONLY_IF_IT_CHANGES
 	END
 	// Spirits, fey creatures, elementals, and spectral undead take double damage
+	// Make sure it bypasses Mirror Image (since the parent SPL file is an AoE spell)
 	WITH_SCOPE BEGIN
 		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%b.spl~ ~override~
+			// Header
+			WRITE_SHORT 0x1C 2 // Spell type: Priest (same as parent SPL file)
+			WRITE_BYTE 0x25 2 // Primary type: CONJURER (same as parent SPL file)
+			WRITE_BYTE 0x27 10 // Secondary type: OFFENSIVEDAMAGE (same as parent SPL file)
 			// Feature blocks
 			LPF "ALTER_EFFECT"
 			INT_VAR
 				"power" = 0
+				"savingthrow" = BIT0 BOR BIT24
 			END
 		BUT_ONLY_IF_IT_CHANGES
 	END

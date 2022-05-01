@@ -191,7 +191,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~sendai.itm~   ~override~ // sendai: 75% poison, 25% str drain
               ~sharswd.itm~  ~override~ // xei win toh: 50/50 con/dex drain
               ~slimed2.itm~  ~override~ // unk: 20% poison death
-              ~sorb.itm~     ~override~ // sol's searing orb: poor approximation of 1d6
+              //~sorb.itm~     ~override~ // sol's searing orb: poor approximation of 1d6; fixed elsewhere (luke)
               ~spermel.itm~  ~override~ // mellisan: 25% stun
               ~staf09.itm~   ~override~ // staff of command: (half)elven resistance 
               ~staf13.itm~   ~override~ // staff of thunder and lightning: 10% stun

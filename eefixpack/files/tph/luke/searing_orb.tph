@@ -1,0 +1,217 @@
+// This function moves Searing Orb so as to use 326 magic rather than those messy 177s.
+// The new implementation takes into account the "7eyes.2da" thing... More on that on a future pull request...
+
+DEFINE_ACTION_FUNCTION "CLERIC_SOL_SEARING_ORB"
+BEGIN
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "sorb.itm" "override"
+			/* Header */
+			WRITE_ASCII 0x10 ~~ #8 // Used up item
+			/* Feature blocks */
+			LPF "DELETE_EFFECT" END // let us start from scratch
+			// Visual/Cosmetic effect (no save, bypass MR)
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 215 // Play visual effect
+				"target" = 2 // Preset target
+				"timing" = 1
+			STR_VAR
+				"resource" = "ICFIRSDI"
+			END
+			// Blinds undead target for 12 rounds (Save vs. Spell for 6 rounds)
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 326 // Apply effects list
+				"target" = 2 // Preset target
+				"parameter2" = 1 // GENERAL=UNDEAD
+				"timing" = 1
+				"resist_dispel" = BIT0
+			STR_VAR
+				"resource" = "%CLERIC_SOL_SEARING_ORB%a"
+			END
+			// Blinds living target for 1d6 rounds (Save vs. Spell negates)
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 326 // Apply effects list
+				"target" = 2 // Preset target
+				"parameter2" = 2 // GENERAL!=UNDEAD
+				"timing" = 1
+				"resist_dispel" = BIT0
+				"savingthrow" = BIT0 // Save vs. Spell
+			STR_VAR
+				"resource" = "%CLERIC_SOL_SEARING_ORB%b"
+			END
+			// 6d6 (fire), Save vs. Spell for half damage
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 12 // Damage
+				"target" = 2 // Preset target
+				"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE")
+				"timing" = 1
+				"resist_dispel" = BIT0
+				"dicenumber" = 6
+				"dicesize" = 6
+				"savingthrow" = BIT0 // Save vs. Spell
+				"special" = BIT8 // Save for Half
+			END
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 318 // Protection from resource
+				"target" = 2 // Preset target
+				"parameter2" = 2 // GENERAL!=UNDEAD
+			STR_VAR
+				"resource" = "%DEST_RES%"
+			END
+			// 6d6 (fire), no save (for GENERAL=UNDEAD only)
+			// - 12d6 (fire) upon a failed Save vs. Spell
+			// - 9d6 = 3d6 + 6d6 (fire) upon a successful Save vs. Spell
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 2 // Ranged
+				"opcode" = 12 // Damage
+				"target" = 2 // Preset target
+				"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE")
+				"timing" = 1
+				"resist_dispel" = BIT0
+				"dicenumber" = 6
+				"dicesize" = 6
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Subspell A => GENERAL = UNDEAD => "Blinds undead target for 12 rounds (Save vs. Spell for 6 rounds)"
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%CLERIC_SOL_SEARING_ORB%.spl" "override/%CLERIC_SOL_SEARING_ORB%a.spl"
+			/* Header */
+			WRITE_LONG NAME1 "-1"
+			WRITE_ASCII 0x10 "" #8 // casting sound
+			WRITE_LONG 0x18 0 // flags
+			WRITE_LONG 0x1E 0 // exclusion flags
+			WRITE_SHORT 0x22 0 // casting animation
+			WRITE_BYTE 0x25 6 // Primary type: INVOKER (match "sorb.itm")
+			WRITE_BYTE 0x27 10 // Secondary type: OFFENSIVEDAMAGE (match "sorb.itm")
+			/* Extended header(s) */
+			LPF "ALTER_SPELL_HEADER"
+			INT_VAR
+				"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
+				"speed" = 0
+			END
+			/* Feature block(s) */
+			LPF "DELETE_EFFECT" END // delete current content
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 72
+				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 139 // Display string
+				"target" = 2 // Preset target
+				"parameter1" = "%game_is_bgee%" ? 31786 : 14674
+				"timing" = 1
+				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 318 // Protection from resource
+				"target" = 2 // Preset target
+				"resist_dispel" = BIT0 + BIT1
+				"savingthrow" = BIT0 // Save vs. Spell
+			STR_VAR
+				"resource" = "%DEST_RES%"
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 36
+				"resist_dispel" = BIT0 + BIT1
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 139 // Display string
+				"target" = 2 // Preset target
+				"parameter1" = "%game_is_bgee%" ? 31786 : 14674
+				"timing" = 1
+				"resist_dispel" = BIT0 + BIT1
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Subspell B => GENERAL != UNDEAD => "Blinds living target for 1d6 rounds (Save vs. Spell negates)"
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%CLERIC_SOL_SEARING_ORB%a.spl" "override/%CLERIC_SOL_SEARING_ORB%b.spl"
+			/* Feature blocks */
+			LPF "DELETE_EFFECT" END // delete current content
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 6
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 0
+				"probability1" = 16
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 12
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 17
+				"probability1" = 33
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 18
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 34
+				"probability1" = 50
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 24
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 51
+				"probability1" = 67
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 30
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 68
+				"probability1" = 84
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 74 // Blindness
+				"target" = 2 // Preset target
+				"duration" = 36
+				"resist_dispel" = BIT0 + BIT1
+				"probability2" = 85
+				"probability1" = 100
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 139 // Display string
+				"target" = 2 // Preset target
+				"parameter1" = "%game_is_bgee%" ? 31786 : 14674
+				"timing" = 1
+				"resist_dispel" = BIT0 + BIT1
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

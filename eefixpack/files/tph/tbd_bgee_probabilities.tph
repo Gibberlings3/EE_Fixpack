@@ -155,7 +155,7 @@ COPY_EXISTING ~ax1h01.itm~   ~override~ // battle axe: 1% to break
               ~sharswd.itm~  ~override~ // xei win toh: 50/50 con/dex drain
               ~shld08p.itm~  ~override~ // tarloc's contingency +1: 5% invis, 20% spell recovery
               ~slimed2.itm~  ~override~ // unk: 20% poison death
-              ~sorb.itm~     ~override~ // sol's searing orb: poor approximation of 1d6
+              //~sorb.itm~     ~override~ // sol's searing orb: poor approximation of 1d6; fixed elsewhere (luke)
               ~sper01.itm~   ~override~ // spear: 1% to break
               ~spermel.itm~  ~override~ // mellisan: 25% stun
 //            ~stafn1.itm~   ~override~ // neera's staff +1: 10% for extra fire damage; fixed elsewhere
