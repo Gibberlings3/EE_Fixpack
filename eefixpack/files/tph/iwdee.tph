@@ -65,6 +65,17 @@ INCLUDE ~eefixpack/files/tph/6018_lizardmen.tph~       // ie-6018 , cam: Summone
 INCLUDE ~eefixpack/files/tph/6020_bullets.tph~         // ie-6020 , cam: Bullets +1 and Bullets +2 use the same projectile
 INCLUDE ~eefixpack/files/tph/6036_clostsbfbhnaeig.tph~ // ie-6036 , cam: Cam's List o' Stuff That Should Be Fixed But Has No Actual Effect In Game
 
+/////                                                  \\\\\
+///// mechanics fixes / overhauls                      \\\\\
+/////                                                  \\\\\
+
+// kjeron
+WITH_SCOPE BEGIN
+  WITH_TRA "eefixpack/languages/en_us/luke/polymorph_overhaul.tra" "eefixpack/languages/%LANGUAGE%/luke/polymorph_overhaul.tra" BEGIN
+    INCLUDE "eefixpack/files/tph/luke/polymorph_overhaul.tph"
+    LAF "POLYMORPH_OVERHAUL" END
+  END
+END
 
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\

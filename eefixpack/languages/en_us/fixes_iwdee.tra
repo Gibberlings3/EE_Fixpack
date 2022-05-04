@@ -225,3 +225,39 @@ Requires:
  8 Strength
 
 Weight: 7~
+
+// luke
+// The clause "The Druid is healed 12 Hit Points after using this ability." should not be missing
+@40314 = ~Shapeshift: Werewolf
+
+Strength: 19
+Dexterity: 16
+
+Base Armor Class: 1
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing)
+
+Special Abilities:
+– Magic Resistance: 20%
+
+The Druid is healed 12 Hit Points after using this ability.~
+
+// luke
+// The clause "The Druid is healed 12 Hit Points after using this ability." should not be missing
+@40315 = ~Shapeshift: Greater Werewolf
+
+Strength: 21
+Dexterity: 20
+
+Base Armor Class: -6
+Number of Attacks: 3
+Attack Damage: 1d10 (slashing)
+
+Special Abilities:
+– Fire Resistance: 50%
+– Cold Resistance: 50%
+– Electricity Resistance: 50%
+– Acid Resistance: 50%
+– Magic Resistance: 40%
+
+The Druid is healed 12 Hit Points after using this ability.~

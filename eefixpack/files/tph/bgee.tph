@@ -129,6 +129,18 @@ ACTION_IF game_includes_sod BEGIN
 END
 
 /////                                                  \\\\\
+///// mechanics fixes / overhauls                      \\\\\
+/////                                                  \\\\\
+
+// kjeron
+WITH_SCOPE BEGIN
+  WITH_TRA "eefixpack/languages/en_us/luke/polymorph_overhaul.tra" "eefixpack/languages/%LANGUAGE%/luke/polymorph_overhaul.tra" BEGIN
+    INCLUDE "eefixpack/files/tph/luke/polymorph_overhaul.tph"
+    LAF "POLYMORPH_OVERHAUL" END
+  END
+END
+
+/////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
 
