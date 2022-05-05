@@ -95,7 +95,7 @@
 
 //// **Non-polymorph spells/items**
 //// - Examples: "Flame Blade", "MMM", "Shillelagh", etc...
-//// - `op326, parameter2=<if STAT_POLYMORPHED=1>, resource="SPINHUMW"` (right before `op111`)
+//// - `op326, parameter2=(STAT POLYMORPHED = 1), resource="SPINHUMW"` (right before `op111`)
 //// - Only relevant for Contingency, Sequencer, Item activation (since `op135,p2=0` automatically disables arcane / divine spellcasting)
 ////   - Non-polymorph Weapon-Creation spells cast `SPINHUMW`, which casts `SPINHUMR` while blocking its first `EFF` (`op135`), but not the rest.
 ////     - It has to block the `op135 EFF`, because otherwise `op135` would remove the Magical Weapon that is being created by the spell.
@@ -140,7 +140,7 @@ BEGIN
 		"preferredValue" = 248
 	STR_VAR
 		"idsFile" = "splstate"
-		"identifier" = "POLYFORM_TEMPORARY_ABILITY"
+		"identifier" = "POLYMORPH_TEMPORARY_ABILITY"
 	RET
 		$"splstate"("TEMP") = "value"
 	END
@@ -831,7 +831,7 @@ BEGIN
 			// Polymorph moved to subspell because it needs a duration
 			WITH_SCOPE BEGIN
 				ACTION_TO_LOWER ~resource~
-				CREATE ~SPL~ ~%resource%a~
+				CREATE ~SPL~ ~%resource%s~
 					/* Header */
 					WRITE_LONG NAME1 ~-1~
 					WRITE_LONG NAME2 ~-1~
