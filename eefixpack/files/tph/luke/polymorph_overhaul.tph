@@ -766,7 +766,11 @@ BEGIN
 								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 111 "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" "duration" STR_VAR "resource" = $~item~(~~) END // Create weapon
 						END
 					END
-					OUTER_SET $~POLYFORM_abort~($~res~(~~)) = 1
+					ACTION_IF ("%duration%" > 0) BEGIN
+						OUTER_SET $~POLYFORM_abort~($~res~(~~)) = 1
+					END ELSE BEGIN
+						OUTER_SET $~POLYFORM_abort~($~x~(~0~)) = 1
+					END
 					LAF ~alter_poly_item~ INT_VAR ~hostile~ STR_VAR ~item_~ ~cre_~ RET_ARRAY ~POLYITEM~ END
 				END
 		END
