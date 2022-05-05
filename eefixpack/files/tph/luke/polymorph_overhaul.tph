@@ -2,24 +2,107 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //// kjeron
 ////
-//// "SPINHUM.SPL" => universal "Shapeshift: Natural Form" ability (for voluntary forms)
+//// **SPINHUM.SPL** => universal "Shapeshift: Natural Form" ability (for voluntary forms)
+//// - Usable at will (`op172`, `op171` as casting feature effects)
+//// - `op326, resource="SPINHUME"`
+//// - `op326, resource="SPINHUMR"`
+
+//// **SPINHUME.SPL** (for use with "Fire / Earth Elemental Transformation" only)
+//// - `op177, resource="SPINHUME"`
+//// - `op17, dicenumber=3, dicesize=10` (+3d10 HP)
+
+//// **SPINHUME.EFF** (for use with "Fire / Earth Elemental Transformation" only)
+//// - `op318, resource="SPINHUME", parent_resource="*PINHUME"`
+
+//// **SPINHUMR.SPL** (actual Natural Form ability)
+//// - `op177, resource="SPINHUMW"`
+//// - `op177, resource="SPINHUMS"`
+//// - visual / cosmetic effects
+
+//// **SPINHUMW.EFF**
+//// - `op135, resource="", parent_resource="*PINHUMW"`
+////   - Clear Magical Weapon Slot / Terminate existing Polymorph
+
+//// **SPINHUMS.EFF**
+//// - `op321, resource="SPIN823", parent_resource="*PINHUMS"`
+////   - Clear "Slayer Change" Delayed Damage and Save/Rest block
+
+//// **SPWI489.SPL** => "Shapeshift: Natural Form" (forced by "Polymorph Self")
+//// - visual / audio feedback
+//// - `op177, resource="SPWI489R"`
+//// - `op146, parameter2=1, resource="SPINHUMR"`
+
+//// **SPWI489R.EFF**
+////   - `op318, resource="SPWI489", parent_resource="SPWI416R"`
+////     - Blocks `"SPINHUMR.SPL"` if the caster is not in one of the forms granted by "Polymorph Self"
+
+//// **SPIN150.SPL** => "Shapeshift: Natural Form" (forced by "Shapechange")
+//// - visual / audio feedback
+//// - `op177, resource="SPIN150R"`
+//// - `op146, parameter2=1, resource="SPINHUMR"`
+
+//// - `"SPIN150R.EFF"`
+////   - `op318, resource="SPIN150", parent_resource="SPWI916R"`
+////     - Blocks `"SPINHUMR.SPL"` if the caster is not in one of the forms granted by "Shapechange"
 
 //// **Self Polymorphs** (with an overall duration)
 //// - Examples: Shapeshift: Ogre, Shapechange: Fire Elemental, etc...
-//// - `op146, parameter2=1, timing=1, resource=SPINHUMR`
+//// - Usable at will: (`op172`, `op171` as casting feature effects)
+//// - `op146, parameter2=1, timing=1, resource="SPINHUMR"`
+//// - `op111, timing=4, duration=0 resource="<poly_weapon>"`
+////    - That `0` seconds delay is meant to prevent equipped effect loss (see the IESDP for further details)
 
 //// **Self Polymorphs** (without an overall duration)
-//// - Examples: Druid polymorphs (i.e., ) etc...
+//// - Examples: Druid polymorphs (i.e., Shapeshift: Water Elemental, Shapeshift: Greater Werewolf, ...)
+//// - `op146, parameter2=1, timing=1, resource="SPINHUMR"`
+//// - `op111, timing=4, duration=0, resource="<poly_weapon>"`
+////    - That `0` seconds delay is meant to prevent equipped effect loss (see the IESDP for further details)
 //// - `op146, parameter2=1, timing=1, resource=SPINHUMR`
 
-//// **Self Polymorphs** (with an overall duration)
-//// - Examples: Shapeshift: Ogre, Shapechange: Fire Elemental, etc...
-//// - `op146, parameter2=1, timing=1, resource=SPINHUMR`
+//// **Hostile / Limited Polymorphs**
+//// - Examples: Fire Elemental Transformation, Polymorph Other, Cloak of the Sewers, etc...
+//// - `op146, parameter2=1, timing=1, resource="SPINHUMR"`
+////   - `op111, timing=4, duration=0, resource="<poly_weapon>"` – if permanent duration (such as Bolt of Polymorphing)
+////     - That `0` seconds delay is meant to prevent equipped effect loss (see the IESDP for further details)
+////   - `op146, parameter2=1, timing=4, duration=0, resource="<subspell>"` – if limited duration (such as Sphere of Chaos)
+////     - That `0` seconds delay is meant to prevent equipped effect loss (see the IESDP for further details)
+////     - <subspell>
+////       - `op111, timing=0, duration=<intended_duration>, resource="<poly_weapon>"`
 
-//// Fixes:
-//// - `"%SLAYER_CHANGE_TWO%"` normally gives `"%SLAYER_START%"` back after a `180` seconds delay.
-////   - In the new implementation `"%SLAYER_START%"` is blocked for `180` seconds rather than removed and given back later, as it seems like that process may get interrupted on occasion (people complaining about permanently losing the ability).
-//// - 
+//// **Slayer Change**
+//// - Relevant `SPL` files: `SPIN717`, `SPIN783`, `SPIN823`, `SPIN852`
+//// - `op146, parameter2=1, timing=1, resource="SPINHUMR"` (all but the voluntary one, i.e.: `SPIN823`)
+//// - `op146, parameter2=1, timing=1, resource="SPINHUMS"` (only the voluntary one, i.e.: `SPIN823`)
+////   - "Slayer Change" (`SPIN823`) casts `SPINHUMS`, which casts `SPINHUMR` while blocking its second `EFF` (`op321`), as it would remove all the effects of `SPIN823` that are about to be applied.
+////     - `SPIN823` has its own leading `op321` to prevent stacking itself.
+//// - `op146, parameter2=1, timing=4, duration=0, resource="<subspell>"`
+////     - That `0` seconds delay is meant to prevent equipped effect loss (see the IESDP for further details)
+////     - <subspell>
+////       - `op111, timing=0, duration=<intended_duration>, resource="<slayer_weapon>"` (all)
+////       - `op206, timing=0, duration=180, resource="SPIN822"` (only the voluntary one)
+////         - In the unmodded game, `SPIN823` normally gives `SPIN822` back after a `180` seconds delay. This way instead `SPIN822` is blocked for `180` seconds rather than removed and given back later, as it seems like that process got interrupted on occasion (people complaining about permanently losing the ability).
+////       - `op247` (Attack nearest creature – only the hostile one)
+//// - The "Slayer Change" 'recoil' damage now scales as follows: `1`, `2`, `4`, `8`, ... , up to `32768` (since at least in principle your character can have `32767` HP)
+////   - NB.: The unknown damage type is to avoid screwing around with the player's damage resistance, using something they cannot prevent.
+
+//// **<poly_weapon>**
+//// - `op335, resource="SPINHUM"` (only voluntary forms)
+//// - `op335, resource="SPIN160"` ("Shapeshift: Fire Salamander" only)
+//// - `op335, resource="SPIN974"` ("Shapechange: Mind Flayer" only)
+//// - `op318, resource="SPWI416R"` (only forms granted by "Polymorph Self")
+//// - `op318, resource="SPWI916R"` (only forms granted by "Shapechange")
+//// - `op318, resource="*PINHUME"` ("Fire / Earth Elemental Transformation" only)
+
+//// **Non-polymorph spells/items**
+//// - Examples: "Flame Blade", "MMM", "Shillelagh", etc...
+//// - `op326, parameter2=<if STAT_POLYMORPHED=1>, resource="SPINHUMW"` (right before `op111`)
+//// - Only relevant for Contingency, Sequencer, Item activation (since `op135,p2=0` automatically disables arcane / divine spellcasting)
+////   - Non-polymorph Weapon-Creation spells cast `SPINHUMW`, which casts `SPINHUMR` while blocking its first `EFF` (`op135`), but not the rest.
+////     - It has to block the `op135 EFF`, because otherwise `op135` would remove the Magical Weapon that is being created by the spell.
+////       - The new magical weapon will terminate the polymorph on its own, as it replaces the polymorph weapon.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 DEFINE_ACTION_FUNCTION "POLYMORPH_OVERHAUL"
 BEGIN
 	// Initialize
@@ -102,15 +185,14 @@ BEGIN
 				COPY_EXISTING ~%res%.spl~ ~override~
 					/* Header */
 					WRITE_LONG NAME1 ("%src%" STRING_EQUAL_CASE "%WIZARD_POLYMORPH_SELF%" ? RESOLVE_STR_REF (@0) : RESOLVE_STR_REF (@1)) // clearly state it's the one forced by "Polymorph Self" / "Shapechange"
-					PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-						WRITE_ASCII 0x10 ~EFF_M10~ #8 // Casting sound
-					END ELSE BEGIN
-						WRITE_ASCII 0x10 ~#EFF_M10~ #8 // Casting sound
-					END
+					WRITE_ASCII 0x10 ~~ #8 // Casting sound
 					/* Feature Blocks */
 					LPF "DELETE_EFFECT" END // delete current content
 					PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 141 "target" = 1 "parameter2" = 6 "timing" = 1 END // Lighting effects (Effect: Alteration water)
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 1 "timing" = 1 STR_VAR "resource" = "EFF_M10" END // Play sound
+					END ELSE BEGIN
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 1 "timing" = 1 STR_VAR "resource" = "#EFF_M10" END // Play sound
 					END
 					LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 177 "target" = 1 "parameter2" = 2 STR_VAR "resource" = ~%res%r~ END // Use EFF file (EA = ANYONE)
 					LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 1 "parameter2" = 1 "timing" = 1 STR_VAR "resource" = ~SPINHUMR~ END // Cast SPL file (Cast instantly (ignore level))
@@ -151,6 +233,8 @@ BEGIN
 	// Update Slayer weapon
 	WITH_SCOPE BEGIN
 		COPY_EXISTING ~slayerw3.itm~ ~override~
+			WRITE_LONG NAME1 10966
+			WRITE_LONG NAME2 10966
 			LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 17 END // Current HP bonus
 			LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 18 "parameter2" = 3 "dicenumber" = 0 "dicesize" = 0 END // Maximum HP bonus => Increment (does not affect current HP)
 		BUT_ONLY IF_EXISTS
@@ -159,7 +243,7 @@ BEGIN
 	WITH_SCOPE BEGIN
 		COPY_EXISTING ~%WIZARD_POLYMORPH_SELF%.spl~ ~override~
 			LPF "DELETE_EFFECT" END // delete current content
-			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 321 "target" = 1 "power" = 4 "timing" = 1 STR_VAR "resource" = $SOURCE(RES) END // Remove effects by resource (refresh duration without stacking)
+			//LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 321 "target" = 1 "power" = 4 "timing" = 1 STR_VAR "resource" = $SOURCE(RES) END // Remove effects by resource (refresh duration without stacking)
 			PATCH_WITH_SCOPE BEGIN
 				SET "power" = 4
 				GET_OFFSET_ARRAY "ab" SPL_V10_HEADERS
@@ -178,14 +262,14 @@ BEGIN
 			LPF "DELETE_EFFECT" END // delete current content
 			PATCH_WITH_SCOPE BEGIN
 				SET "power" = 9
-				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 321 "target" = 1 "power" "timing" = 1 STR_VAR "resource" = $SOURCE(RES) END // Remove effects by resource (refresh duration without stacking)
+				//LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 321 "target" = 1 "power" "timing" = 1 STR_VAR "resource" = $SOURCE(RES) END // Remove effects by resource (refresh duration without stacking)
 				LPF "alter_poly_spell" INT_VAR "power" "duration" = (3 * 60) STR_VAR ~array~ = ~%WIZARD_SHAPECHANGE%~ END // Duration: 3 turns
 			END
 		BUT_ONLY
 	END
 	// Universal Natural Form ability
 	WITH_SCOPE BEGIN
-		COPY_EXISTING - ~SPWI489.SPL~ ~override~
+		COPY_EXISTING - ~%WIZARD_POLYMORPH_NATURAL_FORM%.spl~ ~override~
 			READ_SLONG NAME1 "name"
 			READ_SLONG UNIDENTIFIED_DESC "desc"
 		BUT_ONLY
@@ -204,7 +288,7 @@ BEGIN
 			INSERT_BYTES 0x72 0x28
 			/* Extended Header */
 			WRITE_SHORT 0x74 4 // Ability location: F13 (Special Ability)
-			WRITE_ASCII 0x76 ~IHUMB~ #8 // Ability icon
+			WRITE_ASCII 0x76 ~IHUM~ #8 // Ability icon
 			WRITE_BYTE 0x7e 5 // Ability target: Caster
 			WRITE_SHORT 0x80 32767 // Ability range
 			WRITE_SHORT 0x82 1 // Minimum level
@@ -213,7 +297,49 @@ BEGIN
 			// Usable at will
 			LPF "ADD_SPELL_CFEFFECT" INT_VAR "opcode" = 171 "target" = 1 "timing" = 1 STR_VAR "resource" = ~SPINHUM~ END
 			LPF "ADD_SPELL_CFEFFECT" INT_VAR "opcode" = 172 "target" = 1 "timing" = 1 STR_VAR "resource" = ~SPINHUM~ END
+			// CLERIC_ELEMENTAL_TRANSFORMATION_FIRE / CLERIC_ELEMENTAL_TRANSFORMATION_EARTH: "When the Druid returns to human form, <PRO_HESHE> is also healed 3d10 Hit Points."
+			PATCH_IF (GAME_IS ~bg2ee eet iwdee~) BEGIN
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 326 "target" = 1 "timing" = 1 STR_VAR "resource" = ~SPINHUME~ END
+			END
+			// Actual "Return to Natural Form" SPL file
 			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 326 "target" = 1 "timing" = 1 STR_VAR "resource" = ~SPINHUMR~ END
+	END
+	// CLERIC_ELEMENTAL_TRANSFORMATION_FIRE / CLERIC_ELEMENTAL_TRANSFORMATION_EARTH: "When the Druid returns to human form, <PRO_HESHE> is also healed 3d10 Hit Points."
+	ACTION_IF (GAME_IS ~bg2ee eet iwdee~) BEGIN
+		CREATE ~SPL~ ~spinhume~
+			/* Header */
+			WRITE_LONG NAME1 "-1"
+			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG UNIDENTIFIED_DESC "-1"
+			WRITE_LONG DESC ~-1~
+			WRITE_LONG 0x34 1 // Level
+			WRITE_LONG 0x64 0x72 // Extended Header offset
+			WRITE_SHORT 0x68 1 // Extended Header count
+			WRITE_LONG 0x6a 0x9a // Feature Block Table offset
+			INSERT_BYTES 0x72 0x28
+			/* Extended Header */
+			WRITE_SHORT 0x80 32767 // Ability range
+			WRITE_SHORT 0x82 1 // Minimum level
+			WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+			/* Feature blocks */
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 177 "target" = 1 "parameter2" = 2 STR_VAR "resource" = ~SPINHUME~ END // Use EFF file (EA = ANYONE)
+			PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 17 "target" = 1 "timing" = 1 "dicenumber" = 3 "dicesize" = 10 END // Current HP bonus (+3d10 HP)
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 61 "target" = 1 "parameter1" = (60 << 8) + (120 << 16) + (240 << 24) "parameter2" = (0 + 50 << 16) "timing" = 1 END // Creature RGB color fade
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 1 "parameter1" = 14022 "timing" = 1 END // Display String ~Healed~
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 1 "parameter2" = 1 "duration" = 2 STR_VAR "resource" = ~SPHEALIN~ END // Play visual effect (Play where?: Over target (attached))
+			END ELSE BEGIN
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 17 "target" = 1 "timing" = 1 "dicenumber" = 3 "dicesize" = 10 END // Current HP bonus (+3d10 HP)
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 61 "target" = 1 "parameter1" = (0 << 8) + (126 << 16) + (255 << 24) "parameter2" = (0 + 30 << 16) "timing" = 1 END // Creature RGB color fade
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 1 "parameter1" = 14022 "timing" = 1 END // Display String ~Healed~
+				LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 1 "timing" = 1 STR_VAR "resource" = ~CLWOUNH~ END // Play visual effect (Play where?: Over target (unattached))
+			END
+		// CLERIC_ELEMENTAL_TRANSFORMATION_FIRE / CLERIC_ELEMENTAL_TRANSFORMATION_EARTH: "When the Druid returns to human form, <PRO_HESHE> is also healed 3d10 Hit Points."
+		CREATE "EFF" ~spinhume~
+			WRITE_LONG 0x10 318 // Effect ID: Protection from resource
+			WRITE_SHORT 0x2c 100 // Probability 1
+			WRITE_ASCII 0x30 ~SPINHUME~ #8
+			WRITE_ASCII 0x94 ~*PINHUME~ #8 // Parent resource (Important: This specific field always needs to be in ALLCAPS!!!)
 	END
 	// Actual "Return to Natural Form" SPL file
 	CREATE ~SPL~ ~spinhumr~
@@ -233,19 +359,19 @@ BEGIN
 		WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
 		/* Feature blocks */
 		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 177 "target" = 2 "parameter2" = 2 STR_VAR "resource" = ~SPINHUMW~ END // Use EFF file (EA = ANYONE): Clear Magical Weapon Slot / Terminate existing Polymorph
-		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 177 "target" = 2 "parameter2" = 2 "timing" = 1 STR_VAR "resource" = ~SPINHUMS~ END // Use EFF file (EA = ANYONE): Clear "Slayer Change" Delayed Damage and Save/Rest block
 		PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 177 "target" = 2 "parameter2" = 2 "timing" = 1 STR_VAR "resource" = ~SPINHUMS~ END // Use EFF file (EA = ANYONE): Clear "Slayer Change" Delayed Damage and Save/Rest block
 			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 2 "parameter2" = 1 "duration" = 3 STR_VAR "resource" = ~SPPOLYMP~ END // Play visual effect
 			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 2 "parameter2" = 1 "duration" = 3 STR_VAR "resource" = ~POLYBACK~ END // Play visual effect
 		END ELSE BEGIN
 			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 1 STR_VAR "resource" = "#EFF_M08" END // Play sound
 			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 2 "timing" = 1 STR_VAR "resource" = "ALTERH" END // Play visual effect
-			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 61 "target" = 2 "parameter1" = (0<<75 + 8<<210 + 24<<160) "parameter2" = (0 + 16<<30) "timing" = 1 END // Creature RGB color fade
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 61 "target" = 2 "parameter1" = (75 << 8) + (210 << 16) + (160 << 24) "parameter2" = (0 + 30 << 16) "timing" = 1 END // Creature RGB color fade
 		END
 	// Clear Magical Weapon Slot / Terminate existing Polymorph
 	CREATE "EFF" ~spinhumw~
 		WRITE_LONG 0x10 135 // Effect ID: Polymorph
-		WRITE_BYTE 0x2c 100 // Probability 1
+		WRITE_SHORT 0x2c 100 // Probability 1
 		WRITE_ASCII 0x94 ~*PINHUMW~ #8 // Parent resource (Important: This specific field always needs to be in ALLCAPS!!!)
 	// For use with Magically Created weapons (f.i. "Flame Blade", "Seeking Sword", etc...)
 	CREATE "SPL" ~spinhumw~
@@ -270,8 +396,8 @@ BEGIN
 	ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 		// EFF file (cast by "spinhums.spl"): Clear "Slayer Change" Delayed Damage and Save/Rest block
 		CREATE "EFF" ~spinhums~
-			WRITE_SHORT 0x10 321 // Effect ID: Remove effects by resource
-			WRITE_BYTE 0x2c 100 // Probability 1
+			WRITE_LONG 0x10 321 // Effect ID: Remove effects by resource
+			WRITE_SHORT 0x2c 100 // Probability 1
 			WRITE_ASCIIE 0x30 ~%SLAYER_CHANGE_TWO%~ #8 // Resource
 			WRITE_ASCII 0x94 ~*PINHUMS~ #8 // Parent resource (Important: This specific field always needs to be in ALLCAPS!!!)
 		// For use with "Slayer Change"
@@ -420,9 +546,6 @@ BEGIN
 		/* Shapeshifter (Druid) */
 		~SPCL643~ , ~SPL~ , 0 , 0 , 0 , ~WEREWODR~ , ~BRBRP1~ , ~WEREWODR~ , ~CDBRBRP~ , ~WEREWODR~ , ~WEREWLF1~ , 0 => ~SHAPESHIFTER_SHAPESHIFT_WEREWOLF~
 		~SPCL644~ , ~SPL~ , 0 , 0 , 0 , ~WEREGRDR~ , ~BRBRP2~ , ~WEREGRDR~ , ~CDBRBRP2~ , ~WEREGRDR~ , ~WEREWLF2~ , 0 => ~SHAPESHIFTER_SHAPESHIFT_GREATER_WEREWOLF~
-		/* Elemental Transformation (Druid HLA) */
-		~SPPR731~ , ~SPL~ , 0 , 0 , 0 , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , 6 => ~CLERIC_ELEMENTAL_TRANSFORMATION_FIRE~
-		~SPPR732~ , ~SPL~ , 0 , 0 , 0 , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , 6 => ~CLERIC_ELEMENTAL_TRANSFORMATION_EARTH~
 	END
 	// Main
 	ACTION_PHP_EACH "self_polymorphs" AS "x" => "y" BEGIN
@@ -510,17 +633,20 @@ RET_ARRAY
 BEGIN
 	// Initialize
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY "hostile_limited_polymorphs" BEGIN // Hostile/Duration Polymorphs
-		// RES , Type , Power , Resist/Dispel , Header , Save , Duration , Probability , BGEE (CRE) , BGEE (ITM) , BG2EE (CRE) , BG2EE (ITM) , IWDEE (CRE) , IWDEE (ITM) , Game => Polymoprh/Shapeshift ability (identifier)
-		~SPWI415~ , ~SPL~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 => ~POLYMORPH_OTHER_SQUIRREL~
-		~SPWI711~ , ~SPL~ , 7 , 1 , 0 , 1 , 9 , 10 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 => ~SPHERE_OF_CHAOS_POLYMORPH_SQUIRREL~
-		~SPWM183~ , ~SPL~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 => ~WILD_SURGE_POLYMORPH_SQUIRREL~
-		~BOLT05~ , ~ITM~ , 0 , 1 , 1 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 => ~BOLT_OF_POLYMORPHING_SQUIRREL~
-		~WAND09~ , ~ITM~ , 4 , 1 , 1 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 => ~WAND_OF_POLYMORPHING_SQUIRREL~
-		~SPWM113~ , ~SPL~ , 4 , 1 , 0 , 0 , 70 , 100 , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , 0 => ~WILD_SURGE_POLYMORPH_SPIRIT_WOLF~
-		~CLCK04~ , ~ITM~ , 0 , 0 , 0 , 0 , 120 , 100 , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , 3 => ~RELAIR'S_MISTAKE_POLYMORPH_WOLF~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 1 , 0 , 120 , 100 , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , 2 => ~CLOAK_OF_THE_SEWERS_POLYMORPH_RAT~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 2 , 0 , 120 , 100 , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , 2 => ~CLOAK_OF_THE_SEWERS_POLYMORPH_TROLL~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 3 , 0 , 120 , 100 , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , 2 => ~CLOAK_OF_THE_SEWERS_POLYMORPH_JELLY~
+		// RES , Type , Power , Resist/Dispel , Header , Save , Duration , Probability , BGEE (CRE) , BGEE (ITM) , BG2EE (CRE) , BG2EE (ITM) , IWDEE (CRE) , IWDEE (ITM) , Game , Subspell => Polymoprh/Shapeshift ability (identifier)
+		~SPWI415~ , ~SPL~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~~ => ~POLYMORPH_OTHER_SQUIRREL~
+		~SPWI711~ , ~SPL~ , 7 , 1 , 0 , 1 , 9 , 10 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~SPWI711A~ => ~SPHERE_OF_CHAOS_POLYMORPH_SQUIRREL~
+		~SPWM183~ , ~SPL~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~~ => ~WILD_SURGE_POLYMORPH_SQUIRREL~
+		~BOLT05~ , ~ITM~ , 0 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~~ => ~BOLT_OF_POLYMORPHING_SQUIRREL~
+		~WAND09~ , ~ITM~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~~ => ~WAND_OF_POLYMORPHING_SQUIRREL~
+		~SPWM113~ , ~SPL~ , 4 , 1 , 0 , 0 , 70 , 100 , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , 0 , ~SPWM113A~ => ~WILD_SURGE_POLYMORPH_SPIRIT_WOLF~
+		~CLCK04~ , ~ITM~ , 0 , 0 , 0 , 0 , 120 , 100 , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , 3 , ~CLCK04~ => ~RELAIRS_MISTAKE_POLYMORPH_WOLF~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 0 , 0 , 120 , 100 , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , 2 , ~CLCK27A~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_RAT~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 1 , 0 , 120 , 100 , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , 2 , ~CLCK27B~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_TROLL~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 2 , 0 , 120 , 100 , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , 2 , ~CLCK27C~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_JELLY~
+		/* Elemental Transformation (Druid HLA) */
+		~SPPR731~ , ~SPL~ , 0 , 0 , 0 , 0 , 300 , 100 , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , 6 , ~SPPR731A~ => ~CLERIC_ELEMENTAL_TRANSFORMATION_FIRE~
+		~SPPR732~ , ~SPL~ , 0 , 0 , 0 , 0 , 300 , 100 , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , 6 , ~SPPR732A~ => ~CLERIC_ELEMENTAL_TRANSFORMATION_EARTH~
 	END
 	// Main
 	//OUTER_SET ~squirrel~ = 1
@@ -568,7 +694,8 @@ BEGIN
 						DEFAULT
 							OUTER_SPRINT ~add_fun~ ~ADD_ITEM_EFFECT~
 					END*/
-					OUTER_SPRINT ~res_~ ~%resource%S~
+					OUTER_TEXT_SPRINT ~res_~ $"x"("15")
+					/*OUTER_SPRINT ~res_~ ~%resource%S~
 					OUTER_SET ~del_head~ = ~-1~
 					OUTER_SET ~header~ = 0
 					ACTION_IF !("%hostile%") BEGIN
@@ -578,24 +705,33 @@ BEGIN
 							WRITE_BYTE 0 (THIS + "%del_head%")
 						END
 						OUTER_SPRINT ~res_~ ~%resource%%s%~
-					END
+					END*/
 					WITH_SCOPE BEGIN
 						ACTION_TO_LOWER ~file_~
 						COPY_EXISTING ~%file_%~ ~override~
 							//TO_UPPER ~SOURCE_RES~
-							LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%del_head%" "match_probability1" = "%probability1%" END
+							//LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%del_head%" "match_probability1" = "%probability1%" END
+							LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = $"x"("4") "match_probability1" = "%probability1%" END
 							PATCH_MATCH "%DEST_EXT%" WITH
 								"SPL" BEGIN
 									LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~SPINHUMR~ END // Cast SPL file
-									LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"res"(~~) END // Cast SPL file
-									PATCH_IF (GAME_IS ~bgee bg2ee eet~) AND ("%hostile%") BEGIN
+									PATCH_IF ("%duration%" > 0) BEGIN
+										LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"res"(~~) END // Cast SPL file (0s Delay => prevents equipped effect loss)
+									END ELSE BEGIN
+										LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 111 "power" "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"item"(~~) END // Create ITM file (0s Delay => prevents equipped effect loss)
+									END
+									PATCH_IF (GAME_IS ~bgee bg2ee eet~) AND ("%hostile%") AND ("%DEST_RES%" STRING_COMPARE_CASE "%WIZARD_SPHERE_OF_CHAOS%") BEGIN
 										LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 141 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 4 "timing" = 1 "resist_dispel" "savingthrow" "probability1" END // Lighting effects (Alteration air)
 										LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 174 "power" "target" = ("%hostile%" ? 2 : 1) "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~EFF_P07~ END // Play sound
 									END
 								END
 								DEFAULT
 									LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~SPINHUMR~ END // Cast SPL file
-									LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"res"(~~) END // Cast SPL file
+									PATCH_IF ("%duration%" > 0) BEGIN
+										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"res"(~~) END // Cast SPL file (0s Delay => prevents equipped effect loss)
+									END ELSE BEGIN
+										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 111 "power" "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" = 4 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = $"item"(~~) END // Create ITM file (0s Delay => prevents equipped effect loss)
+									END
 									PATCH_IF (GAME_IS ~bgee bg2ee eet~) AND ("%hostile%") BEGIN
 										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 141 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 4 "timing" = 1 "resist_dispel" "savingthrow" "probability1" END // Lighting effects (Alteration air)
 										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 174 "power" "target" = ("%hostile%" ? 2 : 1) "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~EFF_P07~ END // Play sound
@@ -603,31 +739,33 @@ BEGIN
 							END
 						BUT_ONLY
 					END
-					// Polymorph moved to subspell because it needs a duration
-					WITH_SCOPE BEGIN
-						ACTION_TO_LOWER ~res_~
-						CREATE ~SPL~ ~%res_%~
-							/* Header */
-							WRITE_LONG NAME1 ~-1~
-							WRITE_LONG NAME2 ~-1~
-							WRITE_LONG UNIDENTIFIED_DESC ~-1~
-							WRITE_LONG DESC ~-1~
-							WRITE_LONG 0x34 1 // Level
-							WRITE_LONG 0x64 0x72 // Abilities offset
-							WRITE_SHORT 0x68 1 // # abilities
-							WRITE_LONG 0x6a 0x9a // Effects offset
-							INSERT_BYTES 0x72 0x28
-							/* Extended Header */
-							WRITE_SHORT 0x80 32767 // Range
-							WRITE_SHORT 0x82 1 // Minimum level
-							WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
-							/* Feature blocks */
-							PATCH_IF ("%duration%" == 0) BEGIN
-								SET "timing" = 1
-							END ELSE BEGIN
-								SET "timing" = 0
-							END
-							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 111 "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" "duration" STR_VAR "resource" = $~item~(~~) END // Create weapon
+					// Polymorph effect moved to subspell if it needs a duration
+					ACTION_IF ("%duration%" > 0) BEGIN
+						WITH_SCOPE BEGIN
+							ACTION_TO_LOWER ~res_~
+							CREATE ~SPL~ ~%res_%~
+								/* Header */
+								WRITE_LONG NAME1 ~-1~
+								WRITE_LONG NAME2 ~-1~
+								WRITE_LONG UNIDENTIFIED_DESC ~-1~
+								WRITE_LONG DESC ~-1~
+								WRITE_LONG 0x34 1 // Level
+								WRITE_LONG 0x64 0x72 // Abilities offset
+								WRITE_SHORT 0x68 1 // # abilities
+								WRITE_LONG 0x6a 0x9a // Effects offset
+								INSERT_BYTES 0x72 0x28
+								/* Extended Header */
+								WRITE_SHORT 0x80 32767 // Range
+								WRITE_SHORT 0x82 1 // Minimum level
+								WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+								/* Feature blocks */
+								PATCH_IF ("%duration%" == 0) BEGIN
+									SET "timing" = 1
+								END ELSE BEGIN
+									SET "timing" = 0
+								END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 111 "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" "duration" STR_VAR "resource" = $~item~(~~) END // Create weapon
+						END
 					END
 					OUTER_SET $~POLYFORM_abort~($~res~(~~)) = 1
 					LAF ~alter_poly_item~ INT_VAR ~hostile~ STR_VAR ~item_~ ~cre_~ RET_ARRAY ~POLYITEM~ END
@@ -674,11 +812,11 @@ BEGIN
 						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 2 "parameter2" = 1 "timing" = 1 STR_VAR ~resource~ = ~SPINHUMS~ END
 						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 2 "parameter2" = 1 ~timing~ = 4 STR_VAR ~resource~ = $~res~(~~) END
 						PATCH_IF ($"x"("4") == 3) BEGIN
-							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 338 "target" = 2 "parameter1" = 16502 "parameter2" = 2 "duration" = 45 END // Disable Save (~You cannot save at this time.~)
-							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = 5381 "timing" = 4 "duration" = 44 END // Display string (~You feel your control slipping...~)
+							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 338 "target" = 2 "parameter1" = 16502 "parameter2" = 2 "duration" = 96 END // Disable Save (~You cannot save at this time.~)
+							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = 5381 "timing" = 4 "duration" = 48 END // Display string (~You feel your control slipping...~)
 							PATCH_WITH_SCOPE BEGIN
 								FOR ("i" = 0; "%i%" < 16; ++"i") BEGIN
-									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 12 "target" = 2 "parameter1" = (2**"%i%") "parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC") "timing" = 4 "duration" = 6 * ("%i%" + 1) "savingthrow" = (BIT24 BOR BIT25) END // Damage (Bypass Mirror Image, Ignore Game Difficulty)
+									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 12 "target" = 2 "parameter1" = (2**"%i%") "parameter2" = (4096 << 16) "timing" = 4 "duration" = 6 * ("%i%" + 1) "savingthrow" = (BIT24 BOR BIT25) END // Damage (Bypass Mirror Image, Ignore Game Difficulty) – N.B.: `Damage type` is intentionally unknown so as to bypass/ignore any player's resistances!
 								END
 							END
 						END
@@ -690,7 +828,7 @@ BEGIN
 			// Polymorph moved to subspell because it needs a duration
 			WITH_SCOPE BEGIN
 				ACTION_TO_LOWER ~resource~
-				CREATE ~SPL~ ~%resource%s~
+				CREATE ~SPL~ ~%resource%a~
 					/* Header */
 					WRITE_LONG NAME1 ~-1~
 					WRITE_LONG NAME2 ~-1~
@@ -820,10 +958,12 @@ BEGIN
 	PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 215 "power" "target" = 1 "parameter2" = 1 "duration" = 3 STR_VAR "resource" = ~SPPOLYMP~ END // Polymorph Visual
 		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 215 "power" "target" = 1 "parameter2" = 1 "duration" = 3 STR_VAR "resource" = ~POLYBACK~ END // Polymorph Visual
+		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 206 "power" "target" = 1 "parameter1" = (GAME_IS ~bgee~) ? 26463 : 21644 "duration" STR_VAR "resource" = "%DEST_RES%" END // String Display (~You have already cast a polymorph type spell on yourself.~)
 	END ELSE BEGIN
 		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 174 "power" "target" = 1 "timing" = 1 STR_VAR "resource" = "#EFF_M08" END // Play sound
 		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 215 "power" "target" = 1 "timing" = 1 STR_VAR "resource" = "ALTERH" END // Play visual effect
-		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 61 "power" "target" = 1 "parameter1" = (0<<75 + 8<<210 + 24<<160) "parameter2" = (0 + 16<<30) "timing" = 1 END // Creature RGB color fade
+		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 61 "power" "target" = 1 "parameter1" = (75 << 8) + (210 << 16) + (160 << 24) "parameter2" = (0 + 30 << 16) "timing" = 1 END // Creature RGB color fade
+		LPF "ADD_SPELL_EFFECT" INT_VAR "header" "opcode" = 206 "power" "target" = 1 "parameter1" = 36576 "duration" STR_VAR "resource" = "%DEST_RES%" END // String Display (~You have already cast a polymorph type spell on yourself.~)
 	END
 END
 
@@ -874,12 +1014,19 @@ BEGIN
 					LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 124 "timing" = 2 END // Portrait Icon (Polymorphed)
 				END
 				// ~%CLERIC_ELEMENTAL_TRANSFORMATION_FIRE%~ and ~%CLERIC_ELEMENTAL_TRANSFORMATION_EARTH%~ and have its own portrait icon
+				// Moreover, they should get immunity to "SPINHUME.EFF" so that the caster can be healed 3d10 HP when returning to its natural form
 				PATCH_MATCH "%DEST_RES%" WITH
-					"DRUFIR" WHEN (GAME_IS ~iwdee~) BEGIN
-						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 164 "timing" = 2 END // Portrait Icon (Fire Elemental Transformation)
+					"DRUFIR" BEGIN
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 318 "target" = 1 "timing" = 2 STR_VAR "resource" = "*PINHUME" END // Protection from resource
+						PATCH_IF (GAME_IS ~iwdee~) BEGIN
+							LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 164 "timing" = 2 END // Portrait Icon (Fire Elemental Transformation)
+						END
 					END
-					"DRUEAR" WHEN (GAME_IS ~iwdee~) BEGIN
-						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 165 "timing" = 2 END // Portrait Icon (Earth Elemental Transformation)
+					"DRUEAR" BEGIN
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 318 "target" = 1 "timing" = 2 STR_VAR "resource" = "*PINHUME" END // Protection from resource
+						PATCH_IF (GAME_IS ~iwdee~) BEGIN
+							LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 165 "timing" = 2 END // Portrait Icon (Earth Elemental Transformation)
+						END
 					END
 					DEFAULT
 				END
