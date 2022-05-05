@@ -641,9 +641,9 @@ BEGIN
 		~WAND09~ , ~ITM~ , 4 , 1 , 0 , 16 , 0 , 100 , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , ~SQUIRR~ , ~SQUIRP~ , 0 , ~~ => ~WAND_OF_POLYMORPHING_SQUIRREL~
 		~SPWM113~ , ~SPL~ , 4 , 1 , 0 , 0 , 70 , 100 , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , ~SPIRWOLF~ , ~WSWOLF~ , 0 , ~SPWM113A~ => ~WILD_SURGE_POLYMORPH_SPIRIT_WOLF~
 		~CLCK04~ , ~ITM~ , 0 , 0 , 0 , 0 , 120 , 100 , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , ~WOLFCHAR~ , ~CDWOLFM~ , 3 , ~CLCK04~ => ~RELAIRS_MISTAKE_POLYMORPH_WOLF~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 0 , 0 , 120 , 100 , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , 2 , ~CLCK27A~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_RAT~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 1 , 0 , 120 , 100 , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , 2 , ~CLCK27B~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_TROLL~
-		~CLCK27~ , ~ITM~ , 0 , 0 , 2 , 0 , 120 , 100 , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , 2 , ~CLCK27C~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_JELLY~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 1 , 0 , 120 , 100 , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , ~POLYRAT~ , 2 , ~CLCK27A~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_RAT~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 2 , 0 , 120 , 100 , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , ~PLYTROLL~ , 2 , ~CLCK27B~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_TROLL~
+		~CLCK27~ , ~ITM~ , 0 , 0 , 3 , 0 , 120 , 100 , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , ~JELLMU~ , ~POLYJELL~ , 2 , ~CLCK27C~ => ~CLOAK_OF_THE_SEWERS_POLYMORPH_JELLY~
 		/* Elemental Transformation (Druid HLA) */
 		~SPPR731~ , ~SPL~ , 0 , 0 , 0 , 0 , 300 , 100 , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , ~DRUFIR01~ , ~DRUFIR~ , 6 , ~SPPR731A~ => ~CLERIC_ELEMENTAL_TRANSFORMATION_FIRE~
 		~SPPR732~ , ~SPL~ , 0 , 0 , 0 , 0 , 300 , 100 , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , ~DRUEAR01~ , ~DRUEAR~ , 6 , ~SPPR732A~ => ~CLERIC_ELEMENTAL_TRANSFORMATION_EARTH~
@@ -695,23 +695,22 @@ BEGIN
 							OUTER_SPRINT ~add_fun~ ~ADD_ITEM_EFFECT~
 					END*/
 					OUTER_TEXT_SPRINT ~res_~ $"x"("15")
-					/*OUTER_SPRINT ~res_~ ~%resource%S~
+					//OUTER_SPRINT ~res_~ ~%resource%S~
 					OUTER_SET ~del_head~ = ~-1~
 					OUTER_SET ~header~ = 0
 					ACTION_IF !("%hostile%") BEGIN
 						OUTER_SET "header" = $"x"("4")
 						OUTER_SET "del_head" = "%header%" - 1
-						OUTER_PATCH_SAVE ~s~ ~R~ BEGIN
+						/*OUTER_PATCH_SAVE ~s~ ~R~ BEGIN
 							WRITE_BYTE 0 (THIS + "%del_head%")
 						END
-						OUTER_SPRINT ~res_~ ~%resource%%s%~
-					END*/
+						OUTER_SPRINT ~res_~ ~%resource%%s%~*/
+					END
 					WITH_SCOPE BEGIN
 						ACTION_TO_LOWER ~file_~
 						COPY_EXISTING ~%file_%~ ~override~
 							//TO_UPPER ~SOURCE_RES~
-							//LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%del_head%" "match_probability1" = "%probability1%" END
-							LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = $"x"("4") "match_probability1" = "%probability1%" END
+							LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%del_head%" "match_probability1" = "%probability1%" END
 							PATCH_MATCH "%DEST_EXT%" WITH
 								"SPL" BEGIN
 									LPF ~ADD_SPELL_EFFECT~ INT_VAR "header" "opcode" = 146 "power" "target" = ("%hostile%" ? 2 : 1) "parameter2" = 1 "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~SPINHUMR~ END // Cast SPL file
