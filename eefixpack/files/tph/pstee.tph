@@ -98,6 +98,18 @@ COPY_EXISTING ~kyname.itm~ ~override~
   END
 BUT_ONLY
 
+// Not usable by Annah
+COPY_EXISTING ~uhrknf.itm~ ~override~
+  WRITE_LONG 0x1e (THIS | BIT28)  // Exclude: Annah
+BUT_ONLY
+
+// Not usable by Priests and various NPCs
+COPY_EXISTING ~supwep.itm~ ~override~
+              ~fork.itm~   ~override~
+  // Exclude: Priests, Dak'kon, Fall-From-Grace, Vhailor, Ignus, Morte, Nordom, Annah
+  WRITE_LONG 0x1e (THIS | BIT7 | BIT20 | BIT21 | BIT23 | BIT24 | BIT25 | BIT26 | BIT28 )
+BUT_ONLY
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
