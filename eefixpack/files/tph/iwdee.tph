@@ -14,6 +14,31 @@ END
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 
+/*
+luke
+**splprot.2da**
+- the newly added (v2.6) header descriptions are incorrect for the alignment rows
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING "splprot.2da" "override"
+    COUNT_2DA_COLS "cols"
+    SET_2DA_ENTRY 33 0 "%cols%" "33_ALIGNMENTBITS=GOOD" // NOT BIT1 = Not NEUTRAL or EVIL
+    SET_2DA_ENTRY 34 0 "%cols%" "34_ALIGNMENTBITS!=GOOD" // HAS BIT1 = Is NEUTRAL or EVIL
+    SET_2DA_ENTRY 35 0 "%cols%" "35_ALIGNMENTBITS=NEUTRAL" // NOT BIT0 = Not GOOD or EVIL
+    SET_2DA_ENTRY 36 0 "%cols%" "36_ALIGNMENTBITS!=NEUTRAL" // HAS BIT0 = Is GOOD or EVIL
+    SET_2DA_ENTRY 37 0 "%cols%" "37_ALIGNMENTBITS=EVIL"
+    SET_2DA_ENTRY 38 0 "%cols%" "38_ALIGNMENTBITS!=EVIL"
+    SET_2DA_ENTRY 59 0 "%cols%" "59_ALIGNMENTBITS=LAWFUL" // NOT BIT5 = Not CHAOTIC or NEUTRAL
+    SET_2DA_ENTRY 60 0 "%cols%" "60_ALIGNMENTBITS!=LAWFUL" // HAS BIT5 = Is CHAOTIC or NEUTRAL
+    SET_2DA_ENTRY 61 0 "%cols%" "61_ALIGNMENTBITS=CHAOTIC"
+    SET_2DA_ENTRY 62 0 "%cols%" "62_ALIGNMENTBITS!=CHAOTIC"
+    SET_2DA_ENTRY 118 0 "%cols%" "118_ALIGNMENTBITS!=n" // Clearly state it is a bitwise check
+    // Formatting
+    PRETTY_PRINT_2DA
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 // tbd, davidw
 // 7 eyes (eye of the sword shouldn't protect against stunning damage, which is only used for the hp backlash of the Enrage ability)
 COPY_EXISTING ~7eyes.2da~ ~override~
