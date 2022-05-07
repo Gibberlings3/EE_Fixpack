@@ -1,0 +1,46 @@
+DEFINE_ACTION_FUNCTION song_of_kaudies BEGIN
+
+
+	// create new spellstate
+	LAF ds_resolve_stat STR_VAR id=50_PERCENT_SONIC_IMMUNITY RET stat_ind END
+	
+	// patch it in to the spells
+	ACTION_FOR_EACH spell IN 
+		//silence effects
+		CLERIC_SILENCE_15_FOOT 
+		TRAP_SILENCE  
+		WIZARD_POWER_WORD_SILENCE 
+		// sonic effects
+		CLERIC_COMMAND 
+		CLERIC_GREATER_COMMAND 
+		WIZARD_SHOUT 
+		WIZARD_GREAT_SHOUT 
+		WIZARD_WAIL_OF_THE_BANSHEE
+		INNATE_MOURNFUL_WAIL 
+		INNATE_DEATH_KNELL 
+		INNATE_HARPY_WAIL 
+		INNATE_WAR_CRY 
+		INNATE_UNDYING_LAMENT 
+		INNATE_GREAT_ROAR
+		DEMILICH_DEATH //yes, these probably don't turn up in IWDEE but it's convenient to have one list
+		ohbdemi2
+	BEGIN
+		ACTION_IF VARIABLE_IS_SET "%spell%" BEGIN
+			OUTER_SPRINT spell "%%spell%%"
+		END
+		COPY_EXISTING "%spell%.spl" override
+			LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=324 target=2 timing=0 duration=1 parameter1=stat_ind parameter2=110 probability1=49 STR_VAR resource="%SOURCE_RES%" END
+		IF_EXISTS
+	END
+	
+	// patch Song of Kaudies itself
+	
+	COPY_EXISTING "%BARD_SONG_KAUDIES%.spl" override
+			// remove the existing immunities 
+			LPF DELETE_EFFECT INT_VAR match_opcode=206 END
+			LPF DELETE_EFFECT INT_VAR match_opcode=101 END
+			// set the spellstate
+			LPF ADD_SPELL_EFFECT INT_VAR opcode=328 target=2 duration=7 parameter2=stat_ind special=1 END
+	
+
+END

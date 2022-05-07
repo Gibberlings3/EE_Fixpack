@@ -6,6 +6,10 @@ OUTER_SPRINT "library_path" "%MOD_FOLDER%/files/tph/dw"
 
 OUTER_SET write=0
 
+// include 'detectable spells', so we can use ds_resolve_stat
+
+INCLUDE "%library_path%/ds.tph"
+
 // some misc fixes
 
 INCLUDE "%library_path%/dw_misc.tph"
@@ -53,6 +57,14 @@ END
 ACTION_IF GAME_IS "bgee bg2ee" BEGIN
 	INCLUDE "%library_path%/speculative_109_175.tph"
 	LAF speculative_109_175 END
+END
+
+/// Song of Kaudies operates via splstate
+/// run this BEFORE immunities_via_324 so as not to end up granting SILENCE_IMMUNITY before we wipe the 101 from Song of Kaudies.
+
+ACTION_IF GAME_IS iwdee BEGIN
+	INCLUDE "%library_path%/song_of_kaudies.tph"
+	LAF song_of_kaudies END
 END
 
 /// 324-ify spell immunities.
