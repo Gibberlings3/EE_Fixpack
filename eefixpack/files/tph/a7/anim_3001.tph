@@ -1,0 +1,15 @@
+// Fixes creature animation definition for Neothelid
+
+// Add missing animation entry for Neothelid
+APPEND ~animate.ids~ ~0x3001 NEOTHELID~ UNLESS ~0x3001[ %TAB%]+~
+APPEND ~anisnd.ids~  ~0x3001 MNEO     CGAMEANIMATIONTYPE_NEOTHELID~ UNLESS ~0x3001[ %TAB%]+MNEO[ %TAB%]+~
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~3001.ini~) BEGIN
+  // cosmetic fix
+  COPY_EXISTING ~3001.ini~ ~override~
+    REPLACE_TEXTUALLY ~// MAKH ankheg~ ~// MNEO neothelid~
+  BUT_ONLY
+END ELSE BEGIN
+  // add missing animation definition stub
+  COPY ~eefixpack/files/ini/3001.ini~ ~override~
+END
