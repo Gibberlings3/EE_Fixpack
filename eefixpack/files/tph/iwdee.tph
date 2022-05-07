@@ -12,6 +12,8 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
+
 // tbd, davidw
 // 7 eyes (eye of the sword shouldn't protect against stunning damage, which is only used for the hp backlash of the Enrage ability)
 COPY_EXISTING ~7eyes.2da~ ~override~

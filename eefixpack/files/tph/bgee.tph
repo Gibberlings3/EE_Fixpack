@@ -18,6 +18,8 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
+
 // luke
 // **splprot.2da**
 // *Binary match* is `8` (not `9`)
