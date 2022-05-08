@@ -1,0 +1,27 @@
+2DA V1.0
+*
+                                school                          sectype                         ids                             name
+BALTH07                         4                               11                              -1                              Greater_Malison
+BHAAL2A                         6                               13                              -1                              Draw_Upon_Holy_Might
+SPCL212                         3                               13                              PALADIN_DETECT_EVIL             Detect_Evil
+SPCL722                         -1                              10                              TALOS_LIGHTNING_BOLT            Lightning_Bolt
+SPIN552                         8                               -1                              HIVE_MOTHER_DISINTEGRATE        Disintegrate
+SPIN553                         4                               11                              NALMISSRA_CHARM                 Charm_Person
+SPIN558                         -1                              11                              ERINYES_CHARM                   Charm_Person
+SPIN673                         -1                              9                               SPORE_DEATH                     Cloudkill
+SPIN686                         -1                              7                               PROTECTION_MAGIC_WEAPON_NOEFF   Protection_From_Magical_Weapons
+SPIN839                         4                               -1                              HULK_CONFUSION                  Confusion
+SPIN920                         1                               1                               BEHOLDER_SPELL_TURNING          Minor_Spell_Turning
+SPIN940                         6                               9                               MEPHIT_STINKING_CLOUD           Stinking_Cloud
+SPIN943                         5                               -1                              MEPHIT_BLUR                     Blur
+SPIN961                         7                               10                              BEHOLDER_FINGER_OF_DEATH        Finger_of_Death
+SPIN962                         6                               10                              BEHOLDER_MAGIC_MISSILE          Magic_Missile
+SPIN982                         8                               -1                              BEHOLDER_DISINTEGRATE           Disintegrate
+SPIN984                         -1                              11                              BEHOLDER_FLESH_TO_STONE         Flesh_to_Stone
+SPIN997                         7                               12                              TANARI_VAMPIRIC_TOUCH           Vampiric_Touch
+SPIN998                         8                               11                              TANARI_SILENCE                  Silence,_15'_Radius
+SPWI004                         -1                              9                               1004                            Stinking_Cloud
+SPWI016                         -1                              9                               1016                            Cloudkill
+SPWI940                         6                               10                              1940                            Agannazar's_Scorcher
+SPWM123                         -1                              11                              -1                              Symbol,_Fear
+SPWM179                         8                               -1                              -1                              Polymorph_Other

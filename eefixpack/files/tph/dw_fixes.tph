@@ -67,6 +67,11 @@ ACTION_IF GAME_IS iwdee BEGIN
 	LAF song_of_kaudies END
 END
 
+/// correct school/sectype errors
+
+INCLUDE "%library_path%/school_sectype_errors.tph"
+LAF fix_school_sectype_errors INT_VAR write END
+
 /// 324-ify spell immunities.
 
 INCLUDE "%library_path%/immunities_via_324.tph"

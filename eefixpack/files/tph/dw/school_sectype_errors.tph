@@ -1,0 +1,223 @@
+/*
+
+Automated fix for school/sectype errors, according to this algorithm: 
+- if a spell 
+(i) shares a name with a standard player-castable spell; and
+(ii) does not bypass magic resistance; and
+(iii) is used in core play and not just in cutscenes or dialogs; and
+(iv) is not one of a small number of ad hoc exceptions
+
+then its school and sectype gets corrected to the player-castable version.
+
+Run with write=1 to autogenerate a list of changes. If write=0 we just load
+the previous list.
+
+NB, for consistency only use write=1 on English-language runs.
+
+*/
+
+DEFINE_ACTION_FUNCTION fix_school_sectype_errors 
+	INT_VAR write=0
+	STR_VAR path="%MOD_FOLDER%/data/school_sectype"
+BEGIN
+
+	// determine name of fix file
+	
+	ACTION_IF game_includes_sod BEGIN 
+		OUTER_SPRINT file "sod"
+	END ELSE BEGIN
+		OUTER_SPRINT file "%game%"
+	END
+	OUTER_SPRINT path "%path%/%file%.2da"
+
+	// generate the file if needed
+	
+	ACTION_IF !write && !FILE_EXISTS "%path%" BEGIN
+		WARN "fix_school_sectype_errors is operating in write=0 mode but there is no datatable; generating one anyway"
+		OUTER_SET write=1
+	END
+	
+	ACTION_IF write BEGIN	
+		LAF find_school_sectype_errors END		
+	END
+
+	// load the data; implement the fixes
+	
+	COPY - "%path%" nowhere
+		COUNT_2DA_COLS colcount
+		READ_2DA_ENTRIES_NOW s_s_data colcount 
+		FOR (row=0;row<s_s_data;++row) BEGIN
+			READ_2DA_ENTRY_FORMER s_s_data row 0 resref
+			READ_2DA_ENTRY_FORMER s_s_data row 1 school
+			READ_2DA_ENTRY_FORMER s_s_data row 2 sectype
+			INNER_ACTION BEGIN
+				COPY_EXISTING "%resref%.spl" override
+					WRITE_BYTE 0x25 (school>=0? school: THIS)
+					WRITE_BYTE 0x27 (sectype>=0? sectype: THIS)
+				BUT_ONLY
+			END
+		END
+
+END
+
+DEFINE_ACTION_FUNCTION find_school_sectype_errors BEGIN
+
+	// get the data on schools/sectypes for player-castable spells
+	COPY_EXISTING_REGEXP - 
+	"SPPR[1-7][0-4][0-9].spl" nowhere
+	"SPWI[1-9][0-4][0-9].spl" nowhere
+		PATCH_IF !RESOURCE_CONTAINS "hidespl.2da" "%SOURCE_RES%" BEGIN
+			READ_STRREF 0x8 name
+			READ_BYTE 0x25 school
+			READ_BYTE 0x27 sectype
+			SET $school_map("%name%")=school
+			SET $sectype_map("%name%")=sectype
+			SPRINT $template("%name%") "%SOURCE_RES%"
+		END
+	// load in a list of exceptions
+	LAF school_sectype_exceptions RET_ARRAY to_skip END
+
+	// go through the files
+	OUTER_SPRINT data ""	
+	COPY_EXISTING_REGEXP -
+	".*\.spl" nowhere
+		SPRINT resref "%SOURCE_RES%"
+		TO_UPPER resref
+		PATCH_IF !VARIABLE_IS_SET $to_skip("%resref%") BEGIN
+			PATCH_IF LONG_AT 0x8>0 BEGIN
+				READ_STRREF 0x8 name
+				correct_school="-1"
+				correct_sectype="-1"
+				READ_BYTE 0x25 school
+				PATCH_IF VARIABLE_IS_SET $school_map("%name%") && !($school_map("%name%")=school) BEGIN
+					LPF check_mr RET mr_check=value END
+					PATCH_IF mr_check BEGIN
+						SPRINT template $template("%name%")
+						SET correct_school=$school_map("%name%")
+					END
+				END
+				READ_BYTE 0x27 sectype
+				PATCH_IF VARIABLE_IS_SET $sectype_map("%name%") && !($sectype_map("%name%")=sectype) BEGIN
+					LPF check_mr RET mr_check=value END
+					PATCH_IF mr_check BEGIN
+						SPRINT template $template("%name%")
+						SET correct_sectype=$sectype_map("%name%")
+					END
+				END
+				PATCH_IF correct_school>=0 || correct_sectype>=0 BEGIN
+					PATCH_MATCH "%resref%" WITH
+					
+					"sp\(IN\|CL\|PR\|WI\)[0-9][0-9][0-9]" BEGIN
+						INNER_PATCH_SAVE spell_num "%resref%" BEGIN
+							REPLACE_TEXTUALLY "SP" ""
+							REPLACE_TEXTUALLY "CL" 4
+							REPLACE_TEXTUALLY "IN" 3
+							REPLACE_TEXTUALLY "PR" 2
+							REPLACE_TEXTUALLY "WI" 1
+						END
+						LOOKUP_IDS_SYMBOL_OF_INT ids spell spell_num
+					END
+					DEFAULT
+						SPRINT ids "-1"
+					END	
+					INNER_PATCH_SAVE name "%name%" BEGIN
+						REPLACE_TEXTUALLY " " "_"
+					END
+					SPRINT data "%data%%SOURCE_RES%%TAB%%correct_school%%TAB%%correct_sectype%%TAB%%ids%%TAB%%name%%WNL%"
+				END
+			END		
+		END
+	
+	// write the data to file
+	
+<<<<<<<< .../fp-inline/file.2da
+2DA_V1.0
+*
+		school		sectype		ids		name
+%data%
+>>>>>>>>
+
+	COPY + ".../fp-inline/file.2da" "%path%" EVALUATE_BUFFER PRETTY_PRINT_2DA REPLACE_TEXTUALLY "2DA_V1" "2DA V1"
+
+
+
+END
+////////////////////////////////////////////////////////////
+/// Helper function to check if a spell bypasses MR
+/////////////////////////////////////////////////////////////
+
+
+DEFINE_PATCH_FUNCTION check_mr RET value BEGIN
+	value=0
+	PATCH_IF SHORT_AT 0x68>=1 BEGIN
+		READ_LONG 0x64 ab_off
+		GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+		PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+			PATCH_IF BYTE_AT (fx_off+0xd)=1 || BYTE_AT (fx_off+0xd)=3 BEGIN
+				READ_SHORT fx_off opcode
+				PATCH_IF !(opcode=174 || opcode=141) BEGIN // ignore sound effects/visuals
+					value=1
+				END
+			END
+		END
+	END
+
+END
+
+////////////////////////////////////////////////////////////
+/// Helper function to note the exceptions that we don't autofix
+/////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION school_sectype_exceptions RET_ARRAY to_skip BEGIN
+
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY to_skip BEGIN
+				MISLEAD => 1 // internally-used subspell
+				PROJIMAG => 1 // internally-used subspell
+				SIMULACR => 1 // internally-used subspell
+				SPIN736 => 1 // internally-used subspell
+				SPIN738 => 1 // internally-used subspell
+				SPIN923 => 1// internally-used subspell
+				SPWI710D => 1 // internally-used subspell
+				SPWI710P => 1 // internally-used subspell
+				SPWI809D => 1 // internally-used subspell
+				SPWI809P => 1 // internally-used subspell
+				SPCL641 => 1 // unused?
+				SPIN976 => 1// golem_confusion - unused?
+	END
+
+	ACTION_IF GAME_IS BG2EE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY to_skip BEGIN
+				SPCL641 => 1 // unused?
+				SPIN572 => 1 // cutscene
+				SPIN648 => 1 // cutscene/unused?
+				SPIN650 => 1 // DM_SHIELD - cutscene/unused?
+				SPIN837 => 1 // cutscene
+				SPIN918 => 1 // cutscene
+				SPIN945 => 1 // cutscene
+				SPWI802 => 1 // unused version of spell deflection
+				SPIN945 => 1 // cutscene
+				SPIN946 => 1 // cutscene
+				SPIN950 => 1 // cutscene
+		END
+
+	END ELSE
+	ACTION_IF GAME_IS IWDEE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY to_skip BEGIN
+				DW#SILIN =>1 // internal/mechanics
+		END
+	END ELSE
+	ACTION_IF GAME_IS BGEE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY to_skip BEGIN
+				SPIN837 => 1 // cutscene
+				SPIN945 => 1 // cutscene
+				SPIN946 => 1 // cutscene
+				SPWI802 => 1 // unused version of spell deflection
+		END
+	END
+	ACTION_IF GAME_INCLUDES SOD BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY to_skip BEGIN
+			BDSTINK=>1 // myconid confusion spores, quite different from spell
+		END
+	END
+
+END
