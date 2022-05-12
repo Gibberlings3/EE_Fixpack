@@ -213,7 +213,7 @@ BEGIN
 	END
 	// Various remaining Natural Form abilities => all redirected to cast SPINHUMR
 	WITH_SCOPE BEGIN
-		ACTION_DEFINE_ARRAY "human" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ END
+		ACTION_DEFINE_ARRAY "human" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ ~SPCL110~ END
 		ACTION_PHP_EACH "human" AS "null" => "res_" BEGIN
 			ACTION_TO_LOWER "res_"
 			COPY_EXISTING ~%res_%.spl~ ~override~
@@ -1112,9 +1112,17 @@ BEGIN
 					"FIRERN" "EARTHRN" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Fire/Earth Elemental
 						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 120 "target" = 1 "parameter2" = 2 "timing" = 2 END // Immunity to weapons (Weapon type: Non-magical)
 					END
+					// Replace Haste with Increased Movement Rate (for consistency)
+					"CDPOLY\(BB\|PB\|WW\)" BEGIN // Shapeshift: Boring Beetle, Shapeshift: Polar Bear, Shapeshift: Winter Wolf
+						LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 16 "opcode" = 176 "parameter1" = 150 "parameter2" = 5 STR_VAR "resource" = "" END // Haste => Movement rate bonus 2
+						LPF "CLONE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 176 "opcode" = 142 "parameter1" = 0 "parameter2" = 193 STR_VAR "insert" = "below" END // Display portrait icon (Increased Movement Rate)
+					END
 					// Minor clean up
 					"PLYFLIND" BEGIN // Shapeshift: Flind
 						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 12 "timing" = 1 STR_VAR "resource" = "" END
+					END
+					"PLYMSTAR" BEGIN // Shapeshift: Ogre
+						LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 142 "match_parameter2" = 38 END // Display portrait icon (Haste) => this is supposed to be Movement rate bonus, not haste
 					END
 					"CDMINDFL" BEGIN // Shapechange: Mind Flayer
 						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 139 "parameter1" = RESOLVE_STR_REF (@2) "parameter2" = 0 "timing" = 1 "duration" = 0 STR_VAR "resource" = "" END

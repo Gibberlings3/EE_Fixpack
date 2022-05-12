@@ -476,7 +476,8 @@ Attack Damage: 5d4 (slashing), strikes as a +2 weapon
 Special Abilities:
 – Slashing Resistance: 50%
 – Piercing Resistance: 50%
-– Missile Resistance: 50%"
+– Missile Resistance: 50%
+– Increased movement rate"
 
 /*
 luke
@@ -493,7 +494,8 @@ Attack Damage: 1d12 (slashing), strikes as a +3 weapon
 
 Special Abilities:
 – Cold Resistance: 75%
-– Fire Resistance: -25%"
+– Fire Resistance: -25%
+– Increased movement rate"
 
 /*
 luke
@@ -510,7 +512,8 @@ Attack Damage: 1d6 (slashing), strikes as a +1 weapon
 
 Special Abilities:
 – Cold Resistance: 75%
-– Fire Resistance: -25%"
+– Fire Resistance: -25%
+– Increased movement rate"
 
 /*
 luke
