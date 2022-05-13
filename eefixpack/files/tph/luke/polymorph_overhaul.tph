@@ -817,7 +817,7 @@ BEGIN
 						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 2 "parameter2" = 1 ~timing~ = 4 STR_VAR ~resource~ = $~res~(~~) END
 						PATCH_IF ($"x"("4") == 3) BEGIN
 							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 338 "target" = 2 "parameter1" = 16502 "parameter2" = 2 "duration" = 96 END // Disable Save (~You cannot save at this time.~)
-							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = 5381 "timing" = 4 "duration" = 48 END // Display string (~You feel your control slipping...~)
+							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = (GAME_IS ~bg2ee eet~ ? 5381 : 26012) "timing" = 4 "duration" = 48 END // Display string (~You feel your control slipping...~)
 							PATCH_WITH_SCOPE BEGIN
 								FOR ("i" = 0; "%i%" < 16; ++"i") BEGIN
 									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 12 "target" = 2 "parameter1" = (2**"%i%") "parameter2" = (4096 << 16) "timing" = 4 "duration" = 6 * ("%i%" + 1) "savingthrow" = (BIT24 BOR BIT25) END // Damage (Bypass Mirror Image, Ignore Game Difficulty) – N.B.: `Damage type` is intentionally unknown so as to bypass/ignore any player's resistances!
