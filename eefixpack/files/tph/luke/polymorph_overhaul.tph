@@ -279,6 +279,7 @@ BEGIN
 			/* Header */
 			WRITE_LONG NAME1 "%name%"
 			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG 0x18 (BIT14 BOR BIT15 BOR BIT25) // Ignore dead/wild magic, Ignore wild surge, Castable when silenced
 			WRITE_SHORT 0x1c 4 // Type: Innate
 			WRITE_LONG UNIDENTIFIED_DESC "%desc%"
 			WRITE_LONG DESC ~-1~
@@ -998,7 +999,8 @@ BEGIN
 			ACTION_TO_LOWER ~item_~
 			COPY_EXISTING ~%item_%.itm~ ~override~
 				/* Header */
-				WRITE_LONG 0x18 (LONG_AT 0x18 BAND IDS_OF_SYMBOL ("ITEMFLAG" "TWOHANDED")) ? THIS : THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") // Forbid off-hand weapon
+				WRITE_LONG 0x18 (THIS BAND IDS_OF_SYMBOL ("ITEMFLAG" "TWOHANDED")) ? THIS : THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") // Forbid off-hand weapon
+				WRITE_SHORT 0x1C (THIS == IDS_OF_SYMBOL ("ITEMCAT" "MISC") ? IDS_OF_SYMBOL ("ITEMCAT" "FIST") : THIS) // Hand-to-hand weapons (it seems as if this category was designed to ignore weapon styles. However, it just hides them from the UI: the actual bonuses still apply!)
 				PATCH_MATCH "%DEST_RES%" WITH
 					"BRBRP" "BRBLP" BEGIN // Shapeshift: Brown/Black Bear
 						WRITE_ASCII 0x22 "" #2 // Equipped appearance
@@ -1007,6 +1009,7 @@ BEGIN
 					END
 					"PLYMSTAR" BEGIN // Shapeshift: Ogre
 						WRITE_LONG 0x18 (THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "MAGIC")) // Mage ogre form's weapon should be flagged as magical
+						WRITE_SHORT 0x1C IDS_OF_SYMBOL ("ITEMCAT" "MSTAR") // Morning stars
 					END
 					"CDGOLIRO" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Iron Golem
 						WRITE_LONG NAME1 10966 // Attack
