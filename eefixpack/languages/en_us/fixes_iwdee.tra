@@ -226,8 +226,12 @@ Requires:
 
 Weight: 7~
 
-// luke
-// The clause "The Druid is healed 12 Hit Points after using this ability." should not be missing
+/*
+luke
+- "The Druid is healed 12 Hit Points after using this ability."
+- "strikes as a +2 weapon"
+should not be missing
+*/
 @40314 = ~Shapeshift: Werewolf
 
 Strength: 19
@@ -235,15 +239,20 @@ Dexterity: 16
 
 Base Armor Class: 1
 Number of Attacks: 2
-Attack Damage: 1d6 (slashing)
+Attack Damage: 1d6 (slashing), strikes as a +2 weapon
 
 Special Abilities:
 – Magic Resistance: 20%
 
 The Druid is healed 12 Hit Points after using this ability.~
 
-// luke
-// The clause "The Druid is healed 12 Hit Points after using this ability." should not be missing
+/*
+luke
+- "strikes as a +3 weapon"
+- "The Druid is healed 12 Hit Points after using this ability."
+- "Regenerates 1 Hit Point per 2 seconds."
+should not be missing
+*/
 @40315 = ~Shapeshift: Greater Werewolf
 
 Strength: 21
@@ -251,7 +260,7 @@ Dexterity: 20
 
 Base Armor Class: -6
 Number of Attacks: 3
-Attack Damage: 1d10 (slashing)
+Attack Damage: 1d10 (slashing), strikes as a +3 weapon
 
 Special Abilities:
 – Fire Resistance: 50%
@@ -259,5 +268,425 @@ Special Abilities:
 – Electricity Resistance: 50%
 – Acid Resistance: 50%
 – Magic Resistance: 40%
+– Regenerates 1 Hit Point per 2 seconds
 
 The Druid is healed 12 Hit Points after using this ability.~
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@36172 = "Shapeshift: Sword Spider
+
+Strength: 16
+Dexterity: 16
+
+Base Armor Class: 3
+Number of Attacks: 4
+Attack Damage: 2d6 (piercing), strikes as a +1 weapon
+
+Special Abilities:
+– Immunity to web
+– Hasted
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@36173 = "Shapeshift: Baby Wyvern
+
+Strength: 16
+Dexterity: 17
+
+Base Armor Class: 3
+Number of Attacks: 2
+Attack Damage: 1d8 (piercing), strikes as a +1 weapon, on hit it causes 1 poison damage/second for 1 round (Save vs. Poison negates)
+
+Special Abilities:
+– Immunity to hold, paralysis, slow, level drain, web, entangle, and grease
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@36174 = "Shapeshift: Lesser Fire Salamander
+
+Strength: 18/75
+Dexterity: 19
+
+Base Armor Class: 5
+Number of Attacks: 1
+Attack Damage: 1d8 (piercing), +1 fire damage, strikes as a +3 weapon
+
+Special Abilities:
+– 200% movement rate
+– Fire Resistance: 100%
+– Cold Resistance: -12%
+– Lesser Aura of Flame: All creatures within 5 ft. take 1d2 points of fire damage
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@40310 = "Shapeshift: Polar Bear
+
+Strength: 18/100
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 (slashing), strikes as a +3 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@40308 = "Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing), strikes as a +1 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +2 weapon" should not be missing
+*/
+@40309 = "Shapeshift: Boring Beetle
+
+Strength: 18/51
+Dexterity: 7
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 5d4 (slashing), strikes as a +2 weapon
+
+Special Abilities:
+– Slashing Resistance: 50%
+– Piercing Resistance: 50%
+– Missile Resistance: 50%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@40311 = "Shapeshift: Fire Elemental
+
+Strength: 19
+Dexterity: 9
+
+Base Armor Class: 2
+Number of Attacks: 1
+Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -50%
+– Fire Resistance: 100%
+– Acid Resistance: 15%
+– Electricity Resistance: 15%
+– Slashing Resistance: 15%
+– Crushing Resistance: 15%
+– Piercing Resistance: 15%
+– Missile Resistance: 15%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@40312 = "Shapeshift: Earth Elemental
+
+Strength: 23
+Dexterity: 5
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: 25%
+– Fire Resistance: 25%
+– Slashing Resistance: 50%
+– Crushing Resistance: -50%
+– Piercing Resistance: 50%
+– Missile Resistance: 75%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@40413 = "Shapeshift: Water Elemental
+
+Strength: 18
+Dexterity: 14
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -25%
+– Electricity Resistance: -75%
+– Acid Resistance: 75%
+– Slashing Resistance: 75%
+– Crushing Resistance: 75%
+– Piercing Resistance: 75%
+– Missile Resistance: 75%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +2 weapon" should not be missing
+*/
+@40941 = "Shapeshift: Boring Beetle
+
+Strength: 18/51
+Dexterity: 7
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 5d4 (slashing), strikes as a +2 weapon
+
+Special Abilities:
+– Slashing Resistance: 50%
+– Piercing Resistance: 50%
+– Missile Resistance: 50%
+– Increased movement rate"
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@40939 = "Shapeshift: Polar Bear
+
+Strength: 18/100
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 (slashing), strikes as a +3 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate"
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@40940 = "Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing), strikes as a +1 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate"
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@36597 = "Shapeshift: Mustard Jelly
+
+Strength: 14
+Dexterity: 9
+
+Base Armor Class: 4
+Number of Attacks: 1
+Attack Damage (ranged): 1d6 (crushing), strikes as a +3 weapon, poison (1 damage per 2 seconds for 5 rounds; Save vs. Poison at +2 negates), slow (20 seconds; Save vs. Breath at -2 negates)
+
+Special Abilities:
+– Cold Resistance: 50%
+– Electrical Resistance: 100%
+– Magic Resistance: 100%
+– Magic Cold Resistance: 50%
+– Slashing Resistance: 30%
+– Crushing Resistance: 60%
+– Piercing Resistance: 100%
+– Missile Resistance: 85%
+– Immunity to stun, sleep, fear, poison, petrification, confusion, charm, paralysis, and level drain
+– Immunity to non-magical weapons
+– Increased movement rate"
+
+/*
+luke
+- "strikes as a +2 weapon"
+- "Psionic Blast (stuns target for five rounds; Save vs. Spell negates)"
+should not be missing
+*/
+@36176 = "Shapechange: Mind Flayer
+
+Strength: 10
+Dexterity: 10
+
+Base Armor Class: 5
+Number of Attacks: 4
+Attack Damage: 1d2 (crushing), strikes as a +2 weapon, -5 Intelligence
+
+Special Abilities:
+– Psionic Blast (stuns target for five rounds; Save vs. Spell negates)"
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@36178 = "Shapechange: Iron Golem
+
+Strength: 24
+Dexterity: 9
+
+Base Armor Class: 3
+Number of Attacks: 1
+Attack Damage: 4d10 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Fire Resistance: 125%
+– Cold Resistance: 100%
+– Electricity Resistance: 100%
+– Acid Resistance: 100%
+– Magic Resistance: 100%
+– Magic Fire Resistance: 125%
+– Magic Cold Resistance: 100%
+– Slashing Resistance: 20%
+– Crushing Resistance: 20%
+– Piercing Resistance: 20%
+– Missile Resistance: 20%
+– Immunity to backstab, poison, and disease. Immune to Cloudkill"
+
+/*
+luke
+"strikes as a +2 weapon" should not be missing
+*/
+@36180 = "Shapechange: Giant Troll
+
+Strength: 18/100
+Dexterity: 20
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 2d6 (piercing), strikes as a +2 weapon
+
+Special Abilities:
+– Immunity to stun, sleep, hold, paralysis
+– Regenerates 1 Hit Point per second"
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@36182 = "Shapechange: Greater Wolfwere
+
+Strength: 19
+Dexterity: 19
+
+Base Armor Class: 2
+Number of Attacks: 3
+Attack Damage: 1d12 (slashing), strikes as a +1 weapon
+
+Special Abilities:
+– Fire Resistance: 50%
+– Cold Resistance: 50%
+– Electrical Resistance: 50%
+– Acid Resistance: 50%
+– Magic Fire Resistance: 50%
+– Magic Cold Resistance: 50%
+– Immune to weapons of +1 enchantment or less
+– Regenerates 8 Hit Points per second"
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@36184 = "Shapechange: Fire Elemental
+
+Strength: 19
+Dexterity: 9
+
+Base Armor Class: 2
+Number of Attacks: 1
+Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -50%
+– Fire Resistance: 100%
+– Slashing Resistance: 15%
+– Crushing Resistance: 15%
+– Piercing Resistance: 15%
+– Missile Resistance: 15%"
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@36186 = "Shapechange: Earth Elemental
+
+Strength: 23
+Dexterity: 5
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: 20%
+– Fire Resistance: 20%
+– Slashing Resistance: 50%
+– Crushing Resistance: -50%
+– Piercing Resistance: 50%
+– Missile Resistance: 75%"
+
+/*
+luke
+- "strikes as a +4 weapon" should not be missing
+- "The Druid is healed 12 Hit Points after using this ability." should be missing (this is not the Druid variant)
+*/
+@40313 = "Shapeshift: Water Elemental
+
+Strength: 18
+Dexterity: 14
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -25%
+– Electricity Resistance: -75%
+– Acid Resistance: 75%
+– Slashing Resistance: 75%
+– Crushing Resistance: 75%
+– Piercing Resistance: 75%
+– Missile Resistance: 75%"

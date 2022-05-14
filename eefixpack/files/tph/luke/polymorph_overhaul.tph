@@ -149,23 +149,25 @@ BEGIN
 		ACTION_IF (GAME_IS ~bgee~) BEGIN
 			//COPY_EXISTING ~plybear1.itm~ ~override/plybear2.itm~ // Added as of patch v2.6
 			COPY_EXISTING ~cdwolfm.itm~ ~override/wswolf.itm~ // Missing
-			COPY_EXISTING ~mindflay.itm~ ~override/cdmindfl.itm~ // Missing (you should not use the same resref used by enemy/NPC Mind Flayers)
 			COPY_EXISTING ~brbrp1.itm~ ~override/brbrp2.itm~ // Moved to accomodate splitting Brown Bear and Werewolf Item
 			COPY_EXISTING ~brbrp.itm~ ~override/brbrp1.itm~ // Split Brown Bear and Werewolf Item
-			COPY_EXISTING ~brbrp.itm~ ~override~ // Adjust natural weapon stats (this is meant to be used by "%DRUID_SHAPESHIFT_BROWNBEAR%")
-				WRITE_ASCII 0x22 "" #2 // Equipped appearance
-				WRITE_ASCII 0x3A "IBEAR" #8 // Inventory icon
-				WRITE_LONG 0x60 1 // Enchantment
-				LPF "ALTER_ITEM_HEADER" INT_VAR "dicenumber" = 1 "dicesize" = 6 "thac0_bonus" = 0 "damage_bonus" = 0 "damage_type" = 1 STR_VAR "icon" = "IBEAR" END // 1d6 (Piercing)
-			BUT_ONLY_IF_IT_CHANGES
 		END
 		ACTION_IF (GAME_IS ~bg2ee eet~) BEGIN
 			COPY_EXISTING ~plyjelly.itm~ ~override/polyjell.itm~ // Moved to accomodate splitting Mustard Jelly (Polymorph Self) and Mustard Jelly (Cloak of the Sewers)
 		END
 		ACTION_IF (GAME_IS ~iwdee~) BEGIN
 			COPY_EXISTING ~plybear1.itm~ ~override/plybear2.itm~ // Missing
+			COPY_EXISTING ~goliro.itm~ ~override/cdgoliro.itm~ // So as to match BG2EE ("GOLIRO" is usually used by NPCs, in particular by "GOLADA01.CRE"...)
+		END
+		ACTION_IF (GAME_IS ~bgee iwdee~) BEGIN
+			COPY_EXISTING ~mindflay.itm~ ~override/cdmindfl.itm~ // Missing (you should not use the same resref used by enemy/NPC Mind Flayers)
+		END
+		ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+			COPY_EXISTING ~irongol.itm~ ~override/cdgoliro.itm~ // Iron Golem form lacks most of the immunities its description says it has. The description says "backstab, weapons of +2 immunity or less, sleep, fear, hold, charm, paralysis, poison". Of that list, you only get backstab immunity.
 		END
 	END
+	// Update poly creatures so as to match spell / ability description
+	LAUNCH_ACTION_FUNCTION "alter_poly_creatures" END
 	// Main
 	LAF "self_polymorphs" RET_ARRAY "POLYITEM" "POLYFORM_abort" "%WIZARD_POLYMORPH_SELF%" ~%WIZARD_SHAPECHANGE%~ END
 	LAF "hostile_limited_polymorphs" RET_ARRAY "POLYITEM" "POLYFORM_abort" END
@@ -211,7 +213,7 @@ BEGIN
 	END
 	// Various remaining Natural Form abilities => all redirected to cast SPINHUMR
 	WITH_SCOPE BEGIN
-		ACTION_DEFINE_ARRAY "human" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ END
+		ACTION_DEFINE_ARRAY "human" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ ~SPCL110~ END
 		ACTION_PHP_EACH "human" AS "null" => "res_" BEGIN
 			ACTION_TO_LOWER "res_"
 			COPY_EXISTING ~%res_%.spl~ ~override~
@@ -233,8 +235,8 @@ BEGIN
 	// Update Slayer weapon
 	WITH_SCOPE BEGIN
 		COPY_EXISTING ~slayerw3.itm~ ~override~
-			WRITE_LONG NAME1 10966
-			WRITE_LONG NAME2 10966
+			WRITE_LONG NAME1 10966 // Attack
+			WRITE_LONG NAME2 10966 // Attack
 			LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 17 END // Current HP bonus
 			LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 18 "parameter2" = 3 "dicenumber" = 0 "dicesize" = 0 END // Maximum HP bonus => Increment (does not affect current HP)
 		BUT_ONLY IF_EXISTS
@@ -277,6 +279,7 @@ BEGIN
 			/* Header */
 			WRITE_LONG NAME1 "%name%"
 			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG 0x18 (BIT14 BOR BIT15 BOR BIT25) // Ignore dead/wild magic, Ignore wild surge, Castable when silenced
 			WRITE_SHORT 0x1c 4 // Type: Innate
 			WRITE_LONG UNIDENTIFIED_DESC "%desc%"
 			WRITE_LONG DESC ~-1~
@@ -424,6 +427,7 @@ BEGIN
 	// This is only relevant when one of those spells is in a Sequencer / Contingency / etc... (since op135 automatically disables arcane/divine spellcasting)
 	WITH_SCOPE BEGIN
 		COPY_EXISTING_REGEXP ~^.+\.\(spl\|itm\)$~ ~override~
+			TO_UPPER "SOURCE_RES"
 			LPF ~ARRAY_CONTAINS~
 			STR_VAR
 				"array" = "POLYFORM_abort"
@@ -516,8 +520,8 @@ BEGIN
 		~SPWI481~ , ~SPL~ , ~%WIZARD_POLYMORPH_SELF%~ , 0 , 0 , ~DRUIDPB~ , ~CDPOLYPB~ , ~DRUIDPB~ , ~CDPOLYPB~ , ~DRUIDPB~ , ~CDPOLYPB~ , 4 => ~POLYMORPH_SELF_POLAR_BEAR~
 		~SPWI482~ , ~SPL~ , ~%WIZARD_POLYMORPH_SELF%~ , 0 , 0 , ~DRUIDWW~ , ~CDPOLYWW~ , ~DRUIDWW~ , ~CDPOLYWW~ , ~DRUIDWW~ , ~CDPOLYWW~ , 4 => ~POLYMORPH_SELF_WINTER_WOLF~
 		/* Shapechange */
-		~SPIN152~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , ~%MIND_FLAYER_PSIONIC_BLAST%~ , ~SHMIND~ , ~CDMINDFL~ , ~SHMIND~ , ~CDMINDFL~ , ~SHMIND~ , ~MINDFLAY~ , 0 => ~SHAPECHANGE_MIND_FLAYER~
-		~SPIN153~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , 0 , ~SHIRON~ , ~GOLIRO~ , ~SHIRON~ , ~CDGOLIRO~ , ~SHIRON~ , ~GOLIRO~ , 0 => ~SHAPECHANGE_IRON_GOLEM~
+		~SPIN152~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , ~%MIND_FLAYER_PSIONIC_BLAST%~ , ~SHMIND~ , ~CDMINDFL~ , ~SHMIND~ , ~CDMINDFL~ , ~SHMIND~ , ~CDMINDFL~ , 0 => ~SHAPECHANGE_MIND_FLAYER~
+		~SPIN153~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , 0 , ~SHIRON~ , ~CDGOLIRO~ , ~SHIRON~ , ~CDGOLIRO~ , ~SHIRON~ , ~CDGOLIRO~ , 0 => ~SHAPECHANGE_IRON_GOLEM~
 		~SPIN154~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , 0 , ~SHTROLL~ , ~TROLLALL~ , ~SHTROLL~ , ~TROLLALL~ , ~SHTROLL~ , ~TROLLALL~ , 0 => ~SHAPECHANGE_GIANT_TROLL~
 		~SPIN155~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , 0 , ~SHWOLF~ , ~WOLFGR~ , ~SHWOLF~ , ~WOLFGR~ , ~SHWOLF~ , ~WOLFGR~ , 0 => ~SHAPECHANGE_GREATER_WOLFWERE~
 		~SPIN156~ , ~SPL~ , ~%WIZARD_SHAPECHANGE%~ , 0 , 0 , ~SHFIRE~ , ~FIRERN~ , ~SHFIRE~ , ~FIRERN~ , ~SHFIRE~ , ~FIRERN~ , 0 => ~SHAPECHANGE_FIRE_ELEMENTAL~
@@ -661,7 +665,7 @@ BEGIN
 			1 WHEN GAME_IS ~bg2ee eet iwdee~ BEGIN END
 			2 WHEN GAME_IS ~bgee iwdee~ BEGIN END
 			DEFAULT
-				ACTION_IF FILE_EXISTS_IN_GAME $~file~(~~) BEGIN // hidden array construct
+				ACTION_IF FILE_EXISTS_IN_GAME $~file~(~~) BEGIN
 					OUTER_SET "power" = $"x"("2")
 					OUTER_SET "resist_dispel" = $"x"("3")
 					OUTER_SET "savingthrow" = $"x"("5")
@@ -765,8 +769,6 @@ BEGIN
 								END
 								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 111 "target" = ("%hostile%" ? 2 : 1) "parameter1" = 1 "timing" "duration" STR_VAR "resource" = $~item~(~~) END // Create weapon
 						END
-					END
-					ACTION_IF ("%duration%" > 0) BEGIN
 						OUTER_SET $~POLYFORM_abort~($~res~(~~)) = 1
 					END ELSE BEGIN
 						OUTER_SET $~POLYFORM_abort~($~x~(~0~)) = 1
@@ -798,7 +800,7 @@ BEGIN
 	ACTION_PHP_EACH "slayer_change" AS "x" => "y" BEGIN
 		OUTER_SPRINT ~resource~ ~%x%~
 		ACTION_IF (FILE_EXISTS_IN_GAME ~%resource%.SPL~) BEGIN
-			OUTER_SPRINT ~res_~ ~%x%S~
+			OUTER_SPRINT ~res_~ ~%x%A~
 			OUTER_SET ~duration~ = $~x~(~3~)
 			OUTER_SPRINT ~cre_~ $"x"("2")
 			OUTER_SPRINT ~item_~ $"x"("1")
@@ -816,7 +818,7 @@ BEGIN
 						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 2 "parameter2" = 1 ~timing~ = 4 STR_VAR ~resource~ = $~res~(~~) END
 						PATCH_IF ($"x"("4") == 3) BEGIN
 							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 338 "target" = 2 "parameter1" = 16502 "parameter2" = 2 "duration" = 96 END // Disable Save (~You cannot save at this time.~)
-							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = 5381 "timing" = 4 "duration" = 48 END // Display string (~You feel your control slipping...~)
+							LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = (GAME_IS ~bg2ee eet~ ? 5381 : 26012) "timing" = 4 "duration" = 48 END // Display string (~You feel your control slipping...~)
 							PATCH_WITH_SCOPE BEGIN
 								FOR ("i" = 0; "%i%" < 16; ++"i") BEGIN
 									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 12 "target" = 2 "parameter1" = (2**"%i%") "parameter2" = (4096 << 16) "timing" = 4 "duration" = 6 * ("%i%" + 1) "savingthrow" = (BIT24 BOR BIT25) END // Damage (Bypass Mirror Image, Ignore Game Difficulty) – N.B.: `Damage type` is intentionally unknown so as to bypass/ignore any player's resistances!
@@ -831,7 +833,7 @@ BEGIN
 			// Polymorph moved to subspell because it needs a duration
 			WITH_SCOPE BEGIN
 				ACTION_TO_LOWER ~resource~
-				CREATE ~SPL~ ~%resource%s~
+				CREATE ~SPL~ ~%resource%a~
 					/* Header */
 					WRITE_LONG NAME1 ~-1~
 					WRITE_LONG NAME2 ~-1~
@@ -996,6 +998,64 @@ BEGIN
 		WITH_SCOPE BEGIN
 			ACTION_TO_LOWER ~item_~
 			COPY_EXISTING ~%item_%.itm~ ~override~
+				/* Header */
+				WRITE_LONG 0x18 (THIS BAND IDS_OF_SYMBOL ("ITEMFLAG" "TWOHANDED")) ? THIS : THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") // Forbid off-hand weapon
+				WRITE_SHORT 0x1C (THIS == IDS_OF_SYMBOL ("ITEMCAT" "MISC") ? IDS_OF_SYMBOL ("ITEMCAT" "FIST") : THIS) // Hand-to-hand weapons (it seems as if this category was designed to ignore weapon styles. However, it just hides them from the UI: the actual bonuses still apply!)
+				PATCH_MATCH "%DEST_RES%" WITH
+					"BRBRP" "BRBLP" BEGIN // Shapeshift: Brown/Black Bear
+						WRITE_ASCII 0x22 "" #2 // Equipped appearance
+						WRITE_ASCII 0x3A "IBEAR" #8 // Inventory icon
+						WRITE_LONG 0x60 1 // Enchantment
+					END
+					"PLYMSTAR" BEGIN // Shapeshift: Ogre
+						WRITE_LONG 0x18 (THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "MAGIC")) // Mage ogre form's weapon should be flagged as magical
+						WRITE_SHORT 0x1C IDS_OF_SYMBOL ("ITEMCAT" "MSTAR") // Morning stars
+					END
+					"CDGOLIRO" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Iron Golem
+						WRITE_LONG NAME1 10966 // Attack
+						WRITE_LONG NAME2 10966 // Attack
+						WRITE_LONG 0x18 IDS_OF_SYMBOL ("ITEMFLAG" "NOTCOPIABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "MAGIC") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") BOR IDS_OF_SYMBOL ("ITEMFLAG" "BODYPART")
+						WRITE_SHORT 0x1C IDS_OF_SYMBOL ("ITEMCAT" "FIST")
+						WRITE_ASCII 0x22 "" #2 // Equipped appearance
+						WRITE_ASCII 0x3A "ISHAPE03" #8 // Inventory icon
+						WRITE_LONG 0x60 4 // Enchantment
+						WRITE_LONG 0x64 0x72 // Extended Header offset
+						WRITE_SHORT 0x68 1 // Extended Header count
+						WRITE_LONG 0x6A 0xAA // Feature Block Table offset
+						INSERT_BYTES 0x72 0x38
+					END
+					DEFAULT
+				END
+				/* Extended header */
+				PATCH_MATCH "%DEST_RES%" WITH
+					"PLYWOLF1" "PLYBEAR[1-2]" "PLYMSTAR" "PLYSPID" // Shapeshift: Wolf, Shapeshift: Brown/Black Bear, Shapeshift: Ogre, Shapeshift: Spider
+					"PLYSALA" "PLYWYVRN" // Shapeshift: Fire Salamander, Shapeshift: Baby Wyvern
+					"BRBRP[1-2]" "CDBRBRP2?" // Shapeshift: (Greater) Werewolf
+					BEGIN
+						LPF "ALTER_ITEM_HEADER" INT_VAR "damage_bonus" = 0 END
+					END
+					"BRBRP" "BRBLP" BEGIN // Shapeshift: Brown / Black Bear
+						LPF "ALTER_ITEM_HEADER" INT_VAR "dicenumber" = 1 "dicesize" = 6 "thac0_bonus" = 0 "damage_bonus" = 0 "damage_type" = 1 STR_VAR "icon" = "IBEAR" END // 1d6 (Piercing)
+					END
+					"CDGOLIRO" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Iron Golem => 4d10 (Crushing)
+						WRITE_BYTE 0x72 1 // Type: Melee
+						WRITE_BYTE 0x74 1 // Location: Weapon
+						WRITE_ASCII 0x76 "ISHAPE03" #8 // Icon
+						WRITE_BYTE 0x7E 1 // Target: Living actor
+						WRITE_SHORT 0x80 2 // Range
+						WRITE_BYTE 0x88 10 // Dicesize
+						WRITE_BYTE 0x8A 4 // Dicenumber
+						WRITE_SHORT 0x8E 2 // Damage type: Crushing
+						WRITE_SHORT 0x96 1 // Item vanishes
+						WRITE_LONG 0x98 BIT0 // Add STR bonus
+						WRITE_SHORT 0x9C IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+						WRITE_SHORT 0x9E 34 // Overhand swing
+						WRITE_SHORT 0xA0 33 // Backhand swing
+						WRITE_SHORT 0xA2 33 // Thrust
+					END
+					DEFAULT
+				END
+				/* Feature blocks */
 				LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 144 END // Remove any redundant 'Disable Button' effects
 				LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 145 END // Remove any redundant 'Disable Spellcasting' effects
 				LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 135 END // Remove any existing 'Polymorph' effects
@@ -1010,26 +1070,65 @@ BEGIN
 				LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 144 "target" = 1 "parameter2" = IDS_OF_SYMBOL ("BUTTON" "BUTTON_DIALOG") "timing" = 2 END // Disable "Talk" Button
 				//LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 342 "target" = 1 "parameter1" = 3 "parameter2" = 4 "timing" = 2 END // Override Creature Size: "3"
 				// Otherwise transforming into a larger creature can result in being immediately stuck, even in wide open areas. => fixed as of v2.6...? It appears to be so...
-				PATCH_IF ("%DEST_RES%" STRING_EQUAL_CASE "SQUIRP") BEGIN
-					PATCH_IF (GAME_IS ~bgee iwdee~) BEGIN
-						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 18 "target" = 1 "parameter1" = 5 "parameter2" = 1 "timing" = 2 END // Maximum HP bonus => Set to 5 (both current and maximum HP)
-					END
-					LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 124 "timing" = 2 END // Portrait Icon (Polymorphed)
-				END
-				// ~%CLERIC_ELEMENTAL_TRANSFORMATION_FIRE%~ and ~%CLERIC_ELEMENTAL_TRANSFORMATION_EARTH%~ and have its own portrait icon
-				// Moreover, they should get immunity to "SPINHUME.EFF" so that the caster can be healed 3d10 HP when returning to its natural form
+				/* Misc fixes and tweaks */
+				// Adjusted movement rate should ignore / bypass Free Action and the like
+				// Moreover, make sure the adjusted value takes into account the current value (a.k.a. Multiplicative Stacking Percentage Modifier)
+				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 176 "parameter2" = 5 END // Modifier type: Set % of
+				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 126 "opcode" = 176 "parameter2" = 5 END // Modifier type: Set % of
 				PATCH_MATCH "%DEST_RES%" WITH
+					"SQUIRP" BEGIN // Squirrel form
+						PATCH_IF (GAME_IS ~bgee iwdee~) BEGIN
+							LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 18 "target" = 1 "parameter1" = 5 "parameter2" = 1 "timing" = 2 END // Maximum HP bonus => Set to 5 (both current and maximum HP)
+						END
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 124 "timing" = 2 END // Portrait Icon (Polymorphed)
+					END
+					// ~%CLERIC_ELEMENTAL_TRANSFORMATION_FIRE%~ has its own portrait icon
+					// Moreover, they should get immunity to "SPINHUME.EFF" so that the caster can be healed 3d10 HP when returning to its natural form
 					"DRUFIR" BEGIN
 						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 318 "target" = 1 "timing" = 2 STR_VAR "resource" = "*PINHUME" END // Protection from resource
 						PATCH_IF (GAME_IS ~iwdee~) BEGIN
 							LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 164 "timing" = 2 END // Portrait Icon (Fire Elemental Transformation)
 						END
 					END
+					// ~%CLERIC_ELEMENTAL_TRANSFORMATION_EARTH%~ has its own portrait icon
+					// Moreover, they should get immunity to "SPINHUME.EFF" so that the caster can be healed 3d10 HP when returning to its natural form
 					"DRUEAR" BEGIN
 						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 318 "target" = 1 "timing" = 2 STR_VAR "resource" = "*PINHUME" END // Protection from resource
 						PATCH_IF (GAME_IS ~iwdee~) BEGIN
 							LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 142 "target" = 1 "parameter2" = 165 "timing" = 2 END // Portrait Icon (Earth Elemental Transformation)
 						END
+					END
+					// [BGEE] Shapeshifter greater werewolf form lacks the regeneration effect added in BG2EE v2.6
+					"BRBRP2" BEGIN
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 98 "target" = 1 "parameter1" = 2 "parameter2" = 3 "timing" = 2 "special" = 87 END // Regeneration (1 HP per 2 seconds)
+					END
+					// Immune to weapons of +2 enchantment or less
+					"CDGOLIRO" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Iron Golem
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 120 "target" = 1 "parameter2" = 2 "timing" = 2 END // Immunity to weapons (Weapon type: Non-magical)
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 120 "target" = 1 "parameter1" = 2 "timing" = 2 END // Immunity to weapons (Weapon type: Enchanted, Maximum enchantment: 2)
+					END
+					// Immune to weapons of +1 enchantment or less. (shouldn't this include also immunity to non-magical weapons...?)
+					"WOLFGR" BEGIN // Shapechange: Greater Wolfwere
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 120 "target" = 1 "parameter2" = 2 "timing" = 2 END // Immunity to weapons (Weapon type: Non-magical)
+					END
+					// Immune to weapons of +2 enchantment or less. (shouldn't this include also immunity to non-magical weapons...?)
+					"FIRERN" "EARTHRN" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Fire/Earth Elemental
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 120 "target" = 1 "parameter2" = 2 "timing" = 2 END // Immunity to weapons (Weapon type: Non-magical)
+					END
+					// Replace Haste with Increased Movement Rate (for consistency)
+					"CDPOLY\(BB\|PB\|WW\)" BEGIN // Shapeshift: Boring Beetle, Shapeshift: Polar Bear, Shapeshift: Winter Wolf
+						LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 16 "opcode" = 176 "parameter1" = 150 "parameter2" = 5 STR_VAR "resource" = "" END // Haste => Movement rate bonus 2
+						LPF "CLONE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 176 "opcode" = 142 "parameter1" = 0 "parameter2" = 193 STR_VAR "insert" = "below" END // Display portrait icon (Increased Movement Rate)
+					END
+					// Minor clean up
+					"PLYFLIND" BEGIN // Shapeshift: Flind
+						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 12 "timing" = 1 STR_VAR "resource" = "" END
+					END
+					"PLYMSTAR" BEGIN // Shapeshift: Ogre
+						LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 142 "match_parameter2" = 38 END // Display portrait icon (Haste) => this is supposed to be Movement rate bonus, not haste
+					END
+					"CDMINDFL" BEGIN // Shapechange: Mind Flayer
+						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 139 "parameter1" = RESOLVE_STR_REF (@2) "parameter2" = 0 "timing" = 1 "duration" = 0 STR_VAR "resource" = "" END
 					END
 					DEFAULT
 				END
@@ -1059,16 +1158,19 @@ BEGIN
 				END
 				// Grant Breath Fireball / Psionic Blast
 				PATCH_IF !(IS_AN_INT $"x"("4")) BEGIN
-					LPF "ADD_ITEM_EQEFFECT"
-					INT_VAR
-						"opcode" = 335 // Seven eyes
-						"target" = 1 // Self
-						"parameter1" = $"splstate"("TEMP") // Spellstate
-						"parameter2" = ~-1~ // "7eyes.2da" row number
-						"timing" = 2
-						"special" = ~-1~ // Eye Group
-					STR_VAR
-						"resource" = $"x"("4")
+					PATCH_IF ($"x"("4") STRING_COMPARE_CASE "%SALAMANDER_BREATHE_FIREBALL%") OR (GAME_IS "bgee bg2ee eet") BEGIN
+						// IWDEE: here the Fire Salamander form has a different ability (namely "Lesser Aura of Flame")
+						LPF "ADD_ITEM_EQEFFECT"
+						INT_VAR
+							"opcode" = 335 // Seven eyes
+							"target" = 1 // Self
+							"parameter1" = $"splstate"("TEMP") // Spellstate
+							"parameter2" = ~-1~ // "7eyes.2da" row number
+							"timing" = 2
+							"special" = ~-1~ // Eye Group
+						STR_VAR
+							"resource" = $"x"("4")
+						END
 					END
 				END
 				PATCH_IF !(IS_AN_INT $"x"("2")) AND ($"x"("2") STRING_COMPARE_CASE "SLAYER") BEGIN
@@ -1087,5 +1189,21 @@ BEGIN
 				LPF "ADD_ITEM_EQEFFECT" INT_VAR "opcode" = 135 "target" = 1 "timing" = 2 STR_VAR "resource" = $~cre~(~~) END // Polymorph (Polymorph type: Change into)
 			BUT_ONLY IF_EXISTS
 		END
+	END
+END
+
+///////////////////////////////////////////////////////////////
+/////// ~alter_poly_creatures~: update poly creatures so as to match spell / ability description
+///////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION "alter_poly_creatures"
+BEGIN
+	// ~%DRUID_SHAPESHIFT_WOLF%~ => Strength: 15, Dexterity: 18, Number of Attacks: 2
+	WITH_SCOPE BEGIN
+		COPY_EXISTING ~wolfchar.cre~ ~override~
+			WRITE_BYTE 0x53 2 // Number of Attacks
+			WRITE_BYTE 0x238 15 // Strength
+			WRITE_BYTE 0x23C 18 // Dexterity
+		BUT_ONLY IF_EXISTS
 	END
 END
