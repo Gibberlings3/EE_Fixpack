@@ -22,7 +22,9 @@ Below this section, the page is torn and jagged, as if it has been ripped from i
 
 /*
 luke
-"Regenerates 1 Hit Point per 2 seconds" should not be missing
+- "Regenerates 1 Hit Point per 2 seconds"
+- "strikes as a +2 weapon"
+should not be missing
 */
 @103011 = "Shapeshift: Greater Werewolf
 
