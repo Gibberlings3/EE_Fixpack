@@ -495,7 +495,12 @@ COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
   WRITE_LONG 0x244 0x40000000 // proper trueclass value
   BUT_ONLY IF_EXISTS
 
-
+// tbd, cam
+// ordulian should give his cloak, or not have it. We choose that he doesn't have it
+COPY_EXISTING ~orduli.cre~ ~override~
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
+  BUT_ONLY
+  
 // BGCS-483, luke
 // CRE files should not use non-existing resources
 WITH_SCOPE BEGIN
