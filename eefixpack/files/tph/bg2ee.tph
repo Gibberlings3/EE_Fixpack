@@ -155,7 +155,30 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
 
-
+// tbd, cam (originally from jmerry)
+// joinable NPCs should have proper trueclass kit values
+COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
+              ~anomen12.cre~ ~override~ // anomen
+              ~anomen6.cre~  ~override~ // anomen
+              ~anomen7.cre~  ~override~ // anomen
+              ~anomen8.cre~  ~override~ // anomen
+              ~anomen9.cre~  ~override~ // anomen
+              ~imoen.cre~    ~override~ // imoen
+              ~imoen10.cre~  ~override~ // imoen
+              ~imoen15.cre~  ~override~ // imoen
+              ~imoen211.cre~ ~override~ // imoen
+              ~imoen213.cre~ ~override~ // imoen
+              ~kivan.cre~    ~override~ // kivan
+              ~kivan4.cre~   ~override~ // kivan
+              ~kivan6.cre~   ~override~ // kivan
+              ~mazzy11.cre~  ~override~ // mazzy
+              ~mazzy12.cre~  ~override~ // mazzy
+              ~mazzy15.cre~  ~override~ // mazzy
+              ~mazzy8.cre~   ~override~ // mazzy
+              ~mazzy9.cre~   ~override~ // mazzy
+              ~sarevok.cre~  ~override~ // sarevok
+  WRITE_LONG 0x244 0x40000000 // proper trueclass value
+  BUT_ONLY IF_EXISTS
 
 // BGCS-469, luke
 // Lizard Men should be flagged as 'LIZARDMAN'

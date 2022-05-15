@@ -471,6 +471,26 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
   BUT_ONLY IF_EXISTS // sod
 
 
+// tbd, cam (originally from jmerry)
+// joinable NPCs should have proper trueclass kit values
+COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
+              ~ajanti4.cre~  ~override~ // ajantis
+              ~ajanti6.cre~  ~override~ // ajantis
+              ~alora.cre~    ~override~ // alora
+              ~alora6.cre~   ~override~ // alora
+              ~coran.cre~    ~override~ // coran
+              ~coran5.cre~   ~override~ // coran
+              ~imoen1.cre~   ~override~ // imoen
+              ~imoen2.cre~   ~override~ // imoen
+              ~imoen4.cre~   ~override~ // imoen
+              ~imoen6.cre~   ~override~ // imoen
+              ~kivan.cre~    ~override~ // kivan
+              ~kivan4.cre~   ~override~ // kivan
+              ~kivan6.cre~   ~override~ // kivan
+              ~sharte.cre~   ~override~ // shar-teel
+  WRITE_LONG 0x244 0x40000000 // proper trueclass value
+  BUT_ONLY IF_EXISTS
+
 
 // BGCS-483, luke
 // CRE files should not use non-existing resources
