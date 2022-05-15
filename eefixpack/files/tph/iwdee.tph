@@ -466,6 +466,10 @@ INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spide
 
 
 
+// tbd, cam (from jmerry)
+// simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
+
 
 // ie-5938, cam
 // Lich Touch should paralyze, not hold

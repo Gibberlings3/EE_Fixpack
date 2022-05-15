@@ -38,5 +38,5 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone (neutralize poison
               ~spwm168.spl~  ~override~ // heal (wild surge)
               ~staf10.itm~   ~override~ // Staff of Curing - bg2ee only
               ~trollreg.spl~ ~override~ // troll 'death'
-LPF CLONE_EFFECT INT_VAR match_opcode = 11 opcode = 321 STR_VAR resource = ~jellgr1~ END
-BUT_ONLY IF_EXISTS
+  LPF CLONE_EFFECT INT_VAR match_opcode = 11 opcode = 321 STR_VAR resource = ~jellgr1~ END
+  BUT_ONLY IF_EXISTS

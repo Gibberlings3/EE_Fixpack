@@ -381,6 +381,10 @@ END
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
 
+// tbd, cam (from jmerry)
+// simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
+
 // luke
 // **Cure Wounds**
 WITH_SCOPE BEGIN

@@ -1,0 +1,6 @@
+COPY_EXISTING ~projimag.spl~ ~override~ // project image
+              ~simulacr.spl~ ~override~ // simulacrum
+  LPF DELETE_EFFECT INT_VAR match_opcode = 144 match_parameter2 = 14 END // allow trapfinding
+  LPF DELETE_EFFECT INT_VAR match_opcode = 144 match_parameter2 =  0 END // alow stealth
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 206 STR_VAR match_resource = spwi420 resource = spcl936 END // block shadow twin ability
+  BUT_ONLY
