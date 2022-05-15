@@ -15,6 +15,25 @@ ACTION_IF game_includes_sod BEGIN
 END
 
 /////                                                  \\\\\
+///// lua fixes                                        \\\\\
+/////                                                  \\\\\
+
+COPY_EXISTING ~bgee.lua~ ~override~
+  PATCH_IF game_includes_sod BEGIN
+    REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
+    REPLACE_TEXTUALLY ~\({'BDORCF1L',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'SKAN',%TAB%2},~
+/* comment this section, pending verification for mobile versions   
+    REPLACE_TEXTUALLY ~\({'BAELOTH',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'NCERND',%TAB%1},%WNL%%TAB%{'NKELDOR',%TAB%1},%WNL%%TAB%{'NANOMEN',%TAB%1},%WNL%%TAB%{'NEDWIN',%TAB%1},%WNL%%TAB%{'NHAER',%TAB%1},%WNL%%TAB%{'NJAN',%TAB%1},%WNL%%TAB%{'NMINSC',%TAB%1},%WNL%%TAB%{'NVALYGA',%TAB%1},%WNL%%TAB%{'NYOSHIM',%TAB%1},%WNL%%TAB%{'NKORGAN',%TAB%1},~
+    REPLACE_TEXTUALLY ~\({'NEERA',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'NNALIA', 2},%WNL%%TAB%{'NMAZZY', 2},%WNL%%TAB%{'NAERIE', 2},~
+  END ELSE BEGIN
+    PATCH_FOR_EACH portrait IN BAELOTH NCERND NKELDOR NANOMEN NEDWIN NHAER NJAN NMINSC NVALYGA NYOSHIM NKORGAN NNALIA NMAZZY NAERIE NJAHEIR NVICON BEGIN
+      REPLACE_TEXTUALLY ~--\({'%portrait%',[ %TAB%]*[12]},\)~ ~\1~
+    END
+*/
+  END
+  BUT_ONLY 
+  
+/////                                                  \\\\\
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
