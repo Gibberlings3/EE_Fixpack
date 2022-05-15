@@ -136,6 +136,10 @@ ACTION_IF game_includes_sod BEGIN
   END  
 END
 
+// tbd, cam (from jmerry)
+// curing poison should also cure insta-death from green slimes
+INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
