@@ -133,11 +133,13 @@ BEGIN
 			WRITE_LONG UNIDENTIFIED_DESC ~-1~
 			WRITE_LONG DESC ~-1~
 			WRITE_LONG 0x34 1 // Level
+			WRITE_ASCIIE 0x3A ~%WIZARD_BLACK_BLADE_OF_DISASTER%C~ #8 // Spell icon
 			WRITE_LONG 0x64 0x72 // Abilities offset
 			WRITE_SHORT 0x68 1 // # abilities
 			WRITE_LONG 0x6a 0x9a // Effects offset
 			INSERT_BYTES 0x72 0x28
 			/* Extended Header */
+			WRITE_ASCIIE 0x76 ~%WIZARD_BLACK_BLADE_OF_DISASTER%B~ #8 // Icon
 			WRITE_SHORT 0x80 32767 // Range
 			WRITE_SHORT 0x82 1 // Minimum level
 			WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
