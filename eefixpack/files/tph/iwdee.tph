@@ -350,6 +350,29 @@ COPY_EXISTING ~days.itm~ ~override~ // round out slow/haste immunity; david's st
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 opcode = 169 parameter1= 0 parameter2 = 38 STR_VAR match_resource = spwi312 resource = ~~ END // immune to icon haste
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 169 match_parameter2= 38 parameter2 = 41 END // immune to icon slow
 
+/*
+luke
+**Black Blade of Disaster**
+- Make sure `primary_type` is `NECROMANCER`
+- Make sure `equipped appearance` is `Long sword`
+- Make sure all unnatural creatures are immune to its level drain effect
+- Should not interact with level-based spell protections and Magic Resistance
+- Make sure *"The caster is considered to be proficient to the point of Grand Mastery in this weapon"* always works
+  - `op233` needs to be on the normal effects list to be evaluated after chargen proficiency effects and override them!
+- Provide a workaround for the following bugs:
+  - if you Dual-class when the Black Blade is equipped, the character permanently gains grand mastery in long swords
+  - if, for example, you have a warrior with an item that grants dagger proficiency while equipped, they can then take dagger specialization at a level-up, remove the item, and keep the specialization permanently
+*/
+WITH_SCOPE BEGIN
+  WITH_TRA
+    "eefixpack/languages/en_us/luke/shared.tra"
+    "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
+  BEGIN
+    INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
+    LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
+  END
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\

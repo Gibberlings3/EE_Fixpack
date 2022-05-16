@@ -1,0 +1,198 @@
+DEFINE_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER"
+BEGIN
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "blakblad.itm" "override"
+			/* Header */
+			WRITE_ASCII 0x22 "S1" #2 // Long sword
+			// Workaround for overwriting Chargen proficiencies
+			LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~
+			INT_VAR
+				"match_opcode" = 233 // Modify proficiencies
+				"check_headers" = 0
+			END
+			LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
+			INT_VAR
+				"insert_point" = "-1" // Last
+				"opcode" = 272 // Use EFF file on condition
+				"target" = 1
+				"parameter1" = 1 // any non-zero value
+				"parameter2" = 0 // Once per second
+				"timing" = 2
+			STR_VAR
+				"resource" = "blakblad"
+			END
+			/* Extended header */
+			LPF "ALTER_ITEM_HEADER"
+			INT_VAR
+				"primary_type" = 7 // [IWDEE] INVOKER => NECROMANCER
+			END
+			/* Feature blocks */
+			// Do not interact with level-based spell protections and Magic Resistance
+			LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
+			INT_VAR
+				"power" = 0
+				"resist_dispel" = 0
+			END
+			// [IWDEE] Workaround for missing file "DISINTH.SPL"
+			PATCH_IF (GAME_IS ~iwdee~) BEGIN
+				LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
+				INT_VAR
+					"match_opcode" = 326 // Apply effects list
+					"opcode" = 238 // Disintegrate
+					"parameter1" = 0 // ANYONE
+					"parameter2" = 2 // EA.IDS
+				STR_VAR
+					"match_resource" = "DISINTH"
+					"resource" = ""
+				END
+				// Put GENERAL/RACE checks in the subspell
+				LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
+				INT_VAR
+					"match_opcode" = 326 // Apply effects list
+					"parameter1" = 0 // Unused
+					"parameter2" = 0 // EA >= ANYONE
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Auxiliary SPL file
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "blakblad.spl" "override"
+			/* Header */
+			WRITE_BYTE 0x25 7 // primary type: INVOKER => NECROMANCER
+			/* Feature blocks */
+			// Set up immunities as per \(WIZARD\|CLERIC\)_ENERGY_DRAIN
+			PATCH_WITH_SCOPE BEGIN
+				CLEAR_ARRAY "patch_data"
+				DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					"0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+					"%RACE_DEMONIC%" => "104"
+					"%RACE_MEPHIT%" => "104"
+					"%RACE_ELEMENTAL%" => "104"
+					"%RACE_GENIE%" => "104"
+					"%RACE_TIEFLING%" => "104"
+					"%RACE_SOLAR%" => "104"
+					"%RACE_ANTISOLAR%" => "104"
+					"%RACE_PLANATAR%" => "104"
+					"%RACE_DARKPLANATAR%" => "104"
+					"%RACE_SALAMANDER%" => "104"
+				END
+				PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+					LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+					INT_VAR
+						"opcode" = 324 // Immunity to resource and message
+						"target" = 2
+						"parameter1"
+						"parameter2"
+						"insert_point" = 0
+					STR_VAR
+						"resource" = "%DEST_RES%"
+					END
+				END
+			END
+			// Do not interact with level-based spell protections and Magic Resistance
+			LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
+			INT_VAR
+				"power" = 0
+				"resist_dispel" = 0
+			END
+			// Delete duplicate op61 effect
+			LAUNCH_PATCH_FUNCTION "DELETE_EFFECT"
+			INT_VAR
+				"match_opcode" = 61
+				"multi_match" = 1
+			END
+			// The following patch should be irrelevant since when it comes to op326, effects in the "resource" that target `Self` will affect the target of this (op326) effect, not the caster.
+			// This is just so that visual effects are applied after the core effect (op216)
+			LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
+			INT_VAR
+				"match_target" = 1 // self
+				"target" = 2 // projectile target
+			END
+		BUT_ONLY IF_EXISTS
+	END
+	/*
+	** Overwrite Chargen proficiencies **
+	** This workaround relies on an UI hack (it basically prevents the player from either Leveling Up or Dual Classing when this item is equipped...) **
+	*/
+	// Auxiliary EFF file
+	WITH_SCOPE BEGIN
+		CREATE "EFF" "blakblad"
+			WRITE_LONG 0x10 146 // Cast spell
+			WRITE_LONG 0x20 1 // Cast instantly (ignore level)
+			WRITE_LONG 0x24 1 // Instant/Permanent until death
+			WRITE_SHORT 0x2C 100 // Probability 1
+			WRITE_ASCII 0x30 "cdbblade" #8 // SPL file
+	END
+	// Auxiliary SPL file
+	WITH_SCOPE BEGIN
+		CREATE "SPL" "cdbblade"
+			WRITE_LONG NAME1 ~-1~
+			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG UNIDENTIFIED_DESC ~-1~
+			WRITE_LONG DESC ~-1~
+			WRITE_LONG 0x34 1 // Level
+			WRITE_LONG 0x64 0x72 // Abilities offset
+			WRITE_SHORT 0x68 1 // # abilities
+			WRITE_LONG 0x6a 0x9a // Effects offset
+			INSERT_BYTES 0x72 0x28
+			/* Extended Header */
+			WRITE_SHORT 0x80 32767 // Range
+			WRITE_SHORT 0x82 1 // Minimum level
+			WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+			/* Feature blocks */
+			// Prevent self stacking (`op272` can trigger under unintended circumstances...)
+			LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 321 // Remove effects by resource
+				"target" = 1
+				"timing" = 1
+			STR_VAR
+				"resource" = "cdbblade"
+			END
+			LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 233 // Modify proficiencies
+				"target" = 1
+				"parameter1" = 5
+				"parameter2" = IDS_OF_SYMBOL ("WPROF" "PROFICIENCYLONGSWORD")
+				"duration" = 2 // Remember that Slow doubles the timing rate of `op272`!
+			END
+			PATCH_WITH_SCOPE BEGIN
+				LAUNCH_PATCH_FUNCTION "ADD_STATDESC_ENTRY"
+				INT_VAR
+					"description" = RESOLVE_STR_REF (@100000)
+				STR_VAR
+					"bam_file" = "weapprof"
+				RET
+					"index"
+				END
+				LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 142 // Display portrait icon
+					"target" = 1
+					"parameter2" = "%index%"
+					"duration" = 2 // Remember that Slow doubles the timing rate of `op272`!
+				END
+			END
+	END
+	// Disable Level-up and Dual-class (kjeron)
+	WITH_SCOPE BEGIN
+		ACTION_IF !(FILE_EXISTS_IN_GAME ~m_cdprof.lua~) BEGIN
+			ACTION_IF !(FILE_EXISTS_IN_GAME ~weapprof.bam~) BEGIN
+				WITH_SCOPE BEGIN
+					COPY "eefixpack/files/bam/luke/weapprof.bam" "override"
+				END
+			END
+			WITH_SCOPE BEGIN
+				COPY "eefixpack/files/lua/luke/m_cdprof.lua" "override"
+			END
+			WITH_SCOPE BEGIN
+				COPY_EXISTING ~ui.menu~ ~override~
+					REPLACE_TEXTUALLY ~characterScreen:IsLevelUpButtonClickable()~ ~(AreWeaponProficienciesModified() and characterScreen:IsLevelUpButtonClickable())~
+					REPLACE_TEXTUALLY ~characterScreen:IsDualClassButtonClickable()~ ~(AreWeaponProficienciesModified() and characterScreen:IsDualClassButtonClickable())~
+				BUT_ONLY_IF_IT_CHANGES
+			END
+		END
+	END
+END
