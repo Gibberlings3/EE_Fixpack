@@ -45,7 +45,37 @@ BEGIN
 					"match_resource" = "DISINTH"
 					"resource" = ""
 				END
-				// Put GENERAL/RACE checks in the subspell
+				// Set up immunities as per \(WIZARD\|CLERIC\)_ENERGY_DRAIN
+				PATCH_WITH_SCOPE BEGIN
+					CLEAR_ARRAY "patch_data"
+					DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+						"0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
+						"%RACE_DEMONIC%" => "104"
+						"%RACE_MEPHIT%" => "104"
+						"%RACE_ELEMENTAL%" => "104"
+						"%RACE_GENIE%" => "104"
+						"%RACE_TIEFLING%" => "104"
+						"%RACE_SOLAR%" => "104"
+						"%RACE_ANTISOLAR%" => "104"
+						"%RACE_PLANATAR%" => "104"
+						"%RACE_DARKPLANATAR%" => "104"
+						"%RACE_SALAMANDER%" => "104"
+					END
+					PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
+						LAUNCH_PATCH_FUNCTION "CLONE_EFFECT"
+						INT_VAR
+							"match_opcode" = 326 // Apply effects list
+							"opcode" = 324 // Immunity to resource and message
+							"parameter1"
+							"parameter2"
+							"special" = 0
+							"timing" = 0
+							"duration" = 0
+						STR_VAR
+							"resource" = "%DEST_RES%"
+						END
+					END
+				END
 				LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
 				INT_VAR
 					"match_opcode" = 326 // Apply effects list
@@ -61,35 +91,6 @@ BEGIN
 			/* Header */
 			WRITE_BYTE 0x25 7 // primary type: INVOKER => NECROMANCER
 			/* Feature blocks */
-			// Set up immunities as per \(WIZARD\|CLERIC\)_ENERGY_DRAIN
-			PATCH_WITH_SCOPE BEGIN
-				CLEAR_ARRAY "patch_data"
-				DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					"0" => "55" // GENERAL = UNDEAD || RACE = GOLEM
-					"%RACE_DEMONIC%" => "104"
-					"%RACE_MEPHIT%" => "104"
-					"%RACE_ELEMENTAL%" => "104"
-					"%RACE_GENIE%" => "104"
-					"%RACE_TIEFLING%" => "104"
-					"%RACE_SOLAR%" => "104"
-					"%RACE_ANTISOLAR%" => "104"
-					"%RACE_PLANATAR%" => "104"
-					"%RACE_DARKPLANATAR%" => "104"
-					"%RACE_SALAMANDER%" => "104"
-				END
-				PHP_EACH "patch_data" AS "parameter1" => "parameter2" BEGIN
-					LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
-					INT_VAR
-						"opcode" = 324 // Immunity to resource and message
-						"target" = 2
-						"parameter1"
-						"parameter2"
-						"insert_point" = 0
-					STR_VAR
-						"resource" = "%DEST_RES%"
-					END
-				END
-			END
 			// Do not interact with level-based spell protections and Magic Resistance
 			LAUNCH_PATCH_FUNCTION "ALTER_EFFECT"
 			INT_VAR
