@@ -111,6 +111,16 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
   END
   BUT_ONLY  
   
+// tbd, cam
+// two CC guards have unbounded scripts blocks that loop
+COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
+              ~guard1b.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Allegiance(Myself,NEUTRAL)\)~      ~\1 Global("f4imoved","LOCALS",0)~
+    REPLACE_TEXTUALLY ~\(MoveToPoint(\[[0-9]+\.[0-9]+\])\)~ ~\1 SetGlobal("f4imoved","LOCALS",1)~
+  END
+  BUT_ONLY  
+  
 // tbd, cam  
 // love talk sets trigger for jaheira's bandits to spawn, but shouldn't occur if romance ends before timer is up
 COPY_EXISTING ~jaheira.bcs~ ~override~
