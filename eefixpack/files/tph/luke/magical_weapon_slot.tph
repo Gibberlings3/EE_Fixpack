@@ -108,7 +108,6 @@ BEGIN
 			/* Polymorph Self */
 			~plybear1.itm~ ~override~ // Shapeshift: Brown Bear
 			~plybear2.itm~ ~override~ // Shapeshift: Black Bear
-			~plyflind.itm~ ~override~ // Shapeshift: Flind
 			~plymstar.itm~ ~override~ // Shapeshift: Ogre
 			~plyspid.itm~ ~override~ // Shapeshift: Spider
 			~plywolf1.itm~ ~override~ // Shapeshift: Wolf
