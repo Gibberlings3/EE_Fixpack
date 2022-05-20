@@ -1,0 +1,93 @@
+DEFINE_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP"
+BEGIN
+	// Let us use a unique ITM file for all character levels
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "%WIZARD_SHOCKING_GRASP%.spl" "override"
+			/* Header */
+			WRITE_BYTE 0x27 12 // COMBATPROTECTIONS => COMBINATION
+			/* Feature blocks */
+			LPF "ALTER_EFFECT"
+			INT_VAR
+				"match_opcode" = 111 // Create weapon
+			STR_VAR
+				"resource" = "SGRASP"
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// ITM file
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "sgrasp.itm" "override"
+			/* Header */
+			WRITE_LONG 0x18 THIS BOR IDS_OF_SYMBOL ("itemflag" "SILVER") BOR IDS_OF_SYMBOL ("itemflag" "COLDIRON")
+			WRITE_ASCII 0x3A "ISGRASP" #8 // Inventory icon
+			/* Extended header */
+			LPF "ALTER_ITEM_HEADER"
+			INT_VAR
+				"range" = 0 // Touch attack
+			STR_VAR
+				"icon" = "ISGRASP"
+			END
+			/* Feature blocks */
+			LPF "DELETE_EFFECT" END // delete current content
+			LPF "ADD_ITEM_EFFECT"
+			INT_VAR
+				"type" = 1 // Melee headers
+				"opcode" = 146 // Cast spell
+				"target" = 2
+				"parameter2" = 1 // Cast instantly (ignore level)
+				"timing" = 1
+			STR_VAR
+				"resource" = "%DEST_RES%"
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Auxiliary subspell
+	WITH_SCOPE BEGIN
+		CREATE "SPL" "sgrasp"
+			WRITE_LONG NAME1 ~-1~
+			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG UNIDENTIFIED_DESC ~-1~
+			WRITE_LONG DESC ~-1~
+			WRITE_LONG 0x18 BIT14 // Ignore dead/wild magic
+			WRITE_SHORT 0x1C 1 // Spell type: wizard
+			WRITE_BYTE 0x25 8 // TRANSMUTER
+			WRITE_BYTE 0x27 10 // OFFENSIVEDAMAGE
+			WRITE_LONG 0x34 1 // Level
+			WRITE_ASCIIE 0x3A ~%WIZARD_SHOCKING_GRASP%C~ #8 // Spell icon
+			WRITE_LONG 0x64 0x72 // Abilities offset
+			WRITE_SHORT 0x68 1 // # abilities
+			WRITE_LONG 0x6a 0x9a // Effects offset
+			INSERT_BYTES 0x72 0x28
+			/* Extended Header */
+			WRITE_ASCIIE 0x76 ~%WIZARD_SHOCKING_GRASP%B~ #8 // Icon
+			WRITE_SHORT 0x80 32767 // Range
+			WRITE_SHORT 0x82 1 // Minimum level
+			WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+			// Extend up to character level 20
+			LPF "CD_EXTEND-O-MATIC" END
+			/* Feature blocks */
+			// "... an electrical charge will deal 1d8 points of damage plus 1 per level of the caster..."
+			PATCH_WITH_SCOPE BEGIN
+				FOR ("i" = 1 ; "%i%" <= SHORT_AT 0x68 ; "i" += 1) BEGIN
+					LPF "ADD_SPELL_EFFECT"
+					INT_VAR
+						"header" = "%i%"
+						"opcode" = 12 // Damage
+						"target" = 2
+						"parameter1" = "%i%"
+						"parameter2" = IDS_OF_SYMBOL ("dmgtype" "ELECTRICITY")
+						"timing" = 1
+						"dicenumber" = 1
+						"dicesize" = 8
+					END
+				END
+			END
+			LPF "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 141 // Lighting effects
+				"target" = 2
+				"parameter2" = 6 // Alteration water
+				"timing" = 1
+			END
+	END
+END

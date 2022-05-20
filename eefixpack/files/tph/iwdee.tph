@@ -373,6 +373,32 @@ WITH_SCOPE BEGIN
   END
 END
 
+/*
+luke
+**Iron Body**
+- Move spell features from `SPL` file to `ITM` file
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/iron_body.tph"
+  LAUNCH_ACTION_FUNCTION "WIZARD_IRON_BODY" END
+END
+
+/*
+luke
+**Magical Weapon Slot**
+(Based on the previous tweak to the Black Blade of Disaster)
+- Make sure natural creature weapons / touch attacks do not benefit from Fighting Styles
+*/
+WITH_SCOPE BEGIN
+  WITH_TRA
+    "eefixpack/languages/en_us/luke/shared.tra"
+    "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
+  BEGIN
+    INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
+    LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
+  END
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\

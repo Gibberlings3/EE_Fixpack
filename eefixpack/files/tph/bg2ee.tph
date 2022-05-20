@@ -266,12 +266,16 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Shocking Grasp – should not interact with spell protections
+/*
+luke
+**Shocking Grasp**
+- Should not interact with level-based spell protections
+- It now casts a `SPL` file that scales with level (up to `20`)
+  - (instead of using `20` different `ITM` files)
+*/
 WITH_SCOPE BEGIN
-  COPY_EXISTING "sgrasp19.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
+  INCLUDE "eefixpack/files/tph/luke/shocking_grasp.tph"
+  LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
 END
 
 // luke
@@ -343,6 +347,22 @@ END
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/searing_orb.tph"
   LAUNCH_ACTION_FUNCTION ~CLERIC_SOL_SEARING_ORB~ END
+END
+
+/*
+luke
+**Magical Weapon Slot**
+(Based on the previous tweak to the Black Blade of Disaster)
+- Make sure natural creature weapons / touch attacks do not benefit from Fighting Styles
+*/
+WITH_SCOPE BEGIN
+  WITH_TRA
+    "eefixpack/languages/en_us/luke/shared.tra"
+    "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
+  BEGIN
+    INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
+    LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
+  END
 END
 
 // tbd, cam
