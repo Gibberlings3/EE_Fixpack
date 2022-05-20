@@ -31,6 +31,7 @@ BEGIN
 			LPF ~FJ_SPL_ITM_REINDEX~ END // re-index the file
 			// Clean up
 			LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 111 END // Create weapon
+			LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_timing" = 1 END
 			LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "target" = 1 "power" = 0 "resist_dispel" = 0 "timing" = 2 "duration" = 0 END
 		BUT_ONLY_IF_IT_CHANGES
 	END
