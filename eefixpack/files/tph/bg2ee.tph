@@ -270,6 +270,7 @@ END
 luke
 **Shocking Grasp**
 - Should not interact with level-based spell protections
+- Delete expiry sound since the spell can end prematurely
 - It now casts a `SPL` file that scales with level (up to `20`)
   - (instead of using `20` different `ITM` files)
 */

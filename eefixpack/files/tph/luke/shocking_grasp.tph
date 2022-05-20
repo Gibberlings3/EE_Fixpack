@@ -12,6 +12,12 @@ BEGIN
 			STR_VAR
 				"resource" = "SGRASP"
 			END
+			// Delete expiry sound since the spell can end prematurely
+			LPF "DELETE_EFFECT"
+			INT_VAR
+				"match_opcode" = 174 // Play sound
+				"match_timing" = 4 // Delay/Permanent
+			END
 		BUT_ONLY_IF_IT_CHANGES
 	END
 	// ITM file
