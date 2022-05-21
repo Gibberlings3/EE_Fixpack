@@ -1046,6 +1046,7 @@ BEGIN
 						WRITE_BYTE 0x88 10 // Dicesize
 						WRITE_BYTE 0x8A 4 // Dicenumber
 						WRITE_SHORT 0x8E 2 // Damage type: Crushing
+						WRITE_SHORT 0x92 SHORT_AT 0x70 // First effect index (we need to take into account equipped effects!)
 						WRITE_SHORT 0x96 1 // Item vanishes
 						WRITE_LONG 0x98 BIT0 // Add STR bonus
 						WRITE_SHORT 0x9C IDS_OF_SYMBOL ("MISSILE" "None") // Projectile

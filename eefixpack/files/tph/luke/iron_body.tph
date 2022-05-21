@@ -1,0 +1,38 @@
+DEFINE_ACTION_FUNCTION "WIZARD_IRON_BODY"
+BEGIN
+	// SPL file
+	COPY_EXISTING "%WIZARD_IRON_BODY%.spl" "override"
+		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 1 END // already present on "ibody.itm"
+		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 321 STR_VAR "match_resource" = "%DEST_RES%" END // useless (`op111` does not leave behind a removable effect)
+		SET "#_effects" = SHORT_AT (LONG_AT 0x64 + 0x1E) // # effects on the 1st ability
+		READ_ASCII (LONG_AT 0x6A + 0x30 * SHORT_AT 0x70) "effects_data" (0x30 * "%#_effects%") // store all effects (1st ability)
+		PATCH_WITH_SCOPE BEGIN
+			FOR ("i" = 0 ; "%i%" < "%#_effects%" ; "i" += 1) BEGIN // loop through all effects on the 1st ability
+				SET "match_opcode" = SHORT_AT (LONG_AT 0x6A + 0x30 * SHORT_AT 0x70 + "%i%" * 0x30 + 0x0) // current effect ID
+				SET "match_timing" = BYTE_AT (LONG_AT 0x6A + 0x30 * SHORT_AT 0x70 + "%i%" * 0x30 + 0xC) // current `timing_mode`
+				PATCH_MATCH "%match_timing%" WITH
+					"0" WHEN ("%match_opcode%" != 111) BEGIN
+						LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "multi_match" = 1 "match_opcode" END // delete one effect at a time (the function does not return the number of deleted effects)
+						// We need to take into account the effect we've just deleted
+						SET "#_effects" -= 1 // total number of effects
+						SET "i" -= 1 // current index
+					END
+					DEFAULT
+				END
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	// ITM file
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "ibody.itm" "override"
+			INSERT_BYTES 0xAA STRING_LENGTH "%effects_data%"
+			WRITE_ASCIIE 0xAA "%effects_data%"
+			WRITE_SHORT 0x70 (THIS + "%#_effects%")
+			LPF ~FJ_SPL_ITM_REINDEX~ END // re-index the file
+			// Clean up
+			LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 111 END // Create weapon
+			LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_timing" = 1 END
+			LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "target" = 1 "power" = 0 "resist_dispel" = 0 "timing" = 2 "duration" = 0 END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END

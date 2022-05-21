@@ -440,7 +440,7 @@ The Druid is healed 12 Hit Points after using this ability."
 luke
 "strikes as a +4 weapon" should not be missing
 */
-@40413 = "Shapeshift: Water Elemental
+@40313 = "Shapeshift: Water Elemental
 
 Strength: 18
 Dexterity: 14
