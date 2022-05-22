@@ -9,6 +9,10 @@ LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
 END
 
 /////                                                  \\\\\
+///// lua fixes                                        \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
@@ -64,6 +68,10 @@ BEGIN
   COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
 END
 
+// tbd, cam (from jmerry)
+// curing poison should also cure insta-death from green slimes
+INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -100,6 +108,16 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~GlobalLT("EXTRACOUNT2","MYAREA",1)[ %TAB%%LNL%%MNL%%WNL%]+\(ActionListEmpty()[ %TAB%%LNL%%MNL%%WNL%]+InActiveArea(Myself)[ %TAB%%LNL%%MNL%%WNL%]+THEN[ %TAB%%LNL%%MNL%%WNL%]+RESPONSE #30[ %TAB%%LNL%%MNL%%WNL%]+IncrementGlobal("MaxSpawn","AR5203",1)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObjectOffScreen("YSSOLD04",Player1,0,0,0)[ %TAB%%LNL%%MNL%%WNL%]+IncrementGlobal("EXTRACOUNT3","MYAREA",1)\)~
                       ~GlobalLT("EXTRACOUNT3","MYAREA",1) \1~
+  END
+  BUT_ONLY  
+  
+// tbd, cam
+// two CC guards have unbounded scripts blocks that loop
+COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
+              ~guard1b.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Allegiance(Myself,NEUTRAL)\)~      ~\1 Global("f4imoved","LOCALS",0)~
+    REPLACE_TEXTUALLY ~\(MoveToPoint(\[[0-9]+\.[0-9]+\])\)~ ~\1 SetGlobal("f4imoved","LOCALS",1)~
   END
   BUT_ONLY  
   
@@ -155,7 +173,30 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
 
-
+// tbd, cam (originally from jmerry)
+// joinable NPCs should have proper trueclass kit values
+COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
+              ~anomen12.cre~ ~override~ // anomen
+              ~anomen6.cre~  ~override~ // anomen
+              ~anomen7.cre~  ~override~ // anomen
+              ~anomen8.cre~  ~override~ // anomen
+              ~anomen9.cre~  ~override~ // anomen
+              ~imoen.cre~    ~override~ // imoen
+              ~imoen10.cre~  ~override~ // imoen
+              ~imoen15.cre~  ~override~ // imoen
+              ~imoen211.cre~ ~override~ // imoen
+              ~imoen213.cre~ ~override~ // imoen
+              ~kivan.cre~    ~override~ // kivan
+              ~kivan4.cre~   ~override~ // kivan
+              ~kivan6.cre~   ~override~ // kivan
+              ~mazzy11.cre~  ~override~ // mazzy
+              ~mazzy12.cre~  ~override~ // mazzy
+              ~mazzy15.cre~  ~override~ // mazzy
+              ~mazzy8.cre~   ~override~ // mazzy
+              ~mazzy9.cre~   ~override~ // mazzy
+              ~sarevok.cre~  ~override~ // sarevok
+  WRITE_LONG 0x244 0x40000000 // proper trueclass value
+  BUT_ONLY IF_EXISTS
 
 // BGCS-469, luke
 // Lizard Men should be flagged as 'LIZARDMAN'
@@ -386,6 +427,10 @@ END
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+// tbd, cam (from jmerry)
+// simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
 
 // luke
 // **Cure Wounds**

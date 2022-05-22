@@ -1,0 +1,42 @@
+// lot of overlap for bgee, bg2ee, so just do one patch with IF_EXISTS
+COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone (neutralize poison) - bg2ee only
+              ~amul22.itm~   ~override~ // Periapt of Proof Against Poison
+              ~bhaal1a.spl~  ~override~ // Mass Healing - bg2ee only
+              ~bpdispel.spl~ ~override~ // dispel/cure (cutscene, black pits) - bg2ee only
+              ~brac20.itm~   ~override~ // Gloves of Healing
+              ~cdhgtrl.spl~  ~override~ // fire troll 'death' - bg2ee only
+              ~cdtorgal.spl~ ~override~ // torgal 'death' - bg2ee only
+              ~cdtrlblz.spl~ ~override~ // blizzard troll 'death' - bg2ee only
+              ~devaheal.spl~ ~override~ // heal (deva) - bg2ee only
+              ~globblu2.itm~ ~override~ // Blue Globe (heals) - bg2ee only
+              ~misc76.itm~   ~override~ // The Dream Potion
+              ~ohbbclt1.spl~ ~override~ // cutscene heal/dispel - bg2ee only
+              ~ohbresto.spl~ ~override~ // greater restoration - bg2ee only
+              ~ohsmode1.spl~ ~override~ // story mode
+              ~ohsmode4.spl~ ~override~ // story mode
+              ~potn17.itm~   ~override~ // Elixir of Health
+              ~potn20.itm~   ~override~ // Antidote
+              ~potn47.itm~   ~override~ // Marek's Potion of Antidote
+              ~potnmare.itm~ ~override~ // Marek's Potion of Antidote
+              ~scrl08.itm~   ~override~ // Protection From Poison
+              ~senspihe.spl~ ~override~ // heal (lashar'ra) - bg2ee only
+              ~spin102.spl~  ~override~ // Slow Poison (bhaalspawn power)
+              ~spin201.spl~  ~override~ // neutralize poison - bg2ee only
+              ~spin599.spl~  ~override~ // fire_healing (wk) - bg2ee only
+              ~spin679.spl~  ~override~ // Heal_no_visual (shar-teel)
+              ~spin699.spl~  ~override~ // Healing Lick (moondoggie)
+              ~spin711.spl~  ~override~ // final_heal
+              ~spin734.spl~  ~override~ // wish_heal_party
+              ~spin746.spl~  ~override~ // restore_full_health (cutscenes, black pits)
+              ~sppr212.spl~  ~override~ // slow poison
+              ~sppr404.spl~  ~override~ // neutralize poison
+              ~sppr607.spl~  ~override~ // heal
+              ~sppr713.spl~  ~override~ // greater restoration
+              ~spwish07.spl~ ~override~ // greater restoration (wish) - bg2ee only
+              ~spwish28.spl~ ~override~ // heal (wish) - bg2ee only
+              ~spwish46.spl~ ~override~ // greater restoration (wish) - bg2ee only
+              ~spwm168.spl~  ~override~ // heal (wild surge)
+              ~staf10.itm~   ~override~ // Staff of Curing - bg2ee only
+              ~trollreg.spl~ ~override~ // troll 'death'
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 11 opcode = 321 STR_VAR resource = ~jellgr1~ END
+  BUT_ONLY IF_EXISTS

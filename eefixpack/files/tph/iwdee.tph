@@ -9,6 +9,10 @@ LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
 END
 
 /////                                                  \\\\\
+///// lua fixes                                        \\\\\
+/////                                                  \\\\\
+
+/////                                                  \\\\\
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
@@ -514,6 +518,10 @@ END
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 
 
+
+// tbd, cam (from jmerry)
+// simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
 
 
 // ie-5938, cam

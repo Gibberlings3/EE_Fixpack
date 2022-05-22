@@ -15,6 +15,25 @@ ACTION_IF game_includes_sod BEGIN
 END
 
 /////                                                  \\\\\
+///// lua fixes                                        \\\\\
+/////                                                  \\\\\
+
+COPY_EXISTING ~bgee.lua~ ~override~
+  PATCH_IF game_includes_sod BEGIN
+    REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
+    REPLACE_TEXTUALLY ~\({'BDORCF1L',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'SKAN',%TAB%2},~
+/* comment this section, pending verification for mobile versions   
+    REPLACE_TEXTUALLY ~\({'BAELOTH',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'NCERND',%TAB%1},%WNL%%TAB%{'NKELDOR',%TAB%1},%WNL%%TAB%{'NANOMEN',%TAB%1},%WNL%%TAB%{'NEDWIN',%TAB%1},%WNL%%TAB%{'NHAER',%TAB%1},%WNL%%TAB%{'NJAN',%TAB%1},%WNL%%TAB%{'NMINSC',%TAB%1},%WNL%%TAB%{'NVALYGA',%TAB%1},%WNL%%TAB%{'NYOSHIM',%TAB%1},%WNL%%TAB%{'NKORGAN',%TAB%1},~
+    REPLACE_TEXTUALLY ~\({'NEERA',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'NNALIA', 2},%WNL%%TAB%{'NMAZZY', 2},%WNL%%TAB%{'NAERIE', 2},~
+  END ELSE BEGIN
+    PATCH_FOR_EACH portrait IN BAELOTH NCERND NKELDOR NANOMEN NEDWIN NHAER NJAN NMINSC NVALYGA NYOSHIM NKORGAN NNALIA NMAZZY NAERIE NJAHEIR NVICON BEGIN
+      REPLACE_TEXTUALLY ~--\({'%portrait%',[ %TAB%]*[12]},\)~ ~\1~
+    END
+*/
+  END
+  BUT_ONLY 
+  
+/////                                                  \\\\\
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
@@ -135,6 +154,10 @@ ACTION_IF game_includes_sod BEGIN
     COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
   END  
 END
+
+// tbd, cam (from jmerry)
+// curing poison should also cure insta-death from green slimes
+INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -471,7 +494,32 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
   BUT_ONLY IF_EXISTS // sod
 
 
+// tbd, cam (originally from jmerry)
+// joinable NPCs should have proper trueclass kit values
+COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
+              ~ajanti4.cre~  ~override~ // ajantis
+              ~ajanti6.cre~  ~override~ // ajantis
+              ~alora.cre~    ~override~ // alora
+              ~alora6.cre~   ~override~ // alora
+              ~coran.cre~    ~override~ // coran
+              ~coran5.cre~   ~override~ // coran
+              ~imoen1.cre~   ~override~ // imoen
+              ~imoen2.cre~   ~override~ // imoen
+              ~imoen4.cre~   ~override~ // imoen
+              ~imoen6.cre~   ~override~ // imoen
+              ~kivan.cre~    ~override~ // kivan
+              ~kivan4.cre~   ~override~ // kivan
+              ~kivan6.cre~   ~override~ // kivan
+              ~sharte.cre~   ~override~ // shar-teel
+  WRITE_LONG 0x244 0x40000000 // proper trueclass value
+  BUT_ONLY IF_EXISTS
 
+// tbd, cam
+// ordulian should give his cloak, or not have it. We choose that he doesn't have it
+COPY_EXISTING ~orduli.cre~ ~override~
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
+  BUT_ONLY
+  
 // BGCS-483, luke
 // CRE files should not use non-existing resources
 WITH_SCOPE BEGIN
@@ -682,6 +730,10 @@ END
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+// tbd, cam (from jmerry)
+// simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
 
 // luke
 // **Cure Wounds**
