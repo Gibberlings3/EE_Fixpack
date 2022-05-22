@@ -202,6 +202,15 @@ COPY_EXISTING ~bd0120.bcs~ ~override~
     REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
   END
   BUT_ONLY IF_EXISTS // sod
+  
+  
+// tbd, cam
+// syntax: an OR(4) only has two conditions
+COPY_EXISTING ~bd1000.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~OR(4)~ ~OR(2)~ // luckily only one so easy replace
+  END
+  BUT_ONLY IF_EXISTS // sod asset
 
 
 
