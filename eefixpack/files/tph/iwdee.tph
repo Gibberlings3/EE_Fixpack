@@ -57,9 +57,7 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 
 // tbd, cam
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
-ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ BEGIN
-  INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
-END
+INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
  
 // CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
