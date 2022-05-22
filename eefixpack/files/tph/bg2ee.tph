@@ -307,12 +307,17 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Shocking Grasp – should not interact with spell protections
+/*
+luke
+**Shocking Grasp**
+- Should not interact with level-based spell protections
+- Delete expiry sound since the spell can end prematurely
+- It now casts a `SPL` file that scales with level (up to `20`)
+  - (instead of using `20` different `ITM` files)
+*/
 WITH_SCOPE BEGIN
-  COPY_EXISTING "sgrasp19.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
+  INCLUDE "eefixpack/files/tph/luke/shocking_grasp.tph"
+  LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
 END
 
 // luke
@@ -331,12 +336,24 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Black Blade of Disaster – should not interact with spell protections and Magic Resistance
+/*
+luke
+**Black Blade of Disaster**
+- Should not interact with level-based spell protections
+- Make sure *"The caster is considered to be proficient to the point of Grand Mastery in this weapon"* always works
+  - `op233` needs to be on the normal effects list to be evaluated after chargen proficiency effects and override them!
+- Provide a workaround for the following bugs:
+  - if you Dual-class when the Black Blade is equipped, the character permanently gains grand mastery in long swords
+  - if, for example, you have a warrior with an item that grants dagger proficiency while equipped, they can then take dagger specialization at a level-up, remove the item, and keep the specialization permanently
+*/
 WITH_SCOPE BEGIN
-  COPY_EXISTING "blakblad.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 ~resist_dispel~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
+  WITH_TRA
+    "eefixpack/languages/en_us/luke/shared.tra"
+    "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
+  BEGIN
+    INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
+    LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
+  END
 END
 
 // luke
@@ -372,6 +389,22 @@ END
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/searing_orb.tph"
   LAUNCH_ACTION_FUNCTION ~CLERIC_SOL_SEARING_ORB~ END
+END
+
+/*
+luke
+**Magical Weapon Slot**
+(Based on the previous tweak to the Black Blade of Disaster)
+- Make sure natural creature weapons / touch attacks do not benefit from Fighting Styles
+*/
+WITH_SCOPE BEGIN
+  WITH_TRA
+    "eefixpack/languages/en_us/luke/shared.tra"
+    "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
+  BEGIN
+    INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
+    LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
+  END
 END
 
 // tbd, cam

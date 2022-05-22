@@ -1,0 +1,187 @@
+DEFINE_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT"
+BEGIN
+	/* Disable SWORDANDSHIELD and SINGLEWEAPON */
+	// Auxiliary EFF file
+	WITH_SCOPE BEGIN
+		CREATE "EFF" "cdwstyl1"
+			WRITE_LONG 0x10 146 // Cast spell
+			WRITE_LONG 0x20 1 // Cast instantly (ignore level)
+			WRITE_LONG 0x24 1 // Instant/Permanent until death
+			WRITE_SHORT 0x2C 100 // Probability 1
+			WRITE_ASCII 0x30 "cdwstyl1" #8 // SPL file
+	END
+	// Auxiliary SPL file
+	WITH_SCOPE BEGIN
+		CREATE "SPL" "cdwstyl1"
+			WRITE_LONG NAME1 ~-1~
+			WRITE_LONG NAME2 ~-1~
+			WRITE_LONG UNIDENTIFIED_DESC ~-1~
+			WRITE_LONG DESC ~-1~
+			WRITE_LONG 0x34 1 // Level
+			//WRITE_ASCIIE 0x3A ~%WIZARD_BLACK_BLADE_OF_DISASTER%C~ #8 // Spell icon
+			WRITE_LONG 0x64 0x72 // Abilities offset
+			WRITE_SHORT 0x68 1 // # abilities
+			WRITE_LONG 0x6a 0x9a // Effects offset
+			INSERT_BYTES 0x72 0x28
+			/* Extended Header */
+			//WRITE_ASCIIE 0x76 ~%WIZARD_BLACK_BLADE_OF_DISASTER%B~ #8 // Icon
+			WRITE_SHORT 0x80 32767 // Range
+			WRITE_SHORT 0x82 1 // Minimum level
+			WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+			/* Feature blocks */
+			// Prevent self stacking (`op272` can trigger under unintended circumstances...)
+			LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 321 // Remove effects by resource
+				"target" = 1
+				"timing" = 1
+			STR_VAR
+				"resource" = "cdwstyl1"
+			END
+			LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 233 // Modify proficiencies
+				"target" = 1
+				"parameter1" = 0 // Set to 0
+				"parameter2" = IDS_OF_SYMBOL ("WPROF" "PROFICIENCYSWORDANDSHIELD")
+				"duration" = 2 // Remember that Slow doubles the timing rate of `op272`!
+			END
+			LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+			INT_VAR
+				"opcode" = 233 // Modify proficiencies
+				"target" = 1
+				"parameter1" = 0 // Set to 0
+				"parameter2" = IDS_OF_SYMBOL ("WPROF" "PROFICIENCYSINGLEWEAPON")
+				"duration" = 2 // Remember that Slow doubles the timing rate of `op272`!
+			END
+			PATCH_WITH_SCOPE BEGIN
+				LAUNCH_PATCH_FUNCTION "ADD_STATDESC_ENTRY"
+				INT_VAR
+					"description" = RESOLVE_STR_REF (@100000)
+				STR_VAR
+					"bam_file" = "weapprof"
+				RET
+					"index"
+				END
+				LAUNCH_PATCH_FUNCTION "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 142 // Display portrait icon
+					"target" = 1
+					"parameter2" = "%index%"
+					"duration" = 2 // Remember that Slow doubles the timing rate of `op272`!
+				END
+			END
+	END
+	/* Disable SWORDANDSHIELD */
+	// Auxiliary EFF file
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "cdwstyl1.eff" "override/cdwstyl2.eff"
+			WRITE_ASCII 0x30 "cdwstyl2" #8 // SPL file
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Auxiliary SPL file
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "cdwstyl1.spl" "override/cdwstyl2.spl"
+			/* Feature blocks */
+			LAUNCH_PATCH_FUNCTION "DELETE_EFFECT"
+			INT_VAR
+				"match_opcode" = 233 // Modify proficiencies
+				"check_globals" = 0
+				"match_parameter2" = IDS_OF_SYMBOL ("WPROF" "PROFICIENCYSINGLEWEAPON")
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+	// Main
+	WITH_SCOPE BEGIN
+		COPY_EXISTING
+			~sgrasp.itm~ ~override~ // Shocking Grasp
+			~bclaw.itm~ ~override~ // Beast Claw
+			~seriuos.itm~ ~override~ // Cause Serious Wounds
+			~critical.itm~ ~override~ // Cause Critical Wounds
+			~slaylive.itm~ ~override~ // Slay Living
+			~harm.itm~ ~override~ // Harm
+			~ctouch.itm~ ~override~ // Chill Touch (iwd)
+			~chillt.itm~ ~override~ // Chill Touch (bg)
+			~ghoult.itm~ ~override~ // Ghoul Touch
+			~ltouch.itm~ ~override~ // Lich Touch
+			~ibody.itm~ ~override~ // Iron Body
+			/* Polymorph Self */
+			~plybear1.itm~ ~override~ // Shapeshift: Brown Bear
+			~plybear2.itm~ ~override~ // Shapeshift: Black Bear
+			~plymstar.itm~ ~override~ // Shapeshift: Ogre
+			~plyspid.itm~ ~override~ // Shapeshift: Spider
+			~plywolf1.itm~ ~override~ // Shapeshift: Wolf
+			~cdpolybb.itm~ ~override~ // Shapeshift: Boring Beetle (iwd)
+			~cdpolypb.itm~ ~override~ // Shapeshift: Polar Bear (iwd)
+			~cdpolyww.itm~ ~override~ // Shapeshift: Winter Wolf (iwd)
+			/* Shapechange */
+			~cdmindfl.itm~ ~override~ // Shapechange: Mind Flayer
+			~cdgoliro.itm~ ~override~ // Shapechange: Iron Golem
+			~trollall.itm~ ~override~ // Shapechange: Giant Troll
+			~wolfgr.itm~ ~override~ // Shapechange: Greater Wolfwere
+			~firern.itm~ ~override~ // Shapechange: Fire Elemental
+			~earthrn.itm~ ~override~ // Shapechange: Earth Elemental
+			~cdshwele.itm~ ~override~ // Shapeshift: Water Elemental (iwd)
+			/* Unkitted Druid */
+			~brbrp.itm~ ~override~ // Shapeshift: Brown Bear (bg)
+			~wolfm.itm~ ~override~ // Shapeshift: Wolf (bg)
+			~brblp.itm~ ~override~ // Shapeshift: Black Bear (bg)
+			~plypbear.itm~ ~override~ // Shapeshift: Polar Bear (iwd)
+			~plywwolf.itm~ ~override~ // Shapeshift: Winter Wolf (iwd)
+			~plybeetl.itm~ ~override~ // Shapeshift: Boring Beetle (iwd)
+			~felem.itm~ ~override~ // Shapeshift: Fire Elemental (iwd)
+			~eelem.itm~ ~override~ // Shapeshift: Earth Elemental (iwd)
+			~welem.itm~ ~override~ // Shapeshift: Water Elemental (iwd)
+			/* Avenger (Druid) */
+			~plyspid2.itm~ ~override~ // Shapeshift: Sword Spider
+			~plywyvrn.itm~ ~override~ // Shapeshift: Baby Wyvern
+			~plybass.itm~ ~override~ // Shapeshift: Lesser Basilisk (old, unused)
+			/* Shapeshifter (Druid) */
+			~brbrp1.itm~ ~override~ // Shapeshift: Werewolf (bg)
+			~brbrp2.itm~ ~override~ // Shapeshift: Greater Werewolf (bg)
+			~cdbrbrp.itm~ ~override~ // Shapeshift: Werewolf (bg)
+			~cdbrbrp2.itm~ ~override~ // Shapeshift: Greater Werewolf (bg2)
+			~werewfl1.itm~ ~override~ // Shapeshift: Werewolf (bg)
+			~werewfl2.itm~ ~override~ // Shapeshift: Greater Werewolf (iwd)
+			/* Other */
+			~squirp.itm~ ~override~ // Polymorph Other
+			~wswolf.itm~ ~override~ // Polymorph Other (wild surge)
+			~cdwolfm.itm~ ~override~ // Relair's Mistake
+			~polyrat.itm~ ~override~ // Cloak of the Sewers (Rat)
+			~plytroll.itm~ ~override~ // Cloak of the Sewers (Troll)
+			~drufir.itm~ ~override~ // Fire Elemental Transformation
+			~druear.itm~ ~override~ // Earth Elemental Transformation
+			~slayerw1.itm~ ~override~ // Slayer Change
+			~slayerw2.itm~ ~override~ // Slayer Change
+			~slayerw3.itm~ ~override~ // Slayer Change
+			~slayerw4.itm~ ~override~ // Slayer Change
+			PATCH_MATCH "%DEST_RES%" WITH
+				~plymstar~ BEGIN
+					LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
+					INT_VAR
+						"insert_point" = "-1" // Last
+						"opcode" = 272 // Use EFF file on condition
+						"target" = 1
+						"parameter1" = 1 // any non-zero value
+						"parameter2" = 0 // Once per second
+						"timing" = 2
+					STR_VAR
+						"resource" = "cdwstyl2"
+					END
+				END
+				DEFAULT
+					LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
+					INT_VAR
+						"insert_point" = "-1" // Last
+						"opcode" = 272 // Use EFF file on condition
+						"target" = 1
+						"parameter1" = 1 // any non-zero value
+						"parameter2" = 0 // Once per second
+						"timing" = 2
+					STR_VAR
+						"resource" = "cdwstyl1"
+					END
+			END
+		BUT_ONLY IF_EXISTS
+	END
+END
