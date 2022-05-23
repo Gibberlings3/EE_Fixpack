@@ -540,6 +540,10 @@ COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
 INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
 
+//tbd, cam
+// poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
+INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
+
 // tbd, cam
 // ordulian should give his cloak, or not have it. We choose that he doesn't have it
 COPY_EXISTING ~orduli.cre~ ~override~
