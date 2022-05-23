@@ -72,6 +72,10 @@ END
 // curing poison should also cure insta-death from green slimes
 INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 
+// tbd, cam (from jmerry)
+// vernus can't be raised
+INCLUDE ~eefixpack/files/tph/tbd_vernus_resurrection.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
