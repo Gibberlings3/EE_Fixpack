@@ -204,6 +204,20 @@ Requires:
 
 Weight: 4~
 
+// second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
+// same fix required for bg (26586), bg2 (29212), and iwd (35784)
+@35784 = ~Carrion Summons
+(Conjuration/Summoning)
+
+Level: 6
+Range: 120 ft.
+Duration: 7 rounds + 1 round/level
+Casting Time: 9
+Area of Effect: Special
+Saving Throw: None
+
+There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 25818, 27373
 // Weapon damage corrections
 @40639 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
