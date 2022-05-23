@@ -144,6 +144,21 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
      ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
+     ~eefixpack/files/bam/wphf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wplf2inv.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wplf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a1.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a3.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a5.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a7.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a8.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2a9.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2g1.bam~  ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2oa7.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2oa8.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
 
 ACTION_IF game_includes_sod BEGIN
 

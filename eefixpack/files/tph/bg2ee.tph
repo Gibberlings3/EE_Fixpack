@@ -64,6 +64,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
      ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
+     ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
