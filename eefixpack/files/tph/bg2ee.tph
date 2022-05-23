@@ -152,7 +152,13 @@ COPY_EXISTING ~ohb_t302.bcs~ ~override~
   END
   BUT_ONLY
 
-
+// tbd, cam (from jmerry)
+// area script can loop
+COPY_EXISTING ~oh7200.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(AmbientActivate("Hidcont",TRUE)\)~ ~\1 SetGlobal("OHH_wiztrap","OH7200",2)~
+  END
+  BUT_ONLY 
 
 // tbd, cam (two issues here, see bysohim in main d compile)
 // Yoshimo Should Have Follow-Up Banters with the PC
