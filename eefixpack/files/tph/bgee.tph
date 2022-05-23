@@ -537,6 +537,10 @@ COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
   BUT_ONLY IF_EXISTS
 
 // tbd, cam
+// HD too low for most ankhegs; bgee ones also had pickpocketable shells
+INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
+
+// tbd, cam
 // ordulian should give his cloak, or not have it. We choose that he doesn't have it
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END

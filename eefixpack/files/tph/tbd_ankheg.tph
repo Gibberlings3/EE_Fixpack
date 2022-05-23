@@ -1,0 +1,21 @@
+// tbd, cam
+// HD too low for most ankhegs; bgee ones also had pickpocketable shells
+COPY_EXISTING ~ankheg.cre~   ~override~
+              ~ankheg01.cre~ ~override~
+              ~ankhegf.cre~  ~override~
+              ~ankhegg.cre~  ~override~
+              ~ankhegq.cre~  ~override~
+              ~bdankh01.cre~ ~override~
+              ~bdankheg.cre~ ~override~
+              ~bdankhsu.cre~ ~override~
+              ~bdneo.cre~    ~override~ // the one
+              ~bpankhe1.cre~ ~override~ // rabid ankheg
+              ~ohdrankh.cre~ ~override~ // corrupted ankheg
+  READ_BYTE  0x234 level1
+  PATCH_IF level1 < 8 BEGIN
+    WRITE_BYTE 0x234 8 // level 1
+  END  
+  WRITE_BYTE 0x235 1 // level 2
+  WRITE_BYTE 0x236 1 // level 3
+  LPF cd_no_pickpocket STR_VAR item = misc12 END
+  BUT_ONLY IF_EXISTS

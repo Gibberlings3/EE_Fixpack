@@ -208,6 +208,10 @@ COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
   WRITE_LONG 0x244 0x40000000 // proper trueclass value
   BUT_ONLY IF_EXISTS
 
+// tbd, cam
+// HD too low for most ankhegs; bgee ones also had pickpocketable shells
+INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
+
 // BGCS-469, luke
 // Lizard Men should be flagged as 'LIZARDMAN'
 WITH_SCOPE BEGIN
