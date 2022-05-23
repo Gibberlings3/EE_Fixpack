@@ -83,6 +83,10 @@ INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 // vernus can't be raised
 INCLUDE ~eefixpack/files/tph/tbd_vernus_resurrection.tph~
 
+//tbd, cam
+// wilson fixes: strength exploit, AC fixes, regen fixes
+INCLUDE ~eefixpack/files/tph/tbd_wilson.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
