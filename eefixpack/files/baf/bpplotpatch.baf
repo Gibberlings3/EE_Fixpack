@@ -1,0 +1,8 @@
+IF
+	!AreaCheck("OH9310")
+	!AreaCheck("OH9350")
+	!AreaCheck("OH9360")
+THEN
+	RESPONSE #100
+		ChangeAIScript("",OVERRIDE)
+END

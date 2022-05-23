@@ -39,6 +39,10 @@ COPY_EXISTING ~bgee.lua~ ~override~
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 
+// tbd, cam (from jmerry)
+// clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
+APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
+
 /*
 luke
 **splprot.2da**
@@ -329,8 +333,17 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// tbd, cam (from jmerry)
+// bp: hogarl not using the right potion when he's hurt
+COPY_EXISTING ~bpgiafir.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetGlobalTimer("GIANT_POTION","LOCALS",ONE_ROUND)[%TAB% %LNL%%MNL%%WNL%]+\)UseItem("POTN27",NearestEnemyOf(Myself))~ ~\1 UseItem("POTN52",Myself)~
+  END
+  BUT_ONLY 
 
-
+// tbd, cam (from jmerry)
+// characters imported from bp retain their bp scripting
+EXTEND_TOP ~bpplot.bcs~ ~eefixpack/files/baf/bpplotpatch.baf~ // BP script removes itself if not in BP area
 
 // tbd, cam
 // sod imoen missing xp-matching scripting, among other things
@@ -1600,6 +1613,12 @@ END
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
+
+// tbd, cam (from jmerry)
+// Correct number of charges on the Sandthief's Ring at tier 3
+COPY_EXISTING ~bpxith03.sto~ ~override~ 
+  LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
+  BUT_ONLY 
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
