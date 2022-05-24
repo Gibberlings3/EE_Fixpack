@@ -128,6 +128,10 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
   BUT_ONLY  
   
 // tbd, cam
+// firkraag should despawn at the copper coronet once you engage in the windpear events
+EXTEND_TOP ~firkra01.bcs~ ~eefixpack/files/baf/firkra01.baf~
+  
+// tbd, cam
 // two CC guards have unbounded scripts blocks that loop
 COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
               ~guard1b.bcs~ ~override~
@@ -1242,6 +1246,36 @@ END
 // tbd, cam
 // don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
 INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
+
+// tbd, cam
+// dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+COPY_EXISTING ~spin691.spl~  ~override~ // black dragon breath (effects)
+              ~spin691v.spl~ ~override~ // black dragon breath (cosmetics)
+              ~spin597.spl~  ~override~ // blue dragon breath
+              ~spin596.spl~  ~override~ // brown dragon breath (effects)
+              ~spin596v.spl~ ~override~ // brown dragon breath (cosmetics)
+              ~drgrbrht.spl~ ~override~ // green dragon breath (effects)
+              ~spin535.spl~  ~override~ // green dragon breath (cosmetics)
+              ~spin693.spl~  ~override~ // red dragon breath (effects)
+              ~spin894.spl~  ~override~ // red dragon breath (cosmetics)
+              ~spin893.spl~  ~override~ // shadow dragon breath (effects)
+              ~spin893v.spl~ ~override~ // shadow dragon breath (cosmetics)
+              ~spin833.spl~  ~override~ // silver dragon breath: cone of cold (effects)
+              ~spin833v.spl~ ~override~ // silver dragon breath: cone of cold (cosmetics)
+              ~spin832.spl~  ~override~ // silver dragon breath: paralyzation (effects)
+              ~spin832v.spl~ ~override~ // silver dragon breath: paralyzation (cosmetics)
+              ~spin595.spl~  ~override~ // yellow dragon breath (effects)
+              ~spin595v.spl~ ~override~ // yellow dragon breath (cosmetics)
+  WRITE_BYTE 0x25 0 // no school
+  WRITE_BYTE 0x27 0 // no secondary
+  
+COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional fixes
+  WRITE_ASCII 0x10 ~~ #8 // blank casting sound
+  WRITE_SHORT 0x1c 4     // innate spell type
+  WRITE_LONG  0x1e 0     // blanks exclusion flags
+  WRITE_SHORT 0x22 0     // blanks casting animation
+  WRITE_LONG  0x34 1     // set spell level 1
+  LPF ALTER_EFFECT INT_VAR power = 0 resist_dispel = 0 END
 
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
