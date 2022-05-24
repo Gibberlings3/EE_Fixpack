@@ -587,6 +587,12 @@ INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
+
+// BGCS-3442, cam
+// bugbear shaman should use bugbear shaman animation
+COPY_EXISTING ~bdbugb20.cre~ ~override~ // bugbear shaman
+  WRITE_LONG 0x28 0x0000e291 // bugbear shaman animation  
+  BUT_ONLY IF_EXISTS
   
 // BGCS-483, luke
 // CRE files should not use non-existing resources
