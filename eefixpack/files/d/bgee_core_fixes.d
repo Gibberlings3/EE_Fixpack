@@ -37,3 +37,7 @@ APPEND oberan
     IF ~~ THEN EXIT
   END
 END
+
+// tbd, cam
+// perdue says he's giving you 50 gold, but only delivers if you actually accepted the quest
+REPLACE_ACTION_TEXT perdue ~GivePartyGoldGlobal("PerduePayment","GLOBAL")~ ~GivePartyGold(50)~
