@@ -286,8 +286,17 @@ COPY_EXISTING ~bd7300.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// tbd, cam
+// sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
+ACTION_FOR_EACH script IN 1 4 BEGIN
 
+  COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
+    END
+    BUT_ONLY IF_EXISTS
 
+END    
 
 // tbd, cam
 // possibly missing Minsc-rasaad banter due to typo
