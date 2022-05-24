@@ -88,6 +88,10 @@ INCLUDE ~eefixpack/files/tph/tbd_vernus_resurrection.tph~
 // wilson fixes: strength exploit, AC fixes, regen fixes
 INCLUDE ~eefixpack/files/tph/tbd_wilson.tph~
 
+// BGCS-3460, cam
+// death tyrant animation fixes
+INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death tyrant animation fixes
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\

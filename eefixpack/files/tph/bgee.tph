@@ -178,6 +178,10 @@ END
 // curing poison should also cure insta-death from green slimes
 INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 
+// BGCS-3460, cam
+// death tyrant animation fixes
+INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death tyrant animation fixes
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\

@@ -1,0 +1,24 @@
+// BGCS-3460, cam
+// death tyrant animation fixes
+COPY_EXISTING ~7f46.ini~ ~override~ // death tyrant animation
+  REPLACE_TEXTUALLY ~^[ %TAB%]*ellipse[ %TAB%]*=.+$~        ~ellipse=32~       // increase to same as ordinary beholder
+  REPLACE_TEXTUALLY ~^[ %TAB%]*personal_space[ %TAB%]*=.+$~ ~personal_space=5~ // increase to same as ordinary beholder
+  BUT_ONLY
+
+COPY_EXISTING ~7f02.ini~ ~override~ // beholder animation
+              ~7f46.ini~ ~override~ // death tyrant animation
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack[ %TAB%]*=.+$~                 ~attack=~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_frame[ %TAB%]*=.+$~           ~attack_frame=0~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_\(slash\|backslash\|jab\)[ %TAB%]*=.+$~       ~attack_\1=bhold03~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_\(slash\|backslash\|jab\)_frame[ %TAB%]*=.+$~ ~attack_\1_frame=0~
+  BUT_ONLY
+
+ACTION_IF game_is_bg2ee BEGIN
+
+  COPY_EXISTING ~behund01.cre~ ~override~ // death tyrant
+                ~melsum03.cre~ ~override~ // death tyrant
+                ~rngbeh01.cre~ ~override~ // death tyrant
+    WRITE_LONG 0x28 0x00007f46 // death tyrant animation  
+    BUT_ONLY
+
+END
