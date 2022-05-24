@@ -495,6 +495,13 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
+// tbd, cam
+// enrage is using berserk's spell icon
+COPY_EXISTING ~spcl321.spl~ ~override~
+  WRITE_ASCII 0x3a ~enrageb~ #8
+  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
+
 // ie-5931, cam
 // Stoneskin from Demogorgon & Melissan cannot be breached
 COPY_EXISTING ~melstone.spl~ ~override~

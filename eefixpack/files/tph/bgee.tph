@@ -842,6 +842,13 @@ WITH_SCOPE BEGIN
 END
 
 // tbd, cam
+// enrage is using berserk's spell icon
+COPY_EXISTING ~spcl321.spl~ ~override~
+  WRITE_ASCII 0x3a ~enrageb~ #8
+  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
+
+// tbd, cam
 // shield spell shouldn't stack
 COPY_EXISTING ~spwi114.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END

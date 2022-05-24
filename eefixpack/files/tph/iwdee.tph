@@ -564,8 +564,13 @@ COPY_EXISTING ~backstab.spl~ ~override~
 APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
 COPY ~eefixpack/files/spl/spin704.spl~ ~override~
   SPRINT NYMPH_CONFUSION ~spin704~
-  
-  
+
+// tbd, cam
+// enrage is using berserk's spell icon
+COPY_EXISTING ~spcl321.spl~ ~override~
+  WRITE_ASCII 0x3a ~enrageb~ #8
+  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
   
 // tbd, davidw
 // The projectile for Bombardier Beetle clouds has a duplicate string
