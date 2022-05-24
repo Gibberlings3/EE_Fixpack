@@ -482,6 +482,16 @@ COPY_EXISTING ~viconia.bcs~ ~override~ // viconia gets armor upgrades at 8k, 16k
   END
   BUT_ONLY 
 
+// tbd, cam
+// tanar'ri do not hail from the nine hells; change albert to something more appropriate  
+COPY_EXISTING ~albert.bcs~   ~override~
+              ~rufcut01.bcs~ ~override~
+              ~rufcut02.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Polymorph(TANARRI)~ ~Polymorph(CORNUGON)~  
+  END
+  BUT_ONLY  
+
 
 
 // tbd, cam
