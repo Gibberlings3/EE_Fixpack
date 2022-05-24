@@ -1,0 +1,16 @@
+// tbd, cam (from jmerry)
+// vernus can't be raised
+COPY_EXISTING ~bhaal4a.spl~ ~override~ // resurrection (bhaalspawn)
+              ~rods03.itm~  ~override~ // rod of resurrection
+              ~spja01.spl~  ~override~ // harper's call
+              ~sppr504.spl~ ~override~ // raise dead
+              ~sppr550.spl~ ~override~ // recall spirit
+              ~sppr712.spl~ ~override~ // resurrection
+  LPF CLONE_EFFECT INT_VAR match_opcode = 326 opcode = 309 power = 0 parameter1 = 1 parameter2 = 0 resist_dispel = 0 STR_VAR insert = first resource = ohdress END // var now set by original spell
+
+COPY_EXISTING ~sppr504a.spl~ ~override~
+              ~sppr550a.spl~ ~override~
+              ~sppr712a.spl~ ~override~
+              ~spja01a.spl~  ~override~
+              ~bhaal4aa.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 309 STR_VAR match_resource = ohdress END // delete here as redundant

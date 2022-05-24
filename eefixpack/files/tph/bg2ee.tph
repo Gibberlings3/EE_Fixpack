@@ -44,19 +44,27 @@ END
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 
+//tbd, cam
+// battleguards starting in tob lack a weapon due to a typo
+COPY_EXISTING ~25stweap.2da~ ~override~
+  REPLACE_TEXTUALLY ~[ %TAB%]ham07[ %TAB%]~ ~ hamm07 ~
+  PRETTY_PRINT_2DA
+
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
 
-COPY_EXISTING ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
-              ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
-              ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
-              ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
-              ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
-              ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
-              ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
-              ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-              ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
+     ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
+     ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
+     ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
+     ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
+     ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
+     ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
+     ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
+     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
+     ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -71,6 +79,14 @@ END
 // tbd, cam (from jmerry)
 // curing poison should also cure insta-death from green slimes
 INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
+
+// tbd, cam (from jmerry)
+// vernus can't be raised
+INCLUDE ~eefixpack/files/tph/tbd_vernus_resurrection.tph~
+
+//tbd, cam
+// wilson fixes: strength exploit, AC fixes, regen fixes
+INCLUDE ~eefixpack/files/tph/tbd_wilson.tph~
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -148,7 +164,13 @@ COPY_EXISTING ~ohb_t302.bcs~ ~override~
   END
   BUT_ONLY
 
-
+// tbd, cam (from jmerry)
+// area script can loop
+COPY_EXISTING ~oh7200.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(AmbientActivate("Hidcont",TRUE)\)~ ~\1 SetGlobal("OHH_wiztrap","OH7200",2)~
+  END
+  BUT_ONLY 
 
 // tbd, cam (two issues here, see bysohim in main d compile)
 // Yoshimo Should Have Follow-Up Banters with the PC
@@ -197,6 +219,14 @@ COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
               ~sarevok.cre~  ~override~ // sarevok
   WRITE_LONG 0x244 0x40000000 // proper trueclass value
   BUT_ONLY IF_EXISTS
+
+// tbd, cam
+// HD too low for most ankhegs; bgee ones also had pickpocketable shells
+INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
+
+//tbd, cam
+// poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
+INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 
 // BGCS-469, luke
 // Lizard Men should be flagged as 'LIZARDMAN'

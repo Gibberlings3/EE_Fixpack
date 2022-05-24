@@ -1,0 +1,8 @@
+IF
+  LevelGT(Myself,%level%)
+  Global("cd_wilson_str_%level%","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeStat(Myself,STR,1,ADD)
+    SetGlobal("cd_wilson_str_%level%","LOCALS",1)
+END

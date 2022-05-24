@@ -6,6 +6,10 @@ ADD_TRANS_ACTION byoshim BEGIN 11 END BEGIN END ~SetGlobalTimer("YoshimoTalksPC2
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also ar1100.bcs
 ADD_TRANS_ACTION delon BEGIN 21 END BEGIN END ~SetGlobal("CDDelonSpoke","GLOBAL",1)~
 
+// tbd, cam (from jmerry)
+// rasaad can duplicate crit items; re-ordering actions fixes the issue
+REPLACE_ACTION_TEXT ~rasaadj~ ~LeaveParty()[ %TAB%%WNL%]*GivePartyAllEquipment()~ ~GivePartyAllEquipment() LeaveParty()~ 
+
 //tbd, cam
 // missing journal entries; make outro flow better by adding player reply about cloak
 ADD_TRANS_ACTION udsola01 BEGIN 121 END BEGIN 1 END ~EraseJournalEntry(97332)AddJournalEntry(97332,QUEST_DONE)AddJournalEntry(97333,QUEST)~

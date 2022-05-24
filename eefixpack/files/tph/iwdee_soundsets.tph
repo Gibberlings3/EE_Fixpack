@@ -1,19 +1,33 @@
-ACTION_IF ("%LANGUAGE%" STRING_COMPARE_CASE "english" = 0) BEGIN // english-specific fixes
+ACTION_IF (FILE_EXISTS ~lang/%LANGUAGE%/sounds/FFIGHT1#.wav~) BEGIN
 
-  // string sound asignments fixed in tra file
-  MOVE ~lang/en_us/sounds/fthiefl.wav~  ~lang/en_us/sounds/fthiefm_.wav~ // female thief 1 has damage and dying sounds reversed
-       ~lang/en_us/sounds/fthiefm.wav~  ~lang/en_us/sounds/fthiefl.wav~ 
-       ~lang/en_us/sounds/fthiefm_.wav~ ~lang/en_us/sounds/fthiefm.wav~
-       
-  COPY ~eefixpack/files/wav/male3m.wav~ ~lang/en_us/sounds~ // correct Male3 sound      
+  OUTER_SPRINT langpath ~%LANGUAGE%~ // languages that have native soundsets
+  
+END ELSE BEGIN
 
-  COPY_EXISTING ~charsnd.2da~ ~override~
-    REPLACE_TEXTUALLY ~[ %TAB%]20007[ %TAB%]~ ~ temp20011 ~
-    REPLACE_TEXTUALLY ~[ %TAB%]20011[ %TAB%]~ ~ 20007 ~
-    REPLACE_TEXTUALLY ~[ %TAB%]temp20011[ %TAB%]~ ~ 20011 ~
-    REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying; 
-    PRETTY_PRINT_2DA
-    BUT_ONLY
+  OUTER_SPRINT langpath ~en_us~ // languages without native soundsets default to english, so do the english fixes for them as well
+
+END    
+
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/charstr.2da~ BEGIN // check that this is available
+
+  ACTION_IF ("%langpath%" STRING_COMPARE_CASE "en_us" = 0) BEGIN // english-specific fixes
+
+    // string sound asignments fixed in tra file
+    MOVE ~lang/en_us/sounds/fthief1l.wav~  ~lang/en_us/sounds/fthief1m_.wav~ // female thief 1 has damage and dying sounds reversed
+         ~lang/en_us/sounds/fthief1m.wav~  ~lang/en_us/sounds/fthief1l.wav~ 
+         ~lang/en_us/sounds/fthief1m_.wav~ ~lang/en_us/sounds/fthief1m.wav~
+         
+    COPY ~eefixpack/languages/en_us/sounds/male3m.wav~ ~lang/en_us/sounds~ // correct Male3 sound      
+
+    COPY_EXISTING ~charsnd.2da~ ~override~
+      REPLACE_TEXTUALLY ~[ %TAB%]20007[ %TAB%]~ ~ temp20011 ~
+      REPLACE_TEXTUALLY ~[ %TAB%]20011[ %TAB%]~ ~ 20007 ~
+      REPLACE_TEXTUALLY ~[ %TAB%]temp20011[ %TAB%]~ ~ 20011 ~
+      REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying; 
+      PRETTY_PRINT_2DA
+      BUT_ONLY
+    
+  END    
        
 END
 
@@ -29,7 +43,7 @@ COPY_EXISTING ~charsnd.2da~ ~override~ // get column numbers in advance
   PRETTY_PRINT_2DA
   BUT_ONLY
 
-COPY ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ ~eefixpack/languages/%LANGUAGE%/sounds/charstr.2da~ // read table into variables
+COPY ~eefixpack/languages/%langpath%/sounds/charstr.2da~ ~eefixpack/languages/%langpath%/sounds/charstr.2da~ // read table into variables
   COUNT_2DA_ROWS 41 rows   
   FOR (row = 0 ; row < rows ; ++row) BEGIN
     READ_2DA_ENTRY row 0 41 rowname
@@ -76,11 +90,11 @@ END
  
 ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
 
-  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/%params_0%01.wav~ BEGIN // language check, basically
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/%params_0%01.wav~ BEGIN // language check, basically
  
-    ACTION_BASH_FOR ~eefixpack/languages/%LANGUAGE%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
+    ACTION_BASH_FOR ~eefixpack/languages/%langpath%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
     
-      COPY ~eefixpack/languages/%LANGUAGE%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
+      COPY ~eefixpack/languages/%langpath%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
         INNER_PATCH ~%BASH_FOR_RES%~ BEGIN // grab number from file name
           REPLACE_EVALUATE ~%params_0%\([0-9]+\)~ BEGIN
             SET number = MATCH1
@@ -139,9 +153,9 @@ ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
       END  
       
       ACTION_IF ((number > 33) AND (number < 37)) BEGIN // damage (should have two)
-        OUTER_SET row_0 = 90 
-        OUTER_SET row_1 = 89 
-        OUTER_SET row_2 = 18 
+//        OUTER_SET row_0 = 90 
+//        OUTER_SET row_1 = 89 
+//        OUTER_SET row_2 = 18 
       END  
       
       ACTION_IF ((number > 36) AND (number < 39)) BEGIN // dying (should have one)

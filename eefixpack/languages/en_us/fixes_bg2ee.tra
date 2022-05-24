@@ -17,6 +17,20 @@ Mazzy
 
 Below this section, the page is torn and jagged, as if it has been ripped from its other half.~
 
+// second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
+// same fix required for bg (26586), bg2 (29212), and iwd (35784)
+@29212 = ~Carrion Summons
+(Conjuration/Summoning)
+
+Level: 6
+Range: 120 ft.
+Duration: 7 rounds + 1 round/level
+Casting Time: 9
+Area of Effect: Special
+Saving Throw: None
+
+There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
 // this item's name should state its enchantment level
 @57918 = "Paralytic Bolt +1"
 
