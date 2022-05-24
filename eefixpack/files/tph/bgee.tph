@@ -542,6 +542,13 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+// bgcs-3454, cam
+// lady's house lacks its normal music
+COPY_EXISTING ~ar0132.are~ ~override~
+  READ_LONG 0xbc song_off
+  WRITE_LONG song_off 11
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
