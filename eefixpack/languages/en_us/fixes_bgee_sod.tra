@@ -4,9 +4,6 @@
 
 // any strings < 34000 are non-sod strings and should go into the fixes_bgee.tra file instead. 
 
-// strref #34567, updating because "X is misspelled"
-@34567 = ~This is a test replacement string.~
-
 // The weight in the description and in-game should be 0
 @52365 = "Any target hit by this bolt must making a Saving Throw or be paralyzed for 5 rounds.
 
