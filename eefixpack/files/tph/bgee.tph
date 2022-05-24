@@ -182,6 +182,10 @@ INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 // death tyrant animation fixes
 INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death tyrant animation fixes
 
+// bgcs-3397, cam
+// revenant animation fixes
+INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
