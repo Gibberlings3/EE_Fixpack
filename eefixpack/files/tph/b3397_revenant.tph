@@ -1,0 +1,21 @@
+// BGCS-3397, cam
+// revenant animation fixes
+COPY_EXISTING ~7701.ini~ ~override~ // revenant animation
+  REPLACE_TEXTUALLY ~ghoul0~ ~reven0~ // takes care of soundsets; further adjustments below
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack[ %TAB%]*=.+$~                                             ~attack=~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_frame[ %TAB%]*=.+$~                                       ~attack_frame=0~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_\(slash\|backslash\|jab\)_frame[ %TAB%]*=.+$~             ~attack_\1_frame=2~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*\(attack_\(slash\|backslash\)[ %TAB%]*=[ %TAB%]*reven0[56]\).+$~ ~\1~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*attack_jab[ %TAB%]*=.+$~                                         ~attack_jab=reven05~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*selection[ %TAB%]*=.+$~                                          ~selection=reven01,reven02~
+  REPLACE_TEXTUALLY ~^[ %TAB%]*selection_frame[ %TAB%]*=.+$~                                    ~selection_frame=0,0~
+  BUT_ONLY
+
+// iwd revenants (revnant, rndrevn) already use the correct animation
+COPY_EXISTING ~bpreve01.cre~ ~override~ // revenant (bgee)
+              ~firmon04.cre~ ~override~ // revenant (bg2ee)
+              ~grreven.cre~  ~override~ // revenant (bg2ee)
+              ~reven01.cre~  ~override~ // revenant (bg2ee)
+              ~revent.cre~   ~override~ // revenant (sod)
+  WRITE_LONG 0x28 0x00007701 // revenant animation  
+  BUT_ONLY IF_EXISTS

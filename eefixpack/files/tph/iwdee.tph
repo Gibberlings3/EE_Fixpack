@@ -94,6 +94,8 @@ INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~      // ie-5943 , cam: lots of
 INCLUDE ~eefixpack/files/tph/6018_lizardmen.tph~       // ie-6018 , cam: Summoned lizardmen lack visible weapons
 INCLUDE ~eefixpack/files/tph/6020_bullets.tph~         // ie-6020 , cam: Bullets +1 and Bullets +2 use the same projectile
 INCLUDE ~eefixpack/files/tph/6036_clostsbfbhnaeig.tph~ // ie-6036 , cam: Cam's List o' Stuff That Should Be Fixed But Has No Actual Effect In Game
+INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~   // bgcs-3460, cam: death tyrant animation fixes
+INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~       // bgcs-3397, cam: revenant animation fixes
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -562,8 +564,13 @@ COPY_EXISTING ~backstab.spl~ ~override~
 APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
 COPY ~eefixpack/files/spl/spin704.spl~ ~override~
   SPRINT NYMPH_CONFUSION ~spin704~
-  
-  
+
+// tbd, cam
+// enrage is using berserk's spell icon
+COPY_EXISTING ~spcl321.spl~ ~override~
+  WRITE_ASCII 0x3a ~enrageb~ #8
+  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
   
 // tbd, davidw
 // The projectile for Bombardier Beetle clouds has a duplicate string

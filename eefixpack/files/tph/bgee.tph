@@ -178,6 +178,14 @@ END
 // curing poison should also cure insta-death from green slimes
 INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
 
+// BGCS-3460, cam
+// death tyrant animation fixes
+INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death tyrant animation fixes
+
+// bgcs-3397, cam
+// revenant animation fixes
+INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -286,8 +294,17 @@ COPY_EXISTING ~bd7300.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// tbd, cam
+// sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
+ACTION_FOR_EACH script IN 1 4 BEGIN
 
+  COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
+    END
+    BUT_ONLY IF_EXISTS
 
+END    
 
 // tbd, cam
 // possibly missing Minsc-rasaad banter due to typo
@@ -525,6 +542,13 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+// bgcs-3454, cam
+// lady's house lacks its normal music
+COPY_EXISTING ~ar0132.are~ ~override~
+  READ_LONG 0xbc song_off
+  WRITE_LONG song_off 11
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
@@ -574,6 +598,12 @@ INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
+
+// BGCS-3442, cam
+// bugbear shaman should use bugbear shaman animation
+COPY_EXISTING ~bdbugb20.cre~ ~override~ // bugbear shaman
+  WRITE_LONG 0x28 0x0000e291 // bugbear shaman animation  
+  BUT_ONLY IF_EXISTS
   
 // BGCS-483, luke
 // CRE files should not use non-existing resources
@@ -810,6 +840,13 @@ WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/restoration.tph"
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
+
+// tbd, cam
+// enrage is using berserk's spell icon
+COPY_EXISTING ~spcl321.spl~ ~override~
+  WRITE_ASCII 0x3a ~enrageb~ #8
+  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
 
 // tbd, cam
 // shield spell shouldn't stack
