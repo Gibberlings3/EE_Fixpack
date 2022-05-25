@@ -1054,6 +1054,9 @@ Weight: 2~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @7829 = ~Container of Razorvine Extract~
 
+// added "Tower" at the end
+@8529 = ~A desperate plan was created that would ensure this would never happen. All the artifacts within Sehanine tower were set to release their magic so that the tower would destroy itself. Before these energies were released, however, we planned to lead as many of the orcs and goblins as we could into Sehanine Tower.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8705 = ~This bottle of elven wine also has the properties of a healing potion. During one of the elven festivals, the priests of the Seldarine's Hand imbibed too much that day and accidentally added a barrel of elven wine to a mixture that was intended for healing potions.
 
@@ -2334,6 +2337,9 @@ Weight: 6~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @15170 = ~...free... my... people...
 ...Astrolabe... whirls... twirls...~ [LARR_02]
+
+// "learn source" > "learn the source"
+@15200 = ~We seek to learn the source of the evil that troubles the North.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @15883 = ~Inspired by your foster father's colorful tales of rogues and scoundrels, you have spent your childhood yearning for intrigue. On the stage of your imagination, the ambling, preoccupied monks of the keep have often played the secret lords of Waterdeep, their purses ripe targets for your nimble fingers. On more than one occasion Gorion has asked you to very tactfully return a pen or an inkwell to the pocket from which it came. The more valuable of the keep's treasures remain impenetrable to your wiles, but you have little desire to steal from your benefactors anyway; you long for more appropriate and accessible pickings.~

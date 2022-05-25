@@ -477,11 +477,12 @@ You return to your travels, making sure that those you meet never forget your pa
 And wherever you go, people stand aside. You have gained great power, and no one will ever take it from you again.~ [NARR05]
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
+// manual fix: had sound file narr01 assigned, but changed to narr04 to match oBG2 (pointless regardless: string is unused _ sound file doesn't exist)
 @1763 = ~As you leave Suldanessellar, you are nearly overwhelmed by the cheering of the assembled crowds. There is open gratitude on the faces of the elves, and many times you are encouraged to stop and receive gifts or shake hands. There is an obvious lament at your departure, as well as an expectation of your return. They consider you a hero and, for once, you really feel the part.
 
 You pass into the Forest of Tethir, wondering if there could have been a future for you in the city that you have left behind. You examine the amulet around your neck, studying the images of elven gods inlaid in the platinum, and you feel the warm tingle of the item's magic. This gift will remind you of how welcome a visitor you would be—but it also bears witness to the fact that you are without a true home, a place where you belong. You could return to Athkatla, you think, but deep inside, you feel the taint that yet remains in your soul.
 
-There can be no home for you yet, as hard as that is to admit, so you venture deeper into the forest, pondering the words of demons and growing annoyed at how destiny holds its secrets from your view.~ [NARR01]
+There can be no home for you yet, as hard as that is to admit, so you venture deeper into the forest, pondering the words of demons and growing annoyed at how destiny holds its secrets from your view.~ [NARR04]
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @1783 = ~How exactly is she ruining her own reputation? By being kind to those less fortunate?~

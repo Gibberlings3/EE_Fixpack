@@ -7570,6 +7570,16 @@ For the love of whatever powers you hold dear, don't make the same mistake thric
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @66806 = ~Forked-Tongue told me that the portal out of the crater, the one that will return me to Curst, is under the tailbone of the massive skeleton. He expressed delight that I should be traveling through its arse-end.~
 
+// "gems that serves as its eyes." > "gems that serve as its eyes."
+@66898 = ~AEGIS OF TORMENT
+Special:
+   +3 to Constitution
+   +15 to Base Hit Points
+   +3 to Armor Class
+Weight: 0
+
+Rows and rows of minute skulls line the outer edge of this ring. It is crowned by an over-sized skull with fire-red gems that serve as its eyes. This ring is the physical manifestation of the suffering of the tormented slaves of Dahnthur. It was their ultimate wish to gain protection from their oppressors, and with this magical ring, their wish was finally realized. Even with the fiery red gems, a royal purple hue continually emanates outward.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @66912 = ~"You... I... cannot..." She suddenly freezes, and she speaks slowly, carefully, as if her voice frightens her. "The truth is this: you are one who dies many deaths. These deaths have given the knowing of all things mortal, and in your hand lies the spark of life... and death. Those that die near you carry a trace of themselves that you can bring forth..."~
 

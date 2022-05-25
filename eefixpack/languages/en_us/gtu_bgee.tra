@@ -5109,6 +5109,9 @@ Through the passing of knowledge my sword shall display my glory
 Then you shall know that I am well pleased
 I must pass these four warders to descend to the lower level. I assume that one of them will have the wardstone required to operate this lift that they are guarding. What would honor this warder? What will cause his sword, his Pride, to show his glory. He mentions chronicles of deeds. Obviously, I must find and read these chronicles. The trick is in finding them. What could Durlag have intended with this puzzle? I must solve it to pass.~
 
+// Well-spoken shouldn't be hypehnated, as it's noe being used as an adjective
+@21537 = ~Well spoken, land-dweller. You may have the monster's corpse if such is your wish.~
+
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @21716 = ~'Tis too much gold for my purse.~
 
