@@ -417,7 +417,9 @@ Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
 
 Special Abilities:
 – Cold Resistance: -50%
+– Magic Cold Resistance: -50%
 – Fire Resistance: 100%
+– Magic Fire Resistance: 100%
 – Acid Resistance: 15%
 – Electricity Resistance: 15%
 – Slashing Resistance: 15%
@@ -442,7 +444,9 @@ Attack Damage: 4d8 (crushing), strikes as a +4 weapon
 
 Special Abilities:
 – Cold Resistance: 25%
+– Magic Cold Resistance: 25%
 – Fire Resistance: 25%
+– Magic Fire Resistance: 25%
 – Slashing Resistance: 50%
 – Crushing Resistance: -50%
 – Piercing Resistance: 50%
@@ -465,6 +469,7 @@ Attack Damage: 4d8 (crushing), strikes as a +4 weapon
 
 Special Abilities:
 – Cold Resistance: -25%
+– Magic Cold Resistance: -25%
 – Electricity Resistance: -75%
 – Acid Resistance: 75%
 – Slashing Resistance: 75%
@@ -642,7 +647,8 @@ Special Abilities:
 
 /*
 luke
-"strikes as a +4 weapon" should not be missing
+- "strikes as a +4 weapon" should not be missing
+- Added missing 15% acid and electricity resist
 */
 @36184 = "Shapechange: Fire Elemental
 
@@ -655,7 +661,11 @@ Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
 
 Special Abilities:
 – Cold Resistance: -50%
+– Magic Cold Resistance: -50%
 – Fire Resistance: 100%
+– Magic Fire Resistance: 100%
+– Acid Resistance: 15%
+– Electricity Resistance: 15%
 – Slashing Resistance: 15%
 – Crushing Resistance: 15%
 – Piercing Resistance: 15%
@@ -663,7 +673,8 @@ Special Abilities:
 
 /*
 luke
-"strikes as a +4 weapon" should not be missing
+- "strikes as a +4 weapon" should not be missing
+- fire and cold resist should be 25%, not 20%
 */
 @36186 = "Shapechange: Earth Elemental
 
@@ -675,32 +686,11 @@ Number of Attacks: 1
 Attack Damage: 4d8 (crushing), strikes as a +4 weapon
 
 Special Abilities:
-– Cold Resistance: 20%
-– Fire Resistance: 20%
+– Cold Resistance: 25%
+– Magic Cold Resistance: 25%
+– Fire Resistance: 25%
+– Magic Fire Resistance: 25%
 – Slashing Resistance: 50%
 – Crushing Resistance: -50%
 – Piercing Resistance: 50%
-– Missile Resistance: 75%"
-
-/*
-luke
-- "strikes as a +4 weapon" should not be missing
-- "The Druid is healed 12 Hit Points after using this ability." should be missing (this is not the Druid variant)
-*/
-@40313 = "Shapeshift: Water Elemental
-
-Strength: 18
-Dexterity: 14
-
-Base Armor Class: -2
-Number of Attacks: 1
-Attack Damage: 4d8 (crushing), strikes as a +4 weapon
-
-Special Abilities:
-– Cold Resistance: -25%
-– Electricity Resistance: -75%
-– Acid Resistance: 75%
-– Slashing Resistance: 75%
-– Crushing Resistance: 75%
-– Piercing Resistance: 75%
 – Missile Resistance: 75%"

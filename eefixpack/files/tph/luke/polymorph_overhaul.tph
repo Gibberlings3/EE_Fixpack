@@ -586,6 +586,14 @@ BEGIN
 					END
 					COPY_EXISTING ~%file_%~ ~override~
 						//TO_UPPER ~SOURCE_RES~
+						/* Header */
+						PATCH_MATCH "%DEST_RES%" WITH
+							"%SHAPECHANGE_WATER_ELEMENTAL%" BEGIN
+								WRITE_LONG UNIDENTIFIED_DESC RESOLVE_STR_REF (@2)
+								WRITE_LONG DESC ~-1~ // unused
+							END
+							DEFAULT
+						END
 						LPF "DELETE_EFFECT" END // delete current content
 						PATCH_IF !(IS_AN_INT $"x"("2")) BEGIN // Polymorph Self / Shapechange - usable at will
 							SPRINT $ $"x"("2")(~%resource%~) $~item~(~~) // This instruction is supposed to generate an array containing the various special abilities granted by Polymorph Self / Shapechange (f.i.: Shapechange: Mind Flayer, Shapechange: Iron Golem, etc...)
@@ -1129,7 +1137,7 @@ BEGIN
 						LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 142 "match_parameter2" = 38 END // Display portrait icon (Haste) => this is supposed to be Movement rate bonus, not haste
 					END
 					"CDMINDFL" BEGIN // Shapechange: Mind Flayer
-						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 139 "parameter1" = RESOLVE_STR_REF (@2) "parameter2" = 0 "timing" = 1 "duration" = 0 STR_VAR "resource" = "" END
+						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 139 "parameter1" = RESOLVE_STR_REF (@3) "parameter2" = 0 "timing" = 1 "duration" = 0 STR_VAR "resource" = "" END
 					END
 					DEFAULT
 				END
@@ -1206,5 +1214,14 @@ BEGIN
 			WRITE_BYTE 0x238 15 // Strength
 			WRITE_BYTE 0x23C 18 // Dexterity
 		BUT_ONLY IF_EXISTS
+	END
+	// ~%SHAPECHANGE_GIANT_TROLL%~ => Strength: 18/100 (so as to match description)
+	WITH_SCOPE BEGIN
+		ACTION_IF (GAME_IS ~iwdee~) BEGIN
+			COPY_EXISTING ~shtroll.cre~ ~override~
+				WRITE_BYTE 0x238 18 // Strength
+				WRITE_BYTE 0x239 100 // Strength bonus
+			BUT_ONLY_IF_IT_CHANGES
+		END
 	END
 END
