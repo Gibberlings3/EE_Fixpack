@@ -2,4 +2,26 @@
 
 @1 = ~Shapeshift: Natural Form (Shapechange)~
 
-@2 = "Devour brain"
+/*
+IWD:EE, @40313: This is used for both the druid shapeshift and the mage shapechange. A new text string should be created for the Shapechange version.
+Notably, "The Druid is healed 12 Hit Points after using this ability." should be missing in the mage shapechange
+*/
+@2 = "Shapeshift: Water Elemental
+
+Strength: 18
+Dexterity: 14
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -25%
+– Electricity Resistance: -75%
+– Acid Resistance: 75%
+– Slashing Resistance: 75%
+– Crushing Resistance: 75%
+– Piercing Resistance: 75%
+– Missile Resistance: 75%"
+
+@3 = "Devour brain"
