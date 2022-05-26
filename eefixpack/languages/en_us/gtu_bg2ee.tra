@@ -2911,6 +2911,10 @@ The very potent Heal spell enables the priest to wipe away disease and injury in
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @9332 = ~A Shadow Druid! They are perversions of our calling!~
 
+// per MM, it's "Half-Ogre" not "Half Ogre"
+@9356 = ~Half-Ogre~
+@9357 = ~Half-Ogre~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 9
 @9557 = ~RANGER: The Ranger is a warrior and a woods<PRO_MANWOMAN> who is skilled with weapons and is knowledgeable in the ways of the forest. The Ranger often protects and guides lost travelers and honest peasant-folk. A Ranger needs to be strong and wise to the ways of nature to live a full life.
 
@@ -3852,6 +3856,7 @@ Saving Throw: None
 By means of this spell, the caster calls from 1 to 3 animals that have 8 Hit Dice or less. The animals summoned aid the caster by whatever means they possess, staying until the spell duration expires. Only normal or giant animals can be summoned; fantastic animals or monsters cannot be summoned by this spell (no chimerae, dragons, gorgons, manticores, etc.).~
 
 // [automatic scan] Issues: 5  | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 6 | Surplus trailing whitespace at line 8 | Surplus trailing whitespace at line 9 | Surplus trailing whitespace at line 10
+// manual: <PRO_HISHER>self > <PRO_HIMHER>self to avoid "hisself"
 @12217 = ~Chant
 (Conjuration/Summoning)
 
@@ -3863,7 +3868,7 @@ Casting Time: 9
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-By means of the Chant spell, the priest brings special favor upon <PRO_HISHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6 piercing plus 1d2 fire damage will deal 1d6 piercing plus 1 fire damage instead. The priest's enemies suffer the opposite effects.
+By means of the Chant spell, the priest brings special favor upon <PRO_HIMHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6 piercing plus 1d2 fire damage will deal 1d6 piercing plus 1 fire damage instead. The priest's enemies suffer the opposite effects.
 
 Multiple chants are not cumulative.~
 
@@ -11101,6 +11106,9 @@ Imoen still remains in that place, however. The Shadow Thieves have arranged a s
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @47960 = ~As you would.~
+
+// passed though all > passed through all
+@47964 = ~You have passed through all that was set before you. Judgment comes next, though you have proven more sophisticated than the tests.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 3
 @48001 = ~Yoshimo escapes the dungeon on his own

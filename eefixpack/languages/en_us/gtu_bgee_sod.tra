@@ -8975,6 +8975,9 @@ With my neck in a noose?~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @60688 = ~Forgive me this trespass, I beg you. Criminals had taken up residence in this place—I came to drive them from it, and I believe I've been successful.~
 
+// but not I > but not me
+@60735 = ~Join the troops if you wish, but not me. Follow the campfires and tell the guard I sent you.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @60757 = ~You just won't ever use it. Fine, that's all right. You're a cleric. I understand. I get it.~
 
@@ -10606,6 +10609,9 @@ More soldiers are here than anticipated, led by Delgar Munsch of the Bridgefort 
 The crusade is on the run.
 
 My allies and I have played a vital role in defeating the crusade's forces.~
+
+// Return from whence > Return whence
+@67208 = ~You are naught but ashes. Return whence you came, and bother me no more.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @67289 = ~My momma’s gone.~
