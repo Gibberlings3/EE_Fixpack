@@ -5083,6 +5083,9 @@ Equipped abilities:
 
 Weight: 2~
 
+// peoples wastes > people's wastes - left remainder of grammatical errors, as they seem intentional
+@19776 = ~My people are rulers of the deeps. Where your people's wastes are sent, that where we thrive. Ratchild's tribe is stronger than all others. Ratchild's tribe trained to beat anyone. ANYONE. No one can stand up to Ratchild and tribe!~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @20632 = ~Flooding the Cloakwood Mine
 I have flooded the Iron Throne mine in Cloakwood. Before opening the magical plug, I helped the innocent slave miners to freedom. Hopefully the destruction of such a valuable resource will be a serious setback to whatever the Iron Throne has planned.~
@@ -5252,6 +5255,14 @@ I live in the darkness of his soul
 I bring him to his knees,
 Trembling and weeping
 Unable to lift a hand in his own defense~
+
+// but I sad as well > but I am sad as well (line for both Delainy and Durlyle)
+@22369 = ~I am grateful beyond measuring, but I am sad as well that I have nothing to give. Perhaps there is something else you wish that I can help?~
+@22496 = ~I am grateful beyond measuring, but I am sad as well that I have nothing to give. Perhaps there is something else you wish that I can help?~
+
+// If it you wish > If it is your wish (line for both Delainy and Durlyle)
+@22545 = ~If it is your wish, I will make it so.~
+@22599 = ~If it is your wish, I will make it so.~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 9
 @22609 = ~Spirit Armor

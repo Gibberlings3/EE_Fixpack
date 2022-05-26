@@ -2725,6 +2725,9 @@ This spell enables the caster to create a black, blade-shaped planar rift about 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8224 = ~Aye, and a bloody campaign it was. I slew twenty of the beasts during that scorching summer.~
 
+// token is wrong: <PRO_CHARNAME> > <CHARNAME>
+@8229 = ~Shar! My deliverance is in your hands. ...Wait! I recognize you! <CHARNAME>! It is I! Viconia DeVir! You must remember! My life depends on it!~ [VICONI01]
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8259 = ~We have been sent by the church to search these depths for missing followers.~
 
@@ -5869,6 +5872,9 @@ Weight: 4~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @21142 = ~I... I thought we had come to a point where such talk was valuable to... Never mind, I shall not pursue what is obviously lost.~
+
+// complimentary > complementary
+@21143 = ~As Harper and as druid. They are complementary, despite bards being thought the Harper standard-bearers. Both seek balance over all. I... I think I have done so.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @21149 = ~I think... I think I am the one out of balance, not you. I think... well, I think many things. I... I need more time to consider this.~
@@ -14430,6 +14436,9 @@ The bloody carnage is over, and another of the Five has fallen. I am drawing eve
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @67579 = ~'Twas I who harbored his avatar when the Lord of Murder was cast down to walk amongst us in the Time of Troubles. To his greatest priestess did he come for succor!~ [MELISS11]
+
+// tense issues: original line was "I'd confront your kind of evil wherever I had to go... and I will win." would/had then had then will
+@67605 = ~I will confront your kind of evil wherever I have to go...and I will win.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @67620 = ~I am <CHARNAME>, and I'm here to destroy you!~

@@ -682,6 +682,13 @@ Special Abilities:
 – Piercing Resistance: 50%
 – Missile Resistance: 75%"
 
+// ranger charm animal description doesn't mention the duration of the charm; added the sentence at the end of the first paragraph
+@40299 = ~Charm Animal
+
+This ability allows a Ranger to charm an animal and manipulate its behavior. The animal is allowed a Saving Throw vs. Wand to negate the effect. If the animal fails its Saving Throw, it regards the Ranger as a trusted friend and ally to be heeded and protected for 1 turn. The Ranger may give it orders, and the charmed animal will carry them out to the best of its ability. The charm lasts for one turn.
+
+If the Ranger harms or attempts to harm the charmed animal, the charm is broken. If two or more charms simultaneously affect a creature, the most recent one takes precedence.~
+
 /*
 luke
 - "strikes as a +4 weapon" should not be missing
