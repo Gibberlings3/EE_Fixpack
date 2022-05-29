@@ -1705,3 +1705,7 @@ COPY_EXISTING ~bpxith03.sto~ ~override~
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~     // function for effect batches
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2.tpa~ // array definitions for effect batches
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~              // use effect batches to remove vfx from effects which have been removed
