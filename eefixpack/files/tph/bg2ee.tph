@@ -1329,3 +1329,4 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~ // tbd, cam: removes ongoing visual effects from spells which have otherwise been 'cured' (aka getting rid of the spinny-head animation)
