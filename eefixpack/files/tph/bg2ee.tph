@@ -304,6 +304,14 @@ COPY_EXISTING ~sw1h26.itm~ ~override~ // ilbratha
   LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 3 resist_dispel = 3 END
   BUT_ONLY
 
+// tbd, cam
+// sword of flame and angurvadal apply glows to wrong part of avatar
+COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
+              ~sw1h60.itm~ ~override~ // Angurvadal +4
+              ~sw1h61.itm~ ~override~ // Angurvadal +5
+  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 9 match_parameter2 = (5 + (20 << 16)) parameter2 = (20 + (20 << 16)) END
+  BUT_ONLY 
+
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
