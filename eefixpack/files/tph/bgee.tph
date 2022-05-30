@@ -554,6 +554,20 @@ COPY_EXISTING ~ar0132.are~ ~override~
   WRITE_LONG song_off 11
   BUT_ONLY
 
+// tbd, cam
+// ambient blocks footstep sounds
+COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
+              ~tu0018.are~ ~override~ // Baldur's Gate Estate Cellar (Tutorial area)
+  READ_SHORT 0x82 amb_num // inactive ambient
+  READ_LONG  0x84 amb_off
+  FOR (index = 0 ; index < amb_num ; ++index) BEGIN
+    READ_ASCII (amb_off + 0x30 + (index * 0xd4)) sound1
+    PATCH_IF ("%sound1%" STRING_COMPARE_CASE "gacavm02" = 0) BEGIN // main ambient
+      WRITE_LONG (amb_off + 0x90 + (index * 0xd4)) (THIS BOR BIT1) // adds looping flag
+    END
+  END
+  BUT_ONLY IF_EXISTS // bd0116 is sod
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
