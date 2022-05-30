@@ -77,6 +77,8 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mwdr~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
      ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
+     ~eefixpack/files/2da/fogarea.2da~  ~override~ // tbd, cam: add basic 2das to enable fog
+     ~eefixpack/files/2da/fogpt.2da~    ~override~ // tbd, cam: add basic 2das to enable fog
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
