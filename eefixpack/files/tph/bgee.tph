@@ -1695,6 +1695,22 @@ COPY_EXISTING ~bpxith03.sto~ ~override~
   LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
   BUT_ONLY 
 
+// tbd, cam
+// Frair Tajik is only merchant that takes helmets but not hats (peacock hat)  
+COPY_EXISTING ~bdfrair.sto~ ~override~
+  READ_LONG 0x2c buy_off   ELSE 0
+  READ_LONG 0x30 buy_num   ELSE 0
+  INSERT_BYTES buy_off 0x04
+  WRITE_LONG buy_off 72
+  WRITE_LONG 0x30 (buy_num + 1)
+  PATCH_FOR_EACH offset IN 0x34 0x4c 0x70 BEGIN // adjust offsets if needed, thankfully the same in v9, v1, and v1.1
+    READ_LONG offset off
+    PATCH_IF off > buy_off BEGIN
+      WRITE_LONG offset (off + 0x04)
+    END
+  END
+  BUT_ONLY  
+
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
