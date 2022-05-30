@@ -621,8 +621,14 @@ COPY_EXISTING ~orduli.cre~ ~override~
 // BGCS-3442, cam
 // bugbear shaman should use bugbear shaman animation
 COPY_EXISTING ~bdbugb20.cre~ ~override~ // bugbear shaman
-  WRITE_LONG 0x28 0x0000e291 // bugbear shaman animation  
+  WRITE_SHORT 0x28 0xe291 // bugbear shaman animation  
   BUT_ONLY IF_EXISTS
+  
+// tbd, cam
+// make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
+COPY_EXISTING ~trollgi.cre~ ~override~
+  WRITE_SHORT 0x28 0x7f00 
+  BUT_ONLY IF_EXISTS // sod asset
   
 // BGCS-483, luke
 // CRE files should not use non-existing resources

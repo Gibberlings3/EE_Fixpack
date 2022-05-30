@@ -1,0 +1,41 @@
+// tbd, cam
+// make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
+COPY ~eefixpack/files/bam/mscr~ ~override~ // troll_scrag
+     ~eefixpack/files/bam/mtic~ ~override~ // troll_ice
+     ~eefixpack/files/bam/mtsn~ ~override~ // troll_snow
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_troll_anims BEGIN
+
+  rogtro01 => 0xe254 // sea troll (TROLL_BLUE > TROLL_SCRAG)
+  rogtro02 => 0xe254 // sea troll (TROLL_BLUE > TROLL_SCRAG)
+  trolfr01 => 0xe254 // freshwater troll (TROLL > TROLL_SCRAG)
+  trolfr02 => 0xe254 // freshwater troll (TROLL > TROLL_SCRAG)
+  kptrol06 => 0xe0a0 // ice troll (TROLL_SMALL > TROLL_ICE)
+  trolic01 => 0xe0a0 // ice troll (TROLL_SMALL > TROLL_ICE)
+  trolic02 => 0xe0a0 // ice troll (TROLL_SMALL > TROLL_ICE)
+  trolic03 => 0xe0a0 // blizzard troll (TROLL_BLUE > TROLL_ICE)
+  trolic04 => 0xe0a0 // blizzard troll (TROLL_BLUE > TROLL_ICE)  
+  obsice01 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
+  obsice11 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
+  trolsn01 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
+  trolsn02 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)  
+  daspitro => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
+  pptroll1 => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
+  pptroll2 => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
+  trolsi01 => 0xe28a // spirit troll (TROLL_BLUE > TROLL_SPECTRAL)
+  trolsi02 => 0xe28a // spirit troll (TROLL_BLUE > TROLL_SPECTRAL)
+  firamb03 => 0x7f00 // spirit troll (TROLL_SMALL > TROLL)
+  firamb05 => 0x7f00 // spirit troll (TROLL_SMALL > TROLL)
+
+END
+
+ACTION_PHP_EACH cd_troll_anims AS cre => anim BEGIN
+
+  COPY_EXISTING ~%cre%.cre~ ~override~
+    WRITE_SHORT 0x28 anim
+    PATCH_IF (anim = 0xe0c0) BEGIN // for the snow trolls, add an effect to keep them at speed 8
+      LPF ADD_CRE_EFFECT INT_VAR opcode = 126 parameter1 = 8 parameter2 = 1 timing = 9 END
+    END  
+    BUT_ONLY
+    
+END   

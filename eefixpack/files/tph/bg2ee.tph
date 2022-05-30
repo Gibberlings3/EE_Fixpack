@@ -96,6 +96,10 @@ INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // bgcs-3460, cam: death ty
 // revenant animation fixes
 INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
 
+// tbd, cam
+// make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
+INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~ 
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
