@@ -80,9 +80,10 @@ DEFINE_PATCH_MACRO ~cd_vfx_confusion_cure~ BEGIN
       321, "-10", 0, "was2h",  "-10", "-10", "same" => 1 // joril's dagger +3 - causes confusion - plays spconfus
     END
   END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
 END
 
-// anything that cures fear should also 321 anything that plays spmindat
+// anything that cures fear should also 321 anything that plays cdhorror
 DEFINE_PATCH_MACRO ~cd_vfx_fear_cure~ BEGIN
   DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
     161, "-10", "-10", "same",  "-10",  "-10", "same" => 1 // cure: fear
@@ -110,6 +111,7 @@ DEFINE_PATCH_MACRO ~cd_vfx_fear_cure~ BEGIN
       321, "-10", 0, "ohreyeb3",  "-10", "-10", "same" => 1 // fear - causes fear - plays cdhorror
     END
   END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
 END
 
 // anything that cures feeblemind should also 321 anything that plays cdfeeble
@@ -126,6 +128,7 @@ DEFINE_PATCH_MACRO ~cd_vfx_feeblemind_cure~ BEGIN
       321, "-10", 0, "bdmycsp2",  "-10", "-10", "same" => 1 // pacifier spores - causes feeblemind - plays spmindat (updated to cdfeeble)
     END  
   END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
 END
 
 // anything that cures hold should also 321 anything that plays spmindat
@@ -156,6 +159,7 @@ DEFINE_PATCH_MACRO ~cd_vfx_hold_cure~ BEGIN
       321, "-10", 0, "spin648",  "-10", "-10", "same" => 1 // hold person - plays spmindat - causes hold
     END  
   END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
 END
 
 // anything that cures stun should also 321 anything that plays cdstun
@@ -171,4 +175,5 @@ DEFINE_PATCH_MACRO ~cd_vfx_stun_cure~ BEGIN
       321, "-10", 0, "fampsdat",  "-10", "-10", "same" => 1 // skull - causes stun - plays spmindat (now cdstun)
     END  
   END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
 END

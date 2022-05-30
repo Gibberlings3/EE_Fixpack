@@ -1,0 +1,47 @@
+/////                                                  \\\\\
+///// hold                                             \\\\\
+/////                                                  \\\\\
+
+// stuff that cures hold should also remove anything that plays spmindat
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <invalid strref -1> - cures hold
+              ~cdiwdtr1.spl~ ~override~ // <invalid strref -1> - cures hold
+              ~cdiwdtr2.spl~ ~override~ // <invalid strref -1> - cures hold
+              ~labelt.itm~   ~override~ // girdle of labelas - cures hold - immune to hold - blocks spmindat
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures hold - immune to hold - blocks spmindat
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures hold - immune to hold - blocks spmindat
+              ~potn45.itm~   ~override~ // potion of freedom - cures hold - immune to hold - blocks spmindat
+              ~ring09.itm~   ~override~ // ring of free action - cures hold - immune to hold - blocks spmindat
+              ~sppr308.spl~  ~override~ // remove paralysis - cures hold
+              ~sppr403.spl~  ~override~ // free action - cures hold - immune to hold - blocks spmindat
+              ~sprngb03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngb04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngl03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngl04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngs01.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngs02.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngs03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngs04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+              ~sprngz05.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_hold_cure END
+  BUT_ONLY 
+
+/////                                                  \\\\\
+///// other                                            \\\\\
+/////                                                  \\\\\
+  
+// split hold from bounty hunter's special snare into own spell
+COPY ~eefixpack/files/spl/spcl415h.spl~ ~override~ // just the hold ability farmed out into separate spell
+COPY_EXISTING ~spcl415.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 END // deletes hold EFFs
+  LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 326 power = 0 parameter1 = 0 parameter2 = 5 timing = 1 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 END // change hold to apply spell to hhumanoids
+  BUT_ONLY
+  
+// item blocks spmindat, but isn't immune to hold
+COPY_EXISTING ~cwreve.itm~   ~override~ // attack - blocks spmindat
+  LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spmindat END
+  BUT_ONLY
+  
+// stuns, but plays spmindat
+COPY_EXISTING ~spcl118.spl~  ~override~ // the siren's yearning—enthralls creatures - plays spmindat
+  LPF DELETE_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat END
+  BUT_ONLY

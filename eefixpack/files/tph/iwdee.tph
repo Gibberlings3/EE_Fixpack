@@ -934,3 +934,7 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 
 INCLUDE ~eefixpack/files/tph/6037_iwdee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~  // function for effect batches
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_iwd.tpa~ // array definitions for effect batches
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_iwd.tph~          // use effect batches to remove vfx from effects which have been removed
