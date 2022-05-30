@@ -294,6 +294,12 @@ COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
   LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
   BUT_ONLY
 
+// tbd, cam
+// ilbratha's mirror image can be blocked by wielder's MR
+COPY_EXISTING ~sw1h26.itm~ ~override~ // ilbratha
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 3 resist_dispel = 3 END
+  BUT_ONLY
+
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
