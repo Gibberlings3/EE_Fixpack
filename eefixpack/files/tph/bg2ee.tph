@@ -540,6 +540,12 @@ COPY_EXISTING ~spin117.spl~ ~override~ // minsc's berserk
   BUT_ONLY 
 
 // tbd, cam
+// delayed sound effect doesn't bypass mr though the rest of the spell does
+COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
+  LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
+  BUT_ONLY 
+
+// tbd, cam
 // shield spell shouldn't stack
 COPY_EXISTING ~spwi114.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
