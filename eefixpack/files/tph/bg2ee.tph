@@ -520,13 +520,17 @@ COPY_EXISTING ~spcl321.spl~ ~override~
   LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
   BUT_ONLY
 
+// tbd, cam
+// shadow twin duration should be two turns, not one
+COPY_EXISTING ~spcl936.spl~ ~override~ // shadow twin
+  LPF ALTER_EFFECT INT_VAR match_duration = 60 duration = 120 END
+  BUT_ONLY 
+
 // ie-5931, cam
 // Stoneskin from Demogorgon & Melissan cannot be breached
 COPY_EXISTING ~melstone.spl~ ~override~
   WRITE_BYTE 0x27 7 // change secondary to Combat Protections
-  BUT_ONLY
-  
-  
+  BUT_ONLY  
 
 // tbd, cam
 // shield spell shouldn't stack
