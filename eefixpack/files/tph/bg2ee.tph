@@ -513,6 +513,12 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
+// ie-5931, cam
+// Stoneskin from Demogorgon & Melissan cannot be breached
+COPY_EXISTING ~melstone.spl~ ~override~
+  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
+  BUT_ONLY  
+
 // tbd, cam
 // enrage is using berserk's spell icon
 COPY_EXISTING ~spcl321.spl~ ~override~
@@ -526,19 +532,18 @@ COPY_EXISTING ~spcl936.spl~ ~override~ // shadow twin
   LPF ALTER_EFFECT INT_VAR match_duration = 60 duration = 120 END
   BUT_ONLY 
 
-// ie-5931, cam
-// Stoneskin from Demogorgon & Melissan cannot be breached
-COPY_EXISTING ~melstone.spl~ ~override~
-  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
-  BUT_ONLY  
+// tbd, cam
+// damage on minsc's berserk expiry should precede the bonus HP expiring, like it does in bgee
+COPY_EXISTING ~spin117.spl~ ~override~ // minsc's berserk
+  LPF ALTER_EFFECT INT_VAR match_duration = 119 duration = 120 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 duration = 119 END
+  BUT_ONLY 
 
 // tbd, cam
 // shield spell shouldn't stack
 COPY_EXISTING ~spwi114.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
   BUT_ONLY
-  
-  
 
 // tbd, cam
 // know alignment's save should match description
@@ -546,8 +551,6 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
   BUT_ONLY
-
-
 
 // luke
 // Mis-indexed effects
