@@ -13,6 +13,9 @@
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @641 = ~'Twas fated by Cyric to be so. Let us go forth and make short work of your tasks, for greater things will need attendance.~
 
+// Your group seem to be composed > Your group seems to be composed
+@829 = ~You may call me the Surgeon. I heal others in penance for what I have done in my past. Many have died because of a foolish act of charity on my part. I have a brother, an evil man by the name of Davaeorn. He lives because I was too weak-hearted to kill him when I had the chance. Many have died at his hands, including... including our own father. I have heard that he has come to this region, and I hope to meet him one day, to rectify my previous mistake. Your group seems to be composed of adventurers. Perhaps you might come to fight my brother. This may be wishful thinking on my part, but take this. It would help you in any fight against magic users.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @1509 = ~[HUSAM 13]~ [HUSAM13]
 
@@ -2480,6 +2483,10 @@ Area of Effect: Special
 Saving Throw: None
 
 This spell creates the lowest of the undead monsters, skeletons or zombies, usually from the bones or bodies of dead humans, demihumans, or humanoids. The spell causes these remains to become animated and obey the simple verbal commands of the caster, regardless of how they communicated in life. The skeletons or zombies can follow the caster, remain in an area and attack any creature (or just a specific type of creature) entering the place, and so on. The undead remain animated until they are destroyed in combat, 8 hours pass, or are turned; the magic cannot be dispelled. The priest can animate one skeleton for each experience level he has attained.~
+
+// per MM, it's "Half-Ogre" not "Half Ogre"
+@9356 = ~Half-Ogre~
+@9357 = ~Half-Ogre~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @10035 = ~This mage robe has been perfected for use by any rambling, itinerant mage that travels from town to town. Its enchantments provide protection from the bandit's arrow and from the jealous mage/thief that lies in ambush with his Stinking Cloud. As with other robes of its kind, the Traveler's Robe can only be worn by wizards.
@@ -5076,6 +5083,9 @@ Equipped abilities:
 
 Weight: 2~
 
+// peoples wastes > people's wastes - left remainder of grammatical errors, as they seem intentional
+@19776 = ~My people are rulers of the deeps. Where your people's wastes are sent, that where we thrive. Ratchild's tribe is stronger than all others. Ratchild's tribe trained to beat anyone. ANYONE. No one can stand up to Ratchild and tribe!~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @20632 = ~Flooding the Cloakwood Mine
 I have flooded the Iron Throne mine in Cloakwood. Before opening the magical plug, I helped the innocent slave miners to freedom. Hopefully the destruction of such a valuable resource will be a serious setback to whatever the Iron Throne has planned.~
@@ -5108,6 +5118,9 @@ Through the chronicles of my deeds, pride shall be honored
 Through the passing of knowledge my sword shall display my glory
 Then you shall know that I am well pleased
 I must pass these four warders to descend to the lower level. I assume that one of them will have the wardstone required to operate this lift that they are guarding. What would honor this warder? What will cause his sword, his Pride, to show his glory. He mentions chronicles of deeds. Obviously, I must find and read these chronicles. The trick is in finding them. What could Durlag have intended with this puzzle? I must solve it to pass.~
+
+// Well-spoken shouldn't be hypehnated, as it's noe being used as an adjective
+@21537 = ~Well spoken, land-dweller. You may have the monster's corpse if such is your wish.~
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @21716 = ~'Tis too much gold for my purse.~
@@ -5242,6 +5255,14 @@ I live in the darkness of his soul
 I bring him to his knees,
 Trembling and weeping
 Unable to lift a hand in his own defense~
+
+// but I sad as well > but I am sad as well (line for both Delainy and Durlyle)
+@22369 = ~I am grateful beyond measuring, but I am sad as well that I have nothing to give. Perhaps there is something else you wish that I can help?~
+@22496 = ~I am grateful beyond measuring, but I am sad as well that I have nothing to give. Perhaps there is something else you wish that I can help?~
+
+// If it you wish > If it is your wish (line for both Delainy and Durlyle)
+@22545 = ~If it is your wish, I will make it so.~
+@22599 = ~If it is your wish, I will make it so.~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 9
 @22609 = ~Spirit Armor
@@ -6926,6 +6947,7 @@ The recipient of this spell gains the benefits of a Bless spell (+1 to attack ro
 Example: A 1st-level Fighter has 8 Hit Points, suffers 2 points of damage (8 - 2 = 6), then receives an Aid spell that grants <PRO_HIMHER> 5 additional Hit Points. The Fighter now has 11 Hit Points, 3 of which are temporary. If <PRO_HESHE> is then hit for 7 points of damage, 4 normal Hit Points and all 3 temporary Hit Points are lost. The Fighter then receives a Cure Light Wounds spell that heals 4 points of damage, restoring <PRO_HIMHER> to <PRO_HISHER> original 8 Hit Points.~
 
 // [automatic scan] Issues: 5  | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 6 | Surplus trailing whitespace at line 8 | Surplus trailing whitespace at line 9 | Surplus trailing whitespace at line 10
+// manual: <PRO_HISHER>self > <PRO_HIMHER>self to avoid "hisself"
 @26147 = ~Chant
 (Conjuration/Summoning)
 
@@ -6937,7 +6959,7 @@ Casting Time: 9
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-By means of the Chant spell, the priest brings special favor upon <PRO_HISHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6+2 piercing plus 1d6 fire damage will deal 1d6+2 piercing plus 1d5 fire damage instead. The priest's enemies suffer the opposite effects.
+By means of the Chant spell, the priest brings special favor upon <PRO_HIMHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6+2 piercing plus 1d6 fire damage will deal 1d6+2 piercing plus 1d5 fire damage instead. The priest's enemies suffer the opposite effects.
 
 Multiple chants are not cumulative.~
 

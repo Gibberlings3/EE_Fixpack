@@ -1,0 +1,60 @@
+/////                                                  \\\\\
+///// arrays for batch effects                         \\\\\
+/////                                                  \\\\\
+
+/*
+The cd_apply_batch function, defined below, requires a macro name. That macro needs to define
+three arrays for the function:
+
+* cd_immunity_batches_key
+If any effect in this array is present on the item/creature/spell being patches, it will proceed with
+adding extra effects and deleting effects, as defined by the next two arrays. If you have mutiple 
+effects defined here, it will match any of them and add any missing.
+
+* cd_immunity_batches_extras
+This array contains all of the subsiduary effects that should accompany the effects in the key area.
+
+* cd_immunity_batches_deletes
+If a key is found, any effect matching this array will be deleted. 
+
+If a key is found, the function will then proceed back through the file being patched and add--if they
+are not present--all of the effects not found in the _key and _extras arrays. It will also, only with
+a key effect matched, delete any effects listed in the _deletes array.
+
+Note that since it's a macro, you can conditionally define your arrays. The free action batch will
+remove stun immunity unless a particular component from the Fixpack is installed, for example. Remember
+that's it's being run in a patch context, so you'll need to use PATCH actions instead of ACTIONs.
+
+An example use--the cd_full_dispel_arrays uses a dispel magic opcode (58) as the lone key element. If
+found, the function will delete a variety of old item removal opcodes defined in the _deletes array,
+and add (if not already present) the series of effects that cure feeblemind and deafness.
+
+In general, try to avoid explicit spell blockages with 206 opcodes. If you can block the relevant
+effects with other immunities, do so, as it's a more robust and extensible solution. In some cases 
+they are needed --e.g. the slow immunity batch blocks slow spells outright, as most come paired 
+with AC and THAC0 penalties which can't be blocked via opcode without serious collateral damage.
+
+* Format of all arrays are opcode, parameter1, parameter2, resref, timing, duration
+* Timing and duration are only used for new fx writes
+* Use -1 in a field (or "same" in string fields) if the match value for that field doesn't matter.
+* Always map the effect to one.
+
+arrays separated out in separate files to allow for per-game adjustments. 
+
+*/
+
+// anything that cures hold should also 321 anything that plays spmindat
+DEFINE_PATCH_MACRO ~cd_vfx_hold_cure~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    162, "-10", "-10", "same",  "-10",  "-10", "same" => 1 // cure: hold & paralysis
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN
+    321, "-10", 0, "spcl415h",  "-10", "-10", "same" => 1 // bounty hunter special snare, hold subspell - plays spmindat (eff) - causes hold
+    321, "-10", 0, "sppr208",  "-10", "-10", "same" => 1 // hold person - plays spmindat - causes hold
+    321, "-10", 0, "sppr305",  "-10", "-10", "same" => 1 // hold animal - plays spmindat - causes hold
+    321, "-10", 0, "sppr989",  "-10", "-10", "same" => 1 // hold person - plays spmindat - causes hold
+    321, "-10", 0, "spwi306",  "-10", "-10", "same" => 1 // hold person - plays spmindat - causes hold
+    321, "-10", 0, "spwm122",  "-10", "-10", "same" => 1 // hold person - plays spmindat - causes hold
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
+END

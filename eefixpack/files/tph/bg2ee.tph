@@ -96,6 +96,10 @@ INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // bgcs-3460, cam: death ty
 // revenant animation fixes
 INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
 
+// tbd, cam
+// make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
+INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~ 
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -293,6 +297,20 @@ COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
   LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
   BUT_ONLY
+
+// tbd, cam
+// ilbratha's mirror image can be blocked by wielder's MR
+COPY_EXISTING ~sw1h26.itm~ ~override~ // ilbratha
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 3 resist_dispel = 3 END
+  BUT_ONLY
+
+// tbd, cam
+// sword of flame and angurvadal apply glows to wrong part of avatar
+COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
+              ~sw1h60.itm~ ~override~ // Angurvadal +4
+              ~sw1h61.itm~ ~override~ // Angurvadal +5
+  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 9 match_parameter2 = (5 + (20 << 16)) parameter2 = (20 + (20 << 16)) END
+  BUT_ONLY 
 
 // luke
 // Mis-indexed effects
@@ -495,6 +513,12 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
+// ie-5931, cam
+// Stoneskin from Demogorgon & Melissan cannot be breached
+COPY_EXISTING ~melstone.spl~ ~override~
+  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
+  BUT_ONLY  
+
 // tbd, cam
 // enrage is using berserk's spell icon
 COPY_EXISTING ~spcl321.spl~ ~override~
@@ -502,21 +526,30 @@ COPY_EXISTING ~spcl321.spl~ ~override~
   LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
   BUT_ONLY
 
-// ie-5931, cam
-// Stoneskin from Demogorgon & Melissan cannot be breached
-COPY_EXISTING ~melstone.spl~ ~override~
-  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
-  BUT_ONLY
-  
-  
+// tbd, cam
+// shadow twin duration should be two turns, not one
+COPY_EXISTING ~spcl936.spl~ ~override~ // shadow twin
+  LPF ALTER_EFFECT INT_VAR match_duration = 60 duration = 120 END
+  BUT_ONLY 
+
+// tbd, cam
+// damage on minsc's berserk expiry should precede the bonus HP expiring, like it does in bgee
+COPY_EXISTING ~spin117.spl~ ~override~ // minsc's berserk
+  LPF ALTER_EFFECT INT_VAR match_duration = 119 duration = 120 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 duration = 119 END
+  BUT_ONLY 
+
+// tbd, cam
+// delayed sound effect doesn't bypass mr though the rest of the spell does
+COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
+  LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
+  BUT_ONLY 
 
 // tbd, cam
 // shield spell shouldn't stack
 COPY_EXISTING ~spwi114.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
   BUT_ONLY
-  
-  
 
 // tbd, cam
 // know alignment's save should match description
@@ -524,8 +557,6 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
   BUT_ONLY
-
-
 
 // luke
 // Mis-indexed effects
@@ -1329,3 +1360,7 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~     // function for effect batches
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2.tpa~ // array definitions for effect batches
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~             // use effect batches to remove vfx from effects which have been removed

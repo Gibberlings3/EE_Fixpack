@@ -6220,6 +6220,9 @@ How it ended up inside Nordom's frame is unknown, but the rogue modron may have 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @56060 = ~The armor is archaic, and the shoulder blades are just that - a great ridge of blades sprouting from the shoulder plates. You almost would have taken the ridged blades as decoration, but they look too heavy and dangerous to be anything more than an additional weapon on an already menacing suit of armor. The armor bears dents and other marks of battle, and its surface has been scarred by age and rust.~
 
+// fallen on it during > fallen on him during
+@57065 = ~You see an aging githzerai, trapped under the wheels of a wagon that must have fallen on him during the chaos. He spits a bloody wad, and grins up at you. "Not going to help me, are you? That's what brought us here in the first place..." He laughs weakly.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @56067 = ~This double-bladed battle-axe is reminiscent of an executioner's axe; the axe head has been forged into the likeness of a blood-red serpent with its wings outspread, the outstretched wings curling to become the edges of the axe. The axe itself is *huge;* even wielded two-handed, it would require tremendous strength to use effectively. Yet it rests in the disembodied gauntlet of the armor, almost casually.~
 
@@ -7569,6 +7572,16 @@ For the love of whatever powers you hold dear, don't make the same mistake thric
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @66806 = ~Forked-Tongue told me that the portal out of the crater, the one that will return me to Curst, is under the tailbone of the massive skeleton. He expressed delight that I should be traveling through its arse-end.~
+
+// "gems that serves as its eyes." > "gems that serve as its eyes."
+@66898 = ~AEGIS OF TORMENT
+Special:
+   +3 to Constitution
+   +15 to Base Hit Points
+   +3 to Armor Class
+Weight: 0
+
+Rows and rows of minute skulls line the outer edge of this ring. It is crowned by an over-sized skull with fire-red gems that serve as its eyes. This ring is the physical manifestation of the suffering of the tormented slaves of Dahnthur. It was their ultimate wish to gain protection from their oppressors, and with this magical ring, their wish was finally realized. Even with the fiery red gems, a royal purple hue continually emanates outward.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @66912 = ~"You... I... cannot..." She suddenly freezes, and she speaks slowly, carefully, as if her voice frightens her. "The truth is this: you are one who dies many deaths. These deaths have given the knowing of all things mortal, and in your hand lies the spark of life... and death. Those that die near you carry a trace of themselves that you can bring forth..."~

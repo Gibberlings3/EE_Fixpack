@@ -34,6 +34,14 @@ There are two parts to this spell. First, a small portal opens and summons one o
 // this item's name should state its enchantment level
 @57918 = "Paralytic Bolt +1"
 
+// ranger charm animal description doesn't mention the duration of the charm; added the sentence at the end of the first paragraph
+@100356 = ~Charm Animal
+This spell affects any single animal it is cast upon. The animal is allowed a Saving Throw vs. Spell to negate the effect. The charm lasts for two turns.
+
+If the spell's recipient fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible. 
+
+If the caster harms—or attempts to harm—the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the Charm spell is broken. If two or more Charms simultaneously affect a creature, the most recent Charm takes precedence. Note that the subject will be hostile when the Charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+
 /*
 luke
 - "Regenerates 1 Hit Point per 2 seconds"

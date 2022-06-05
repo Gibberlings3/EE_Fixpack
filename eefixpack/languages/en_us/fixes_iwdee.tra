@@ -694,3 +694,33 @@ Special Abilities:
 – Crushing Resistance: -50%
 – Piercing Resistance: 50%
 – Missile Resistance: 75%"
+
+// ranger charm animal description doesn't mention the duration of the charm; added the sentence at the end of the first paragraph
+@40299 = ~Charm Animal
+
+This ability allows a Ranger to charm an animal and manipulate its behavior. The animal is allowed a Saving Throw vs. Wand to negate the effect. If the animal fails its Saving Throw, it regards the Ranger as a trusted friend and ally to be heeded and protected for 1 turn. The Ranger may give it orders, and the charmed animal will carry them out to the best of its ability. The charm lasts for one turn.
+
+If the Ranger harms or attempts to harm the charmed animal, the charm is broken. If two or more charms simultaneously affect a creature, the most recent one takes precedence.~
+
+/*
+luke
+- "strikes as a +4 weapon" should not be missing
+- "The Druid is healed 12 Hit Points after using this ability." should be missing (this is not the Druid variant)
+*/
+@40313 = "Shapeshift: Water Elemental
+
+Strength: 18
+Dexterity: 14
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -25%
+– Electricity Resistance: -75%
+– Acid Resistance: 75%
+– Slashing Resistance: 75%
+– Crushing Resistance: 75%
+– Piercing Resistance: 75%
+– Missile Resistance: 75%"

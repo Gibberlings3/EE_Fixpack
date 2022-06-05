@@ -1,0 +1,424 @@
+COPY_EXISTING ~spmindat.vvc~ ~override/cdfeeble.vvc~ // create new vvc that plays spmindat for feeblemind
+              ~spmindat.vvc~ ~override/cdstun.vvc~   // create new vvc that plays spmindat for stun
+
+/////                                                  \\\\\
+///// confusion                                        \\\\\
+/////                                                  \\\\\
+
+// stuff that cures confusion should also remove anything that plays spconfus
+COPY_EXISTING ~bdbrd03.spl~  ~override~ // dispel confusion - cures confusion
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohtyr1.spl~   ~override~ // exaltation - cures feeblemind - cures fear - cures confusion - blocks cdhorror - immune to fear - immune to feeblemind - blocks spconfus - immune to confusion
+              ~sppr350.spl~  ~override~ // spiritual clarity - cures feeblemind - cures fear - cures confusion
+              ~sppr713.spl~  ~override~ // greater restoration - cures feeblemind - cures fear - cures confusion
+              ~trollreg.spl~ ~override~ // <invalid strref -1> - cures stun - cures feeblemind - cures fear - cures hold - cures confusion
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_confusion_cure END
+  BUT_ONLY IF_EXISTS
+  
+// immune to confusion, but missing spconfus immunity
+COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 128 opcode = 296 parameter2 = 0 STR_VAR resource = spconfus END
+  BUT_ONLY IF_EXISTS
+  
+/////                                                  \\\\\
+///// fear and loathing in las baldur's gate           \\\\\
+/////                                                  \\\\\
+
+// stuff that causes fear and plays spmindat should be updated to play cdhorror instead
+COPY_EXISTING ~spin680.spl~  ~override~ // deathsong - causes fear - plays spmindat
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = cdhorror END
+  BUT_ONLY IF_EXISTS
+  
+// moondog howl causes fear but plays spmindat via eff
+COPY_EXISTING ~moond4.eff~ ~override~
+  WRITE_ASCII 0x30 ~cdhorror~
+  BUT_ONLY IF_EXISTS
+
+// stuff that cures fear should also remove anything that plays cdhorror (ignore creature files for this)
+COPY_EXISTING ~abazring.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~amul17.itm~   ~override~ // greenstone amulet, 7 new effects from cd_vfx_fear_cure
+              ~bardsong.spl~ ~override~ // <invalid strref -1>, 21 new effects from cd_vfx_fear_cure
+              ~bazpatrg.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~bdbelhia.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~bdchan04.itm~ ~override~ // commander's chain mail +3, 9 new effects from cd_vfx_fear_cure
+              ~bdchan04.spl~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~bdconstr.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~bddtrai.itm~  ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~bdhelmca.itm~ ~override~ // circlet of the cynosure, 9 new effects from cd_vfx_fear_cure
+              ~bdmisc1b.itm~ ~override~ // invulnerable, 9 new effects from cd_vfx_fear_cure
+              ~bdmisc1c.itm~ ~override~ // invulnerable, 9 new effects from cd_vfx_fear_cure
+              ~bdneoimm.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~bdteleki.cre~ ~override~ // magical sword, 9 new effects from cd_vfx_fear_cure
+              ~bhaalhp1.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~bhaalimm.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~cdgoliro.itm~ ~override~ // attack, 9 new effects from cd_vfx_fear_cure
+              ~chalcy3.itm~  ~override~ // greenstone amulet, 16 new effects from cd_vfx_fear_cure
+              ~chalslay.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~clck30.itm~   ~override~ // cloak of bravery, 9 new effects from cd_vfx_fear_cure
+              ~demogorg.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~finmel01.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~fjbarda.spl~  ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~fjbardb.spl~  ~override~ // <invalid strref -1>, 21 new effects from cd_vfx_fear_cure
+              ~fjbladeb.spl~ ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~fsspir.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~golcla.itm~   ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~golfle.itm~   ~override~ // attack, 9 new effects from cd_vfx_fear_cure
+              ~golmag01.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~golstone.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~gorchr.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~gorfirg.itm~  ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~gorjelfu.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~gorjelgr.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~gormisti.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~helm14.itm~   ~override~ // kiel's helmet, 9 new effects from cd_vfx_fear_cure
+              ~hgber01.itm~  ~override~ // two-handed sword +1, 9 new effects from cd_vfx_fear_cure
+              ~holdring.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~imoenhp1.itm~ ~override~ // imoen's belt, 9 new effects from cd_vfx_fear_cure
+              ~innoc.itm~    ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~invulner.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~ipsion.itm~   ~override~ // greenstone amulet, 16 new effects from cd_vfx_fear_cure
+              ~irongol.itm~  ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~minhp1.itm~   ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~mistpo01.cre~ ~override~ // poison mist, 9 new effects from cd_vfx_fear_cure
+              ~mistposu.cre~ ~override~ // poison mist, 9 new effects from cd_vfx_fear_cure
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~ohtyr1.spl~   ~override~ // exaltation, 7 new effects from cd_vfx_fear_cure
+              ~potn21.itm~   ~override~ // potion of clarity, 7 new effects from cd_vfx_fear_cure
+              ~ravag03.itm~  ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~ref1.itm~     ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~ring94.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~ring95.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~ring98.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~ring99.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~ringkora.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sengua04.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~spcl104.spl~  ~override~ // resist fear, 7 new effects from cd_vfx_fear_cure
+              ~spcl152.spl~  ~override~ // barbarian rage, 7 new effects from cd_vfx_fear_cure
+              ~spcl221.spl~  ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~spcl222.spl~  ~override~ // remove fear, 7 new effects from cd_vfx_fear_cure
+              ~spcl321.spl~  ~override~ // enrage, 7 new effects from cd_vfx_fear_cure
+              ~spcl542a.spl~ ~override~ // <invalid strref -1>, 14 new effects from cd_vfx_fear_cure
+              ~spec01.itm~   ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~spec02.itm~   ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~spin117.spl~  ~override~ // berserk, 7 new effects from cd_vfx_fear_cure
+              ~spin676.spl~  ~override~ // invoke courage, 7 new effects from cd_vfx_fear_cure
+              ~spin872.spl~  ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~spin891.spl~  ~override~ // moon dog howl, 7 new effects from cd_vfx_fear_cure
+              ~spin906.spl~  ~override~ // <invalid strref -1>, 7 new effects from cd_vfx_fear_cure
+              ~sppr108.spl~  ~override~ // remove fear, 7 new effects from cd_vfx_fear_cure
+              ~sppr350.spl~  ~override~ // spiritual clarity, 6 new effects from cd_vfx_fear_cure
+              ~sppr713.spl~  ~override~ // greater restoration, 7 new effects from cd_vfx_fear_cure
+              ~sprngb01.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngb02.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngb03.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngb04.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngl02.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngl03.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngl04.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sprngz05.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~spwi210.spl~  ~override~ // resist fear, 7 new effects from cd_vfx_fear_cure
+              ~spwi411.spl~  ~override~ // emotion, hopelessness, 98 new effects from cd_vfx_fear_cure
+              ~surehp1.itm~  ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~sword01.cre~  ~override~ // magical sword, 9 new effects from cd_vfx_fear_cure
+              ~telslav2.itm~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~trollimm.itm~ ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+              ~trollreg.spl~ ~override~ // <invalid strref -1>, 9 new effects from cd_vfx_fear_cure
+              ~vampreg.itm~  ~override~ // ring, 9 new effects from cd_vfx_fear_cure
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_fear_cure END
+  BUT_ONLY IF_EXISTS
+  
+ACTION_IF game_includes_sod BEGIN // all sod assets
+
+  // immune to fear, but missing cdhorror immunity
+  COPY_EXISTING ~bdmisc1c.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
+                ~bdstysic.cre~ ~override~ // stysich - blocks spmindat - immune to hold - immune to fear
+                ~bdteam22.cre~ ~override~ // wizard slayer - blocks spmindat - immune to hold - immune to fear
+                ~bdteam23.cre~ ~override~ // wizard slayer - blocks spmindat - immune to hold - immune to fear
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 24 opcode = 296 parameter2 = 0 STR_VAR resource = cdhorror END
+    BUT_ONLY 
+
+END
+  
+/////                                                  \\\\\
+///// feeblemind                                       \\\\\
+/////                                                  \\\\\
+
+// stuff that causes feeblemind and plays spmindat should be updated to play cdfeeble instead
+COPY_EXISTING ~bdmycsp2.spl~ ~override~ // pacifier spores - causes feeblemind - plays spmindat
+              ~sppr650.spl~  ~override~ // spiritual lock - causes feeblemind - plays spmindat
+              ~spwi509.spl~  ~override~ // feeblemind - causes feeblemind - plays spmindat
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = cdfeeble END
+  BUT_ONLY IF_EXISTS // bdmycsp2 is sod
+
+// stuff that cures feeblemind should also remove anything that plays cdfeeble
+COPY_EXISTING ~arow07.itm~   ~override~ // arrow of dispelling, 3 new effects from cd_vfx_feeblemind_cure
+              ~ax1h19.itm~   ~override~ // golden axe +1, 3 new effects from cd_vfx_feeblemind_cure
+              ~bddispel.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~bdrejuve.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~bdsw1h25.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~bpdispel.spl~ ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~deva.itm~     ~override~ // mace, 3 new effects from cd_vfx_feeblemind_cure
+              ~devaevil.itm~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemchan.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemcryo.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemhydr.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemimix.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemogre.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemsunn.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemyanc.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~elemzaam.itm~ ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~finsol01.itm~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~ohtyr1.spl~   ~override~ // exaltation, 3 new effects from cd_vfx_feeblemind_cure
+              ~planetar.itm~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~potn33.itm~   ~override~ // potion of magic blocking, 3 new effects from cd_vfx_feeblemind_cure
+              ~ravag01.itm~  ~override~ // attack, 3 new effects from cd_vfx_feeblemind_cure
+              ~scrl07.itm~   ~override~ // protection from magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spcl231.spl~  ~override~ // dispel magic, 60 new effects from cd_vfx_feeblemind_cure
+              ~spin112.spl~  ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin646.spl~  ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin679.spl~  ~override~ // heal, 2 new effects from cd_vfx_feeblemind_cure
+              ~spin703.spl~  ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin711.spl~  ~override~ // heal, 2 new effects from cd_vfx_feeblemind_cure
+              ~spin712.spl~  ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin768.spl~  ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin779.spl~  ~override~ // anti-magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin866.spl~  ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spin992.spl~  ~override~ // anti-magic ray, 3 new effects from cd_vfx_feeblemind_cure
+              ~sppr303.spl~  ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~sppr317.spl~  ~override~ // cure disease, 2 new effects from cd_vfx_feeblemind_cure
+              ~sppr350.spl~  ~override~ // spiritual clarity, 1 new effects from cd_vfx_feeblemind_cure
+              ~sppr607.spl~  ~override~ // heal, 2 new effects from cd_vfx_feeblemind_cure
+              ~sppr713.spl~  ~override~ // greater restoration, 2 new effects from cd_vfx_feeblemind_cure
+              ~spwi010.spl~  ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+              ~spwi302.spl~  ~override~ // remove magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spwi326.spl~  ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~spwm168.spl~  ~override~ // heal, 2 new effects from cd_vfx_feeblemind_cure
+              ~sw2h10dm.spl~ ~override~ // dispel magic, 3 new effects from cd_vfx_feeblemind_cure
+              ~trollreg.spl~ ~override~ // <invalid strref -1>, 3 new effects from cd_vfx_feeblemind_cure
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_feeblemind_cure END
+  BUT_ONLY IF_EXISTS
+  
+// update anything which provides immunity to feeblemind by ADDING a new block for cdfeeble (basically stuff that also blocks hold, or didn't block spmindat originally)
+COPY_EXISTING ~amul17.itm~   ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to hold - immune to confusion - immune to feeblemind - immune to fear - immune to stun
+              ~bdbeetbh.cre~ ~override~ // boring beetle - immune to feeblemind
+              ~bdbeetbm.cre~ ~override~ // bombardier beetle - immune to feeblemind
+              ~bdbeetbr.cre~ ~override~ // boring beetle - immune to feeblemind
+              ~bdbeetmh.cre~ ~override~ // bombardier beetle - immune to feeblemind
+              ~bdbeetrh.cre~ ~override~ // rhinoceros beetle - immune to feeblemind
+              ~bddraggh.itm~ ~override~ // attack - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~bdforcew.spl~ ~override~ // <invalid strref -1> - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~bdidylet.cre~ ~override~ // idyletia - blocks spconfus - immune to confusion - immune to feeblemind
+              ~bdneoimm.itm~ ~override~ // ring - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun - blocks cdhorror - cures fear - immune to fear
+              ~bdshrie2.cre~ ~override~ // shrieker - immune to feeblemind
+              ~bdshriek.cre~ ~override~ // shrieker - immune to feeblemind
+              ~bdteleki.cre~ ~override~ // magical sword - cures fear - blocks cdhorror - blocks spconfus - blocks spmindat - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold
+              ~chalcy3.itm~  ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to hold - immune to confusion - immune to feeblemind - immune to fear - immune to stun
+              ~demogorg.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~devaevil.cre~ ~override~ // fallen deva - blocks spconfus - immune to confusion - immune to feeblemind
+              ~devagood.cre~ ~override~ // deva - blocks spconfus - immune to confusion - immune to feeblemind
+              ~finmel01.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~ipsion.itm~   ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - immune to stun - immune to hold - immune to confusion - immune to feeblemind - immune to fear - blocks spconfus
+              ~minhp1.itm~   ~override~ // <invalid strref -1> - blocks cdhorror - immune to feeblemind - cures fear - immune to fear - immune to stun - immune to confusion - blocks spconfus - blocks spmindat - immune to hold
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohtyr1.spl~   ~override~ // exaltation - cures feeblemind - cures fear - cures confusion - blocks cdhorror - immune to fear - immune to feeblemind - blocks spconfus - immune to confusion
+              ~planevil.cre~ ~override~ // fallen planetar - blocks spconfus - immune to confusion - immune to feeblemind
+              ~plangood.cre~ ~override~ // planetar - blocks spconfus - immune to confusion - immune to feeblemind
+              ~planwish.cre~ ~override~ // fallen planetar - blocks spconfus - immune to confusion - immune to feeblemind
+              ~potn21.itm~   ~override~ // potion of clarity - blocks cdhorror - cures fear - blocks spconfus - immune to feeblemind - immune to confusion - immune to fear
+              ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ravag03.itm~  ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~ringdemn.itm~ ~override~ // <invalid strref -1> - blocks spconfus - immune to feeblemind - immune to confusion
+              ~spcl321.spl~  ~override~ // enrage - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to fear - immune to hold - immune to confusion - immune to stun - immune to feeblemind - immune to stun - cures stun
+              ~spin117.spl~  ~override~ // berserk - blocks cdhorror - immune to stun - cures fear - blocks spmindat - blocks spconfus - immune to stun - immune to fear - immune to confusion - immune to hold - immune to stun - immune to feeblemind
+              ~sppr508.spl~  ~override~ // chaotic commands - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~sprngb04.itm~ ~override~ // ring - blocks cdhorror - immune to fear - cures fear - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngl04.itm~ ~override~ // ring - blocks cdhorror - immune to hold - blocks spmindat - cures hold - cures stun - immune to fear - cures fear - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngs03.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngs04.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngz05.itm~ ~override~ // ring - blocks cdhorror - immune to fear - cures fear - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sword01.cre~  ~override~ // magical sword - cures fear - blocks cdhorror - immune to fear - immune to confusion - blocks spconfus - immune to hold - blocks spmindat - immune to stun - immune to feeblemind
+              ~trollimm.itm~ ~override~ // ring - immune to fear - cures fear - blocks cdhorror - immune to stun - immune to feeblemind - immune to hold - blocks spmindat - immune to confusion - blocks spconfus
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 76 opcode = 296 parameter2 = 0 STR_VAR resource = cdfeeble END
+  BUT_ONLY IF_EXISTS // several sod assets
+
+/////                                                  \\\\\
+///// hold                                             \\\\\
+/////                                                  \\\\\
+
+// stuff that cures hold should also remove anything that plays spmindat
+COPY_EXISTING ~bdring09.itm~ ~override~ // ring of free action, 12 new effects from cd_vfx_hold_cure
+              ~beholder.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~freering.itm~ ~override~ // edventar's gift, 12 new effects from cd_vfx_hold_cure
+              ~jwsuper.itm~  ~override~ // edventar's gift, 12 new effects from cd_vfx_hold_cure
+              ~misc3o.itm~   ~override~ // methild's harp, 12 new effects from cd_vfx_hold_cure
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1>, 12 new effects from cd_vfx_hold_cure
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1>, 12 new effects from cd_vfx_hold_cure
+              ~potn45.itm~   ~override~ // potion of freedom, 12 new effects from cd_vfx_hold_cure
+              ~ring09.itm~   ~override~ // edventar's gift, 12 new effects from cd_vfx_hold_cure
+              ~spin862.spl~  ~override~ // <invalid strref -1>, 12 new effects from cd_vfx_hold_cure
+              ~sppr308.spl~  ~override~ // remove paralysis, 12 new effects from cd_vfx_hold_cure
+              ~sppr403.spl~  ~override~ // free action, 168 new effects from cd_vfx_hold_cure
+              ~sprngb03.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngb04.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngl03.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngl04.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngs01.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngs02.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngs03.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngs04.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sprngz05.itm~ ~override~ // ring, 12 new effects from cd_vfx_hold_cure
+              ~sw2h06.itm~   ~override~ // spider's bane +2, 12 new effects from cd_vfx_hold_cure
+              ~trollreg.spl~ ~override~ // <invalid strref -1>, 12 new effects from cd_vfx_hold_cure
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_hold_cure END
+  BUT_ONLY IF_EXISTS
+  
+ACTION_IF game_includes_sod BEGIN // all sod assets
+
+  // immune to hold, but missing spmindat immunity
+  COPY_EXISTING ~bdmisc1c.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
+                ~bdplant.itm~  ~override~ // ring - immune to stun - immune to hold
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
+    BUT_ONLY
+    
+END
+
+/////                                                  \\\\\
+///// stun                                             \\\\\
+/////                                                  \\\\\
+
+// for consistency, update to cdstun as bg2
+COPY_EXISTING ~spin974.spl~  ~override~ // psionic blast - causes stun - plays spflayer
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spflayer resource = cdstun END
+  BUT_ONLY 
+  
+// stuff that cures stun should also remove anything that plays cdstun
+COPY_EXISTING ~bdring09.itm~ ~override~ // ring of free action - cures hold - cures stun - immune to hold - blocks spmindat
+              ~beholder.itm~ ~override~ // ring - blocks spmindat - cures hold - cures stun - immune to hold
+              ~freering.itm~ ~override~ // edventar's gift - cures hold - cures stun - blocks spmindat - immune to hold
+              ~jwsuper.itm~  ~override~ // edventar's gift - cures hold - cures stun - blocks spmindat - immune to hold
+              ~misc3o.itm~   ~override~ // methild's harp - cures stun - cures hold
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~potn45.itm~   ~override~ // potion of freedom - blocks spmindat - immune to hold - cures hold - cures stun
+              ~ring09.itm~   ~override~ // edventar's gift - cures hold - cures stun - immune to hold - blocks spmindat
+              ~spcl152.spl~  ~override~ // barbarian rage - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to hold - immune to confusion - blocks spmindat - blocks spconfus - cures stun
+              ~spcl321.spl~  ~override~ // enrage - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to fear - immune to hold - immune to confusion - immune to stun - immune to feeblemind - immune to stun - cures stun
+              ~sppr308.spl~  ~override~ // remove paralysis - cures stun - cures hold
+              ~sppr403.spl~  ~override~ // free action - cures stun - cures hold - immune to hold - blocks spmindat
+              ~sprngb03.itm~ ~override~ // ring - blocks cdhorror - immune to hold - blocks spmindat - cures hold - cures stun - immune to fear - cures fear
+              ~sprngb04.itm~ ~override~ // ring - blocks cdhorror - immune to fear - cures fear - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngl03.itm~ ~override~ // ring - blocks cdhorror - immune to hold - blocks spmindat - cures hold - cures stun - immune to fear - cures fear
+              ~sprngl04.itm~ ~override~ // ring - blocks cdhorror - immune to hold - blocks spmindat - cures hold - cures stun - immune to fear - cures fear - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngs01.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun
+              ~sprngs02.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun
+              ~sprngs03.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngs04.itm~ ~override~ // ring - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sprngz05.itm~ ~override~ // ring - blocks cdhorror - immune to fear - cures fear - immune to hold - blocks spmindat - cures hold - cures stun - immune to feeblemind - immune to confusion - blocks spconfus
+              ~sw2h06.itm~   ~override~ // spider's bane +2 - cures hold - cures stun - blocks spmindat - immune to hold
+              ~trollreg.spl~ ~override~ // <invalid strref -1> - cures stun - cures feeblemind - cures fear - cures hold - cures confusion
+  LPF cd_apply_batch STR_VAR array_name = cd_vfx_stun_cure END
+  BUT_ONLY IF_EXISTS
+  
+// update anything which provides immunity to stun by ADDING a new block for cdstun (basically stuff that also blocks hold, or didn't block spmindat originally)
+COPY_EXISTING ~amul17.itm~   ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to hold - immune to confusion - immune to feeblemind - immune to fear - immune to stun
+              ~bdbelhia.itm~ ~override~ // <invalid strref -1> - blocks spconfus - immune to confusion - immune to stun - blocks cdhorror - cures fear - immune to fear
+              ~bdchan02.itm~ ~override~ // kruntur's armor +3 - immune to stun
+              ~bdconstr.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - immune to stun - blocks spmindat - immune to hold
+              ~bddraggh.itm~ ~override~ // attack - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~bddtrai.itm~  ~override~ // <invalid strref -1> - immune to confusion - immune to stun - immune to fear - blocks cdhorror - cures fear - blocks spconfus
+              ~bdforcew.spl~ ~override~ // <invalid strref -1> - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~bdmisc1b.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
+              ~bdmisc1c.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
+              ~bdneoimm.itm~ ~override~ // ring - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun - blocks cdhorror - cures fear - immune to fear
+              ~bdplant.itm~  ~override~ // ring - immune to stun - immune to hold
+              ~bdringge.itm~ ~override~ // ring - immune to fear - immune to stun - immune to confusion - immune to hold - blocks cdhorror - blocks spmindat - blocks spconfus
+              ~bdringgh.itm~ ~override~ // ring - immune to fear - immune to stun - immune to confusion - immune to hold - blocks cdhorror - blocks spmindat - blocks spconfus
+              ~bdteleki.cre~ ~override~ // magical sword - cures fear - blocks cdhorror - blocks spconfus - blocks spmindat - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold
+              ~bhaalhp1.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to hold - blocks spmindat
+              ~bhaalimm.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to hold - blocks spmindat
+              ~chalcy3.itm~  ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to hold - immune to confusion - immune to feeblemind - immune to fear - immune to stun
+              ~demogorg.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~dragring.itm~ ~override~ // ring - immune to stun - immune to hold - blocks spmindat - blocks spconfus
+              ~elemsunn.cre~ ~override~ // sunnis - blocks spmindat - immune to hold - immune to stun
+              ~elemzaam.cre~ ~override~ // zaaman rul - blocks spmindat - immune to hold - immune to stun
+              ~finmel01.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~gorfirg.itm~  ~override~ // ring - blocks cdhorror - cures fear - immune to hold - blocks spconfus - immune to fear - immune to confusion - immune to stun - blocks spmindat
+              ~gorjelfu.itm~ ~override~ // ring - blocks cdhorror - cures fear - immune to hold - blocks spconfus - immune to fear - immune to confusion - immune to stun - blocks spmindat
+              ~gorjelgr.itm~ ~override~ // ring - blocks cdhorror - cures fear - immune to hold - blocks spconfus - immune to fear - immune to confusion - immune to stun - blocks spmindat
+              ~gormisti.itm~ ~override~ // ring - blocks cdhorror - cures fear - immune to hold - blocks spconfus - immune to fear - immune to confusion - immune to stun - blocks spmindat
+              ~hgber01.itm~  ~override~ // two-handed sword +1 - blocks cdhorror - cures fear - immune to fear - immune to stun
+              ~imoenhp1.itm~ ~override~ // imoen's belt - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to hold - blocks spmindat
+              ~invulner.itm~ ~override~ // ring - blocks cdhorror - blocks spmindat - immune to hold - cures fear - immune to stun - immune to fear
+              ~ipsion.itm~   ~override~ // greenstone amulet - blocks cdhorror - cures fear - blocks spmindat - immune to stun - immune to hold - immune to confusion - immune to feeblemind - immune to fear - blocks spconfus
+              ~mage05.itm~   ~override~ // edventar's gift - immune to stun
+              ~minhp1.itm~   ~override~ // <invalid strref -1> - blocks cdhorror - immune to feeblemind - cures fear - immune to fear - immune to stun - immune to confusion - blocks spconfus - blocks spmindat - immune to hold
+              ~mistpo01.cre~ ~override~ // poison mist - blocks cdhorror - blocks spmindat - immune to hold - cures fear - immune to fear - immune to stun
+              ~mistposu.cre~ ~override~ // poison mist - blocks cdhorror - blocks spmindat - immune to hold - cures fear - immune to fear - immune to stun
+              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures feeblemind - cures stun - cures hold - cures fear - cures confusion - immune to fear - immune to stun - immune to feeblemind - blocks spconfus - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~plyjelly.itm~ ~override~ // attack - blocks spmindat - blocks spconfus - blocks cdhorror - immune to confusion - immune to fear - immune to hold - immune to stun
+              ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+              ~ravag03.itm~  ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - immune to hold - blocks spconfus - immune to fear - immune to stun - immune to feeblemind - immune to confusion
+              ~ref1.itm~     ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to confusion - blocks spconfus - blocks spmindat - immune to hold
+              ~ring95.itm~   ~override~ // ring - blocks cdhorror - immune to stun - blocks spconfus - cures fear - immune to fear - immune to confusion
+              ~ring99.itm~   ~override~ // ring - blocks cdhorror - immune to stun - cures fear - blocks spconfus - immune to fear - immune to confusion
+              ~sengua04.itm~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to confusion - blocks spconfus - blocks spmindat - immune to hold
+              ~spcl152.spl~  ~override~ // barbarian rage - blocks cdhorror - cures fear - immune to fear - immune to stun - immune to hold - immune to confusion - blocks spmindat - blocks spconfus - cures stun
+              ~spcl321.spl~  ~override~ // enrage - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to fear - immune to hold - immune to confusion - immune to stun - immune to feeblemind - immune to stun - cures stun
+              ~spcl542a.spl~ ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - immune to fear - blocks spconfus - immune to confusion - immune to stun
+              ~spin117.spl~  ~override~ // berserk - blocks cdhorror - immune to stun - cures fear - blocks spmindat - blocks spconfus - immune to stun - immune to fear - immune to confusion - immune to hold - immune to stun - immune to feeblemind
+              ~spin872.spl~  ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to fear - immune to stun - immune to confusion - immune to hold
+              ~spin906.spl~  ~override~ // <invalid strref -1> - blocks cdhorror - cures fear - blocks spmindat - blocks spconfus - immune to fear - immune to stun - immune to confusion - immune to hold
+              ~sppr508.spl~  ~override~ // chaotic commands - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks spconfus - immune to stun
+              ~surehp1.itm~  ~override~ // ring - blocks cdhorror - cures fear - blocks spmindat - immune to hold - immune to stun - immune to fear
+              ~sword01.cre~  ~override~ // magical sword - cures fear - blocks cdhorror - immune to fear - immune to confusion - blocks spconfus - immune to hold - blocks spmindat - immune to stun - immune to feeblemind
+              ~trollall.itm~ ~override~ // attack - blocks spmindat - immune to hold - immune to stun
+              ~trollimm.itm~ ~override~ // ring - immune to fear - cures fear - blocks cdhorror - immune to stun - immune to feeblemind - immune to hold - blocks spmindat - immune to confusion - blocks spconfus
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 45 opcode = 296 parameter2 = 0 STR_VAR resource = cdstun END
+  BUT_ONLY IF_EXISTS // several sod assets
+
+/////                                                  \\\\\
+///// other                                            \\\\\
+/////                                                  \\\\\
+  
+ACTION_IF game_includes_sod BEGIN // sod asset
+  
+  // split confusion part of piercing shriek into its own spell
+  COPY_EXISTING ~bdshriek.spl~ ~override/bdshriec.spl~ // insanity gaze - confusion version
+    WRITE_LONG 0x08 "-1" // blank name
+    LPF ALTER_HEADER INT_VAR projectile = 1 END
+    LPF DELETE_EFFECT INT_VAR match_probability1 = 100 END // save/mr effects, confusion
+    LPF DELETE_EFFECT INT_VAR match_probability1 = 28 END // save/mr effects, confusion
+    LPF DELETE_EFFECT INT_VAR match_opcode = 177 END // save/mr effects, confusion
+    LPF ALTER_EFFECT INT_VAR probability1 = 100 probability2 = 0 END
+    
+  // change confusion part to cast new subspell instead
+  COPY_EXISTING ~bdshriek.spl~ ~override~ // insanity gaze - confusion version
+    LPF DELETE_EFFECT INT_VAR match_probability1 = 48 match_duration = 18 END // delete most feeblemind/confusion effects
+    LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 25807 opcode = 146 power = 0 parameter1 = 0 parameter2 = 2 resist_dispel = 0 savingthrow = 0 savebonus = 0 STR_VAR resource = bdshriec END  
+
+END
+
+// blocks confusion animation, but is subject to confusion
+//COPY_EXISTING ~dragring.itm~ ~override~ // ring - immune to stun - immune to hold - blocks spmindat - blocks spconfus - probably intentional since animation isn't right for dragons
+//  LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spconfus END
+
+// update psychic drain to use generic mind flayer spell animation, spflayer
+COPY_EXISTING ~spin804.spl~  ~override~ // psychic drain - plays spmindat
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = spflayer END
+
+// because moon dog hown causes and cure fear, it can cancel its own effect unless we order effects correctly even though they target different groups
+COPY_EXISTING ~spin891.spl~  ~override~ // moon dog howl - blocks cdhorror - causes fear (eff) - plays spmindat (eff) - cures fear - immune to fear
+  LPF DELETE_EFFECT INT_VAR match_opcode = 321 STR_VAR match_resource = spin891 END                                                      // delete out of stack
+  LPF CLONE_EFFECT  INT_VAR multi_match = 1 match_opcode = 161 opcode = 321 parameter2 = 0 STR_VAR insert = first resource = spin891 END // insert back at top of stack
+  
+// split hold from bounty hunter's special snare into own spell
+COPY ~eefixpack/files/spl/spcl415h.spl~ ~override~ // just the hold ability farmed out into separate spell
+COPY_EXISTING ~spcl415.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 END // deletes hold EFFs
+  LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 326 power = 0 parameter1 = 0 parameter2 = 5 timing = 1 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 END // change hold to apply spell to hhumanoids  

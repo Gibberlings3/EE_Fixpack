@@ -477,11 +477,12 @@ You return to your travels, making sure that those you meet never forget your pa
 And wherever you go, people stand aside. You have gained great power, and no one will ever take it from you again.~ [NARR05]
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
+// manual fix: had sound file narr01 assigned, but changed to narr04 to match oBG2 (pointless regardless: string is unused _ sound file doesn't exist)
 @1763 = ~As you leave Suldanessellar, you are nearly overwhelmed by the cheering of the assembled crowds. There is open gratitude on the faces of the elves, and many times you are encouraged to stop and receive gifts or shake hands. There is an obvious lament at your departure, as well as an expectation of your return. They consider you a hero and, for once, you really feel the part.
 
 You pass into the Forest of Tethir, wondering if there could have been a future for you in the city that you have left behind. You examine the amulet around your neck, studying the images of elven gods inlaid in the platinum, and you feel the warm tingle of the item's magic. This gift will remind you of how welcome a visitor you would be—but it also bears witness to the fact that you are without a true home, a place where you belong. You could return to Athkatla, you think, but deep inside, you feel the taint that yet remains in your soul.
 
-There can be no home for you yet, as hard as that is to admit, so you venture deeper into the forest, pondering the words of demons and growing annoyed at how destiny holds its secrets from your view.~ [NARR01]
+There can be no home for you yet, as hard as that is to admit, so you venture deeper into the forest, pondering the words of demons and growing annoyed at how destiny holds its secrets from your view.~ [NARR04]
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @1783 = ~How exactly is she ruining her own reputation? By being kind to those less fortunate?~
@@ -2724,6 +2725,9 @@ This spell enables the caster to create a black, blade-shaped planar rift about 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8224 = ~Aye, and a bloody campaign it was. I slew twenty of the beasts during that scorching summer.~
 
+// token is wrong: <PRO_CHARNAME> > <CHARNAME>
+@8229 = ~Shar! My deliverance is in your hands. ...Wait! I recognize you! <CHARNAME>! It is I! Viconia DeVir! You must remember! My life depends on it!~ [VICONI01]
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8259 = ~We have been sent by the church to search these depths for missing followers.~
 
@@ -2909,6 +2913,10 @@ The very potent Heal spell enables the priest to wipe away disease and injury in
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @9332 = ~A Shadow Druid! They are perversions of our calling!~
+
+// per MM, it's "Half-Ogre" not "Half Ogre"
+@9356 = ~Half-Ogre~
+@9357 = ~Half-Ogre~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 9
 @9557 = ~RANGER: The Ranger is a warrior and a woods<PRO_MANWOMAN> who is skilled with weapons and is knowledgeable in the ways of the forest. The Ranger often protects and guides lost travelers and honest peasant-folk. A Ranger needs to be strong and wise to the ways of nature to live a full life.
@@ -3851,6 +3859,7 @@ Saving Throw: None
 By means of this spell, the caster calls from 1 to 3 animals that have 8 Hit Dice or less. The animals summoned aid the caster by whatever means they possess, staying until the spell duration expires. Only normal or giant animals can be summoned; fantastic animals or monsters cannot be summoned by this spell (no chimerae, dragons, gorgons, manticores, etc.).~
 
 // [automatic scan] Issues: 5  | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 6 | Surplus trailing whitespace at line 8 | Surplus trailing whitespace at line 9 | Surplus trailing whitespace at line 10
+// manual: <PRO_HISHER>self > <PRO_HIMHER>self to avoid "hisself"
 @12217 = ~Chant
 (Conjuration/Summoning)
 
@@ -3862,7 +3871,7 @@ Casting Time: 9
 Area of Effect: 15-ft. radius
 Saving Throw: None
 
-By means of the Chant spell, the priest brings special favor upon <PRO_HISHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6 piercing plus 1d2 fire damage will deal 1d6 piercing plus 1 fire damage instead. The priest's enemies suffer the opposite effects.
+By means of the Chant spell, the priest brings special favor upon <PRO_HIMHER>self and <PRO_HISHER> party and causes harm to <PRO_HISHER> enemies. When the Chant spell is completed, all the priest's allies within the area of effect gain a +1 bonus to attack rolls, minimum damage/healing rolls, and Saving Throws. Furthermore, damage dice for all effects outside a weapon's base damage is reduced by 1. For example, a 6d6 fireball will do 6d5 damage, and an arrow of fire that deals 1d6 piercing plus 1d2 fire damage will deal 1d6 piercing plus 1 fire damage instead. The priest's enemies suffer the opposite effects.
 
 Multiple chants are not cumulative.~
 
@@ -5863,6 +5872,9 @@ Weight: 4~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @21142 = ~I... I thought we had come to a point where such talk was valuable to... Never mind, I shall not pursue what is obviously lost.~
+
+// complimentary > complementary
+@21143 = ~As Harper and as druid. They are complementary, despite bards being thought the Harper standard-bearers. Both seek balance over all. I... I think I have done so.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @21149 = ~I think... I think I am the one out of balance, not you. I think... well, I think many things. I... I need more time to consider this.~
@@ -11101,6 +11113,9 @@ Imoen still remains in that place, however. The Shadow Thieves have arranged a s
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @47960 = ~As you would.~
 
+// passed though all > passed through all
+@47964 = ~You have passed through all that was set before you. Judgment comes next, though you have proven more sophisticated than the tests.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 3
 @48001 = ~Yoshimo escapes the dungeon on his own
 
@@ -14421,6 +14436,9 @@ The bloody carnage is over, and another of the Five has fallen. I am drawing eve
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @67579 = ~'Twas I who harbored his avatar when the Lord of Murder was cast down to walk amongst us in the Time of Troubles. To his greatest priestess did he come for succor!~ [MELISS11]
+
+// tense issues: original line was "I'd confront your kind of evil wherever I had to go... and I will win." would/had then had then will
+@67605 = ~I will confront your kind of evil wherever I have to go...and I will win.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @67620 = ~I am <CHARNAME>, and I'm here to destroy you!~

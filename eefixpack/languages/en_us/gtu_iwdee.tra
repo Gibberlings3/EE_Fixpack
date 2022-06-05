@@ -670,13 +670,14 @@ Bards and sages pass down the tale that the headwaters of the Unicorn Run are, i
 Regardless of the truth, the elves, korreds, and halflings all agree that the Unicorn Run is sacred to life and a site of incredible purity. As a result, all three races have strong taboos about extended trips up the run, for if the river is ever fouled, then no new races will ever be born on Toril again.~
 
 // [automatic scan] Issues: 8  | Surplus trailing whitespace at line 3 | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 7 | Surplus trailing whitespace at line 13 | Surplus trailing whitespace at line 17 | Surplus trailing whitespace at line 19 | Surplus trailing whitespace at line 31 | Surplus trailing line break at line 33
+// hordes or noncorporeal undead > hordes of noncorporeal undead
 @7335 = ~History of the Dead Three: "KNUCKLEBONES, SKULL BOWLING, AND THE EMPTY THRONE"
 
 In ages past, there was but one god of strife, death, and the dead, and he was known as Jergal, Lord of the End of Everything. Jergal fomented and fed on the discord among mortals and powers alike. When beings slew each other in their quest for power or in their hatred, he welcomed them into his shadowy kingdom of eternal gloom. As all things died, everything came to him eventually, and over time he built his power into a kingdom unchallenged by any other god. Eventually, however, he grew tired of his duties for he knew them too well. Without challenge there is nothing, and in nothingness there is only gloom. In such a state, the difference between absolute power and absolute powerlessness is undetectable.
 
 During this dark era, there arose three powerful mortals—Bane, Bhaal, and Myrkul—who lusted after the power Jergal wielded. The trio forged an unholy pact, agreeing that they would dare to seek such ultimate power or die in the attempt. Over the length and breadth of the realms they strode, seeking powerful magic and spells and defying death at every turn. No matter what monster they confronted or what spells they braved, the three mortals emerged unscathed at every turn. Eventually the trio destroyed one of the Seven Lost Gods, and they each seized a portion of his divine essence for themselves.
 
-The trio then journeyed into the Gray Waste and sought out the Castle of Bone. Through armies of skeletons, legions of zombies, hordes or noncorporeal undead, and a gauntlet of liches they battled. Eventually they reached the object of their lifelong quest—the Bone Throne.
+The trio then journeyed into the Gray Waste and sought out the Castle of Bone. Through armies of skeletons, legions of zombies, hordes of noncorporeal undead, and a gauntlet of liches they battled. Eventually they reached the object of their lifelong quest—the Bone Throne.
 
 "I claim this throne of evil," shouted Bane the tyrant.
 
@@ -1054,6 +1055,9 @@ Weight: 2~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @7829 = ~Container of Razorvine Extract~
 
+// added "Tower" at the end
+@8529 = ~A desperate plan was created that would ensure this would never happen. All the artifacts within Sehanine tower were set to release their magic so that the tower would destroy itself. Before these energies were released, however, we planned to lead as many of the orcs and goblins as we could into Sehanine tower.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8705 = ~This bottle of elven wine also has the properties of a healing potion. During one of the elven festivals, the priests of the Seldarine's Hand imbibed too much that day and accidentally added a barrel of elven wine to a mixture that was intended for healing potions.
 
@@ -1219,6 +1223,10 @@ The promise I make is to hone your skills, both physical and mental, to bring ho
 
 For the glory of the Hand,
 Kaylessa~
+
+// per MM, it's "Half-Ogre" not "Half Ogre"
+@9356 = ~Half-Ogre~
+@9357 = ~Half-Ogre~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 9
 @9557 = ~RANGER: The Ranger is a warrior and a woods<PRO_MANWOMAN> who is skilled with weapons and is knowledgeable in the ways of the forest. The Ranger often protects and guides lost travelers and honest peasant-folk. A Ranger needs to be strong and wise to the ways of nature to live a full life.
@@ -2334,6 +2342,9 @@ Weight: 6~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @15170 = ~...free... my... people...
 ...Astrolabe... whirls... twirls...~ [LARR_02]
+
+// "learn source" > "learn the source"
+@15200 = ~We seek to learn the source of the evil that troubles the North.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @15883 = ~Inspired by your foster father's colorful tales of rogues and scoundrels, you have spent your childhood yearning for intrigue. On the stage of your imagination, the ambling, preoccupied monks of the keep have often played the secret lords of Waterdeep, their purses ripe targets for your nimble fingers. On more than one occasion Gorion has asked you to very tactfully return a pen or an inkwell to the pocket from which it came. The more valuable of the keep's treasures remain impenetrable to your wiles, but you have little desire to steal from your benefactors anyway; you long for more appropriate and accessible pickings.~
