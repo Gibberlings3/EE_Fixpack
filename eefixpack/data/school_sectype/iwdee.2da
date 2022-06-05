@@ -1,11 +1,10 @@
 2DA V1.0
 *
-                     school               sectype              ids                  name
-SPCL111              1                    -1                   PALADIN_CURE_DISEASE Cure_Disease
-SPPR983              4                    11                   2983                 Confusion
-SPPR985              6                    10                   2985                 Flame_Strike
-SPPR987              8                    10                   2987                 Call_Lightning
-SPPR988              -1                   11                   2988                 Silence,_15'_Radius
-SPPR989              -1                   11                   2989                 Hold_Person
-SPWI004              -1                   9                    1004                 Stinking_Cloud
-SPWM123              -1                   11                   -1                   Symbol,_Fear
+                    school              sectype             ids                 name
+SPPR983             4                   11                  2983                Confusion
+SPPR985             6                   10                  2985                Flame_Strike
+SPPR987             8                   10                  2987                Call_Lightning
+SPPR988             -1                  11                  2988                Silence,_15'_Radius
+SPPR989             -1                  11                  2989                Hold_Person
+SPWI004             -1                  9                   1004                Stinking_Cloud
+SPWM123             -1                  11                  -1                  Symbol,_Fear

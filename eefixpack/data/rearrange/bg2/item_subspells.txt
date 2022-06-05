@@ -1,0 +1,7 @@
+itm		ability		subspell	extract
+deva		0		dwfpdeva	4,5,6
+ohbdeva		0		dwfpohdv	0,1,2
+spermel		0		dwfpsmst	11,12,13
+spermel		0		dwfpsmsl	1,10
+wand12		0		dwfpwwfs	5,15
+wand12		0		dwfpwwhs	3,4,14  	note the interweaving of the last two

@@ -1,0 +1,8 @@
+object			ability			permutation
+ax1h10.itm		-1			1,0,2
+blun12.itm		-1			1,2,0
+blun25.itm		-1			1,2,0
+hamm10.itm		-1			1,2,0
+hamm11.itm		0			1,2,0
+dwfpdeva.spl		-1			2,1,0
+dwfpohdv.spl		-1			2,1,0

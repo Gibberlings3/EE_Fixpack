@@ -1,0 +1,3 @@
+spl		track_levels		subspell	extract
+insanity	0			dwfpdgfb	6,7
+insanity	0			dwfpdgcn	0,1,2,3,4,5

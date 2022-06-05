@@ -1,0 +1,2 @@
+itm		ability		subspell	extract
+sirine1		0		dwfpsirf	0,3

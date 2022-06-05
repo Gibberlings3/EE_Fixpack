@@ -27,3 +27,5 @@ SPIN961.spl	55	55	Finger of death
 SPPR708.spl	55	55	Finger of death
 SPWI054.spl	55	55	Finger of death
 OHBCSFD.spl	55	55	Finger of death
+AURSTAF.itm	40	40	Staff of the Ram
+
