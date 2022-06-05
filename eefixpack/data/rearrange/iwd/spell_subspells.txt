@@ -1,0 +1,4 @@
+spl		track_levels		subspell	extract
+spwi806		0			dwfpgs01	14,15,17	// stun no save
+spwi806		0			dwfpgs02	8,9,12		// stun w/ save
+spwi806		0			dwfpgs03	6,7		// death

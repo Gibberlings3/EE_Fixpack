@@ -8,6 +8,7 @@ In either case, there's a manually-generated list of immunities in %MOD_FOLDER%/
 
 When 'in_fixpack' is set to 0, the code runs idempotently and doesn't record its edits. (This can be used by later mods to update the immunity structure for mod-added items.)
 
+Dependencies: needs detectable spells to be loaded.
 */
 
 DEFINE_ACTION_FUNCTION immunities_via_324 
@@ -79,7 +80,15 @@ BEGIN
 			LPF ds_resolve_stat STR_VAR id RET stat_ind END
 			SET $opcode_splstate_map("%opcode%")=stat_ind
 		END
+
+////////////////////////////////////////////////////////////////////////
+// load an opcode map for EFF files
+////////////////////////////////////////////////////////////////////////
 		
+	COPY_EXISTING_REGEXP - ".*\.eff" nowhere
+		SPRINT resref "%SOURCE_RES%"
+		TO_UPPER resref
+		SET $eff_opcodes("%resref%")=LONG_AT 0x10
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -476,6 +485,13 @@ BEGIN
 		current_opcode="-1"
 		PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
 			READ_SHORT fx_off opcode
+			PATCH_IF opcode=177 BEGIN
+				READ_ASCII fx_off+0x14 eff
+				TO_UPPER eff
+				PATCH_IF VARIABLE_IS_SET $eff_opcodes("%eff%") BEGIN
+					opcode=$eff_opcodes("%eff%")
+				END
+			END 
 			PATCH_IF VARIABLE_IS_SET $opcode_splstate_map("%opcode%") BEGIN
 				PATCH_IF !(opcode=current_opcode) BEGIN
 					++number_of_matches
@@ -483,6 +499,9 @@ BEGIN
 				END
 			END
 		END
+		PATCH_IF number_of_matches>1 BEGIN
+			LPF fp_log_this INT_VAR repeat=0 STR_VAR file=multiple_effects_for_immunity.txt input="%SOURCE_FILE%" END
+		END ELSE
 		PATCH_IF number_of_matches=1 BEGIN
 			PATCH_IF current_opcode=39 BEGIN // sleep/unconsciousnes, treat separately
 				PATCH_IF write && in_fixpack BEGIN
@@ -492,15 +511,30 @@ BEGIN
 				// go through the other opcodes and check for non-cosmetic effects
 				non_cosmetic=0
 				reached_payload_opcode=0
+				payload_is_177=0
 				SPRINT insert "first"
 				PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
 					READ_SHORT fx_off opcode
+					PATCH_IF opcode=177 BEGIN
+						READ_ASCII fx_off+0x14 eff
+						TO_UPPER eff
+						PATCH_IF VARIABLE_IS_SET $eff_opcodes("%eff%") BEGIN
+							opcode=$eff_opcodes("%eff%")
+						END
+						currently_177=1
+					END ELSE BEGIN
+						currently_177=0
+					END
 					PATCH_MATCH "%opcode%" WITH
 					"%current_opcode%" 
 					BEGIN
 						reached_payload_opcode=1
+						PATCH_IF currently_177 BEGIN
+							SPRINT current_eff "%eff%"
+							payload_is_177=1
+						END
 					END
-					7 8 50 61 66 141 142 139 165 174 177 /*all actual relevant 177s (I think) just do something cosmetic */ 206 215 287 318 324 BEGIN
+					7 8 50 61 66 141 142 139 165 174 206 215 287 318 324 BEGIN
 					END
 					23 106 BEGIN// panic-related opcodes
 						PATCH_IF !current_opcode=24 BEGIN
@@ -516,18 +550,28 @@ BEGIN
 						END
 					END
 				END			
-				PATCH_IF !non_cosmetic BEGIN
+				PATCH_IF !non_cosmetic && reached_payload_opcode BEGIN
 					parameter1=$opcode_splstate_map("%current_opcode%")
 					PATCH_IF !in_fixpack BEGIN
 						LPF DELETE_EFFECT INT_VAR header=ab_ind match_opcode=324 match_parameter1=parameter1 match_parameter2=110 END
 					END
-					LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=current_opcode parameter1 parameter2=110 opcode=324 STR_VAR resource="%SOURCE_RES%" insert END
+					PATCH_IF payload_is_177 BEGIN
+						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=177 parameter1 parameter2=110 opcode=324 STR_VAR match_resource="%current_eff%" resource="%SOURCE_RES%" insert END
+						PATCH_IF write BEGIN
+							LPF fp_log_this INT_VAR repeat=0 STR_VAR file=177_offensive_for_immunity.txt input="%SOURCE_FILE%" END
+						END
+					END ELSE BEGIN
+						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=current_opcode parameter1 parameter2=110 opcode=324 STR_VAR resource="%SOURCE_RES%" insert END
+					END
 					PATCH_IF write BEGIN
 						modified=1
 					END
 				END ELSE BEGIN
 					PATCH_IF write && in_fixpack BEGIN
 						LPF fp_log_this INT_VAR repeat=0 STR_VAR file=complex_effects_for_immunity.txt input="%SOURCE_FILE% %current_opcode%" END
+						PATCH_IF currently_177 BEGIN
+							LPF fp_log_this INT_VAR repeat=0 STR_VAR file=complex_effects_for_immunity_177.txt input="%SOURCE_FILE% %current_opcode%" END						
+						END
 					END
 				END
 			END
@@ -619,3 +663,19 @@ END
 
 <<<<<<<<.../fp-inline/blank
 >>>>>>>>
+
+/////////////////////////////////////////////////////////////////
+/*
+For the current itm/spl file, take the effect stack for an ability
+and permute the order of the effects. The permutation is controlled by
+the string "permutation", which should be a comma-separated list of nonnegative integers.
+If the list has N elements it should contain 0... N-1, in some order.
+
+Assuming that the ability has at least that many effects, the first N will be permuted into
+the order given by the permutation. (If not, we give a warning.)
+
+'ability' determines which ability is permuted. (If ability=-1, we permute all abilities.)
+
+
+
+*/

@@ -1,0 +1,229 @@
+/////////////////////////////////////////////////////////////////
+/*
+
+Take some subset of a spell or item's effects and extract them as a subspell.
+Inputs: 'resource' (e.g., AX1H10.itm) is the spell/item to be edited.
+'subspell' is the name of the subspell to be created. 'extract' is a comma-separated
+list of nonnegative integers specifying which effects are to be extracted.
+
+Effects extracted should all have the same probability, the same saving throw (if any)
+and should not include damage with save-for-half.
+
+On an item, the integer 'ability' indicates which ability is patched (0 by default). On a 
+spell the default assumption is that the effect block is the same at every level, but if
+you set keep_spell_levels=1, the effect blocks are extracted on a per-level basis.
+
+If the 'subspell' spell already exists, it is not recreated. (So be careful if reusing to
+make sure effects really are identical.)
+
+*/
+//////////////////////////////////////////////////////////////////
+	
+DEFINE_ACTION_FUNCTION extract_effects_as_subspell 
+	INT_VAR ability=0
+			keep_spell_levels=0
+	STR_VAR resource=""
+			subspell=""
+			extract=""
+BEGIN
+	ACTION_IF !FILE_EXISTS_IN_GAME "%resource%" BEGIN
+		WARN "extract_effects_as_subspell: attempted to extract effects from resource %resource%, but it doesn't exist."
+	END ELSE BEGIN
+		// work inside a patch of main resource
+		COPY_EXISTING "%resource%" override
+			// process the extraction instruction
+			CLEAR_ARRAY extract_array
+			INNER_PATCH "%extract%," BEGIN
+				count=0
+				REPLACE_EVALUATE "\([0-9]+\)," BEGIN
+					SET $extract_array("%count%")="%MATCH1%"
+					++count
+				END
+				""
+			END
+			// collect the information
+			CLEAR_ARRAY extracted_data
+			CLEAR_ARRAY extracted_levels
+			header_count=0
+			PATCH_MATCH "%SOURCE_EXT%" WITH
+			itm BEGIN
+				GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
+				PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+					PATCH_IF ab_ind=ability BEGIN
+						SET $extracted_levels("%header_count%")=1
+						++ header_count
+						GET_OFFSET_ARRAY2 fx_arr ab_off ITM_V10_HEAD_EFFECTS
+						done_first=0
+						PHP_EACH extract_array AS new_ind=>fx_ind BEGIN
+							offset=$fx_arr("%fx_ind%")
+							READ_ASCII offset data (0x30)
+							SPRINT $extracted_data("1" "%new_ind%") "%data%"
+							PATCH_IF !done_first BEGIN
+								WRITE_SHORT offset 998
+								done_first=1
+							END ELSE BEGIN
+								WRITE_SHORT offset 999
+							END
+						END
+					END
+				END
+			END
+			spl BEGIN
+				GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+				PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+					READ_SHORT (0x10+ab_off) level
+					PATCH_IF ab_ind=0  || keep_spell_levels BEGIN
+						SET $extracted_levels("%header_count%")=level
+						++ header_count
+					END
+					GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+					done_first=0
+					PHP_EACH extract_array AS new_ind=>fx_ind BEGIN
+						offset=$fx_arr("%fx_ind%")
+						PATCH_IF ab_ind=0 || keep_spell_levels BEGIN
+							READ_ASCII offset data (0x30)
+							SPRINT $extracted_data("%level%" "%new_ind%") "%data%"
+						END
+						PATCH_IF !done_first BEGIN
+							WRITE_SHORT offset 998
+							done_first=1
+						END ELSE BEGIN
+							WRITE_SHORT offset 999
+						END
+					END
+				END			
+			END
+			DEFAULT
+				PATCH_WARN "extract_effects_as_subspell: attempted to extract effects from %resource%, but it is not an itm or spl file"
+			END
+			// make the edits
+			LPF DELETE_EFFECT INT_VAR match_opcode=999 END
+			LPF ALTER_EFFECT INT_VAR match_opcode=998 opcode=146 power=0 timing=1 duration=0 parameter1=0 parameter2=1 dicenumber=0 dicesize=0 STR_VAR resource="%subspell%" END
+	
+		// now build the new spell
+		ACTION_IF !FILE_EXISTS_IN_GAME "%subspell%.spl" BEGIN
+			CREATE spl "%subspell%"
+				// set its ability structure
+				INSERT_BYTES 0x72 (0x28*header_count)
+				WRITE_SHORT 0x68 header_count
+				WRITE_SHORT 0x6a BUFFER_LENGTH
+				// add blank data for the effects
+				INSERT_BYTES BUFFER_LENGTH 0x30*header_count*count
+				// fill in the abilities
+				INNER_PATCH_SAVE abil_base "" BEGIN
+					INSERT_BYTES 0x0 0x28						
+					WRITE_SHORT 0x0 1
+					WRITE_SHORT 0x2 4
+					WRITE_BYTE 0xc 1
+					WRITE_SHORT 0x22 1
+					WRITE_SHORT 0x24 1
+					WRITE_SHORT 0x26 1
+				END
+				GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+				PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+					WRITE_ASCIIE ab_off "%abil_base%" (0x28)
+					WRITE_SHORT 0x1e+ab_off count
+					WRITE_SHORT 0x20+ab_off count*ab_ind
+					// write the data
+					GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+					level=$extracted_levels("%ab_ind%")
+					WRITE_SHORT (0x10+ab_off) level
+					PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+						SPRINT data $extracted_data("%level%" "%fx_ind%")
+						WRITE_ASCII fx_off "%data%" (0x30)
+						// overwrite probabilities and saving throws
+						WRITE_LONG 0x24+fx_off 0
+						WRITE_LONG 0x28+fx_off 0
+						WRITE_BYTE 0x12+fx_off 100
+						WRITE_BYTE 0x13+fx_off 0
+					END
+				END
+		END	
+			
+	END
+END
+
+/////////////////////////////////////////////////////////////////
+/*
+For the current itm/spl file, take the effect stack for an ability
+and permute the order of the effects. The permutation is controlled by
+the string "permutation", which should be a comma-separated list of nonnegative integers.
+If the list has N elements it should contain 0... N-1, in some order.
+
+Assuming that the ability has at least that many effects, the first N will be permuted into
+the order given by the permutation. (If not, we give a warning.)
+
+'ability' determines which ability is permuted. (If ability=-1, we permute all abilities.)
+
+
+
+*/
+//////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION permute_effects
+	INT_VAR ability="-1"
+	STR_VAR permutation=""
+BEGIN
+	// process permutation
+	CLEAR_ARRAY perm_array
+	INNER_PATCH "%permutation%," BEGIN
+		count=0
+		REPLACE_EVALUATE "\([0-9]+\)," BEGIN
+			SET $perm_array("%count%")="%MATCH1%"
+			++count
+		END
+		""
+	END
+	// sanity-check permutation
+	fail=0
+	PHP_EACH perm_array AS k=>v BEGIN
+		PATCH_IF v>=count BEGIN
+			fail=1
+		END ELSE BEGIN
+			PATCH_IF VARIABLE_IS_SET $SFO_CHECK_PERMUTATION_IS_LEGAL("%v%") BEGIN
+				fail=1
+			END ELSE BEGIN
+				SET $SFO_CHECK_PERMUTATION_IS_LEGAL("%v%")=k
+			END
+		END
+	END
+	PATCH_IF fail BEGIN
+		PATCH_WARN "permute_effects: trying to permute effects on %SOURCE_FILE%, but %perm_array% is not a legal permutation. Aborting patch."
+	END ELSE BEGIN
+		// main application
+		PATCH_MATCH "%SOURCE_EXT%" WITH
+		itm BEGIN
+			GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
+		END
+		spl BEGIN
+			GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS		
+		END
+		DEFAULT
+			PATCH_WARN "permute_effects: trying to permute effects on %SOURCE_FILE%, but it is not a spl or itm file. Aborting patch."
+			CLEAR_ARRAY ab_arr
+		END
+		PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+			PATCH_IF ab_ind=ability || ability<0 BEGIN
+				GET_OFFSET_ARRAY2 fx_arr ab_off ITM_V10_HEAD_EFFECTS // spl and itm are identical
+				count_here=0
+				PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+					++count_here
+					READ_ASCII fx_off data (0x30)
+					SPRINT $fx_data("%fx_ind%") "%data%"
+				END
+				PATCH_IF count_here<count BEGIN
+					PATCH_WARN "permute_effects: trying to permute effects on %SOURCE_FILE%, but permutation %permutation% is length %count% and ability %ab_ind% only has %count_here% effects. Aborting patch."
+				END ELSE BEGIN
+					PHP_EACH perm_array AS old=>new BEGIN
+						SPRINT data $fx_data("%old%")
+						offset=$fx_arr("%new%")
+						WRITE_ASCIIE offset "%data%" (0x30)
+					END
+				END
+			END
+		END
+	
+	END
+	
+
+END

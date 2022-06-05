@@ -29,6 +29,7 @@ ALWAYS
   INCLUDE ~eefixpack/files/lib/gt_race_ids.tph~ // sets variables such as RACE_HUMAN based on race.ids
   INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
   INCLUDE ~eefixpack/files/lib/gt_functions.tph~
+  INCLUDE ~eefixpack/files/lib/dw_functions.tph~
 
 END
 
