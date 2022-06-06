@@ -122,5 +122,8 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
-//BEGIN "Temporary test space" DESIGNATED 1000
+BEGIN "Temporary test space" DESIGNATED 1000
 
+INCLUDE "%MOD_FOLDER%/files/tph/dw/get_strings_from_game.tph"
+OUTER_SPRINT $strings("35786") ""
+LAF get_strings_from_game END
