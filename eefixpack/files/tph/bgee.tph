@@ -1688,6 +1688,26 @@ WITH_SCOPE BEGIN
   END
 END
 
+/*
+luke
+Summon Nishruu / Hakeashar
+- their attack (`nishrusu.itm`) should ignore all `AC` modifiers
+  - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
+    - this is certainly unintended since they don't actually deal piercing damage
+- they should be vulnerable to Dispel/Remove Magic
+- they should be flagged as `GENERAL=MONSTER` / `RACE=MIST` / `CLASS=MIST` on all games
+- make sure the Nishruu has 100% Poison resistance
+- The Hakeashar should have the same passive traits as the Nishruu
+  - i.e., it should be immune to Poison and see invisible creatures
+- the Nishruu should use the `NISHRUU` animation on all games
+- the Hakeashar should use the `HAKEASHAR` animation on all games
+- removed unused spell setup
+*/
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
+  LAF ~NISHRUU_HAKEASHAR~ END
+END
+
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
