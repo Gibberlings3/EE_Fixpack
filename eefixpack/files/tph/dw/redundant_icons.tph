@@ -1,0 +1,164 @@
+/// Rather heavily refactored version of Luke's code to remove redundant icons - this version
+/// avoids the need for regexps
+
+
+DEFINE_ACTION_FUNCTION remove_redundant_icons
+	INT_VAR write=0
+	STR_VAR data_location="%MOD_FOLDER%/data/redundant_icons"
+BEGIN
+
+
+
+// find path
+
+	ACTION_IF GAME_IS iwdee BEGIN
+		OUTER_SPRINT path "iwd"
+	END ELSE
+	ACTION_IF GAME_IS bgee BEGIN
+		ACTION_IF GAME_INCLUDES sod BEGIN
+			OUTER_SPRINT path "sod"
+		END ELSE BEGIN
+			OUTER_SPRINT path "bg1"
+		END
+	END ELSE BEGIN
+		OUTER_SPRINT path "bg2"
+	END
+	OUTER_SPRINT path "%data_location%/%path%"
+	
+// main
+
+	ACTION_IF write BEGIN
+	
+		COPY_EXISTING_REGEXP ".*\.\(\itm\|spl\)$" override
+			LPF redundant_icon_patch END
+		BUT_ONLY
+		COPY + "weidu_external/data/%MOD_FOLDER%/redundant_icons.txt" "%path%.txt"
+	
+	
+	END ELSE BEGIN
+	
+		COPY - "%path%.txt" nowhere
+			READ_2DA_ENTRIES_NOW itemlist 1
+			FOR (row=0;row<itemlist;++row) BEGIN
+				READ_2DA_ENTRY_FORMER itemlist row 0 file
+				INNER_ACTION BEGIN
+					COPY_EXISTING "%file%" override
+						LPF redundant_icon_patch END
+				END
+			END
+	
+	END
+	
+END
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION redundant_icon_patch BEGIN
+	found=0
+	// get the array	
+	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
+		GET_OFFSET_ARRAY fx_arr ITM_V10_GEN_EFFECTS
+	END ELSE BEGIN
+		GET_OFFSET_ARRAY fx_arr SPL_V10_GEN_EFFECTS
+	END
+	// check
+	LPF redundant_icon_helper RET found_here END
+	found=found_here
+	// do abilities
+	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
+		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
+	END ELSE BEGIN
+		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+	END	
+	PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+		GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+		LPF redundant_icon_helper RET found_here END
+		found=found OR found_here
+	END
+	/// do the actual deletion
+	PATCH_IF found BEGIN 
+		LPF DELETE_EFFECT INT_VAR match_opcode=999 END
+		PATCH_IF write BEGIN
+			LPF fp_log_this STR_VAR file=redundant_icons.txt input="%SOURCE_FILE%" END
+		END
+	END
+
+
+END
+
+DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
+	// collect opcodes
+	PHP_EACH to_check AS k=>v BEGIN
+		SPRINT $to_check("%k%") ""
+	END
+	proceed=0
+	PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+		READ_SHORT fx_off opcode
+		PATCH_MATCH "%opcode%" WITH
+		25 BEGIN // poisoned
+			SET $to_check(6)=1
+			proceed=1
+		END
+		74 BEGIN // blind
+			SET $to_check(8)=1
+			proceed=1
+		END // haste
+		16 317 BEGIN
+			SET $to_check(38)=1
+			SET $to_check(110)=1
+			proceed=1
+		END //stun
+		45  BEGIN
+			SET $to_check(55)=1
+			proceed=1
+		END //slow
+		40 BEGIN
+			SET $to_check(41)=1
+			proceed=1
+		END //hold
+		175 BEGIN
+			SET $to_check(13)=1
+			proceed=1
+		END //disease
+		78 BEGIN
+			SET $to_check(7)=1
+			proceed=1
+		END
+		DEFAULT
+		END
+	END
+	// check icons
+	PATCH_IF proceed BEGIN
+		poison=0
+		disease=0
+		PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+			PATCH_IF SHORT_AT fx_off=142 BEGIN
+				READ_LONG fx_off+0x8 parameter2
+				PATCH_IF IS_AN_INT $to_check("%parameter2%") BEGIN
+					WRITE_SHORT fx_off 999
+					PATCH_MATCH "%parameter2%" WITH 
+					6 BEGIN
+						poison=1
+					END
+					7 BEGIN
+						disease=1
+					END
+					DEFAULT
+					END
+				END		
+			END
+		END
+		// update poison/disease if needed
+		PATCH_IF poison || disease BEGIN
+			PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+				PATCH_IF (poison && SHORT_AT fx_off=25) BEGIN
+					WRITE_LONG fx_off+0x2c 6
+				END ELSE
+				PATCH_IF (disease && SHORT_AT fx_off=78) BEGIN
+					WRITE_LONG fx_off+0x2c 7
+				END				
+			END
+		END
+	END
+	found_here=proceed
+END

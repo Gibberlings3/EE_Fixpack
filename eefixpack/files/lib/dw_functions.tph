@@ -227,3 +227,51 @@ BEGIN
 	
 
 END
+
+/*
+This function logs a string to an external file.
+It's mostly to record which files are altered by
+COPY_EXISTING_REGEXP, in case we want to hardcode
+later.
+*/
+
+
+DEFINE_DIMORPHIC_FUNCTION fp_log_this // change name to avoid clashing with SFO version if this is used elsewhere
+	INT_VAR repeat=1 // set to 1 if entries shouldn't be repeated
+	STR_VAR file=""
+			path="weidu_external/data/%MOD_FOLDER%"
+			input=""
+BEGIN
+	// provide log file if it doesn't exist
+	ACTION_IF !FILE_EXISTS "%path%/%file%" BEGIN
+		COPY ".../fp-inline/blank" "%path%/%file%"
+	END
+	ACTION_IF repeat BEGIN
+		APPEND_OUTER "%path%/%file%" "%input%"
+	END ELSE BEGIN
+		APPEND_OUTER "%path%/%file%" "%input%" UNLESS "%input%"	
+	END
+
+
+
+END
+
+
+<<<<<<<<.../fp-inline/blank
+>>>>>>>>
+
+/////////////////////////////////////////////////////////////////
+/*
+For the current itm/spl file, take the effect stack for an ability
+and permute the order of the effects. The permutation is controlled by
+the string "permutation", which should be a comma-separated list of nonnegative integers.
+If the list has N elements it should contain 0... N-1, in some order.
+
+Assuming that the ability has at least that many effects, the first N will be permuted into
+the order given by the permutation. (If not, we give a warning.)
+
+'ability' determines which ability is permuted. (If ability=-1, we permute all abilities.)
+
+
+
+*/
