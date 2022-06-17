@@ -322,12 +322,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/remove_redundant_portrait_icons.tph"
-  LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "itm" END
-END
-
-// luke
 // **Longtooth: The Grave Binder**
 // - Unusually large dagger, depicted as a Short Sword => make sure `range=1`
 WITH_SCOPE BEGIN
@@ -567,11 +561,6 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/remove_redundant_portrait_icons.tph"
-  LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "spl" END
-END
 
 // luke
 // Mimic Glue should not set the GREASE stat
@@ -1380,6 +1369,12 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+
+INCLUDE "eefixpack/files/tph/luke/remove_redundant_portrait_icons.tph"
+LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "itm" END
+LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "spl" END
+
 
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~     // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2.tpa~ // array definitions for effect batches

@@ -125,5 +125,8 @@ END
 BEGIN "Temporary test space" DESIGNATED 1000
 
 INCLUDE "%MOD_FOLDER%/files/tph/dw/get_strings_from_game.tph"
-OUTER_SPRINT $strings("35786") ""
+
+OUTER_SPRINT $strings("35786") "" // 35786 is the strref of the string you want
+// add any other strings you want in the same format
+
 LAF get_strings_from_game END
