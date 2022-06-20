@@ -1371,7 +1371,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probabili
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
 WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/remove_redundant_effects.tph" END
+  INCLUDE "eefixpack/files/tph/luke/remove_redundant_effects.tph"
   LAF "remove_redundant_effects" END
 END
 
