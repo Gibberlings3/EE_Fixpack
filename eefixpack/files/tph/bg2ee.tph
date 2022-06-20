@@ -237,6 +237,13 @@ COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
   BUT_ONLY IF_EXISTS
 
 // tbd, cam
+// has all hallmarks of fear immunity except fear immunity itself
+COPY_EXISTING ~gith03.cre~   ~override~ // anti-paladin - blocks cdhorror
+              ~ohgith03.cre~ ~override~ // anti-paladin - blocks cdhorror
+  LPF ALTER_EFFECT INT_VAR match_opcode = 101 match_parameter2 = 101 parameter2 = 24 END // yo dawg, we heard you like immunity to effect, so we immunity to efected your immunity to effect
+  BUT_ONLY
+
+// tbd, cam
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
 INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
 
@@ -275,6 +282,45 @@ COPY_EXISTING ~basigaze.itm~ ~override~
 // set to 400% speed, not set a fixed value of 30
 COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
   LPF ALTER_EFFECT INT_VAR match_opcode = 126 parameter1 = 400 parameter2 = 2 END 
+  
+// tbd, cam
+// blackmist plays two sounds when it blinds targets; one of them is the expirty sound and should be delayed
+COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
+  LPF ALTER_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 600 STR_VAR match_resource = eff_e07 END
+
+// tbd, cam
+// combat feedback used with instant/limited timing and durations
+COPY_EXISTING ~helm32.itm~   ~override~ // Helm of the Rock - causes fear - portrait icon 36 - unknown long effect
+              ~spin595.spl~  ~override~ // Yellow Dragon Scorching Sand - causes blind - unknown long effect
+              ~spin878.spl~  ~override~ // Level Drain - causes blind - causes level drain - unknown long effect
+              ~spin893.spl~  ~override~ // Shadow Dragon Breath - causes blind - causes level drain - unknown long effect
+              ~spin929.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
+              ~spin931.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
+              ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
+              ~spwi815.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
+              ~spwi958.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
+  
+// tbd, cam  
+// blocks confusion animation, but is subject to confusion
+COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to hold - blocks spmindat - blocks spconfus - probably intentional since animation isn't right for dragons
+              ~hslaywpn.itm~ ~override~ // <invalid strref -1> - immune to stun - blocks spconfus - blocks spmindat
+              ~ohbbslay.itm~ ~override~ // <invalid strref -1> - immune to stun - blocks spconfus - blocks spmindat
+              ~slayerw1.itm~ ~override~ // <invalid strref -1> - immune to stun - blocks spconfus - blocks spmindat
+              ~slayerwp.itm~ ~override~ // <invalid strref -1> - immune to stun - blocks spconfus - blocks spmindat
+  LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spconfus END
+  BUT_ONLY
+
+// sirine1 uses 'feeblemind' icon for an intelligence drain; instead use generic 'ability score drained' for both
+COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unknown long effect - portrait icon 3
+              ~sirine1.itm~  ~override~ // Ghoul hand - causes confusion - unknown long effect - portrait icon 3 - portrait icon 48
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 48 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 19 opcode = 142 parameter1 = 0 parameter2 = 91 END
+  
+// tbd, cam
+// uses 'intoxication' icon for a confusion effect
+COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
   
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
@@ -534,6 +580,17 @@ COPY_EXISTING ~spin117.spl~ ~override~ // minsc's berserk
   BUT_ONLY 
 
 // tbd, cam
+// update psychic drain to use generic mind flayer spell animation, spflayer
+COPY_EXISTING ~spin804.spl~  ~override~ // psychic drain - plays spmindat
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = spflayer END
+  BUT_ONLY
+
+// tbd, cam
+// wrong duration for portrait icon
+COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait icon 36
+  LPF ALTER_EFFECT INT_VAR match_duration = 120 duration = 12 END
+
+// tbd, cam
 // delayed sound effect doesn't bypass mr though the rest of the spell does
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
@@ -551,6 +608,11 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
   BUT_ONLY
+
+// tbd, cam
+// expiry sound is way too early
+COPY_EXISTING ~spwish33.spl~ ~override~ // Intoxication - causes drunkenness - plays sound EFF_E06 - portrait icon 5
+  LPF ALTER_EFFECT INT_VAR match_opcode = 174 match_duration = 60 duration = 1200 END
 
 // luke
 // Mis-indexed effects
@@ -1376,6 +1438,6 @@ LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "i
 LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "spl" END
 
 
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~     // function for effect batches
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2.tpa~ // array definitions for effect batches
-INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~             // use effect batches to remove vfx from effects which have been removed
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~                 // use effect batches to remove vfx from effects which have been removed
