@@ -45,8 +45,10 @@ END
 
 // tbd, davidw
 // 7 eyes (eye of the sword shouldn't protect against stunning damage, which is only used for the hp backlash of the Enrage ability)
+// luke (EYEMAGE should not absorb MAGIC damage, as per spell description)
 COPY_EXISTING ~7eyes.2da~ ~override~
   REPLACE_TEXTUALLY "12\*0x8000000" "*"
+  REPLACE_TEXTUALLY EXACT_MATCH "12*0x400000" "*"
   PRETTY_PRINT_2DA
 
 
@@ -109,6 +111,15 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/polymorph_overhaul.tph"
     LAF "POLYMORPH_OVERHAUL" END
   END
+END
+
+/*
+luke
+"7eyes.2da" vs. SPL/ITM files
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
+  LAUNCH_ACTION_FUNCTION "7EYES" END
 END
 
 /////                                                  \\\\\
@@ -291,7 +302,7 @@ COPY_EXISTING ~uhxbw2a.itm~ ~override~ // finest heavy crossbow
   
 // ie-6023, cam
 // Weapon effect duration fixes
-COPY_EXISTING ~dart03.itm~ ~override~ // dart of stunning: color glow expires early
+COPY_EXISTING ~dart03.spl~ ~override~ // dart of stunning: color glow expires early
   LPF ALTER_EFFECT INT_VAR match_duration = 38 duration = 42 END
   BUT_ONLY
 
@@ -404,6 +415,20 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
     LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
   END
+END
+
+/*
+luke
+**Attack** (used by Slime Zombie)
+- Make sure it uses op318 to grant protection from itself (instead of messy op101 + op267 + op173 effects)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "cwszomb.itm" "override"
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 267 END // Disable display string
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 173 END // Poison resistance bonus
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 101 END // Immunity to effect
+    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 318 "target" = 2 "probability1" = 10 STR_VAR "resource" = "%DEST_RES%" END
+  BUT_ONLY_IF_IT_CHANGES
 END
 
 /////                                                  \\\\\
@@ -616,10 +641,16 @@ COPY_EXISTING ~%WIZARD_MIND_BLANK%.spl~ ~override~ // spwi802
 // Great Shout duplicates combat feedback on a failed save
 COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   LPF DELETE_EFFECT INT_VAR match_opcode = 174 END
-  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_target = 2 match_savingthrow = BIT0 END // nuke dupe 'stunned' string
-  LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END 
+  //LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_target = 2 match_savingthrow = BIT0 END // nuke dupe 'stunned' string
+  //LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END 
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
   BUT_ONLY
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~%WIZARD_GREAT_SHOUT%a.spl~ ~override~ // spwi806 great shout (subspell applying stun)
+    LPF ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 45 ~match_duration~ = 6 ~opcode~ = 206 ~parameter1~ = "-1" ~parameter2~ = 0 ~duration~ = 0 STR_VAR ~resource~ = ~%DEST_RES%~ END
+  BUT_ONLY_IF_IT_CHANGES
+END
  
  
  
@@ -893,6 +924,21 @@ Summon Nishruu / Hakeashar
 WITH_SCOPE BEGIN
   INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
   LAF ~NISHRUU_HAKEASHAR~ END
+END
+
+/*
+luke
+**Ghast attack**
+- Effects that grant a Save vs. Paralyze/Poison/Death should go into the new subspell
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "ghast1.spl" "override"
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_savingthrow" = BIT2 END
+  BUT_ONLY_IF_IT_CHANGES
+  COPY_EXISTING "ghast2.spl" "override"
+    LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 1 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_P11" END
+    LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 4 "duration" = 36 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_E05" END
+  BUT_ONLY_IF_IT_CHANGES
 END
 
 // tbd, cam

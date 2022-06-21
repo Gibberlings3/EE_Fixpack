@@ -1,0 +1,438 @@
+/////////////////////////////////////////////////////////////////
+/*
+
+Take some subset of a spell or item's effects and extract them as a subspell.
+(I tweaked DavidW's function to suite my needs)
+
+*/
+//////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+INT_VAR
+	"ability" = "-1" // all
+STR_VAR
+	"subspell_resref" = "" // without extension
+	"extract" = ""
+BEGIN
+	// Validate input
+	PATCH_IF (("%extract%" STRING_MATCHES_REGEXP "^[0-9]+\(,[0-9]+\)*$") == 0) BEGIN
+		// process the extraction instruction
+		LPF "ARRAY_OF_LIST"
+		STR_VAR
+			"list" = "%extract%"
+			"separator" = ","
+		RET_ARRAY
+			"extract_array" = "array"
+		END
+		// Mark specified effects for later detection
+		LPF "MARK_EFFECTS" RET "damage_opcode" RET_ARRAY "extracted_data" END
+		// Cast a subspell with the specified effects
+		PATCH_IF "%damage_opcode%" BEGIN
+			LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ability%" "match_opcode" = 998 "opcode" = 146 "parameter1" = 0 "parameter2" = 1 "timing" = 1 "duration" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%subspell_resref%" END
+		END ELSE BEGIN
+			LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ability%" "match_opcode" = 998 "opcode" = 146 "parameter1" = 0 "parameter2" = 1 "timing" = 1 "duration" = 0 "special" = 0 STR_VAR "resource" = "%subspell_resref%" END
+		END
+		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ability%" "match_opcode" = 999 END
+		// Now build the new spl file
+		LPF "MAKE_SUBSPELL" STR_VAR "subspell_resref" END
+	END ELSE BEGIN
+		PATCH_FAIL "gt_extract_effects_as_subspell: Invalid input => ~%extract%~"
+	END
+END
+
+/////////////////////////////////////////////////////////////////
+/*
+For the current itm/spl file, take the effect stack for an ability and permute the order of the effects
+(I tweaked DavidW's function to suite my needs)
+
+*/
+//////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION "gt_permute_effects"
+INT_VAR
+	"ability" = "-1" // all
+STR_VAR
+	"permutation" = ""
+BEGIN
+	// Validate input
+	PATCH_IF (("%permutation%" STRING_MATCHES_REGEXP "^[0-9]+=>[0-9]+\(,[0-9]+=>[0-9]+\)*$") == 0) BEGIN
+		// Initialize
+		PATCH_MATCH "%DEST_EXT%" WITH
+			"itm" BEGIN
+				GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+			END
+			"spl" BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+			END
+			DEFAULT
+				PATCH_FAIL "Should not happen (~%DEST_FILE%~)"
+		END
+		// Main
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			PATCH_IF ("%ability%" == "-1") OR ("%ab_ind%" == "%ability%") BEGIN
+				PATCH_WITH_SCOPE BEGIN
+					GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS // NB, same for spl and itm
+					WHILE ("%permutation%" STRING_COMPARE_CASE "") BEGIN
+						LPF "RETURN_FIRST_ENTRY"
+						STR_VAR
+							"list_in" = "%permutation%"
+							"separator" = ","
+						RET
+							"entry"
+							"permutation" = "list_out"
+						END
+						INNER_PATCH "%entry%" BEGIN
+							REPLACE_EVALUATE "^\([0-9]+\)=>\([0-9]+\)$" BEGIN
+								SET "old_idx" = "%MATCH1%"
+								SET "new_idx" = "%MATCH2%"
+							END
+							""
+						END
+						PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+							PATCH_IF ("%fx_ind%" == "%old_idx%") BEGIN
+								// Save current values
+								READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+								READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+								READ_BYTE ("%fx_off%" + 0x3) "fx_power"
+								READ_SLONG ("%fx_off%" + 0x4) "fx_parameter1"
+								READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
+								READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+								READ_BYTE ("%fx_off%" + 0xD) "fx_resist_dispel"
+								READ_LONG ("%fx_off%" + 0xE) "fx_duration"
+								READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+								READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+								READ_ASCII ("%fx_off%" + 0x14) "fx_resref"
+								READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+								READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+								READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+								READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+								READ_SLONG ("%fx_off%" + 0x2C) "fx_special"
+								TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resref%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%old_idx%" "%new_idx%") "irrelevant"
+								// Mark it for deletion
+								WRITE_SHORT "%fx_off%" 999
+							END
+						END
+					END
+					// Add the saved effects at the specified new position
+					PATCH_MATCH "%DEST_EXT%" WITH
+						"itm" BEGIN
+							PHP_EACH "fx_data" AS "fx_attributes" => "" BEGIN
+								LPF "ADD_ITEM_EFFECT"
+								INT_VAR
+									"type" = 99 // all types
+									"header" = "%ab_ind%" + 1 // count starts from 1 instead of 0!!!
+									"opcode" = "%fx_attributes_0%"
+									"target" = "%fx_attributes_1%"
+									"power" = "%fx_attributes_2%"
+									"parameter1" = "%fx_attributes_3%"
+									"parameter2" = "%fx_attributes_4%"
+									"timing" = "%fx_attributes_5%"
+									"resist_dispel" = "%fx_attributes_6%"
+									"duration" = "%fx_attributes_7%"
+									"probability1" = "%fx_attributes_8%"
+									"probability2" = "%fx_attributes_9%"
+									"dicenumber" = "%fx_attributes_11%"
+									"dicesize" = "%fx_attributes_12%"
+									"savingthrow" = "%fx_attributes_13%"
+									"savebonus" = "%fx_attributes_14%"
+									"special" = "%fx_attributes_15%"
+									"insert_point" = "%fx_attributes_17%"
+								STR_VAR
+									"resource" = "%fx_attributes_10%"
+								END
+							END
+						END
+						"spl" BEGIN
+							PHP_EACH "fx_data" AS "fx_attributes" => "" BEGIN
+								LPF "ADD_SPELL_EFFECT"
+								INT_VAR
+									"header" = "%ab_ind%" + 1 // count starts from 1 instead of 0!!!
+									"opcode" = "%fx_attributes_0%"
+									"target" = "%fx_attributes_1%"
+									"power" = "%fx_attributes_2%"
+									"parameter1" = "%fx_attributes_3%"
+									"parameter2" = "%fx_attributes_4%"
+									"timing" = "%fx_attributes_5%"
+									"resist_dispel" = "%fx_attributes_6%"
+									"duration" = "%fx_attributes_7%"
+									"probability1" = "%fx_attributes_8%"
+									"probability2" = "%fx_attributes_9%"
+									"dicenumber" = "%fx_attributes_11%"
+									"dicesize" = "%fx_attributes_12%"
+									"savingthrow" = "%fx_attributes_13%"
+									"savebonus" = "%fx_attributes_14%"
+									"special" = "%fx_attributes_15%"
+									"insert_point" = "%fx_attributes_17%"
+								STR_VAR
+									"resource" = "%fx_attributes_10%"
+								END
+							END
+						END
+						DEFAULT
+							PATCH_FAIL "File not supported (~%DEST_FILE%~)"
+					END
+					LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 999 END // delete old instances
+				END
+			END
+		END
+	END ELSE BEGIN
+		PATCH_FAIL "gt_permute_effects: Invalid input => ~%permutation%~"
+	END
+END
+
+/////////////////////////////////////////////////////////////////
+/*
+
+Auxiliary functions
+
+*/
+//////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION "MARK_EFFECTS"
+RET
+	"damage_opcode"
+RET_ARRAY
+	"extracted_data"
+BEGIN
+	// Initialize
+	PATCH_CLEAR_ARRAY "extracted_data"
+	SET "damage_opcode" = 0
+	PATCH_MATCH "%DEST_EXT%" WITH
+		"itm" BEGIN
+			GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+		END
+		"spl" BEGIN
+			GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+		END
+		DEFAULT
+			PATCH_FAIL "Should not happen (~%DEST_FILE%~)"
+	END
+	// Main
+	PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+		PATCH_IF ("%ability%" == "-1") OR ("%ab_ind%" == "%ability%") BEGIN
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS // NB, same for spl and itm
+			SET "done_first" = 0
+			PHP_EACH "extract_array" AS "new_ind" => "fx_ind" BEGIN
+				// Sanity check
+				LAUNCH_PATCH_FUNCTION ~ARRAY_CONTAINS~
+				STR_VAR
+					"array" = "fx_array" // array name
+					"key" = "%fx_ind%"
+				RET
+					~found~
+				END
+				PATCH_IF ~%found%~ BEGIN
+					//SET "offset" = $"fx_array"("%fx_ind%")
+					PATCH_IF !("%done_first%") BEGIN
+						// Save current values
+						READ_SHORT $"fx_array"("%fx_ind%") "fx_opcode"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x2) "fx_target"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x3) "fx_power"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x4) "fx_parameter1"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x8) "fx_parameter2"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0xC) "fx_timing"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0xD) "fx_resist_dispel"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0xE) "fx_duration"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x12) "fx_probability1"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x13) "fx_probability2"
+						READ_ASCII ($"fx_array"("%fx_ind%") + 0x14) "fx_resref"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x1C) "fx_max_level"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x20) "fx_min_level"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x24) "fx_savetype"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x28) "fx_savebonus"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x2C) "fx_special"
+						TEXT_SPRINT $"extracted_data"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resref%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%new_ind%" "%ab_ind%") "irrelevant"
+						// Mark it
+						WRITE_SHORT $"fx_array"("%fx_ind%") 998
+						SET "done_first" = 1
+					END ELSE BEGIN
+						// Save current values
+						READ_SHORT $"fx_array"("%fx_ind%") "fx_opcode"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x2) "fx_target"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x3) "fx_power"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x4) "fx_parameter1"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x8) "fx_parameter2"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0xC) "fx_timing"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0xD) "fx_resist_dispel"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0xE) "fx_duration"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x12) "fx_probability1"
+						READ_BYTE ($"fx_array"("%fx_ind%") + 0x13) "fx_probability2"
+						READ_ASCII ($"fx_array"("%fx_ind%") + 0x14) "fx_resref"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x1C) "fx_max_level"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x20) "fx_min_level"
+						READ_LONG ($"fx_array"("%fx_ind%") + 0x24) "fx_savetype"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x28) "fx_savebonus"
+						READ_SLONG ($"fx_array"("%fx_ind%") + 0x2C) "fx_special"
+						TEXT_SPRINT $"extracted_data"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resref%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%new_ind%" "%ab_ind%") "irrelevant"
+						// Mark it
+						WRITE_SHORT $"fx_array"("%fx_ind%") 999
+					END
+				END ELSE BEGIN
+					PATCH_FAIL "gt_extract_effects_as_subspell, ~%DEST_FILE%~: effect #%fx_ind% does not exist on ability #%ab_ind%"
+				END
+			END
+		END
+	END
+	PHP_EACH "extracted_data" AS "effect_attributes" => "" BEGIN
+		PATCH_IF ("%effect_attributes_0%" == 12) BEGIN
+			SET "damage_opcode" = 1
+		END
+	END
+END
+
+DEFINE_PATCH_FUNCTION "MAKE_SUBSPELL"
+STR_VAR
+	"subspell_resref" = ""
+BEGIN
+	PATCH_IF !(FILE_EXISTS_IN_GAME "%subspell_resref%.spl") AND ("%subspell_resref%" STRING_COMPARE_CASE "") BEGIN
+		TO_LOWER "subspell_resref"
+		PATCH_MATCH "%DEST_EXT%" WITH
+			"ITM" BEGIN
+				READ_ASCII 0x3A "header_icon"
+				SET "hdr" = "%ability%" < 0 ? 0 : "%ability%"
+				SET "primary_type" = BYTE_AT (LONG_AT 0x64 + 0x38 * "%hdr%" + 0x17)
+				SET "secondary_type" = BYTE_AT (LONG_AT 0x64 + 0x38 * "%hdr%" + 0x19)
+				READ_ASCII (LONG_AT 0x64 + 0x38 * "%hdr%" + 0x4) "ability_icon"
+				LPF "GET_PROJECTILE_TYPE" RET "projectile_type" END
+				INNER_ACTION BEGIN
+					CREATE "SPL" "%subspell_resref%"
+						/* Header */
+						WRITE_LONG NAME1 "-1"
+						WRITE_LONG NAME2 "-1"
+						WRITE_LONG UNIDENTIFIED_DESC "-1"
+						WRITE_LONG DESC "-1"
+						WRITE_LONG 0x18 BIT14 // Ignore dead/wild magic
+						WRITE_BYTE 0x25 "%primary_type%"
+						WRITE_BYTE 0x27 "%secondary_type%"
+						WRITE_LONG 0x34 1 // Spell level
+						WRITE_EVALUATED_ASCII 0x3A "%header_icon%" #8
+						WRITE_LONG 0x64 0x72 // Extended Header offset
+						WRITE_SHORT 0x68 1 // Extended Header count
+						WRITE_LONG 0x6A 0x9A // Feature Block Table offset
+						INSERT_BYTES 0x72 0x28
+						/* Extended header */
+						WRITE_EVALUATED_ASCII 0x76 "%ability_icon%" #8
+						WRITE_SHORT 0x80 0x7FFF // Range (max signed value)
+						WRITE_SHORT 0x82 1 // Minimum level
+						WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+						/* Feature blocks */
+						PHP_EACH "extracted_data" AS "effect_attributes" => "" BEGIN
+							LPF "ADD_SPELL_EFFECT"
+							INT_VAR
+								"opcode" = "%effect_attributes_0%"
+								"target" = "%effect_attributes_1%"
+								"power" = "%projectile_type%" == 3 ? 0 : "%effect_attributes_2%"
+								"parameter1" = "%effect_attributes_3%"
+								"parameter2" = "%effect_attributes_4%"
+								"timing" = "%effect_attributes_5%"
+								"resist_dispel" = ("%effect_attributes_6%" == BIT0 ? BIT0 | BIT1 : "%effect_attributes_6%")
+								"duration" = "%effect_attributes_7%"
+								"dicenumber" = "%damage_opcode%" ? "%effect_attributes_11%" : 0
+								"dicesize" = "%damage_opcode%" ? "%effect_attributes_12%" : 0
+								"savingthrow" = "%damage_opcode%" ? "%effect_attributes_13%" : 0
+								"savebonus" = "%damage_opcode%" ? "%effect_attributes_14%" : 0
+								"special" = "%effect_attributes_15%"
+							STR_VAR
+								"resource" = "%effect_attributes_10%"
+							END
+						END
+				END
+			END
+			"SPL" BEGIN
+				READ_ASCII 0x0 "current_content" (BUFFER_LENGTH) // read current content
+				INNER_ACTION BEGIN
+					CREATE "SPL" "%subspell_resref%"
+						INSERT_BYTES 0x72 (STRING_LENGTH "%current_content%" - 0x72) // insert missing bytes
+						WRITE_EVALUATED_ASCII 0x0 "%current_content%"
+						/* Header */
+						WRITE_LONG NAME1 "-1"
+						WRITE_LONG NAME2 "-1"
+						WRITE_ASCII 0x10 "" #8 // no casting sound
+						WRITE_LONG UNIDENTIFIED_DESC "-1"
+						WRITE_LONG DESC "-1"
+						WRITE_LONG 0x1E 0 // no exclusion flags
+						WRITE_SHORT 0x22 0 // no casting animation
+						/* Extended header */
+						PATCH_WITH_SCOPE BEGIN
+							GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+							PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+								PATCH_MATCH "%ability%" WITH
+									"-1" "%ab_ind%" BEGIN END
+									DEFAULT
+										WRITE_BYTE "%ab_off%" 0xFF // mark it for deletion (max unsigned value)
+								END
+							END
+							LPF "DELETE_SPELL_HEADER" INT_VAR "header_type" = 0xFF END
+						END
+						LPF "GET_PROJECTILE_TYPE" RET "projectile_type" END // this assumes all abilities share the same PRO file
+						LAUNCH_PATCH_FUNCTION "ALTER_SPELL_HEADER"
+						INT_VAR
+							"range" = 0x7FFF // max signed value
+							"speed" = 0
+							"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
+						END
+						// Sanity check
+						PATCH_MATCH SHORT_AT 0x68 WITH
+							0 BEGIN
+								PATCH_FAIL "MAKE_SUBSPELL: ~%DEST_FILE%~ has 0 abilities... Wut???"
+							END
+							1 BEGIN
+								LPF ~ALTER_SPELL_HEADER~ INT_VAR ~min_level~ = 1 END
+							END
+							DEFAULT
+						END
+						/* Feature blocks */
+						LPF "DELETE_EFFECT" END // delete current content
+						PHP_EACH "extracted_data" AS "effect_attributes" => "" BEGIN
+							LPF "ADD_SPELL_EFFECT"
+							INT_VAR
+								"opcode" = "%effect_attributes_0%"
+								"target" = "%effect_attributes_1%"
+								"power" = "%projectile_type%" == 3 ? 0 : "%effect_attributes_2%"
+								"parameter1" = "%effect_attributes_3%"
+								"parameter2" = "%effect_attributes_4%"
+								"timing" = "%effect_attributes_5%"
+								"resist_dispel" = ("%effect_attributes_6%" == BIT0 ? BIT0 | BIT1 : "%effect_attributes_6%")
+								"duration" = "%effect_attributes_7%"
+								"dicenumber" = "%damage_opcode%" ? "%effect_attributes_11%" : 0
+								"dicesize" = "%damage_opcode%" ? "%effect_attributes_12%" : 0
+								"savingthrow" = "%damage_opcode%" ? "%effect_attributes_13%" : 0
+								"savebonus" = "%damage_opcode%" ? "%effect_attributes_14%" : 0
+								"special" = "%effect_attributes_15%"
+								"header" = "%effect_attributes_17%" + 1 // count starts from 1 instead of 0!!!
+							STR_VAR
+								"resource" = "%effect_attributes_10%"
+							END
+						END
+				END
+			END
+			DEFAULT
+				PATCH_FAIL "Should not happen (~%DEST_FILE%~)"
+		END
+	END ELSE BEGIN
+		PATCH_WARN "SPL file ~%subspell_resref%~ already exists as a game resource! Intended?"
+	END
+END
+
+DEFINE_PATCH_FUNCTION "GET_PROJECTILE_TYPE"
+RET
+	"projectile_type"
+BEGIN
+	PATCH_MATCH "%DEST_EXT%" WITH
+		"itm" BEGIN
+			LOOKUP_IDS_SYMBOL_OF_INT "pro_resref" "projectl" (SHORT_AT (LONG_AT 0x64 + 0x38 * "%hdr%" + 0x2A) - 1)
+		END
+		"spl" BEGIN
+			LOOKUP_IDS_SYMBOL_OF_INT "pro_resref" "projectl" (SHORT_AT (0x98) - 1)
+		END
+		DEFAULT
+			PATCH_FAIL "Should not happen"
+	END
+	PATCH_IF (FILE_EXISTS_IN_GAME "%pro_resref%.pro") BEGIN
+		INNER_PATCH_FILE "%pro_resref%.pro" BEGIN
+			READ_SHORT 0x8 "projectile_type"
+		END
+	END ELSE BEGIN
+		SET "projectile_type" = "-1"
+	END
+END

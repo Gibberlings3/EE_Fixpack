@@ -3,195 +3,301 @@
 
 DEFINE_ACTION_FUNCTION "CLERIC_SUNRAY"
 BEGIN
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
-			LPF "DELETE_EFFECT" END // let us start from scratch
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 146 // Cast spell
-				"target" = 1 // Self
-				"power" = 7
-				"parameter2" = 1 // Cast instantly (ignore level)
-				"timing" = 1
-				"resist_dispel" = BIT1
-			STR_VAR
-				"resource" = "%CLERIC_FALSE_DAWN%d"
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 326 // Apply effects list
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter2" = 1 // GENERAL=UNDEAD
-				"timing" = 1
-				"resist_dispel" = BIT0
-			STR_VAR
-				"resource" = "%CLERIC_SUNRAY%a"
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 326 // Apply effects list
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter2" = 2 // GENERAL!=UNDEAD
-				"timing" = 1
-				"resist_dispel" = BIT0
-			STR_VAR
-				"resource" = "%CLERIC_SUNRAY%b"
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 215 // Play visual effect
-				"target" = 2 // Preset target
-				"power" = 7
-				"timing" = 1
-				"resist_dispel" = BIT1
-			STR_VAR
-				"resource" = "SPFDAWN"
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 174 // Play sound
-				"target" = 2 // Preset target
-				"power" = 7
-				"timing" = 1
-				"resist_dispel" = BIT1
-			STR_VAR
-				"resource" = "EFF_P56"
-			END
-		BUT_ONLY_IF_IT_CHANGES
-	END
-	// Subspell A => GENERAL = UNDEAD => "Undead that are hit by the sunray take 1d6 damage per level of the caster, and must save vs. Spell or be destroyed."
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override/%CLERIC_SUNRAY%a.spl"
-			/* Header */
-			WRITE_LONG NAME1 "-1"
-			WRITE_ASCII 0x10 "" #8 // casting sound
-			WRITE_LONG 0x18 0 // flags
-			WRITE_LONG 0x1E 0 // exclusion flags
-			WRITE_SHORT 0x22 0 // casting animation
-			/* Extended header(s) */
-			LPF "ALTER_SPELL_HEADER"
-			INT_VAR
-				"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
-				"speed" = 0
-			END
-			/* Feature block(s) */
-			LPF "DELETE_EFFECT" END // delete current content
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 13 // Kill target
-				"target" = 2 // Preset target
-				"parameter2" = BIT0 // Burning death
-				"timing" = 1
-				"resist_dispel" = BIT1
-				"savingthrow" = BIT0 // Save vs. Spell
-			END
-			PATCH_WITH_SCOPE BEGIN
-				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
-				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "ADD_SPELL_EFFECT"
-					INT_VAR
-						"header" = "%hdr%" + 1
-						"opcode" = 12 // Damage
-						"target" = 2 // Preset target
-						"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
-						"timing" = 1
-						"resist_dispel" = BIT1
-						"dicenumber" = SHORT_AT ("%ab_off%" + 0x10) == 1 ? 14 : SHORT_AT ("%ab_off%" + 0x10)
-						"dicesize" = 6
-						"savingthrow" = BIT24 // Bypass Mirror Image
-					END
+	ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
+				LPF "DELETE_EFFECT" END // let us start from scratch
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 146 // Cast spell
+					"target" = 1 // Self
+					"power" = 7
+					"parameter2" = 1 // Cast instantly (ignore level)
+					"timing" = 1
+					"resist_dispel" = BIT1
+				STR_VAR
+					"resource" = "%CLERIC_FALSE_DAWN%d"
 				END
-			END
-		BUT_ONLY_IF_IT_CHANGES
-	END
-	// Subspell B => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage and must save vs. Spell or be blinded for 1 turn."
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "%CLERIC_SUNRAY%a.spl" "override/%CLERIC_SUNRAY%b.spl"
-			// Should not scale with character level
-			PATCH_WITH_SCOPE BEGIN
-				SET "#_abilities" = SHORT_AT 0x68
-				FOR ("hdr" = 0 ; "hdr" < "%#_abilities%" ; "hdr" += 1) BEGIN
-					PATCH_IF (SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10) != 1) BEGIN
-						LPF "DELETE_SPELL_HEADER"
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 326 // Apply effects list
+					"target" = 2 // Preset target
+					"power" = 7
+					"parameter2" = 1 // GENERAL=UNDEAD
+					"timing" = 1
+					"resist_dispel" = BIT0
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%a"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 326 // Apply effects list
+					"target" = 2 // Preset target
+					"power" = 7
+					"parameter2" = 2 // GENERAL!=UNDEAD
+					"timing" = 1
+					"resist_dispel" = BIT0
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%b"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 215 // Play visual effect
+					"target" = 2 // Preset target
+					"power" = 7
+					"timing" = 1
+					"resist_dispel" = BIT1
+				STR_VAR
+					"resource" = "SPFDAWN"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 174 // Play sound
+					"target" = 2 // Preset target
+					"power" = 7
+					"timing" = 1
+					"resist_dispel" = BIT1
+				STR_VAR
+					"resource" = "EFF_P56"
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell A => GENERAL = UNDEAD => "Undead that are hit by the sunray take 1d6 damage per level of the caster, and must save vs. Spell or be destroyed."
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override/%CLERIC_SUNRAY%a.spl"
+				/* Header */
+				WRITE_LONG NAME1 "-1"
+				WRITE_ASCII 0x10 "" #8 // casting sound
+				WRITE_LONG 0x18 0 // flags
+				WRITE_LONG 0x1E 0 // exclusion flags
+				WRITE_SHORT 0x22 0 // casting animation
+				/* Extended header(s) */
+				LPF "ALTER_SPELL_HEADER"
+				INT_VAR
+					"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
+					"speed" = 0
+				END
+				/* Feature block(s) */
+				LPF "DELETE_EFFECT" END // delete current content
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 13 // Kill target
+					"target" = 2 // Preset target
+					"parameter2" = BIT0 // Burning death
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"savingthrow" = BIT0 // Save vs. Spell
+				END
+				PATCH_WITH_SCOPE BEGIN
+					GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
+						LPF "ADD_SPELL_EFFECT"
 						INT_VAR
-							"header_type" = "-1" // all types
-							"min_level" = SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10)
+							"header" = "%hdr%" + 1
+							"opcode" = 12 // Damage
+							"target" = 2 // Preset target
+							"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
+							"timing" = 1
+							"resist_dispel" = BIT1
+							"dicenumber" = SHORT_AT ("%ab_off%" + 0x10) == 1 ? 14 : SHORT_AT ("%ab_off%" + 0x10)
+							"dicesize" = 6
+							"savingthrow" = BIT24 // Bypass Mirror Image
 						END
-						// We need to take into account the ability we've just deleted
-						SET "hdr" -= 1 // current index
-						SET "#_abilities" -= 1 // total number of abilities
 					END
 				END
-			END
-			/* Feature blocks */
-			LPF "DELETE_EFFECT" END // delete current content
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 146 // Cast spell
-				"target" = 2 // Preset target
-				"parameter2" = 1 // Cast instantly (ignore level)
-				"timing" = 1
-				"resist_dispel" = BIT1
-			STR_VAR
-				"resource" = "%CLERIC_SUNRAY%c"
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 74 // Blindness
-				"target" = 2 // Preset target
-				"duration" = 60
-				"resist_dispel" = BIT0 + BIT1
-				"savingthrow" = BIT0 // Save vs. Spell
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 139 // Display string
-				"target" = 2 // Preset target
-				"parameter1" = "%game_is_bgee%" ? 31786 : 14674
-				"timing" = 1
-				"resist_dispel" = BIT1
-				"savingthrow" = BIT0 // Save vs. Spell
-			END
-		BUT_ONLY_IF_IT_CHANGES
-	END
-	// Subspell C => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage"
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
-			/* Feature blocks */
-			LPF "DELETE_EFFECT" END // delete current content
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 12 // Damage
-				"target" = 2 // Preset target
-				"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
-				"timing" = 1
-				"resist_dispel" = BIT1
-				"dicenumber" = 3
-				"dicesize" = 6
-				"savingthrow" = BIT24 // Bypass Mirror Image
-			END
-		BUT_ONLY_IF_IT_CHANGES
-	END
-	// Main SPL file should not scale with character level
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
-			PATCH_WITH_SCOPE BEGIN
-				SET "#_abilities" = SHORT_AT 0x68
-				FOR ("hdr" = 0 ; "hdr" < "%#_abilities%" ; "hdr" += 1) BEGIN
-					PATCH_IF (SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10) != 1) BEGIN
-						LPF "DELETE_SPELL_HEADER"
-						INT_VAR
-							"header_type" = "-1" // all types
-							"min_level" = SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10)
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell B => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage and must save vs. Spell or be blinded for 1 turn."
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%a.spl" "override/%CLERIC_SUNRAY%b.spl"
+				// Should not scale with character level
+				PATCH_WITH_SCOPE BEGIN
+					SET "#_abilities" = SHORT_AT 0x68
+					FOR ("hdr" = 0 ; "hdr" < "%#_abilities%" ; "hdr" += 1) BEGIN
+						PATCH_IF (SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10) != 1) BEGIN
+							LPF "DELETE_SPELL_HEADER"
+							INT_VAR
+								"header_type" = "-1" // all types
+								"min_level" = SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10)
+							END
+							// We need to take into account the ability we've just deleted
+							SET "hdr" -= 1 // current index
+							SET "#_abilities" -= 1 // total number of abilities
 						END
-						// We need to take into account the ability we've just deleted
-						SET "hdr" -= 1 // current index
-						SET "#_abilities" -= 1 // total number of abilities
 					END
 				END
-			END
-		BUT_ONLY_IF_IT_CHANGES
+				/* Feature blocks */
+				LPF "DELETE_EFFECT" END // delete current content
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 146 // Cast spell
+					"target" = 2 // Preset target
+					"parameter2" = 1 // Cast instantly (ignore level)
+					"timing" = 1
+					"resist_dispel" = BIT1
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%c"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 74 // Blindness
+					"target" = 2 // Preset target
+					"duration" = 60
+					"resist_dispel" = BIT0 + BIT1
+					"savingthrow" = BIT0 // Save vs. Spell
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 139 // Display string
+					"target" = 2 // Preset target
+					"parameter1" = "%game_is_bgee%" ? 31786 : 14674
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"savingthrow" = BIT0 // Save vs. Spell
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell C => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage"
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
+				/* Feature blocks */
+				LPF "DELETE_EFFECT" END // delete current content
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 12 // Damage
+					"target" = 2 // Preset target
+					"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"dicenumber" = 3
+					"dicesize" = 6
+					"savingthrow" = BIT24 // Bypass Mirror Image
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Main SPL file should not scale with character level
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
+				PATCH_WITH_SCOPE BEGIN
+					SET "#_abilities" = SHORT_AT 0x68
+					FOR ("hdr" = 0 ; "hdr" < "%#_abilities%" ; "hdr" += 1) BEGIN
+						PATCH_IF (SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10) != 1) BEGIN
+							LPF "DELETE_SPELL_HEADER"
+							INT_VAR
+								"header_type" = "-1" // all types
+								"min_level" = SHORT_AT (0x72 + "%hdr%" * 0x28 + 0x10)
+							END
+							// We need to take into account the ability we've just deleted
+							SET "hdr" -= 1 // current index
+							SET "#_abilities" -= 1 // total number of abilities
+						END
+					END
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END ELSE BEGIN
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
+				LPF "DELETE_EFFECT" END // let us start from scratch
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 326 // Apply effects list
+					"target" = 2 // Preset target
+					"power" = 7
+					"parameter2" = 31 // GENERAL=UNDEAD || RACE=MYCONID
+					"timing" = 1
+					"resist_dispel" = BIT0
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%a"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 326 // Apply effects list
+					"target" = 2 // Preset target
+					"power" = 7
+					"parameter2" = 32 // !(GENERAL=UNDEAD || RACE=MYCONID)
+					"timing" = 1
+					"resist_dispel" = BIT0
+					"savingthrow" = BIT0 // Save vs. Spell
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%c"
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell A => (GENERAL=UNDEAD || RACE=MYCONID) => "Undead or fungoid creatures in the area of effect also take 8d6 points of damage (save vs. Spell for half) and are blinded for 1 turn."
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override/%CLERIC_SUNRAY%a.spl"
+				/* Header */
+				WRITE_LONG NAME1 "-1"
+				WRITE_ASCII 0x10 "" #8 // casting sound
+				WRITE_LONG 0x18 0 // flags
+				WRITE_LONG 0x1E 0 // exclusion flags
+				WRITE_SHORT 0x22 0 // casting animation
+				/* Extended header(s) */
+				LPF "ALTER_SPELL_HEADER"
+				INT_VAR
+					"projectile" = IDS_OF_SYMBOL ("MISSILE" "None")
+					"speed" = 0
+				END
+				/* Feature block(s) */
+				LPF "DELETE_EFFECT" END // delete current content
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 146 // Cast spell
+					"target" = 2 // Preset target
+					"parameter2" = 1 // Cast instantly (ignore level)
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"savingthrow" = BIT0 // Save vs. Spell
+				STR_VAR
+					"resource" = "%CLERIC_SUNRAY%B"
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 12 // Damage
+					"target" = 2 // Preset target
+					"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE")
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"dicenumber" = 8
+					"dicesize" = 6
+					"savingthrow" = (BIT0 | BIT24) // Save vs. Spell, Bypass Mirror Image
+					"special" = BIT8 // Save for half
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell B => (GENERAL=UNDEAD || RACE=MYCONID) => "Undead or fungoid creatures in the area of effect ... are blinded for 1 turn."
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%a.spl" "override/%CLERIC_SUNRAY%b.spl"
+				/* Feature blocks */
+				LPF "DELETE_EFFECT" END // delete current content
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 74 // Blindness
+					"target" = 2 // Preset target
+					"duration" = 60
+					"resist_dispel" = BIT0 | BIT1
+				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 139 // Display string
+					"target" = 2 // Preset target
+					"parameter1" = 37800 // ~Blinded~
+					"timing" = 1
+					"resist_dispel" = BIT0 | BIT1
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell C => !(GENERAL=UNDEAD || RACE=MYCONID) => "Creatures in the area of effect must make a Save vs. Spell or be blinded for 2 rounds."
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
+				/* Feature blocks */
+				LPF "ALTER_EFFECT"
+				INT_VAR
+					"match_opcode" = 74 // Blindness
+					"duration" = 12
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
 	END
 END
