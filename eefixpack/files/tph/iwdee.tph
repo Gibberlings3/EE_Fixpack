@@ -908,6 +908,16 @@ END
 
 /*
 luke
+**Sunray**
+- It now properly distinguishes `GENERAL=UNDEAD || RACE=MYCONID` from `!(GENERAL=UNDEAD || RACE=MYCONID)`
+*/
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~
+  LAF ~CLERIC_SUNRAY~ END
+END
+
+/*
+luke
 Summon Nishruu / Hakeashar
 - their attack (`nishrusu.itm`) should ignore all `AC` modifiers
   - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
