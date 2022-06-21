@@ -1744,7 +1744,7 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
       WRITE_LONG offset (off + 0x04)
     END
   END
-  BUT_ONLY  
+  BUT_ONLY IF_EXISTS // sod asset  
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
