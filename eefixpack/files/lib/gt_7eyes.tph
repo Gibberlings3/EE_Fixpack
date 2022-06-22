@@ -55,7 +55,7 @@ STR_VAR
 	"permutation" = ""
 BEGIN
 	// Validate input
-	PATCH_IF (("%permutation%" STRING_MATCHES_REGEXP "^[0-9]+=>[0-9]+\(,[0-9]+=>[0-9]+\)*$") == 0) BEGIN
+	PATCH_IF (("%permutation%" STRING_MATCHES_REGEXP "^[0-9]+=>-?[0-9]+\(,[0-9]+=>-?[0-9]+\)*$") == 0) BEGIN
 		// Initialize
 		PATCH_MATCH "%DEST_EXT%" WITH
 			"itm" BEGIN
@@ -82,7 +82,7 @@ BEGIN
 							"permutation" = "list_out"
 						END
 						INNER_PATCH "%entry%" BEGIN
-							REPLACE_EVALUATE "^\([0-9]+\)=>\([0-9]+\)$" BEGIN
+							REPLACE_EVALUATE "^\([0-9]+\)=>\(-?[0-9]+\)$" BEGIN
 								SET "old_idx" = "%MATCH1%"
 								SET "new_idx" = "%MATCH2%"
 							END
