@@ -181,7 +181,7 @@ END
 
 // tbd, cam (from jmerry)
 // curing poison should also cure insta-death from green slimes
-INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~
+//INCLUDE ~eefixpack/files/tph/tbd_green_slime.tph~ now part of 'cure' fixes
 
 // BGCS-3460, cam
 // death tyrant animation fixes
@@ -669,6 +669,50 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 
+ACTION_IF game_includes_sod BEGIN
+
+  // poison resistance blocking dispel
+  COPY_EXISTING ~bdbelhi1.itm~ ~override~ // Attack - causes poison
+                ~bdbelhi2.itm~ ~override~ // Attack - causes poison
+    LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 400 STR_VAR insert = first END
+    LPF DELETE_EFFECT INT_VAR match_opcode = 146 END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 146 END
+
+  // poison resistance blocking *gulp*
+  COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
+    LPF CLONE_EFFECT INT_VAR match_opcode = 139 opcode = 400 STR_VAR insert = first END
+    LPF DELETE_EFFECT INT_VAR match_opcode = 139 END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 139 END
+
+END
+  
+// elven charm immunity can block level drain and other effects
+OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
+COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
+  LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 49 END // charm is 50%, but icon is 100%
+  PATCH_FOR_EACH op IN 5 215 142 BEGIN
+    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 49 STR_VAR insert = last END
+    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 49 multi_match = 1 END
+  END  
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 14 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 44 END // elf immunity
+
+// poison resistance blocking con penalty, choking noises
+COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes poison
+  LPF CLONE_EFFECT INT_VAR match_opcode = 324 STR_VAR insert = last END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
+
+// viper's edge poison immunity block poorly placed
+COPY_EXISTING ~sw1p01.itm~ ~override~
+  LPF CLONE_EFFECT INT_VAR match_opcode = 318 probability1 = 23 probability2 = 0 STR_VAR insert = last END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 318 END
+  LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 25 END
+
 // tbd, cam
 // special wand of magic missiles shouldn't bypass shield
 COPY_EXISTING ~wand12.itm~ ~override~ // wand of missiles
@@ -861,11 +905,46 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
+// expiry sound has wrong duration  
+COPY_EXISTING ~bdsleep.spl~  ~override~ // <Invalid Strref -1> - causes sleep - plays sound EFF_E05
+  LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 300 END
+  IF_EXISTS // sod asset
+
+// tbd, cam
+// fear portrait icon expires too early
+COPY_EXISTING ~bdfear.spl~  ~override~ // Panic - causes fear - unknown long effect - portrait icon 36
+  LPF ALTER_EFFECT INT_VAR match_duration = 12 duration = 30 END
+  IF_EXISTS // sod asset
+
+// tbd, cam
+// combat feedback used with instant/limited timing and durations
+COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion deafness stun
+              ~spin878.spl~  ~override~ // Level Drain - causes blind - causes level drain - unknown long effect
+              ~spin893.spl~  ~override~ // Shadow Dragon Breath - causes blind - causes level drain - unknown long effect
+              ~spin929.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
+              ~spin931.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
+              ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
+              ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
+  IF_EXISTS // bdshriek is sod asset
+
 // tbd, cam
 // enrage is using berserk's spell icon
 COPY_EXISTING ~spcl321.spl~ ~override~
   WRITE_ASCII 0x3a ~enrageb~ #8
   LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
+  BUT_ONLY
+  
+// has permanent-timed effect with duration
+COPY_EXISTING ~spin672.spl~ ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
+              ~spin878.spl~ ~override~
+              ~spin927.spl~ ~override~  // (spl) Boiling Rain Storm - causes stun - plays sound EFF_P27
+  LPF ALTER_EFFECT INT_VAR match_timing = 1 duration = 0 END
+
+// tbd, cam
+// update psychic drain to use generic mind flayer spell animation, spflayer
+COPY_EXISTING ~spin804.spl~  ~override~ // psychic drain - plays spmindat
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = spflayer END
   BUT_ONLY
 
 // tbd, cam
@@ -1762,8 +1841,6 @@ INCLUDE "eefixpack/files/tph/luke/remove_redundant_portrait_icons.tph"
 LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "itm" END
 LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "spl" END
 
-
-
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~     // function for effect batches
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2.tpa~ // array definitions for effect batches
-INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~              // use effect batches to remove vfx from effects which have been removed
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
+INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
+INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~                  // use effect batches to remove vfx from effects which have been removed

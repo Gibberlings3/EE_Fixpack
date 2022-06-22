@@ -97,7 +97,14 @@ DEFINE_PATCH_MACRO ~cd_cure_disease~ BEGIN
     326, "-10", "-10", "cdcur79",  1, 0, "same" => 1 // apply 'cure disease' spell with 321s
     240, "-10",     7, "same",     1, 0, "same" => 1 // remove 'disease' portrait icon
   END  
-  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN // delete existing 321s, as they've been shunted to cdcfear
+    321, "-10", 0, "spin784",  "-10", "-10", "same" => 1 // snake gaze
+    321, "-10", 0, "spwi409",  "-10", "-10", "same" => 1 // contagion
+    321, "-10", 0, "demogorg", "-10", "-10", "same" => 1 // contagion
+    321, "-10", 0, "finmel01", "-10", "-10", "same" => 1 // contagion
+    321, "-10", 0, "pudden01", "-10", "-10", "same" => 1 // contagion
+    321, "-10", 0, "ravag03",  "-10", "-10", "same" => 1 // contagion
+  END  
 END
 
 DEFINE_PATCH_MACRO ~cd_cure_drunkenness~ BEGIN
@@ -199,7 +206,9 @@ DEFINE_PATCH_MACRO ~cd_cure_poison~ BEGIN
     326, "-10", "-10", "cdcur11",  1, 0, "same" => 1 // apply 'cure poison' spell with 321s
     240, "-10",     6, "same",     1, 0, "same" => 1 // remove 'poisoned' portrait icon
   END  
-  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN // delete existing 321s, as they've been shunted to cdcfear
+    321, "-10", 0, "jellgr1",  "-10", "-10", "same" => 1 
+  END  
 END
 
 DEFINE_PATCH_MACRO ~cd_cure_silence~ BEGIN
