@@ -24,7 +24,7 @@ BEGIN
 					// parent resref , ability , permutation/extract => child resref
 					//"cwszomb" -- fixed elsewhere
 					"kris" , "-1" , "2,3,4,5" => "kris" // Bone Kris of Black Ichor +2
-					"poison" , "-1" , "2,3,4,5" => "poison" // Should EYEVENOM also block that Constitution loss...? Guess so...? (see here => https://www.gibberlings3.net/forums/topic/35652-removing-that-dang-spinny-head-animation/?do=findComment&comment=312015)
+					"poison" , "-1" , "2,3,4,6" => "poison" // Should EYEVENOM also block that Constitution loss...? Guess so...? (see here => https://www.gibberlings3.net/forums/topic/35652-removing-that-dang-spinny-head-animation/?do=findComment&comment=312015)
 					//"spsatt[1-5]" -- Should that op177 effect be removed...?
 				END
 			END
