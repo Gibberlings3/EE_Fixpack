@@ -44,7 +44,10 @@ BEGIN
 					"icegolem" , "-1" , "1,0,2,3" => "icegolem" // Skull
 					"icetrl" , "-1" , "1,2,3" => "icetrl" // Attack
 					"poq2-16" , "-1" , "0,1,2,3" => "poq2-16" // 
-					"sflail" , "-1" , "22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57" => "sflail" // Flail
+					"sflail" , "-1" , "22,23,24,25,26,27,28,29,30" => "sflail1" // Flail (Stun: 6 seconds)
+					"sflail" , "-1" , "23,24,25,26,27,28,29,30,31" => "sflail2" // Flail (Stun: 12 seconds)
+					"sflail" , "-1" , "24,25,26,27,28,29,30,31,32" => "sflail3" // Flail (Stun: 18 seconds)
+					"sflail" , "-1" , "25,26,27,28,29,30,31,32,33" => "sflail4" // Flail (Stun: 24 seconds)
 					"u1ham3b" , "-1" , "1,2,3,4" => "u1ham3b" // War Hammer of Sparks +2
 					"u1hax2a" , "-1" , "1,2,3,4" => "u1hax2a" // Charged Battle Axe +2
 					"u1hax4b" , "-1" , "1,0,2,3" => "u1hax4b" // Benorg's Truth +3
