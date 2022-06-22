@@ -440,12 +440,16 @@ END
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
 
   ~#beltyn~  => 7 // generalist > necromancy (beltyn's burning blood)
+  ~%WIZARD_BELTYNS_BURNING_BLOOD%a~ => 7 // generalist > necromancy (beltyn's burning blood) => subspell applying FIRE damage
   ~#bonecir~ => 7 // generalist > necromancy (circle of bones)
   ~#cureslp~ => 0 // generalist > none (unused)
   ~#curestn~ => 0 // generalist > none (unused)
   ~#deathf1~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%a~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#deathf2~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%b~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#deathf3~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%c~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#jedslp~  => 0 // generalist > none (jed passes out)
   ~#rw_17~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
   ~#rw_18~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
@@ -460,6 +464,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
   ~#shrouda~ => 6 // generalist > invoker (old shroud of flmae)
   ~#shroudb~ => 6 // generalist > invoker (old shroud of flmae)
   ~#sunrund~ => 0 // generalist > none (unk)
+  ~cdsunrun~ => 0 // generalist > none (unk) => subspell applying FIRE damage
   ~#vitarea~ => 2 // generalist > conjurer (old vitriolic sphere)
   ~blindimm~ => 0 // generalist > none (old blindness immunity)
   ~deafimm~  => 0 // generalist > none (old deafness immunity)
@@ -495,12 +500,16 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
   ~spin130~  => 0 // generalist > none (INNATE_BLUE_GLOW)
   ~spin131~  => 0 // generalist > none (INNATE_DRAGON_DEATH_ANIMATION)
   ~spin132~  => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET)
+  ~spin132a~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying CRUSHING/SLASHING damage
+  ~spin132b~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying STUN
   ~spin133~  => 0 // generalist > none (INNATE_DRAGON_GEM_EFFECTS)
   ~spin134~  => 0 // generalist > none (INNATE_DRAGON_BREATH)
   ~spin135~  => 0 // generalist > none (INNATE_DRAGON_GEM_SUMMONING)
   ~spin136~  => 0 // generalist > none (INNATE_BEHOLDER_UNUSED)
   ~spin138~  => 0 // generalist > none (INNATE_HARPY_WAIL)
   ~spin139~  => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL)
+  ~spin139a~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying PANIC
+  ~spin139b~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying STUN
   ~spin149~  => 0 // generalist > none (INNATE_POLYMORPH_TO_DOG)
   ~spin162~  => 0 // generalist > none (INNATE_HOBART_TO_RAKSHASA)
   ~spin164~  => 0 // generalist > none (INNATE_MUSTARD_JELLY_VAPOR)
