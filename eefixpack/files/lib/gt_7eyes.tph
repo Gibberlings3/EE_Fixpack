@@ -399,7 +399,7 @@ BEGIN
 								"savingthrow" = "%damage_opcode%" ? "%effect_attributes_13%" : 0
 								"savebonus" = "%damage_opcode%" ? "%effect_attributes_14%" : 0
 								"special" = "%effect_attributes_15%"
-								"header" = "%effect_attributes_17%" + 1 // count starts from 1 instead of 0!!!
+								"header" = (SHORT_AT 0x68) == 1 ? 1 : "%effect_attributes_17%" + 1 // count starts from 1 instead of 0!!!
 							STR_VAR
 								"resource" = "%effect_attributes_10%"
 							END
