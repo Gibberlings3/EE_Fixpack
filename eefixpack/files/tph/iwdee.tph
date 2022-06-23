@@ -653,11 +653,16 @@ COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   //LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_target = 2 match_savingthrow = BIT0 END // nuke dupe 'stunned' string
   //LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END 
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = 0 STR_VAR match_resource = ~%DEST_RES%A~ END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 savingthrow = BIT0 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 savingthrow = 0 STR_VAR insert = ~last~ END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 match_savingthrow = BIT0 opcode = 206 parameter1 = ~-1~ timing = 0 STR_VAR resource = ~%DEST_RES%~ END
   BUT_ONLY
 
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREAT_SHOUT%a.spl~ ~override~ // spwi806 great shout (subspell applying stun)
     LPF ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 45 ~match_duration~ = 6 ~opcode~ = 206 ~parameter1~ = "-1" ~parameter2~ = 0 ~duration~ = 0 STR_VAR ~resource~ = ~%DEST_RES%~ END
+    LPF ~ALTER_EFFECT~ INT_VAR ~multi_match~ = 4 ~savingthrow~ = BIT0 END
   BUT_ONLY_IF_IT_CHANGES
 END
  
