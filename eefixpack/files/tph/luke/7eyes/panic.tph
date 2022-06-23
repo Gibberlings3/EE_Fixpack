@@ -121,8 +121,8 @@ BEGIN
 					"%WARRIOR_WAR_CRY%" , "-1" , "2=>1" => ""
 					//"%INNATE_GREAT_ROAR%" -- should EYEMIND absorb the 'Strength bonus' penalty...? Yes, probably (see here => https://www.gibberlings3.net/forums/topic/35652-removing-that-dang-spinny-head-animation/?do=findComment&comment=312015)
 					"%INNATE_HARPY_WAIL_INTERNAL%" , "-1" , "5,8,9" => "%INNATE_HARPY_WAIL_INTERNAL%A"
-					"%CLERIC_INSECT_PLAGUE%" , "-1" , "4,6,13" => "%CLERIC_INSECT_PLAGUE%B"
-					"%CLERIC_INSECT_PLAGUE%" , "-1" , "5,6,12" => "%CLERIC_INSECT_PLAGUE%C"
+					"%CLERIC_INSECT_PLAGUE%" , "-1" , "4,6,13" => "%CLERIC_INSECT_PLAGUE%B" // "... creatures with 2 or fewer Hit Dice will immediately panic..."
+					"%CLERIC_INSECT_PLAGUE%" , "-1" , "5,6,12" => "%CLERIC_INSECT_PLAGUE%B" // "... while creatures with 3 to 5 Hit Dice must save vs. Spell to avoid the same fate."
 					"%WIZARD_SPOOK%" , 0 , "3=>1" => ""
 					"%WIZARD_SPOOK%" , 1 , "3=>1" => ""
 					"%WIZARD_SPOOK%" , 2 , "3=>1" => ""
