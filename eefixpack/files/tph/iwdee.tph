@@ -894,7 +894,18 @@ WITH_SCOPE BEGIN
   LAF "WIZARD_CHILL_TOUCH" END
 END
 
-
+/*
+luke
+**Cause Disease**
+- Make sure `op78` displays the `Diseased` portrait icon
+  - function "remove_redundant_effects" won't be able to properly deal with this file because there are multiple op78 effects and just one op142 effect
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%CLERIC_CAUSE_DISEASE%.spl" "override"
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 78 "special" = 7 END // Disease
+    LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 "match_parameter2" = 7 END // op78 can naturally provide the "Diseased" portrait icon
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 // luke
 // Spirit Fire => should not interact with spell protections

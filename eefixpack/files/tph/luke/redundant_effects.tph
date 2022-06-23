@@ -5,6 +5,12 @@
 /////////////////////////////////////////////////////////////////
 /*
 
+**Opcode 39**
+- It can naturally provide the "Sleep/Hopelessness/Nauseated/Unconscious" portrait icons
+
+**Opcode 213**
+- It can naturally provide the "Maze" portrait icon
+
 **Opcode 74**
 - It can naturally provide the "Blind" portrait icon
 - It naturally imposes a -4 penalty to THAC0
@@ -137,134 +143,7 @@ BEGIN
 	// Initialize
 	SET "found_here" = 0
 	// Collect opcodes
-	PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
-		PATCH_MATCH SHORT_AT "%fx_off%" WITH
-			5 BEGIN // Charm creature
-				READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
-				PATCH_IF ("%fx_parameter2%" STRING_MATCHES_REGEXP "^\(4\|1004\)$") BEGIN
-					// Save current values
-					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(0\|1\|43\)$" "%fx_ind%") "irrelevant"
-				END
-			END
-			16 317 BEGIN // Haste
-				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
-				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
-					// Save current values
-					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(38\|110\)$" "%fx_ind%") "irrelevant"
-				END
-			END
-			25 BEGIN // Poison
-				// Save current values
-				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "6" "%fx_ind%") "irrelevant"
-			END
-			40 BEGIN // Slow
-				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
-				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
-					// Save current values
-					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "41" "%fx_ind%") "irrelevant"
-				END
-			END
-			45 BEGIN // Stun
-				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
-				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
-					// Save current values
-					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "55" "%fx_ind%") "irrelevant"
-				END
-			END
-			74 BEGIN // Blindness
-				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
-				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
-					// Save current values
-					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "8" "%fx_ind%") "irrelevant"
-				END
-			END
-			78 BEGIN // Disease
-				// Save current values
-				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "7" "%fx_ind%") "irrelevant"
-			END
-			98 BEGIN // Regeneration
-				// Save current values
-				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(56\|87\)$" "%fx_ind%") "irrelevant"
-			END
-			175 BEGIN // Hold creature
-				// Save current values
-				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "13" "%fx_ind%") "irrelevant"
-			END
-			DEFAULT
-		END
-	END
+	LPF "redundant_effect_helper2" RET_ARRAY "fx_data" END
 	// check redundant effects
 	PHP_EACH "fx_data" AS "fx_attributes" => "" BEGIN
 		PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
@@ -317,12 +196,22 @@ BEGIN
 												PATCH_IF (SLONG_AT ("%fx_off%" + 0x28) == "%fx_attributes_7%") BEGIN
 													WRITE_SHORT "%fx_off%" 999
 													SET "found_here" = 1
-													PATCH_IF (("%icon%" STRING_MATCHES_REGEXP "^\(7\|56\|87\)$") == 0) BEGIN
-														PATCH_IF ("%fx_ind%" > "%fx_attributes_9%") BEGIN
-															WRITE_LONG ("%fx_off%" - ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
-														END ELSE BEGIN
-															WRITE_LONG ("%fx_off%" + ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
+													PATCH_MATCH "%icon%" WITH
+														7 56 87 14 44 126 130 BEGIN
+															PATCH_IF ("%fx_ind%" > "%fx_attributes_9%") BEGIN
+																WRITE_LONG ("%fx_off%" - ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
+															END ELSE BEGIN
+																WRITE_LONG ("%fx_off%" + ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
+															END
 														END
+														41 WHEN ("%fx_attributes_0%" == 78) AND ("%fx_attributes_10%" == 10) BEGIN // Disease type: Slow
+															PATCH_IF ("%fx_ind%" > "%fx_attributes_9%") BEGIN
+																WRITE_LONG ("%fx_off%" - ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
+															END ELSE BEGIN
+																WRITE_LONG ("%fx_off%" + ("%fx_ind%" - "%fx_attributes_9%") * 0x30 + 0x2C) "%icon%"
+															END
+														END
+														DEFAULT
 													END
 												END
 											END
@@ -335,6 +224,168 @@ BEGIN
 				END
 				DEFAULT
 			END
+		END
+	END
+END
+
+DEFINE_PATCH_FUNCTION "redundant_effect_helper2"
+RET_ARRAY
+	"fx_data"
+BEGIN
+	PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+		PATCH_MATCH SHORT_AT "%fx_off%" WITH
+			5 BEGIN // Charm creature
+				READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
+				PATCH_IF ("%fx_parameter2%" STRING_MATCHES_REGEXP "^\(4\|1004\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(0\|1\|43\)$" "%fx_ind%") "irrelevant"
+				END
+			END
+			16 317 BEGIN // Haste
+				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(38\|110\)$" "%fx_ind%") "irrelevant"
+				END
+			END
+			25 BEGIN // Poison
+				// Save current values
+				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "6" "%fx_ind%") "irrelevant"
+			END
+			39 BEGIN // Sleep
+				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(14\|44\|126\|130\)$" "%fx_ind%") "irrelevant"
+				END
+			END
+			40 BEGIN // Slow
+				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "41" "%fx_ind%") "irrelevant"
+				END
+			END
+			45 BEGIN // Stun
+				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "55" "%fx_ind%") "irrelevant"
+				END
+			END
+			74 BEGIN // Blindness
+				READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+				PATCH_IF ("%fx_timing%" STRING_MATCHES_REGEXP "^\(1\|4\|7\)$") BEGIN
+					// Save current values
+					READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+					READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+					READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+					READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+					READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+					READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+					READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+					READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+					TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "8" "%fx_ind%") "irrelevant"
+				END
+			END
+			78 BEGIN // Disease
+				// Save current values
+				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+				READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
+				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(7\|41\)$" "%fx_ind%" "%fx_parameter2%") "irrelevant"
+			END
+			98 BEGIN // Regeneration
+				// Save current values
+				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "^\(56\|87\)$" "%fx_ind%") "irrelevant"
+			END
+			175 BEGIN // Hold creature
+				// Save current values
+				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "13" "%fx_ind%") "irrelevant"
+			END
+			213 BEGIN // Maze
+				// Save current values
+				READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+				READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+				READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+				READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+				READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+				READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+				TEXT_SPRINT $"fx_data"("%fx_opcode%" "%fx_target%" "%fx_probability1%" "%fx_probability2%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "78" "%fx_ind%") "irrelevant"
+			END
+			DEFAULT
 		END
 	END
 END
