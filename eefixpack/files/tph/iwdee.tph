@@ -976,6 +976,51 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+/*
+luke
+**Jester's song**
+- Make sure the Confusion subspell is refreshed every time it triggers (whether or not the target fails the save vs. Spell)
+  - this is a "eefixpack/files/tph/luke/7eyes/confusion.tph" follow-up
+*/
+
+WITH_SCOPE BEGIN
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "spcl751a.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "spcl751b" END // Cast spell
+    BUT_ONLY_IF_IT_CHANGES
+  END
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "spcl751b.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "savingthrow" = BIT0 "savebonus" = 2 END // all effects: Save vs. Spell
+      LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 2 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
+
+/*
+luke
+**Wand of Cursing**
+- Move all cosmetic effects into the 3 subspells
+  - this is a "eefixpack/files/tph/luke/7eyes/silence/blindness/deafness.tph" follow-up
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING "wand19.itm" "override"
+    LPF "GET_V10_HEAD_EFFECTS" RET_ARRAY "v10_head_effects" END
+    LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 174 END // Play sound
+    LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 215 END // Play visual effect
+  BUT_ONLY_IF_IT_CHANGES
+  WITH_SCOPE BEGIN
+    COPY_EXISTING_REGEXP "^wand19[a-c]\.spl$" "override"
+      PHP_EACH "v10_head_effects" AS "fx_attributes" => "" BEGIN
+        PATCH_IF ("%fx_attributes_0%" != 146) BEGIN
+          LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = "%fx_attributes_0%" "target" = "%fx_attributes_1%" "power" = "%fx_attributes_2%" "parameter1" = "%fx_attributes_3%" "parameter2" = "%fx_attributes_4%" "timing" = "%fx_attributes_5%" "resist_dispel" = ("%fx_attributes_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attributes_6%") "duration" = "%fx_attributes_7%" "special" = "%fx_attributes_15%" STR_VAR "resource" = "%fx_attributes_10%" END
+        END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
+
 // tbd, cam
 // don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
 INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~

@@ -119,42 +119,6 @@ BEGIN
 			BUT_ONLY_IF_IT_CHANGES
 		END
 	END
-
-	/* Post production */
-
-	WITH_SCOPE BEGIN
-		// Make sure the Confusion subspell is refreshed every time it triggers (whether or not the target fails the save vs. Spell)
-		WITH_SCOPE BEGIN
-			COPY_EXISTING "spcl751a.spl" "override"
-				LPF "ALTER_EFFECT"
-				INT_VAR
-					"match_opcode" = 146 // Cast spell
-					"savingthrow" = 0
-					"savebonus" = 0
-				STR_VAR
-					"match_resource" = "spcl751b"
-				END
-			BUT_ONLY_IF_IT_CHANGES
-		END
-		WITH_SCOPE BEGIN
-			COPY_EXISTING "spcl751b.spl" "override"
-				LPF "ALTER_EFFECT"
-				INT_VAR
-					"savingthrow" = BIT0 // Save vs. Spell
-					"savebonus" = 2
-				END
-				LPF "ADD_SPELL_EFFECT"
-				INT_VAR
-					"insert_point" = 0 // first
-					"opcode" = 321 // Remove effects by resource
-					"target" = 2
-					"timing" = 1
-				STR_VAR
-					"resource" = "%DEST_RES%"
-				END
-			BUT_ONLY_IF_IT_CHANGES
-		END
-	END
 END
 
 /////////////////////////////////////////////////////////////////

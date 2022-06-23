@@ -95,38 +95,6 @@ BEGIN
 			BUT_ONLY_IF_IT_CHANGES
 		END
 	END
-
-	/* Post production */
-
-	WITH_SCOPE BEGIN
-		COPY_EXISTING "wand19.itm" "override"
-			LPF "GET_V10_HEAD_EFFECTS" RET_ARRAY "v10_head_effects" END
-			LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 174 END
-			LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 215 END
-		BUT_ONLY_IF_IT_CHANGES
-		WITH_SCOPE BEGIN
-			COPY_EXISTING_REGEXP "^wand19[a-c]\.spl$" "override"
-				PHP_EACH "v10_head_effects" AS "fx_attributes" => "" BEGIN
-					PATCH_IF ("%fx_attributes_0%" != 146) BEGIN
-						LPF "ADD_SPELL_EFFECT"
-						INT_VAR
-							"opcode" = "%fx_attributes_0%"
-							"target" = "%fx_attributes_1%"
-							"power" = "%fx_attributes_2%"
-							"parameter1" = "%fx_attributes_3%"
-							"parameter2" = "%fx_attributes_4%"
-							"timing" = "%fx_attributes_5%"
-							"resist_dispel" = ("%fx_attributes_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attributes_6%")
-							"duration" = "%fx_attributes_7%"
-							"special" = "%fx_attributes_15%"
-						STR_VAR
-							"resource" = "%fx_attributes_10%"
-						END
-					END
-				END
-			BUT_ONLY_IF_IT_CHANGES
-		END
-	END
 END
 
 /////////////////////////////////////////////////////////////////
