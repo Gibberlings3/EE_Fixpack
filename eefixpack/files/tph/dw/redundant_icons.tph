@@ -124,6 +124,10 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 			SET $to_check(7)=1
 			proceed=1
 		END
+		98 BEGIN
+			SET $to_check(56)=1
+			SET $to_check(87)=1
+		END
 		DEFAULT
 		END
 	END
@@ -131,6 +135,7 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 	PATCH_IF proceed BEGIN
 		poison=0
 		disease=0
+		regenerate=0
 		PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
 			PATCH_IF SHORT_AT fx_off=142 BEGIN
 				READ_LONG fx_off+0x8 parameter2
@@ -143,19 +148,26 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 					7 BEGIN
 						disease=1
 					END
+					56 87 BEGIN
+						regenerate=1
+						regen_icon=parameter2
+					END
 					DEFAULT
 					END
 				END		
 			END
 		END
-		// update poison/disease if needed
-		PATCH_IF poison || disease BEGIN
+		// update poison/disease/regeneration if needed
+		PATCH_IF poison || disease || regenerate BEGIN
 			PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
 				PATCH_IF (poison && SHORT_AT fx_off=25) BEGIN
 					WRITE_LONG fx_off+0x2c 6
 				END ELSE
 				PATCH_IF (disease && SHORT_AT fx_off=78) BEGIN
 					WRITE_LONG fx_off+0x2c 7
+				END	ELSE			
+				PATCH_IF (regenerate && SHORT_AT fx_off=98) BEGIN
+					WRITE_LONG fx_off+0x2c regen_icon
 				END				
 			END
 		END
