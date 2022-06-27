@@ -10,6 +10,7 @@ OUTER_SET panic_immunity = IDS_OF_SYMBOL (~splstate~ ~PANIC_IMMUNITY~)
 OUTER_SET sleep_immunity = IDS_OF_SYMBOL (~splstate~ ~SLEEP_IMMUNITY~)
 OUTER_SET stun_immunity = IDS_OF_SYMBOL (~splstate~ ~STUN_IMMUNITY~)
 
+/*
 // hold abilities which should have immunity checks
 COPY_EXISTING ~carrio1.spl~  ~override~ // (itm) Ghoul hand - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
               ~ghoult.spl~   ~override~ // (itm) Ghoul Touch - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
@@ -18,6 +19,7 @@ COPY_EXISTING ~carrio1.spl~  ~override~ // (itm) Ghoul hand - causes hold - port
 // lacking hold_immunity check
 COPY_EXISTING ~ghoul1.itm~   ~override~ // Ghoul Touch - causes hold - plays sound EFF_E05 - portrait icon 13 [expiry sound]
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = hold_immunity parameter2 = 110 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+*/
 
 // poison immunity blocking slow
 COPY_EXISTING ~jellmu1.itm~  ~override~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
@@ -71,8 +73,8 @@ COPY ~override/ghast1.spl~ ~override/ghast1n.spl~ // nausea subspell
 COPY_EXISTING ~ghast1p.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = 0 END
 MOVE ~override/ghast2.spl~ ~override/ghast1p.spl~ // paralyze subspell
-COPY_EXISTING ~ghast1p.spl~ ~override~
-  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 324 parameter1 = hold_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+//COPY_EXISTING ~ghast1p.spl~ ~override~
+//  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 324 parameter1 = hold_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 
 // luke's seven eyes already split this, but it needs a unique resref
 COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect
@@ -85,7 +87,7 @@ COPY_EXISTING ~icetrlst.spl~ ~override~
 // move stun to subspell
 COPY_EXISTING ~sflail.itm~   ~override~ // (itm) Flail - causes stun - additional effects
   LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END
-  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 146 parameter2 = 1 timing = 1 resist_dispel = 2 savingthrow = BIT2 savebonus = "-2" probability2 = 100 probability1 = 74 STR_VAR resource = sflailst END
+  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 146 parameter2 = 2 timing = 1 resist_dispel = 2 savingthrow = BIT2 savebonus = "-2" probability2 = 100 probability1 = 74 STR_VAR resource = sflailst END
 
 // create stun subspell  
 COPY ~eefixpack/files/spl/cdcure.spl~ ~override/sflailst.spl~
@@ -187,8 +189,8 @@ COPY_EXISTING ~spwi029.spl~ ~override~ // (spl) <Invalid Strref -1> - causes con
 // luke and david's code was conflicting in splitting great shout the seven eyes/immunity fixes, so I've disabled it in their code blocks and handling it myself
 COPY_EXISTING ~spwi806.spl~ ~override~ // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = 0 END // remove save from already-created death subspell
-  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 opcode = 146 parameter1 = 0 parameter2 = 1 savingthrow = 0 STR_VAR resource = dwfpgs01 END // turn deaf string into spell cast
-  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 35568 opcode = 146 parameter1 = 0 parameter2 = 1 savingthrow = 0 STR_VAR resource = dwfpgs02 END // turn stun string into spell cast
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 opcode = 146 parameter1 = 0 parameter2 = 2 savingthrow = 0 STR_VAR resource = dwfpgs01 END // turn deaf string into spell cast
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 35568 opcode = 146 parameter1 = 0 parameter2 = 2 savingthrow = 0 STR_VAR resource = dwfpgs02 END // turn stun string into spell cast
   LPF DELETE_EFFECT INT_VAR match_target = 2 match_savingthrow = BIT0 END // delete leftovers
   LPF DELETE_EFFECT INT_VAR match_target = 2 match_duration =  6 END // delete leftovers
   LPF DELETE_EFFECT INT_VAR match_target = 2 match_duration = 12 END // delete leftovers
@@ -237,7 +239,7 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
               ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
               ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 4 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureber~ END               
+  LPF ALTER_EFFECT INT_VAR match_opcode = 4 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureber~ END               
   LPF cd_apply_batch STR_VAR array_name = cd_cure_berserk END
   BUT_ONLY
 
@@ -297,7 +299,7 @@ COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness di
               ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 75 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curebld~ END               
+  LPF ALTER_EFFECT INT_VAR match_opcode = 75 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curebld~ END               
   LPF cd_apply_batch STR_VAR array_name = cd_cure_blind END
   BUT_ONLY
 
@@ -346,7 +348,7 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 242 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curecon~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 242 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curecon~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_confusion END
   BUT_ONLY
 
@@ -407,7 +409,7 @@ COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness di
               ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 81 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedef~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 81 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curedef~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_deafness END
   BUT_ONLY
 
@@ -466,7 +468,7 @@ COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness di
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~trollde.itm~  ~override~ // <Invalid Strref -1> - cures disease poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 79 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedis~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 79 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curedis~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_disease END
   BUT_ONLY
 
@@ -505,7 +507,7 @@ COPY_EXISTING ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease d
               ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 164 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedrk~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 164 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curedrk~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_drunkenness END
   BUT_ONLY
 
@@ -620,7 +622,7 @@ COPY_EXISTING ~#palfear.spl~ ~override~ // <Invalid Strref -1> - cures fear
               ~vampreg.itm~  ~override~ // Ring - cures fear - additional effects
               ~vampreg1.itm~ ~override~ // Ring - cures fear - additional effects
               ~virgin.itm~   ~override~ // Wailing of Virgins - cures fear
-  LPF ALTER_EFFECT INT_VAR match_opcode = 161 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curefer~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 161 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curefer~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_fear END
   BUT_ONLY
 
@@ -677,7 +679,7 @@ COPY_EXISTING ~arow07.itm~   ~override~ // Arrow of Dispelling - cures deafness 
               ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 77 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curefbm~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 77 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curefbm~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_feeblemind END
   BUT_ONLY
 
@@ -742,7 +744,7 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~sprngs03.itm~ ~override~ // [1pp] - cures hold stun - additional effects
               ~sprngs04.itm~ ~override~ // [1pp] - cures hold stun - additional effects
               ~sprngz05.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 162 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curehol~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 162 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curehol~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_hold END
   BUT_ONLY
 
@@ -809,7 +811,7 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureinv.spl~
   END
 
 COPY_EXISTING ~dw#brkin.spl~ ~override~ // Generic Abjuration - cures invisibility
-  LPF ALTER_EFFECT INT_VAR match_opcode =  47 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureinv~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode =  47 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureinv~ END   
 //  LPF cd_apply_batch STR_VAR array_name = cd_cure_invisbility END // currently does nothing
   BUT_ONLY
 
@@ -825,7 +827,7 @@ COPY_EXISTING ~spcl232.spl~  ~override~ // True Sight - cures invisibility - por
               ~spwi515.spl~  ~override~ // Oracle - cures invisibility
               ~spwi609.spl~  ~override~ // True Sight - cures invisibility - portrait icon(s) 108 - sound(s) EFF_E02 - additional effects
               ~spwi609d.spl~ ~override~ // True Sight - cures invisibility 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 116 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureinv~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 116 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureinv~ END   
 //  LPF cd_apply_batch STR_VAR array_name = cd_cure_invisbility END // currently does nothing
   BUT_ONLY
 
@@ -859,7 +861,7 @@ COPY_EXISTING ~cdpr417.spl~  ~override~ // Lesser Restoration - cures level drai
               ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 224 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureldr~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 224 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureldr~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_leveldrain END
   BUT_ONLY
 
@@ -884,7 +886,7 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curendt.spl~
 
 /* nothing "cures" nondetection in iwd
 COPY_EXISTING 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 70 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curendt~ END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 70 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curendt~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_nondetection END
   BUT_ONLY
 */
@@ -919,7 +921,7 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curepse.spl~
 
 /* nothing "cures" pause in iwd
 COPY_EXISTING 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 270 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curepse~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 270 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curepse~ END  
 //  LPF cd_apply_batch STR_VAR array_name = cd_cure_pause END // currently does nothing
   BUT_ONLY
 */
@@ -1001,7 +1003,7 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
               ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~trollde.itm~  ~override~ // <Invalid Strref -1> - cures disease poison
-  LPF ALTER_EFFECT INT_VAR match_opcode = 11 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curepsn~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 11 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curepsn~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_poison END
   BUT_ONLY
 
@@ -1025,7 +1027,7 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curesil.spl~
   END
 
 COPY_EXISTING ~spwi219.spl~  ~override~ // Vocalize - cures silence - portrait icon(s) 103 - sound(s) EFF_E01 - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 48 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curesil~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 48 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curesil~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_silence END
   BUT_ONLY
 
@@ -1085,7 +1087,7 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
               ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
               ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 2 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureslp~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 2 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureslp~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_sleep END
   BUT_ONLY
 
@@ -1182,6 +1184,6 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
               ~sprngs03.itm~ ~override~ // [1pp] - cures hold stun - additional effects
               ~sprngs04.itm~ ~override~ // [1pp] - cures hold stun - additional effects
               ~sprngz05.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 46 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curestn~ END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 46 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curestn~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_stun END
   BUT_ONLY

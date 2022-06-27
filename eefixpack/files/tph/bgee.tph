@@ -684,20 +684,44 @@ ACTION_IF game_includes_sod BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode = 139 END
     LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 139 END
 
+  // immune to hold, but missing spmindat immunity
+  COPY_EXISTING ~bdmisc1c.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
+                ~bdplant.itm~  ~override~ // ring - immune to stun - immune to hold
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
+    BUT_ONLY 
+
 END
+
+// tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
+COPY_EXISTING ~bddraggh.itm~ ~override~ // (itm) Attack - causes disease level drain
+              ~pudden01.itm~ ~override~ // (itm) <Invalid Strref -1> - causes disease
+  LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
+  IF_EXISTS // sod asset(s)
+  
+// tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
+COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~bdotyg02.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~otyugh.itm~   ~override~ // (itm) Attack - causes disease - portrait icon 41
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete separate slow icon (not present on bddraggh and pudden01)
+  LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
+  IF_EXISTS // sod asset(s)
   
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 49 END // charm is 50%, but icon is 100%
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
   PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 49 STR_VAR insert = last END
-    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 49 multi_match = 1 END
+    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
   END  
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 14 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 44 END // elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+
+// should cure intoxication, not set level to 0
+COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
+  LPF ALTER_EFFECT INT_VAR match_opcode = 94 opcode = 164 parameter2 = 0 END // flesh out effects below
 
 // poison resistance blocking con penalty, choking noises
 COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes poison
@@ -705,6 +729,15 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
+  
+// immune to confusion, but missing spconfus immunity
+COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 128 opcode = 296 parameter2 = 0 STR_VAR resource = spconfus END
+  BUT_ONLY IF_EXISTS
+
+// the feeblemind effect already sets INT=3, so purging redundant effects
+COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
+  LPF DELETE_EFFECT INT_VAR match_opcode = 19 END
 
 // viper's edge poison immunity block poorly placed
 COPY_EXISTING ~sw1p01.itm~ ~override~

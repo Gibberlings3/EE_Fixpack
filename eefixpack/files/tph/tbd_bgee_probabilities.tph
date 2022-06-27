@@ -35,7 +35,7 @@ COPY_EXISTING ~bdephrik.cre~ ~override~ // leftover 293
  
 COPY_EXISTING ~baring.itm~   ~override~ // barrityl's burden: 1-in3 chance for damage; 1-3 in each 1-3 for item
   LPF ALTER_EFFECT INT_VAR match_probability1 =  33 match_probability2 =  1 probability1 =  33 probability2 =  0 dicesize = 2 END // fire damage was 1-33, should be 0-33; damge to 1d2 instead of 1d1
-  LPF ALTER_EFFECT INT_VAR match_probability1 =  67 match_probability2 =  0 probability1 =  67 probability2 = 34 END // cold damage was 0-67, should be 34-67
+  LPF ALTER_EFFECT INT_VAR match_probability1 =  66 match_probability2 =  0 probability1 =  66 probability2 = 34 END // cold damage was 0-66, should be 34-66
   LPF ALTER_EFFECT INT_VAR match_probability1 = 100 match_probability2 = 88 probability1 = 100 probability2 = 87 END // other gems have 13% chance, not 12%
   BUT_ONLY 
  
