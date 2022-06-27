@@ -44,6 +44,7 @@ DEFINE_ACTION_FUNCTION declutter INT_VAR write=0 BEGIN
 					INNER_ACTION BEGIN
 						COPY_EXISTING "%resource%" override
 							LPF remove_redundant_fx RET altered END
+              IF_EXISTS
 					END
 				END
 				PATCH_VERBOSE

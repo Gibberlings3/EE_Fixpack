@@ -1,47 +1,1201 @@
 /////                                                  \\\\\
-///// hold                                             \\\\\
+///// bespoke immunity review                          \\\\\
 /////                                                  \\\\\
 
-// stuff that cures hold should also remove anything that plays spmindat
-COPY_EXISTING ~bpdispel.spl~ ~override~ // <invalid strref -1> - cures hold
-              ~cdiwdtr1.spl~ ~override~ // <invalid strref -1> - cures hold
-              ~cdiwdtr2.spl~ ~override~ // <invalid strref -1> - cures hold
-              ~labelt.itm~   ~override~ // girdle of labelas - cures hold - immune to hold - blocks spmindat
-              ~ohsmode1.spl~ ~override~ // <invalid strref -1> - cures hold - immune to hold - blocks spmindat
-              ~ohsmode4.spl~ ~override~ // <invalid strref -1> - cures hold - immune to hold - blocks spmindat
-              ~potn45.itm~   ~override~ // potion of freedom - cures hold - immune to hold - blocks spmindat
-              ~ring09.itm~   ~override~ // ring of free action - cures hold - immune to hold - blocks spmindat
-              ~sppr308.spl~  ~override~ // remove paralysis - cures hold
-              ~sppr403.spl~  ~override~ // free action - cures hold - immune to hold - blocks spmindat
-              ~sprngb03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngb04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngl03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngl04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngs01.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngs02.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngs03.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngs04.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-              ~sprngz05.itm~ ~override~ // interesting. well... we must be off. farewell. - immune to hold - blocks spmindat - cures hold
-  LPF cd_apply_batch STR_VAR array_name = cd_vfx_hold_cure END
-  BUT_ONLY 
+OUTER_SET confusion_immunity = IDS_OF_SYMBOL (~splstate~ ~CONFUSION_IMMUNITY~)
+OUTER_SET hold_immunity = IDS_OF_SYMBOL (~splstate~ ~HOLD_IMMUNITY~)
+OUTER_SET panic_immunity = IDS_OF_SYMBOL (~splstate~ ~PANIC_IMMUNITY~)
+OUTER_SET sleep_immunity = IDS_OF_SYMBOL (~splstate~ ~SLEEP_IMMUNITY~)
+OUTER_SET stun_immunity = IDS_OF_SYMBOL (~splstate~ ~STUN_IMMUNITY~)
+
+// hold abilities which should have immunity checks
+COPY_EXISTING ~carrio1.itm~  ~override~ // (itm) Ghoul hand - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+              ~ghoult.itm~   ~override~ // (itm) Ghoul Touch - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 324 parameter1 = hold_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// lacking hold_immunity check
+COPY_EXISTING ~ghoul1.itm~   ~override~ // Ghoul Touch - causes hold - plays sound EFF_E05 - portrait icon 13 [expiry sound]
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = hold_immunity parameter2 = 110 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// poison immunity blocking slow
+COPY_EXISTING ~jellmu1.itm~  ~override~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 318 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 multi_match = 2 END
+  LPF CLONE_EFFECT  INT_VAR match_savingthrow = BIT2 STR_VAR insert = last END // poison, icon
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 multi_match = 2 END
+
+// feeblemind immunity blocks *gulp* string
+COPY_EXISTING ~potn23.itm~   ~override~ // Oil of Speed - causes feeblemind - portrait icon(s) 48 - sound(s) #eff_e07
+  LPF CLONE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 16233 opcode = 400 STR_VAR insert = first END // clone to top of stack
+  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 16233 END // delete original
+  LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 139 END // correct opcode
+  
+// needs stun immunity, but can't block bonus damage
+COPY_EXISTING ~uarow3b.itm~  ~override~  // (itm) Hammer Arrow +1 - causes stun - portrait icon(s) 55 - additional effects [color glow]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 324 parameter1 = stun_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 12 opcode = 400 STR_VAR insert = first END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 12 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 12 END
+
+// needs stun immunity, but do special to avoid triple 324s
+COPY_EXISTING ~spin115.spl~  ~override~ // (spl) Mournful Wail - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound]
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 45 opcode = 324 parameter1 = stun_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 probability1 = 100 probability2 = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// fear abilities which should have immunity checks
+COPY_EXISTING ~spin119.spl~  ~override~ // (spl) Great Roar - causes fear - portrait icon(s) 36 91 - additional effects [str penalty]
+              ~spin921.spl~  ~override~ // (spl) Deathsong - causes fear - additional effects [includes attack penalty, school protection (?)]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 324 parameter1 = panic_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// sleep abilities which should have immunity checks
+COPY_EXISTING ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects [color pulse]
+              ~spin161.spl~  ~override~ // (spl) <Invalid Strref -1> - causes sleep - additional effects [remove stacking protection]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 39 opcode = 324 parameter1 = sleep_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// stun immunity check placed too late
+COPY_EXISTING ~sppr716.spl~  ~override~ // (spl) Symbol, Hopelessness - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound, hopelesssness icon]
+              ~spwi411.spl~  ~override~ // (spl) Emotion, Hopelessness - causes stun - portrait icon(s) 44 - sound(s) #eff_e05 [expiry sound, hopelesssness icon]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 324 opcode = 400 STR_VAR insert = first END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 324 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 324 END
 
 /////                                                  \\\\\
-///// other                                            \\\\\
+///// subspell creation                                \\\\\
 /////                                                  \\\\\
+
+// shunt ghast/ghoul lord hold stuff to new ability
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/ghast1p.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 109 target = 2 parameter2 = 2 duration = 36 END // add paralyze
+  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 142 parameter2 = 13 STR_VAR insert = below END // add 'held' icon
+  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 215 timing = 1 duration = 0 parameter2 = 0 STR_VAR resource = paralh END // add 'paralh' visual
+  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 174 STR_VAR resource = ~#eff_p11~ insert = below END // immediate sound
+  LPF CLONE_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 36 STR_VAR resource = ~#eff_e05~ insert = below END // expiry sound
+  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 324 parameter1 = hold_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%DEST_RES%~ END
+
+COPY_EXISTING ~ghast1.spl~ ~override/ghast1n.spl~ // rename existing nausea spell so it can be targeted individually
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END // delete leftover paralyze sound effects
+  LPF ALTER_EFFECT INT_VAR savingthrow = 0 resist_dispel = 0 END // save, MR checks moved to 146 invoking this
+
+// shunt ghast hold stuff to new ability
+COPY_EXISTING ~ghast1.itm~   ~override~ // Attack - causes hold - portrait icon 13 - plays sound EFF_E05 - plays sound EFF_E07 - unknown long effect - portrait icon 126
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 13 END // delete related
+  LPF DELETE_EFFECT INT_VAR match_opcode = 215 END // delete related
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = BIT1 resist_dispel = 1 STR_VAR resource = ghast1n END // change subspell to new resource for nausea
+  LPF ALTER_EFFECT INT_VAR match_opcode = 109 opcode = 146 target = 2 parameter1 = 0 parameter2 = 1 timing = 1 duration = 0 STR_VAR resource = ghast1p END // change paralyze to cast spells
+
+// shunt stun effects into spell
+COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 opcode = 146 parameter1 = 0 parameter2 = 1 timing = 1 duration = 0 STR_VAR resource = icetrlst END
+  LPF DELETE_EFFECT INT_VAR match_duration = 18 END
+
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/icetrlst.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 324 parameter1 = stun_immunity parameter2 = 110 STR_VAR resource = EVAL ~%DEST_RES%~ END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  45 target = 2 duration = 18 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =   7 target = 2 parameter1 = 71 parameter2 = 3 duration = 18 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = 14043 timing = 1 END
+  
+// move stun to subspell
+COPY_EXISTING ~sflail.itm~   ~override~ // (itm) Flail - causes stun - additional effects
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END
+  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 146 parameter2 = 1 timing = 1 resist_dispel = 2 savingthrow = BIT2 savebonus = "-2" probability2 = 100 probability1 = 74 STR_VAR resource = sflailst END
+
+// create stun subspell  
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/sflailst.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 324 parameter1 = stun_immunity parameter2 = 110 STR_VAR resource = EVAL ~%DEST_RES%~ END // stun immunity
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = 35568 timing = 1 END // stunned string
+  FOR (index = 0 ; index < 4 ; ++index) BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode =  45 target = 2 duration = ((index + 1) * 6) probability2 = (((index + 1) * 25)  - 1) probability1 = (index * 25) END
+    FOR (index2 = 0 ; index2 < 7 ; ++index2) BEGIN 
+      LPF ADD_SPELL_EFFECT INT_VAR opcode =  8 target = 2 duration = ((index + 1) * 6) probability2 = (((index + 1) * 25)  - 1) probability1 = (index * 25) parameter1 = ((46 << 8) + (56 << 16) + (0 << 24)) parameter2 = index2 END
+    END  
+  END
+
+// split out confusion from main insanity gaze spell
+COPY_EXISTING ~insanity.spl~ ~override/insanitc.spl~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
+  LPF DELETE_EFFECT INT_VAR match_savebonus = 0 END // deletes feeblemind, other effects
+  LPF CLONE_EFFECT INT_VAR match_opcode = 128 opcode = 324 parameter1 = confusion_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%DEST_RES%~ END
+  LPM cd_make_subspell
+
+// split out confusion from main insanity gaze spell
+COPY_EXISTING ~insanity.spl~ ~override~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
+  LPF DELETE_EFFECT INT_VAR match_duration = 48 match_probability1 = 100 END // deletes all confusion except string, visual
+  LPF DELETE_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = confush END // deletes confusion visual
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 37604 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = insanitc END // convert confused string to spell cast
   
 // split hold from bounty hunter's special snare into own spell
 COPY ~eefixpack/files/spl/spcl415h.spl~ ~override~ // just the hold ability farmed out into separate spell
+  LPF ALTER_EFFECT INT_VAR match_opcode = 324 parameter1 = hold_immunity END
 COPY_EXISTING ~spcl415.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 177 END // deletes hold EFFs
-  LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 326 power = 0 parameter1 = 0 parameter2 = 5 timing = 1 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 END // change hold to apply spell to hhumanoids
+  LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 326 power = 0 parameter1 = 0 parameter2 = 5 timing = 1 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 STR_VAR resource = spcl415h END // change hold to apply spell to humanoids
   BUT_ONLY
+
+// chromatic orb - subspells for hold (7), blind (1,4), and stun (6)
+COPY_EXISTING ~spdr101.spl~  ~override~ // Chromatic Orb (druid)
+              ~spwi118.spl~  ~override~ // Chromatic Orb (arcane)
+  // hold              
+  LPF ALTER_EFFECT  INT_VAR header = 5 match_opcode = 175 opcode = 146 parameter2 = 2 timing = 1 duration = 0 savingthrow = 17 STR_VAR resource = spwi118f END // change hold to cast spell
+  LPF DELETE_EFFECT INT_VAR header = 5 match_savingthrow = BIT0 END // delete other hold effects
+  LPF ALTER_EFFECT  INT_VAR header = 5 match_savingthrow = 17 savingthrow = BIT0 END // reinstate savingthrow
+  // blind
+  LPF DELETE_EFFECT INT_VAR match_opcode = 74 END // delete blind effect from headers 0 and 3
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 8 END // delete blind icon from headers 0 and 3
+  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 37800 END // uses strref 37800 "blinded" on header 0, 3
+  LPF ALTER_EFFECT INT_VAR header = 0 match_opcode = 174 match_timing = 4 opcode = 146 parameter2 = 2 timing = 1 duration = 0 STR_VAR resource = spwi118a END // change expiry sounds to spell casts
+  LPF ALTER_EFFECT INT_VAR header = 3 match_opcode = 174 match_timing = 4 opcode = 146 parameter2 = 2 timing = 1 duration = 0 STR_VAR resource = spwi118d END // change expiry sounds to spell casts
+  // stun
+  LPF DELETE_EFFECT INT_VAR match_opcode = 45 END // delete stun effect from headers 4 and 6 25862
+  LPF DELETE_EFFECT INT_VAR header = 4 match_opcode = 139 match_parameter1 = 35568 END // delete stun string from headers 4
+  LPF ALTER_EFFECT INT_VAR header = 4 match_opcode = 174 match_timing = 4 opcode = 146 parameter2 = 2 timing = 1 duration = 0 STR_VAR resource = spwi118e END // change expiry sounds to spell casts
   
-// item blocks spmindat, but isn't immune to hold
-COPY_EXISTING ~cwreve.itm~   ~override~ // attack - blocks spmindat
-  LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spmindat END
+// create stun subspell for chromatic orb
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/spwi118e.spl~ // create blind subspell for header 0 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 324 parameter1 = stun_immunity parameter2 = 110 STR_VAR resource = EVAL ~%DEST_RES%~ END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 45 target = 2 duration = 18 END // add stun effect
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = 35568 timing = 1 END // add stun string
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target = 2 timing = 4 duration = 18 STR_VAR resource = ~#eff_e05~ END // add expiry sound
+  
+// create blind subspells for chromatic orb 
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/spwi118a.spl~ // create blind subspell for header 0 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 74 target = 2 duration = 6 END // add blind effect
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target = 2 parameter2 = 8 duration = 6 END // add blind icon
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = 37800 timing = 1 END // add blinded string
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target = 2 parameter1 = 10 timing = 4 duration = 6 STR_VAR resource = ~#eff_e05~ END // add expiry sound
+COPY_EXISTING ~spwi118a.spl~ ~override/spwi118d.spl~ // create blind subspell for header 3 
+  LPF ALTER_EFFECT INT_VAR match_duration = 6 duration = 24 END
+  
+// create hold subspell for chromatic orb
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/spwi118f.spl~ // create hold subspell for header 0 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 324 target = 2 power = 1 parameter1 = hold_immunity parameter2 = 110 STR_VAR resource = EVAL ~%DEST_RES%~ END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 175 target = 2 power = 1 parameter2 = 3 duration = 78 END // add hold effect
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 142 target = 2 power = 1 parameter2 = 13 duration = 78 END // add hold icon
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 174 target = 2 power = 1 timing = 4 duration = 78 STR_VAR resource = ~#eff_e05~ END // add expiry sound
+
+// poison immunity blocking hold, needs hold subspell
+COPY_EXISTING ~spwi028.spl~  ~override/spwi028h.spl~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END // delete poison
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 END // poison protections
+  LPF DELETE_EFFECT INT_VAR match_opcode = 12 END // delete damage
+  LPM cd_make_subspell
+
+// poison immunity blocking hold, needs hold subspell
+COPY_EXISTING ~spwi028.spl~  ~override~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 175 opcode = 146 parameter2 = 2 timing = 1 duration = 0 savingthrow = 17 STR_VAR resource = spwi028h insert = first END // change hold to cast spell
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT0 END // delete other hold effects
+  LPF ALTER_EFFECT  INT_VAR match_opcode = 146 match_savingthrow = 17 savingthrow = BIT0 END // reinstate savingthrow
+
+// poison immunity stepping on confusion, move confusion to subspell
+COPY_EXISTING ~spwi029.spl~ ~override/spwi029c.spl~ // (spl) <Invalid Strref -1> - causes confusion poison - portrait icon(s) 6 3
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = 0 END // deletes damage, generic effects 
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END // deletes poison stuff
+  LPM cd_make_subspell
+
+// poison immunity stepping on confusion
+COPY_EXISTING ~spwi029.spl~ ~override~ // (spl) <Invalid Strref -1> - causes confusion poison - portrait icon(s) 6 3
+  LPF CLONE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 37604 opcode = 146 parameter1 = 0 parameter2 = 2 savingthrow = 0 STR_VAR insert = first resource = spwi029c END
+  LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT0 END // deletes confusion stuff
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = BIT0 END // the old switcheroo
+
+// great shout split into three subspells (kill, dead, stun) but effects were not split quite right
+COPY_EXISTING ~spwi806.spl~ ~override~ // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
+  LPF DELETE_EFFECT INT_VAR match_opcode = 80 END // delete leftover deaf
+  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14073 END // delete leftover deaf string
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 112 END // delete leftover deaf icon
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = 0 END // let subspells handle saves since they're mixed
+
+// great shout split into three subspells (kill, dead, stun) but effects were not split quite right
+COPY_EXISTING ~dwfpgs01.spl~ ~override~ // (spl) Great Shout - deaf subspell
+  LPF DELETE_EFFECT INT_VAR match_opcode = 45 END // delete leftover stun
+  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END // main 146 already has MR check
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 parameter1 = 14073 END // change string from stun to deaf
+  LPF CLONE_EFFECT INT_VAR match_opcode = 80 opcode = 142 parameter2 = 112 END // clone deaf into icon
+  LPF CLONE_EFFECT INT_VAR match_duration = 12 duration = 24 savingthrow = BIT0 END // clone deaf, icon into saveable 24s deaf
+
+// great shout split into three subspells (kill, dead, stun) but effects were not split quite right
+COPY_EXISTING ~dwfpgs02.spl~ ~override~ // (spl) Great Shout - stun subspell
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END // main 146 already has MR check
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 139 parameter1 = 35568 timing = 1 duration = 0 savingthrow = 0 END // clone into stunned string
+  LPF ALTER_EFFECT INT_VAR match_opcode =  45 savingthrow = BIT0 END // add save vs. spell for 12s stun
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 parameter2 = 55 duration = 12 savingthrow = BIT0 END // change deaf to stun icon
+  LPF CLONE_EFFECT INT_VAR match_savingthrow = BIT0 savingthrow = 0 duration = 6 END // clone stun, icon into unsaveable 6s stun
+
+// great shout split into three subspells (kill, dead, stun) but effects were not split quite right
+COPY_EXISTING ~dwfpgs03.spl~ ~override~ // (spl) Great Shout - kill subspell
+  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END // main 146 already has MR check
+  
+/////                                                  \\\\\
+///// berserk                                          \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureber.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =   4 target = 2 timing = 1                END // cure: berserk
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 4 END // remove icon: berserk
+  PATCH_FOR_EACH res IN
+//    ~#beltyn~  // (spl) <Invalid Strref -1> - causes berserk - portrait icon(s) 4
+//    ~spin188~  // (spl) Sprays Spores - causes berserk fear stun - portrait icon(s) 55 36 4
+    ~sppr422~  // (spl) Blood Rage - causes berserk - portrait icon(s) 176 - additional effects [all bonuses drawn from berserk]
+    ~sppr522~  // (spl) Animal Rage - causes berserk - portrait icon(s) 173 - additional effects
+    ~sppr522b~ // (spl) <Invalid Strref -1> - causes berserk - portrait icon(s) 4
+//    ~u2hax5a~  // (itm) Foe's Fate +4 - causes berserk - portrait icon(s) 4
+//    ~udart2a~  // (itm) Berserker Darts - causes berserk - portrait icon(s) 4
+//    ~young~    // (itm) Young Rage +5 - causes berserk - portrait icon(s) 4
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+  LPF ALTER_EFFECT INT_VAR match_opcode = 4 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureber~ END               
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_berserk END
   BUT_ONLY
+
+/////                                                  \\\\\
+///// blind                                            \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curebld.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  75 target = 2 timing = 1                END // cure: blind
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 8 END // remove icon: blind
+  PATCH_FOR_EACH res IN
+//    ~#sunrund~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
+//    ~sorb~     // (itm) Searing Orb - causes blind - portrait icon(s) 8
+//    ~spcl239a~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8
+//    ~spdm101~  // (spl) Blindness - causes blind - portrait icon(s) 8
+//    ~spdr101~  // (spl) Chromatic Orb - causes blind hold stun - portrait icon(s) 8 55 13 - sound(s) #eff_m05 #eff_e05 - additional effects
+//    ~sppr115~  // (spl) Sunscorch - causes blind - portrait icon(s) 8
+//    ~sppr313~  // (spl) Holy Smite - causes blind - portrait icon(s) 8
+//    ~sppr423~  // (spl) Cloud of Pestilence - causes blind - portrait icon(s) 8 - additional effects
+//    ~sppr609~  // (spl) False Dawn - causes blind - portrait icon(s) 8
+//    ~sppr614b~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8
+//    ~sppr614c~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8
+//    ~sppr704~  // (spl) Nature's Beauty - causes blind
+//    ~sppr707~  // (spl) Sunray - causes blind - portrait icon(s) 8
+//    ~spwi032~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 55 - additional effects
+//    ~spwi105~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 - additional effects
+//    ~spwi106~  // (spl) Blindness - causes blind - portrait icon(s) 8
+//    ~spwi118~  // (spl) Chromatic Orb - causes blind hold stun [blind at 1,4 moved to spwi118a & d]
+    ~spwi118a~ // (spl) Chromatic Orb - causes blind hold stun [blind from level 1]
+    ~spwi118d~ // (spl) Chromatic Orb - causes blind hold stun [blind from level 4]
+    ~spwi224~  // (spl) Glitterdust - causes blind - portrait icon(s) 128 8 - sound(s) EFF_E07 [expiry sound, glitterdust icon]
+    ~spwi226~  // (spl) Blindness - causes blind - portrait icon(s) 8 - sound(s) #eff_e01 [expiry sound]
+//    ~spwi714~  // (spl) Prismatic Spray - causes blind feeblemind - portrait icon(s) 8 48 171
+//    ~spwi815~  // (spl) Power Word, Blind - causes blind - portrait icon(s) 8
+    ~spwm178~  // (spl) Blindness - causes blind - portrait icon(s) 8 - sound(s) #eff_e01 [expiry sound]
+//    ~udart3b~  // (itm) Blinding Dart +2 - causes blind - portrait icon(s) 8
+//    ~wand19~   // (itm) Wand of Cursing - causes blind deafness silence [three effects are intertwined, curing one shouldn't dump combined expiry sound]
+//    ~zze6pe~   // (itm) Pig's Eye +2 - causes blind - portrait icon(s) 8
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness disease
+              ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~philter.itm~  ~override~ // Philter of Purification - cures blind deafness disease
+              ~spcl111.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~spin734.spl~  ~override~ // Wish - cures blind deafness disease drunkenness poison
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr317.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 75 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curebld~ END               
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_blind END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// confusion                                        \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curecon.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 242 target = 2 timing = 1                 END // cure: confusion
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  2 END // remove icon: rigid thinking
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  3 END // remove icon: confusion
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 47 END // remove icon: chaos
+  PATCH_FOR_EACH res IN
+//    ~bdsha01a~ // (spl) <Invalid Strref -1> - causes confusion - portrait icon(s) 3
+//    ~insanity~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects [confusion routed to insanitc.spl]
+    ~insanitc~ // (spl) Insanity Gaze - [confusion from to insanity.spl]
+//    ~spcl751a~ // (spl) <Invalid Strref -1> - causes confusion sleep [bard song, refreshes every round so don't bother]
+    ~spdr501~  // (spl) Chaos - causes confusion - portrait icon(s) 3 - sound(s) #eff_e05 [expiry sound]
+    ~spin704~  // (spl) Confusion - causes confusion - portrait icon(s) 3 - sound(s) #EFF_E05 [expiry sound]
+    ~spin976~  // (spl) Confusion - causes confusion - portrait icon(s) 3 - sound(s) EFF_E05 [expiry sound]
+    ~sppr311~  // (spl) Rigid Thinking - causes confusion - portrait icon(s) 2 - sound(s) #eff_e05 [expiry sound]
+    ~sppr709~  // (spl) Confusion - causes confusion - portrait icon(s) 3 - sound(s) #eff_e05 [expiry sound]
+    ~sppr983~  // (spl) Confusion - causes confusion - portrait icon(s) 3 - sound(s) EFF_E05 [expiry sound]
+//    ~spwi029~  // (spl) <Invalid Strref -1> - causes confusion poison - portrait icon(s) 6 3 [confusion moved to spwi029c subspell]
+    ~spwi029c~ // (spl) <Invalid Strref -1> - [confusion subspell from spwi029, has expiry sound]
+    ~spwi401~  // (spl) Confusion - causes confusion - portrait icon(s) 3 - sound(s) #eff_e05 [expiry sound]
+    ~spwi508~  // (spl) Chaos - causes confusion - portrait icon(s) 47 - sound(s) #eff_e05 [expiry sound]
+//    ~spwi711~  // (spl) Sphere of Chaos - causes confusion hold sleep - portrait icon(s) 38 - additional effects
+//    ~uarow3a~  // (itm) Confusion Arrow +3 - causes confusion - portrait icon(s) 3
+//    ~ulswd3b~  // (itm) Long Sword of Confusion +2 - causes confusion - portrait icon(s) 3
+//    ~umbergaz~ // (spl) <Invalid Strref -1> - causes confusion - portrait icon(s) 3
+//    ~umstr2a~  // (itm) Morning Star of Confusion +1 - causes confusion - portrait icon(s) 3
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr350.spl~  ~override~ // Spiritual Clarity - cures confusion fear feeblemind
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 242 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curecon~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_confusion END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// deafness                                         \\\\\
+/////                                                  \\\\\
   
-// stuns, but plays spmindat
-COPY_EXISTING ~spcl118.spl~  ~override~ // the siren's yearning—enthralls creatures - plays spmindat
-  LPF DELETE_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat END
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curedef.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  81 target = 2 timing = 1                  END // cure: deafness
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 122 END // remove icon: deafness
+/*
+  PATCH_FOR_EACH res IN
+//    ~dwfpgs01~ // (spl) <Invalid Strref -1> - causes deafness stun
+//    ~spin191~  // (spl) <Invalid Strref -1> - causes deafness stun - portrait icon(s) 112 55
+//    ~sppr710~  // (spl) Holy Word - causes deafness stun - portrait icon(s) 55 41 - additional effects
+//    ~sppr715~  // (spl) Unholy Word - causes deafness stun - portrait icon(s) 55 41 - additional effects
+//    ~spwi223~  // (spl) Deafness - causes deafness
+//    ~spwi431~  // (spl) Shout - causes deafness pause - portrait icon(s) 112
+//    ~spwi806~  // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
+//    ~wand19~   // (itm) Wand of Cursing - causes blind deafness silence [three effects are intertwined, curing one shouldn't dump combined expiry sound]
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+*/
+
+COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness disease
+              ~arow07.itm~   ~override~ // Arrow of Dispelling - cures deafness feeblemind
+              ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~deva.itm~     ~override~ // Mace of Disruption +2 - cures deafness feeblemind - portrait icon(s) 55
+              ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~elemchan.itm~ ~override~ // Skull - cures deafness feeblemind - animations(s) SPGLBBLD - additional effects
+              ~elemsunn.itm~ ~override~ // Skull - cures deafness feeblemind
+              ~elemzaam.itm~ ~override~ // Skull - cures deafness feeblemind - animations(s) SPFIRESR SPFIREST - additional effects
+              ~fkiller.itm~  ~override~ // Faith Killer +2 - cures deafness feeblemind
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~philter.itm~  ~override~ // Philter of Purification - cures blind deafness disease
+              ~planetar.itm~ ~override~ // Silver Sword - cures deafness feeblemind
+              ~pnull.itm~    ~override~ // Oil of Null Effect - cures deafness feeblemind
+              ~potn33.itm~   ~override~ // Potion of Magic Blocking - cures deafness feeblemind - portrait icon(s) 28 - sound(s) #eff_e04 - additional effects
+              ~scrl07.itm~   ~override~ // Protection from Magic - cures deafness feeblemind - portrait icon(s) 28 - sound(s) EFF_E04 - additional effects
+              ~spcl111.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~spcl231.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spin137.spl~  ~override~ // Anti-Magic Ray - cures deafness feeblemind - portrait icon(s) 83 - additional effects
+              ~spin183.spl~  ~override~ // <Invalid Strref -1> - cures deafness feeblemind
+              ~spin734.spl~  ~override~ // Wish - cures blind deafness disease drunkenness poison
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr303.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~sppr317.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwi010.spl~  ~override~ // <Invalid Strref -1> - cures deafness feeblemind
+              ~spwi302.spl~  ~override~ // Remove Magic - cures deafness feeblemind
+              ~spwi323.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spwi326.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 81 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedef~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_deafness END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// disease                                          \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curedis.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  79 target = 2 timing = 1                  END // cure: disease
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =   7 END // remove icon: disease
+  PATCH_FOR_EACH res IN
+//    ~amulfle~  // (itm) Amulet of Dark Flesh - causes disease hold
+//    ~behwep~   // (itm) <Invalid Strref -1> - causes disease poison
+//    ~mum1-12~  // (itm) <Invalid Strref -1> - causes disease
+//    ~pest~     // (itm) Pestilent Dawn +4 - causes disease - portrait icon(s) 7
+//    ~shadow1~  // (spl) <Invalid Strref -1> - causes disease - portrait icon(s) 7
+//    ~spidwr1~  // (itm) <Invalid Strref -1> - causes disease - portrait icon(s) 7
+//    ~spin190~  // (spl) <Invalid Strref -1> - causes disease sleep - [causes all sorts of stuff, but self-contained]
+//    ~sppr320~  // (spl) Cause Disease - causes disease - portrait icon(s) 7
+    ~sppr326~  // (spl) Mold Touch - causes disease - additional effects [clear out mold_touch spellstate]
+//    ~sppr326a~ // (spl) <Invalid Strref -1> - causes disease
+    ~sppr326b~ // (spl) <Invalid Strref -1> - causes disease - additional effects [clear out mold_touch spellstate]
+//    ~spwi018~  // (spl) <Invalid Strref -1> - causes disease
+//    ~spwi409~  // (spl) Contagion - causes disease
+//    ~u2hax3a~  // (itm) Infected Two-Handed Axe +2 - causes disease
+//    ~ubswd5a~  // (itm) Cancerous Bastard Sword +4 - causes disease
+//    ~udagg4a~  // (itm) Chaos Dagger +3 - causes disease - portrait icon(s) 7
+//    ~uhalb2a~  // (itm) Diseased Halberd +1 - causes disease
+//    ~utswd4b~  // (itm) Two-Handed Sword +3: Bane - causes disease
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~adisease.itm~ ~override~ // Mummy's Tea - cures blind deafness disease
+              ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~philter.itm~  ~override~ // Philter of Purification - cures blind deafness disease
+              ~potn17.itm~   ~override~ // Elixir of Health - cures disease poison
+              ~spcl111.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~spin734.spl~  ~override~ // Wish - cures blind deafness disease drunkenness poison
+              ~spin746.spl~  ~override~ // <Invalid Strref -1> - cures disease poison
+              ~spin747.spl~  ~override~ // <Invalid Strref -1> - cures disease poison
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr317.spl~  ~override~ // Cure Disease - cures blind deafness disease
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~sppr736.spl~  ~override~ // Mist of Eldath - cures disease poison
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~trollde.itm~  ~override~ // <Invalid Strref -1> - cures disease poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 79 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedis~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_disease END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// drunkenness                                      \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curedrk.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 164 target = 2 timing = 1                  END // cure: drunkenness
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =   5 END // remove icon: intoxication 
+  PATCH_FOR_EACH res IN
+//    ~elfwine~  // (itm) Elven Healing Wine - causes drunkenness
+//    ~potn25~   // (itm) Potion of Healing - causes drunkenness
+    ~spwish33~ // (spl) Intoxication - causes drunkenness - portrait icon(s) 5 - sound(s) EFF_E06 [expiry sound]
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~giving.itm~   ~override~ // The Giving Star +3 - cures drunkenness - additional effects
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~potn17.itm~   ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
+              ~spin200.spl~  ~override~ // Cure Serious Wounds - cures drunkenness
+              ~spin734.spl~  ~override~ // Wish - cures blind deafness disease drunkenness poison
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr103.spl~  ~override~ // Cure Light Wounds - cures drunkenness
+              ~sppr212.spl~  ~override~ // Slow Poison - cures drunkenness
+              ~sppr217.spl~  ~override~ // Cure Moderate Wounds - cures drunkenness
+              ~sppr315.spl~  ~override~ // Cure Medium Wounds - cures drunkenness
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr401.spl~  ~override~ // Cure Serious Wounds - cures drunkenness
+              ~sppr502.spl~  ~override~ // Cure Critical Wounds - cures drunkenness
+              ~sppr514.spl~  ~override~ // Mass Cure Light Wounds - cures drunkenness
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 164 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curedrk~ END  
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_drunkenness END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// fear and loathing in las kuldahar                \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curefer.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 161 target = 2 timing = 1                  END // cure: fear
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  36 END // remove icon: panic
+  PATCH_FOR_EACH res IN
+    ~#cofear~  // (spl) <Invalid Strref -1> - causes fear - portrait icon(s) 36 - additional effects [clear out stacking protection, too]
+//    ~bdsha01c~ // (spl) <Invalid Strref -1> - causes fear - portrait icon(s) 36
+//    ~bearspir~ // (itm) Attack - causes fear
+//    ~flpr717a~ // (spl) <Invalid Strref -1> - causes fear - portrait icon(s) 36
+//    ~spbatt1~  // (itm) Attack - causes fear
+//    ~spbatt2~  // (itm) Attack - causes fear
+//    ~spbatt3~  // (itm) Attack - causes fear
+//    ~spbatt4~  // (itm) Attack - causes fear
+//    ~spbatt5~  // (itm) Attack - causes fear
+//    ~spcl103~  // (spl) Aura of Despair - causes fear - portrait icon(s) 36 - additional effects [mixed - causes fear at higher levels, but rest of effects are from "despair"]
+    ~spcl908~  // (spl) War Cry - causes fear - portrait icon(s) 36 - sound(s) EFF_E05 [expiry sound]
+    ~spin119~  // (spl) Great Roar - causes fear - portrait icon(s) 36 91 - additional effects [str penalty]
+//    ~spin139~  // (spl) Harpy Wail - causes fear stun - portrait icon(s) 36 - additional effects [combined fear/stun]
+//    ~spin145~  // (spl) Fear - causes fear - portrait icon(s) 36
+//    ~spin173~  // (spl) Aura of Fear - causes fear - portrait icon(s) 36
+//    ~spin188~  // (spl) Sprays Spores - causes berserk fear stun - portrait icon(s) 55 36 4
+    ~spin921~  // (spl) Deathsong - causes fear - additional effects [includes attack penalty, school protection (?)]
+//    ~sppr517~  // (spl) Insect Plague - causes fear - portrait icon(s) 36 105 - animations(s) #insects - additional effects
+    ~sppr706~  // (spl) Symbol, Fear - causes fear - portrait icon(s) 36 - sound(s) #eff_e04 [expiry sound]
+//    ~spwi036~  // (spl) Horror - causes fear - portrait icon(s) 36 - additional effects
+//    ~spwi117a~ // (spl) <Invalid Strref -1> - causes fear - portrait icon(s) 36
+    ~spwi125~  // (spl) Spook - causes fear - portrait icon(s) 36 - sound(s) EFF_E06 [expiry sound]
+//    ~spwi205~  // (spl) Horror - causes fear - portrait icon(s) 36
+    ~spwi428~  // (spl) Emotion, Fear - causes fear - portrait icon(s) 36 - sound(s) #eff_e05 [expiry sound]
+    ~spwi811~  // (spl) Symbol, Fear - causes fear - portrait icon(s) 36 - sound(s) #eff_e04 [expiry sound]
+    ~spwi899~  // (spl) Symbol, Fear - causes fear - portrait icon(s) 36 - sound(s) #eff_e04 [expiry sound]
+    ~spwm123~  // (spl) Symbol, Fear - causes fear - portrait icon(s) 36 - sound(s) EFF_E05 [expiry sound]
+//    ~wand02~   // (itm) Wand of Fear - causes fear - portrait icon(s) 36
+//    ~zzj6sp~   // (itm) Selûne's Promise +1 - causes fear - portrait icon(s) 36
+//    ~zzm5mh~   // (itm) Misery's Herald +3 - causes fear - portrait icon(s) 36
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+// stuff that cures fear should also remove anything that plays cdhorror (ignore creature files for this)
+COPY_EXISTING ~#palfear.spl~ ~override~ // <Invalid Strref -1> - cures fear
+              ~bdconstr.itm~ ~override~ // Construct immunity item - do not translate - cures fear
+              ~bdsleep.itm~  ~override~ // Necklace - cures fear
+              ~behamu.itm~   ~override~ // <Invalid Strref -1> - cures fear
+              ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~brdflute.itm~ ~override~ // Magic Flute - cures fear - portrait icon(s) 37 - sound(s) EFF_E04 - additional effects
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cibossb.itm~  ~override~ // Ring - cures fear
+              ~ciigen.itm~   ~override~ // Broken Shield - cures fear
+              ~fjbarda.spl~  ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 37 40 - additional effects
+              ~fjbardb.spl~  ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 37 40 37 40 37 40 - additional effects
+              ~fjbladeb.spl~ ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 37 40 - additional effects
+              ~golcla.itm~   ~override~ // Attack - cures fear
+              ~golstone.itm~ ~override~ // Ring - cures fear
+              ~helmded.itm~  ~override~ // Dead Man's Face - cures fear
+              ~invulner.itm~ ~override~ // Ring - cures fear
+              ~ipsion.itm~   ~override~ // Greenstone Amulet - cures fear - portrait icon(s) 52 - sound(s) EFF_E05 - additional effects
+              ~irongol.itm~  ~override~ // <Invalid Strref -1> - cures fear
+              ~ltouch.itm~   ~override~ // Lich Touch - cures fear
+              ~mdk2gun.itm~  ~override~ // Big Gun - cures fear
+              ~mdk2ring.itm~ ~override~ // Big Gun - cures fear
+              ~minhp1.itm~   ~override~ // <Invalid Strref -1> - cures fear
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~potn21.itm~   ~override~ // Potion of Clarity - cures fear - portrait icon(s) 52 37 - sound(s) #eff_e02 - additional effects
+              ~ring90.itm~   ~override~ // Ring - cures fear
+              ~ring91.itm~   ~override~ // Ring - cures fear - animations(s) #globinv
+              ~ring95.itm~   ~override~ // Ring - cures fear
+              ~ringdemn.itm~ ~override~ // <Invalid Strref -1> - cures fear
+              ~sceptre.itm~  ~override~ // Scepter of Tyranny +4 - cures fear
+              ~spcl104.spl~  ~override~ // <Invalid Strref -1> - cures fear
+              ~spcl115.spl~  ~override~ // The Tale of Curran Strongheart—Immunity to Fear - cures fear - portrait icon(s) 178 - additional effects
+              ~spcl152.spl~  ~override~ // Rage - cures fear stun - portrait icon(s) 37 90 138 52 - additional effects
+              ~spcl221.spl~  ~override~ // <Invalid Strref -1> - cures fear
+              ~spcl222.spl~  ~override~ // Remove Fear - cures fear - portrait icon(s) 37 - sound(s) #eff_e03 - additional effects
+              ~spcl321.spl~  ~override~ // Enrage - cures fear stun - portrait icon(s) 52 37 90 141 - additional effects
+              ~spcl542a.spl~ ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 40 37 40 37 - additional effects
+              ~spcl920a.spl~ ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 37 40 63 - additional effects
+              ~spcl921a.spl~ ~override~ // <Invalid Strref -1> - cures fear - portrait icon(s) 37 - additional effects
+              ~sppr108.spl~  ~override~ // Remove Fear - cures fear - portrait icon(s) 37 - sound(s) #eff_e03 - additional effects
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr350.spl~  ~override~ // Spiritual Clarity - cures confusion fear feeblemind
+              ~sppr422.spl~  ~override~ // Blood Rage - cures fear - portrait icon(s) 176 - additional effects
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~sppr733.spl~  ~override~ // Impervious Sanctity of Mind - cures fear - portrait icon(s) 52 37 170 - sound(s) #eff_e03 - additional effects
+              ~sprngb01.itm~ ~override~ // [1pp] - cures fear
+              ~sprngb02.itm~ ~override~ // [1pp] - cures fear
+              ~sprngb03.itm~ ~override~ // [1pp] - cures fear hold stun
+              ~sprngb04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl02.itm~ ~override~ // [1pp] - cures fear - additional effects
+              ~sprngl03.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngz05.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~spwi210.spl~  ~override~ // Resist Fear - cures fear - portrait icon(s) 37 - sound(s) #eff_e02 - additional effects
+              ~spwi427.spl~  ~override~ // Emotion, Courage - cures fear - portrait icon(s) 187 - sound(s) #eff_e03 - additional effects
+              ~spwi802.spl~  ~override~ // Mind Blank - cures fear - portrait icon(s) 166 - sound(s) EFF_E02 - additional effects
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~stalker.itm~  ~override~ // Ring - cures fear
+              ~stupid.itm~   ~override~ // Ring - cures fear
+              ~sword01.cre~  ~override~ // Magical Sword - cures fear
+              ~trollimm.itm~ ~override~ // Ring - cures fear
+              ~vampreg.itm~  ~override~ // Ring - cures fear - additional effects
+              ~vampreg1.itm~ ~override~ // Ring - cures fear - additional effects
+              ~virgin.itm~   ~override~ // Wailing of Virgins - cures fear
+  LPF ALTER_EFFECT INT_VAR match_opcode = 161 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curefer~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_fear END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// feeblemind                                       \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curefbm.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  77 target = 2 timing = 1                  END // cure: feeblemind
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  48 END // remove icon: feeblemind
+  PATCH_FOR_EACH res IN
+//    ~insanity~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects [feeblemind has no ongoing effects]
+    ~potn23~   // (itm) Oil of Speed - causes feeblemind - portrait icon(s) 48 - sound(s) #eff_e07 [expiry sound]
+    ~sppr650~  // (spl) Spiritual Lock - causes feeblemind - portrait icon(s) 48 - sound(s) EFF_E05 [expiry sound]
+//    ~spwi509~  // (spl) Feeblemind - causes feeblemind - portrait icon(s) 48
+//    ~spwi714~  // (spl) Prismatic Spray - causes blind feeblemind - portrait icon(s) 8 48 171
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+  
+COPY_EXISTING ~arow07.itm~   ~override~ // Arrow of Dispelling - cures deafness feeblemind
+              ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~deva.itm~     ~override~ // Mace of Disruption +2 - cures deafness feeblemind - portrait icon(s) 55
+              ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~elemchan.itm~ ~override~ // Skull - cures deafness feeblemind - animations(s) SPGLBBLD - additional effects
+              ~elemsunn.itm~ ~override~ // Skull - cures deafness feeblemind
+              ~elemzaam.itm~ ~override~ // Skull - cures deafness feeblemind - animations(s) SPFIRESR SPFIREST - additional effects
+              ~fkiller.itm~  ~override~ // Faith Killer +2 - cures deafness feeblemind
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~planetar.itm~ ~override~ // Silver Sword - cures deafness feeblemind
+              ~pnull.itm~    ~override~ // Oil of Null Effect - cures deafness feeblemind
+              ~potn33.itm~   ~override~ // Potion of Magic Blocking - cures deafness feeblemind - portrait icon(s) 28 - sound(s) #eff_e04 - additional effects
+              ~scrl07.itm~   ~override~ // Protection from Magic - cures deafness feeblemind - portrait icon(s) 28 - sound(s) EFF_E04 - additional effects
+              ~spcl231.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spin137.spl~  ~override~ // Anti-Magic Ray - cures deafness feeblemind - portrait icon(s) 83 - additional effects
+              ~spin183.spl~  ~override~ // <Invalid Strref -1> - cures deafness feeblemind
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr303.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr350.spl~  ~override~ // Spiritual Clarity - cures confusion fear feeblemind
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwi010.spl~  ~override~ // <Invalid Strref -1> - cures deafness feeblemind
+              ~spwi302.spl~  ~override~ // Remove Magic - cures deafness feeblemind
+              ~spwi323.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spwi326.spl~  ~override~ // Dispel Magic - cures deafness feeblemind
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 77 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curefbm~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_feeblemind END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// hold/paralyze                                    \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curehol.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 162 target = 2 timing = 1                  END // cure: hold
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  13 END // remove icon: hold
+  PATCH_FOR_EACH res IN
+//    ~amulfle~  // (itm) Amulet of Dark Flesh - causes disease hold
+//    ~basill1~  // (itm) Attack - causes hold
+    ~carrio1~  // (itm) Ghoul hand - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+//    ~ghast1~   // (itm) Ghoul Touch - causes hold - portrait icon(s) 13 [hold routed to ghast1p.spl]
+    ~ghast1p~  // (spl) Ghoul Touch [paralyze subspell]
+    ~ghoul1~   // (itm) Ghoul Touch - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+    ~ghoult~   // (itm) Ghoul Touch - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+//    ~ltouch~   // (spl) <Invalid Strref -1> - causes hold - portrait icon(s) 13
+//    ~spcl415~  // (spl) [special snare] - causes hold [hold shunted to spcl415h.spl]
+    ~spcl415h~  // (spl) [special snare] - causes hold [hold from spcl415.spl]
+    ~spcl742~  // (spl) Hold Undead - causes hold - sound(s)  #eff_e07 [expiry sound]
+//    ~spdr101~  // (spl) Chromatic Orb - causes blind hold stun [hold effects routed to spwi118f.spl]
+    ~sppr208~  // (spl) Hold Person - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 - animations(s) SPMINDAT [expiry sound, animation]
+    ~sppr305~  // (spl) Hold Animal - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound, animation]
+//    ~sppr728~  // (spl) Implosion - causes hold
+    ~sppr989~  // (spl) Hold Person - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 - animations(s) SPMINDAT [expiry sound, animation]
+//    ~spwatt2~  // (itm) Attack - causes hold
+//    ~spwatt3~  // (itm) Attack - causes hold
+//    ~spwatt4~  // (itm) Attack - causes hold
+//    ~spwatt5~  // (itm) Attack - causes hold level drain
+//    ~spwi028~  // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13 [hold moved into spwi028h.spl]
+//    ~spwi118~  // (spl) Chromatic Orb - causes blind hold stun [hold effects routed to spwi118f.spl]
+    ~spwi118f~ // (spl) Chromatic Orb [hold effects routed here from spdr101.spl, spwi118.spl]
+    ~spwi306~  // (spl) Hold Person - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 - animations(s) SPMINDAT [expiry sound, animation]
+    ~spwi324~  // (spl) Hold Undead - causes hold - sound(s) EFF_E07 [expiry sound]
+    ~spwi507~  // (spl) Hold Monster - causes hold - sound(s) #eff_e05 [expiry sound]
+//    ~spwi711~  // (spl) Sphere of Chaos - causes confusion hold sleep - portrait icon(s) 38 - additional effects
+    ~spwm122~  // (spl) Hold Person - causes hold - portrait icon(s) 13 - sound(s) EFF_E05 - animations(s) SPMINDAT [expiry sound, animation]
+    ~ulswd4a~  // (itm) Hold Fast +3 - causes hold - portrait icon(s) 13 - sound(s) #eff_e05 [expiry sound]
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~labelt.itm~   ~override~ // Girdle of Labelas - cures hold stun - portrait icon(s) 38 - sound(s) #eff_m29 - additional effects
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~potn45.itm~   ~override~ // Potion of Freedom - cures hold stun - portrait icon(s) 19 - sound(s) #eff_e02 - additional effects
+              ~ring09.itm~   ~override~ // Ring of Free Action - cures hold stun
+              ~sppr308.spl~  ~override~ // Remove Paralysis - cures hold stun
+              ~sppr403.spl~  ~override~ // Free Action - cures hold stun - portrait icon(s) 19 - sound(s) #eff_e03 - additional effects
+              ~sprngb03.itm~ ~override~ // [1pp] - cures fear hold stun
+              ~sprngb04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl03.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngs01.itm~ ~override~ // [1pp] - cures hold stun
+              ~sprngs02.itm~ ~override~ // [1pp] - cures hold stun
+              ~sprngs03.itm~ ~override~ // [1pp] - cures hold stun - additional effects
+              ~sprngs04.itm~ ~override~ // [1pp] - cures hold stun - additional effects
+              ~sprngz05.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+  LPF ALTER_EFFECT INT_VAR match_opcode = 162 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curehol~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_hold END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// invisibility                                     \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureinv.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 116 target = 2 timing = 1                  END // cure: invisibility
+  PATCH_FOR_EACH res IN
+//    ~bdcutid~  // (cre) <Invalid Strref -1> - causes invisibility
+//    ~bdsha12b~ // (itm) Attack - causes invisibility
+//    ~bdsha18b~ // (itm) Attack - causes invisibility
+//    ~cdisland~ // (cre) <Invalid Strref -1> - causes invisibility
+//    ~ciraksh1~ // (itm) Ring of Invisibility  - causes invisibility
+//    ~cornugo~  // (cre) Cornugon - causes invisibility
+//    ~cutspy~   // (cre) <Invalid Strref -1> - causes invisibility
+//    ~cutspy2~  // (cre) <Invalid Strref -1> - causes invisibility
+//    ~dlsgem~   // (cre) Icasaracht's Soul Gem - causes invisibility
+//    ~dw#silin~ // (spl) Invisibility - causes invisibility
+//    ~eeeverar~ // (cre) Everard - causes invisibility
+//    ~fincor01~ // (cre) Cornugon - causes invisibility
+//    ~fincor02~ // (cre) Cornugon - causes invisibility
+//    ~kaarund~  // (cre) Arundel - causes invisibility
+//    ~keanimp2~ // (cre) Animated Plate - causes invisibility
+//    ~keanimph~ // (cre) Animated Plate - causes invisibility
+//    ~mage01~   // (itm) Sandthief's Ring - causes invisibility
+//    ~ohhide~   // (itm) Hide In Shadows - causes invisibility
+//    ~ohlure~   // (cre) <Invalid Strref -1> - causes invisibility nondetection
+//    ~potn10~   // (itm) Potion of Invisibility - causes invisibility - sound(s) #cas_m01 - animations(s) illush - additional effects
+//    ~seercut~  // (cre) Seer - causes invisibility
+//    ~seercut2~ // (cre) Seer - causes invisibility
+//    ~sethh~    // (cre) Seth - causes invisibility
+//    ~spcl415a~ // (spl) [otiluke's resilient sphere] - causes invisibility - portrait icon(s) 30 125 - sound(s) EFF_M12B - animations(s) #OTILUKE - additional effects [has whole mess of effects from HLA]
+//    ~spcl938~  // (spl) Shadow Form - causes invisibility - portrait icon(s) 147 - sound(s) EFF_E03 - additional effects [has whole mess of effects from HLA]
+//    ~spcl940~  // (spl) Spirit Form - causes invisibility - portrait icon(s) 26 - sound(s) EFF_E03 #eff_m08 - animations(s) ALTERH - additional effects
+//    ~spdr401~  // (spl) Improved Invisibility - causes invisibility
+//    ~sppr516~  // (spl) Pixie Dust - causes invisibility
+//    ~spwi206~  // (spl) Invisibility - causes invisibility
+    ~spwi307~  // (spl) Invisibility, 10' Radius - causes invisibility - sound(s) EFF_M10 [expiry sound]
+//    ~spwi405~  // (spl) Improved Invisibility - causes invisibility
+//    ~spwi413a~ // (spl) [otiluke's resilient sphere] - causes invisibility pause - portrait icon(s) 125 - sound(s) EFF_M12B - animations(s) #OTILUKE - additional effects
+    ~spwi505~  // (spl) Shadow Door - causes invisibility - sound(s) EFF_M10 [expiry sound]
+//    ~spwi607~  // (spl) Mislead - causes invisibility - additional effects
+    ~spwi721~  // (spl) Mass Invisibility - causes invisibility - sound(s) EFF_M10 [expiry sound]
+//    ~tradran~  // (cre) Spectral Hero - causes invisibility
+//    ~trcriek~  // (cre) Spectral Hero - causes invisibility
+//    ~trharld~  // (cre) Spectral Hero - causes invisibility
+//    ~trhobrt~  // (cre) Spectral Hero - causes invisibility
+//    ~trollspi~ // (itm) Attack - causes invisibility - portrait icon(s) 91 - additional effects
+//    ~trshelh~  // (cre) Spectral Hero - causes invisibility
+//    ~trsph1~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph2~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph3~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph4~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph5~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph6~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph7~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph8~   // (cre) Spectral Hero - causes invisibility
+//    ~trsph9~   // (cre) Spectral Hero - causes invisibility
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~dw#brkin.spl~ ~override~ // Generic Abjuration - cures invisibility
+  LPF ALTER_EFFECT INT_VAR match_opcode =  47 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureinv~ END   
+//  LPF cd_apply_batch STR_VAR array_name = cd_cure_invisbility END // currently does nothing
+  BUT_ONLY
+
+COPY_EXISTING ~spcl232.spl~  ~override~ // True Sight - cures invisibility - portrait icon(s) 108 - sound(s) EFF_E02 - additional effects
+              ~spcl232d.spl~ ~override~ // True Seeing - cures invisibility
+              ~spcl732.spl~  ~override~ // True Sight - cures invisibility - portrait icon(s) 108 - sound(s) EFF_E02 - additional effects
+              ~sppr309.spl~  ~override~ // Invisibility Purge - cures invisibility
+              ~sppr505.spl~  ~override~ // True Seeing - cures invisibility - portrait icon(s) 108 - sound(s) EFF_E02 - additional effects
+              ~sppr505d.spl~ ~override~ // True Seeing - cures invisibility
+              ~sppr950.spl~  ~override~ // True Sight - cures invisibility
+              ~spwi203.spl~  ~override~ // Detect Invisibility - cures invisibility
+              ~spwi224.spl~  ~override~ // Glitterdust - cures invisibility - portrait icon(s) 128 8 - sound(s) EFF_E07
+              ~spwi515.spl~  ~override~ // Oracle - cures invisibility
+              ~spwi609.spl~  ~override~ // True Sight - cures invisibility - portrait icon(s) 108 - sound(s) EFF_E02 - additional effects
+              ~spwi609d.spl~ ~override~ // True Sight - cures invisibility 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 116 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureinv~ END   
+//  LPF cd_apply_batch STR_VAR array_name = cd_cure_invisbility END // currently does nothing
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// level drain                                      \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureldr.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 224 target = 2 timing = 1                  END // cure: level drain
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  59 END // remove icon: energy drain
+/*
+  PATCH_FOR_EACH res IN
+    ~blakblad~ // (spl) <Invalid Strref -1> - causes level drain
+    ~sppr739~  // (spl) Energy Drain - causes level drain
+    ~spwatt5~  // (itm) Attack - causes hold level drain
+    ~spwi914~  // (spl) Energy Drain - causes level drain
+    ~spwish19~ // (spl) Energy Drain - causes level drain
+    ~vamp~     // (itm) <Invalid Strref -1> - causes level drain
+    ~vamp1~    // (itm) <Invalid Strref -1> - causes level drain
+    ~wolfspir~ // (itm) Attack - causes level drain - additional effects
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+*/
+
+COPY_EXISTING ~cdpr417.spl~  ~override~ // Lesser Restoration - cures level drain
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~sppr417.spl~  ~override~ // Lesser Restoration - cures level drain
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 224 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureldr~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_leveldrain END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// nondetection                                     \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curendt.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  70 target = 2 timing = 1                  END // cure: nondetection
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  31 END // remove icon: nondetection
+  PATCH_FOR_EACH res IN
+//    ~clck06~   // (itm) Cloak of Non-Detection - causes nondetection
+//    ~ohlure~   // (cre) <Invalid Strref -1> - causes invisibility nondetection
+//    ~shadows~  // (itm) Ring of Shadows - causes nondetection
+    ~spwi310~  // (spl) Non-Detection - causes nondetection - portrait icon(s) 31 - sound(s) #eff_e04 [expiry sound]
+//    ~tongue~   // (itm) The Salamander's Tongue +3 - causes nondetection
+//    ~watcher~  // (itm) Robe of the Watcher - causes nondetection
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+/* nothing "cures" nondetection in iwd
+COPY_EXISTING 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 70 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curendt~ END   
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_nondetection END
+  BUT_ONLY
+*/
+
+/////                                                  \\\\\
+///// pause                                            \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curepse.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 270 target = 2 timing = 1                  END // cure: pause
+  PATCH_FOR_EACH res IN
+//    ~#disint~  // (spl) <Invalid Strref -1> - causes pause
+//    ~serpsca~  // (itm) Oil of the Serpent's Scales - causes pause - additional effects [uses a round to apply oil]
+//    ~spdd03~   // (spl) Breath Weapon - causes pause
+//    ~spin169~  // (spl) <Invalid Strref -1> - causes pause
+//    ~spwi032~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 55 - additional effects
+//    ~spwi103~  // (spl) Burning Hands - causes pause
+//    ~spwi105~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 - additional effects
+//    ~spwi217~  // (spl) Agannazar's Scorcher - causes pause
+//    ~spwi413a~ // (spl) <Invalid Strref -1> - causes invisibility pause - portrait icon(s) 125 - sound(s) EFF_M12B - animations(s) #OTILUKE - additional effects
+//    ~spwi431~  // (spl) Shout - causes deafness pause - portrait icon(s) 112
+    ~spwi516~  // (spl) Conjure Lesser Fire Elemental - causes pause - portrait icon(s) 131 - animations(s) SPELEMND - additional effects
+    ~spwi520~  // (spl) Conjure Lesser Air Elemental - causes pause - portrait icon(s) 131 - animations(s) SPELEMND - additional effects
+    ~spwi521~  // (spl) Conjure Lesser Earth Elemental - causes pause - portrait icon(s) 131 - animations(s) SPELEMND - additional effects
+    ~spwi621~  // (spl) Conjure Air Elemental - causes pause - portrait icon(s) 131 - animations(s) SPELEMND - additional effects
+//    ~spwi806~  // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
+//    ~wand05~   // (itm) Wand of Fire - causes pause
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+/* nothing "cures" pause in iwd
+COPY_EXISTING 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 270 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curepse~ END  
+//  LPF cd_apply_batch STR_VAR array_name = cd_cure_pause END // currently does nothing
+  BUT_ONLY
+*/
+
+/////                                                  \\\\\
+///// poison                                           \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curepsn.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  11 target = 2 timing = 1                  END // cure: poison
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =   6 END // remove icon: poison
+  PATCH_FOR_EACH res IN
+//    ~arow05~   // (itm) Arrow of Biting +1 - causes poison - portrait icon(s) 6
+//    ~arow12~   // (itm) Arrow of Biting - causes poison - portrait icon(s) 6
+//    ~bdsha01b~ // (spl) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~behwep~   // (itm) <Invalid Strref -1> - causes disease poison
+//    ~bolt04~   // (itm) Bolt of Biting +1 - causes poison - portrait icon(s) 6
+    ~cwoslim~  // (itm) Attack - causes poison - portrait icon(s) 6 - additional effects [remove stacking protections if poison cured]
+    ~cwszomb~  // (itm) Attack - causes poison - portrait icon(s) 6 - additional effects [remove stacking protections if poison cured]
+//    ~dart04~   // (itm) Dart of Wounding +1 - causes poison - portrait icon(s) 6
+//    ~etterc2~  // (itm) Attack - causes poison - portrait icon(s) 6
+//    ~jellmu1~  // (itm) Attack - causes poison - portrait icon(s) 41 6 - additional effects
+//    ~kris~     // (itm) Bone Kris of Black Ichor +2 - causes poison - portrait icon(s) 6
+//    ~misc75~   // (itm) Dagger of Venom +2 - causes poison - portrait icon(s) 6
+//    ~plyjelly~ // (itm) Attack - causes poison - portrait icon(s) 41 6 - additional effects
+//    ~plyspid~  // (itm) Attack - causes poison - portrait icon(s) 6
+//    ~plywyvrn~ // (itm) Attack - causes poison - portrait icon(s) 6
+//    ~poison~   // (itm) Vial of mysterious liquid - causes poison - portrait icon(s) 6 [perm con penalty]
+//    ~presdag~  // (itm) Presio's Dagger +2 - causes poison - portrait icon(s) 6
+//    ~snakspir~ // (itm) Attack - causes poison - portrait icon(s) 6
+//    ~spcl422~  // (spl) <Invalid Strref -1> - causes poison - portrait icon(s) 6 41 - additional effects 
+//    ~spidgi1~  // (itm) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~spidhu1~  // (itm) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~spidph1~  // (itm) Ghoul hand - causes poison - portrait icon(s) 6
+//    ~spin733~  // (spl) Wish - causes poison - portrait icon(s) 6
+//    ~spin979~  // (spl) Gas Cloud - causes poison - portrait icon(s) 6
+//    ~sppr411~  // (spl) Poison - causes poison - portrait icon(s) 6
+    ~sppr610~  // (spl) Dolorous Decay - causes poison - portrait icon(s) 6 41 101 - sound(s) EFF_E07 - additional effects [has expiry sound and slow effect, but since that's blocked by poison immunity, choose to remove all]
+//    ~sppr722~  // (spl) Storm of Vengeance - causes poison - portrait icon(s) 6 - additional effects
+    ~spsatt1~  // (itm) Attack - causes poison [expiry sound]
+    ~spsatt2~  // (itm) Attack - causes poison [expiry sound]
+    ~spsatt3~  // (itm) Attack - causes poison [expiry sound]
+    ~spsatt4~  // (itm) Attack - causes poison - portrait icon(s) 6 [expiry sound]
+    ~spsatt5~  // (itm) Attack - causes poison - portrait icon(s) 6 - sound(s) EFF_E07 [expiry sound]
+//    ~spwi008~  // (spl) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~spwi019~  // (spl) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~spwi028~  // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
+//    ~spwi029~  // (spl) <Invalid Strref -1> - causes confusion poison - portrait icon(s) 6 3
+//    ~u1hax3a~  // (itm) Poisonous Battle Axe +2 - causes poison - portrait icon(s) 6
+//    ~wepwyv~   // (itm) Ghoul hand - causes poison - portrait icon(s) 6
+//    ~wpsnzom~  // (itm) <Invalid Strref -1> - causes poison - portrait icon(s) 6
+//    ~wyvern2~  // (itm) Attack - causes poison - portrait icon(s) 6
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~devaheal.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~potn17.itm~   ~override~ // Elixir of Health - cures disease poison
+              ~potn20.itm~   ~override~ // Antidote - cures poison
+              ~scrl08.itm~   ~override~ // Protection from Poison - cures poison - portrait icon(s) 30 - sound(s) EFF_E04 - additional effects
+              ~spin201.spl~  ~override~ // Neutralize Poison - cures poison
+              ~spin734.spl~  ~override~ // Wish - cures blind deafness disease drunkenness poison
+              ~spin746.spl~  ~override~ // <Invalid Strref -1> - cures disease poison
+              ~spin747.spl~  ~override~ // <Invalid Strref -1> - cures disease poison
+              ~spin923.spl~  ~override~ // Limited Wish - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr404.spl~  ~override~ // Neutralize Poison - cures poison
+              ~sppr607.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~sppr736.spl~  ~override~ // Mist of Eldath - cures disease poison
+              ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwish28.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish39.spl~ ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion disease fear feeblemind level drain poison
+              ~spwm168.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
+              ~trollde.itm~  ~override~ // <Invalid Strref -1> - cures disease poison
+  LPF ALTER_EFFECT INT_VAR match_opcode = 11 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curepsn~ END  
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_poison END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// silence                                          \\\\\
+/////                                                  \\\\\
+
+// create resource removal spell
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curesil.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode =  48 target = 2 timing = 1                  END // cure: silence
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  34 END // remove icon: silence
+  PATCH_FOR_EACH res IN
+    ~sppr211~  // (spl) Silence, 15' Radius - causes silence - portrait icon(s) 34 - sound(s) #eff_e05 [expiry sound]
+    ~sppr988~  // (spl) Silence, 15' Radius - causes silence - portrait icon(s) 34 - sound(s) #eff_e06 [expiry sound]
+//    ~spwi612~  // (spl) Power Word, Silence - causes silence - portrait icon(s) 34
+//    ~spwish35~ // (spl) Power Word, Silence - causes silence - portrait icon(s) 34
+    ~trnbolt~  // (itm) Tranquil Bolt +1 - causes silence - portrait icon(s) 34 - sound(s) #eff_e06 [expiry sound]
+//    ~wand19~   // (itm) Wand of Cursing - causes blind deafness silence [three effects are intertwined, curing one shouldn't dump combined expiry sound]
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~spwi219.spl~  ~override~ // Vocalize - cures silence - portrait icon(s) 103 - sound(s) EFF_E01 - additional effects
+  LPF ALTER_EFFECT INT_VAR match_opcode = 48 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curesil~ END  
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_silence END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// sleep                                            \\\\\
+/////                                                  \\\\\
+// use existing removal spell
+COPY_EXISTING ~#cureslp.spl~ ~override~ // (already has sleep cure)
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  14 END // remove icon: sleep
+  PATCH_FOR_EACH res IN
+//    ~#jedslp~  // (spl) <Invalid Strref -1> - causes sleep
+//    ~bdsha12c~ // (spl) <Invalid Strref -1> - causes sleep
+//    ~bdsleep~  // (itm) Necklace - causes sleep
+//    ~cdfampsd~ // (itm) Attack - causes sleep
+//    ~cdiwdtr1~ // (spl) [troll stuff] - causes sleep - additional effects
+//    ~cdiwdtr2~ // (spl) [troll stuff] - causes sleep - additional effects
+//    ~dgwhirl~  // (spl) <Invalid Strref -1> - causes sleep [knockback]
+//    ~spcl751a~ // (spl) <Invalid Strref -1> - causes confusion sleep [bard song, refreshes every round so don't bother]
+//    ~spcl911b~ // (spl) <Invalid Strref -1> - causes sleep [knockback]
+    ~spin120~  // (spl) Retribution - causes sleep - additional effects [color pulse]
+ //    ~spin125~  // (spl) <Invalid Strref -1> - causes sleep [sleep is temp until replaced]
+//    ~spin126~  // (spl) <Invalid Strref -1> - causes sleep
+//    ~spin131~  // (spl) <Invalid Strref -1> - causes sleep
+//    ~spin142~  // (spl) Sleep - causes sleep
+//    ~spin149~  // (spl) <Invalid Strref -1> - causes sleep
+    ~spin161~  // (spl) <Invalid Strref -1> - causes sleep - additional effects [remove stacking protection]
+//    ~spin190~  // (spl) <Invalid Strref -1> - causes disease sleep - [causes all sorts of stuff, but self-contained]
+//    ~spin802~  // (spl) Psychic Drain - causes sleep
+//    ~spogre01~ // (spl) Earthquake - causes sleep - additional effects [earthquake]
+//    ~sppr102~  // (spl) Command - causes sleep - additional effects
+//    ~sppr426~  // (spl) Smashing Wave - causes sleep stun
+//    ~sppr512~  // (spl) Greater Command - causes sleep
+//    ~sppr720~  // (spl) Earthquake - causes sleep - additional effects [earthquake]
+//    ~spwi004~  // (spl) Stinking Cloud - causes sleep - portrait icon(s) 126 - additional effects
+//    ~spwi032~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 55 - additional effects
+//    ~spwi105~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 - additional effects
+//    ~spwi116~  // (spl) Sleep - causes sleep
+//    ~spwi213~  // (spl) Stinking Cloud - causes sleep - portrait icon(s) 126 - additional effects
+//    ~spwi220~  // (spl) Power Word, Sleep - causes sleep
+//    ~spwi711~  // (spl) Sphere of Chaos - causes confusion hold sleep - portrait icon(s) 38 - additional effects
+//    ~spwi806~  // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
+//    ~spwi922~  // (spl) Dragon's Breath - causes sleep [knockback]
+//    ~spwi925~  // (spl) Comet - causes sleep [knockback]
+//    ~spwish27~ // (spl) Knockback - causes sleep [knockback]
+//    ~spwm187~  // (spl) Stinking Cloud - causes sleep - portrait icon(s) 126
+//    ~spyanc01~ // (spl) Whirlwind - causes sleep [knockback]
+//    ~uhalb3b~  // (itm) Darig's Rest +2 - causes sleep
+//    ~wand08~   // (itm) Wand of Sleep - causes sleep - additional effects
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+              ~sppr321.spl~  ~override~ // Exaltation - cures berserk confusion drunkenness fear feeblemind sleep - portrait icon(s) 174 37 - additional effects
+  LPF ALTER_EFFECT INT_VAR match_opcode = 2 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#cureslp~ END  
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_sleep END
+  BUT_ONLY
+
+/////                                                  \\\\\
+///// stun                                             \\\\\
+/////                                                  \\\\\
+  
+// use existing removal spell
+COPY_EXISTING ~#curestn.spl~ ~override~ // (already has stun cure)
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 =  55 END // remove icon: stun
+  PATCH_FOR_EACH res IN
+    ~axemino~  // (itm) Axe of the Minotaur Lord +4 - causes stun [color glow]
+//    ~bdsha06a~ // (spl) <Invalid Strref -1> - causes stun - portrait icon(s) 55
+//    ~cwreve~   // (itm) Attack - causes stun
+    ~dart03~   // (itm) Dart of Stunning +1 - causes stun - portrait icon(s) 55 - additional effects [color glow]
+    ~dazer~    // (itm) Dazer - causes stun - portrait icon(s) 55 - additional effects [color glow]
+//    ~deva~     // (itm) Mace of Disruption +2 - causes stun - portrait icon(s) 55
+//    ~dwfpgs01~ // (spl) <Invalid Strref -1> - causes deafness stun [shouldn't actually stun, fixed above]
+//    ~dwfpgs02~ // (spl) <Invalid Strref -1> - causes stun - portrait icon(s) 112
+    ~gvalor2~  // (itm) Gauntlet of Valor - causes stun [color glow]
+    ~icegolem~ // (itm) Skull - causes stun [color glow]
+//    ~icetrl~   // (itm) Attack - causes stun - unknown long effect [stun effects moved to icetrolst.spl]
+    ~icetrlst~ // (spl) Attack - causes stun - unknown long effect [stun effects moved frp, icetrol.itm]
+    ~poq2-16~  // (itm) <Invalid Strref -1> - causes stun - portrait icon(s) 55 - additional effects [color glow]
+//    ~sareveff~ // (spl) <Invalid Strref -1> - causes stun - portrait icon(s) 55
+//    ~sflail~   // (itm) Flail - causes stun - additional effects [stun moved to sflailst.spl]
+    ~sflailst~ // (spl) Flail - causes stun - additional effects [stun from sflail.itm] [color glow]
+    ~spcl118~  // (spl) The Siren's Yearning—Enthralls Creatures - causes stun - portrait icon(s) 181 - animations(s) SPMINDAT - additional effects [spmindat changed to color glow]
+//    ~spcl123~  // (spl) <Invalid Strref -1> - causes stun - portrait icon(s) 41 55 - additional effects
+//    ~spdr101~  // (spl) Chromatic Orb - causes blind hold stun - portrait icon(s) 8 55 13 - sound(s) #eff_m05 #eff_e05 - additional effects [stun routed to spwi118e.spl]
+    ~spin115~  // (spl) Mournful Wail - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound]
+//    ~spin132~  // (spl) Wing Buffet - causes stun - portrait icon(s) 55 - additional effects
+//    ~spin139~  // (spl) Harpy Wail - causes fear stun - portrait icon(s) 36 - additional effects [combined fear/stun]
+//    ~spin188~  // (spl) Sprays Spores - causes berserk fear stun - portrait icon(s) 55 36 4
+//    ~spin191~  // (spl) <Invalid Strref -1> - causes deafness stun - portrait icon(s) 112 55
+//    ~spin974~  // (spl) Psionic Blast - causes stun - portrait icon(s) 55
+//    ~sppr426~  // (spl) Smashing Wave - causes sleep stun
+//    ~sppr617~  // (spl) Whirlwind - causes stun - additional effects
+//    ~sppr710~  // (spl) Holy Word - causes deafness stun - portrait icon(s) 55 41 - additional effects
+//    ~sppr715~  // (spl) Unholy Word - causes deafness stun - portrait icon(s) 55 41 - additional effects
+    ~sppr716~  // (spl) Symbol, Hopelessness - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound, hopelesssness icon]
+    ~sppr718~  // (spl) Symbol, Stun - causes stun - portrait icon(s) 55 - sound(s) #eff_e04 [expiry sound]
+//    ~spwi032~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 55 - additional effects
+//    ~spwi105~  // (spl) Color Spray - causes blind pause sleep stun - portrait icon(s) 8 - additional effects [has lingering colors, but unrelated to stun]
+//    ~spwi118~  // (spl) Chromatic Orb - causes blind hold stun - portrait icon(s) 8 55 13 - sound(s) #eff_e05 - additional effects [stun routed to spwi118e.spl]
+    ~spwi118e~ // (spl) Chromatic Orb [stun effects from spwi118.spl and spdr101.spl]
+//    ~spwi327~  // (spl) Icelance - causes stun
+    ~spwi411~  // (spl) Emotion, Hopelessness - causes stun - portrait icon(s) 44 - sound(s) #eff_e05 [expiry sound, hopelesssness icon]
+    ~spwi816~  // (spl) Symbol, Stun - causes stun - portrait icon(s) 55 - sound(s) #eff_e04 [expiry sound]
+    ~spwi898~  // (spl) Symbol, Stun - causes stun - portrait icon(s) 55 - sound(s) #eff_e04 [expiry sound]
+//    ~spwm152~  // (spl) Polymorph Other - causes stun
+    ~u1ham3b~  // (itm) War Hammer of Sparks +2 - causes stun [color glow]
+    ~u1hax2a~  // (itm) Charged Battle Axe +2 - causes stun [color glow]
+    ~u1hax4b~  // (itm) Benorg's Truth +3 - causes stun [color glow]
+    ~uarow3b~  // (itm) Hammer Arrow +1 - causes stun - portrait icon(s) 55 - additional effects [color glow]
+    ~ubswd5b~  // (itm) Bastard Sword +3: Incinerator - causes stun [color glow]
+    ~udart1a~  // (itm) Hammer Darts - causes stun - portrait icon(s) 55 - additional effects [color glow]
+    ~uflal2b~  // (itm) Hammer Flail +2 - causes stun [color glow]
+    ~uflal5a~  // (itm) Shocking Flail +4 - causes stun [color glow]
+    ~uhalb4a~  // (itm) Doom Halberd +3 - causes stun [color glow]
+    ~uhalb4b~  // (itm) Star-Forged Halberd +3 - causes stun [color glow]
+    ~ulswd5b~  // (itm) Bhaal's Fire +3 - causes stun - portrait icon(s) 55 - additional effects [color glow]
+    ~umstr2b~  // (itm) Lesser Static Star +1 - causes stun [color glow]
+    ~umstr3a~  // (itm) Morning Star +2: Hammer - causes stun [color glow]
+    ~umstr5a~  // (itm) Morning Star of Action +4 - causes stun [color glow]
+    ~usswd5b~  // (itm) Short Sword +4: Hammer - causes stun [color glow]
+    ~utswd2b~  // (itm) Two-Handed Sword +1: Hammering - causes stun [color glow]
+    ~utswd3a~  // (itm) Two-Handed Sword +2: Hammering - causes stun - portrait icon(s) 55 - additional effects [color glow]
+    ~utswd5a~  // (itm) Static Two-Handed Sword +4 - causes stun [color glow]
+//    ~wand04~   // (itm) Wand of Paralyzation  - causes stun - portrait icon(s) 55
+    ~xclub~    // (itm) Dazer - causes stun - portrait icon(s) 55 - additional effects [color glow]
+  BEGIN
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
+  END
+
+COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun
+              ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~labelt.itm~   ~override~ // Girdle of Labelas - cures hold stun - portrait icon(s) 38 - sound(s) #eff_m29 - additional effects
+              ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk blind confusion deafness disease fear feeblemind hold level drain poison sleep stun
+              ~potn45.itm~   ~override~ // Potion of Freedom - cures hold stun - portrait icon(s) 19 - sound(s) #eff_e02 - additional effects
+              ~ring09.itm~   ~override~ // Ring of Free Action - cures hold stun
+              ~spcl152.spl~  ~override~ // Rage - cures fear stun - portrait icon(s) 37 90 138 52 - additional effects
+              ~spcl321.spl~  ~override~ // Enrage - cures fear stun - portrait icon(s) 52 37 90 141 - additional effects
+              ~sppr308.spl~  ~override~ // Remove Paralysis - cures hold stun
+              ~sppr403.spl~  ~override~ // Free Action - cures hold stun - portrait icon(s) 19 - sound(s) #eff_e03 - additional effects
+              ~sprngb03.itm~ ~override~ // [1pp] - cures fear hold stun
+              ~sprngb04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl03.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngl04.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+              ~sprngs01.itm~ ~override~ // [1pp] - cures hold stun
+              ~sprngs02.itm~ ~override~ // [1pp] - cures hold stun
+              ~sprngs03.itm~ ~override~ // [1pp] - cures hold stun - additional effects
+              ~sprngs04.itm~ ~override~ // [1pp] - cures hold stun - additional effects
+              ~sprngz05.itm~ ~override~ // [1pp] - cures fear hold stun - additional effects
+  LPF ALTER_EFFECT INT_VAR match_opcode = 46 opcode = 146 parameter1 = 0 parameter2 = 1 STR_VAR resource = ~#curestn~ END  
+  LPF cd_apply_batch STR_VAR array_name = cd_cure_stun END
   BUT_ONLY

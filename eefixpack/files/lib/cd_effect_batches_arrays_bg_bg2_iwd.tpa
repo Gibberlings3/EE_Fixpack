@@ -1,0 +1,222 @@
+/////                                                  \\\\\
+///// arrays for batch effects                         \\\\\
+/////                                                  \\\\\
+
+/*
+The cd_apply_batch function, defined below, requires a macro name. That macro needs to define
+three arrays for the function:
+
+* cd_immunity_batches_key
+If any effect in this array is present on the item/creature/spell being patches, it will proceed with
+adding extra effects and deleting effects, as defined by the next two arrays. If you have mutiple 
+effects defined here, it will match any of them and add any missing.
+
+* cd_immunity_batches_extras
+This array contains all of the subsiduary effects that should accompany the effects in the key area.
+
+* cd_immunity_batches_deletes
+If a key is found, any effect matching this array will be deleted. 
+
+If a key is found, the function will then proceed back through the file being patched and add--if they
+are not present--all of the effects not found in the _key and _extras arrays. It will also, only with
+a key effect matched, delete any effects listed in the _deletes array.
+
+Note that since it's a macro, you can conditionally define your arrays. The free action batch will
+remove stun immunity unless a particular component from the Fixpack is installed, for example. Remember
+that's it's being run in a patch context, so you'll need to use PATCH actions instead of ACTIONs.
+
+An example use--the cd_full_dispel_arrays uses a dispel magic opcode (58) as the lone key element. If
+found, the function will delete a variety of old item removal opcodes defined in the _deletes array,
+and add (if not already present) the series of effects that cure feeblemind and deafness.
+
+In general, try to avoid explicit spell blockages with 206 opcodes. If you can block the relevant
+effects with other immunities, do so, as it's a more robust and extensible solution. In some cases 
+they are needed --e.g. the slow immunity batch blocks slow spells outright, as most come paired 
+with AC and THAC0 penalties which can't be blocked via opcode without serious collateral damage.
+
+* Format of all arrays are opcode, parameter1, parameter2, resref, timing, duration
+* Timing and duration are only used for new fx writes
+* Use -1 in a field (or "same" in string fields) if the match value for that field doesn't matter.
+* Always map the effect to one.
+
+arrays separated out in separate files to allow for per-game adjustments. 
+
+*/
+
+DEFINE_PATCH_MACRO ~cd_cure_berserk~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#cureber",  "-10",  "-10", "same" => 1 // berserk cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10",     4, "same", "-10", "-10", "same" => 1 // remove 'berserk' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_blind~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curebld",  "-10",  "-10", "same" => 1 // blind cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10",     8, "same",    1, 0, "same" => 1 // remove 'blind' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_confusion~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curebld",  "-10",  "-10", "same" => 1 // confusion cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10",     2, "same", "-10", "-10", "same" => 1 // remove 'rigid thinking' portrait icon (moved to cure spell)
+    240, "-10",     3, "same", "-10", "-10", "same" => 1 // remove 'confused' portrait icon (moved to cure spell)
+    240, "-10",    47, "same", "-10", "-10", "same" => 1 // remove 'chaos' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_deafness~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curedef",  "-10",  "-10", "same" => 1 // deafness cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10",   122, "same", "-10", "-10", "same" => 1 // remove 'deafened' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_disease~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curedis",  "-10",  "-10", "same" => 1 // disease cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 7,    "same",  "-10", "-10", "same" => 1 // remove 'disease' portrait icon (moved to cure spell)
+    321, "-10", 0, "spin784",  "-10", "-10", "same" => 1 // delete existing 321s (moved to cure spell)
+    321, "-10", 0, "spwi409",  "-10", "-10", "same" => 1
+    321, "-10", 0, "demogorg", "-10", "-10", "same" => 1
+    321, "-10", 0, "finmel01", "-10", "-10", "same" => 1
+    321, "-10", 0, "pudden01", "-10", "-10", "same" => 1
+    321, "-10", 0, "ravag03",  "-10", "-10", "same" => 1
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_drunkenness~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curedrk",  "-10",  "-10", "same" => 1 // disease cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 5,    "same",  "-10", "-10", "same" => 1 // remove 'disease' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_fear~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curefer",  "-10",  "-10", "same" => 1 // disease cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 36,    "same",  "-10", "-10", "same" => 1 // remove 'disease' portrait icon (moved to cure spell)
+    321, "-10",  0, "spin105",  "-10", "-10", "same" => 1 // horror - causes fear - plays cdhorror
+    321, "-10",  0, "spwi205",  "-10", "-10", "same" => 1 // horror - causes fear - plays cdhorror
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_feeblemind~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curefbm",  "-10",  "-10", "same" => 1 // feeblemind cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 48,    "same",  "-10", "-10", "same" => 1 // remove 'feeblemind' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_hold~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curehol",  "-10",  "-10", "same" => 1 // hold cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 13,    "same",  "-10", "-10", "same" => 1 // remove 'held' portrait icon (moved to cure spell)
+  END  
+END
+
+// nothing uses op47 by default, so leave it open for modders
+DEFINE_PATCH_MACRO ~cd_cure_invisbility~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#cureinv",  "-10",  "-10", "same" => 1 // invisbility cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_leveldrain~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#cureldr",  "-10",  "-10", "same" => 1 // level drain cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 59,    "same",  "-10", "-10", "same" => 1 // remove 'energy drain' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_nondetection~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curendt",  "-10",  "-10", "same" => 1 // nondetection cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 31,    "same",  "-10", "-10", "same" => 1 // remove 'nondetection' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_pause~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curepse",  "-10",  "-10", "same" => 1 // feeblemind cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN END // nothing to delete
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_poison~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curepsn",  "-10",  "-10", "same" => 1 // poison cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 6,    "same",  "-10", "-10", "same" => 1 // remove 'poison' portrait icon (moved to cure spell)
+    321, "-10", 0, "jellgr1",  "-10", "-10", "same" => 1 // green slime kill-from-poison was separate (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_silence~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curesil",  "-10",  "-10", "same" => 1 // silence cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 34,    "same",  "-10", "-10", "same" => 1 // remove 'silence' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_sleep~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#cureslp",  "-10",  "-10", "same" => 1 // sleep cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 14,    "same",  "-10", "-10", "same" => 1 // remove 'sleep' portrait icon (moved to cure spell)
+  END  
+END
+
+DEFINE_PATCH_MACRO ~cd_cure_stun~ BEGIN
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_key BEGIN
+    146, "-10", "-10", "#curestn",  "-10",  "-10", "same" => 1 // poison cure spell
+  END
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_extras BEGIN END // all subsidiary effects now in cure spell
+  DEFINE_ASSOCIATIVE_ARRAY cd_immunity_batches_delete BEGIN 
+    240, "-10", 55,    "same",  "-10", "-10", "same" => 1 // remove 'poison' portrait icon (moved to cure spell)
+  END  
+END

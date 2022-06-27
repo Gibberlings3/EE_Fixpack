@@ -633,3 +633,15 @@ BEGIN
   WRITE_LONG  0x6a fx_off
 
 END
+
+/////                                                  \\\\\
+///// cd_make_subspell                                 \\\\\
+/////                                                  \\\\\
+
+DEFINE_PATCH_MACRO ~cd_make_subspell~ BEGIN
+  WRITE_LONG 0x08 "-1" // blank name
+  WRITE_LONG 0x50 "-1" // blank desc
+  WRITE_ASCII 0x22 ~~ #6 // blank casting anim, school, secondary
+  LPF ALTER_HEADER INT_VAR projectile = 1 END
+  LPF ALTER_EFFECT INT_VAR power = 0 resist_dispel = 0 savingthrow = 0 END
+END  
