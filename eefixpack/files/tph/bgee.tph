@@ -1836,11 +1836,12 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
 INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
-
-INCLUDE "eefixpack/files/tph/luke/remove_redundant_portrait_icons.tph"
-LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "itm" END
-LAUNCH_ACTION_FUNCTION "REMOVE_REDUNDANT_PORTRAIT_ICONS" STR_VAR "file_ext" = "spl" END
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
+  LAF "remove_redundant_effects" END
+END
 
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
 INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~                  // use effect batches to remove vfx from effects which have been removed
+

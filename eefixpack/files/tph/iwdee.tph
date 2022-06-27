@@ -45,8 +45,10 @@ END
 
 // tbd, davidw
 // 7 eyes (eye of the sword shouldn't protect against stunning damage, which is only used for the hp backlash of the Enrage ability)
+// luke (EYEMAGE should not absorb MAGIC damage, as per spell description)
 COPY_EXISTING ~7eyes.2da~ ~override~
   REPLACE_TEXTUALLY "12\*0x8000000" "*"
+  REPLACE_TEXTUALLY EXACT_MATCH "12*0x400000" "*"
   PRETTY_PRINT_2DA
 
 
@@ -109,6 +111,15 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/polymorph_overhaul.tph"
     LAF "POLYMORPH_OVERHAUL" END
   END
+END
+
+/*
+luke
+"7eyes.2da" vs. SPL/ITM files
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
+  LAUNCH_ACTION_FUNCTION "7EYES" END
 END
 
 /////                                                  \\\\\
@@ -415,6 +426,20 @@ WITH_SCOPE BEGIN
   END
 END
 
+/*
+luke
+**Attack** (used by Slime Zombie)
+- Make sure it uses op318 to grant protection from itself (instead of messy op101 + op267 + op173 effects)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "cwszomb.itm" "override"
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 267 END // Disable display string
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 173 END // Poison resistance bonus
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 101 END // Immunity to effect
+    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 318 "target" = 2 "probability1" = 10 STR_VAR "resource" = "%DEST_RES%" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
@@ -424,12 +449,16 @@ END
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
 
   ~#beltyn~  => 7 // generalist > necromancy (beltyn's burning blood)
+  ~%WIZARD_BELTYNS_BURNING_BLOOD%a~ => 7 // generalist > necromancy (beltyn's burning blood) => subspell applying FIRE damage
   ~#bonecir~ => 7 // generalist > necromancy (circle of bones)
   ~#cureslp~ => 0 // generalist > none (unused)
   ~#curestn~ => 0 // generalist > none (unused)
   ~#deathf1~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%a~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#deathf2~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%b~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#deathf3~ => 6 // generalist > invoker (death fog, trap)
+  ~%TRAP_DEATH_FOG%c~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
   ~#jedslp~  => 0 // generalist > none (jed passes out)
   ~#rw_17~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
   ~#rw_18~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
@@ -444,6 +473,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
   ~#shrouda~ => 6 // generalist > invoker (old shroud of flmae)
   ~#shroudb~ => 6 // generalist > invoker (old shroud of flmae)
   ~#sunrund~ => 0 // generalist > none (unk)
+  ~cdsunrun~ => 0 // generalist > none (unk) => subspell applying FIRE damage
   ~#vitarea~ => 2 // generalist > conjurer (old vitriolic sphere)
   ~blindimm~ => 0 // generalist > none (old blindness immunity)
   ~deafimm~  => 0 // generalist > none (old deafness immunity)
@@ -479,12 +509,16 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
   ~spin130~  => 0 // generalist > none (INNATE_BLUE_GLOW)
   ~spin131~  => 0 // generalist > none (INNATE_DRAGON_DEATH_ANIMATION)
   ~spin132~  => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET)
+  ~spin132a~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying CRUSHING/SLASHING damage
+  ~spin132b~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying STUN
   ~spin133~  => 0 // generalist > none (INNATE_DRAGON_GEM_EFFECTS)
   ~spin134~  => 0 // generalist > none (INNATE_DRAGON_BREATH)
   ~spin135~  => 0 // generalist > none (INNATE_DRAGON_GEM_SUMMONING)
   ~spin136~  => 0 // generalist > none (INNATE_BEHOLDER_UNUSED)
   ~spin138~  => 0 // generalist > none (INNATE_HARPY_WAIL)
   ~spin139~  => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL)
+  ~spin139a~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying PANIC
+  ~spin139b~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying STUN
   ~spin149~  => 0 // generalist > none (INNATE_POLYMORPH_TO_DOG)
   ~spin162~  => 0 // generalist > none (INNATE_HOBART_TO_RAKSHASA)
   ~spin164~  => 0 // generalist > none (INNATE_MUSTARD_JELLY_VAPOR)
@@ -656,6 +690,7 @@ COPY_EXISTING ~%CLERIC_STORM_SHELL%.spl~ ~override~ // sppr327
   LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=2 timing=0 resist_dispel=3 STR_VAR resource="%CLERIC_STORM_SHELL%" END
   LPF ALTER_EFFECT INT_VAR target=1 END // for some subtle reason, ability_target=5 and target=2 doesn't play nice with the 321 trick
   BUT_ONLY
+
 
 // tbd, cam
 // poison icon expires too early, just build into poison effect
@@ -830,7 +865,18 @@ WITH_SCOPE BEGIN
   LAF "WIZARD_CHILL_TOUCH" END
 END
 
-
+/*
+luke
+**Cause Disease**
+- Make sure `op78` displays the `Diseased` portrait icon
+  - function "remove_redundant_effects" won't be able to properly deal with this file because there are multiple op78 effects and just one op142 effect
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%CLERIC_CAUSE_DISEASE%.spl" "override"
+    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 78 "special" = 7 END // Disease
+    LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 "match_parameter2" = 7 END // op78 can naturally provide the "Diseased" portrait icon
+  BUT_ONLY_IF_IT_CHANGES
+END
 
 // luke
 // Spirit Fire => should not interact with spell protections
@@ -858,6 +904,16 @@ END
 
 /*
 luke
+**Sunray**
+- It now properly distinguishes `GENERAL=UNDEAD || RACE=MYCONID` from `!(GENERAL=UNDEAD || RACE=MYCONID)`
+*/
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~
+  LAF ~CLERIC_SUNRAY~ END
+END
+
+/*
+luke
 Summon Nishruu / Hakeashar
 - their attack (`nishrusu.itm`) should ignore all `AC` modifiers
   - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
@@ -874,6 +930,66 @@ Summon Nishruu / Hakeashar
 WITH_SCOPE BEGIN
   INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
   LAF ~NISHRUU_HAKEASHAR~ END
+END
+
+/*
+luke
+**Ghast attack**
+- Effects that grant a Save vs. Paralyze/Poison/Death should go into the new subspell
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "ghast1.spl" "override"
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_savingthrow" = BIT2 END
+  BUT_ONLY_IF_IT_CHANGES
+  COPY_EXISTING "ghast2.spl" "override"
+    LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 1 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_P11" END
+    LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 4 "duration" = 36 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_E05" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**Jester's song**
+- Make sure the Confusion subspell is refreshed every time it triggers (whether or not the target fails the save vs. Spell)
+  - this is a "eefixpack/files/tph/luke/7eyes/confusion.tph" follow-up
+*/
+
+WITH_SCOPE BEGIN
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "spcl751a.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "spcl751b" END // Cast spell
+    BUT_ONLY_IF_IT_CHANGES
+  END
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "spcl751b.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "savingthrow" = BIT0 "savebonus" = 2 END // all effects: Save vs. Spell
+      LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 2 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
+
+/*
+luke
+**Wand of Cursing**
+- Move all cosmetic effects into the 3 subspells
+  - this is a "eefixpack/files/tph/luke/7eyes/silence/blindness/deafness.tph" follow-up
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING "wand19.itm" "override"
+    LPF "GET_V10_HEAD_EFFECTS" RET_ARRAY "v10_head_effects" END
+    LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 174 END // Play sound
+    LPF "DELETE_ITEM_EFFECT" INT_VAR "opcode_to_delete" = 215 END // Play visual effect
+  BUT_ONLY_IF_IT_CHANGES
+  WITH_SCOPE BEGIN
+    COPY_EXISTING_REGEXP "^wand19[a-c]\.spl$" "override"
+      PHP_EACH "v10_head_effects" AS "fx_attributes" => "" BEGIN
+        PATCH_IF ("%fx_attributes_0%" != 146) BEGIN
+          LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = "%fx_attributes_0%" "target" = "%fx_attributes_1%" "power" = "%fx_attributes_2%" "parameter1" = "%fx_attributes_3%" "parameter2" = "%fx_attributes_4%" "timing" = "%fx_attributes_5%" "resist_dispel" = ("%fx_attributes_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attributes_6%") "duration" = "%fx_attributes_7%" "special" = "%fx_attributes_15%" STR_VAR "resource" = "%fx_attributes_10%" END
+        END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
 END
 
 // tbd, cam
@@ -937,6 +1053,11 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 
 INCLUDE ~eefixpack/files/tph/6037_iwdee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
+  LAF "remove_redundant_effects" END
+END
 
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches

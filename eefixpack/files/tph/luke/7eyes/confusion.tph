@@ -1,0 +1,172 @@
+DEFINE_ACTION_FUNCTION "CONFUSION"
+BEGIN
+	/*
+	****************************************************************************************
+	***************************************** ITM files ************************************
+	****************************************************************************************
+	*/
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			(GAME_IS ~bgee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"magiconf" , "-1" , "1,2" => "magiconf" // Ghoul hand
+					"sirine1" , "-1" , "1,2" => "sirine1a" // Ghoul hand
+				END
+			END
+			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"uarow3a" , "-1" , "0,1,2,3,4" => "uarow3a" // Confusion Arrow +3
+					"ulswd3b" , "-1" , "0,1,2,3,4" => "ulswd3b" // Long Sword of Confusion +2
+					"umstr2a" , "-1" , "0,1,2,3,4" => "umstr2a" // Morning Star of Confusion +1
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		/* Main */
+		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
+			COPY_EXISTING "%x_0%.itm" "override"
+				// Transfer effects onto a new SPL file (if needed)
+				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"subspell_resref" = "%y%"
+						"extract" = "%x_2%"
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"permutation" = "%x_2%"
+					END
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+
+	/*
+	****************************************************************************************
+	***************************************** SPL files ************************************
+	****************************************************************************************
+	*/
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			(GAME_IS ~bgee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					//"bdax1h05" "override" // used by Grubdoubler's Axe +1
+					//"bdmycsp1" "override" // Hallucinator Spores
+					//"bdsha01a" "override" // used by Fox Spirit
+					"bdshriek" , "-1" , "4,5,6,7" => "bdshrie1" // Piercing Shriek
+					//"bdstink" "override" // Confusion
+					"spcl751a" , 1 , "8=>6,4=>7" => "" // Jester's song
+					//"spdr501" "override" // Chaos
+					//"%PSIONIC_ID_INSINUATION%" "override"
+					//"%CONFUSION_NO_SAVE%" "override"
+					//"%MIST_CHAOS%" "override"
+					//"%NYMPH_CONFUSION%" "override"
+					//"%HULK_CONFUSION%" "override"
+					//"%GOLEM_CONFUSION%" "override"
+					//"%CLERIC_RIGID_THINKING%" "override"
+					//"%CLERIC_CONFUSION%" "override"
+					//"%TRAP_CONFUSION%" "override"
+					//"%WIZARD_CONFUSION%" "override"
+					//"%WIZARD_CHAOS%" "override"
+					//"%WIZARD_SPHERE_OF_CHAOS%" , "-1" , "" => "%WIZARD_SPHERE_OF_CHAOS%B"
+				END
+			END
+			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					//"insanity" , "-1" , "9=>0,8=>0" => "insanity" // Insanity Gaze
+					"insanity" , "-1" , "0,1,2,3,4" => "insanit2" // Insanity Gaze
+					"spcl751a" , 1 , "2,4,5" => "spcl751b" // Jester's song
+					"spcl751a" , 2 , "6,7" => "spcl751b" // Jester's song -- this is just to accomodate Cure Confusion SPL/ITM files...
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		/* Main */
+		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
+			COPY_EXISTING "%x_0%.spl" "override"
+				// Transfer effects onto a new SPL file (if needed)
+				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"subspell_resref" = "%y%"
+						"extract" = "%x_2%"
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"permutation" = "%x_2%"
+					END
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+END
+
+/////////////////////////////////////////////////////////////////
+/*
+
+Collect SPL/ITM files to check
+
+*/
+//////////////////////////////////////////////////////////////////
+
+/*
+WITH_SCOPE BEGIN
+	OUTER_SET "count_spl" = 0
+	OUTER_SET "count_itm" = 0
+	COPY_EXISTING_REGEXP - "^.+\.\(spl\|itm\)$" "override"
+		PATCH_MATCH "%DEST_EXT%" WITH
+			"itm" BEGIN
+				GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+				TEXT_SPRINT "filename" "rearrange_itm"
+			END
+			"spl" BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				TEXT_SPRINT "filename" "rearrange_spl"
+			END
+			DEFAULT
+				PATCH_FAIL "~%DEST_FILE%~"
+		END
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			PATCH_IF SHORT_AT ("%ab_off%" + 0x1E) > 1 BEGIN
+				GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+				PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+					PATCH_MATCH SHORT_AT "%fx_off%" WITH
+						128 BEGIN
+							INNER_ACTION BEGIN
+								ACTION_IF ("%DEST_EXT%" STRING_EQUAL_CASE "itm") BEGIN
+									OUTER_SET "count_itm" += 1
+									APPEND_OUTER "%MOD_FOLDER%/%filename%.txt" "%count_itm%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%" UNLESS "%count_itm%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%"
+								END ELSE BEGIN
+									OUTER_SET "count_spl" += 1
+									APPEND_OUTER "%MOD_FOLDER%/%filename%.txt" "%count_spl%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%" UNLESS "%count_spl%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%"
+								END
+							END
+						END
+						DEFAULT
+					END
+				END
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+END
+*/

@@ -1,0 +1,66 @@
+DEFINE_ACTION_FUNCTION "7EYES"
+BEGIN
+	// Include function library
+	INCLUDE "eefixpack/files/lib/gt_7eyes.tph"
+	// Main
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/berserk.tph"
+		LAF "BERSERK" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/charm_creature.tph"
+		LAF "CHARM_CREATURE" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/damage.tph"
+		LAF "DAMAGE" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/panic.tph"
+		LAF "PANIC" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/poison.tph"
+		LAF "POISON" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/silence.tph"
+		LAF "SILENCE" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/stun.tph"
+		LAF "STUN" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/blindness.tph"
+		LAF "BLINDNESS" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/feeblemindedness.tph"
+		LAF "FEEBLEMINDEDNESS" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/deafness.tph"
+		LAF "DEAFNESS" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/paralyze.tph"
+		LAF "PARALYZE" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/confusion.tph"
+		LAF "CONFUSION" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/petrification.tph"
+		LAF "PETRIFICATION" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/hold_creature.tph"
+		LAF "HOLD_CREATURE" END
+	END
+	WITH_SCOPE BEGIN
+		INCLUDE "eefixpack/files/tph/luke/7eyes/power_word_stun.tph"
+		LAF "POWER_WORD_STUN" END
+	END
+END

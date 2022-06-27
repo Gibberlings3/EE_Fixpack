@@ -1,0 +1,236 @@
+DEFINE_ACTION_FUNCTION "STUN"
+BEGIN
+	/*
+	****************************************************************************************
+	***************************************** ITM files ************************************
+	****************************************************************************************
+	*/
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			(GAME_IS ~bgee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"bdhalb01" , "-1" , "2,1,3,4,5" => "bdhalb00" // Storm Pike +2
+					"blun41" , "-1" , "0,1,2,3" => "blun41" // The Stupefier +1
+					"carrio" , "-1" , "1,0" => "carrio" // Ghoul hand
+					"cornugon" , "-1" , "2,1" => "cornugon" // Attack
+					"dart03" , "-1" , "1,0,2" => "dart03" // Dart of Stunning
+					"demcor01" , "-1" , "1,0" => "demcor01" // Attack
+					"deva" , "-1" , "14,13,15" => "deva" // Mace
+					"dwbolt02" , "-1" , "0,1,2" => "dwbolt02" // Drow Bolt of Stunning +1
+					"elemhydr" , "-1" , "13,12,14" => "elemhydr" // Attack (Olhydra)
+					"ghoulc" , "-1" , "1,0" => "ghoulc" // Ghoul hand
+					"goltome4" , "-1" , "1,0,3" => "goltome4" // Attack
+					"gorsnake" , "-1" , "1,0,2" => "gorsnake" // Skull
+					"icetrl" , "-1" , "2,1" => "icetrl" // Attack
+					"paracarr" , "-1" , "1,0,2" => "paracarr" // Ghoul hand
+					"paraghas" , "-1" , "1,0,2,3,4" => "paraghas" // Ghoul Touch
+					"paraghou" , "-1" , "1,0,2,3,4" => "paraghou" // Ghoul Touch
+					"sahbolt" , "-1" , "0,1,2" => "sahbolt" // Paralytic Bolt +1
+					"spermel" , "-1" , "12,11,13" => "spermel" // Spear
+					"wand04" , "-1" , "1,0,2,3,4,5" => "wand04" // Wand of Paralyzation
+				END
+			END
+			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"axemino" , "-1" , "0,1,2,3" => "axemino" // Axe of the Minotaur Lord +4
+					"cwreve" , "-1" , "0,1,2,3,4,5" => "cwreve" // Attack
+					"dart03" , "-1" , "0,1,2,3" => "dart03" // Dart of Stunning +1
+					"dazer" , "-1" , "0,1,2,3" => "dazer" // Dazer
+					"deva" , "-1" , "14,15,16" => "deva" // Mace of Disruption +2
+					"icegolem" , "-1" , "1,0,2,3" => "icegolem" // Skull
+					"icetrl" , "-1" , "1,2,3" => "icetrl" // Attack
+					"poq2-16" , "-1" , "0,1,2,3" => "poq2-16" // 
+					"sflail" , "-1" , "22,23,24,25,26,27,28,29,30" => "sflail1" // Flail (Stun: 6 seconds)
+					"sflail" , "-1" , "23,24,25,26,27,28,29,30,31" => "sflail2" // Flail (Stun: 12 seconds)
+					"sflail" , "-1" , "24,25,26,27,28,29,30,31,32" => "sflail3" // Flail (Stun: 18 seconds)
+					"sflail" , "-1" , "25,26,27,28,29,30,31,32,33" => "sflail4" // Flail (Stun: 24 seconds)
+					"u1ham3b" , "-1" , "1,2,3,4" => "u1ham3b" // War Hammer of Sparks +2
+					"u1hax2a" , "-1" , "1,2,3,4" => "u1hax2a" // Charged Battle Axe +2
+					"u1hax4b" , "-1" , "1,0,2,3" => "u1hax4b" // Benorg's Truth +3
+					"uarow3b" , "-1" , "0,1,2,3" => "uarow3b" // Hammer Arrow +1
+					"ubswd5b" , "-1" , "1,2,3,4" => "ubswd5b" // Bastard Sword +3: Incinerator
+					"udart1a" , "-1" , "0,1,2,3" => "udart1a" // Hammer Dart
+					"uflal2b" , "-1" , "0,1,2,3" => "uflal2b" // Hammer Flail +2
+					"uflal5a" , "-1" , "1,2,3,4" => "uflal5a" // Shocking Flail +4
+					"uhalb4a" , "-1" , "1,2,3,4" => "uhalb4a" // Doom Halberd +3
+					"uhalb4b" , "-1" , "0,1,2,3" => "uhalb4b" // Star-Forged Halberd +3
+					"ulswd5b" , "-1" , "1,2,3,4" => "ulswd5b" // Bhaal's Fire +3
+					"umstr2b" , "-1" , "1,2,3,4" => "umstr2b" // Lesser Static Star +1
+					"umstr3a" , "-1" , "0,1,2,3" => "umstr3a" // Morning Star +2: Hammer
+					"umstr5a" , "-1" , "0,1,2,3" => "umstr5a" // Morning Star of Action +4
+					"usswd5b" , "-1" , "1,2,3,4" => "usswd5b" // Short Sword +4: Hammer
+					"utswd2b" , "-1" , "0,1,2,3" => "utswd2b" // Two-Handed Sword +1: Hammering
+					"utswd3a" , "-1" , "0,1,2,3" => "utswd3a" // Two-Handed Sword +2: Hammering
+					"utswd5a" , "-1" , "1,2,3,4" => "utswd5a" // Static Two-Handed Sword +4
+					"wand04" , "-1" , "1,2,3,4,5,6" => "wand04" // Wand of Paralyzation
+					"xclub" , "-1" , "0,1,2,3" => "xclub" // Dazer
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		/* Main */
+		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
+			COPY_EXISTING "%x_0%.itm" "override"
+				// Transfer effects onto a new SPL file (if needed)
+				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"subspell_resref" = "%y%"
+						"extract" = "%x_2%"
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"permutation" = "%x_2%"
+					END
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+
+	/*
+	****************************************************************************************
+	***************************************** SPL files ************************************
+	****************************************************************************************
+	*/
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			(GAME_IS ~bgee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"bddcor01" , "-1" , "6=>4" => "" // used by Cornugon
+					//"bdhelm17" , "-1" => "override" // used by Voghiln's Helmet
+					"bdsha06a" , "-1" , "2=>1" => "" // used by Bear Spirit
+					"bdshriek" , "-1" , "2,3,4,5" => "bdshrie0" // Piercing Shriek
+					"spcl123" , 3 , "4=>3" => "" // 
+					//"spdr101" , 4 , "1,2,3,4,5,6,7" => "spdr101a" // Chromatic Orb (AVENGER)
+					//"spdr101" , 6 , "1,2,3,4,5,6,7" => "spdr101b" // Chromatic Orb (AVENGER)
+					"%BOMBARDIER_BEETLE_CLOUD%" , "-1" , "2,3,4" => "%BOMBARDIER_BEETLE_CLOUD%A"
+					"%PSIONIC_INFLICT_PAIN%" , "-1" , "1=>0" => ""
+					"%NOSAVE_PSIONIC_BLAST%" , "-1" , "1=>0" => ""
+					"%SILVER_DRAGON_BREATH_PARALIZATION%" , "-1" , "2=>1" => ""
+					"%BRAIN_PSIONIC_BLAST%" , "-1" , "1,0,2,4" => "%BRAIN_PSIONIC_BLAST%A"
+					//"%PSIONIC_EGOWHIP%" , "-1" => ""
+					"%MEPHIT_WATER_JET%" , "-1" , "1,2,3" => "%MEPHIT_WATER_JET%A"
+					"%MEPHIT_WATER_JET%" , "-1" , "2=>0" => ""
+					"%MEPHIT_RAINSTORM%" , "-1" , "2,1,3,4" => "%MEPHIT_RAINSTORM%A"
+					"%MEPHIT_SALT_CRYSTAL%" , "-1" , "2,1,3,4" => "%MEPHIT_SALT_CRYSTAL%A"
+					"%ULITHARID_PSIONIC_BLAST%" , "-1" , "1=>0" => ""
+					"%MIND_FLAYER_PSIONIC_BLAST%" , "-1" , "1=>0" => ""
+					"%CLERIC_SYMBOL_STUN%" , "-1" , "1=>0" => ""
+					//"%TRAP_CHROMATIC_ORB%" , "-1" => ""
+					//"%WIZARD_CHROMATIC_ORB%" , 4 , "" => "%WIZARD_CHROMATIC_ORB%A"
+					//"%WIZARD_CHROMATIC_ORB%" , 6 => "%WIZARD_CHROMATIC_ORB%B"
+					"%WIZARD_SYMBOL_STUN%" , "-1" , "1=>0" => ""
+					//"%WIZARD_NPC_SYMBOL_STUN%" , "-1" => ""
+					"spwm152" , "-1" , "4=>0" => "" // Polymorph Other (wild surge)
+				END
+			END
+			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref , ability , permutation/extract => child resref
+					"bdsha06a" , "-1" , "2=>1" => "" // used by Bear Spirit
+					"sareveff" , "-1" , "2=>1" => "" // Sarevok special attack
+					"%BARD_SONG_SIREN%" , "-1" , "7=>6" => "" // The Siren's Yearning—Enthralls Creatures
+					"spcl123" , 3 , "5=>3" => "" // 
+					"%INNATE_MOURNFUL_WAIL%" , "-1" , "3=>7" => ""
+					"%INNATE_DRAGON_WING_BUFFET%" , "-1" , "6,7,8" => "%INNATE_DRAGON_WING_BUFFET%B"
+					"%INNATE_HARPY_WAIL_INTERNAL%" , "-1" , "6,7" => "%INNATE_HARPY_WAIL_INTERNAL%B"
+					//"%INNATE_MYCONID_SPORES%" , "-1" , "9=>0" => ""
+					//"%INNATE_BOMBARDIER_BEETLE_CLOUD%" , "-1" , "2,3,4,8" => "%INNATE_BOMBARDIER_BEETLE_CLOUD%A"
+					//"%CLERIC_SMASHING_WAVE%" , "-1" , "5,6,10" => "%CLERIC_SMASHING_WAVE%B"
+					"%CLERIC_WHIRLWIND%" , "-1" , "6,7,8" => "%CLERIC_WHIRLWIND%B"
+					"%CLERIC_SYMBOL_OF_HOPELESSNESS%" , "-1" , "3=>1" => ""
+					"%WIZARD_ICELANCE%" , "-1" , "1,2,3" => "%WIZARD_ICELANCE%A"
+					"%WIZARD_EMOTION_HOPELESSNESS%" , "-1" , "3=>1" => ""
+					"%WIZARD_GREAT_SHOUT%" , "-1" , "7,8,11,13,14,16" => "%WIZARD_GREAT_SHOUT%A"
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		/* Main */
+		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
+			COPY_EXISTING "%x_0%.spl" "override"
+				// Transfer effects onto a new SPL file (if needed)
+				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"subspell_resref" = "%y%"
+						"extract" = "%x_2%"
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
+					INT_VAR
+						"ability" = "%x_1%"
+					STR_VAR
+						"permutation" = "%x_2%"
+					END
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+END
+
+/////////////////////////////////////////////////////////////////
+/*
+
+Collect SPL/ITM files to check
+
+*/
+//////////////////////////////////////////////////////////////////
+
+/*
+WITH_SCOPE BEGIN
+	OUTER_SET "count_spl" = 0
+	OUTER_SET "count_itm" = 0
+	COPY_EXISTING_REGEXP - "^.+\.\(spl\|itm\)$" "override"
+		PATCH_MATCH "%DEST_EXT%" WITH
+			"itm" BEGIN
+				GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+				TEXT_SPRINT "filename" "rearrange_itm"
+			END
+			"spl" BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				TEXT_SPRINT "filename" "rearrange_spl"
+			END
+			DEFAULT
+				PATCH_FAIL "~%DEST_FILE%~"
+		END
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			PATCH_IF SHORT_AT ("%ab_off%" + 0x1E) > 1 BEGIN
+				GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+				PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+					PATCH_MATCH SHORT_AT "%fx_off%" WITH
+						45 BEGIN
+							INNER_ACTION BEGIN
+								ACTION_IF ("%DEST_EXT%" STRING_EQUAL_CASE "itm") BEGIN
+									OUTER_SET "count_itm" += 1
+									APPEND_OUTER "%filename%.txt" "%count_itm%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%" UNLESS "%count_itm%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%"
+								END ELSE BEGIN
+									OUTER_SET "count_spl" += 1
+									APPEND_OUTER "%filename%.txt" "%count_spl%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%" UNLESS "%count_spl%) ~%DEST_FILE%~ => ability #%ab_ind%, position #%fx_ind%"
+								END
+							END
+						END
+						DEFAULT
+					END
+				END
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+END
+*/
