@@ -154,7 +154,7 @@ BEGIN
 					"%CLERIC_SYMBOL_OF_HOPELESSNESS%" , "-1" , "3=>1" => ""
 					"%WIZARD_ICELANCE%" , "-1" , "1,2,3" => "%WIZARD_ICELANCE%A"
 					"%WIZARD_EMOTION_HOPELESSNESS%" , "-1" , "3=>1" => ""
-					"%WIZARD_GREAT_SHOUT%" , "-1" , "7,8,11,13,14,16" => "%WIZARD_GREAT_SHOUT%A"
+					//"%WIZARD_GREAT_SHOUT%" , "-1" , "7,8,11,13,14,16" => "%WIZARD_GREAT_SHOUT%A" // disabled by cam - david's immunity review already breaks this into subspells
 				END
 			END
 			DEFAULT
