@@ -243,6 +243,12 @@ COPY_EXISTING ~gith03.cre~   ~override~ // anti-paladin - blocks cdhorror
   LPF ALTER_EFFECT INT_VAR match_opcode = 101 match_parameter2 = 101 parameter2 = 24 END // yo dawg, we heard you like immunity to effect, so we immunity to efected your immunity to effect
   BUT_ONLY
 
+// immune to confusion, but missing spconfus immunity
+COPY_EXISTING ~ohhgmum.cre~  ~override~ // greater mummy - immune to fear - immune to confusion
+              ~ohhraffi.cre~ ~override~ // raffiyah - immune to fear - immune to confusion
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 128 opcode = 296 parameter2 = 0 STR_VAR resource = spconfus END
+  BUT_ONLY
+
 // tbd, cam
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
 INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
@@ -287,14 +293,14 @@ COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 49 END // charm is 50%, but icon is 100%
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
   PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 49 STR_VAR insert = last END
-    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 49 multi_match = 1 END
+    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
   END  
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 14 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 44 END // elf immunity
+//  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
   
 // tbd, cam
 // blackmist plays two sounds when it blinds targets; one of them is the expirty sound and should be delayed
@@ -324,6 +330,13 @@ COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to h
   LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spconfus END
   BUT_ONLY
 
+// tie slow icon to slos-via-disease effect so it gets cleared by disease cures    
+COPY_EXISTING ~iotyugh.itm~  ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~ohrslng1.itm~ ~override~ // (itm) Lupine Sling +2 - causes disease - portrait icon 41 [uses slow icon with its disease]
+              ~otyugh.itm~   ~override~ // (itm) Attack - causes disease - portrait icon 41
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete slow effect
+  LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
+
 // sirine1 uses 'feeblemind' icon for an intelligence drain; instead use generic 'ability score drained' for both
 COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unknown long effect - portrait icon 3
               ~sirine1.itm~  ~override~ // Ghoul hand - causes confusion - unknown long effect - portrait icon 3 - portrait icon 48
@@ -334,6 +347,16 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
 // uses 'intoxication' icon for a confusion effect
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
+
+// immune to hold, but missing spmindat immunity
+COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
+  BUT_ONLY
+  
+// tbd, cam
+// elixir of health should cure intoxication, not set it to zero
+COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
+  LPF ALTER_EFFECT INT_VAR match_opcode = 94 opcode = 164 parameter2 = 0 END // flesh out effects below
 
 // poison resistance blocking con penalty, choking noises
 COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes poison
@@ -352,6 +375,10 @@ COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
     LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 221 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index 
   END 
   BUT_ONLY 
+
+// the feeblemind effect already sets INT=3, so purging redundant effects
+COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
+  LPF DELETE_EFFECT INT_VAR match_opcode = 19 END
 
 // tbd, cam
 // elemental staves' sound effect should only target the specified creature

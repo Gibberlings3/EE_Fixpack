@@ -295,14 +295,16 @@ COPY_EXISTING ~cwreve.itm~   ~override~ // attack - blocks spmindat
   BUT_ONLY
   
 // ie-6023, cam
-// Weapon effect duration fixes
+// Weapon effect duration fixes - target both itm and spl so it can go before or after luke's seven eye fixes
 COPY_EXISTING ~dart03.itm~ ~override~ // dart of stunning: color glow expires early
-  LPF ALTER_EFFECT INT_VAR match_duration = 38 duration = 42 END
-  BUT_ONLY
+              ~dart03.spl~ ~override~ // dart of stunning: color glow expires early
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 38 duration = 42 END
+  BUT_ONLY IF_EXISTS
 
 COPY_EXISTING ~ghoult.itm~ ~override~ // ghoul touch should last six rounds
-  LPF ALTER_EFFECT INT_VAR match_duration = 25 duration = 36 END // bump up to six rounds
-  BUT_ONLY
+              ~ghoult.spl~ ~override~ // ghoul touch should last six rounds
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 25 duration = 36 END // bump up to six rounds
+  BUT_ONLY IF_EXISTS
   
 // tbd, cam
 // sword of days doesn't block all haste/slow spells
@@ -371,7 +373,9 @@ COPY_EXISTING ~uhxbw2a.itm~ ~override~ // finest heavy crossbow
 // feedback with limited timing and/or duration
 COPY_EXISTING ~wand08.itm~   ~override~ // (itm) Wand of Sleep - causes sleep - additional effects
               ~wand19.itm~   ~override~ // (itm) Wand of Cursing - causes blind deafness silence - portrait icon(s) 8 34 112 - sound(s) EFF_E06 - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
+              ~wand19b.spl~  ~override~ // if run after luke's seven eye fixes, busted string is here instead
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 timing = 1 duration = 0 END
+  BUT_ONLY IF_EXISTS
   
   
   
