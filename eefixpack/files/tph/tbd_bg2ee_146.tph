@@ -22,6 +22,12 @@ COPY_EXISTING ~helm17.itm~ ~override~ // skull of death: shouldn't require creat
   LPF ALTER_HEADER INT_VAR target = 4 STR_VAR match_icon = spwi605b END // death spell header
   LPF ALTER_EFFECT INT_VAR opcode = 148 target = 1 STR_VAR match_resource = spwi605 END // actual cast
   BUT_ONLY
+
+// change wand of glitterdust to just cast the spell
+COPY_EXISTING ~ohdwand1.itm~ ~override~ // Wand of Glitterdust - cures invisibility - causes blind - unknown long effect - unknown long effect - plays sound EFF_E07
+  LPF DELETE_EFFECT END // delete existing effects
+  LPF ALTER_HEADER INT_VAR range = 30 primary = 0 secondary = 0 projectile = 1 END
+  LPF ADD_ITEM_EFFECT INT_VAR opcode = 148 target = 1 parameter1 = 10 timing = 1 STR_VAR resource = spwi224 END
   
 COPY_EXISTING ~restore.itm~ ~override~ // restoration scroll
   LPF ALTER_HEADER INT_VAR range = 1 STR_VAR match_icon = sppr417a END // restoration: range is touch
