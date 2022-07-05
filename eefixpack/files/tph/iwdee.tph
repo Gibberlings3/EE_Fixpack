@@ -234,6 +234,18 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
   END
   BUT_ONLY
 
+
+
+// tbd, graion
+// Vale of Shadows exterior INI only uses two spawn points out of 16
+COPY_EXISTING ~ar3000.ini~ ~override~
+  REPLACE_TEXTUALLY
+  ~critters=lShadow1,lShadow2,lShadow3,lShadow4,lShadow5,lShadow6,lShadow7,lShadow8,lShadow9,lShadow10,lShadow11,lShadow12,lShadow13,lShadow14,lShadow15,Shadow1~
+  ~critters=lShadow1,Shadow2,Shadow3,Shadow4,Shadow5,Shadow6,Shadow7,Shadow8,Shadow9,Shadow10,Shadow11,Shadow12,Shadow13,Shadow14,Shadow15,Shadow1~
+  BUT_ONLY
+
+
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
