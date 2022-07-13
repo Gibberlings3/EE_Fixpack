@@ -41,3 +41,7 @@ END
 // tbd, cam
 // perdue says he's giving you 50 gold, but only delivers if you actually accepted the quest
 REPLACE_ACTION_TEXT perdue ~GivePartyGoldGlobal("PerduePayment","GLOBAL")~ ~GivePartyGold(50)~
+
+// tbd, graion
+// mendas's dialogue triggers the wrong spell
+REPLACE_ACTION_TEXT ~menda4~ ~ActionOverride("Baresh",ApplySpell(Myself,BERESH_CHANGE))~ ~ActionOverride("Baresh",ApplySpellRES("ohwi924",Myself))~
