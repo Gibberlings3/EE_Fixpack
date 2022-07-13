@@ -2,6 +2,36 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+/*
+jazira
+It is south of the battlefield, not north
+*/
+@6511   = ~I do believe that you are correct. We should make our way there now. He said that it was just south of the battlefield, did he not?~
+
+/*
+jazira
+offers the demon the fake eggs, not the dragon
+*/
+@7148   = ~The drow summoning ritual
+
+Phaere has told me of Ardulace's plan in its entirety. The drow intend to invade the surface... to what end, I don't know. But Matron Ardulace's ritual is going to summon a great demon to aid the drow. The dragon eggs will be sacrificed to the demon in return for its service, and this will place House Despana in great favor with Lolth.
+
+Phaere intends to betray Matron Ardulace and has coerced me into helping her. She wants me to go to the Despana treasury (in Lolth's temple) and replace the silver dragon's eggs with fake eggs that Phaere has had made. Then when Ardulace offers the demon the fake eggs, Phaere can step in with the real ones.
+
+I must be careful if I go to the treasury... killing the guards, if it is done, must be done discreetly if at all. And even once I get the eggs, the city has been sealed by Matron Ardulace... there is no escaping. I must continue to play along... for now.~
+
+/*
+jazira
+It is south of the battlefield, not north
+*/
+@7417   = ~I do believe that you are correct. We should make our way there now. He said that is was just south of the battlefield, did he not?~
+
+/*
+jazira
+It is south of the battlefield, not north
+*/
+@7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
+
 // last line: the ruins are west of imnesvale, not north
 @17169 = ~Wallag,
 We travel this day to search out the wolf lair. My own scouting of the region has confirmed Merella's suspicions that there is a large pack of wolves acting in this area. On the map included, I have indicated where I believe the wolf den to be located. Follow us if you can, but be cautious. We can ill-afford another mysterious disappearance. Until we meet again. 
