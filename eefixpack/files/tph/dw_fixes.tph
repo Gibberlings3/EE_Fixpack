@@ -34,7 +34,7 @@ LAF paralyzation_fixes END
 
 // standardize death magic protection (BG2 only)
 
-ACTION_IF GAME_IS "bg2ee" BEGIN
+ACTION_IF game_is_bgee OR game_is_bg2ee BEGIN
 	INCLUDE "%library_path%/death_magic_immunity.tph"
 	LAF death_magic_immunity END
 END

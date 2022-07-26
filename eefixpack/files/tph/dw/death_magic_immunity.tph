@@ -1,48 +1,56 @@
 DEFINE_ACTION_FUNCTION death_magic_immunity BEGIN
 
-	/////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////
-	//// Standardize the various spells / items that grant immunity to 'death magic'
-	//// (currently BG2 only)
-	/////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////
+  ACTION_IF game_is_bg2ee BEGIN
+  
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    //// Standardize the various spells / items that grant immunity to 'death magic'
+    //// (currently BG2 only)
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
-	/*
-	We are standardizing on Death Ward (immunity to 13, 55, 209, 238), partly because that's what PnP does,
-	partly because it's plausible that a core spell was more carefully worked out than later ideas, and partly
-	because it seems to meet the common sense meaning (an effect that directly kills you).
-	*/
+    /*
+    We are standardizing on Death Ward (immunity to 13, 55, 209, 238), partly because that's what PnP does,
+    partly because it's plausible that a core spell was more carefully worked out than later ideas, and partly
+    because it seems to meet the common sense meaning (an effect that directly kills you).
+    */
 
-	/////////////////////////////////////////////////////////////////////////
-	//// Cloak of the Lich should protect from Disintegrate
-	/////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    //// Cloak of the Lich should protect from Disintegrate
+    /////////////////////////////////////////////////////////////////////////
 
-	COPY_EXISTING "ohbclck1.itm" override
-		LPF CLONE_EFFECT INT_VAR match_opcode=101 match_parameter2=13 parameter2=238 END
-		
-	////////////////////////////////////////////////////////////////////////
-	//// Hindo's Doom should not have an undocumented protection from petrification
-	/////////////////////////////////////////////////////////////////////////
+    COPY_EXISTING "ohbclck1.itm" override
+      LPF CLONE_EFFECT INT_VAR match_opcode=101 match_parameter2=13 parameter2=238 END
+      
+    ////////////////////////////////////////////////////////////////////////
+    //// Hindo's Doom should not have an undocumented protection from petrification
+    /////////////////////////////////////////////////////////////////////////
 
-	COPY_EXISTING "sw1h71.itm" override
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=14665 END // 'petrified' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=134 END // protection
-		
-	////////////////////////////////////////////////////////////////////////
-	//// Avoid Death should protect from PW:Kill, but not from level drain, petrification, or Imprisonment
-	/////////////////////////////////////////////////////////////////////////
+    COPY_EXISTING "sw1h71.itm" override
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=14665 END // 'petrified' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=134 END // protection
+      
+    ////////////////////////////////////////////////////////////////////////
+    //// Avoid Death should protect from PW:Kill, but not from level drain, petrification, or Imprisonment
+    /////////////////////////////////////////////////////////////////////////
 
-	COPY_EXISTING "spcl917.spl" override
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=41616 END // 'five levels drained' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40979 END // 'four levels drained' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40969 END // 'three levels drained' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40968 END // 'two levels drained' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=41495 END // 'one level drained' string	
-		LPF DELETE_EFFECT INT_VAR match_opcode=169 match_parameter2=59 END // energy drain icon
-		LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=211 END // protection from imprisonment
-		LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=216 END // protection from level drain
-		LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=134 END // protection from petrification
-		LPF CLONE_EFFECT INT_VAR match_opcode=101 match_parameter2=13 parameter2=209 END // PW:Kill
+    COPY_EXISTING "spcl917.spl" override
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=41616 END // 'five levels drained' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40979 END // 'four levels drained' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40969 END // 'three levels drained' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=40968 END // 'two levels drained' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=267 match_parameter1=41495 END // 'one level drained' string	
+      LPF DELETE_EFFECT INT_VAR match_opcode=169 match_parameter2=59 END // energy drain icon
+      LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=211 END // protection from imprisonment
+      LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=216 END // protection from level drain
+      LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=134 END // protection from petrification
+      LPF CLONE_EFFECT INT_VAR match_opcode=101 match_parameter2=13 parameter2=209 END // PW:Kill
 
+  END ELSE BEGIN // just one fix for bgee
+  
+    COPY_EXISTING ~sppr409.spl~ ~override~ // death ward
+      LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 opcode = 206 parameter1 = 0 parameter2 = 0 STR_VAR resource = spin996 END // add explicit block for aec's death gaze
 
+  END
+  
 END
