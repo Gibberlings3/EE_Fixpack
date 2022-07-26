@@ -48,7 +48,9 @@ DEFINE_ACTION_FUNCTION death_magic_immunity BEGIN
 
   END ELSE BEGIN // just one fix for bgee
   
-    COPY_EXISTING ~sppr409.spl~ ~override~ // death ward
+    COPY_EXISTING ~ohsmode1.spl~ ~override~ // story mode
+                  ~ohsmode4.spl~ ~override~ // story mode
+                  ~sppr409.spl~  ~override~ // death ward
       LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 opcode = 206 parameter1 = 0 parameter2 = 0 STR_VAR resource = spin996 END // add explicit block for aec's death gaze
 
   END
