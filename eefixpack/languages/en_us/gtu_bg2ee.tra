@@ -1369,6 +1369,9 @@ Bodhi offered to let me join her guild, the one that has been warring with the S
 
 I didn't think I could trust her, and I didn't want to throw away what I have done so far. I turned her down, and now she is an enemy. She let me leave peacefully, accepting my decision, but stated quite matter-of-factly that we would meet again on less friendly terms.~
 
+// potion that casts this is named "Potion of Icedust" (no space), so remove space in spell to match: "Ice Dust" > "Icedust"
+@6611 = ~Icedust~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @6650 = ~Slings have existed since the beginning of recorded history. The basic sling consists of a leather or fabric strap with a pouch for holding the missile. The weapon is held by both ends of the strap and twirled around the wielder's head. When top speed is attained, the missile is launched by releasing one of the strap's ends.
 

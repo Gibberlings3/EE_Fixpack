@@ -100,6 +100,10 @@ INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant ani
 // make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
 INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~ 
 
+// tbd, cam
+// potion of icedust doesn't work since it uses an enemy-only projectile for a buff
+INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -199,7 +203,10 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
+
 /////                                                  \\\\\
+INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
+INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 
 // ie-3658, cam
 // Jassar (and others) shouldn't drop identified magic armor
@@ -270,6 +277,7 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
+INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
 // tbd, cam
 // aegis fang has wrong enchantment level
@@ -306,6 +314,22 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
 // blackmist plays two sounds when it blinds targets; one of them is the expirty sound and should be delayed
 COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 600 STR_VAR match_resource = eff_e07 END
+
+// tbd, cam
+// helmet appearance corrections
+COPY_EXISTING ~helm32.itm~ ~override~ // Helm of the Rock
+  WRITE_ASCII 0x22 ~j2~ #2 // paperdoll appearance
+  LPF ALTER_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 48 parameter1 = 207 END // change 'helmet wings' to 'minor noble 2 chrome gold'
+  LPF ALTER_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 52 parameter1 = 199 END // change 'helmet face' to 'black teal'
+  LPF ALTER_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 53 parameter1 = 199 END // change 'helmet exterior' to 'black teal'
+  LPF CLONE_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 48 parameter1 =   0 parameter2 = 49 END // clone 'helmet wings' to 'helmet detail', color 'rust tinted black'
+  LPF CLONE_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 48 parameter1 =   0 parameter2 = 50 END // clone 'helmet wings' to 'helmet plume', color 'rust tinted black'
+
+COPY_EXISTING ~helm33.itm~ ~override~ // Gold Horned Helm
+  WRITE_ASCII 0x22 ~j3~ #2 // paperdoll appearance
+  LPF ALTER_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 48 parameter1 = 223 END // change 'helmet wings' to 'drow skin moss green'
+  LPF ALTER_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 53 parameter1 = 208 END // change 'helmet exterior' to 'faded wheat'
+  LPF CLONE_EFFECT INT_VAR match_opcode = 7 match_parameter2 = 53                  parameter2 = 52 END // clone 'helmet exterior' to 'helmet face'
 
 // tbd, cam
 // combat feedback used with instant/limited timing and durations

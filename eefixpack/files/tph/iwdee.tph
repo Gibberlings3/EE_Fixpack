@@ -237,6 +237,8 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
   
 // ie-6035, cam
 // Why are constructs carrying gold?
@@ -249,6 +251,7 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
+INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
   
 // ie-6019, cam
 // Portrait icon fixes for items

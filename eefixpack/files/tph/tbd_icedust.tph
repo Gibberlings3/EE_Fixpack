@@ -1,0 +1,9 @@
+// tbd, cam
+// potion of icedust doesn't work since it uses an enemy-only projectile for a buff
+COPY_EXISTING ~safefire.pro~ ~override/cdicedus.pro~
+  WRITE_SHORT 0x200 ((THIS BAND `BIT6) BAND `BIT7) // remove enemy- and ally-only flags
+ADD_PROJECTILE ~override/cdicedus.pro~ // register new projectile
+COPY_EXISTING ~spin713.spl~ ~override~
+  LPF ALTER_HEADER INT_VAR projectile = cdicedus END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 30 opcode = 142 parameter1 = 0 parameter2 = 16 END // add protection from fire portrait icon
+  LPF CLONE_EFFECT INT_VAR match_opcode = 30 opcode = 328 parameter1 = 0 parameter2 = 65 special = 1 END // set buff_pro_damage spell state

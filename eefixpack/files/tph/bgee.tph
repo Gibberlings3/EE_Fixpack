@@ -370,6 +370,12 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// tbd, cam
+// don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
+ACTION_IF game_includes_sod BEGIN
+  EXTEND_TOP ~bdshadow.bcs~ ~eefixpack/files/baf/bdshadow.baf~
+END  
+
 // tbd, cam (from jmerry)
 // bp: hogarl not using the right potion when he's hurt
 COPY_EXISTING ~bpgiafir.bcs~ ~override~
@@ -572,6 +578,9 @@ COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
+INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+
 // tbd, cam
 // crusaders with the wrong DV
 COPY_EXISTING ~bdcrus21.cre~ ~override~
@@ -668,6 +677,7 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
+INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
 ACTION_IF game_includes_sod BEGIN
 
@@ -705,6 +715,12 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete separate slow icon (not present on bddraggh and pudden01)
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
+
+// tbd, cam
+// sword of balduran should be zero enchantment
+COPY_EXISTING ~comps18.itm~ ~override~ // sword of balduran, 1pp cosmetic version
+              ~sw1h18.itm~  ~override~ // sword of balduran
+  WRITE_LONG 0x60 0 // enchantment (already has 344 to make it +4 vs. lycans)
   
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)

@@ -42,3 +42,8 @@ COPY_EXISTING ~comps34.itm~ ~override~ // albruin (1pp dupe)
   LPF ADD_ITEM_EFFECT INT_VAR opcode = 146 target = 2 parameter1 = 10 parameter2 = 2 timing = 1 STR_VAR resource = spwi203 END // and replace with a single cast
   BUT_ONLY
   
+// IH from ring of gaxx can't be dispelled
+COPY_EXISTING ~ring39.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 3 match_resist_dispel = 2 resist_dispel = 3 END // delete everything on the magical headers
+  
+  
