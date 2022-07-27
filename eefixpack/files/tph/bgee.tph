@@ -572,6 +572,9 @@ COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
+INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+
 // tbd, cam
 // crusaders with the wrong DV
 COPY_EXISTING ~bdcrus21.cre~ ~override~
@@ -668,6 +671,7 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
+INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
 ACTION_IF game_includes_sod BEGIN
 

@@ -1,0 +1,5 @@
+// tbd, cam
+// bears summoned by conjure animals should used summoned scripts, not bear scripts
+COPY_EXISTING ~bearposu.cre~ ~override~  
+  WRITE_ASCII 0x258 ~~        #8 // remove cbear
+  WRITE_ASCII 0x268 ~bdsum00~ #8 // add generic summon script

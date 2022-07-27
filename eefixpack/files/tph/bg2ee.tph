@@ -100,6 +100,10 @@ INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant ani
 // make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
 INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~ 
 
+// tbd, cam
+// potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
+INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -199,7 +203,10 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
+
 /////                                                  \\\\\
+INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
+INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 
 // ie-3658, cam
 // Jassar (and others) shouldn't drop identified magic armor
@@ -270,6 +277,7 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
+INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
 // tbd, cam
 // aegis fang has wrong enchantment level

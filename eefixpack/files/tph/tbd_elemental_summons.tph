@@ -1,0 +1,6 @@
+// tbd, cam
+// summons shouldn't grant XP
+COPY_EXISTING ~elemchan.cre~ ~override~ // chan-chan
+              ~elemsunn.cre~ ~override~ // sunnis-kun
+              ~elemzaam.cre~ ~override~ // ruul zamaan-san
+  WRITE_LONG 0x14 0 // xp value
