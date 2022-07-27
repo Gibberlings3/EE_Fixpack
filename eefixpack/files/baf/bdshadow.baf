@@ -1,0 +1,94 @@
+IF
+  Global("cdBugbearsDead","LOCALS",0)
+  Difficulty(EASIEST)
+  Dead("bdsnorga")
+  NumDeadGT("bdbugb01",3)
+  NumDeadGT("bdbugb02",3)
+  NumDeadGT("bdbugb03",2)
+  NumDeadGT("bdbugb04",1)
+  NumDeadGT("bdbugb10",2)
+  NumDeadGT("bdbugb11",1)
+//  NumDeadGT("bdbugb12",3)
+  NumDeadGT("bdbugb20",0)
+//  NumDeadGT("bdbugb21",3)
+THEN
+  RESPONSE #100
+    SetGlobal("cdBugbearsDead","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("cdBugbearsDead","LOCALS",0)
+  Difficulty(EASY)
+  Dead("bdsnorga")
+  NumDeadGT("bdbugb01",3)
+  NumDeadGT("bdbugb02",4)
+  NumDeadGT("bdbugb03",2)
+  NumDeadGT("bdbugb04",2)
+  NumDeadGT("bdbugb10",3)
+  NumDeadGT("bdbugb11",2)
+//  NumDeadGT("bdbugb12",3)
+  NumDeadGT("bdbugb20",0)
+//  NumDeadGT("bdbugb21",3)
+THEN
+  RESPONSE #100
+    SetGlobal("cdBugbearsDead","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("cdBugbearsDead","LOCALS",0)
+  Difficulty(NORMAL)
+  Dead("bdsnorga")
+  NumDeadGT("bdbugb01",3)
+  NumDeadGT("bdbugb02",4)
+  NumDeadGT("bdbugb03",2)
+  NumDeadGT("bdbugb04",3)
+  NumDeadGT("bdbugb10",3)
+  NumDeadGT("bdbugb11",2)
+  NumDeadGT("bdbugb12",0)
+  NumDeadGT("bdbugb20",1)
+//  NumDeadGT("bdbugb21",3)
+THEN
+  RESPONSE #100
+    SetGlobal("cdBugbearsDead","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("cdBugbearsDead","LOCALS",0)
+  Difficulty(HARD)
+  Dead("bdsnorga")
+  NumDeadGT("bdbugb01",3)
+  NumDeadGT("bdbugb02",4)
+  NumDeadGT("bdbugb03",2)
+  NumDeadGT("bdbugb04",7)
+  NumDeadGT("bdbugb10",4)
+  NumDeadGT("bdbugb11",2)
+  NumDeadGT("bdbugb12",1)
+  NumDeadGT("bdbugb20",1)
+  NumDeadGT("bdbugb21",0)
+THEN
+  RESPONSE #100
+    SetGlobal("cdBugbearsDead","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("cdBugbearsDead","LOCALS",0)
+  Difficulty(HARDEST)
+  Dead("bdsnorga")
+  NumDeadGT("bdbugb01",3)
+  NumDeadGT("bdbugb02",4)
+  NumDeadGT("bdbugb03",2)
+  NumDeadGT("bdbugb04",7)
+  NumDeadGT("bdbugb10",4)
+  NumDeadGT("bdbugb11",2)
+  NumDeadGT("bdbugb12",1)
+  NumDeadGT("bdbugb20",3)
+  NumDeadGT("bdbugb21",0)
+THEN
+  RESPONSE #100
+    SetGlobal("cdBugbearsDead","LOCALS",1)
+    Continue()
+END

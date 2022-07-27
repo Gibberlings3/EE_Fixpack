@@ -370,6 +370,12 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// tbd, cam
+// don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
+ACTION_IF game_includes_sod BEGIN
+  EXTEND_TOP ~bdshadow.bcs~ ~eefixpack/files/baf/bdshadow.baf~
+END  
+
 // tbd, cam (from jmerry)
 // bp: hogarl not using the right potion when he's hurt
 COPY_EXISTING ~bpgiafir.bcs~ ~override~
