@@ -1,5 +1,5 @@
 // tbd, cam
-// potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
+// potion of icedust doesn't work since it uses an enemy-only projectile for a buff
 COPY_EXISTING ~safefire.pro~ ~override/cdicedus.pro~
   WRITE_SHORT 0x200 ((THIS BAND `BIT6) BAND `BIT7) // remove enemy- and ally-only flags
 ADD_PROJECTILE ~override/cdicedus.pro~ // register new projectile
