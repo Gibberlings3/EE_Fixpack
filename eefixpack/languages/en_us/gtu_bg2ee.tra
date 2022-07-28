@@ -13997,13 +13997,14 @@ Requires:
 
 Weight: 3~
 
+// "such as a dragons" > "such as dragons"
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 7
 @66367 = ~Roranach's Horn augments the Staff of the Ram's already noteworthy abilities, creating a weapon few opponents are able to stand against.
 
 STATISTICS:
 
 Combat abilities:
-– 15% chance opponent is knocked back and stunned (large creatures such as a dragons or giants will not be knocked back or stunned)
+– 15% chance opponent is knocked back and stunned (large creatures such as dragons or giants will not be knocked back or stunned)
 
 THAC0: +6
 Damage: 1d6+12, +1d4 piercing
