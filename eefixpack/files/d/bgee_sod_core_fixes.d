@@ -24,5 +24,12 @@ ADD_TRANS_TRIGGER bdsimone 1  ~!Dead("BDHELVDA") !Dead("BDSIMONE") !Global("SDD3
 ADD_TRANS_ACTION bdkharm BEGIN 1 END BEGIN 1 2 3 END ~GiveGoldForce(250)~
 
 // tbd, cam
-// don't tell shadow to kill bugbears if they're already dead
+// don't tell shadow to kill bugbears if they're already dead (see also bdshadow.bcs)
 ADD_TRANS_TRIGGER bdshadow  2 ~Global("cdBugbearsDead","LOCALS",0)~ DO 2 3 4
+
+// tbd, cam
+// dialogues for blind albino cave can fire elsewhere (see also bd5100aw.bcs)
+ADD_STATE_TRIGGER bddynahj 85 ~Range("wyrm_sense",20)~
+ADD_STATE_TRIGGER bdjaheij 47 ~Range("wyrm_sense",20)~ 
+ADD_STATE_TRIGGER bdminscj 85 ~Range("wyrm_sense",20)~
+ADD_STATE_TRIGGER bdmkhiij 80 ~Range("wyrm_sense",20)~

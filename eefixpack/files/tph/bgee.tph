@@ -265,7 +265,13 @@ COPY_EXISTING ~bd2000.bcs~   ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
-
+// tbd, cam
+// dialogues for blind albino cave can fire elsewhere (see also bddynahj.dlg et al)
+COPY_EXISTING ~bd5100aw.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~I[fs]ValidForPartyDialo\(g\|gue\)("\([^"]+\)")~ ~Range("\2",20) IfValidForPartyDialog("\2")~
+  END
+  BUT_ONLY IF_EXISTS // sod
 
 // tbd, cam
 // referring to wrong DV for Halatathlaer
