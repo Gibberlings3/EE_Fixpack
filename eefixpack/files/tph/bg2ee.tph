@@ -296,6 +296,12 @@ COPY_EXISTING ~basigaze.itm~ ~override~
 // set to 400% speed, not set a fixed value of 30
 COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
   LPF ALTER_EFFECT INT_VAR match_opcode = 126 parameter1 = 400 parameter2 = 2 END 
+
+// tbd, cam
+// lmd via foebane lacks normal immunity for golems & undead
+COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
+              ~sw1h63.itm~  ~override~ // foebane +5
+  LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 146 opcode = 324 parameter1 = 0 parameter2 = 55 timing = 0 resist_dispel = 0 STR_VAR match_resource = spin104a resource = EVAL ~%SOURCE_RES%~ END
   
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
@@ -414,6 +420,11 @@ COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
   LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
   BUT_ONLY
+
+// tbd, cam
+// per descript knockback shouldn't work on 'large creatures'
+COPY_EXISTING ~staf22.itm~  ~override~ // staff of the ram +6
+  LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 235 opcode = 318 parameter1 = 0 parameter2 = 13 timing = 0 duration = 0 resist_dispel = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
 
 // tbd, cam
 // ilbratha's mirror image can be blocked by wielder's MR
