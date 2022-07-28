@@ -642,6 +642,16 @@ COPY_EXISTING ~melstone.spl~ ~override~
   BUT_ONLY  
 
 // tbd, cam
+// Hexxat's ability is supposed to summon 1d4 creatures, does something wacky intstead
+COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
+  LPF DELETE_EFFECT INT_VAR multi_match = 1                                             STR_VAR match_resource = ohhrat END // change 1d4+1 rats to 1d4 
+  LPF ALTER_EFFECT  INT_VAR                                          probability1 = 100 STR_VAR match_resource = ohhrat END // uncorrect rat probs so I can run the next three unimpeded
+  LPF ALTER_EFFECT  INT_VAR multi_match = 1                          probability1 = 24                                  END // change summon #1 to 25%
+  LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 49                                  END // change summon #2 to 50%
+  LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 74                                  END // change summon #3 to 75%
+  BUT_ONLY  
+
+// tbd, cam
 // enrage is using berserk's spell icon
 COPY_EXISTING ~spcl321.spl~ ~override~
   WRITE_ASCII 0x3a ~enrageb~ #8
