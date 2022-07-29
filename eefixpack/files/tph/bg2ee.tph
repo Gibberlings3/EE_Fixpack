@@ -722,7 +722,13 @@ COPY_EXISTING ~spwi114.spl~ ~override~
 COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
-  BUT_ONLY
+  BUT_ONLY	
+
+// tbd, cam (from jmerry)
+// self-stack protection only targets self, not party, like the rest of the effects
+COPY_EXISTING ~spwish12.spl~ ~override~
+	LPF ALTER_EFFECT INT_VAR match_opcode = 321 target = 3 END
+	BUT_ONLY // Now removes hardiness effects from the same targets it adds them to
 
 // tbd, cam
 // expiry sound is way too early
