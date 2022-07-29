@@ -983,7 +983,15 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
               ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
-  IF_EXISTS // bdshriek is sod asset
+  IF_EXISTS // bdshriek is sod asset  
+
+// tbd, cam (from jmerry)
+// misordered 321 removes several (cosmetic) protections from barbarian rage
+COPY_EXISTING ~spcl152.spl~ ~override~ // Barbarian rage
+  LPF CLONE_EFFECT INT_VAR match_opcode=321 STR_VAR insert=first match_resource=SPCL152 resource=SPCL102 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=321 STR_VAR match_resource=SPCL152  END
+  LPF ALTER_EFFECT INT_VAR match_opcode=321 STR_VAR match_resource=SPCL102 resource=SPCL152 END
+  BUT_ONLY // Effect removing previous instances of rage needs to be first in stack
 
 // tbd, cam
 // enrage is using berserk's spell icon
