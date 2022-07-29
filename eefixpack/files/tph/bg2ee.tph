@@ -637,6 +637,10 @@ END
 // simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
 
+// tbd, cam (from jmerry)
+// prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
+INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
+
 // luke
 // **Cure Wounds**
 WITH_SCOPE BEGIN

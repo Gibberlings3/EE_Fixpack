@@ -1,0 +1,26 @@
+// tbd, cam (from jmerry)
+// prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_fireshields BEGIN 
+  ~balshld2~ => 0 // [bg2] balshld.spl (unused)
+  ~bdbarbde~ => 0 // [bg] bdhamat2.itm: Hamatula item (barbed defense) 
+  ~bdsha12a~ => 0 // [multi] bgsha12a/bdsha18a.itm: shaman summons, (lesser) fire spirit
+  ~bdshld02~ => 0 // [bg] bdhsld02.itm: The Suncatcher feedback
+  ~keldorn~  => 0 // [multi] npswo03.itm: Hallowed Redeemer 
+  ~leat23a~  => 0 // [multi] leat23.itm: Studded Leather of Thorns +6 [original power 4] 
+  ~spcl237d~ => 0 // [multi] spcl237.spl: Greater Sun [original power 4] 
+  ~spimixd~  => 0 // [multi] elemimix/elemzaam.itm: Imix/Zaaman Ruul fireshield [original power 4] 
+  ~sppr730d~ => 7 // [multi] sppr730.spl: auro o' flaming death [original power 4] 
+  ~sppr951d~ => 0 // [multi] unused, fix anyway
+  ~sppr952d~ => 0 // [multi] unused, fix anyway [original power 4] 
+  ~spwi403d~ => 4 // [multi] spwi403.spl: fire shield blue
+  ~spwi418d~ => 4 // [multi] spwi418.spl: fire shield red
+END
+
+ACTION_PHP_EACH cd_fireshields AS spell => pow BEGIN
+
+  COPY_EXISTING ~%spell%.spl~ ~override~
+    LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = pow END
+    LPF CLONE_EFFECT INT_VAR match_opcode = 12 opcode = 206 parameter1 = 0 timing = 10 duration = 2 STR_VAR insert = last resource = EVAL ~%SOURCE_RES%~ END // clone damage into 2 ticks of immunity
+    BUT_ONLY IF_EXISTS
+
+END

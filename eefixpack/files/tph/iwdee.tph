@@ -572,6 +572,10 @@ END
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
 
+// tbd, cam (from jmerry)
+// prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
+INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
+
 // tbd, davidw
 // circle of bone subspell has illegal character in sig
  COPY_EXISTING "#bonecir.spl" override WRITE_ASCII 0x0 "SPL "
