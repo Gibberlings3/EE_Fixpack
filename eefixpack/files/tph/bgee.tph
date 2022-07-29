@@ -599,7 +599,6 @@ COPY_EXISTING ~bdcrus21.cre~ ~override~
   WRITE_ASCIIE 0x280 ~%SOURCE_RES%~ #32 // was bdcrus20
   BUT_ONLY IF_EXISTS // sod
 
-
 // tbd, cam (originally from jmerry)
 // joinable NPCs should have proper trueclass kit values
 COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
@@ -619,6 +618,16 @@ COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
               ~sharte.cre~   ~override~ // shar-teel
   WRITE_LONG 0x244 0x40000000 // proper trueclass value
   BUT_ONLY IF_EXISTS
+
+// tbd, cam (originally from jmerry)
+// Nonstandard wand of missiles on Imoen and Mordaine replaced
+COPY_EXISTING ~imoen1.cre~ ~override~
+              ~imoen2.cre~ ~override~
+              ~imoen4.cre~ ~override~
+              ~imoen6.cre~ ~override~
+              ~mordai.cre~ ~override~
+  LPF ALTER_CREATURE_ITEM STR_VAR match_item = wand12 item = wand03 END
+  BUT_ONLY // Nonstandard wand of missiles on Imoen and Mordaine replaced
 
 // tbd, cam
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
