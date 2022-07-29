@@ -17,3 +17,8 @@ ALTER_TRANS udsola01 BEGIN 138 144 END BEGIN 0 END // filename, state, trans
 BEGIN // list of changes, see below for flags
   ~REPLY~ ~#51710~
 END 
+
+// tbd, cam (from jmerry)
+// npcs spawning/moving on impassable terrain (see also ar0800.are, ar1000.are)
+REPLACE_ACTION_TEXT aeriej ~MoveGlobal("AR0607","Aerie",\[1034.1034\])~ ~MoveGlobal("AR0607","Aerie",[469.437])~
+REPLACE_ACTION_TEXT baerie ~MoveGlobal("AR0607","Aerie",\[1034.1034\])~ ~MoveGlobal("AR0607","Aerie",[469.437])~

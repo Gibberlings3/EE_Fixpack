@@ -202,6 +202,28 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+// tbd, cam (from jmerry)
+// npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar1000.are)
+COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
+  LPF ALTER_AREA_ACTOR INT_VAR y_coord=1071 STR_VAR actor_name=Stein END
+	BUT_ONLY
+  
+// tbd, cam (from jmerry)
+// npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
+COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
+  READ_LONG 0x54 ofsActors
+  READ_SHORT 0x58 numActors
+  FOR (idx = 0; idx < numActors; ++idx) BEGIN
+    SET offsetx = ofsActors + (idx * 0x110) + 0x20
+    SET offsety = ofsActors + (idx * 0x110) + 0x22
+    READ_SHORT offsetx xpos
+    READ_SHORT offsety ypos
+    PATCH_IF ((xpos = 2796) AND (ypos = 538)) BEGIN
+      WRITE_SHORT offsety 558
+    END
+  END // Multiple actors with same name, long version needed
+	BUT_ONLY
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 
