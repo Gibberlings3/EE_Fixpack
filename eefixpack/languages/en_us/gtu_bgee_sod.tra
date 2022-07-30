@@ -9706,6 +9706,9 @@ Equipped abilities:
 
 Weight: 1~
 
+// Morningstar > Morning Star
+@61835 = ~Martyr's Morning Star +2~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 8
 @61838 = ~Despite this short bow's intimidating name, it carries no gruesome history. Kitsana, an elven ranger, designed this bow for her own use and could fire it with astonishing rapidity. One night at camp Kitsana's party each took a turn trying to master the unusually thin bowstring and uniquely curved grip of the weapon. None shot as poorly as the fighter, a braggart named Tirrel, who not only missed his target by a foot but who snapped the bowstring down the length of his forearm and tore off a strip of skin. Kitsana and her party faded into obscurity decades ago but her bow still circulates.
 
@@ -11884,8 +11887,9 @@ Everyone has their own reason for joining in the struggle against Caelar's crusa
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @71313 = ~Of course. I shall endeavour to look for myself. Thank you, Hero.~
 
+// morningstar > morning star
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@71331 = ~This glittering morningstar was crafted by weaponsmiths in the Temple of Tempus in Waterdeep. Fashioned as a weapon for Tempus's priests, who cannot use their deity's favored weapon due to its bladed edge, Blazing Glory has a black iron tip studded with points of alternating gold and ruby. Enchantments harden these points and add a flash of fire with every blow. The wielder of Blazing Glory never tires in battle, fortified by the will of the Lord of Battles himself.
+@71331 = ~This glittering morning star was crafted by weaponsmiths in the Temple of Tempus in Waterdeep. Fashioned as a weapon for Tempus's priests, who cannot use their deity's favored weapon due to its bladed edge, Blazing Glory has a black iron tip studded with points of alternating gold and ruby. Enchantments harden these points and add a flash of fire with every blow. The wielder of Blazing Glory never tires in battle, fortified by the will of the Lord of Battles himself.
 
 STATISTICS:
 
