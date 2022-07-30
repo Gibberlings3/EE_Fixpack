@@ -218,73 +218,10 @@ Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
 
-// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 25818, 27373
-// Weapon damage corrections
-@40639 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
+// sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 37263)
+@36015 = ~Sun Soulbeam
 
-After contacting another plane and learning about Bren Muller, you have learned a new ability of the weapon. Once per day, it can dramatically increase accuracy for two rounds.
-
-STATISTICS:
-
-Charge abilities:
-– Deadeye once per day
-  Wielder gains an additional +5 to-hit for two rounds
-
-THAC0: +5
-Damage: +3
-Speed Factor: 4
-Proficiency Type: Crossbow
-Type: Two-handed
-Requires:
- 8 Strength
-
-Weight: 7~
-
-/*
-luke
-- "The Druid is healed 12 Hit Points after using this ability."
-- "strikes as a +2 weapon"
-should not be missing
-*/
-@40314 = ~Shapeshift: Werewolf
-
-Strength: 19
-Dexterity: 16
-
-Base Armor Class: 1
-Number of Attacks: 2
-Attack Damage: 1d6 (slashing), strikes as a +2 weapon
-
-Special Abilities:
-– Magic Resistance: 20%
-
-The Druid is healed 12 Hit Points after using this ability.~
-
-/*
-luke
-- "strikes as a +3 weapon"
-- "The Druid is healed 12 Hit Points after using this ability."
-- "Regenerates 1 Hit Point per 2 seconds."
-should not be missing
-*/
-@40315 = ~Shapeshift: Greater Werewolf
-
-Strength: 21
-Dexterity: 20
-
-Base Armor Class: -6
-Number of Attacks: 3
-Attack Damage: 1d10 (slashing), strikes as a +3 weapon
-
-Special Abilities:
-– Fire Resistance: 50%
-– Cold Resistance: 50%
-– Electricity Resistance: 50%
-– Acid Resistance: 50%
-– Magic Resistance: 40%
-– Regenerates 1 Hit Point per 2 seconds
-
-The Druid is healed 12 Hit Points after using this ability.~
+The character emits a dazzling burst of light that strikes at all other creatures within a 15-ft. radius. Struck creatures suffer 9d6 points of fire damage (9d6+3 if undead), unless they save vs. Spell for half. In addition, all creatures except the character must save vs. Spell or be blinded for 2 hours.~
 
 /*
 luke
@@ -343,222 +280,6 @@ Special Abilities:
 – Lesser Aura of Flame: All creatures within 5 ft. take 1d2 points of fire damage
 
 The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +3 weapon" should not be missing
-*/
-@40310 = "Shapeshift: Polar Bear
-
-Strength: 18/100
-Dexterity: 10
-
-Base Armor Class: 4
-Number of Attacks: 3
-Attack Damage: 1d12 (slashing), strikes as a +3 weapon
-
-Special Abilities:
-– Cold Resistance: 75%
-– Fire Resistance: -25%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +1 weapon" should not be missing
-*/
-@40308 = "Shapeshift: Winter Wolf
-
-Strength: 18
-Dexterity: 13
-
-Base Armor Class: 2
-Number of Attacks: 2
-Attack Damage: 1d6 (slashing), strikes as a +1 weapon
-
-Special Abilities:
-– Cold Resistance: 75%
-– Fire Resistance: -25%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +2 weapon" should not be missing
-*/
-@40309 = "Shapeshift: Boring Beetle
-
-Strength: 18/51
-Dexterity: 7
-
-Base Armor Class: -2
-Number of Attacks: 1
-Attack Damage: 5d4 (slashing), strikes as a +2 weapon
-
-Special Abilities:
-– Slashing Resistance: 50%
-– Piercing Resistance: 50%
-– Missile Resistance: 50%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +4 weapon" should not be missing
-*/
-@40311 = "Shapeshift: Fire Elemental
-
-Strength: 19
-Dexterity: 9
-
-Base Armor Class: 2
-Number of Attacks: 1
-Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
-
-Special Abilities:
-– Cold Resistance: -50%
-– Magic Cold Resistance: -50%
-– Fire Resistance: 100%
-– Magic Fire Resistance: 100%
-– Acid Resistance: 15%
-– Electricity Resistance: 15%
-– Slashing Resistance: 15%
-– Crushing Resistance: 15%
-– Piercing Resistance: 15%
-– Missile Resistance: 15%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +4 weapon" should not be missing
-*/
-@40312 = "Shapeshift: Earth Elemental
-
-Strength: 23
-Dexterity: 5
-
-Base Armor Class: -2
-Number of Attacks: 1
-Attack Damage: 4d8 (crushing), strikes as a +4 weapon
-
-Special Abilities:
-– Cold Resistance: 25%
-– Magic Cold Resistance: 25%
-– Fire Resistance: 25%
-– Magic Fire Resistance: 25%
-– Slashing Resistance: 50%
-– Crushing Resistance: -50%
-– Piercing Resistance: 50%
-– Missile Resistance: 75%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +4 weapon" should not be missing
-*/
-@40313 = "Shapeshift: Water Elemental
-
-Strength: 18
-Dexterity: 14
-
-Base Armor Class: -2
-Number of Attacks: 1
-Attack Damage: 4d8 (crushing), strikes as a +4 weapon
-
-Special Abilities:
-– Cold Resistance: -25%
-– Magic Cold Resistance: -25%
-– Electricity Resistance: -75%
-– Acid Resistance: 75%
-– Slashing Resistance: 75%
-– Crushing Resistance: 75%
-– Piercing Resistance: 75%
-– Missile Resistance: 75%
-
-The Druid is healed 12 Hit Points after using this ability."
-
-/*
-luke
-"strikes as a +2 weapon" should not be missing
-*/
-@40941 = "Shapeshift: Boring Beetle
-
-Strength: 18/51
-Dexterity: 7
-
-Base Armor Class: -2
-Number of Attacks: 1
-Attack Damage: 5d4 (slashing), strikes as a +2 weapon
-
-Special Abilities:
-– Slashing Resistance: 50%
-– Piercing Resistance: 50%
-– Missile Resistance: 50%
-– Increased movement rate"
-
-/*
-luke
-"strikes as a +3 weapon" should not be missing
-*/
-@40939 = "Shapeshift: Polar Bear
-
-Strength: 18/100
-Dexterity: 10
-
-Base Armor Class: 4
-Number of Attacks: 3
-Attack Damage: 1d12 (slashing), strikes as a +3 weapon
-
-Special Abilities:
-– Cold Resistance: 75%
-– Fire Resistance: -25%
-– Increased movement rate"
-
-/*
-luke
-"strikes as a +1 weapon" should not be missing
-*/
-@40940 = "Shapeshift: Winter Wolf
-
-Strength: 18
-Dexterity: 13
-
-Base Armor Class: 2
-Number of Attacks: 2
-Attack Damage: 1d6 (slashing), strikes as a +1 weapon
-
-Special Abilities:
-– Cold Resistance: 75%
-– Fire Resistance: -25%
-– Increased movement rate"
-
-/*
-luke
-"strikes as a +3 weapon" should not be missing
-*/
-@36597 = "Shapeshift: Mustard Jelly
-
-Strength: 14
-Dexterity: 9
-
-Base Armor Class: 4
-Number of Attacks: 1
-Attack Damage (ranged): 1d6 (crushing), strikes as a +3 weapon, poison (1 damage per 2 seconds for 5 rounds; Save vs. Poison at +2 negates), slow (20 seconds; Save vs. Breath at -2 negates)
-
-Special Abilities:
-– Cold Resistance: 50%
-– Electrical Resistance: 100%
-– Magic Resistance: 100%
-– Magic Cold Resistance: 50%
-– Slashing Resistance: 30%
-– Crushing Resistance: 60%
-– Piercing Resistance: 100%
-– Missile Resistance: 85%
-– Immunity to stun, sleep, fear, poison, petrification, confusion, charm, paralysis, and level drain
-– Immunity to non-magical weapons
-– Increased movement rate"
 
 /*
 luke
@@ -695,12 +416,177 @@ Special Abilities:
 – Piercing Resistance: 50%
 – Missile Resistance: 75%"
 
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@36597 = "Shapeshift: Mustard Jelly
+
+Strength: 14
+Dexterity: 9
+
+Base Armor Class: 4
+Number of Attacks: 1
+Attack Damage (ranged): 1d6 (crushing), strikes as a +3 weapon, poison (1 damage per 2 seconds for 5 rounds; Save vs. Poison at +2 negates), slow (20 seconds; Save vs. Breath at -2 negates)
+
+Special Abilities:
+– Cold Resistance: 50%
+– Electrical Resistance: 100%
+– Magic Resistance: 100%
+– Magic Cold Resistance: 50%
+– Slashing Resistance: 30%
+– Crushing Resistance: 60%
+– Piercing Resistance: 100%
+– Missile Resistance: 85%
+– Immunity to stun, sleep, fear, poison, petrification, confusion, charm, paralysis, and level drain
+– Immunity to non-magical weapons
+– Increased movement rate"
+
+// sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 36015)
+@37263 = ~SUN SOUL MONK: Sun Soul Monks were once worshippers of Amaunator in the time of the Netheril, but today their worship is divided between Lathander, Selûne, and Sune. Sun Soul Monks adhere strictly to the law, using their martial arts and magical abilities to drive out darkness and corruption wherever they find it.
+
+Advantages:
+– 2nd level: May cast Sun Soulray once per day.
+
+SUN SOULRAY: The Sun Soul Monk projects a blast of light from <PRO_HISHER> open palm, dealing 1d8 fire damage for every 2 caster levels (up to a maximum of 5d8 damage). Undead creatures take an additional 6 points of damage.
+
+– 5th level: May cast Flaming Fists once per day.
+
+FLAMING FISTS: The Sun Soul Monk channels <PRO_HISHER> inner light into <PRO_HISHER> unarmed attacks, turning <PRO_HISHER> fists into flaming weapons that deal an additional 2d6 fire damage per hit for the next round. The duration increases to 2 rounds at level 9, 3 rounds at level 12, 4 rounds at level 15, and 5 rounds at level 25. This special ability automatically modifies normal attacks; no weapon-switching needs to be done.
+
+– 6th level: Gains an additional use of Sun Soulray.
+– 8th level: May cast Greater Sun once per day.
+
+GREATER SUN: The Sun Soul Monk wreathes <PRO_HIMHER>self in flames that act as a Fireshield (Red), granting the Monk 50% Fire Resistance and protecting <PRO_HIMHER> from attacks made within a 5-ft. radius. An opponent that hits the Monk with any weapons or spells within this radius suffers 1d8+2 points of fire damage.
+
+– 10th level: Gains an additional use of Sun Soulray.
+– 13th level: May cast Sun Soulbeam once per day.
+
+SUN SOULBEAM: The Sun Soul Monk emits a dazzling burst of light that strikes at all other creatures within a 15-ft. radius. Struck creatures suffer 9d6 points of damage (9d6+3 if undead), unless they save vs. Spell for half. In addition, all creatures except the Monk must save vs. Spell or be blinded for 2 hours.
+
+– 15th level: Gains an additional use of Sun Soulray.
+
+Disadvantages:
+– Alignment restricted to lawful good.
+– May not use Stunning Blow ability.
+– May not use Quivering Palm ability.~
+
 // ranger charm animal description doesn't mention the duration of the charm; added the sentence at the end of the first paragraph
 @40299 = ~Charm Animal
 
 This ability allows a Ranger to charm an animal and manipulate its behavior. The animal is allowed a Saving Throw vs. Wand to negate the effect. If the animal fails its Saving Throw, it regards the Ranger as a trusted friend and ally to be heeded and protected for 1 turn. The Ranger may give it orders, and the charmed animal will carry them out to the best of its ability. The charm lasts for one turn.
 
 If the Ranger harms or attempts to harm the charmed animal, the charm is broken. If two or more charms simultaneously affect a creature, the most recent one takes precedence.~
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@40308 = "Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing), strikes as a +1 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +2 weapon" should not be missing
+*/
+@40309 = "Shapeshift: Boring Beetle
+
+Strength: 18/51
+Dexterity: 7
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 5d4 (slashing), strikes as a +2 weapon
+
+Special Abilities:
+– Slashing Resistance: 50%
+– Piercing Resistance: 50%
+– Missile Resistance: 50%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@40310 = "Shapeshift: Polar Bear
+
+Strength: 18/100
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 (slashing), strikes as a +3 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@40311 = "Shapeshift: Fire Elemental
+
+Strength: 19
+Dexterity: 9
+
+Base Armor Class: 2
+Number of Attacks: 1
+Attack Damage: 1d8 (crushing), +1d4 fire, strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: -50%
+– Magic Cold Resistance: -50%
+– Fire Resistance: 100%
+– Magic Fire Resistance: 100%
+– Acid Resistance: 15%
+– Electricity Resistance: 15%
+– Slashing Resistance: 15%
+– Crushing Resistance: 15%
+– Piercing Resistance: 15%
+– Missile Resistance: 15%
+
+The Druid is healed 12 Hit Points after using this ability."
+
+/*
+luke
+"strikes as a +4 weapon" should not be missing
+*/
+@40312 = "Shapeshift: Earth Elemental
+
+Strength: 23
+Dexterity: 5
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 4d8 (crushing), strikes as a +4 weapon
+
+Special Abilities:
+– Cold Resistance: 25%
+– Magic Cold Resistance: 25%
+– Fire Resistance: 25%
+– Magic Fire Resistance: 25%
+– Slashing Resistance: 50%
+– Crushing Resistance: -50%
+– Piercing Resistance: 50%
+– Missile Resistance: 75%
+
+The Druid is healed 12 Hit Points after using this ability."
 
 /*
 luke
@@ -724,3 +610,126 @@ Special Abilities:
 – Crushing Resistance: 75%
 – Piercing Resistance: 75%
 – Missile Resistance: 75%"
+
+/*
+luke
+- "The Druid is healed 12 Hit Points after using this ability."
+- "strikes as a +2 weapon"
+should not be missing
+*/
+@40314 = ~Shapeshift: Werewolf
+
+Strength: 19
+Dexterity: 16
+
+Base Armor Class: 1
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing), strikes as a +2 weapon
+
+Special Abilities:
+– Magic Resistance: 20%
+
+The Druid is healed 12 Hit Points after using this ability.~
+
+/*
+luke
+- "strikes as a +3 weapon"
+- "The Druid is healed 12 Hit Points after using this ability."
+- "Regenerates 1 Hit Point per 2 seconds."
+should not be missing
+*/
+@40315 = ~Shapeshift: Greater Werewolf
+
+Strength: 21
+Dexterity: 20
+
+Base Armor Class: -6
+Number of Attacks: 3
+Attack Damage: 1d10 (slashing), strikes as a +3 weapon
+
+Special Abilities:
+– Fire Resistance: 50%
+– Cold Resistance: 50%
+– Electricity Resistance: 50%
+– Acid Resistance: 50%
+– Magic Resistance: 40%
+– Regenerates 1 Hit Point per 2 seconds
+
+The Druid is healed 12 Hit Points after using this ability.~
+
+// ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 25818, 27373
+// Weapon damage corrections
+@40639 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
+
+After contacting another plane and learning about Bren Muller, you have learned a new ability of the weapon. Once per day, it can dramatically increase accuracy for two rounds.
+
+STATISTICS:
+
+Charge abilities:
+– Deadeye once per day
+  Wielder gains an additional +5 to-hit for two rounds
+
+THAC0: +5
+Damage: +3
+Speed Factor: 4
+Proficiency Type: Crossbow
+Type: Two-handed
+Requires:
+ 8 Strength
+
+Weight: 7~
+
+/*
+luke
+"strikes as a +3 weapon" should not be missing
+*/
+@40939 = "Shapeshift: Polar Bear
+
+Strength: 18/100
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 (slashing), strikes as a +3 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate"
+
+/*
+luke
+"strikes as a +1 weapon" should not be missing
+*/
+@40940 = "Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 (slashing), strikes as a +1 weapon
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate"
+
+/*
+luke
+"strikes as a +2 weapon" should not be missing
+*/
+@40941 = "Shapeshift: Boring Beetle
+
+Strength: 18/51
+Dexterity: 7
+
+Base Armor Class: -2
+Number of Attacks: 1
+Attack Damage: 5d4 (slashing), strikes as a +2 weapon
+
+Special Abilities:
+– Slashing Resistance: 50%
+– Piercing Resistance: 50%
+– Missile Resistance: 50%
+– Increased movement rate"
