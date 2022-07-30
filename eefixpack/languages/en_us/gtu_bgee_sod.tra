@@ -4654,6 +4654,9 @@ What is it?~ [BD38743]
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @42296 = ~Ready to head out?~
 
+// "I was trapped outside Bridgefort, Khalid within." > "I was trapped outside Bridgefort; Khalid, within."
+@42323 = ~When you put an end to the iron crisis, Khalid and I decided to travel to Bridgefort, thinking it would make for a pleasant respite from Baldur's Gate. And it was—until the crusade took Boareskyr Bridge. I was trapped outside Bridgefort; Khalid, within.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @42327 = ~They are many. We are few.~
 
@@ -10425,6 +10428,21 @@ Weight: 1~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @64098 = ~You can TRY to kill me, but I wouldn't recommend it.~
+
+// "gray stain on it back" > "gray stain on its back"
+@64105 = ~All that remains of the wax seal that once contained this ancient parchment's secrets is a gray stain on it back. On the other side is a letter written centuries ago, its simple but effective penmanship making the message easy to read, despite its age.
+
+"Dearest Karella,
+
+Our journey to the Shadow King's outpost has been long and treacherous. Trolls, hobgoblins, gnolls, xvarts, and even a gargoyle stood 'twixt us and our goal, but we have finally made it across Coast Way Crossing. If the map purloined from the Netherese vampire steers us true, we cannot be far from our goal.
+
+Even if this venture proves as profitable as Walkins believes it will be (I'll believe that when I see it and perhaps not even then), there are many more dangers ahead. No property of the Shadow King will be left undefended. At a minimum, we are told to expect resistance from a small army of minor undead, which do not concern me overmuch, and a lich under the influence of the King's Overmind, which concerns me greatly.
+
+Once these threats are dealt with, the going should become much easier. Along with the map, the vampire 'supplied' us with a key it claimed opens the door to the Shadow King's Inner Sanctum. It spoke of a treasure room hidden within, loaded with items of great power and value.
+
+I send this letter to you in the hopes that it finds you in good health and that we will be together again soon—but however soon that may be, it cannot be soon enough for my taste. Until then, I remain yours,
+
+Agda Coldhearth"~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @64300 = ~Sounds as if you're saying there's nothing valuable left here.~
