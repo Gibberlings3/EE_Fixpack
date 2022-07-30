@@ -226,7 +226,7 @@ COPY_EXISTING ~aurstaf.itm~  ~override~ // staff of the ram +4: 10% chance to st
               ~insanity.spl~ ~override~ // insanity gaze: 50% to feeblemind
               ~ohbquake.spl~ ~override~ // earthquake: 2% chance to summon elemental
 //            ~ohhdrai2.spl~ ~override~ // blood drain: drains 1d4 con, probabilities fine as-is
-              ~ohhsumm.spl~  ~override~ // children of the night: various summoning probs
+//              ~ohhsumm.spl~  ~override~ // children of the night: various summoning probs; addressed earlier in another fix
               ~ohnhammx.spl~ ~override~ // unk: 10% chance of wild magic
               ~ohreyeb1.spl~ ~override~ // domination: (half)elven resistance
               ~ohtmps2d.spl~ ~override~ // chaos of battle: various effects
