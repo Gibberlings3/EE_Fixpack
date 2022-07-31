@@ -1,0 +1,32 @@
+/*
+don't agree with Fixpack's alignment changes? Edit away! Fixpack will read in this list and make alignment changes based on the contents here.
+Simply put the creature file name on the left and new alignment on the right. Alignment values are from align.ids:
+
+0  NONE
+17 LAWFUL_GOOD
+18 LAWFUL_NEUTRAL
+19 LAWFUL_EVIL
+33 NEUTRAL_GOOD
+34 NEUTRAL
+35 NEUTRAL_EVIL
+49 CHAOTIC_GOOD
+50 CHAOTIC_NEUTRAL
+51 CHAOTIC_EVIL
+
+*/
+ACTION_CLEAR_ARRAY cd_bulk_cre_changes_align
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_cre_changes_align BEGIN
+
+  nethgua1 => 35 // Thayan Bodyguard, from NEUTRAL to NEUTRAL_EVIL (shout script could turn townspeople hostile, credit k4thos/eet)
+  nethgua2 => 35 // Thayan Bodyguard, from NEUTRAL to NEUTRAL_EVIL (shout script could turn townspeople hostile, credit k4thos/eet)
+  
+END
+
+// the actual code to update alignments (don't mess with anything below this)
+ACTION_PHP_EACH cd_bulk_cre_changes_align AS cre => align BEGIN
+
+  COPY_EXISTING ~%cre%.cre~ ~override~
+    WRITE_BYTE 0x27b align
+    BUT_ONLY IF_EXISTS
+    
+END    
