@@ -1187,3 +1187,13 @@ COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk b
   LPF ALTER_EFFECT INT_VAR match_opcode = 46 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curestn~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_stun END
   BUT_ONLY
+
+/////                                                  \\\\\
+///// troll exceptions                                 \\\\\
+/////                                                  \\\\\
+
+// the op 2 in #cureslp ends up nuking the trolls death-via-sleep, so a minor workaround
+COPY_EXISTING ~cdiwdtr1.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+              ~cdiwdtr2.spl~ ~override~ // [troll stuff] - cures berserk blind confusion deafness disease fear feeblemind hold poison sleep stun - additional effects
+  LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 2 parameter1 = 0 parameter2 = 0 STR_VAR match_resource = ~#cureslp~ resource = ~~ END 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 101 parameter1 = 0 parameter2 = 2 timing = 0 duration = 1 STR_VAR match_resource = ~#cureslp~ resource = ~~ END 
