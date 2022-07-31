@@ -1,0 +1,18 @@
+// tbd, cam (from k4thos/eet)
+//https://forums.beamdog.com/discussion/44826/bugged-dopplegangers-in-ar2619
+//Bugged ELMINS4.DLG if you kill either TETHTO3 or GORION3 before dialogue is triggered, also fix for 1-hit KO doppleganger change
+COPY_EXISTING ~gdchange.bcs~ ~override~
+              ~ldchange.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~AttackedBy(\[ANYONE\],DEFAULT)~ ~AttackedBy([ANYONE],DEFAULT) !StateCheck(Myself,STATE_REALLY_DEAD)~ //this will prevent change if the first attack was fatal
+  END
+  BUT_ONLY
+  
+COPY_EXISTING ~elmins4.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~See(\[PC\])~ ~Global("K#DOPPLEGANGER_CHANGE","AR2619",0) !Dead("GORION3") !Dead("TETHTO3") See([PC])~ 
+    REPLACE_TEXTUALLY ~StartDialog("elmins4",\[PC\])~ ~SetGlobal("K#DOPPLEGANGER_CHANGE","AR2619",1) StartDialog("elmins4",[PC])~ 
+  END
+  BUT_ONLY
+  
+EXTEND_BOTTOM ~ar2619.bcs~ ~eefixpack/files/baf/ar2619.baf~  

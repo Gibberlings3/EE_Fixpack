@@ -45,3 +45,10 @@ REPLACE_ACTION_TEXT perdue ~GivePartyGoldGlobal("PerduePayment","GLOBAL")~ ~Give
 // tbd, graion
 // mendas's dialogue triggers the wrong spell
 REPLACE_ACTION_TEXT ~menda4~ ~ActionOverride("Baresh",ApplySpell(Myself,BERESH_CHANGE))~ ~ActionOverride("Baresh",ApplySpellRES("ohwi924",Myself))~
+
+// tbd, cam (from k4thos/eet)
+//https://forums.beamdog.com/discussion/comment/789128#Comment_789128
+//http://redmine.beamdog.com/issues/22244
+//Duplicated Neera and Dorn GAM entries
+REPLACE_ACTION_TEXT ~dorn~  ~CreateCreatureObjectOffset("DORN",Myself,\[0\.0\])[%LNL%%MNL%%WNL% %TAB%]*DestroySelf()~ ~~
+REPLACE_ACTION_TEXT ~neera~ ~CreateCreatureObjectOffset("NEERA",Myself,\[0\.0\])[%LNL%%MNL%%WNL% %TAB%]*DestroySelf()~ ~~
