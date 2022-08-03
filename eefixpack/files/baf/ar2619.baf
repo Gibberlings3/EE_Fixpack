@@ -1,0 +1,52 @@
+IF
+  Global("K#DOPPLEGANGER_CHANGE","AR2619",0)
+  Global("K#DOPPLEGANGER_CHANGE_gorion","AR2619",0)
+  !Dead("GORION3")
+  OR(2)
+    Dead("TETHTO3")
+    Dead("ELMINS4")
+THEN
+  RESPONSE #100
+    SetGlobal("K#DOPPLEGANGER_CHANGE_gorion","AR2619",1)
+    ActionOverride("GORION3",ApplySpell(Myself,DOPPLEGANGER_CHANGE_DEFAULT_LESSER))
+    Continue() //variable won't be set until next frame
+END
+
+IF
+  Global("K#DOPPLEGANGER_CHANGE","AR2619",0)
+  Global("K#DOPPLEGANGER_CHANGE_tethto","AR2619",0)
+  !Dead("TETHTO3")
+  OR(2)
+    Dead("GORION3")
+    Dead("ELMINS4")
+THEN
+  RESPONSE #100
+    SetGlobal("K#DOPPLEGANGER_CHANGE_tethto","AR2619",1)
+    ActionOverride("TETHTO3",ApplySpell(Myself,DOPPLEGANGER_CHANGE_DEFAULT_LESSER))
+    Continue()
+END
+
+IF
+  Global("K#DOPPLEGANGER_CHANGE","AR2619",0)
+  Global("K#DOPPLEGANGER_CHANGE_elmins4","AR2619",0)
+  !Dead("ELMINS4")
+  OR(2)
+    Dead("GORION3")
+    Dead("TETHTO3")
+THEN
+  RESPONSE #100
+    SetGlobal("K#DOPPLEGANGER_CHANGE_elmins4","AR2619",1)
+    ActionOverride("ELMINS4",ApplySpell(Myself,DOPPLEGANGER_CHANGE_DEFAULT))
+    Continue()
+END
+
+IF
+  OR(3)
+    Dead("GORION3")
+    Dead("TETHTO3")
+    Dead("ELMINS4")
+  Global("K#DOPPLEGANGER_CHANGE","AR2619",0)
+THEN
+  RESPONSE #100
+    SetGlobal("K#DOPPLEGANGER_CHANGE","AR2619",1)
+END    

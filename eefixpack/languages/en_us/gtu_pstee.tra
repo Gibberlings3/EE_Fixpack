@@ -6527,6 +6527,25 @@ This is a foul-smelling note retrieved from the mouth of one of the Mortuary zom
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @59875 = ~As part of my quest to join the Dustman faction, Emoric has asked me to speak to Awaiting-Death, who is also in the Gathering Dust bar. It seems that Awaiting-Death has begun to reach for the True Death out of passion, and that I must help him before the way is forever lost to him. Once I find out what ails Awaiting-Death, I am to return to Emoric and tell him what I found.~
 
+// "They is warm" > "They are warm"
+@59886 = ~"GAUNTLETS OF CELESTIAL FIRE"
+Damage: 3-18 Crushing
+Enchanted: +3
+Special:
+   +2 to Armor Class
+   +10 Fire Damage
+   +10% Resistance to Crushing Attacks
+THAC0: +2
+Speed: 3
+Weight: 5
+Proficiency: Fist
+Usable only by Fighters and Thieves
+Usable only by Lawful Good characters
+
+"Celestial Fire" was the only object that Trias had left to remind him of the Upper Planes. The blade became a pair of gauntlets in your hands. They are warm to the touch, and flames have been carved across the knuckles of the gloves. The intricacy of the carvings is breathtaking; they are done with such skill that the gauntlets seem to be burning with metallic flames... someone must have spent several centuries rendering them. The metal of the gauntlets is unfamiliar... it is heavy, but it shines like silver.
+
+The gauntlets look several millennia old. A faint hum can be felt within them, and the vibration becomes stronger when they touch human flesh. Not surprisingly, the "Gauntlets of Celestial Fire" can be wielded only by those with sufficient strength and purity of heart. When used in combat, the "Gauntlets of Celestial Fire" burst into a holy radiance that burns any evil creature they strike in combat.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @59986 = ~The words you speak seem to strike Dak'kon strangely... as you speak them, his forehead creases, then resettles into its normal passive expression.~
 

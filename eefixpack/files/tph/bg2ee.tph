@@ -143,6 +143,17 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
                       ~GlobalLT("EXTRACOUNT3","MYAREA",1) \1~
   END
   BUT_ONLY  
+
+// tbd, cam
+// when leaving Brynnlaw with Saemon, the Githyanki catch you "on the fourth morn" but no time actually passes
+COPY_EXISTING ~cut41q.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~TextScreen("SCRTXT05")~ 
+      ~Wait(1) DayNight(MIDNIGHT) SmallWait(1) DayNight(MIDNIGHT) SmallWait(1) DayNight(MIDNIGHT) Wait(1) // three days pass: "on the fouth morn"
+       Rest() ActionOverride(Player2,Rest()) ActionOverride(Player3,Rest()) ActionOverride(Player4,Rest()) ActionOverride(Player5,Rest()) ActionOverride(Player6,Rest()) // rest party
+       DayNight(10) TextScreen("SCRTXT05")~ // delay a few more hours, since the githyanki is spotted "on the fouth morn", but catches you a bit later
+  END
+  BUT_ONLY   
   
 // tbd, cam
 // firkraag should despawn at the copper coronet once you engage in the windpear events
@@ -165,6 +176,15 @@ COPY_EXISTING ~jaheira.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(Global("JaheiraBanditPlot","GLOBAL",1)\)~ ~\1 OR(2) Global("JaheiraRomanceActive","GLOBAL",1) Global("JaheiraRomanceActive","GLOBAL",2)~
   END
   BUT_ONLY  
+  
+// tbd, cam (from k4thos/eet)
+// slng03 changes to slng05 from bg > bg2; caught everywhere else except direct import
+COPY_EXISTING ~ohimport.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(RESPONSE #100[ %TAB%%LNL%%MNL%%WNL%]+\)\(SetGlobal("OH_IMPORT02","GLOBAL",8)[ %TAB%%LNL%%MNL%%WNL%]+SetInterrupt(TRUE)[ %TAB%%LNL%%MNL%%WNL%]+END\)~
+      ~\1 SetInterrupt(FALSE) DestroyItem("SLNG03") CreateItem("SLNG05",0,0,0) \2~
+  END
+  BUT_ONLY 
   
 // ie-5948, cam
 // Generic cleric AI script can hang
@@ -206,7 +226,7 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar1000.are)
 COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
   LPF ALTER_AREA_ACTOR INT_VAR y_coord=1071 STR_VAR actor_name=Stein END
-	BUT_ONLY
+  BUT_ONLY
   
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
@@ -222,7 +242,7 @@ COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
       WRITE_SHORT offsety 558
     END
   END // Multiple actors with same name, long version needed
-	BUT_ONLY
+  BUT_ONLY
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
@@ -726,13 +746,13 @@ COPY_EXISTING ~spwi114.spl~ ~override~
 COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
-  BUT_ONLY	
+  BUT_ONLY  
 
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects
 COPY_EXISTING ~spwish12.spl~ ~override~
-	LPF ALTER_EFFECT INT_VAR match_opcode = 321 target = 3 END
-	BUT_ONLY // Now removes hardiness effects from the same targets it adds them to
+  LPF ALTER_EFFECT INT_VAR match_opcode = 321 target = 3 END
+  BUT_ONLY // Now removes hardiness effects from the same targets it adds them to
 
 // tbd, cam
 // expiry sound is way too early

@@ -64,6 +64,35 @@ There are two parts to this spell. First, a small portal opens and summons one o
 // this item's name should state its enchantment level
 @57918 = "Paralytic Bolt +1"
 
+// sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 100352)
+@74310 = ~SUN SOUL MONK: Sun Soul Monks were once worshippers of Amaunator in the time of the Netheril, but today their worship is divided between Lathander, Selûne, and Sune. Sun Soul Monks adhere strictly to the law, using their martial arts and magical abilities to drive out darkness and corruption wherever they find it.
+
+Advantages:
+– 2nd level: May cast Sun Soulray once per day.
+
+SUN SOULRAY: The Sun Soul Monk projects a blast of light from <PRO_HISHER> open palm, dealing 1d8 fire damage for every 2 caster levels (up to a maximum of 5d8 damage) to a single target. Undead creatures take an additional 6 points of damage.
+
+– 5th level: May cast Flaming Fists once per day.
+
+FLAMING FISTS: The Sun Soul Monk channels <PRO_HISHER> inner light into <PRO_HISHER> unarmed attacks, turning <PRO_HISHER> fists into flaming weapons that deal an additional 2d6 fire damage per hit for the next round. The duration increases to 2 rounds at level 9, 3 rounds at level 12, 4 rounds at level 15, and 5 rounds at level 25. This special ability automatically modifies normal attacks; no weapon-switching needs to be done.
+
+– 6th level: Gains an additional use of Sun Soulray.
+– 8th level: May cast Greater Sun once per day.
+
+GREATER SUN: The Sun Soul Monk wreathes <PRO_HIMHER>self in flames that act as a Fireshield (Red), granting the Monk 50% Fire Resistance and protecting <PRO_HIMHER> from attacks made within a 5-ft. radius. An opponent that hits the Monk with any weapons or spells within this radius suffers 1d8+2 points of fire damage.
+
+– 10th level: Gains an additional use of Sun Soulray.
+– 13th level: May cast Sun Soulbeam once per day.
+
+SUN SOULBEAM: The Sun Soul Monk emits a dazzling burst of light that strikes at all other creatures within a 15-ft. radius. Struck creatures suffer 9d6 points of damage (9d6+3 if undead), unless they save vs. Spell for half. In addition, all creatures except the Monk must save vs. Spell or be blinded for 2 hours.
+
+– 15th level: Gains an additional use of Sun Soulray.
+
+Disadvantages:
+– Alignment restricted to lawful good.
+– May not use Stunning Blow ability.
+– May not use Quivering Palm ability.~
+
 // ranger charm animal description doesn't mention the duration of the charm; added the sentence at the end of the first paragraph
 @100356 = ~Charm Animal
 This spell affects any single animal it is cast upon. The animal is allowed a Saving Throw vs. Spell to negate the effect. The charm lasts for two turns.
@@ -111,6 +140,10 @@ Attack Damage: 2d6 (piercing), strikes as a +1 weapon
 Special Abilities:
 – Immunity to web
 – Hasted"
+
+// sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 74310)
+@100352 = ~Sun Soulbeam
+The character emits a dazzling burst of light that strikes at all other creatures within a 15-ft. radius. Struck creatures suffer 9d6 points of fire damage (9d6+3 if undead), unless they Save vs. Spell for half. In addition, all creatures except the character must Save vs. Spell or be blinded for 2 hours.~
 
 /*
 luke
