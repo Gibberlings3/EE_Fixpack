@@ -1082,8 +1082,8 @@ BEGIN
 				/* Misc fixes and tweaks */
 				// Adjusted movement rate should ignore / bypass Free Action and the like
 				// Moreover, make sure the adjusted value takes into account the current value (a.k.a. Multiplicative Stacking Percentage Modifier)
-				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 176 "parameter2" = 5 END // Modifier type: Set % of
-				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 126 "opcode" = 176 "parameter2" = 5 END // Modifier type: Set % of
+				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 176 "parameter2" = 5 END // Modifier type: Multiply %
+				LPF "ALTER_EFFECT" INT_VAR "check_headers" = 0 "silent" = 1 "match_opcode" = 126 "opcode" = 176 "parameter2" = 5 END // Modifier type: Multiply %
 				PATCH_MATCH "%DEST_RES%" WITH
 					"SQUIRP" BEGIN // Squirrel form
 						PATCH_IF (GAME_IS ~bgee iwdee~) BEGIN
@@ -1138,6 +1138,9 @@ BEGIN
 					END
 					"CDMINDFL" BEGIN // Shapechange: Mind Flayer
 						LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 139 "parameter1" = RESOLVE_STR_REF (@3) "parameter2" = 0 "timing" = 1 "duration" = 0 STR_VAR "resource" = "" END
+					END
+					"TROLLALL" "PLYTROLL" BEGIN // Shapechange: Giant Troll , Cloak of the Sewers => these 2 items should not set (overwrite) base movement rate (i.e., they should not overwrite "Entangle", "Grease", etc...)
+						LPF "DELETE_ITEM_EQEFFECT" INT_VAR "opcode_to_delete" = 176 END
 					END
 					DEFAULT
 				END
