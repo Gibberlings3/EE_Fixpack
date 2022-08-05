@@ -1,0 +1,31 @@
+// generated from docs/eefixpack_arrays.ods > [game] item tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
+
+  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes
+  ~%WIZARD_CHILL_TOUCH%a~, 0, null, null, null, null, null, null, null, null, null, null => ~%WIZARD_CHILL_TOUCH%a~ // luke: Chill Touch – should not interact with spell protections
+  ~%WIZARD_DEAFNESS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_DEAFNESS%~ // luke: Deafness – should not bypass Magic Resistance
+  ~%WIZARD_SPHERE_OF_CHAOS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_SPHERE_OF_CHAOS%~ // luke: Sphere of Chaos – make sure all effects are subjected to Magic Resistance
+  ~%WIZARD_STONE_TO_FLESH%~, null, 2, null, null, null, null, null, null, null, null, null => ~%WIZARD_STONE_TO_FLESH%~ // luke: Stone to Flesh – make sure all effects bypass Magic Resistance
+  ~%WIZARD_WRAITH_FORM%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_WRAITH_FORM%~ // luke: Wraithform – make sure all limited effects are dispellable
+  ~drgrbrht~, null, null, null, null, null, null, null, null, 0, 0, null => ~drgrbrht~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~melstone~, null, null, null, null, null, null, null, null, null, 7, null => ~melstone~ // ie-5931, cam:  Stoneskin from Demogorgon & Melissan cannot be breached
+  ~spin535~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin535~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin595~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin595~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin595v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin595v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin596~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin596~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin596v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin596v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin597~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin597~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin691~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin691~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin691v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin691v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin693~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin693~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin832~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin832~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin832v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin832v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin833~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin833~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin833v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin833v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin893~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin893~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin893v~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin893v~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+  ~spin894~, null, null, null, null, null, null, null, null, 0, 0, null => ~spin894~ // tbd, cam: dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_code.tph~

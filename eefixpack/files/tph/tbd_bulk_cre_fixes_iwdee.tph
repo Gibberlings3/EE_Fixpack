@@ -1,0 +1,8 @@
+// generated from docs/eefixpack_arrays.ods > [game] creature tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
+
+  //file, race, class, general, sex, gender, animation, dv, kit => file // notes
+  
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_code.tph~

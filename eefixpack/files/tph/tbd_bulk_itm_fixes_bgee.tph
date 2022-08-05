@@ -1,0 +1,13 @@
+// generated from docs/eefixpack_arrays.ods > [game] item tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
+
+  //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable => file // notes
+  ~%WIZARD_CHILL_TOUCH%a~, 0, null, null, null, null, null, null, null, null, null, null => ~%WIZARD_CHILL_TOUCH%a~ // luke: Chill Touch – should not interact with spell protections
+  ~%WIZARD_WRAITH_FORM%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_WRAITH_FORM%~ // luke: Wraithform – make sure all limited effects are dispellable
+  ~%WIZARD_IMPROVED_HASTE%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_IMPROVED_HASTE%~ // luke: Improved Haste 1) make sure all effects bypass Magic Resistance
+  ~%WIZARD_STONE_TO_FLESH%~, null, 2, null, null, null, null, null, null, null, null, null => ~%WIZARD_STONE_TO_FLESH%~ // luke: Stone to Flesh – make sure all effects bypass Magic Resistance
+  ~%WIZARD_SPHERE_OF_CHAOS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_SPHERE_OF_CHAOS%~ // luke: Sphere of Chaos – make sure all effects are subjected to Magic Resistance
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_code.tph~

@@ -239,6 +239,8 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
+//INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_iwdee.tph~ // bulk general changes (nothing actually here yet)
+
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
   
 // ie-6035, cam
@@ -250,6 +252,8 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+//INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general changes (nothing here yet)
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
@@ -451,123 +455,6 @@ END
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
-
-// ie-6014, cam
-// spells schooled as 'generalist' instead of 'none' incorrectly invoke save bonuses/penalties
-ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spell_schools BEGIN
-
-  ~#beltyn~  => 7 // generalist > necromancy (beltyn's burning blood)
-  ~%WIZARD_BELTYNS_BURNING_BLOOD%a~ => 7 // generalist > necromancy (beltyn's burning blood) => subspell applying FIRE damage
-  ~#bonecir~ => 7 // generalist > necromancy (circle of bones)
-  ~#cureslp~ => 0 // generalist > none (unused)
-  ~#curestn~ => 0 // generalist > none (unused)
-  ~#deathf1~ => 6 // generalist > invoker (death fog, trap)
-  ~%TRAP_DEATH_FOG%a~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
-  ~#deathf2~ => 6 // generalist > invoker (death fog, trap)
-  ~%TRAP_DEATH_FOG%b~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
-  ~#deathf3~ => 6 // generalist > invoker (death fog, trap)
-  ~%TRAP_DEATH_FOG%c~ => 6 // generalist > invoker (death fog, trap) => subspell applying ACID damage
-  ~#jedslp~  => 0 // generalist > none (jed passes out)
-  ~#rw_17~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_18~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_19~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_33~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_34~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_35~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_49~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_50~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_51~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#rw_ex~   => 4 // generalist > enchanter (old Righteous Wrath of the Faithful)
-  ~#shrouda~ => 6 // generalist > invoker (old shroud of flmae)
-  ~#shroudb~ => 6 // generalist > invoker (old shroud of flmae)
-  ~#sunrund~ => 0 // generalist > none (unk)
-  ~cdsunrun~ => 0 // generalist > none (unk) => subspell applying FIRE damage
-  ~#vitarea~ => 2 // generalist > conjurer (old vitriolic sphere)
-  ~blindimm~ => 0 // generalist > none (old blindness immunity)
-  ~deafimm~  => 0 // generalist > none (old deafness immunity)
-  ~drgrbrht~ => 0 // generalist > none (leftover green dragon breath)
-  ~firau1d6~ => 0 // generalist > none (salamander aura)
-  ~firau3d6~ => 0 // generalist > none (salamander aura)
-  ~frostd10~ => 0 // generalist > none (frost salamander aura)
-  ~frostd6~  => 0 // generalist > none (frost salamander aura)
-  ~gasp~     => 0 // generalist > none (unk)
-  ~holdfst~  => 0 // generalist > none (old holdfast arrows)
-  ~spcl101~  => 0 // generalist > none (DRUID_SHAPESHIFT_POLAR_BEAR)
-  ~spcl107~  => 0 // generalist > none (DRUID_SHAPESHIFT_WINTER_WOLF)
-  ~spcl108~  => 0 // generalist > none (DRUID_SHAPESHIFT_BORING_BEETLE)
-  ~spcl109~  => 3 // generalist > divination (PALADIN_DETECT_EVIL)
-  ~spcl111~  => 1 // generalist > abjuration (PALADIN_CURE_DISEASE)
-  ~spcl112~  => 0 // generalist > none (DRUID_SHAPESHIFT_ELEMENTAL_FIRE)
-  ~spcl113~  => 0 // generalist > none (DRUID_SHAPESHIFT_ELEMENTAL_EARTH)
-  ~spcl114~  => 0 // generalist > none (DRUID_SHAPESHIFT_ELEMENTAL_WATER)
-  ~spcl212~  => 1 // generalist > abjuration (PALADIN_PROTECTION_FROM_EVIL)
-  ~spcl213~  => 1 // generalist > abjuration (protection from evil, unused)
-  ~spcl311~  => 4 // generalist > enchantment (RANGER_CHARM_ANIMAL)
-  ~spin114~  => 0 // generalist > none (INNATE_WIND_WALK)
-  ~spin115~  => 0 // generalist > none (INNATE_MOURNFUL_WAIL)
-  ~spin116~  => 0 // generalist > none (INNATE_DEATH_KNELL)
-  ~spin117~  => 0 // generalist > none (INNATE_WAR_CRY)
-  ~spin118~  => 0 // generalist > none (INNATE_UNDYING_LAMENT)
-  ~spin121~  => 0 // generalist > none (INNATE_SHAPESHIFTS_WEREWOLF)
-  ~spin125~  => 0 // generalist > none (INNATE_WEREWOLF_DEATH)
-  ~spin126~  => 0 // generalist > none (INNATE_WYLFDENES_DEATH_ANIMATION)
-  ~spin127~  => 0 // generalist > none (INNATE_ICE_GOLEM_DISAPPEAR)
-  ~spin128~  => 0 // generalist > none (INNATE_FROST_AURA)
-  ~spin129~  => 0 // generalist > none (INNATE_SEER_TELEPORT)
-  ~spin130~  => 0 // generalist > none (INNATE_BLUE_GLOW)
-  ~spin131~  => 0 // generalist > none (INNATE_DRAGON_DEATH_ANIMATION)
-  ~spin132~  => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET)
-  ~spin132a~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying CRUSHING/SLASHING damage
-  ~spin132b~ => 0 // generalist > none (INNATE_DRAGON_WING_BUFFET) => subspell applying STUN
-  ~spin133~  => 0 // generalist > none (INNATE_DRAGON_GEM_EFFECTS)
-  ~spin134~  => 0 // generalist > none (INNATE_DRAGON_BREATH)
-  ~spin135~  => 0 // generalist > none (INNATE_DRAGON_GEM_SUMMONING)
-  ~spin136~  => 0 // generalist > none (INNATE_BEHOLDER_UNUSED)
-  ~spin138~  => 0 // generalist > none (INNATE_HARPY_WAIL)
-  ~spin139~  => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL)
-  ~spin139a~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying PANIC
-  ~spin139b~ => 0 // generalist > none (INNATE_HARPY_WAIL_INTERNAL) => subspell applying STUN
-  ~spin149~  => 0 // generalist > none (INNATE_POLYMORPH_TO_DOG)
-  ~spin162~  => 0 // generalist > none (INNATE_HOBART_TO_RAKSHASA)
-  ~spin164~  => 0 // generalist > none (INNATE_MUSTARD_JELLY_VAPOR)
-  ~spin166~  => 0 // generalist > none (INNATE_CONTAINER_GLOW)
-  ~spin167~  => 0 // generalist > none (INNATE_CONTAINER_GLOW_BAD)
-  ~spin168~  => 0 // generalist > none (INNATE_CORNUGON_SUMMON_TRAVEL_ANIMATION)
-  ~spin169~  => 0 // generalist > none (INNATE_WINTER_WOLF_BREATH)
-  ~spin170~  => 0 // generalist > none (INNATE_REMOVE_TERIKANS_ITEM_ANIMATION)
-  ~spin171~  => 0 // generalist > none (INNATE_BELHIFETS_DEATH_ANIMATION)
-  ~spin172~  => 0 // generalist > none (INNATE_EVERARDS_PORTAL_CLOSING)
-  ~spin176~  => 0 // generalist > none (INNATE_INFERNAL_CONVEYANCE)
-  ~spin177~  => 0 // generalist > none (INNATE_POQUELINS_PORTAL_OPENING)
-  ~spin180~  => 0 // generalist > none (INNATE_INCENDIARY_CLOUD_IDLING)
-  ~spin181~  => 0 // generalist > none (INNATE_INCENDIARY_CLOUD_EXPLOSION)
-  ~spin182~  => 0 // generalist > none (INNATE_FLASH_DESTROY_SUMMON_YXUNOMEI)
-  ~spin183~  => 0 // generalist > none (INNATE_FLASH_DESTROY_SUMMON_BELHIFET)
-  ~spin184~  => 0 // generalist > none (INNATE_FLASH_DISAPPEAR)
-  ~spin186~  => 0 // generalist > none (INNATE_PHASE_SPIDER_TELEPORT)
-  ~spin187~  => 0 // generalist > none (INNATE_SALAMANDER_AURA_SHIKATA)
-  ~spin188~  => 0 // generalist > none (INNATE_MYCONID_SPORES)
-  ~spin189~  => 0 // generalist > none (INNATE_IRON_GOLEM_CLOUD)
-  ~spin190~  => 0 // generalist > none (INNATE_ZOMBIE_LORD_AURA)
-  ~spin192~  => 0 // generalist > none (INNATE_UMBER_HULK_GAZE)
-  ~spin193~  => 0 // generalist > none (INNATE_SALAMANDER_AURA_FROST)
-  ~spin194~  => 0 // generalist > none (INNATE_SALAMANDER_AURA_FIRE)
-  ~sppr603d~ => 6 // generalist > invoker (CLERIC_BLADE_BARRIER subspell)
-  ~spwi480~  => 0 // generalist > none (polymorph self > boring beetle)
-  ~spwi481~  => 0 // generalist > none (polymorph self > polar bear)
-  ~spwi482~  => 0 // generalist > none (polymorph self > winter wolf)
-  ~talongf~  => 0 // generalist > none (unused talon of the gloomfrost)
-  ~umbergaz~ => 0 // generalist > none (umberhulk gaze)
-
-END
-
-ACTION_PHP_EACH cd_spell_schools AS spell => school BEGIN
-  
-  COPY_EXISTING ~%spell%.spl~ ~override~
-    WRITE_BYTE 0x25 school
-    BUT_ONLY 
-  
-END
 
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
