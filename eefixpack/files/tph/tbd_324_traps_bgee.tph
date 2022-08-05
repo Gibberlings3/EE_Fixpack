@@ -1,0 +1,93 @@
+// tbd, cam
+// game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+OUTER_SET trap = RESOLVE_STR_REF(@101)
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
+
+  ~bdstonec~ => ~%trap%~ // no_name_set, used by: bdtarget - uses 324 vs. death_immunity
+  ~bdtr01~   => ~%trap%~ // no_name_set, used by: bdgtsnar - uses 324 vs. slow_immunity
+  ~spin707~  => ~%trap%~ // no_name_set > dart, used by: gdarts - uses 318 for poison immunity
+  ~spwi008~  => ~%trap%~ // no_name_set > arrow, used by: bptrap02, ctar5, gtar5 - uses 318 for poison immunity
+// everything else either has a name or doesn't use 318/324  
+//  ~bdalldie~ => ~%trap%~ // no_name_set, used by: bdboarb2
+//  ~bdarrow1~ => ~%trap%~ // no_name_set, used by: bdtarget
+//  ~bdarrow2~ => ~%trap%~ // no_name_set, used by: bdtarget
+//  ~bdarrow3~ => ~%trap%~ // no_name_set, used by: bdtarget
+//  ~bdbolt~   => ~%trap%~ // no_name_set, used by: bdvaultd
+//  ~bdbump1~  => ~%trap%~ // no_name_set, used by: bd5100dr
+//  ~bdbump1~  => ~%trap%~ // no_name_set, used by: bd5100dr, bdtarget
+//  ~bdbump2~  => ~%trap%~ // no_name_set, used by: bd5100dr, bdtarget
+//  ~bdcatapu~ => ~%trap%~ // no_name_set, used by: bddsgat1
+//  ~bdcutspy~ => ~%trap%~ // no_name_set, used by: bd5100dr, bdeye5, bdsdd251
+//  ~bddausto~ => 25963 // fireball, used by: bddoor30
+//  ~bdforce1~ => ~%trap%~ // no_name_set, used by: bddsgat1
+//  ~bdgspear~ => ~%trap%~ // no_name_set, used by: bdgspear
+//  ~bdinvis~  => ~%trap%~ // no_name_set, used by: bd7230am
+//  ~bdshadt~  => 56561 // shadow tempest, used by: bd5100dr
+//  ~bdstink1~ => 25968 // confusion, used by: bdstink
+//  ~bdstink~  => 25968 // confusion, used by: bdstink
+//  ~bpndqke~  => 45054 // , used by: bpdlg1
+//  ~spbd002~  => ~%trap%~ // no_name_set, used by: bdffcamp
+//  ~spin708~  => ~%trap%~ // no_name_set, used by: gslime
+//  ~spin709~  => ~%trap%~ // no_name_set, used by: gspear
+//  ~spin994~  => ~%trap%~ // no_name_set, used by: ptd1
+//  ~sppr101~  => 26122 // bless, used by: bd5100dr
+//  ~sppr105~  => 26127 // entangle, used by: bdgt012
+//  ~sppr208~  => 26106 // hold person, used by: bd5100dr
+//  ~sppr304~  => 26165 // glyph of warding, used by: gtgw
+//  ~sppr507~  => 26236 // champion's strength, used by: bpdlg2
+//  ~sppr982~  => 17392 // dire charm, used by: ctdc, gtdc
+//  ~sppr983~  => 25968 // confusion, used by: gtcon
+//  ~sppr984~  => 12054 // chromatic orb, used by: ctcorb, gtcorb
+//  ~sppr985~  => 26004 // flame strike, used by: ctfs, gtfs, gtfs0502
+//  ~sppr986~  => 26180 // miscast magic, used by: ctmis, gtmis
+//  ~sppr987~  => 26163 // call lightning, used by: ctcl, gtcl
+//  ~sppr988~  => 25951 // silence, 15' radius, used by: ctsi, gtsi
+//  ~sppr989~  => 26106 // hold person, used by: bdfftrap, cthp, gthp
+//  ~spwi001~  => 25963 // fireball, used by: bptrap04, ctfb, ctfb2, gtfb, gtfb2, wardfue, wardisl, wardkie
+//  ~spwi002~  => 25852 // lightning bolt, used by: ctlb, ctlb2, gtlb, urntrap1-6
+//  ~spwi003~  => 12052 // magic missile, used by: ctmm, gtmm
+//  ~spwi004~  => 26074 // stinking cloud, used by: bptrap03, gtsc, sarevsti, trpskel
+//  ~spwi005~  => ~%trap%~ // no_name_set, used by: bdtarget, ctar, ctar2, gtar, gtar2
+//  ~spwi007~  => ~%trap%~ // no_name_set, used by: bptrap02, ctar4, gtar4
+//  ~spwi009~  => ~%trap%~ // no_name_set, used by: ctar11, ctar6, gtar6
+//  ~spwi010~  => ~%trap%~ // no_name_set, used by: ctar7, gtar7
+//  ~spwi011~  => ~%trap%~ // no_name_set, used by: bdtarget, bptrap02, gtar8
+//  ~spwi012~  => ~%trap%~ // no_name_set, used by: bptrap02, gtar9
+//  ~spwi013~  => ~%trap%~ // no_name_set, used by: gtar10
+//  ~spwi055~  => 26102 // disintegrate, used by: bdboarb2
+//  ~spwi101~  => 26344 // grease, used by: bptrap01
+//  ~spwi106~  => 26352 // blindness, used by: bdgt013
+//  ~spwi112~  => 12052 // magic missile, used by: bd5100dr
+//  ~spwi118~  => 12054 // chromatic orb, used by: bd5100dr
+//  ~spwi119~  => 25892 // larloch's minor drain, used by: bd5100dr
+//  ~spwi125~  => 26379 // spook, used by: bdgt014
+//  ~spwi205~  => 25894 // horror, used by: gt025
+//  ~spwi215~  => 25864 // web, used by: gtweb, sarevweb
+//  ~spwi217~  => 26105 // agannazar's scorcher, used by: gtas
+//  ~spwi221~  => 26405 // ray of enfeeblement, used by: gt004
+//  ~spwi303~  => 26418 // flame arrow, used by: bd310tr1
+//  ~spwi304~  => 25963 // fireball, used by: bdboarb2, bdcook, bddsgat1, bddswall, rsdoor01, rsdoor02
+//  ~spwi305~  => 26018 // haste, used by: bddsgat1, bddsgat1
+//  ~spwi306~  => 26106 // hold person, used by: bd310tr2
+//  ~spwi308~  => 25852 // lightning bolt, used by: trpblack, trpwhite
+//  ~spwi312~  => 26103 // slow, used by: gt027
+//  ~spwi313~  => 26426 // skull trap, used by: gtst
+//  ~spwi502~  => 25927 // cloudkill, used by: ctck, gtck, wardexit
+//  ~spwi508~  => 25871 // chaos, used by: bdgt010
+//  ~spwi509~  => 26501 // feeblemind, used by: bdgt009
+//  ~spwi514~  => 26084 // lower resistance, used by: bdgt007
+//  ~spwi604~  => 26030 // flesh to stone, used by: gt006
+//  ~spwi813~  => 25993 // maze, used by: gt018
+//  ~spwi914~  => 26666 // energy drain, used by: gt023
+//  ~spwi934~  => ~%trap%~ // no_name_set, used by: crushtr2, crushtr3, crushtrp
+//  ~spwi935~  => ~%trap%~ // no_name_set, used by: trpskel
+//  ~spwi936~  => ~%trap%~ // no_name_set, used by: trpskel
+//  ~spwi937~  => ~%trap%~ // no_name_set, used by: trpskel
+//  ~spwi942~  => ~%trap%~ // no_name_set, used by: trppawn
+//  ~spwi957~  => 26691 // fireball, used by: gtfb3
+//  ~spwi995~  => 26445 // dimension door, used by: bdboarb2
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_324_traps_code.tph~
+              

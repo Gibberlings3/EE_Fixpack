@@ -3,7 +3,7 @@
 ![Language](https://img.shields.io/static/v1?label=language&message=English%20%7C%20Russian&color=limegreen)
 ![Supported games](https://img.shields.io/static/v1?label=supported%20games&message=BGEE%20%7C%20BG2EE%20%7C%20IWDEE%20%7C%20PsTEE&color=dodgerblue)
 
-![The G3 Logo](https://gibberlings3.github.io/Documentation/readmes/style/g3_logo_2018.gif)
+![The G3 Logo](https://raw.githubusercontent.com/Gibberlings3/.github/master/profile/g3_neutral.png)
 
 # The Enhanced Edition Fixpack
 
@@ -13,11 +13,10 @@ The Enhanced Edition Fixpack is an unofficial collection of fixes for the Enhanc
 
 ## More Information
 
-<!--:page_facing_up: [Project Page](https://www.gibberlings3.net/mods/quests/thecalling/)  
-:page_facing_up: [Readme](https://gibberlings3.github.io/Documentation/readmes/readme-eefixpack.html)-->
+:page_facing_up: [Project Page](https://www.gibberlings3.net/mods/fixes/eefp/)  
+<!--:page_facing_up: [Readme](https://gibberlings3.github.io/Documentation/readmes/readme-eefixpack.html)-->
 :page_facing_up: [Forum](https://www.gibberlings3.net/forums/forum/232-ee-fixpack/) 
 
 ## 
 
-[![Created Badge](https://badges.pufler.dev/created/Gibberlings3/EE_Fixpack?style=plastic&label=Created)](https://badges.pufler.dev)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Gibberlings3/EE_Fixpack?style=plastic&label=repo%20size)

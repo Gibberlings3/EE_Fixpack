@@ -1,0 +1,92 @@
+// relies on tbd_traps_324_traps_[game].tph to create array
+ACTION_PHP_EACH cd_spells_via_trap AS spell => string BEGIN
+
+  COPY_EXISTING ~%spell%.spl~ ~override~ 
+    READ_LONG 0x08 name
+    PATCH_IF name < 0 BEGIN // sanity check
+      WRITE_LONG 0x08 string
+    END
+    BUT_ONLY IF_EXISTS // use I_E in case we're checking SoD stuff on BGEE 
+    
+END
+
+/*
+used to generate original arrays of spells-via-trap to manually check
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_area_trap_scripts BEGIN 
+  0x5a, 0x5c, 0x7c, 0xc4 => region
+  0xa4, 0xa8, 0x80, 0xc8 => door
+  0x74, 0x70, 0x48, 0xc0 => container
+END 
+COPY_EXISTING_REGEXP GLOB ~^.+\.are$~ ~override~
+  PATCH_PHP_EACH cd_area_trap_scripts AS params => descript BEGIN
+    READ_SHORT params_0 curr_num
+    READ_LONG  params_1 curr_off 
+    FOR (index = 0 ; index < curr_num ; ++index) BEGIN
+      READ_ASCII (curr_off + params_2 + (index * params_3)) script
+      PATCH_IF ("%script%" STRING_COMPARE_CASE "") BEGIN // if actual script
+        DEFINE_ASSOCIATIVE_ARRAY cd_area_trap_script_list BEGIN "%script%" => "%descript%" END 
+      END
+    END
+  END
+  BUT_ONLY  
+  
+ACTION_PHP_EACH cd_area_trap_script_list AS script => descript BEGIN
+  
+  COPY_EXISTING ~%script%.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_EVALUATE ~\(Spell\|SpellPoint\|SpellNoDec\)(\([^,]+\),\([^)]+\))~ BEGIN // spell, applyspell, forcespell, forcespellpoint, reallyforcespell, spell
+        SET spell_num = IDS_OF_SYMBOL ("spell" "%MATCH3%")
+        PATCH_IF (spell_num < 1000) BEGIN 
+          SPRINT spell unknown 
+        END ELSE BEGIN
+          PATCH_IF (spell_num > 4000) BEGIN SET spell_num -= 4000 SPRINT prefix spcl END ELSE
+          PATCH_IF (spell_num > 3000) BEGIN SET spell_num -= 3000 SPRINT prefix spin END ELSE
+          PATCH_IF (spell_num > 2000) BEGIN SET spell_num -= 2000 SPRINT prefix spwi END ELSE
+                                      BEGIN SET spell_num -= 1000 SPRINT prefix sppr END
+          PATCH_IF (spell_num > 99) BEGIN SPRINT spell ~%prefix%%spell_num%~ END ELSE 
+          PATCH_IF (spell_num > 9) BEGIN SPRINT spell ~%prefix%0%spell_num%~ END ELSE BEGIN
+                                        SPRINT spell ~%prefix%00%spell_num%~ END 
+        END         
+        SPRINT name ~~     
+        SPRINT comment ~~        
+        SET string = 0
+        INNER_ACTION BEGIN
+          COPY_EXISTING ~%spell%.spl~ ~override~
+            READ_LONG 0x08 string
+            PATCH_IF string < 0 BEGIN
+              SPRINT name ~no_name_set~
+              SPRINT string ~trap~
+            END ELSE BEGIN  
+              READ_STRREF 0x08 name
+              SPRINT comment ~//~       
+            END  
+            BUT_ONLY IF_EXISTS
+        END    
+        PATCH_PRINT "%comment%  ~%spell%~  => %string% // %name%, used by: %script%"  
+      END ~%MATCH1%(%MATCH2%,%MATCH3%)~
+      REPLACE_EVALUATE ~\(SpellRES\|SpellPointRES\)("\([^"]+\)"~ BEGIN // applyspellRES, forcespellres, forcespellpointRES, reallyforcespellres, spellres
+        SPRINT spell ~%MATCH2%~
+        SPRINT name ~~     
+        SPRINT comment ~~        
+        SET string = 0
+        INNER_ACTION BEGIN
+          COPY_EXISTING ~%spell%.spl~ ~override~
+            READ_LONG 0x08 string
+            PATCH_IF string < 0 BEGIN
+              SPRINT name ~no_name_set~
+              SPRINT string ~trap~
+            END ELSE BEGIN  
+              READ_STRREF 0x08 name
+              SPRINT comment ~//~       
+            END  
+            BUT_ONLY IF_EXISTS
+        END    
+        PATCH_PRINT "%comment%  ~%spell%~  => %string% // %name%, used by: %script%"  
+      END ~%MATCH1%("%MATCH2%"~
+    END
+    BUT_ONLY IF_EXISTS
+
+END
+*/
+              

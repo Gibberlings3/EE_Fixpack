@@ -571,6 +571,7 @@ END
 
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_324_traps_iwdee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
 // tbd, cam (from jmerry)
 // prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
