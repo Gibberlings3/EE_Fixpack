@@ -1,0 +1,86 @@
+// tbd, cam
+// game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+OUTER_SET trap = RESOLVE_STR_REF(@100)
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
+
+  ~spwi018~  => ~%trap%~ // no_name_set, used by: gnt2014 - 318 vs. poison
+  ~spwi019~  => ~%trap%~ // no_name_set, used by: gnt2015 - 318 vs. poison
+  ~spwi028~  => ~%trap%~ // no_name_set, used by: gnt2016, necchest - 318 vs. poison
+  ~spwi029~  => ~%trap%~ // no_name_set, used by: gnt2017, necchest - 318 vs. poison
+//  ~spin166~  => ~%trap%~ // no_name_set, used by: caaltday, caaltear, caalthea, caaltsea, caaltsun, cachest1, cacont1, cacont2, cacont3, cacont4, cacont5
+//  ~spin167~  => ~%trap%~ // no_name_set, used by: cacont1, cacont2, cacont3, cacont4, cacont5
+//  ~spin170~  => ~%trap%~ // no_name_set, used by: udtrap3
+//  ~spin181~  => ~%trap%~ // no_name_set, used by: ldtrap1, ldtrap2
+//  ~spwi005~  => ~%trap%~ // no_name_set, used by: gnt2005, ldbat
+//  ~spwi006~  => ~%trap%~ // no_name_set, used by: gnt2006
+//  ~spwi007~  => ~%trap%~ // no_name_set, used by: gnt2007
+//  ~spwi009~  => ~%trap%~ // no_name_set, used by: gnt2009
+//  ~spwi010~  => ~%trap%~ // no_name_set, used by: gnt2010
+//  ~spwi011~  => ~%trap%~ // no_name_set, used by: gnt2011
+//  ~spwi012~  => ~%trap%~ // no_name_set, used by: gnt2012
+//  ~spwi013~  => ~%trap%~ // no_name_set, used by: gnt2013
+//  ~sppr511~  => 6928 // slay living, used by: gnt1515
+//  ~sppr511~  => 6928 // slay living, used by: gnt1515
+//  ~sppr901~  => 12085 // glyph of warding, used by: gnt1983
+//  ~sppr901~  => 12085 // glyph of warding, used by: gnt1983
+//  ~sppr984~  => 12109 // flame strike, used by: gnt1984
+//  ~sppr984~  => 12109 // flame strike, used by: gnt1984
+//  ~sppr987~  => 12124 // call lightning, used by: gnt1987
+//  ~sppr987~  => 12124 // call lightning, used by: gnt1987
+//  ~sppr988~  => 12123 // silence, 15' radius, used by: gnt1988
+//  ~sppr988~  => 12123 // silence, 15' radius, used by: gnt1988
+//  ~sppr989~  => 12049 // hold person, used by: gnt1989
+//  ~sppr989~  => 12049 // hold person, used by: gnt1989
+//  ~spwi001~  => 6618 // fireball, used by: gnt2001
+//  ~spwi001~  => 6618 // fireball, used by: gnt2001
+//  ~spwi001~  => 6618 // fireball, used by: necchest
+//  ~spwi002~  => 12060 // lightning bolt, used by: gnt2002
+//  ~spwi002~  => 12060 // lightning bolt, used by: gnt2002
+//  ~spwi002~  => 12060 // lightning bolt, used by: necchest
+//  ~spwi002~  => 12060 // lightning bolt, used by: uddsrmb
+//  ~spwi002~  => 12060 // lightning bolt, used by: uddsrmc
+//  ~spwi002~  => 12060 // lightning bolt, used by: udtrapa
+//  ~spwi002~  => 12060 // lightning bolt, used by: udtrapb
+//  ~spwi002~  => 12060 // lightning bolt, used by: udtrapc
+//  ~spwi003~  => 2968 // magic missile, used by: gnt2003
+//  ~spwi003~  => 2968 // magic missile, used by: gnt2003
+//  ~spwi004~  => 12056 // stinking cloud, used by: gnt2004
+//  ~spwi004~  => 12056 // stinking cloud, used by: gnt2004
+//  ~spwi004~  => 12056 // stinking cloud, used by: necchest
+//  ~spwi016~  => 12065 // cloudkill, used by: gnt2018
+//  ~spwi016~  => 12065 // cloudkill, used by: gnt2018
+//  ~spwi016~  => 12065 // cloudkill, used by: necchest
+//  ~spwi030~  => 7621 // death fog, used by: d5t2019
+//  ~spwi030~  => 7621 // death fog, used by: d5t2019
+//  ~spwi030~  => 7621 // death fog, used by: gnt2019
+//  ~spwi030~  => 7621 // death fog, used by: gnt2019
+//  ~spwi030~  => 7621 // death fog, used by: necchest
+//  ~spwi031~  => 7665 // finger of death, used by: necchest
+//  ~spwi032~  => 12075 // color spray, used by: gnt2021
+//  ~spwi032~  => 12075 // color spray, used by: gnt2021
+//  ~spwi033~  => 12052 // generic abjuration, used by: gnt2022
+//  ~spwi033~  => 12052 // generic abjuration, used by: gnt2022
+//  ~spwi033~  => 12052 // generic abjuration, used by: necchest
+//  ~spwi034~  => 6618 // fireball, used by: gnt2023
+//  ~spwi034~  => 6618 // fireball, used by: gnt2023
+//  ~spwi035~  => 23793 // flesh to stone, used by: gnt2024
+//  ~spwi035~  => 23793 // flesh to stone, used by: gnt2024
+//  ~spwi035~  => 23793 // flesh to stone, used by: ldeyetp1
+//  ~spwi035~  => 23793 // flesh to stone, used by: ldeyetp1
+//  ~spwi035~  => 23793 // flesh to stone, used by: ldeyetp2
+//  ~spwi035~  => 23793 // flesh to stone, used by: ldeyetp2
+//  ~spwi035~  => 23793 // flesh to stone, used by: necchest
+//  ~spwi204~  => 12093 // snilloc's snowball swarm, used by: sctp2220
+//  ~spwi204~  => 12093 // snilloc's snowball swarm, used by: sctp2220
+//  ~spwi404~  => 12062 // ice storm, used by: sctp2404
+//  ~spwi404~  => 12062 // ice storm, used by: sctp2404
+//  ~spwi628~  => 12130 // otiluke's freezing sphere, used by: sctp2612
+//  ~spwi628~  => 12130 // otiluke's freezing sphere, used by: sctp2612
+//  ~spwi631~  => 21432 // soul eater, used by: gnt2619
+//  ~spwi631~  => 21432 // soul eater, used by: gnt2619
+//  ~spwi812~  => 7679 // abi-dalzim's horrid wilting, used by: necchest
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_324_traps_code.tph~
+              
