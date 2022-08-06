@@ -1,9 +1,9 @@
 IF
-	!Allegiance(Myself,ENEMY)
-	Global("DMWWGretekShout","GLOBAL",1)
-	Global("DMWWGretekShout","LOCALS",0)
+  !Allegiance(Myself,ENEMY)
+  Global("DMWWGretekShout","GLOBAL",1)
+  Global("DMWWGretekShout","LOCALS",0)
 THEN
-	RESPONSE #100
-		Enemy()
-	  SetGlobal("DMWWGretekShout","LOCALS",1)
+  RESPONSE #100
+    Enemy()
+    SetGlobal("DMWWGretekShout","LOCALS",1)
 END

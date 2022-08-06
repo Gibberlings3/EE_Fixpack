@@ -1,16 +1,16 @@
 IF
-	Global("DMWWCyd","GLOBAL",1)
-	Allegiance(Myself,NEUTRAL)
+  Global("DMWWCyd","GLOBAL",1)
+  Allegiance(Myself,NEUTRAL)
 THEN
-	RESPONSE #100
-		Enemy()
-		Continue()
+  RESPONSE #100
+    Enemy()
+    Continue()
 END
 
 IF
-	Global("DMWWCyd","GLOBAL",1)
-	!See(NearestEnemyOf(Myself))
+  Global("DMWWCyd","GLOBAL",1)
+  !See(NearestEnemyOf(Myself))
 THEN
-	RESPONSE #100
-		MoveToPoint([610.401])
+  RESPONSE #100
+    MoveToPoint([610.401])
 END
