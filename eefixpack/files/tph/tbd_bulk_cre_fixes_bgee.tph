@@ -7,6 +7,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   ajanti6, null, null, null, null, null, null, null, 0x40000000 => ajanti6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   alora, null, null, null, null, null, null, null, 0x40000000 => alora // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   alora6, null, null, null, null, null, null, null, 0x40000000 => alora6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  andris, null, null, 1, null, null, null, null, null => andris // tbd, cam (from scs): Andris MONSTER > HUMANOID
   bdbugb20, null, null, null, null, null, 58001, null, null => bdbugb20 // BGCS-3442, cam: bugbear shaman should use bugbear shaman animation
   bdcrus21, null, null, null, null, null, null, bdcrus21, null => bdcrus21 // tbd, cam: crusaders with the wrong DV
   bdcrus22, null, null, null, null, null, null, bdcrus22, null => bdcrus22 // tbd, cam: crusaders with the wrong DV
@@ -16,14 +17,20 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   bdcrus9d, null, null, null, null, null, null, bdcrus9d, null => bdcrus9d // tbd, cam: crusaders with the wrong DV
   coran, null, null, null, null, null, null, null, 0x40000000 => coran // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   coran5, null, null, null, null, null, null, null, 0x40000000 => coran5 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  dopkie, null, 111, null, null, null, null, null, null => dopkie // tbd, cam (from scs): Kiel the Legion Killer CLERIC > DOPPLEGANGER
+  fahrin, null, 11, null, null, null, null, null, null => fahrin // tbd, cam (from scs): Fahrington CLERIC > DRUID (uses druid-only spells)
   imoen1, null, null, null, null, null, null, null, 0x40000000 => imoen1 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   imoen2, null, null, null, null, null, null, null, 0x40000000 => imoen2 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   imoen4, null, null, null, null, null, null, null, 0x40000000 => imoen4 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   imoen6, null, null, null, null, null, null, null, 0x40000000 => imoen6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  kaish2, null, 157, null, null, null, null, null, null => kaish2 // tbd, cam (from scs): Kaishas Gan CLERIC > WEREWOLF
+  kaisha, null, 157, null, null, null, null, null, null => kaisha // tbd, cam (from scs): Kaishas Gan CLERIC > WEREWOLF
   kivan, null, null, null, null, null, null, null, 0x40000000 => kivan // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   kivan4, null, null, null, null, null, null, null, 0x40000000 => kivan4 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   kivan6, null, null, null, null, null, null, null, 0x40000000 => kivan6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  krysti , null, 1, null, null, null, null, null, null => krysti  // tbd, cam (from scs): Krystin THIEF > MAGE
   sharte, null, null, null, null, null, null, null, 0x40000000 => sharte // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  tellan, null, 1, null, null, null, null, null, null => tellan // tbd, cam (from scs): Tellan THIEF > MAGE
   trollgi, null, null, null, null, null, 32512, null, null => trollgi // tbd, cam: make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
 
 END
