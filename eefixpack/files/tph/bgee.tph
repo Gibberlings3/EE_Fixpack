@@ -546,7 +546,9 @@ COPY_EXISTING ~albert.bcs~   ~override~
   END
   BUT_ONLY  
 
-
+// tbd, cam (from scs)
+// make cydermac and friends go hostile more reliably (see also banditcy.baf)
+EXTEND_TOP ~banditcy.bcs~ ~eefixpack/files/baf/bancyadd.baf~
 
 // tbd, cam
 // bad string refs for AI scripting
@@ -574,6 +576,10 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
     REPLACE_TEXTUALLY ~DisplayString(Myself,66959)~ ~DisplayString(Myself,%use_wand%)~ // *uses a wand*
   END
   BUT_ONLY
+
+// tbd, cam (from scs)
+// make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
+COMPILE ~eefixpack/files/baf/gretek.baf~
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
@@ -620,6 +626,23 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bgee.tph~ // bulk alignment chang
 
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+
+// tbd, cam (from scs)
+// make gretek and friends go hostile more reliably (see also gretek.baf, gretek.dlg)
+COPY_EXISTING ~arlin.cre~  ~override~
+              ~catura.cre~ ~override~
+              ~gretek.cre~ ~override~
+              ~nader.cre~  ~override~
+              ~pargus.cre~ ~override~
+              ~wilf.cre~   ~override~
+  FOR (index = 0x248 ; index < 0x270 ; index += 8) BEGIN
+    READ_ASCII index script
+    PATCH_IF (("%script%" STRING_COMPARE_CASE "" = 0) OR ("%script%" STRING_COMPARE_CASE "none" = 0)) BEGIN
+      WRITE_ASCII index ~gretek~ #8
+      SET index = 0x270
+    END
+  END
+  BUT_ONLY  
 
 // tbd, cam (originally from jmerry)
 // Nonstandard wand of missiles on Imoen and Mordaine replaced
