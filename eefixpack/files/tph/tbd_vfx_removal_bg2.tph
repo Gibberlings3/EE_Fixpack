@@ -298,13 +298,13 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureber.spl~
   END
 
 COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
               ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
               ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk - cures confusion - cures drunkenness - cures feeblemind - cures fear - cures sleep
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 4 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureber~ END               
   LPF cd_apply_batch STR_VAR array_name = cd_cure_berserk END
   BUT_ONLY
@@ -355,9 +355,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curebld.spl~
 COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cures deafness - cures disease - cures poison
               ~bhaal1a.spl~  ~override~ // Mass Healing - cures blind - cures deafness - cures disease - cures drunkenness - cures poison
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~devaheal.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~ohbbclt1.spl~ ~override~ // <Invalid Strref -1> - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
@@ -373,7 +373,7 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~sppr607.spl~  ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~spwish28.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~spwm168.spl~  ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 75 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curebld~ END               
   LPF cd_apply_batch STR_VAR array_name = cd_cure_blind END
   BUT_ONLY
@@ -417,9 +417,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curecon.spl~
 
 COPY_EXISTING ~bdbrd03.spl~  ~override~ // Dispel Confusion - cures confusion
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~globblu2.itm~ ~override~ // Blue Globe - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~ohbresto.spl~ ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
@@ -429,7 +429,7 @@ COPY_EXISTING ~bdbrd03.spl~  ~override~ // Dispel Confusion - cures confusion
               ~sppr713.spl~  ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~spwish07.spl~ ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 242 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curecon~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_confusion END
   BUT_ONLY
@@ -460,9 +460,9 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~bhaal1a.spl~  ~override~ // Mass Healing - cures blind - cures deafness - cures disease - cures drunkenness - cures poison
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
               ~carsomyr.itm~ ~override~ // Carsomyr +5 - cures deafness - cures feeblemind
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~deva.itm~     ~override~ // Mace of Disruption +2 - cures deafness - cures feeblemind - causes stun
               ~devaevil.itm~ ~override~ // Silver Sword - cures deafness - cures feeblemind
               ~devaheal.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
@@ -519,7 +519,7 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~sw2h10.itm~   ~override~ // Carsomyr +5 - cures deafness - cures feeblemind
               ~sw2h10dm.spl~ ~override~ // Dispel Magic - cures deafness - cures feeblemind
               ~sw2h19.itm~   ~override~ // Carsomyr +6 - cures deafness - cures feeblemind
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 81 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curedef~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_deafness END
   BUT_ONLY
@@ -562,9 +562,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curedis.spl~
 COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cures deafness - cures disease - cures poison
               ~bhaal1a.spl~  ~override~ // Mass Healing - cures blind - cures deafness - cures disease - cures drunkenness - cures poison
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~devaheal.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~globblu2.itm~ ~override~ // Blue Globe - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~ohbbclt1.spl~ ~override~ // <Invalid Strref -1> - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
@@ -589,7 +589,7 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~spwm168.spl~  ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~staf10.itm~   ~override~ // Staff of Curing - cures disease - cures drunkenness - cures poison
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 79 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curedis~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_disease END
   BUT_ONLY
@@ -714,10 +714,10 @@ COPY_EXISTING ~abazring.itm~ ~override~ // Ring - cures fear
               ~brdflut1.itm~ ~override~ // Magic Flute - cures fear
               ~brdflute.itm~ ~override~ // Magic Flute - cures fear
               ~cdgoliro.itm~ ~override~ // Attack - cures fear
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~cdrngchr.itm~ ~override~ // <Invalid Strref -1> - cures fear
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~chalcy3.itm~  ~override~ // Greenstone Amulet - cures fear
               ~chalslay.itm~ ~override~ // Ring - cures fear
               ~chwraith.itm~ ~override~ // <Invalid Strref -1> - cures fear
@@ -869,7 +869,7 @@ COPY_EXISTING ~abazring.itm~ ~override~ // Ring - cures fear
               ~sword01.cre~  ~override~ // Magical Sword - cures fear
               ~telslav2.itm~ ~override~ // <Invalid Strref -1> - cures fear
               ~trollimm.itm~ ~override~ // Ring - cures fear
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~tstatue.itm~  ~override~ // <Invalid Strref -1> - cures fear
               ~uddrow50.cre~ ~override~ // Drow Wizard - cures fear
               ~udgolem.cre~  ~override~ // Brain Golem - cures fear
@@ -905,9 +905,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curefbm.spl~
 COPY_EXISTING ~arow07.itm~   ~override~ // Arrow of Dispelling - cures deafness - cures feeblemind
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
               ~carsomyr.itm~ ~override~ // Carsomyr +5 - cures deafness - cures feeblemind
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~deva.itm~     ~override~ // Mace of Disruption +2 - cures deafness - cures feeblemind - causes stun
               ~devaevil.itm~ ~override~ // Silver Sword - cures deafness - cures feeblemind
               ~devaheal.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
@@ -967,7 +967,7 @@ COPY_EXISTING ~arow07.itm~   ~override~ // Arrow of Dispelling - cures deafness 
               ~sw2h10.itm~   ~override~ // Carsomyr +5 - cures deafness - cures feeblemind
               ~sw2h10dm.spl~ ~override~ // Dispel Magic - cures deafness - cures feeblemind
               ~sw2h19.itm~   ~override~ // Carsomyr +6 - cures deafness - cures feeblemind
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 77 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curefbm~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_feeblemind END
   BUT_ONLY
@@ -1037,9 +1037,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curehol.spl~
 
 COPY_EXISTING ~blun30.itm~   ~override~ // Flail of Ages +5 - cures hold - cures stun
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~misc3o.itm~   ~override~ // Methild's Harp - cures hold - cures stun
               ~npplat.itm~   ~override~ // Firecam Full-Plate Armor - cures hold - cures stun
               ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
@@ -1061,7 +1061,7 @@ COPY_EXISTING ~blun30.itm~   ~override~ // Flail of Ages +5 - cures hold - cures
               ~sprngz05.itm~ ~override~ // <1pp leftover> - cures hold - cures fear - cures stun
               ~sw2h06.itm~   ~override~ // Spider's Bane +2 - cures hold - cures stun
               ~sw2h13.itm~   ~override~ // Spider's Bane +2 - cures hold - cures stun
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 162 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curehol~ END   
   LPF cd_apply_batch STR_VAR array_name = cd_cure_hold END
   BUT_ONLY
@@ -1437,9 +1437,9 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~bhaal1a.spl~  ~override~ // Mass Healing - cures blind - cures deafness - cures disease - cures drunkenness - cures poison
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
               ~brac20.itm~   ~override~ // Gloves of Healing - cures drunkenness - cures poison
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~devaheal.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~globblu2.itm~ ~override~ // Blue Globe - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~misc76.itm~   ~override~ // The Dream Potion - cures poison
@@ -1469,7 +1469,7 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~spwish46.spl~ ~override~ // Greater Restoration - cures confusion - cures disease - cures feeblemind - cures fear - cures level drain - cures poison
               ~spwm168.spl~  ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
               ~staf10.itm~   ~override~ // Staff of Curing - cures disease - cures drunkenness - cures poison
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 11 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curepsn~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_poison END
   BUT_ONLY
@@ -1521,9 +1521,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureslp.spl~
 //              ~bdsha12c.spl~ ~override~ // <Invalid Strref -1> - causes sleep
 //              ~blun16.itm~   ~override~ // The Sleeper +2 - causes sleep
 //              ~cdfampsd.itm~ ~override~ // Attack - causes sleep
-//              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-//              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-//              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+//              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+//              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+//              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
 //              ~ch3away.spl~  ~override~ // <Invalid Strref -1> - causes sleep [unconsciousness from knockback]
 //              ~ch3drain.spl~ ~override~ // <Invalid Strref -1> - causes sleep - unknown long effect - unknown long effect - unknown long effect - unknown long effect
 //              ~ch3flash.spl~ ~override~ // <Invalid Strref -1> - causes sleep - unknown long effect
@@ -1581,22 +1581,22 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#cureslp.spl~
 //              ~staf15.itm~   ~override~ // Staff of Air +2 - causes sleep - unknown long effect
 //              ~staf21.itm~   ~override~ // Staff of the Ram +4 - causes sleep [unconsciousness from knockback]
 //              ~staf22.itm~   ~override~ // Staff of the Ram +6 - causes sleep [unconsciousness from knockback]
-//              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+//              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
 //              ~wand08.itm~   ~override~ // Wand of Sleep - causes sleep
   BEGIN
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 parameter2 = 2 STR_VAR resource = EVAL ~%res%~ END
   END
 
 COPY_EXISTING ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~ohncoll.itm~  ~override~ // Collar Bell - cures sleep - causes deafness - portrait icon 112
               ~ohsmode1.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
               ~ohsmode4.spl~ ~override~ // [story mode] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, level drain, poison, sleep, stun
               ~ohtyr1.spl~   ~override~ // Exaltation - cures berserk - cures confusion - cures drunkenness - cures feeblemind - cures fear - cures sleep
               ~ohwakeup.spl~ ~override~ // <Invalid Strref -1> - cures sleep
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 2 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#cureslp~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_sleep END
   BUT_ONLY
@@ -1675,9 +1675,9 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curestn.spl~
 
 COPY_EXISTING ~blun30.itm~   ~override~ // Flail of Ages +5 - cures hold - cures stun
               ~bpdispel.spl~ ~override~ // <Invalid Strref -1> - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun
-              ~cdhgtrl.spl~  ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtorgal.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
-              ~cdtrlblz.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
               ~misc3o.itm~   ~override~ // Methild's Harp - cures hold - cures stun
               ~npplat.itm~   ~override~ // Firecam Full-Plate Armor - cures hold - cures stun
               ~ohrrage.spl~  ~override~ // Animal Rage - cures fear - cures stun
@@ -1701,7 +1701,19 @@ COPY_EXISTING ~blun30.itm~   ~override~ // Flail of Ages +5 - cures hold - cures
               ~sprngz05.itm~ ~override~ // <1pp leftover> - cures hold - cures fear - cures stun
               ~sw2h06.itm~   ~override~ // Spider's Bane +2 - cures hold - cures stun
               ~sw2h13.itm~   ~override~ // Spider's Bane +2 - cures hold - cures stun
-              ~trollreg.spl~ ~override~ // [leftover troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
   LPF ALTER_EFFECT INT_VAR match_opcode = 46 opcode = 146 parameter1 = 0 parameter2 = 2 STR_VAR resource = ~#curestn~ END  
   LPF cd_apply_batch STR_VAR array_name = cd_cure_stun END
   BUT_ONLY
+
+/////                                                  \\\\\
+///// troll exceptions                                 \\\\\
+/////                                                  \\\\\
+
+// the op 2 in #cureslp ends up nuking the trolls death-via-sleep, so a minor workaround
+COPY_EXISTING ~cdhgtrl.spl~  ~override~ // [fire troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtorgal.spl~ ~override~ // [torgal revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~cdtrlblz.spl~ ~override~ // [blizzard troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+              ~trollreg.spl~ ~override~ // [generic troll revive spell] - cures berserk, blind, confusion, deafness, disease, feeblemind, hold, fear, poison, sleep, stun - causes sleep
+  LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 2 parameter1 = 0 parameter2 = 0 STR_VAR match_resource = ~#cureslp~ resource = ~~ END 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 101 parameter1 = 0 parameter2 = 2 timing = 0 duration = 1 STR_VAR match_resource = ~#cureslp~ resource = ~~ END 

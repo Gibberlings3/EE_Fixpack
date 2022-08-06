@@ -662,13 +662,9 @@ END
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
 
-// tbd, cam (from jmerry)
-// simulacrum/projected images should have thief skills, but no shadow twin
-INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~
-
-// tbd, cam (from jmerry)
-// prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
-INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
+INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
+INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
+INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
 // luke
 // **Cure Wounds**
