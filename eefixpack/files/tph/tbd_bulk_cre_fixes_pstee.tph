@@ -1,0 +1,20 @@
+// generated from docs/eefixpack_arrays.ods > [game] creature tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
+
+  //file, race, class, general, sex, gender, animation, dv, kit => file // notes
+  apprent2, null, null, null, null, null, null, None, null => apprent2 // Fixing creature script names
+  apprent3, null, null, null, null, null, null, None, null => apprent3 // Fixing creature script names
+  apprent4, null, null, null, null, null, null, None, null => apprent4 // Fixing creature script names
+  apprent5, null, null, null, null, null, null, None, null => apprent5 // Fixing creature script names
+  bsohmien, 59, null, null, null, null, null, null, null => bsohmien // SOHMIEN
+  hbdygrd, 1, null, null, null, null, null, null, null => hbdygrd // HUMAN
+  lady, 38, null, null, null, null, null, null, null => lady // LADY_OF_PAIN
+  trias, 14, null, null, null, null, null, null, null => trias // DEVA
+  triasa, 14, null, null, null, null, null, null, null => triasa // DEVA
+  triasb, 14, null, null, null, null, null, null, null => triasb // DEVA
+  triasc, 14, null, null, null, null, null, null, null => triasc // DEVA
+  worm, 71, null, null, null, null, null, null, null => worm // WORM
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_code.tph~
