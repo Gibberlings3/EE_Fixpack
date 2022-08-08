@@ -555,7 +555,9 @@ COPY_EXISTING ~albert.bcs~   ~override~
   END
   BUT_ONLY  
 
-
+// tbd, cam (from scs)
+// make cydermac and friends go hostile more reliably (see also banditcy.baf)
+EXTEND_TOP ~banditcy.bcs~ ~eefixpack/files/baf/bancyadd.baf~
 
 // tbd, cam
 // bad string refs for AI scripting
@@ -583,6 +585,10 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
     REPLACE_TEXTUALLY ~DisplayString(Myself,66959)~ ~DisplayString(Myself,%use_wand%)~ // *uses a wand*
   END
   BUT_ONLY
+
+// tbd, cam (from scs)
+// make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
+COMPILE ~eefixpack/files/baf/gretek.baf~
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
@@ -623,41 +629,29 @@ COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bgee.tph~ // bulk general changes
+
 INCLUDE ~eefixpack/files/tph/alignment_changes_bgee.tph~ // bulk alignment changes
 
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 
-// tbd, cam
-// crusaders with the wrong DV
-COPY_EXISTING ~bdcrus21.cre~ ~override~
-              ~bdcrus22.cre~ ~override~
-              ~bdcrus6d.cre~ ~override~
-              ~bdcrus7d.cre~ ~override~
-              ~bdcrus8d.cre~ ~override~
-              ~bdcrus9d.cre~ ~override~
-  WRITE_ASCIIE 0x280 ~%SOURCE_RES%~ #32 // was bdcrus20
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam (originally from jmerry)
-// joinable NPCs should have proper trueclass kit values
-COPY_EXISTING ~ajanti.cre~   ~override~ // ajantis
-              ~ajanti4.cre~  ~override~ // ajantis
-              ~ajanti6.cre~  ~override~ // ajantis
-              ~alora.cre~    ~override~ // alora
-              ~alora6.cre~   ~override~ // alora
-              ~coran.cre~    ~override~ // coran
-              ~coran5.cre~   ~override~ // coran
-              ~imoen1.cre~   ~override~ // imoen
-              ~imoen2.cre~   ~override~ // imoen
-              ~imoen4.cre~   ~override~ // imoen
-              ~imoen6.cre~   ~override~ // imoen
-              ~kivan.cre~    ~override~ // kivan
-              ~kivan4.cre~   ~override~ // kivan
-              ~kivan6.cre~   ~override~ // kivan
-              ~sharte.cre~   ~override~ // shar-teel
-  WRITE_LONG 0x244 0x40000000 // proper trueclass value
-  BUT_ONLY IF_EXISTS
+// tbd, cam (from scs)
+// make gretek and friends go hostile more reliably (see also gretek.baf, gretek.dlg)
+COPY_EXISTING ~arlin.cre~  ~override~
+              ~catura.cre~ ~override~
+              ~gretek.cre~ ~override~
+              ~nader.cre~  ~override~
+              ~pargus.cre~ ~override~
+              ~wilf.cre~   ~override~
+  FOR (index = 0x248 ; index < 0x270 ; index += 8) BEGIN
+    READ_ASCII index script
+    PATCH_IF (("%script%" STRING_COMPARE_CASE "" = 0) OR ("%script%" STRING_COMPARE_CASE "none" = 0)) BEGIN
+      WRITE_ASCII index ~gretek~ #8
+      SET index = 0x270
+    END
+  END
+  BUT_ONLY  
 
 // tbd, cam (originally from jmerry)
 // Nonstandard wand of missiles on Imoen and Mordaine replaced
@@ -703,18 +697,6 @@ COPY_EXISTING ~cultd1.cre~ ~override~
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
-
-// BGCS-3442, cam
-// bugbear shaman should use bugbear shaman animation
-COPY_EXISTING ~bdbugb20.cre~ ~override~ // bugbear shaman
-  WRITE_SHORT 0x28 0xe291 // bugbear shaman animation  
-  BUT_ONLY IF_EXISTS
-  
-// tbd, cam
-// make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
-COPY_EXISTING ~trollgi.cre~ ~override~
-  WRITE_SHORT 0x28 0x7f00 
-  BUT_ONLY IF_EXISTS // sod asset
   
 // BGCS-483, luke
 // CRE files should not use non-existing resources
@@ -752,6 +734,8 @@ END
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
@@ -792,12 +776,6 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete separate slow icon (not present on bddraggh and pudden01)
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
-
-// tbd, cam
-// sword of balduran should be zero enchantment
-COPY_EXISTING ~comps18.itm~ ~override~ // sword of balduran, 1pp cosmetic version
-              ~sw1h18.itm~  ~override~ // sword of balduran
-  WRITE_LONG 0x60 0 // enchantment (already has 344 to make it +4 vs. lycans)
   
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
@@ -916,22 +894,6 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
 END
 
-// luke
-// Ghoul Touch – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "ghoult.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Melf's Minute Meteors – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "melfmet.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
 /*
 luke
 **Black Blade of Disaster**
@@ -950,32 +912,6 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
     LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
   END
-END
-
-// luke
-// Energy Blade – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "eneblade.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Flame Blade**
-// - should not interact with level-based spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "fblade.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Fire Seed**
-// - should not interact with level-based spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "fireseed.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
 END
 
 // luke
@@ -1006,6 +942,8 @@ END
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
@@ -1210,14 +1148,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Chill Touch – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_CHILL_TOUCH%a.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Detect Evil – should not interact with spell protections
 // 1) there's no need for the subspell
 //// 1a) its effects have incorrect power levels
@@ -1379,14 +1309,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Wraithform – make sure all limited effects are dispellable
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_WRAITH_FORM%.spl~ ~override~
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "resist_dispel" = (BIT0 + BIT1) END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Minor Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override"
@@ -1503,15 +1425,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Improved Haste
-// 1) make sure all effects bypass Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_IMPROVED_HASTE%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = (BIT0 + BIT1) END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override"
@@ -1532,14 +1445,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Stone to Flesh – make sure all effects bypass Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_STONE_TO_FLESH%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Spell Turning – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override"
@@ -1554,14 +1459,6 @@ WITH_SCOPE BEGIN
         LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 233 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ ~match_parameter2~ = IDS_OF_SYMBOL ("STATS" "WIZARD_SPELL_TURNING") END
       END
     END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Sphere of Chaos – make sure all effects are subjected to Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPHERE_OF_CHAOS%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 END
   BUT_ONLY_IF_IT_CHANGES
 END
 

@@ -53,38 +53,15 @@ INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
-// Fixing creature script names
-COPY_EXISTING ~apprent2.cre~ ~override~
-              ~apprent3.cre~ ~override~
-              ~apprent4.cre~ ~override~
-              ~apprent5.cre~ ~override~
-  WRITE_ASCII DEATHVAR ~None~ (32)
-BUT_ONLY
-
-// Fixing creature race
-ACTION_DEFINE_ASSOCIATIVE_ARRAY cre_race BEGIN
-  // resref   => RACE.IDS value
-  ~bsohmien~  => 59   // SOHMIEN
-  ~hbdygrd~   => 1    // HUMAN
-  ~lady~      => 38   // LADY_OF_PAIN
-  ~trias~     => 14   // DEVA
-  ~triasa~    => 14   // DEVA
-  ~triasb~    => 14   // DEVA
-  ~triasc~    => 14   // DEVA
-  ~worm~      => 71   // WORM
-END
-
-ACTION_PHP_EACH cre_race AS resref => race BEGIN
-  COPY_EXISTING ~%resref%.cre~ ~override~
-    WRITE_BYTE 0x272 race
-  BUT_ONLY
-END
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_pstee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
+
+//INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_pstee.tph~ // bulk general changes (nothing here yet)
 
 // The Number of Ku'u Yin should protect from Chaotic creatures
 COPY_EXISTING ~kyname.itm~ ~override~
@@ -117,6 +94,8 @@ BUT_ONLY
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
+
+//INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_pstee.tph~ // bulk general changes (nothing here yet)
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

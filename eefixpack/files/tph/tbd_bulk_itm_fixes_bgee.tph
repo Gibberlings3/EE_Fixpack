@@ -1,0 +1,20 @@
+// generated from docs/eefixpack_arrays.ods > [game] item tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
+
+  //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable => file // notes
+  comps18, null, null, null, null, null, null, null, null, null, 0, null => comps18 // tbd, cam: sword of balduran should be zero enchantment
+  eneblade, null, null, 0, null, null, null, null, null, null, null, null => eneblade // luke: Energy Blade – should not interact with spell protections
+  fblade, null, null, 0, null, null, null, null, null, null, null, null => fblade // luke: flame blade should not interact with level-based spell protections
+  fireseed, null, null, 0, null, null, null, null, null, null, null, null => fireseed // luke: Fire Seed should not interact with level-based spell protections
+  ghoult, null, null, 0, null, null, null, null, null, null, null, null => ghoult // luke: Ghoul Touch – should not interact with spell protections
+  melfmet, null, null, 0, null, null, null, null, null, null, null, null => melfmet // luke: Melf's Minute Meteors – should not interact with spell protections
+  sw1h18, null, null, null, null, null, null, null, null, null, 0, null => sw1h18 // tbd, cam: sword of balduran should be zero enchantment
+  wand02, null, null, 1, null, null, null, null, null, null, null, null => wand02 // tbd, cam (from scs): changing wand powers to better match their effects
+  wand023, null, null, 1, null, null, null, null, null, null, null, null => wand023 // tbd, cam (from scs): changing wand powers to better match their effects
+  wand08, null, null, 1, null, null, null, null, null, null, null, null => wand08 // tbd, cam (from scs): changing wand powers to better match their effects
+  wand12, null, null, 1, null, null, null, null, null, null, null, null => wand12 // tbd, cam (from scs): changing wand powers to better match their effects
+
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_code.tph~

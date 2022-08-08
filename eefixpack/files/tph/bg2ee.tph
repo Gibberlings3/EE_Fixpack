@@ -255,8 +255,10 @@ COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
-
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph~ // bulk general changes
+
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 
@@ -269,31 +271,6 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohnvgc.cre~   ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
-
-// tbd, cam (originally from jmerry)
-// joinable NPCs should have proper trueclass kit values
-COPY_EXISTING ~anomen10.cre~ ~override~ // anomen
-              ~anomen12.cre~ ~override~ // anomen
-              ~anomen6.cre~  ~override~ // anomen
-              ~anomen7.cre~  ~override~ // anomen
-              ~anomen8.cre~  ~override~ // anomen
-              ~anomen9.cre~  ~override~ // anomen
-              ~imoen.cre~    ~override~ // imoen
-              ~imoen10.cre~  ~override~ // imoen
-              ~imoen15.cre~  ~override~ // imoen
-              ~imoen211.cre~ ~override~ // imoen
-              ~imoen213.cre~ ~override~ // imoen
-              ~kivan.cre~    ~override~ // kivan
-              ~kivan4.cre~   ~override~ // kivan
-              ~kivan6.cre~   ~override~ // kivan
-              ~mazzy11.cre~  ~override~ // mazzy
-              ~mazzy12.cre~  ~override~ // mazzy
-              ~mazzy15.cre~  ~override~ // mazzy
-              ~mazzy8.cre~   ~override~ // mazzy
-              ~mazzy9.cre~   ~override~ // mazzy
-              ~sarevok.cre~  ~override~ // sarevok
-  WRITE_LONG 0x244 0x40000000 // proper trueclass value
-  BUT_ONLY IF_EXISTS
 
 // tbd, cam
 // has all hallmarks of fear immunity except fear immunity itself
@@ -316,28 +293,15 @@ INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
 // poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
 INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 
-// BGCS-469, luke
-// Lizard Men should be flagged as 'LIZARDMAN'
-WITH_SCOPE BEGIN
-  COPY_EXISTING_REGEXP ~ohbliz0[1-3].cre~ ~override~ // The Black Pits 2
-    WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "LIZARDMAN")
-  BUT_ONLY_IF_IT_CHANGES
-END
-
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general changes
+
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
-// tbd, cam
-// aegis fang has wrong enchantment level
-COPY_EXISTING ~aegis.itm~  ~override~ // Aegis-fang +3
-              ~aegis2.itm~ ~override~ // Aegis-fang +3
-  WRITE_LONG 0x60 3 // enchantment
-  BUT_ONLY
-  
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~ ~override~
@@ -412,7 +376,7 @@ COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to h
   LPF DELETE_EFFECT INT_VAR match_opcode = 296 STR_VAR match_resource = spconfus END
   BUT_ONLY
 
-// tie slow icon to slos-via-disease effect so it gets cleared by disease cures    
+// tie slow icon to slow-via-disease effect so it gets cleared by disease cures    
 COPY_EXISTING ~iotyugh.itm~  ~override~ // (itm) Attack - causes disease - portrait icon 41
               ~ohrslng1.itm~ ~override~ // (itm) Lupine Sling +2 - causes disease - portrait icon 41 [uses slow icon with its disease]
               ~otyugh.itm~   ~override~ // (itm) Attack - causes disease - portrait icon 41
@@ -554,22 +518,6 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
 END
 
-// luke
-// Ghoul Touch – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "ghoult.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Melf's Minute Meteors – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "melfmet.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
 /*
 luke
 **Black Blade of Disaster**
@@ -588,32 +536,6 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
     LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
   END
-END
-
-// luke
-// Energy Blade – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "eneblade.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Flame Blade**
-// - should not interact with level-based spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "fblade.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Fire Seed**
-// - should not interact with level-based spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "fireseed.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
 END
 
 // luke
@@ -662,6 +584,8 @@ END
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ // bulk general changes
+
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
@@ -686,12 +610,6 @@ WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/restoration.tph"
   LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
-
-// ie-5931, cam
-// Stoneskin from Demogorgon & Melissan cannot be breached
-COPY_EXISTING ~melstone.spl~ ~override~
-  WRITE_BYTE 0x27 7 // change secondary to Combat Protections
-  BUT_ONLY  
 
 // tbd, cam
 // Hexxat's ability is supposed to summon 1d4 creatures, does something wacky intstead
@@ -836,14 +754,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Chill Touch – should not interact with spell protections
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_CHILL_TOUCH%a.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Detect Evil – should not interact with spell protections
 // 1) there's no need for the subspell
 //// 1a) its effects have incorrect power levels
@@ -903,14 +813,6 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION ~ADD_SPELL_EFFECT~ INT_VAR ~insert_point~ = 0 ~target~ = 2 ~opcode~ = 324 ~parameter2~ = 55 STR_VAR ~resource~ = ~%DEST_RES%~ END // Immunity to resource and message
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 126 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Deafness – should not bypass Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_DEAFNESS%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -977,14 +879,6 @@ WITH_SCOPE BEGIN
     WRITE_SHORT 0x22 0
     // Feature blocks
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "power" = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Wraithform – make sure all limited effects are dispellable
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_WRAITH_FORM%.spl~ ~override~
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "resist_dispel" = (BIT0 + BIT1) END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1127,14 +1021,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Stone to Flesh – make sure all effects bypass Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_STONE_TO_FLESH%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT1 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Spell Turning – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override"
@@ -1149,14 +1035,6 @@ WITH_SCOPE BEGIN
         LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 233 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ ~match_parameter2~ = IDS_OF_SYMBOL ("STATS" "WIZARD_SPELL_TURNING") END
       END
     END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Sphere of Chaos – make sure all effects are subjected to Magic Resistance
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPHERE_OF_CHAOS%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1515,27 +1393,7 @@ END
 INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 // tbd, cam
-// dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type; other fixes for blue dragon breath
-COPY_EXISTING ~spin691.spl~  ~override~ // black dragon breath (effects)
-              ~spin691v.spl~ ~override~ // black dragon breath (cosmetics)
-              ~spin597.spl~  ~override~ // blue dragon breath
-              ~spin596.spl~  ~override~ // brown dragon breath (effects)
-              ~spin596v.spl~ ~override~ // brown dragon breath (cosmetics)
-              ~drgrbrht.spl~ ~override~ // green dragon breath (effects)
-              ~spin535.spl~  ~override~ // green dragon breath (cosmetics)
-              ~spin693.spl~  ~override~ // red dragon breath (effects)
-              ~spin894.spl~  ~override~ // red dragon breath (cosmetics)
-              ~spin893.spl~  ~override~ // shadow dragon breath (effects)
-              ~spin893v.spl~ ~override~ // shadow dragon breath (cosmetics)
-              ~spin833.spl~  ~override~ // silver dragon breath: cone of cold (effects)
-              ~spin833v.spl~ ~override~ // silver dragon breath: cone of cold (cosmetics)
-              ~spin832.spl~  ~override~ // silver dragon breath: paralyzation (effects)
-              ~spin832v.spl~ ~override~ // silver dragon breath: paralyzation (cosmetics)
-              ~spin595.spl~  ~override~ // yellow dragon breath (effects)
-              ~spin595v.spl~ ~override~ // yellow dragon breath (cosmetics)
-  WRITE_BYTE 0x25 0 // no school
-  WRITE_BYTE 0x27 0 // no secondary
-  
+// dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type (see bulk fixes); other fixes for blue dragon breath
 COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional fixes
   WRITE_ASCII 0x10 ~~ #8 // blank casting sound
   WRITE_SHORT 0x1c 4     // innate spell type

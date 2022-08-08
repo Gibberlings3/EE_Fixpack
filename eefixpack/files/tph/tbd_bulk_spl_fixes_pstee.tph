@@ -1,0 +1,8 @@
+// generated from docs/eefixpack_arrays.ods > [game] item tab
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
+
+  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes
+
+END
+
+INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_code.tph~
