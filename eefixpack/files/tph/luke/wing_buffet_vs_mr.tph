@@ -1,0 +1,115 @@
+// Workaround for the following engine quirk => https://www.gibberlings3.net/forums/topic/35836-bug-tob-weapons-foebane-5-can-drain-undead-staff-of-the-ram-6-can-knock-out-giants/?do=findComment&comment=313404
+
+DEFINE_ACTION_FUNCTION "WING_BUFFET_VS_MR"
+BEGIN
+	// Initialize
+
+	ACTION_CLEAR_ARRAY "wing_buffet"
+
+	/*
+	***********************************************************************************************************
+	***************************************** SPL files starting with "SP" ************************************
+	***********************************************************************************************************
+	*/
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			(GAME_IS ~bgee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet" BEGIN
+					// parent resref => ability
+					"%PSIONIC_PROJECT_FORCE%" => "-1"
+					"%HELL_BUFFET%" => "-1"
+					"%DRAGON_WING_BUFFET%" => "-1"
+					"%MAGNET%" => "-1"
+					"%REPULSE_X%" => "-1"
+					"%WIZARD_BIGBYS_CLENCHED_FIST%" => "-1"
+					"%WIZARD_BIGBYS_CRUSHING_HAND%" => "-1"
+					"SPYANC01" => "-1" // Air Elemental Whirlwind
+				END
+			END
+			(GAME_IS ~bg2ee eet~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet" BEGIN
+					// parent resref => ability
+					"%ROGUE_SET_EXPLODING_TRAP%B" => "-1"
+					"%PSIONIC_PROJECT_FORCE%" => "-1"
+					"%FAN_BLOW%" => "-1"
+					"%HELL_BUFFET%" => "-1"
+					"%DRAGON_WING_BUFFET%" => "-1"
+					"%MAGNET%" => "-1"
+					"%REPULSE_X%" => "-1"
+					"%WIZARD_BIGBYS_CLENCHED_FIST%" => "-1"
+					"%WIZARD_BIGBYS_CRUSHING_HAND%" => "-1"
+					"%WIZARD_DRAGONS_BREATH%" => "-1"
+					"%WIZARD_COMET%" => "-1"
+					"SPWISH27" => "-1" // Knockback
+					"SPYANC01" => "-1" // Whirlwind
+				END
+			END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet" BEGIN
+					// parent resref => ability
+					"%ROGUE_SET_EXPLODING_TRAP%B" => "-1"
+					"%WIZARD_BIGBYS_CLENCHED_FIST%" => "-1"
+					"%WIZARD_BIGBYS_CRUSHING_HAND%" => "-1"
+					"%WIZARD_DRAGONS_BREATH%" => "-1"
+					"%WIZARD_COMET%" => "-1"
+					"SPWISH27" => "-1" // Knockback
+					"SPYANC01" => "-1" // Whirlwind
+				END
+			END
+			DEFAULT
+				FAIL "WING_BUFFET_VS_MR: Game not supported"
+		END
+		/* Main */
+		ACTION_PHP_EACH "wing_buffet" AS "resref" => "ext_header" BEGIN
+			COPY_EXISTING "%resref%.spl" "override"
+				LAUNCH_PATCH_FUNCTION "wing_buffet_vs_mr_patch" INT_VAR "ability" = "%ext_header%" END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+	END
+END
+
+DEFINE_PATCH_FUNCTION "wing_buffet_vs_mr_patch"
+INT_VAR
+	"ability" = "-1"
+BEGIN
+	PATCH_MATCH "%DEST_EXT%" WITH
+		"itm" BEGIN
+			GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+		END
+		"spl" BEGIN
+			GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+		END
+		DEFAULT
+			PATCH_FAIL "Should not happen (~%DEST_FILE%~)"
+	END
+	// Main
+	PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+		PATCH_IF ("%ability%" == "-1") OR ("%ab_ind%" == "%ability%") BEGIN
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS // NB, same for spl and itm
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				PATCH_MATCH SHORT_AT "%fx_off%" WITH
+					235 BEGIN
+						READ_SLONG ("%fx_off%" + 0x4) "strength"
+						READ_SLONG ("%fx_off%" + 0x8) "direction"
+						PATCH_IF !(FILE_EXISTS_IN_GAME "cdwb%direction%%strength%.eff") BEGIN
+							INNER_ACTION BEGIN
+								CREATE "EFF" "cdwb%direction%%strength%"
+									WRITE_LONG 0x10 0xEB // Effect ID: Wing buffet
+									WRITE_LONG 0x1C "%strength%"
+									WRITE_LONG 0x20 "%direction%"
+									WRITE_SHORT 0x2C 100 // Probability 1
+							END
+						END
+						// Apply via op177
+						WRITE_SHORT "%fx_off%" 177 // Use EFF file
+						WRITE_LONG ("%fx_off%" + 0x4) 0 // ANYONE
+						WRITE_LONG ("%fx_off%" + 0x8) 2 // EA.IDS
+						WRITE_ASCII ("%fx_off%" + 0x14) "cdwb%direction%%strength%" #8
+					END
+					DEFAULT
+				END
+			END
+		END
+	END
+END

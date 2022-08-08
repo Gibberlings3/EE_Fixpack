@@ -123,6 +123,15 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "7EYES" END
 END
 
+/*
+luke
+**Wing Buffet vs. MR**
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/wing_buffet_vs_mr.tph"
+  LAUNCH_ACTION_FUNCTION "WING_BUFFET_VS_MR" END
+END
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
