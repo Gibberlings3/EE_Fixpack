@@ -311,7 +311,7 @@ COPY_EXISTING ~bd5300.bcs~ ~override~
 // referring to wrong DV for Imoen
 COPY_EXISTING ~bd6200.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~"bdimoen"~ ~"imoen"~
+    REPLACE_TEXTUALLY ~ActionOverride("bdimoen"~ ~ActionOverride("imoen"~
   END
   BUT_ONLY IF_EXISTS // sod
 
