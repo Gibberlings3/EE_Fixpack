@@ -1818,7 +1818,7 @@ END
 /////                                                  \\\\\
   
 // tbd, cam
-// myconid cloud look sterrible w/o blending: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/7/#comment-314026
+// myconid cloud looks terrible w/o blending: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/7/#comment-314026
 COPY_EXISTING ~bdstink.pro~ ~override~
   WRITE_LONG 0x240 (THIS BOR BIT13) // add blend flag
   IF_EXISTS // sod asset
