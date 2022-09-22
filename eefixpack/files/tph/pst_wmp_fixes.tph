@@ -1,0 +1,82 @@
+// Returns the area code contained within the specified ARE resref.
+DEFINE_PATCH_FUNCTION a7_get_area_code
+STR_VAR
+  resref = ~~ // ARE resref
+RET
+  code        // numeric area code; 0 if code cannot be determined
+BEGIN
+  INNER_PATCH_SAVE code ~%resref%~ BEGIN
+    REPLACE_TEXTUALLY ~^..0*~ ~~
+  END
+  PATCH_IF (NOT IS_AN_INT ~code~) BEGIN
+    SET code = 0
+  END
+END
+
+// Updates travel time of all specified worldmap areas.
+DEFINE_PATCH_FUNCTION a7_wmp_update_distance
+INT_VAR
+  distance = 0  // new travel time (in 4h units)
+STR_VAR
+  area_codes = ~area_codes~ // name of array containing numeric area codes of maps to patch
+BEGIN
+  // preparing area codes for later
+  PHP_EACH EVAL ~%area_codes%~ AS _ => code BEGIN
+    SET $maps(~%code%~) = 1
+  END
+
+  READ_ASCII 0 sig (8)
+  PATCH_IF (~%sig%~ STR_EQ ~WMAPV1.0~) BEGIN
+    READ_LONG 0x8 num_maps
+    READ_LONG 0xc ofs_maps
+
+    FOR (idx_map = 0; idx_map < num_maps; ++idx_map) BEGIN
+      SET ofs_map = ofs_maps + idx_map * 184
+      READ_LONG (ofs_map + 0x20) num_areas
+      READ_LONG (ofs_map + 0x24) ofs_areas
+      READ_LONG (ofs_map + 0x28) ofs_links
+      READ_LONG (ofs_map + 0x2c) num_links
+
+      // Initializing array of map links to patch
+      FOR (i = 0; i < num_areas; ++i) BEGIN
+        READ_ASCII (ofs_areas + i * 240) resref (8) NULL
+        LPF a7_get_area_code STR_VAR resref RET code END
+        // Patching map? 0: no, 1: yes
+        SET $map_links(~%i%~) = VARIABLE_IS_SET $maps(~%code%~) && $maps(~%code%~) != 0
+      END
+
+      // Updating travel times
+      FOR (i = 0; i < num_areas; ++i) BEGIN // for each area
+        SET ofs = ofs_areas + i * 240
+        FOR (j = 0; j < 4; ++j) BEGIN // for each map edge
+          READ_LONG (ofs + j * 8 + 0x50) idx_link   // index of first link
+          READ_LONG (ofs + j * 8 + 0x54) num_links  // # links
+          FOR (k = 0; k < num_links; ++k) BEGIN     // for each target map
+            SET ofs_link = ofs_links + (idx_link + k) * 216
+            READ_LONG ofs_link target_link
+            PATCH_IF ($map_links(~%target_link%~)) BEGIN  // should target be patched?
+              WRITE_LONG (ofs_link + 0x24) distance  // updating travel time
+            END
+          END
+        END
+      END
+    END
+  END
+END
+
+
+// Hive map travel time on worldmap should be consistent with pre-worldmap travel time
+
+// Area codes of maps to patch
+ACTION_DEFINE_ARRAY area_codes BEGIN
+  // Hive maps
+  100 101 109 200 300 301 400 401
+END
+
+// Patching worldmap
+COPY_EXISTING ~worldmap.wmp~ ~override~
+  LPF a7_wmp_update_distance
+    INT_VAR distance = 0
+    STR_VAR area_codes
+  END
+BUT_ONLY
