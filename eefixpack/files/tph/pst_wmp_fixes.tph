@@ -47,15 +47,17 @@ BEGIN
 
       // Updating travel times
       FOR (i = 0; i < num_areas; ++i) BEGIN // for each area
-        SET ofs = ofs_areas + i * 240
-        FOR (j = 0; j < 4; ++j) BEGIN // for each map edge
-          READ_LONG (ofs + j * 8 + 0x50) idx_link   // index of first link
-          READ_LONG (ofs + j * 8 + 0x54) num_links  // # links
-          FOR (k = 0; k < num_links; ++k) BEGIN     // for each target map
-            SET ofs_link = ofs_links + (idx_link + k) * 216
-            READ_LONG ofs_link target_link
-            PATCH_IF ($map_links(~%target_link%~)) BEGIN  // should target be patched?
-              WRITE_LONG (ofs_link + 0x24) distance  // updating travel time
+        PATCH_IF ($map_links(~%i%~)) BEGIN  // skip if source map is not listed in area codes
+          SET ofs = ofs_areas + i * 240
+          FOR (j = 0; j < 4; ++j) BEGIN // for each map edge
+            READ_LONG (ofs + j * 8 + 0x50) idx_link   // index of first link
+            READ_LONG (ofs + j * 8 + 0x54) num_links  // # links
+            FOR (k = 0; k < num_links; ++k) BEGIN     // for each target map
+              SET ofs_link = ofs_links + (idx_link + k) * 216
+              READ_LONG ofs_link target_link
+              PATCH_IF ($map_links(~%target_link%~)) BEGIN  // should target be patched?
+                WRITE_LONG (ofs_link + 0x24) distance  // updating travel time
+              END
             END
           END
         END
