@@ -57,3 +57,28 @@ COPY_EXISTING ~ar1001.are~ ~override~
     END
   END
 BUT_ONLY
+
+// fixing container items with incorrect number of charges
+ACTION_DEFINE_ASSOCIATIVE_ARRAY charged_container_items BEGIN
+  // ARE resref, container index, item index, charge index => new charge value
+  ~AR0108~, 0, 3, 0 => 0  // RUSTDAG.ITM
+  ~AR0701~, 2, 0, 0 => 1  // SILRING.ITM
+  ~AR0704~, 8, 2, 0 => 0  // STEAKKNF.ITM
+  ~AR1700~, 7, 0, 0 => 1  // COPEAR.ITM
+  ~AR1700~, 8, 0, 0 => 1  // COPEAR.ITM
+END
+
+ACTION_PHP_EACH charged_container_items AS key => value BEGIN
+  OUTER_SPRINT are_resref $key(~0~)
+  COPY_EXISTING ~%are_resref%.ARE~ ~override~
+    READ_LONG 0x70 ofs_containers
+    READ_SHORT 0x74 num_containers
+    READ_LONG 0x78 ofs_items
+    SET container_offset = ofs_containers + $key(~1~) * 192   // container offset
+    READ_LONG (container_offset + 0x40) idx_items
+    READ_LONG (container_offset + 0x44) num_items
+    SET item_offset = ofs_items + (idx_items + $key(~2~)) * 20  // container item offset
+    SET charge_offset = item_offset + 0x0a + $key(~3~) * 2  // absolute offset of item charge
+    WRITE_SHORT charge_offset value   // updating item charge value
+  BUT_ONLY IF_EXISTS
+END
