@@ -8,7 +8,7 @@ COPY_EXISTING ~d4doorg.bcs~  ~override~ // generic doors that opened if alarm so
               ~d4doort.bcs~  ~override~ // as d4doorg, but would also sound alarm if opened/unlocked
               ~d4geldor.bcs~ ~override~ // as d4doorg, but would also sound alarm if opened/unlocked without tricking geelo
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~!Global("D4\(DOOR[GT]\|GELDOR\)_inactive","LOCALS",1)[ %TAB%%LNL%%MNL%%WNL]+\(!Global("YUANTI_INFERNO","GLOBAL",0)\)~ ~False() \2~ // disable opendoor blocks
+    REPLACE_TEXTUALLY ~!Global("D4\(DOOR[GT]\|GELDOR\)_inactive","LOCALS",1)[ %TAB%%LNL%%MNL%%WNL%]+\(!Global("YUANTI_INFERNO","GLOBAL",0)\)~ ~False() \2~ // disable opendoor blocks
     REPLACE_TEXTUALLY ~!Global("D4\(DOOR[GT]\|GELDOR\)_inactive","LOCALS",1)~ ~Global("YUANTI_INFERNO","GLOBAL",0)~ // change alarmed doors to sould alarm only if alarm not yet sounded
   END
   BUT_ONLY
