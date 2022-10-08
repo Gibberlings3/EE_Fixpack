@@ -590,6 +590,15 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 // make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
 COMPILE ~eefixpack/files/baf/gretek.baf~
 
+// tbd, cam
+// region/container scripts can't use LOCALS-scoped variables
+// https://www.gibberlings3.net/forums/topic/35914-scripting-using-locals-in-non-sprite-triggers/
+COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop once rilsa is buried
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!Global("TALK","LOCALS",1)~ ~GlobalLT("BURY_RILSA","GLOBAL",2)~
+  END
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
@@ -600,6 +609,11 @@ COPY_EXISTING ~ar0132.are~ ~override~
   READ_LONG 0xbc song_off
   WRITE_LONG song_off 11
   BUT_ONLY
+  
+// tbd, cam
+// greater ghoul spawns on impassable terrain
+COPY_EXISTING ~ar0500.are~ ~override~
+  LPF ALTER_AREA_ACTOR INT_VAR x_coord = 1880 y_coord = 1222 dest_x = 1880 dest_y = 1222 STR_VAR actor_name = "Greater Ghoul" END
   
 // tbd, cam (from k4thos/eet)
 //junk in BG1801.ARE Rest Spawn entries (harmless but annoying during save update)
@@ -1811,6 +1825,12 @@ END
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
+  
+// tbd, cam
+// myconid cloud looks terrible w/o blending: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/7/#comment-314026
+COPY_EXISTING ~bdstink.pro~ ~override~
+  WRITE_LONG 0x240 (THIS BOR BIT13) // add blend flag
+  IF_EXISTS // sod asset
 
 // luke
 // Ice Storm should last 4 rounds (not 3)

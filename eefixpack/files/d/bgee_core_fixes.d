@@ -61,3 +61,8 @@ ALTER_TRANS gretek BEGIN 1 2 END BEGIN 0 END BEGIN ACTION ~SetGlobal("DMWWGretek
 // make cydermac and friends go hostile more reliably (see also banditcy.baf)
 ALTER_TRANS cyderm BEGIN 1 2 END BEGIN 0 END BEGIN ACTION ~SetGlobal("DMWWCyd","Global",1) Enemy()~ END
 ALTER_TRANS cyderm BEGIN 5 END BEGIN 2 END BEGIN ACTION ~SetGlobal("DMWWCyd","Global",1) Enemy()~ END
+
+// tbd, cam
+// disable silke's chap-7-specific dialogue that implies she's at the coronation, when she's still in beregost
+ADD_TRANS_TRIGGER silke 12 ~False()~ DO 0 // leads to silke dialogue about a 'wondrous party'
+ADD_TRANS_TRIGGER silke 17 ~False()~ DO 2 // reply mentions you're there to save the dukes

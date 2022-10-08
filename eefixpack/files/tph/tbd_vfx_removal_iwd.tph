@@ -70,11 +70,8 @@ COPY_EXISTING ~ghast1.itm~ ~override~
 
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
 COPY ~override/ghast1.spl~ ~override/ghast1n.spl~ // nausea subspell
-COPY_EXISTING ~ghast1p.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = 0 END
 MOVE ~override/ghast2.spl~ ~override/ghast1p.spl~ // paralyze subspell
-//COPY_EXISTING ~ghast1p.spl~ ~override~
-//  LPF CLONE_EFFECT INT_VAR match_opcode = 109 opcode = 324 parameter1 = hold_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 
 // luke's seven eyes already split this, but it needs a unique resref
 COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect

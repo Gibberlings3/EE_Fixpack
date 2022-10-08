@@ -41,6 +41,14 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 COMPILE ~eefixpack/files/baf/pst~
 
 INCLUDE ~eefixpack/files/tph/pst_script_fixes.tph~
+  
+// tbd, cam  
+// remove LOCALS set as it doesn't actually do anything in region script
+COPY_EXISTING ~1204trig.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~SetGlobal("DebugOutput","LOCALS",1)~ ~~
+  END
+  BUT_ONLY  
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\

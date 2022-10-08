@@ -141,6 +141,8 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 /////                                                  \\\\\
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/tbd_iwd_locals_scripts.tph~ // tbd, cam - region/container scripts can't use LOCALS-scoped variables
   
 // tbd, cam
 // player ai checks if magical weapon present before casting shillelagh, but checks old resources
@@ -154,8 +156,6 @@ COPY ~scripts/cleric1.bs~ ~scripts/cleric1.bs~
   END
   BUT_ONLY
   
-  
-  
 // tbd, cam
 // checking for ambients which don't exist
 COPY_EXISTING ~eepoqct1.bcs~ ~override~
@@ -164,8 +164,6 @@ COPY_EXISTING ~eepoqct1.bcs~ ~override~
   END
   BUT_ONLY
   
-  
-  
 // ie-6015, cam
 // Jorn should heal all fellow barbarians (allies are BARBARIAN_1 to 8, script checks 0-7)
 COPY_EXISTING ~iljorn.bcs~ ~override~
@@ -173,8 +171,6 @@ COPY_EXISTING ~iljorn.bcs~ ~override~
     REPLACE_TEXTUALLY ~BARBARIAN_0~ ~BARBARIAN_8~ 
   END
   BUT_ONLY
-  
-  
   
 // ie-6014, cam
 // Loot should have charges: items from random treasure table with differing charges need to be re-added with charges
@@ -189,8 +185,6 @@ ACTION_PHP_EACH cd_rndtres_charges AS params => area BEGIN
   EXTEND_BOTTOM ~%area%.bcs~ ~eefixpack/files/baf/rndtres_charges.baf~ EVALUATE_BUFFER
 END
   
-  
-  
 // ie-6006, cam
 // Talonite Priests don't heal one another
 COPY_EXISTING ~d2talon3.bcs~ ~override~
@@ -200,6 +194,17 @@ COPY_EXISTING ~d2talon3.bcs~ ~override~
     REPLACE_TEXTUALLY ~TalonitePriestess[23]~ ~Talonite~
   END
   BUT_ONLY 
+  
+// tbd, cam
+// potential softlock if party is split when yxunomei closes door as part of her ambush
+COPY_EXISTING ~d5yxudor.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"LOCALS"~ ~"ar4005"~ // need area variable, not locals
+    REPLACE_TEXTUALLY ~!Global("SPRITE_IS_DEADYXUNOMEI","GLOBAL",0)~ ~CombatCounter(0) OpenState(Myself,FALSE) OR(2) !Global("SPRITE_IS_DEADYXUNOMEI","GLOBAL",0) GlobalTimerExpired("CDYxunDoor","ar4005")~
+    REPLACE_TEXTUALLY ~!Global("YXUN_ATTACK","MYAREA",0)~ ~!Global("YXUN_ATTACK","MYAREA",0) OpenState(Myself,TRUE)~
+    REPLACE_TEXTUALLY ~[ %TAB%]Lock(Myself)~ ~Lock(Myself) SetGlobalTimer("CDYxunDoor","ar4005",60)~
+  END
+  BUT_ONLY  
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
