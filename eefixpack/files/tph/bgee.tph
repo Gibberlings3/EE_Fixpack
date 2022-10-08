@@ -590,6 +590,15 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 // make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
 COMPILE ~eefixpack/files/baf/gretek.baf~
 
+// tbd, cam
+// region/container scripts can't use LOCALS-scoped variables
+// https://www.gibberlings3.net/forums/topic/35914-scripting-using-locals-in-non-sprite-triggers/
+COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop once rilsa is buried
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!Global("TALK","LOCALS",1)~ ~GlobalLT("BURY_RILSA","GLOBAL",2)~
+  END
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\

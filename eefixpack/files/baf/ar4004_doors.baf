@@ -1,0 +1,20 @@
+IF
+	!Global("YUANTI_INFERNO","GLOBAL",0)
+	Global("CDOpenDoorsOnce","MYAREA",0)
+THEN
+	RESPONSE #100 // any door not labeled uses d4doorg
+		OpenDoor("AR4004Door1") // d4doort
+		OpenDoor("AR4004Door2")
+		OpenDoor("AR4004Door3")
+		OpenDoor("AR4004Door4")
+		OpenDoor("AR4004Door5") // d4doort
+		OpenDoor("AR4004Door6")
+		OpenDoor("AR4004Door7")
+		OpenDoor("AR4004Door8") // d4geldor
+		OpenDoor("AR4004Door9")
+		OpenDoor("AR4004Door10")
+		OpenDoor("AR4004Door12") // d4doort
+		OpenDoor("AR4004Door14")
+		OpenDoor("AR4004Door15")
+	  SetGlobal("CDOpenDoorsOnce","MYAREA",1)
+END

@@ -1,0 +1,21 @@
+IF
+	!Global("YXUN_ATTACK","MYAREA",0)
+	Global("CDOpenDoorsOnce","MYAREA",0)
+THEN
+	RESPONSE #100 
+		OpenDoor("AR4005Door1")
+		OpenDoor("AR4005Door2")
+		OpenDoor("AR4005Door3")
+		OpenDoor("AR4005Door4")
+		OpenDoor("AR4005Door5")
+		OpenDoor("AR4005Door6")
+		OpenDoor("AR4005Door8") // 7 is a covering, not a conventional door
+		OpenDoor("AR4005Door9")
+		OpenDoor("AR4005Door10")
+		OpenDoor("AR4005Door11")
+		OpenDoor("AR4005Door13") // 12 is yxunomei door, controlled by d5yxudor
+		OpenDoor("AR4005Door14")
+		OpenDoor("AR4005Door15")
+		OpenDoor("AR4005Door16")
+	  SetGlobal("CDOpenDoorsOnce","MYAREA",1)
+END

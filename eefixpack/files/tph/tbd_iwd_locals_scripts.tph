@@ -1,0 +1,35 @@
+// tbd, cam
+// region/container scripts can't use LOCALS-scoped variables
+// https://www.gibberlings3.net/forums/topic/35914-scripting-using-locals-in-non-sprite-triggers/
+
+// doors in eldathyn lair in dragon's eye are all scripted to open once the eldathyn are revealed; however, the doors would always immediately re-open if closed
+EXTEND_BOTTOM ~ar4004.bcs~ ~eefixpack/files/baf/ar4004_doors.baf~ // open all doors *once* in area script if alarm sounded
+COPY_EXISTING ~d4doorg.bcs~  ~override~ // generic doors that opened if alarm sounded
+              ~d4doort.bcs~  ~override~ // as d4doorg, but would also sound alarm if opened/unlocked
+              ~d4geldor.bcs~ ~override~ // as d4doorg, but would also sound alarm if opened/unlocked without tricking geelo
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!Global("D4\(DOOR[GT]\|GELDOR\)_inactive","LOCALS",1)[ %TAB%%LNL%%MNL%%WNL]+\(!Global("YUANTI_INFERNO","GLOBAL",0)\)~ ~False() \2~ // disable opendoor blocks
+    REPLACE_TEXTUALLY ~!Global("D4\(DOOR[GT]\|GELDOR\)_inactive","LOCALS",1)~ ~Global("YUANTI_INFERNO","GLOBAL",0)~ // change alarmed doors to sould alarm only if alarm not yet sounded
+  END
+  BUT_ONLY
+
+// doors in yxunomei lair in dragon's eye are all scripted to open once yxun attacks, but will re-open if closed once she attacks
+EXTEND_BOTTOM ~ar4005.bcs~ ~eefixpack/files/baf/ar4005_doors.baf~ // open all doors *once* in area script if alarm sounded
+COPY_EXISTING ~d5door.bcs~ ~override~ // d5yxudor.bcs fixed elsewhere
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!Global("D5DOOR_inactive","LOCALS",1)~ ~False() !Global("D5DOOR_inactive","LOCALS",1)~ // false ALL the things
+  END
+  BUT_ONLY
+
+// generic swaps of LOCALS for area-scoped variables
+COPY_EXISTING ~5104d3.bcs~   ~override~ // should open after 5-second timer, not instantly
+              ~eetpldor.bcs~ ~override~ // would infinitely loop (harmless)
+              ~ldbdgopn.bcs~ ~override~ // would infinitely loop (harmless)
+              ~ldeyetp1.bcs~ ~override~ // malavon petrification trap that should only fire once, but would repeat
+              ~ldeyetp2.bcs~ ~override~ // malavon petrification trap that should only fire once, but would repeat
+              ~udtrap1.bcs~  ~override~ // would infinitely loop (harmless)
+              ~wtbridge.bcs~ ~override~ // is only supposed to mentioned broken bridge once per visit (resets on reload/revisit)
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"\([^"]+\)","LOCALS"~ ~"\1_%SOURCE_RES%","MYAREA"~
+  END
+  BUT_ONLY
