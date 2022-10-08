@@ -197,6 +197,7 @@ COPY_EXISTING ~d2talon3.bcs~ ~override~
 // potential softlock if party is split when yxunomei closes door as part of her ambush
 COPY_EXISTING ~d5yxudor.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"LOCALS"~ ~"ar4005"~ // need area variable, not locals
     REPLACE_TEXTUALLY ~!Global("SPRITE_IS_DEADYXUNOMEI","GLOBAL",0)~ ~CombatCounter(0) OpenState(Myself,FALSE) OR(2) !Global("SPRITE_IS_DEADYXUNOMEI","GLOBAL",0) GlobalTimerExpired("CDYxunDoor","ar4005")~
     REPLACE_TEXTUALLY ~!Global("YXUN_ATTACK","MYAREA",0)~ ~!Global("YXUN_ATTACK","MYAREA",0) OpenState(Myself,TRUE)~
     REPLACE_TEXTUALLY ~[ %TAB%]Lock(Myself)~ ~Lock(Myself) SetGlobalTimer("CDYxunDoor","ar4005",60)~

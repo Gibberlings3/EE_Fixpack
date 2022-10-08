@@ -184,6 +184,15 @@ COPY_EXISTING ~jaheira.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("JaheiraBanditPlot","GLOBAL",1)\)~ ~\1 OR(2) Global("JaheiraRomanceActive","GLOBAL",1) Global("JaheiraRomanceActive","GLOBAL",2)~
   END
+  BUT_ONLY   
+  
+// tbd, cam  
+// container script doesn't work since it uses LOCALS; in this case the block should be disabled (reward given via dialogue, item given here is placeholder)
+COPY_EXISTING ~ohbpot.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Global("ohb_makesoup","LOCALS"~ ~Global("ohb_makesoup","MYAREA"~ // fix scope...
+    REPLACE_TEXTUALLY ~\(Global("OHB_COOK_MUSHROOM","GLOBAL",3)\)~ ~False() \1~         // and then disable
+  END
   BUT_ONLY  
   
 // tbd, cam (from k4thos/eet)
