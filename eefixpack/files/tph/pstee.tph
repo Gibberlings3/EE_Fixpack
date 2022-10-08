@@ -119,6 +119,11 @@ DISABLE_FROM_KEY ~.bcs~
 
 INCLUDE ~eefixpack/files/tph/pst_bam_fixes.tph~ // BAM-specific fixes
 
+// tbd, cam
+// fix broken spawn coordinates
+COPY_EXISTING ~ar1600.ini~ ~override~
+  REPLACE_TEXTUALLY ~^\([ %TAB%]*spawn_point[ %TAB%]*=[ %TAB%]*\[[ %TAB%]*[0-9]+\)[ %TAB%]*,[ %TAB%]*\([0-9]+[ %TAB%]*:[ %TAB%]*[0-9]+[ %TAB%]*\]\)~ ~\1.\2~
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
