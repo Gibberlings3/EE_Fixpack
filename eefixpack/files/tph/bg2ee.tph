@@ -68,6 +68,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
      ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
+     ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
