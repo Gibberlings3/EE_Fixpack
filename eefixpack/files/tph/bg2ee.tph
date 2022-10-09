@@ -67,6 +67,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
+     ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -261,6 +262,12 @@ COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
       WRITE_SHORT offsety 558
     END
   END // Multiple actors with same name, long version needed
+  BUT_ONLY
+     
+// tbd, cam
+// make tear door transparent so #3 eye graphic can be seen
+COPY_EXISTING ~ar2900.are~ ~override~
+  LPF ALTER_AREA_DOOR INT_VAR flag_no_look = 1 STR_VAR door_name = door01 END
   BUT_ONLY
 
 /////                                                  \\\\\

@@ -124,3 +124,17 @@ END
 
 BEGIN "Temporary test space" DESIGNATED 1000
 
+COPY 
+     ~eefixpack/files/vvc/spnpoisi.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
+     
+COPY_EXISTING ~ar2900.are~ ~override~
+  LPF ALTER_AREA_DOOR INT_VAR flag_no_look = 1 STR_VAR door_name = door01 END
+/*
+COPY_EXISTING ~teardoor.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_EVALUATE ~\(CreateVisualEffect("spnpoisi",\[[0-9]+\.\)\([0-9]+\)\(\])\)~ BEGIN // 2015.182])
+      SET MATCH2 += 35
+    END ~%MATCH1%%MATCH2%%MATCH3%~
+  END
+  BUT_ONLY  
+*/
