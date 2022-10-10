@@ -609,12 +609,13 @@ COPY_EXISTING ~ar0132.are~ ~override~
   READ_LONG 0xbc song_off
   WRITE_LONG song_off 11
   BUT_ONLY
-  
+
 // tbd, cam
-// greater ghoul spawns on impassable terrain
-COPY_EXISTING ~ar0500.are~ ~override~
-  LPF ALTER_AREA_ACTOR INT_VAR x_coord = 1880 y_coord = 1222 dest_x = 1880 dest_y = 1222 STR_VAR actor_name = "Greater Ghoul" END
-  
+// actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
+LAF cd_move_actor INT_VAR old_x = 2028 old_y = 1213 new_x = 1880 new_y = 1222 STR_VAR area = ar0500 END // Greater ghoul (actor #15) at position [2028.1213] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x = 1843 old_y =  188 new_x = 1400 new_y =  188 STR_VAR area = bd0020 END // Noblewoman (actor #122) at position [1843.188] is placed outside of map range
+LAF cd_move_actor INT_VAR old_x = 3953 old_y = 2018 new_x = 3967 new_y = 1992 STR_VAR area = bd5000 END // Ogre (actor #7) at position [3953.2018] is on impassable terrain 
+   
 // tbd, cam (from k4thos/eet)
 //junk in BG1801.ARE Rest Spawn entries (harmless but annoying during save update)
 COPY_EXISTING ~ar1801.are~ ~override~

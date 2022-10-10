@@ -243,6 +243,16 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
+LAF cd_move_actor INT_VAR old_x =  398 old_y =  527 new_x =  448 new_y =  537 STR_VAR area = ar0305 END // Shadow Thief (actor #4) at position [398.527] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x = 1060 old_y = 3033 new_x = 1060 new_y = 3052 STR_VAR area = ar2000 END // Kveroslava (actor #88) at position [1060.3033] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x =  878 old_y =  882 new_x =  916 new_y =  920 STR_VAR area = ar5202 END // Skeleton Cleric (actor #1) at position [878.882] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x =  983 old_y =  523 new_x =  988 new_y =  561 STR_VAR area = ar6005 END // Frost Salamander (actor #4) at position [983.523] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x = 1021 old_y = 2607 new_x =  996 new_y = 2636 STR_VAR area = oh5500 END // Crusader (actor #6) at position [1021.2607] is on impassable terrain
+LAF cd_move_actor INT_VAR old_x = 2552 old_y = 2880 new_x = 2586 new_y = 2916 STR_VAR area = oh5500 END // Celestial Hound (actor #21) at position [2552.2880] is on impassable terrain
+// LAF cd_move_actor INT_VAR old_x = 1412 old_y =  888 new_x = 1412 new_y =  888 STR_VAR area = oh7100 END // Yi Niu (actor #21) at position [1412.888] is on impassable terrain (disabled, never activated?)
+
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar1000.are)
 COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
