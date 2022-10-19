@@ -58,6 +58,10 @@ INCLUDE ~eefixpack/files/tph/pst_are_fixes.tph~ // ARE-specific fixes
 INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
 INCLUDE ~eefixpack/files/tph/pst_wmp_fixes.tph~ // WMP-specific fixes
 
+// tbd, cam
+// actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
+LAF cd_move_actor INT_VAR old_x =  802 old_y =  218 new_x =  738 new_y =  262 STR_VAR area = ar0902 END // Anarchist (actor #5) at position [802.218] is on impassable terrain
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
@@ -118,6 +122,11 @@ BUT_ONLY
 DISABLE_FROM_KEY ~.bcs~
 
 INCLUDE ~eefixpack/files/tph/pst_bam_fixes.tph~ // BAM-specific fixes
+
+// tbd, cam
+// fix broken spawn coordinates
+COPY_EXISTING ~ar1600.ini~ ~override~
+  REPLACE_TEXTUALLY ~^\([ %TAB%]*spawn_point[ %TAB%]*=[ %TAB%]*\[[ %TAB%]*[0-9]+\)[ %TAB%]*,[ %TAB%]*\([0-9]+[ %TAB%]*:[ %TAB%]*[0-9]+[ %TAB%]*\]\)~ ~\1.\2~
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
