@@ -290,6 +290,15 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 
+// tbd, cam
+// pocket plane challenge creatures shouldn't drop stuff
+COPY_EXISTING ~chevil01.cre~ ~override~
+              ~chevil03.cre~ ~override~ 
+              ~chgood04.cre~ ~override~ 
+              ~chgood05.cre~ ~override~ 
+  LPF ALTER_CREATURE_ITEM INT_VAR flag_unstealable = 1 flag_undroppable = 1 STR_VAR match_item = all END
+  BUT_ONLY
+
 // ie-3658, cam
 // Jassar (and others) shouldn't drop identified magic armor
 COPY_EXISTING ~ohbgit01.cre~ ~override~
