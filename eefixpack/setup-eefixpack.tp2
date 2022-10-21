@@ -158,3 +158,10 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN "Temporary test space" DESIGNATED 1000
+
+// luke
+// **Cause Wounds**
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/cause_wounds.tph"
+  LAUNCH_ACTION_FUNCTION ~CAUSE_WOUNDS~ END
+END

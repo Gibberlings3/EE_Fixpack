@@ -7,8 +7,7 @@
 
 ACTION_PHP_EACH cd_bulk_changes_itm AS params => file BEGIN
 
-  //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable => file // notes
-  //file, timing, magical, power, speed, weight, thac0, lore, type, enchantment, dispellable => file // notes
+  //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable, range => file // notes
   COPY_EXISTING ~%file%.itm~ ~override~
     PATCH_IF (IS_AN_INT params_1) BEGIN // has equipped effects with bad timing
       LPF ALTER_EFFECT INT_VAR silent = 1 check_headers = 0 timing = 2 duration = 0 END // instant/while equipped for all global effects
@@ -39,6 +38,9 @@ ACTION_PHP_EACH cd_bulk_changes_itm AS params => file BEGIN
     PATCH_IF (IS_AN_INT params_11) BEGIN // has equipped effects which should bypass MR
       LPF ALTER_EFFECT INT_VAR silent = 1 check_headers = 0 match_resist_dispel = 1 resist_dispel = 2 END
       LPF ALTER_EFFECT INT_VAR silent = 1 check_headers = 0 match_resist_dispel = 3 resist_dispel = 2 END
+    END 
+    PATCH_IF (IS_AN_INT params_12) BEGIN // wrong range
+      LPF ALTER_HEADER INT_VAR silent = 1 match_location = 1 range = params_12 END 
     END 
     BUT_ONLY IF_EXISTS
 

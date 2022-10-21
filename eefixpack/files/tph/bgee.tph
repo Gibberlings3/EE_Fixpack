@@ -842,15 +842,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// **Longtooth: The Grave Binder**
-// - Unusually large dagger, depicted as a Short Sword => make sure `range=1`
-WITH_SCOPE BEGIN
-  COPY_EXISTING "dagg04.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_ITEM_HEADER~ INT_VAR ~range~ = 1 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // **Paralytic Bolt +1**
 // - `Save vs. Paralysis` negates (was `Save vs. Spell`)
 // - `Weight` should be `0` (was `1`)

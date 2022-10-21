@@ -1,12 +1,42 @@
 // generated from docs/eefixpack_arrays.ods > [game] item tab
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
 
-  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes
-  ~%WIZARD_CHILL_TOUCH%a~, 0, null, null, null, null, null, null, null, null, null, null => %WIZARD_CHILL_TOUCH%a // luke: Chill Touch – should not interact with spell protections
-  ~%WIZARD_WRAITH_FORM%~, null, 3, null, null, null, null, null, null, null, null, null => %WIZARD_WRAITH_FORM% // luke: Wraithform – make sure all limited effects are dispellable
-  ~%WIZARD_IMPROVED_HASTE%~, null, 3, null, null, null, null, null, null, null, null, null => %WIZARD_IMPROVED_HASTE% // luke: Improved Haste 1) make sure all effects bypass Magic Resistance
-  ~%WIZARD_STONE_TO_FLESH%~, null, 2, null, null, null, null, null, null, null, null, null => %WIZARD_STONE_TO_FLESH% // luke: Stone to Flesh – make sure all effects bypass Magic Resistance
-  ~%WIZARD_SPHERE_OF_CHAOS%~, null, 1, null, null, null, null, null, null, null, null, null => %WIZARD_SPHERE_OF_CHAOS% // luke: Sphere of Chaos – make sure all effects are subjected to Magic Resistance
+  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes  ~%CLERIC_CURE_CRITICAL_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_CRITICAL_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_CURE_LIGHT_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_LIGHT_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_CURE_MEDIUM_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_MEDIUM_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_CURE_SERIOUS_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_SERIOUS_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_HEAL%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_HEAL%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_LESSER_RESTORATION%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_LESSER_RESTORATION%~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~%CLERIC_MASS_CURE%~, null, 2, null, null, null, null, null, null, null, null, null => ~%CLERIC_MASS_CURE%~ // luke: healing spells should not be dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%CLERIC_RESTORATION%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_RESTORATION%~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~%ENEMY_CLERIC_HARM%~, null, null, null, null, null, null, 0, null, null, null, null => ~%ENEMY_CLERIC_HARM%~ // luke: cause wounds spells should be 0 range, not dispellable (from files/tph/luke/cause_wounds.tph)
+  ~%ENEMY_CLERIC_SLAY_LIVING%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%ENEMY_CLERIC_SLAY_LIVING%~ // luke: cause wounds spells should be 0 range, not dispellable (from files/tph/luke/cause_wounds.tph)
+  ~%EVIL_LAYONHANDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%EVIL_LAYONHANDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%FINAL_HEAL%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%FINAL_HEAL%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%HEAL_NO_VISUAL%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%HEAL_NO_VISUAL%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%INNATE_CURE_LIGHT_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%INNATE_CURE_LIGHT_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%MAZZY_LAY%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%MAZZY_LAY%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%MONK_LAY_ON_HANDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%MONK_LAY_ON_HANDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%PALADIN_LAY_ON_HANDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%PALADIN_LAY_ON_HANDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%ULITHARID_CURE_SERIOUS_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%ULITHARID_CURE_SERIOUS_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~%WIZARD_CHILL_TOUCH%a~, 0, null, null, null, null, null, null, null, null, null, null => ~%WIZARD_CHILL_TOUCH%a~ // luke: Chill Touch – should not interact with spell protections
+  ~%WIZARD_IMPROVED_HASTE%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_IMPROVED_HASTE%~ // luke: Improved Haste 1) make sure all effects bypass Magic Resistance
+  ~%WIZARD_SPHERE_OF_CHAOS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_SPHERE_OF_CHAOS%~ // luke: Sphere of Chaos – make sure all effects are subjected to Magic Resistance
+  ~%WIZARD_STONE_TO_FLESH%~, null, 2, null, null, null, null, null, null, null, null, null => ~%WIZARD_STONE_TO_FLESH%~ // luke: Stone to Flesh – make sure all effects bypass Magic Resistance
+  ~%WIZARD_WRAITH_FORM%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_WRAITH_FORM%~ // luke: Wraithform – make sure all limited effects are dispellable
+  ~bdcaela3~, null, 2, null, null, null, null, 0, null, null, null, null => ~bdcaela3~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~cdpr417~, null, 2, null, null, null, null, 0, null, null, null, null => ~cdpr417~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~devaheal~, null, 2, null, null, null, null, 0, null, null, null, null => ~devaheal~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~dw#fpplo~, null, 2, null, null, null, null, 0, null, null, null, null => ~dw#fpplo~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~ohbresto~, null, 2, null, null, null, null, 0, null, null, null, null => ~ohbresto~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~senspihe~, null, 2, null, null, null, null, 0, null, null, null, null => ~senspihe~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spin109~, null, 2, null, null, null, null, 0, null, null, null, null => ~spin109~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spin200~, null, 2, null, null, null, null, 0, null, null, null, null => ~spin200~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spwish07~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish07~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~spwish28~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish28~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spwish39~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish39~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spwish46~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish46~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
+  ~spwm168~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwm168~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
 
 END
 
