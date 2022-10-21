@@ -5,31 +5,37 @@ MODDER fun_args fail missing_eval none setup_tra none
 
 ALWAYS
 
-  ACTION_FOR_EACH var IN game_includes_sod game_is_bgee game_is_bg2ee game_is_iwdee game_is_pstee BEGIN
-    OUTER_SET ~%var%~ = 0
-  END  
+  ACTION_IF NOT VARIABLE_IS_SET cd_always_eefixpack THEN BEGIN // just do this once per install
   
-  ACTION_IF GAME_IS bgee BEGIN 
-    ACTION_IF GAME_INCLUDES sod BEGIN 
-      ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @3 END // DLC Merger check
-      OUTER_SET game_includes_sod = 1  
-      PRINT @7      
-    END ELSE BEGIN
-      PRINT @6
-    END
-    OUTER_SPRINT game ~bgee~
-  END ELSE  
-  ACTION_IF GAME_IS bg2ee BEGIN OUTER_SPRINT game ~bg2ee~ PRINT @8 END ELSE
-  ACTION_IF GAME_IS iwdee BEGIN OUTER_SPRINT game ~iwdee~ PRINT @9 END ELSE
-  ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END
-  
-  OUTER_SET ~game_is_%game%~ = 1
-  LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
-  INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
-  INCLUDE ~eefixpack/files/lib/gt_race_ids.tph~ // sets variables such as RACE_HUMAN based on race.ids
-  INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
-  INCLUDE ~eefixpack/files/lib/gt_functions.tph~
-  INCLUDE ~eefixpack/files/lib/dw_functions.tph~
+    OUTER_SET cd_always_eefixpack = 1
+
+    ACTION_FOR_EACH var IN game_includes_sod game_is_bgee game_is_bg2ee game_is_iwdee game_is_pstee BEGIN
+      OUTER_SET ~%var%~ = 0
+    END  
+    
+    ACTION_IF GAME_IS bgee BEGIN 
+      ACTION_IF GAME_INCLUDES sod BEGIN 
+        ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @3 END // DLC Merger check
+        OUTER_SET game_includes_sod = 1  
+        PRINT @7      
+      END ELSE BEGIN
+        PRINT @6
+      END
+      OUTER_SPRINT game ~bgee~
+    END ELSE  
+    ACTION_IF GAME_IS bg2ee BEGIN OUTER_SPRINT game ~bg2ee~ PRINT @8 END ELSE
+    ACTION_IF GAME_IS iwdee BEGIN OUTER_SPRINT game ~iwdee~ PRINT @9 END ELSE
+    ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END
+    
+    OUTER_SET ~game_is_%game%~ = 1
+    LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
+    INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
+    INCLUDE ~eefixpack/files/lib/gt_race_ids.tph~ // sets variables such as RACE_HUMAN based on race.ids
+    INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
+    INCLUDE ~eefixpack/files/lib/gt_functions.tph~
+    INCLUDE ~eefixpack/files/lib/dw_functions.tph~
+
+  END
 
 END
 
@@ -99,16 +105,45 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LA
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tra~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tra~))) @5
 
-LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tra~ // tra file to process
-          output_tph = EVAL ~weidu_external/data/eefixpack/gtu_%game%.tph~ // tph being built; use weidu_external for this
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ BEGIN
+  INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~
 END
 
 ACTION_IF game_includes_sod BEGIN
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ BEGIN
+    INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~
+  END
+END
 
-  LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-    STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tra~ // tra file to process
-            output_tph = EVAL ~weidu_external/data/eefixpack/gtu_%game%_sod.tph~ // tph being built; use weidu_external for this
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// tph-from-tra generation                          \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN ~Automatic TPH generation from tra files~ DESIGNATED 999
+NO_LOG_RECORD
+DEPRECATED ~For internal use only~
+
+// generating the STRING_SET tph from the tra files is neat, but can be a bit slow.
+// run this function to generate these files automatically before shipping.
+
+ACTION_FOR_EACH lang IN cs_cz de_de en_us es_es fr_fr hu_hu it_it ja_jp ko_kr nb_no pl_pl pt_br ru_ru tr_tr uk_ua zh_cn BEGIN
+
+  ACTION_FOR_EACH prefix IN gtu fixes BEGIN
+
+    ACTION_FOR_EACH tra_file IN bgee bgee_sod bg2ee iwdee pstee BEGIN 
+  
+      LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
+        INT_VAR cd_mode = 0 
+        STR_VAR input_tra  = EVAL ~eefixpack/languages/%lang%/%prefix%_%tra_file%.tra~ // function includes file_exists check, so we don't bother with it here
+                output_tph = EVAL ~eefixpack/languages/%lang%/%prefix%_%tra_file%.tph~ // tph being built
+      END
+      
+    END
+  
   END
   
 END
@@ -123,18 +158,3 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN "Temporary test space" DESIGNATED 1000
-
-COPY 
-     ~eefixpack/files/vvc/spnpoisi.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
-     
-COPY_EXISTING ~ar2900.are~ ~override~
-  LPF ALTER_AREA_DOOR INT_VAR flag_no_look = 1 STR_VAR door_name = door01 END
-/*
-COPY_EXISTING ~teardoor.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_EVALUATE ~\(CreateVisualEffect("spnpoisi",\[[0-9]+\.\)\([0-9]+\)\(\])\)~ BEGIN // 2015.182])
-      SET MATCH2 += 35
-    END ~%MATCH1%%MATCH2%%MATCH3%~
-  END
-  BUT_ONLY  
-*/

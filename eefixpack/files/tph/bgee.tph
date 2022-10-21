@@ -2,15 +2,13 @@
 ///// string fixes                                     \\\\\
 /////                                                  \\\\\
 
-// string fixes, processed automatically if tra file exists
-LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
-          output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
+  INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
 END
+
 ACTION_IF game_includes_sod BEGIN
-  LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-    STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tra~ // tra file to process
-            output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%_sod.tph~ // tph being built; use weidu_external for this
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~ BEGIN
+    INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~
   END
 END
 
