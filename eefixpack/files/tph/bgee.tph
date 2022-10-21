@@ -1,3 +1,4 @@
+
 /////                                                  \\\\\
 ///// string fixes                                     \\\\\
 /////                                                  \\\\\
@@ -733,15 +734,6 @@ WITH_SCOPE BEGIN
     // Feature block
     LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 12 "target" = 2 "parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "FIRE") "timing" = 1 "dicenumber" = 1 "dicesize" = 8 END // 1d8 (fire)
   BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Make sure plants are properly flagged as such
-WITH_SCOPE BEGIN
-  COPY_EXISTING "bddyingm.cre" "override" // Dying Myconid
-    WRITE_BYTE 0x271 IDS_OF_SYMBOL ("GENERAL" "PLANT")
-    WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "MYCONID")
-  BUT_ONLY IF_EXISTS // sod
 END
 
 /////                                                  \\\\\
