@@ -10,7 +10,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   melfmet, null, null, 0, null, null, null, null, null, null, null, null => melfmet // luke: Melf's Minute Meteors – should not interact with spell protections
   sw1h18, null, null, null, null, null, null, null, null, null, 0, null => sw1h18 // tbd, cam: sword of balduran should be zero enchantment
   wand02, null, null, 1, null, null, null, null, null, null, null, null => wand02 // tbd, cam (from scs): changing wand powers to better match their effects
-  wand023, null, null, 1, null, null, null, null, null, null, null, null => wand023 // tbd, cam (from scs): changing wand powers to better match their effects
+  wand03, null, null, 1, null, null, null, null, null, null, null, null => wand03 // tbd, cam (from scs): changing wand powers to better match their effects
   wand08, null, null, 1, null, null, null, null, null, null, null, null => wand08 // tbd, cam (from scs): changing wand powers to better match their effects
   wand12, null, null, 1, null, null, null, null, null, null, null, null => wand12 // tbd, cam (from scs): changing wand powers to better match their effects
 
