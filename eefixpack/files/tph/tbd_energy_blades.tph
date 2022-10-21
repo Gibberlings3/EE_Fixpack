@@ -1,6 +1,5 @@
 // tbd, cam
-// summons shouldn't grant XP
-COPY_EXISTING ~elemchan.cre~ ~override~ // chan-chan
-              ~elemsunn.cre~ ~override~ // sunnis-kun
-              ~elemzaam.cre~ ~override~ // ruul zamaan-san
-  WRITE_LONG 0x14 0 // xp value
+// per descript, energy blades should do missile damage, not slashing
+COPY_EXISTING ~eneblade.itm~ ~override~
+  LPF ALTER_HEADER INT_VAR match_damage_type = 3 damage_type = 4 END 
+  BUT_ONLY
