@@ -2,7 +2,7 @@ DEFINE_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE"
 BEGIN
 	// Make a clone of "bddoom.spl" and edit it accordingly
 	WITH_SCOPE BEGIN
-		COPY_EXISTING ~bddoom.spl~ ~override/%CLERIC_SPIRIT_FIRE%a.spl~
+		COPY_EXISTING ~bddoom.spl~ ~override/%CLERIC_SPIRIT_FIRE%a.spl~ // sppr450a
 			// Header
 			WRITE_SHORT 0x1C 2 // Spell type: Priest (same as parent SPL file)
 			WRITE_BYTE 0x25 2 // Primary type: CONJURER (same as parent SPL file)
@@ -22,7 +22,7 @@ BEGIN
 	END
 	// Main SPL
 	WITH_SCOPE BEGIN
-		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%.spl~ ~override~
+		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%.spl~ ~override~ // sppr450
 			// Feature blocks
 			LPF "ALTER_EFFECT"
 			INT_VAR
@@ -38,7 +38,7 @@ BEGIN
 	// Spirits, fey creatures, elementals, and spectral undead take double damage
 	// Make sure it bypasses Mirror Image (since the parent SPL file is an AoE spell)
 	WITH_SCOPE BEGIN
-		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%b.spl~ ~override~
+		COPY_EXISTING ~%CLERIC_SPIRIT_FIRE%b.spl~ ~override~ // sppr450b
 			// Header
 			WRITE_SHORT 0x1C 2 // Spell type: Priest (same as parent SPL file)
 			WRITE_BYTE 0x25 2 // Primary type: CONJURER (same as parent SPL file)

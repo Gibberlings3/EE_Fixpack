@@ -629,21 +629,21 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can cra
 // **Cure Wounds**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/cure_wounds.tph"
-  LAUNCH_ACTION_FUNCTION ~CURE_WOUNDS~ END
+  //LAUNCH_ACTION_FUNCTION ~CURE_WOUNDS~ END
 END
 
 // luke
 // **Cause Wounds**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/cause_wounds.tph"
-  LAUNCH_ACTION_FUNCTION ~CAUSE_WOUNDS~ END
+  //LAUNCH_ACTION_FUNCTION ~CAUSE_WOUNDS~ END
 END
 
 // luke
 // **Lesser / Greater Restoration**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/restoration.tph"
-  LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
+  //LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
 // tbd, cam

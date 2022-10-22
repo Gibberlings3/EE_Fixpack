@@ -1,7 +1,8 @@
 // generated from docs/eefixpack_arrays.ods > [game] item tab
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
 
-  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes  ~%CLERIC_CURE_CRITICAL_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_CRITICAL_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes  
+  ~%CLERIC_CURE_CRITICAL_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_CRITICAL_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%CLERIC_CURE_LIGHT_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_LIGHT_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%CLERIC_CURE_MEDIUM_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_MEDIUM_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%CLERIC_CURE_SERIOUS_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_SERIOUS_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
@@ -20,6 +21,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
   ~%PALADIN_LAY_ON_HANDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%PALADIN_LAY_ON_HANDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%ULITHARID_CURE_SERIOUS_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%ULITHARID_CURE_SERIOUS_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%WIZARD_CHILL_TOUCH%a~, 0, null, null, null, null, null, null, null, null, null, null => ~%WIZARD_CHILL_TOUCH%a~ // luke: Chill Touch – should not interact with spell protections
+  ~%WIZARD_DEAFNESS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_DEAFNESS%~ // luke: Deafness // 1) should not bypass Magic Resistance // 2) should be dispellable
   ~%WIZARD_IMPROVED_HASTE%~, null, 3, null, null, null, null, null, null, null, null, null => ~%WIZARD_IMPROVED_HASTE%~ // luke: Improved Haste 1) make sure all effects bypass Magic Resistance
   ~%WIZARD_SPHERE_OF_CHAOS%~, null, 1, null, null, null, null, null, null, null, null, null => ~%WIZARD_SPHERE_OF_CHAOS%~ // luke: Sphere of Chaos – make sure all effects are subjected to Magic Resistance
   ~%WIZARD_STONE_TO_FLESH%~, null, 2, null, null, null, null, null, null, null, null, null => ~%WIZARD_STONE_TO_FLESH%~ // luke: Stone to Flesh – make sure all effects bypass Magic Resistance

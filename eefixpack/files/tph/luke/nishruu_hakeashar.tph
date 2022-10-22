@@ -27,11 +27,11 @@ BEGIN
 	WITH_SCOPE BEGIN
 		COPY_EXISTING
 			/* files to patch */
-			"%CLERIC_DISPEL_MAGIC%.spl" "override"
-			"%WIZARD_DISPEL_MAGIC%.spl" "override"
-			"%WIZARD_TRUE_DISPEL_MAGIC%.spl" "override"
+			"%CLERIC_DISPEL_MAGIC%.spl" "override" // sppr303
+			"%WIZARD_DISPEL_MAGIC%.spl" "override" // spwi302
+			"%WIZARD_TRUE_DISPEL_MAGIC%.spl" "override" // spwi326
 			"spin112.spl" "override" // Dispel Magic (Yeslick)
-			"%INQUIS_DISPEL_MAGIC%.spl" "override"
+			"%INQUIS_DISPEL_MAGIC%.spl" "override" // spcl231
 			/* actual patch */
 			LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~silent~ = 1 ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 58 ~opcode~ = 177 ~parameter1~ = ~%SPECIFIC_NISHRUU_HAKEASHAR%~ ~parameter2~ = 6 ~special~ = 0 STR_VAR ~resource~ = ~destself~ ~insert~ = ~below~ END // Use EFF file (SPECIFIC.IDS)
 		BUT_ONLY IF_EXISTS
