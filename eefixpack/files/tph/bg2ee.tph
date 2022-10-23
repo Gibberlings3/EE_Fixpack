@@ -339,8 +339,8 @@ INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, e
 
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
-              ~basilg1.itm~ ~override~
-              ~basill1.itm~ ~override~
+              ~basilg1.itm~  ~override~
+              ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
   
 // tbd, cam
@@ -730,7 +730,7 @@ END
 // luke
 // Mimic Glue should not set the GREASE stat
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue spin914
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -748,7 +748,7 @@ END
 // luke
 // Grease – Remove duplicate op321 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease
+  COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
@@ -762,10 +762,10 @@ END
 // luke
 // Magic Missile – better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~ ~override~
-                ~%TRAP_MAGIC_MISSILE%.spl~ ~override~
-                ~%MAGIC_MISSILE_SURE_HIT%.spl~ ~override~
-                ~%BEHOLDER_MAGIC_MISSILE%.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~ ~override~ // spwi112
+                ~%TRAP_MAGIC_MISSILE%.spl~ ~override~ // spwi003
+                ~%MAGIC_MISSILE_SURE_HIT%.spl~ ~override~ // spin685
+                ~%BEHOLDER_MAGIC_MISSILE%.spl~ ~override~ // spin962
                 ~balth06.spl~ ~override~
     LAUNCH_PATCH_FUNCTION ~ADD_SPELL_EFFECT~ INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "WIZARD_SHIELD") "parameter2" = 110 "resist_dispel" = 2 "power" = 1 STR_VAR "resource" = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
@@ -777,8 +777,8 @@ END
 // 2) subspell should not play `casting graphics` and `casting sound`
 // 3) subspell should not use the `exclusion flags` field
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_LARLOCH_MINOR_DRAIN%a.spl~ ~override~
-                ~%INNATE_LARLOCHS_MINOR_DRAIN%a.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_LARLOCH_MINOR_DRAIN%a.spl~ ~override~ // spwi119a
+                ~%INNATE_LARLOCHS_MINOR_DRAIN%a.spl~ ~override~ // spin104a
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_LONG 0x1E 0
@@ -796,10 +796,10 @@ END
 // 2) creatures flagged as STATE_NONDETECTION (see f.i. "Cloak of Non-Detection: Whispers of Silence") should not be immune to it
 //// I mean, STATE_NONDETECTION protects against op47 and op116; this spell uses op115, so... Am I missing something?
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_DETECT_EVIL%.spl" "override"
-                "%CLERIC_DETECT_EVIL%.spl" "override"
-                "%PALADIN_DETECT_EVIL%.spl" "override"
-                "spin120.spl" "override"
+  COPY_EXISTING "%WIZARD_DETECT_EVIL%.spl" "override" // spwi202
+                "%CLERIC_DETECT_EVIL%.spl" "override" // sppr104
+                "%PALADIN_DETECT_EVIL%.spl" "override" // spcl212
+                "spin120.spl" "override" // old ajantis detect evil
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 146 ~opcode~ = 115 ~parameter1~ = 0 ~parameter2~ = 0 ~timing~ = 1 ~duration~ = 0 STR_VAR ~resource~ = ~~ END // Cast spell => Detect alignment
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 318 END
   BUT_ONLY_IF_IT_CHANGES
@@ -811,7 +811,7 @@ END
 // 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
 // 3) provide better feedback for the player when attacking Golems or Undead
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override"
+  COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override" // spwi213
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN
@@ -833,8 +833,8 @@ END
 // 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
 // 3) provide better feedback for the player when attacking Golems or Undead
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%TRAP_STINKING_CLOUD%.spl" "override"
-                "%MEPHIT_STINKING_CLOUD%.spl" "override"
+  COPY_EXISTING "%TRAP_STINKING_CLOUD%.spl" "override" // spwi004
+                "%MEPHIT_STINKING_CLOUD%.spl" "override" // spin940
                 "spwm187.spl" "override" // Wild surge
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -854,12 +854,12 @@ END
 // luke
 // Lightning Bolt – remove duplicate op318 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override"
-                "%TALOS_LIGHTNING_BOLT%.spl" "override"
-                "%TRAP_LIGHTNING_BOLT%.spl" "override"
+  COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override" // spwi308
+                "%TALOS_LIGHTNING_BOLT%.spl" "override" // spcl722
+                "%TRAP_LIGHTNING_BOLT%.spl" "override" // spwi002
                 "spdr301.spl" "override" // Avenger
-                "%CELESTIAL_BOLT%.spl" "override"
-                "%GORION_LIGHTNING%.spl" "override"
+                "%CELESTIAL_BOLT%.spl" "override" // spin714
+                "%GORION_LIGHTNING%.spl" "override" // spwi997
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
@@ -873,7 +873,7 @@ END
 // luke
 // Protection From Normal Missiles – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override"
+  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override" // spwi311
                 "spra303.spl" "override" // Stalker
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "PROTECTION_FROM_NORMAL_MISSILES")
@@ -892,7 +892,7 @@ END
 // 2) subspell should not play `casting graphics` and `casting sound`
 // 3) subspell's type should match its parent (to maintain casting level!)
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_VAMPIRIC_TOUCH%a.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_VAMPIRIC_TOUCH%a.spl~ ~override~ // spwi314a
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_SHORT 0x1C 1 // wizard
@@ -907,8 +907,8 @@ END
 // 1) subspell's effects should have `power=0`
 // 2) subspell should not play `casting graphics` and `casting sound`
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%INNATE_VAMPIRIC_TOUCH%a.spl~ ~override~
-                ~%TANARI_VAMPIRIC_TOUCH%a.spl~ ~override~
+  COPY_EXISTING ~%INNATE_VAMPIRIC_TOUCH%a.spl~ ~override~ // spin106a
+                ~%TANARI_VAMPIRIC_TOUCH%a.spl~ ~override~ // spin997a
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_SHORT 0x22 0
@@ -920,7 +920,7 @@ END
 // luke
 // Minor Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override"
+  COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override" // spwi318
                 "spra302.spl" "override" // Stalker
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
@@ -941,11 +941,11 @@ END
 // Applying "Improved" Invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility.
 //// There's no reason to apply both Normal and Improved invisibility in the same spell/item (unless you want them to have different probabilities/hd limits, but this is not the case).
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_IMPROVED_INVISIBILITY%.spl" "override"
+  COPY_EXISTING "%WIZARD_IMPROVED_INVISIBILITY%.spl" "override" // spwi405
                 "ohbwi405.spl" "override"
                 "spdr401.spl" "override" // Avenger
-                "%PSIONIC_SUPERIOR_INVISIBILITY%.spl" "override"
-                "%NON_DETECTION_SELF%.spl" "override"
+                "%PSIONIC_SUPERIOR_INVISIBILITY%.spl" "override" // spin544 
+                "%NON_DETECTION_SELF%.spl" "override" // spin698
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 20 ~match_parameter2~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -954,7 +954,7 @@ END
 // Emotion, Hopelessness
 // Op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_EMOTION_HOPELESSNESS%.spl" "override"
+  COPY_EXISTING "%WIZARD_EMOTION_HOPELESSNESS%.spl" "override" // spwi411
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 ~match_parameter2~ = 44 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 44 END
   BUT_ONLY_IF_IT_CHANGES
@@ -965,7 +965,7 @@ END
 // Applying "Improved" Invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility.
 //// There's no reason to apply both Normal and Improved invisibility in the same spell/item (unless you want them to have different probabilities/hd limits, but this is not the case).
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SHADOW_DOOR%.spl" "override"
+  COPY_EXISTING "%WIZARD_SHADOW_DOOR%.spl" "override" // spwi505
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 20 ~match_parameter2~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -974,7 +974,7 @@ END
 // Feeblemind – make sure it is truly permanent (until dispelled or character death)
 //// Unlike other effects that alter a creature's stat, this one does leave behind a removable effect when applied with `timing=1`
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override"
+  COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override" // spwi509
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 76 ~timing~ = 1 ~duration~ = 0 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 142 ~timing~ = 1 ~duration~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
@@ -983,7 +983,7 @@ END
 // luke
 // Protection From Normal Weapons – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override"
+  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override" // spwi511
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "PROTECTION_FROM_NORMAL_WEAPONS")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -998,8 +998,8 @@ END
 // luke
 // Minor Spell Turning – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override"
-                "%BEHOLDER_SPELL_TURNING%.spl" "override"
+  COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override" // spwi522
+                "%BEHOLDER_SPELL_TURNING%.spl" "override" // spin920
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "WIZARD_SPELL_TURNING")
@@ -1019,8 +1019,8 @@ END
 // 1) make sure all effects bypass Magic Resistance
 // 2) add missing protection against Ranger Haste
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_IMPROVED_HASTE%.spl" "override"
-                "%DM_IMPROVED_HASTE%.spl" "override"
+  COPY_EXISTING "%WIZARD_IMPROVED_HASTE%.spl" "override" // spwi613
+                "%DM_IMPROVED_HASTE%.spl" "override" // spin655
                 "spwish36.spl" "override"
                 "spwish37.spl" "override"
                 "spwish40.spl" "override"
@@ -1038,8 +1038,8 @@ END
 // luke
 // Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override"
-                "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override"
+  COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override" // spwi618
+                "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override" // spin710
                 "spwi802.spl" "override"
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")

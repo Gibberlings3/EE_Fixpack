@@ -1700,7 +1700,7 @@ END
 // - recode from scratch so as to use `op324` magic instead of messy `op177` effects
 // - make sure it causes arcane spell failure (not just divine spell failure)
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/holy_unholy_word.tph~
+  INCLUDE ~eefixpack/files/tph/luke/holy_unholy_word.tph~ // sppr710, sppr715
   LAF ~CLERIC_HOLY_UNHOLY_WORD~ END
 END
 
@@ -1709,7 +1709,7 @@ END
 // - remove duplicate `op233` effect(s)
 // - *"For each round the victim remains inside the cloud, <PRO_HESHE> must make a Save vs. Spell at -2 or run away in fear for one round."* => match `BG2EE` implementation
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/creeping_doom.tph~
+  INCLUDE ~eefixpack/files/tph/luke/creeping_doom.tph~ // sppr717, sppr717a
   LAF ~CLERIC_CREEPING_DOOM~ END
 END
 
@@ -1717,7 +1717,7 @@ END
 // **Creeping Doom** (Black Dragon)
 // - use same projectile as `"%CLERIC_CREEPING_DOOM%"`
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override"
+  COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override" // spin689
     LPF "ALTER_SPELL_HEADER" INT_VAR "projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect") END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1730,7 +1730,7 @@ END
 // - subspell should not play a casting sound
 WITH_SCOPE BEGIN
   WITH_SCOPE BEGIN
-    COPY_EXISTING "%BLACKGUARD_ABSORB_HEALTH%.spl" "override"
+    COPY_EXISTING "%BLACKGUARD_ABSORB_HEALTH%.spl" "override" // spcl102
       LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "resist_dispel" = BIT0 END
     BUT_ONLY_IF_IT_CHANGES
   END
