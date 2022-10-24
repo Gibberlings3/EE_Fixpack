@@ -460,7 +460,8 @@ WITH_SCOPE BEGIN
     LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 267 END // Disable display string
     LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 173 END // Poison resistance bonus
     LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 101 END // Immunity to effect
-    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 318 "target" = 2 "probability1" = 10 STR_VAR "resource" = "%DEST_RES%" END
+    LPF CLONE_EFFECT INT_VAR match_opcode = 25 opcode = 321 parameter1 = 0 parameter2 = 2 duration = 0 special = 0 STR_VAR insert = above resource = EVAL ~%SOURCE_RES%~ END
+//    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 318 "target" = 2 "probability1" = 10 STR_VAR "resource" = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -775,7 +776,7 @@ END
 // luke
 // Chill Touch should correctly affect UNDEAD without permanently removing their immunity to Panic (op24)
 WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/wizard_chill_touch.tph"
+  INCLUDE "eefixpack/files/tph/luke/wizard_chill_touch.tph" // chillt.itm, spwi117a.spl, spwi117b.spl
   LAF "WIZARD_CHILL_TOUCH" END
 END
 
@@ -786,7 +787,7 @@ luke
   - function "remove_redundant_effects" won't be able to properly deal with this file because there are multiple op78 effects and just one op142 effect
 */
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_CAUSE_DISEASE%.spl" "override"
+  COPY_EXISTING "%CLERIC_CAUSE_DISEASE%.spl" "override" // sppr320
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 78 "special" = 7 END // Disease
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 "match_parameter2" = 7 END // op78 can naturally provide the "Diseased" portrait icon
   BUT_ONLY_IF_IT_CHANGES
@@ -796,7 +797,7 @@ END
 // Spirit Fire => should not interact with spell protections
 // As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
 WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
+  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph" // sppr450.spl, sppr450a.spl, sppr450b.spl
   LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
 END
 
@@ -809,7 +810,7 @@ END
 // As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
 // Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
+  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~ // sppr704.spl
     LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // op74 naturally provides the "Blind" portrait icon
@@ -822,7 +823,7 @@ luke
 - It now properly distinguishes `GENERAL=UNDEAD || RACE=MYCONID` from `!(GENERAL=UNDEAD || RACE=MYCONID)`
 */
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~
+  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~ // sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl
   LAF ~CLERIC_SUNRAY~ END
 END
 

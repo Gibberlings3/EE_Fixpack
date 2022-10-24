@@ -12,8 +12,9 @@ INCLUDE "%library_path%/ds.tph"
 
 // some misc fixes
 
-INCLUDE "%library_path%/dw_misc.tph"
-LAF dw_misc END
+// disabled by Cam, as the lone fix for IWDEE in this patch is already handled in iwdee.tph; re-enable if new stuff is added
+//INCLUDE "%library_path%/dw_misc.tph"
+//LAF dw_misc END
 
 // Remove duplicated blocks (mostly due to automated code in FP)
 // This has no in-game consequence, but tidies up and avoids further duplication later when we start making clones
@@ -84,6 +85,7 @@ INCLUDE "%library_path%/immunities_via_324.tph"
 LAF immunities_via_324 INT_VAR write END
 
 /// handle unique items
+/* disabled by Cam, after discussions with David: consensus here leans towards 'not a fix'
 
 ACTION_IF GAME_IS bgee BEGIN
 	INCLUDE "%library_path%/bg1_item_deduplication.tph"
@@ -92,3 +94,4 @@ END
 ACTION_IF GAME_IS bg2ee BEGIN
 	INCLUDE "%library_path%/bg2_item_deduplication.tph"
 END
+*/

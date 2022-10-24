@@ -1,7 +1,7 @@
 DEFINE_ACTION_FUNCTION "WIZARD_IRON_BODY"
 BEGIN
 	// SPL file
-	COPY_EXISTING "%WIZARD_IRON_BODY%.spl" "override"
+	COPY_EXISTING "%WIZARD_IRON_BODY%.spl" "override" // spwi814
 		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 1 END // already present on "ibody.itm"
 		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 321 STR_VAR "match_resource" = "%DEST_RES%" END // useless (`op111` does not leave behind a removable effect)
 		SET "#_effects" = SHORT_AT (LONG_AT 0x64 + 0x1E) // # effects on the 1st ability
