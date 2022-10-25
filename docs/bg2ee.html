@@ -4,7 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
 <style type="text/css">
-.bg2fp_modder {color:#f00;}
+.bg2fp_modder {
+	color:#f00;
+}
 </style>
 </head>
 
@@ -57,7 +59,7 @@
   <li>The Potion of Icedust used an enemy-only projectile so its effects were never applied to the drinker or allies. <span class="bg2fp_modder">(cdicedus.pro, spin713.spl)</span></li>
   <li>When importing a character from BG with Arla's Dragonbane, it would get changed to a generic +3 sling. <span class="bg2fp_modder">(ohimport.bcs)</span></li>
   <li>There are two versions of Full Plate Mail +2, one of which is a special version available via Wish that doesn't require any lore to identify. Several creatures were using the special version, which has been swapped for the other Full Plate +2. <span class="bg2fp_modder">(ohbgit01.cre, ohbthr01.cre, ohdcru04.cre, ohdlufpl.cre, ohnvgc.cre, ohrjassa.cre)</span></li>
-  <li>Several items that cast area-of-effect spells   required creature targets but should not have: Cone of Cold via the White Dragon Chain, Dispel Magic via Purifier, Prismatic Spray via the Helm of Brilliance  <span class="bg2fp_modder">(chan20.itm, comps65.itm, helm16.itm, sw1h65.itm)</span></li>
+  <li>Several items that cast area-of-effect spells   required creature targets but should not have: Cone of Cold via the White Dragon Chain, Dispel Magic via Purifier, Prismatic Spray via the Helm of Brilliance <span class="bg2fp_modder">(chan20.itm, comps65.itm, helm16.itm, sw1h65.itm)</span></li>
   <li>The Purple Globe that heals the caster was asking for a target when none was required <span class="bg2fp_modder">(globpur4.itm)</span></li>
   <li>Several items which cast spells are changed to cast the spells directly instead of simulating them<span class="bg2fp_modder"> (comps34.itm, npmisc1.itm, ohdwand1.itm, sw1h32.itm, sw1h34.itm)</span></li>
   <li>The Restoration scroll should have touch range <span class="bg2fp_modder">(restore.itm)</span></li>
@@ -74,7 +76,7 @@
   <li>The knockback effect of the Staff of the Ram +6 should not work on large creatures <span class="bg2fp_modder">(staf22.itm)</span></li>
   <li>Ilbratha's Mirror Image could be blocked by the wielder's magic resistance <span class="bg2fp_modder">(sw1h26.itm)</span></li>
   <li>The Longtooth dagger is described as exceptionally long and uses a short sword animation, but the range was still that of a dagger. <span class="bg2fp_modder">(dagg04.itm)</span></li>
-  <li>The Paralytic Bolt +1 used the wrong dispellability, and magic resistance check.  <span class="bg2fp_modder">(sahbolt.itm)</span></li>
+  <li>The Paralytic Bolt +1 used the wrong dispellability, and magic resistance check. <span class="bg2fp_modder">(sahbolt.itm)</span></li>
   <li>On 10% of hits Neera's Staff was supposed to inflict a point of fire damage on its wielder <strong>or</strong> its target, but was instead inflicting a point of fire damage on both. <span class="bg2fp_modder">(stafn1.itm)</span></li>
   <li>Natural weapons (claws, bites, etc.) and magically-created weapons (e.g. Chill Touch) should not benefit from weapon style proficencies <span class="bg2fp_modder">(</span><span class="bg2fp_modder">brblp.itm, brbrp.itm, cdbrbrp.itm, cdbrbrp2.itm, cdgoliro.itm, cdmindfl.itm, cdwolfm.itm, cdwstyl1.eff, cdwstyl1.spl, cdwstyl2.eff, cdwstyl2.spl, chillt.itm, critical.itm, druear.itm, drufir.itm, earthrn.itm, firern.itm, ghoult.itm, harm.itm, plybass.itm, plybear1.itm, plybear2.itm, plymstar.itm, plyspid.itm, plyspid2.itm, plytroll.itm, plywolf1.itm, plywyvrn.itm, polyrat.itm, sgrasp.itm, slayerw1.itm, slayerw2.itm, slayerw3.itm, slayerw4.itm, slaylive.itm, squirp.itm, statdesc.2da, trollall.itm, wolfgr.itm, wolfm.itm, wswolf.itm)</span></li>
   <li>Goodberries should not play the *gulp* string when used as they are not potions <span class="bg2fp_modder">(gberry.itm)</span></li>
@@ -91,7 +93,7 @@
   <li>Balthazar's Solar Stance! is supposed to include an HP-draining, fire-damage melee attack effect <span class="bg2fp_modder">(balth01b.eff)</span></li>
   <li>The various Cure Wounds, Restoration, and Lay on Hands spells should be touch range and not dispellable <span class="bg2fp_modder">(critical.itm, harm.itm, serious.itm, slaylive.itm, </span><span class="bg2fp_modder">spcl211.spl, spcl815.spl, spin109.spl, spin679.spl, spin711.spl, spin773.spl, spin827.spl, spin958.spl, sppr103.spl, sppr315.spl, sppr401.spl, sppr502.spl, sppr514.spl, sppr607.spl, spwm168.spl)</span></li>
   <li>When various spells are used against creatures that are immune, better feedback is now provided <span class="bg2fp_modder"> (balth06.spl, chillt.itm, spin685.spl, spin940.spl, spin962.spl, spwi003.spl,
-  spwi004.spl, spwi112.spl, spwi213.spl, spwi914.spl, spwm187.spl)</span> </li>
+    spwi004.spl, spwi112.spl, spwi213.spl, spwi914.spl, spwm187.spl)</span> </li>
   <li>Shocking Grasp should not be blocked by spell protections, and shouldn't play an expiry sound since it can expire on its own. <span class="bg2fp_modder">(sgrasp.itm, sgrasp.spl, spwi115.spl)</span></li>
   <li>Black Blade of Disaster could be blocked by spell protections, and the weapon grandmastery that it supposed to accompany the weapon could sometimes get blocked. <span class="bg2fp_modder">(blakblad.eff, blakblad.itm, cdbblade.spl)</span></li>
   <li>Simulacrum and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. <span class="bg2fp_modder">(projimag.spl, simulacr.spl)</span></li>
@@ -124,7 +126,7 @@
   <li>Dolorous Decay had the wrong duration, the portrait icon bypassed magic resistance, and some of the delayed effects had the wrong save. <span class="bg2fp_modder">(sppr610.spl)</span></li>
   <li>The blindness effect from Nature's Beauty was done in such a way that it could not be removed and didn't have normal blindness penalties. The spell is also limited to affecting humanoids. <span class="bg2fp_modder">(sppr704.spl)</span></li>
   <li>Sunray's instant death effect for undead is now blocked by Death Ward <span class="bg2fp_modder">(sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl) </span></li>
-  <li>(Un)Holy Word was not affecting arcane spellcasting   <span class="bg2fp_modder">(sppr710.spl, sppr715.spl) </span></li>
+  <li>(Un)Holy Word was not affecting arcane spellcasting <span class="bg2fp_modder">(sppr710.spl, sppr715.spl) </span></li>
   <li>Creeping Doom needed a projectile update, as well as a few fixes as to how it interacts with spell protections. <span class="bg2fp_modder">(spin689.spl, sppr717.spl, flpr717a.spl)</span></li>
   <li>Blackguard's Absorb Health should not bypass magic resistance and had some other minor issues. <span class="bg2fp_modder">(spcl102.spl, spdn01a.spl)</span></li>
   <li>When Berserk was used for non-party members, the messages about the expiration damage was still being displayed as combat feedback. <span class="bg2fp_modder">(spcl321.spl, spcl321d.spl, spin117a.eff, spin117b.eff)</span></li>
@@ -148,7 +150,7 @@
   <li>If you never speak to Firkraag before traveling to Windspear and defeating him there, he would still be hanging out at the Copper Coronet when you returned. <span class="bg2fp_modder">(firkra01.bcs)</span></li>
   <li>Several party members had the wrong values assigned to their kit field despite being unkitted. This could cause minor issues with scripting and spell learning. <span class="bg2fp_modder">(anomen10.cre, anomen12.cre, anomen6.cre, anomen7.cre, anomen8.cre, imoen.cre, imoen10.cre, imoen15.cre, imoen211.cre, imoen213.cre, kivan.cre, kivan4.cre, kivan6.cre, mazzy11.cre, mazzy12.cre, mazzy15.cre, mazzy8.cre, mazzy9.cre, sarevok.cre)</span></li>
   <li>Elemental summons shouldn't grant XP if killed. <span class="bg2fp_modder">(elemchan.cre, elemsunn.cre, 
-  elemzaam.cre)</span></li>
+    elemzaam.cre)</span></li>
   <li>Bears summoned via Conjure Animals used generic bear scripting and lacked  the normal scripting of summons. <span class="bg2fp_modder">(bearposu.cre)</span></li>
   <li>Creatures summoned in the Pocket Plane challenge shouldn't drop equipment. <span class="bg2fp_modder">(chevil01.cre, chevil03.cre, chgood04.cre, chgood05.cre)</span></li>
   <li>Several creatures (and the normal creature items that granted abilities) had incomplete immunities to confusion, fear, and/or hold. <span class="bg2fp_modder">(gith03.cre, hslaywpn.itm, ohbbslay.itm, ohbetrai.itm, ohgith03.cre, ohhgmum.cre, ohhraffi.cre, slayerw1.itm, slayerwp.itm)</span></li>
@@ -180,10 +182,10 @@
 </ul>
 <h3> Animation Fixes</h3>
 <ul>
-<li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mdr2*.bam, mdr3*.bam, mwyv*.bam)</span></li>
+  <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mdr2*.bam, mdr3*.bam, mwyv*.bam)</span></li>
   <li>Similar to the above, large animations in areas could also be split and show the same seams where merged. <span class="bg2fp_modder">(1400t001.bam, 1400t002.bam,  1400t003.bam,  1400t004.bam,  1400t005.bam,  am0602c.bam,  am0602d.bam,  am0602k1.bam,  am0602k2.bam,  am0602l1.bam,  am0602l2.bam, 
     am0801b1.bam,  am0801b2.bam,  am0902l.bam,  am0902l1.bam,  am0902l2.bam,  am0902l3.bam,  am0902l4.bam,  am2000a.bam,  am2000a1.bam,  am2000a2.bam,  am2000a3.bam, 
-  am2000a4.bam,  am2000b.bam,  am2000b1.bam,  am2000b2.bam,  am2000b3.bam,  am2000b4.bam,  am2805b.bam,  am2805c.bam,  am414e11.bam,  am414e12.bam )</span></li>
+    am2000a4.bam,  am2000b.bam,  am2000b1.bam,  am2000b2.bam,  am2000b3.bam,  am2000b4.bam,  am2805b.bam,  am2805c.bam,  am414e11.bam,  am414e12.bam )</span></li>
   <li>The paperdoll for monks (the tutorial ones in Candlekeep, not the player class) were corrupted. <span class="bg2fp_modder">(cmnk1inv.bam)</span></li>
   <li>Several animations were <a href="https://www.gibberlings3.net/gallery/image/826-animation-fixes/">not properly blended</a>, resulting in black auras around the effects. <span class="bg2fp_modder">(spsetsh.vvc, spnpoisi.vvc, spccmdsi.vvc)</span></li>
   <li>The animation for <a href="https://www.gibberlings3.net/gallery/image/828-creature-animation-updates/">Death Tyrant beholders</a> had different spacing than regular beholders (despite being the same size) and was not being used by Death Tyrants.<span class="bg2fp_modder"> (7f02.ini, 7f46.ini, behund01.cre, melsum03.cre, rngbeh01.cre)</span></li>
@@ -191,21 +193,21 @@
   <li>Troll animations were inconsistently used, and have been <a href="https://www.gibberlings3.net/gallery/image/824-troll-animations/">standardized</a>. <span class="bg2fp_modder">(daspitro.cre,  
     firamb03.cre,  
     firamb05.cre,  
-  kptrol06.cre, mscr*.bam, mtic*.bam, mtsn*.bam, obsice01.cre, obsice11.cre,  
-  pptroll1.cre,  
-  pptroll2.cre,  
-  rogtro01.cre,  
-  rogtro02.cre,  
-  trolfr01.cre,  
-  trolfr02.cre,  
-  trolic01.cre,  
-  trolic02.cre,  
-  trolic03.cre,  
-  trolic04.cre,  
-  trolsi01.cre,  
-  trolsi02.cre,  
-  trolsn01.cre, 
-  trolsn02.cre)</span></li>
+    kptrol06.cre, mscr*.bam, mtic*.bam, mtsn*.bam, obsice01.cre, obsice11.cre,  
+    pptroll1.cre,  
+    pptroll2.cre,  
+    rogtro01.cre,  
+    rogtro02.cre,  
+    trolfr01.cre,  
+    trolfr02.cre,  
+    trolic01.cre,  
+    trolic02.cre,  
+    trolic03.cre,  
+    trolic04.cre,  
+    trolsi01.cre,  
+    trolsi02.cre,  
+    trolsn01.cre, 
+    trolsn02.cre)</span></li>
   <li>The central eye in the Bhaal door is not actually visible, so you cannot view the animation for placing the Tear and seeing it close. <span class="bg2fp_modder">(ar2900.are)</span></li>
   <li>Helm of the Rock and Gold Horned Helm did not match their icons when equipped; coloring and style have been adjusted appropriately <span class="bg2fp_modder">(helm32.itm, helm33.itm)</span></li>
   <li>Angurvadal (normal and upgraded) and the Sword of Flame glow when wielded. However, one part is mistargeted and could make the wielder's armor  glow instead of the sword <span class="bg2fp_modder">(sw1h53.itm, sw1h60.itm, sw1h61.itm)</span></li>
