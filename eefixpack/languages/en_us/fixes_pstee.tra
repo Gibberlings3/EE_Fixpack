@@ -28,19 +28,6 @@ This cranium rat tail charm is particularly filthy and smells faintly of vomit. 
 
 When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
 
-//  RAT TAIL CHARM -> DIRTY RAT CHARM to match description
-@30450 = ~DIRTY RAT CHARM
-Special:
-   +10% Stealth Skill Bonus
-   +5% Pickpocket Skill Bonus
-   -1 to Charisma
-Weight: 0
-Usable only by Thieves
-
-This cranium rat tail charm is particularly filthy and smells faintly of vomit. The tail is stiff, like a wire, and it can be bent into different shapes... it would almost make a great lockpick, except it is too thick.
-
-When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
-
 // TATTOO OF TRIST -> TATTOO OF TRIST'S SAVIOR - Matching item name. There is also a surplus space after "individual."
 @48826 = ~TATTOO OF TRIST'S SAVIOR
 Special: +3 to Saves vs. Paralyzation

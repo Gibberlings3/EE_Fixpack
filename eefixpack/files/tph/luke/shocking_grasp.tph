@@ -2,7 +2,7 @@ DEFINE_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP"
 BEGIN
 	// Let us use a unique ITM file for all character levels
 	WITH_SCOPE BEGIN
-		COPY_EXISTING "%WIZARD_SHOCKING_GRASP%.spl" "override"
+		COPY_EXISTING "%WIZARD_SHOCKING_GRASP%.spl" "override" // spwi115
 			/* Header */
 			WRITE_BYTE 0x27 12 // COMBATPROTECTIONS => COMBINATION
 			/* Feature blocks */

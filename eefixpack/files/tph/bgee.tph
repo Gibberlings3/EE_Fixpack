@@ -1,16 +1,15 @@
+
 /////                                                  \\\\\
 ///// string fixes                                     \\\\\
 /////                                                  \\\\\
 
-// string fixes, processed automatically if tra file exists
-LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-  STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tra~ // tra file to process
-          output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%.tph~ // tph being built; use weidu_external for this
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
+  INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
 END
+
 ACTION_IF game_includes_sod BEGIN
-  LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-    STR_VAR input_tra  = EVAL ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tra~ // tra file to process
-            output_tph = EVAL ~weidu_external/eefixpack/fixes_%game%_sod.tph~ // tph being built; use weidu_external for this
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~ BEGIN
+    INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~
   END
 END
 
@@ -737,15 +736,6 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Make sure plants are properly flagged as such
-WITH_SCOPE BEGIN
-  COPY_EXISTING "bddyingm.cre" "override" // Dying Myconid
-    WRITE_BYTE 0x271 IDS_OF_SYMBOL ("GENERAL" "PLANT")
-    WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "MYCONID")
-  BUT_ONLY IF_EXISTS // sod
-END
-
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
@@ -848,15 +838,6 @@ COPY_EXISTING ~wand12.itm~ ~override~ // wand of missiles
 WITH_SCOPE BEGIN
   COPY_EXISTING ~ption41.itm~ ~override~ // Potion of Power
     LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Longtooth: The Grave Binder**
-// - Unusually large dagger, depicted as a Short Sword => make sure `range=1`
-WITH_SCOPE BEGIN
-  COPY_EXISTING "dagg04.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_ITEM_HEADER~ INT_VAR ~range~ = 1 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -968,21 +949,21 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can cras
 // **Cure Wounds**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/cure_wounds.tph"
-  LAUNCH_ACTION_FUNCTION ~CURE_WOUNDS~ END
+  //LAUNCH_ACTION_FUNCTION ~CURE_WOUNDS~ END
 END
 
 // luke
 // **Cause Wounds**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/cause_wounds.tph"
-  LAUNCH_ACTION_FUNCTION ~CAUSE_WOUNDS~ END
+  //LAUNCH_ACTION_FUNCTION ~CAUSE_WOUNDS~ END
 END
 
 // luke
 // **Lesser / Greater Restoration**
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/restoration.tph"
-  LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
+  //LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
 // expiry sound has wrong duration  
@@ -1024,9 +1005,12 @@ COPY_EXISTING ~spcl321.spl~ ~override~
   BUT_ONLY
   
 // has permanent-timed effect with duration
-COPY_EXISTING ~spin672.spl~ ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
-              ~spin878.spl~ ~override~
-              ~spin927.spl~ ~override~  // (spl) Boiling Rain Storm - causes stun - plays sound EFF_P27
+COPY_EXISTING ~spin672.spl~              ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
+              ~spin878.spl~              ~override~
+              ~spin927.spl~              ~override~ // (spl) Boiling Rain Storm - causes stun - plays sound EFF_P27
+              ~%WIZARD_FLAME_ARROW%.spl~ ~override~ // spwi303
+              ~%FORCE_DAMAGE_1%.spl~     ~override~ // spwi888
+              ~%CLERIC_BARKSKIN%.spl~    ~override~ // sppr202
   LPF ALTER_EFFECT INT_VAR match_timing = 1 duration = 0 END
 
 // tbd, cam
@@ -1057,7 +1041,7 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%ERINYES_CHARM%.spl~ ~override~ // Charm Person
+  COPY_EXISTING ~%ERINYES_CHARM%.spl~ ~override~ // Charm Person spin558
     LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1065,7 +1049,7 @@ END
 // luke
 // Mimic Glue should not set the GREASE stat
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue
+  COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue spin914
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1123,7 +1107,7 @@ END
 // luke
 // Grease – Remove duplicate op321 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease
+  COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
@@ -1137,10 +1121,10 @@ END
 // luke
 // Magic Missile – better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~ ~override~
-                ~%TRAP_MAGIC_MISSILE%.spl~ ~override~
-                ~%MAGIC_MISSILE_SURE_HIT%.spl~ ~override~
-                ~%BEHOLDER_MAGIC_MISSILE%.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~   ~override~ // spwi112
+                ~%TRAP_MAGIC_MISSILE%.spl~     ~override~ // spwi003
+                ~%MAGIC_MISSILE_SURE_HIT%.spl~ ~override~ // spin685
+                ~%BEHOLDER_MAGIC_MISSILE%.spl~ ~override~ // spin962
     LAUNCH_PATCH_FUNCTION ~ADD_SPELL_EFFECT~ INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "WIZARD_SHIELD") "parameter2" = 110 "resist_dispel" = 2 "power" = 1 STR_VAR "resource" = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1151,8 +1135,8 @@ END
 // 2) subspell should not play `casting graphics` and `casting sound`
 // 3) subspell should not use the `exclusion flags` field
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_LARLOCH_MINOR_DRAIN%a.spl~ ~override~
-                ~%INNATE_LARLOCHS_MINOR_DRAIN%a.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_LARLOCH_MINOR_DRAIN%a.spl~ ~override~ // spwi119
+                ~%INNATE_LARLOCHS_MINOR_DRAIN%a.spl~ ~override~ // spin104
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_LONG 0x1E 0
@@ -1170,10 +1154,10 @@ END
 // 2) creatures flagged as STATE_NONDETECTION (see f.i. "Cloak of Non-Detection: Whispers of Silence") should not be immune to it
 //// I mean, STATE_NONDETECTION protects against op47 and op116; this spell uses op115, so... Am I missing something?
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_DETECT_EVIL%.spl" "override"
-                "%CLERIC_DETECT_EVIL%.spl" "override"
-                "%PALADIN_DETECT_EVIL%.spl" "override"
-                "spin120.spl" "override"
+  COPY_EXISTING "%WIZARD_DETECT_EVIL%.spl" "override" // spwi202
+                "%CLERIC_DETECT_EVIL%.spl" "override" // sppr104
+                "%PALADIN_DETECT_EVIL%.spl" "override" // spcl212
+                "spin120.spl" "override" // leftover bg detect evil (see ajantis)
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 146 ~opcode~ = 115 ~parameter1~ = 0 ~parameter2~ = 0 ~timing~ = 1 ~duration~ = 0 STR_VAR ~resource~ = ~~ END // Cast spell => Detect alignment
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 318 END
   BUT_ONLY_IF_IT_CHANGES
@@ -1184,7 +1168,7 @@ END
 // 1) op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
 // 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override"
+  COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override" // spwi213
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN
@@ -1205,8 +1189,8 @@ END
 // 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
 // 3) provide better feedback for the player when attacking Golems or Undead
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%TRAP_STINKING_CLOUD%.spl" "override"
-                "%MEPHIT_STINKING_CLOUD%.spl" "override"
+  COPY_EXISTING "%TRAP_STINKING_CLOUD%.spl" "override" // spwi004
+                "%MEPHIT_STINKING_CLOUD%.spl" "override" // spin940
                 "spwm187.spl" "override" // Wild surge
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1226,7 +1210,7 @@ END
 // luke
 // Chaos Shield – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_CHAOS_SHIELD%.spl" "override"
+  COPY_EXISTING "%WIZARD_CHAOS_SHIELD%.spl" "override" // spwi222
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "CHAOS_SHIELD")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1239,33 +1223,14 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Deafness
-// 1) should not bypass Magic Resistance
-// 2) should be dispellable
-WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_DEAFNESS%.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = BIT0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Flame Arrow – op12 effects should have a duration of 0 (this is probably irrelevant, but just in case...)
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_FLAME_ARROW%.spl~ ~override~
-                ~%FORCE_DAMAGE_1%.spl~ ~override~
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 12 "match_timing" = 1 "duration" = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // Lightning Bolt – remove duplicate op318 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override"
-                "%TALOS_LIGHTNING_BOLT%.spl" "override"
-                "%TRAP_LIGHTNING_BOLT%.spl" "override"
+  COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override" // spwi308
+                "%TALOS_LIGHTNING_BOLT%.spl" "override" // spcl722
+                "%TRAP_LIGHTNING_BOLT%.spl" "override" // spwi002
                 "spdr301.spl" "override" // Avenger
-                "%CELESTIAL_BOLT%.spl" "override"
-                "%GORION_LIGHTNING%.spl" "override"
+                "%CELESTIAL_BOLT%.spl" "override" // spin714
+                "%GORION_LIGHTNING%.spl" "override" // spwi997
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
@@ -1279,7 +1244,7 @@ END
 // luke
 // Protection From Normal Missiles – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override"
+  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override" // spwi311
                 "spra303.spl" "override" // Stalker
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "PROTECTION_FROM_NORMAL_MISSILES")
@@ -1298,7 +1263,7 @@ END
 // 2) subspell should not play `casting graphics` and `casting sound`
 // 3) subspell's type should match its parent (to maintain casting level!)
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_VAMPIRIC_TOUCH%a.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_VAMPIRIC_TOUCH%a.spl~ ~override~ // spwi314a
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_SHORT 0x1C 1 // wizard
@@ -1313,8 +1278,8 @@ END
 // 1) subspell's effects should have `power=0`
 // 2) subspell should not play `casting graphics` and `casting sound`
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%INNATE_VAMPIRIC_TOUCH%a.spl~ ~override~
-                ~%TANARI_VAMPIRIC_TOUCH%a.spl~ ~override~
+  COPY_EXISTING ~%INNATE_VAMPIRIC_TOUCH%a.spl~ ~override~ // spin106a
+                ~%TANARI_VAMPIRIC_TOUCH%a.spl~ ~override~ // spin997a
     // Header
     WRITE_ASCII 0x10 "" #8
     WRITE_SHORT 0x22 0
@@ -1326,7 +1291,7 @@ END
 // luke
 // Minor Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override"
+  COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override" // spwi318
                 "spra302.spl" "override" // Stalker
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
@@ -1347,7 +1312,7 @@ END
 // Applying "Improved" Invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility.
 //// There's no reason to apply both Normal and Improved invisibility in the same spell/item (unless you want them to have different probabilities/hd limits, but this is not the case).
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_IMPROVED_INVISIBILITY%.spl" "override"
+  COPY_EXISTING "%WIZARD_IMPROVED_INVISIBILITY%.spl" "override" // spwi405
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 20 ~match_parameter2~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1356,7 +1321,7 @@ END
 // Emotion, Hopelessness
 // Op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_EMOTION_HOPELESSNESS%.spl" "override"
+  COPY_EXISTING "%WIZARD_EMOTION_HOPELESSNESS%.spl" "override" // spwi411
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 ~match_parameter2~ = 44 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 44 END
   BUT_ONLY_IF_IT_CHANGES
@@ -1366,9 +1331,9 @@ END
 // Cloudkill
 // Remove the "Bypass Mirror Image" flag from op55 / op215 / op174 (it's only relevant for opcode #12)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_CLOUDKILL%.spl" "override"
-                "%TRAP_CLOUDKILL%.spl" "override"
-                "%SPORE_DEATH%.spl" "override"
+  COPY_EXISTING "%WIZARD_CLOUDKILL%.spl" "override" // spwi502
+                "%TRAP_CLOUDKILL%.spl" "override" // spwi016
+                "%SPORE_DEATH%.spl" "override" // spin673
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN
@@ -1390,7 +1355,7 @@ END
 // Applying "Improved" Invisibility will cause the effect to be duplicated, with the duplicate using "Normal" invisibility.
 //// There's no reason to apply both Normal and Improved invisibility in the same spell/item (unless you want them to have different probabilities/hd limits, but this is not the case).
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SHADOW_DOOR%.spl" "override"
+  COPY_EXISTING "%WIZARD_SHADOW_DOOR%.spl" "override" // spwi505
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 20 ~match_parameter2~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1399,7 +1364,7 @@ END
 // Feeblemind – make sure it is truly permanent (until dispelled or character death)
 //// Unlike other effects that alter a creature's stat, this one does leave behind a removable effect when applied with `timing=1`
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override"
+  COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override" // spwi509
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 76 ~timing~ = 1 ~duration~ = 0 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 142 ~timing~ = 1 ~duration~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
@@ -1408,7 +1373,7 @@ END
 // luke
 // Protection From Normal Weapons – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override"
+  COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override" // spwi511
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "PROTECTION_FROM_NORMAL_WEAPONS")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1423,8 +1388,8 @@ END
 // luke
 // Minor Spell Turning – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override"
-                "%BEHOLDER_SPELL_TURNING%.spl" "override"
+  COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override" // spwi522
+                "%BEHOLDER_SPELL_TURNING%.spl" "override" // spin920
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "WIZARD_SPELL_TURNING")
@@ -1442,8 +1407,8 @@ END
 // luke
 // Spell Deflection – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override"
-                "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override"
+  COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override" // spwi618
+                "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override" // spin710
                 "spwi802.spl" "override"
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
@@ -1462,7 +1427,7 @@ END
 // luke
 // Spell Turning – remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override"
+  COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override" // spwi701
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "WIZARD_SPELL_TURNING")
@@ -1483,7 +1448,7 @@ END
 //// There's no reason to apply both Normal and Improved invisibility in the same spell/item (unless you want them to have different probabilities/hd limits, but this is not the case).
 // 2) "Improved" Invisibility naturally provides a bonus of 4 to all saves, there's no need for separate op33-37 effects.
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%WIZARD_MASS_INVISIBILITY%.spl~ ~override~
+  COPY_EXISTING ~%WIZARD_MASS_INVISIBILITY%.spl~ ~override~ // spwi721
     PATCH_WITH_SCOPE BEGIN
       PATCH_FOR_EACH "match_opcode" IN "33" "34" "35" "36" "37" BEGIN
         LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" END
@@ -1496,7 +1461,7 @@ END
 // luke
 // Improved Chaos Shield – remove duplicate op328 effect
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_IMPROVED_CHAOS_SHIELD%.spl" "override"
+  COPY_EXISTING "%WIZARD_IMPROVED_CHAOS_SHIELD%.spl" "override" // spwi723
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "IMPROVED_CHAOS_SHIELD")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1511,7 +1476,7 @@ END
 // luke
 // Spell Trap – remove duplicate op328 / op282 effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_SPELL_TRAP%.spl" "override"
+  COPY_EXISTING "%WIZARD_SPELL_TRAP%.spl" "override" // spwi902
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1528,7 +1493,7 @@ END
 // luke
 // Energy Drain – provide better feedback for the player
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%WIZARD_ENERGY_DRAIN%.spl" "override"
+  COPY_EXISTING "%WIZARD_ENERGY_DRAIN%.spl" "override" // spwi914
     LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 25803 STR_VAR ~insert~ = ~below~ END // Display string
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1541,7 +1506,7 @@ INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 // **Command**
 // - Creatures with `37` or more Hit Dice (or experience levels) should not be immune to it
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_COMMAND%.spl" "override"
+  COPY_EXISTING "%CLERIC_COMMAND%.spl" "override" // sppr102
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_dicenumber~ = 36 ~dicenumber~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1559,7 +1524,7 @@ END*/
 // **Armor of Faith**
 // - remove duplicate `op328` effect(s)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_ARMOR_OF_FAITH%.spl" "override"
+  COPY_EXISTING "%CLERIC_ARMOR_OF_FAITH%.spl" "override" // sppr111
     PATCH_WITH_SCOPE BEGIN
       SET "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "ARMOR_OF_FAITH")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1572,19 +1537,10 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// **Barkskin**
-// - Instantaneous effects should have a duration of `0` (this is probably irrelevant, but just in case...)
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_BARKSKIN%.spl~ ~override~
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_timing" = 1 "duration" = 0 END
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
 // **Slow Poison**
 // - Make sure it truly slows poison (so as to match `IWDEE` and spell description/name)
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_SLOW_POISON%.spl~ ~override~
+  COPY_EXISTING ~%CLERIC_SLOW_POISON%.spl~ ~override~ // sppr212
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 11 "opcode" = 329 "parameter1" = 10 "parameter2" = 0 END // Cure poison => Slow poison
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1593,8 +1549,8 @@ END
 // **Summon Insects, Insect Plague**
 // - remove duplicate `op233` effect(s)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_SUMMON_INSECTS%.spl" "override"
-                "%CLERIC_INSECT_PLAGUE%.spl" "override"
+  COPY_EXISTING "%CLERIC_SUMMON_INSECTS%.spl" "override" // sppr319
+                "%CLERIC_INSECT_PLAGUE%.spl" "override" //sppr517
     PATCH_WITH_SCOPE BEGIN
       SET "parameter2" = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1612,13 +1568,13 @@ END
 // - Use multiple `op25` effects instead of `spwi411[a-e].eff` (so as to make it work with `CLERIC_SLOW_POISON`)
 //// - As far as I know, `op329` cannot slow poison if `op25` is applied via `op177`...
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_POISON%.spl" "override"
+  COPY_EXISTING "%CLERIC_POISON%.spl" "override" // sppr411
     PATCH_WITH_SCOPE BEGIN
       LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 177 END // Use EFF file
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
         FOR ("i" = 1 ; "%i%" <= "%hdr%" + 2 ; "i" += 1) BEGIN
-          LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~match_opcode~ = 12 ~opcode~ = 25 ~parameter1~ = 6 ~parameter2~ = 3 ~timing~ = 0 ~duration~ = 60 ~dicenumber~ = 0 ~dicesize~ = 0 ~special~ = 0 STR_VAR ~insert~ = ~below~ ~resource~ = ~~ END
+          LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~header~ = ~%hdr%~ ~match_opcode~ = 12 ~opcode~ = 25 ~parameter1~ = 6 ~parameter2~ = 3 ~timing~ = 0 ~duration~ = 60 ~dicenumber~ = 0 ~dicesize~ = 0 ~special~ = 6 STR_VAR ~insert~ = ~below~ ~resource~ = ~~ END
         END
       END
     END
@@ -1641,7 +1597,7 @@ END
 // **Chaotic Commands**
 // - remove duplicate `op328` effect(s)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_CHAOTIC_COMMANDS%.spl" "override"
+  COPY_EXISTING "%CLERIC_CHAOTIC_COMMANDS%.spl" "override" // sppr508
     PATCH_WITH_SCOPE BEGIN
       SET "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "CHAOTIC_COMMANDS")
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
@@ -1657,8 +1613,8 @@ END
 // **Blade Barrier**
 // - Make sure `duration=60 // 1 turn` (instead of `62`)
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_BLADE_BARRIER%.spl" "override"
-                "%NPC_BLADE_BARRIER%.spl" "override"
+  COPY_EXISTING "%CLERIC_BLADE_BARRIER%.spl" "override" // sppr603
+                "%NPC_BLADE_BARRIER%.spl" "override" // sppr698
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_timing~ = 0 ~duration~ = 60 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_timing~ = 4 ~duration~ = 60 END
   BUT_ONLY_IF_IT_CHANGES
@@ -1670,7 +1626,7 @@ END
 // - Make sure the "Decaying" portrait icon does not bypass Magic Resistance
 // - Make sure the delayed `op174` effect (the one related with Poison) offers a Save vs. Poison @ -2
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_DOLOROUS_DECAY%.spl" "override"
+  COPY_EXISTING "%CLERIC_DOLOROUS_DECAY%.spl" "override" // sppr610
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 142 "match_parameter2" = 101 ~resist_dispel~ = BIT0 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_duration~ = 56 ~duration~ = 50 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 174 "match_timing" = 4 "match_duration" = 50 ~savingthrow~ = BIT2 ~savebonus~ = ~-2~ END
@@ -1681,7 +1637,7 @@ END
 // **Physical Mirror**
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_PHYSICAL_MIRROR%.spl" "override"
+  COPY_EXISTING "%CLERIC_PHYSICAL_MIRROR%.spl" "override" // sppr613
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_WEAPONS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_PHYSICAL_MIRROR")
@@ -1700,7 +1656,7 @@ END
 // **Shield of the Archons**
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override"
+  COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")
@@ -1723,7 +1679,7 @@ END
 // - As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
 // - Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
 WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~
+  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~ // sppr704
     LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 142 "match_parameter2" = 8 END // op74 naturally provides the "Blind" portrait icon
@@ -1735,7 +1691,7 @@ END
 // - recode from scratch so as to use `op326` effects instead of messy `op177` effects
 // - its insta-death effect against `UNDEAD` is now blocked by `"%CLERIC_DEATH_WARD%"` and the like
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~
+  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~ // sppr707, a-c
   LAF ~CLERIC_SUNRAY~ END
 END
 
@@ -1744,7 +1700,7 @@ END
 // - recode from scratch so as to use `op324` magic instead of messy `op177` effects
 // - make sure it causes arcane spell failure (not just divine spell failure)
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/holy_unholy_word.tph~
+  INCLUDE ~eefixpack/files/tph/luke/holy_unholy_word.tph~ // sppr710, sppr715
   LAF ~CLERIC_HOLY_UNHOLY_WORD~ END
 END
 
@@ -1753,7 +1709,7 @@ END
 // - remove duplicate `op233` effect(s)
 // - *"For each round the victim remains inside the cloud, <PRO_HESHE> must make a Save vs. Spell at -2 or run away in fear for one round."* => match `BG2EE` implementation
 WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/creeping_doom.tph~
+  INCLUDE ~eefixpack/files/tph/luke/creeping_doom.tph~ // sppr717, sppr717a
   LAF ~CLERIC_CREEPING_DOOM~ END
 END
 
@@ -1761,7 +1717,7 @@ END
 // **Creeping Doom** (Black Dragon)
 // - use same projectile as `"%CLERIC_CREEPING_DOOM%"`
 WITH_SCOPE BEGIN
-  COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override"
+  COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override" // spin689
     LPF "ALTER_SPELL_HEADER" INT_VAR "projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect") END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1774,7 +1730,7 @@ END
 // - subspell should not play a casting sound
 WITH_SCOPE BEGIN
   WITH_SCOPE BEGIN
-    COPY_EXISTING "%BLACKGUARD_ABSORB_HEALTH%.spl" "override"
+    COPY_EXISTING "%BLACKGUARD_ABSORB_HEALTH%.spl" "override" // spcl102
       LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "resist_dispel" = BIT0 END
     BUT_ONLY_IF_IT_CHANGES
   END

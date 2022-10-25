@@ -15,6 +15,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   bdcrus7d, null, null, null, null, null, null, bdcrus7d, null => bdcrus7d // tbd, cam: crusaders with the wrong DV
   bdcrus8d, null, null, null, null, null, null, bdcrus8d, null => bdcrus8d // tbd, cam: crusaders with the wrong DV
   bdcrus9d, null, null, null, null, null, null, bdcrus9d, null => bdcrus9d // tbd, cam: crusaders with the wrong DV
+  bddyingm, 164, null, 7, null, null, null, null, null => bddyingm // luke: Make sure plants are properly flagged as such
   coran, null, null, null, null, null, null, null, 0x40000000 => coran // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   coran5, null, null, null, null, null, null, null, 0x40000000 => coran5 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   dopkie, null, 111, null, null, null, null, null, null => dopkie // tbd, cam (from scs): Kiel the Legion Killer CLERIC > DOPPLEGANGER
