@@ -118,6 +118,37 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////                                                  \\\\\
+///// tlk comparator                                   \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN ~Automatic TPH generation from tra files~ DESIGNATED 998
+REQUIRE_PREDICATE ((!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~0~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~1~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~2~)) ~Do not run with EEFP installed in case you're using the game tlk~
+NO_LOG_RECORD
+DEPRECATED ~For internal use only~
+
+// cam's very sketchy tool for generating GTUs by comparing 2.6 tlk files with the tlk files downlaoded from the BD translation tool
+// more info in the cd_tlk.tph library
+
+INCLUDE ~eefixpack/files/lib/cd_tlk.tph~
+
+OUTER_SPRINT lang pl
+ACTION_FOR_EACH game IN sod iwdee bg2ee /* pstee */ BEGIN
+  LAF cd_tlk_comparator INT_VAR f_tlk_exists = 1 STR_VAR      // dialogf.tlk exists for Polish
+    m_tlk_26       = ~eefixpack/tlk/%game%_%lang%_m_26.tlk~   // male/sole tlk that ships with 2.6 (with path)
+    m_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_m_tool.tlk~ // male/sole tlk from the Beamdog tool (with path)
+    f_tlk_26       = ~eefixpack/tlk/%game%_%lang%_f_26.tlk~   // female tlk that ships with 2.6 (with path)
+    f_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_f_tool.tlk~ // female tlk from the Beamdog tool (with path)
+    output         = ~gtu_%game%.tra~
+  END
+END
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
 ///// tph-from-tra generation                          \\\\\
 /////                                                  \\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
