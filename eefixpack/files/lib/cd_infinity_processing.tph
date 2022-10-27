@@ -1,0 +1,7 @@
+INCLUDE ~eefixpack/languages/%LANGUAGE%/infinity.tph~
+
+COPY_EXISTING ~l_%LANGUAGE%.lua~ ~override~
+  PATCH_PHP_EACH cd_update_infinity_strings AS key => val BEGIN
+    REPLACE_TEXTUALLY ~^\([ %TAB%]*%key%[ %TAB%]*=[ %TAB%]*"\).+",~ ~\1%val%",~
+  END
+  BUT_ONLY  
