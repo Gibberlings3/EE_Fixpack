@@ -45,6 +45,8 @@ README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-
 
 AUTO_TRA ~eefixpack/languages/%LANGUAGE%/%s~
 
+ASK_EVERY_COMPONENT // despite being hidden, WeiDU now thinks there are enough components for the install all prompt
+
 LANGUAGE
   ~English~
   ~en_us~
@@ -100,18 +102,78 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @2 DESIGNATED 2
-REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tra~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tra~))) OR
-                   ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tra~)) OR
-                   ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tra~)) OR
-                   ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tra~))) @5
+REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tph~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tph~))) OR
+                   ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tph~)) OR
+                   ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tph~)) OR
+                   ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tph~)) OR
+                   ((!GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~))) @5
 
-ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ BEGIN
+ACTION_IF !game_is_pstee AND FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~ BEGIN // for updating l_%lang%.lua (UI and help strings across the non-pstee games)
+  INCLUDE ~eefixpack/files/lib/cd_infinity_processing.tph~
+END
+
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ BEGIN // mainline tlk updates
   INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~
 END
 
 ACTION_IF game_includes_sod BEGIN
-  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ BEGIN
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ BEGIN // mainline tlk updates, SoD edition
     INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~
+  END
+END
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// infinity strings                                 \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN ~Automatic TPH generation for Infinity Strings~ DESIGNATED 997
+REQUIRE_PREDICATE ((!GAME_IS ~pstee~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~0~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~1~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~2~)) ~Do not run with EEFP installed in case you're using the game tlk~
+NO_LOG_RECORD
+DEPRECATED ~For internal use only~
+
+// cam's very sketchy tool for generating Infinity Strings (aka the l_en_us.lua files) updates based
+// off of a CSV downloaded from the Beamdog translation tool
+// more info in the cd_infinity_strings.tph library
+
+INCLUDE ~eefixpack/files/lib/cd_infinity_strings.tph~
+
+LAF cd_infinity_comparator STR_VAR lang = ~pl_pl~ END
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// tlk comparator                                   \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN ~Automatic TPH generation from tra files~ DESIGNATED 998
+REQUIRE_PREDICATE ((!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~0~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~1~) AND
+                   (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~2~)) ~Do not run with EEFP installed in case you're using the game tlk~
+NO_LOG_RECORD
+DEPRECATED ~For internal use only~
+
+// cam's very sketchy tool for generating GTUs by comparing 2.6 tlk files with the tlk files downlaoded from the BD translation tool
+// more info in the cd_tlk.tph library
+
+INCLUDE ~eefixpack/files/lib/cd_tlk.tph~
+
+OUTER_SPRINT lang pl
+ACTION_FOR_EACH game IN sod iwdee bg2ee /* pstee */ BEGIN
+  LAF cd_tlk_comparator INT_VAR f_tlk_exists = 1 STR_VAR      // dialogf.tlk exists for Polish
+    m_tlk_26       = ~eefixpack/tlk/%game%_%lang%_m_26.tlk~   // male/sole tlk that ships with 2.6 (with path)
+    m_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_m_tool.tlk~ // male/sole tlk from the Beamdog tool (with path)
+    f_tlk_26       = ~eefixpack/tlk/%game%_%lang%_f_26.tlk~   // female tlk that ships with 2.6 (with path)
+    f_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_f_tool.tlk~ // female tlk from the Beamdog tool (with path)
+    output         = ~gtu_%game%.tra~
   END
 END
 
@@ -152,9 +214,8 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////                                                  \\\\\
 ///// Temporary test space                             \\\\\
-///// (very temporary, Cam will nuke it as soon as he  \\\\\
-///// spots it)                                        \\\\\
+/////                                                  \\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
-BEGIN "Temporary test space" DESIGNATED 1000
+BEGIN ~Temporary test space~ DESIGNATED 1000
