@@ -1025,6 +1025,13 @@ COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
   BUT_ONLY 
 
+//tbd, cam
+// wrong projectiles for mephit flame fan and hell hound breath https://www.gibberlings3.net/forums/topic/36105-a-projectile-issue/
+COPY_EXISTING ~spin938.spl~ ~override~ // mephit flame fan
+              ~spin956.spl~ ~override~ // hell hound flame
+  LPF ALTER_HEADER INT_VAR projectile = 361 END // burnhand.pro
+  BUT_ONLY
+
 // tbd, cam
 // shield spell shouldn't stack
 COPY_EXISTING ~spwi114.spl~ ~override~
