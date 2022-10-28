@@ -164,6 +164,14 @@ COPY_EXISTING ~cut41q.bcs~ ~override~
        DayNight(10) TextScreen("SCRTXT05")~ // delay a few more hours, since the githyanki is spotted "on the fouth morn", but catches you a bit later
   END
   BUT_ONLY   
+
+// tbd, cam
+// variable that tracks if you know Dorn always get set when sorting out journal entries
+COPY_EXISTING ~dorn.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~SetGlobal("OHD_KNOWS_DORN","LOCALS",1)[ %TAB%%LNL%%MNL%%WNL%]+\(SetGlobal("OHD_JOURNAL_BEGIN","LOCALS",2)\)~ ~\1~
+  END
+  BUT_ONLY  
   
 // tbd, cam
 // firkraag should despawn at the copper coronet once you engage in the windpear events
