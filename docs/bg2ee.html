@@ -2,18 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Fixes for BG2EE</title>
 <style type="text/css">
-.bg2fp_modder {
+.bg2fp_beta {
 	color:#f00;
+}
+.bg2fp_modder {
+	color:#f0f;
 }
 </style>
 </head>
 
 <body>
-<p>Developer note: this is essentially copy-pasted (minus this paragraph, natch) into the documentation pages on the G3 project page. Feel free to add/adjust the documentation as needed. Modder notes are left visible but their class is coded in red for easier visual confirmation. </p>
+<p><strong>Developer note:</strong> this is essentially copy-pasted (minus this paragraph, natch) into the documentation pages on the G3 project page. Feel free to add/adjust the documentation as needed. The class <span class="bg2fp_beta">bg2fp_beta (red)</span> should be used to mark fixes that are in the Beta Core Fixes (nothing yet) and the <span class="bg2fp_modder">bg2fp_modder (magenta)</span> class should be used for modder notes. In the live pages, these are normally colored, but hidden, unless the user enables them. </p>
 <!-- documentation begins here -->
-<p> This documentation is complete as of October 21, 2022. </p>
+<p> This documentation is complete as of October 28, 2022. </p>
 <p>
   <input id="cd_modder_show" name="cd_modder_show" onclick="$('.bg2fp_modder').css({'display':'block'}); $('span.bg2fp_modder').css({'display':'inline'}); $('#cd_modder_show').attr('disabled', 'disabled'); $('#cd_modder_hide').removeAttr('disabled');" type="button" value="Show Modder Notes" />
   <input disabled="disabled" id="cd_modder_hide" name="cd_modder_hide" onclick="$('.bg2fp_modder').css({'display':'none'}); $('span.bg2fp_modder').css({'display':'none'}); $('#cd_modder_hide').attr('disabled', 'disabled'); $('#cd_modder_show').removeAttr('disabled');" type="button" value="Hide Modder Notes" />
@@ -52,6 +55,7 @@
   <li>In certain branches, Rasaad can duplicate items when he leaves the party due to how his actions are ordered. <span class="bg2fp_modder">(rasaadj.dlg)</span></li>
   <li>If you spare Solaufein, depending on the PC's replies Solaufein can hand over his cloak even though you never asked for it. He also misses setting some journal entries. <span class="bg2fp_modder">(udsola01.dlg)</span></li>
   <li>When Aerie leaves the party and returns to the circus, she could move to impassable ground. <span class="bg2fp_modder">(aeriej.dlg, baerie.dlg)</span></li>
+  <li>Dorn's first  talk with the PC is supposed to be one of three, depending on your reputation and whether you known him from the events in BG. However, his script was always setting the variable that you knew him, so you always got one of the three banters and never saw the other two options. <span class="bg2fp_modder">(dorn.bcs)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
