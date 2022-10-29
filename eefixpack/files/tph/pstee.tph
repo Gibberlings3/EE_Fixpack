@@ -14,6 +14,12 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// Names of parameters 2 and 3 for ExploreMapChunk() should be swapped in ACTION.IDS
+COPY_EXISTING ~action.ids~ ~override~
+  REPLACE_TEXTUALLY ~435 ExploreMapChunk(P:Center\*,I:Radius\*,I:Mode\*)~ ~435 ExploreMapChunk(P:Center*,I:Mode*,I:Radius*)~
+  BUT_ONLY
+
 COPY_EXISTING ~animate.ids~ ~override~
   REPLACE_TEXTUALLY ~0xf005[ %TAB%]+cl_4_Collector_Thug~ ~0xf006 cl_4_Collector_Thug~
   REPLACE_TEXTUALLY ~0xf042[ %TAB%]+Trelon~ ~0xf043 Trelon~
