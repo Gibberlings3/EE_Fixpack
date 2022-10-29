@@ -357,6 +357,19 @@ COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
   LPF ALTER_EFFECT INT_VAR match_opcode = 126 parameter1 = 400 parameter2 = 2 END 
 
 // tbd, cam
+// Launchers that generate their own ammo override the projectile of loaded ammo
+COPY_EXISTING ~bow15.itm~   ~override~ // tansheron's bow
+              ~bow19.itm~   ~override~ // shortbow of gesen
+              ~compb15.itm~ ~override~ // tansheron's bow (1pp clone)
+              ~compb19.itm~ ~override~ // shortbow of gesen (1pp clone)
+              ~slng07.itm~  ~override~ // sling of seeking
+              ~wasling.itm~ ~override~ // sling of everard
+              ~xbow15.itm~  ~override~ // firetooth, base
+              ~xbow16.itm~  ~override~ // firetooth, upgraded
+  LPF ALTER_HEADER INT_VAR match_type = 4 projectile = 1 END // remove projectile
+  BUT_ONLY
+
+// tbd, cam
 // lmd via foebane lacks normal immunity for golems & undead
 COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
               ~sw1h63.itm~  ~override~ // foebane +5
