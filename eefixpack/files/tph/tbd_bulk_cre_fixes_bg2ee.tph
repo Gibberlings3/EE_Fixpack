@@ -7,6 +7,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   anomen6, null, null, null, null, null, null, null, 0x40000000 => anomen6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   anomen7, null, null, null, null, null, null, null, 0x40000000 => anomen7 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   anomen8, null, null, null, null, null, null, null, 0x40000000 => anomen8 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  elemhydr, null, 219, null, null, null, null, null, null => elemhydr // tbd, cam (from MiH): water elementals should use ELEMENTAL_WATER as their class
+  elwatg01, null, 219, null, null, null, null, null, null => elwatg01 // tbd, cam (from MiH): water elementals should use ELEMENTAL_WATER as their class
   imoen, null, null, null, null, null, null, null, 0x40000000 => imoen // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   imoen10, null, null, null, null, null, null, null, 0x40000000 => imoen10 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   imoen15, null, null, null, null, null, null, null, 0x40000000 => imoen15 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
@@ -19,10 +21,11 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   mazzy12, null, null, null, null, null, null, null, 0x40000000 => mazzy12 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   mazzy15, null, null, null, null, null, null, null, 0x40000000 => mazzy15 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   mazzy8, null, null, null, null, null, null, null, 0x40000000 => mazzy8 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
-  mazzy15, null, null, null, null, null, null, null, 0x40000000 => mazzy15 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  mazzy9, null, null, null, null, null, null, null, 0x40000000 => mazzy9 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   ohbliz01, 162, null, null, null, null, null, null, null => ohbliz01 // BGCS-469, luke: Lizard Men should be flagged as 'LIZARDMAN'
   ohbliz02, 162, null, null, null, null, null, null, null => ohbliz02 // BGCS-469, luke: Lizard Men should be flagged as 'LIZARDMAN'
   ohbliz03, 162, null, null, null, null, null, null, null => ohbliz03 // BGCS-469, luke: Lizard Men should be flagged as 'LIZARDMAN'
+  ohbwat01, null, 219, null, null, null, null, null, null => ohbwat01 // tbd, cam (from MiH): water elementals should use ELEMENTAL_WATER as their class
   sarevok, null, null, null, null, null, null, null, 0x40000000 => sarevok // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
 
 END

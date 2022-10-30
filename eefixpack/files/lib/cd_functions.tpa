@@ -801,3 +801,197 @@ BEGIN
   END
 
 END
+
+/////                                                  \\\\\
+///// cd_define_area_vertices                          \\\\\
+/////                                                  \\\\\
+
+/* 
+angel found a number of opened doors with broken/missing vertices, and fixes
+them in his MiH Fixes & Restorations. Unfortunately, they were fixed with SFO
+so they needed to be converted to bogstandard functions. This function allow 
+you to alter the vertices of any area structure--containers, regions, or the 
+four sets of vertices used by doors--by deleting the existing vertices and 
+using an external cd_define_area_vertices_array for the new vertices. This 
+array *must* be defined prior to the function launch. 
+
+The bounding box and launch points are optional to specify, though the 
+bounding box values are ignored for impeded door vertices since they don't 
+have a bounding box. 
+*/
+
+DEFINE_PATCH_FUNCTION cd_define_area_vertices
+  INT_VAR bounding_left   = "-1" // optional
+          bounding_top    = "-1" // optional
+          bounding_right  = "-1" // optional
+          bounding_bottom = "-1" // optional 
+          launch_point_x  = "-1" // optional
+          launch_point_y  = "-1" // optional
+  STR_VAR struct_name  = ~~ // required: name of the door/region/container to be patched
+          struct_type  = ~~ // required with allowed values: container, region, door_open, door_closed, door_impeded_open, door_impeded_closed
+BEGIN
+
+  SET door_internal = "-1"
+  PATCH_IF ("%struct_type%" STRING_COMPARE_REGEXP "door_\(open\|closed\|impeded_open\|impeded_closed\)" = 0) BEGIN // any door
+    READ_LONG  0xa4 struct_num
+    READ_LONG  0xa8 struct_off
+    SET struct_length = 0xc8
+    SET local_launch_off = 0x74
+    PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "door_open" = 0) BEGIN // open door  
+      SET local_bound_off = 0x38
+      SET local_vert_idx_off = 0x2c
+      SET local_vert_num_off = 0x30
+      SET door_internal = 4
+    END ELSE 
+    PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "door_closed" = 0) BEGIN // closed door  
+      SET local_bound_off = 0x40
+      SET local_vert_idx_off = 0x34
+      SET local_vert_num_off = 0x32
+      SET door_internal = 3
+    END ELSE  
+    PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "door_impeded_open" = 0) BEGIN // open, impeded door  
+      SET local_bound_off = 0
+      SET local_vert_idx_off = 0x48
+      SET local_vert_num_off = 0x4c
+      SET door_internal = 2
+    END ELSE BEGIN // closed, impeded door
+      SET local_bound_off = 0
+      SET local_vert_idx_off = 0x50
+      SET local_vert_num_off = 0x4e
+      SET door_internal = 1
+    END   
+  END ELSE 
+  PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "container" = 0) BEGIN // container  
+    SET local_bound_off = 0x38
+    SET local_vert_idx_off = 0x54
+    SET local_vert_num_off = 0x50
+    SET local_launch_off = 0x34
+    READ_SHORT 0x74 struct_num
+    READ_LONG  0x70 struct_off
+    SET struct_length = 0xc0
+    SET door_internal = 0
+  END ELSE 
+  PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "region" = 0) BEGIN // region/trigger 
+    SET local_bound_off = 0x22
+    SET local_vert_idx_off = 0x2c
+    SET local_vert_num_off = 0x2a
+    SET local_launch_off = 0x70
+    READ_SHORT 0x5a struct_num
+    READ_LONG  0x5c struct_off
+    SET struct_length = 0xc4
+    SET door_internal = 0
+  END
+  PATCH_IF door_internal < 0 BEGIN 
+    PATCH_PRINT ~ == No changes made with cd_define_area_vertices: Unknown structure type specified (%struct_type%)~
+  END ELSE BEGIN  
+    SET vert_delta = 0 
+    READ_LONG  0x7c vert_off
+    READ_SHORT 0x80 vert_num
+    FOR (index = 0 ; index < struct_num ; ++index) BEGIN
+      READ_ASCII (struct_off + 0x00 + (index * struct_length)) name_check
+      PATCH_IF ("%name_check%" STRING_COMPARE_CASE "%struct_name%") BEGIN // NOT the matched door/region/container
+        PATCH_IF vert_delta != 0 BEGIN // don't bother if number of vertices hasn't changed (yet)
+          PATCH_IF door_internal = 0 BEGIN // update container/region
+            WRITE_LONG (struct_off + local_vert_idx_off + (index * struct_length)) THIS + vert_delta // update vertex index
+          END ELSE BEGIN // update four door indices
+            WRITE_LONG (struct_off + 0x2c + (index * struct_length)) THIS + vert_delta // open door vertex index
+            WRITE_LONG (struct_off + 0x34 + (index * struct_length)) THIS + vert_delta // closed door vertex index
+            WRITE_LONG (struct_off + 0x48 + (index * struct_length)) THIS + vert_delta // impeded-open door vertex index
+            WRITE_LONG (struct_off + 0x50 + (index * struct_length)) THIS + vert_delta // impeded-closed door vertex index
+          END    
+        END  
+      END ELSE BEGIN // matched door/region/container
+        PATCH_IF local_bound_off != 0 BEGIN // skip for impeded doors
+          PATCH_IF bounding_left >= 0 BEGIN // only if set
+            WRITE_SHORT (struct_off + local_bound_off + 0x00 + (index * struct_length)) bounding_left   // set the new bounding box
+          END  
+          PATCH_IF bounding_top >= 0 BEGIN // only if set
+            WRITE_SHORT (struct_off + local_bound_off + 0x02 + (index * struct_length)) bounding_top    // set the new bounding box
+          END  
+          PATCH_IF bounding_right >= 0 BEGIN // only if set
+            WRITE_SHORT (struct_off + local_bound_off + 0x04 + (index * struct_length)) bounding_right  // set the new bounding box
+          END  
+          PATCH_IF bounding_bottom >= 0 BEGIN // only if set
+            WRITE_SHORT (struct_off + local_bound_off + 0x06 + (index * struct_length)) bounding_bottom // set the new bounding box
+          END  
+        END  
+        PATCH_IF launch_point_x >= 0 BEGIN // only if set
+          WRITE_SHORT (struct_off + local_launch_off + 0x00 + (index * struct_length)) launch_point_x    // set the new x launch coordinates
+        END  
+        PATCH_IF launch_point_y >= 0 BEGIN // only if set
+          WRITE_SHORT (struct_off + local_launch_off + 0x02 + (index * struct_length)) launch_point_y    // set the new y launch coordinates
+        END  
+        READ_LONG   (struct_off + local_vert_idx_off + (index * struct_length)) struct_vert_idx      
+        READ_SHORT  (struct_off + local_vert_num_off + (index * struct_length)) struct_vert_num    
+        PATCH_IF struct_vert_num != 0 BEGIN // delete old vertices first
+          DELETE_BYTES (vert_off + (0x04 * struct_vert_idx)) (struct_vert_num * 0x04)
+          SET vert_delta -= struct_vert_num
+          SET struct_vert_num = 0
+        END
+        PATCH_PHP_EACH cd_define_area_vertices_array AS coords => foo BEGIN
+          INSERT_BYTES (vert_off + 0x00 + (0x04 * (struct_vert_num + struct_vert_idx))) 0x04   
+          WRITE_SHORT  (vert_off + 0x00 + (0x04 * (struct_vert_num + struct_vert_idx))) coords_0      
+          WRITE_SHORT  (vert_off + 0x02 + (0x04 * (struct_vert_num + struct_vert_idx))) coords_1      
+          SET struct_vert_num += 1    
+          SET vert_delta += 1
+        END   
+        WRITE_SHORT  (struct_off + local_vert_num_off + (index * struct_length)) struct_vert_num  
+        // since doors have four vertex indices, may need additional vertex index updates for anything other than the last one (impeded-closed)
+        PATCH_IF door_internal > 1 BEGIN      // impeded-open, closed, or open
+          WRITE_LONG (struct_off + 0x50 + (index * struct_length)) THIS + vert_delta     // impeded-closed index
+          PATCH_IF door_internal > 2  BEGIN   // closed or open
+            WRITE_LONG (struct_off + 0x48 + (index * struct_length)) THIS + vert_delta   // impeded-open index
+            PATCH_IF door_internal > 3  BEGIN // open                                         
+              WRITE_LONG (struct_off + 0x34 + (index * struct_length)) THIS + vert_delta // closed index 
+            END
+          END
+        END // bonus door check 
+      END // match name check     
+    END // end structure loop
+    
+    // now, to check everything else that uses vertices and update their indices if are listed after the new insertions/deletions
+    PATCH_IF vert_delta != 0 BEGIN // don't bother if same number of vertices
+      PATCH_FOR_EACH offset IN 0x54 0x5c 0x60 0x68 0x70 0x78 /* 0x7c */ 0x84 0x88 0x90 0xa0 0xa8 0xb0 0xb8 0xbc 0xc0 0xc4 0xcc BEGIN
+        READ_LONG offset off_check
+        PATCH_IF off_check > vert_off BEGIN // if section is after vertices, adjust accordingly
+          WRITE_LONG offset (THIS + (0x04 * vert_delta)) 
+        END
+      END      
+      PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "region") BEGIN // update region indices for containers/door patches
+        READ_SHORT 0x5a region_num 
+        READ_LONG  0x5c region_off
+        FOR (index = 0 ; index < region_num ; ++index) BEGIN
+          READ_LONG (region_off + 0x2c + (index * 0xc4)) vert_idx
+          PATCH_IF vert_idx > struct_vert_idx BEGIN 
+            WRITE_LONG (region_off + 0x2c + (index * 0xc4)) vert_idx + vert_delta
+          END
+        END   
+      END  
+      PATCH_IF ("%struct_type%" STRING_COMPARE_CASE "container") BEGIN // update container indices for region/door patches
+        READ_SHORT 0x74 cont_num 
+        READ_LONG  0x70 cont_off
+        FOR (index = 0 ; index < cont_num ; ++index) BEGIN
+          READ_LONG (cont_off + 0x50 + (index * 0xc0)) vert_idx
+          PATCH_IF vert_idx > struct_vert_idx BEGIN 
+            WRITE_LONG (cont_off + 0x50 + (index * 0xc0)) vert_idx + vert_delta
+          END
+        END    
+      END  
+      PATCH_IF !door_internal BEGIN // update door indices for container/region patches
+        READ_LONG 0xa4 door_num 
+        READ_LONG 0xa8 door_off
+        FOR (index = 0 ; index < door_num ; ++index) BEGIN
+          PATCH_FOR_EACH local_off IN 0x2c 0x34 0x48 0x50 BEGIN // checks open door index, closed door index, impeded-open index, impeded-closed index
+            READ_LONG (door_off + local_off + (index * 0xc8)) vert_idx
+            PATCH_IF vert_idx > struct_vert_idx BEGIN 
+              WRITE_LONG (door_off + local_off + (index * 0xc8)) vert_idx + vert_delta
+            END
+          END  
+        END    
+      END   
+      WRITE_SHORT 0x80 vert_num + vert_delta
+    END // vert_delta check  
+    
+  END // end valid structure check
+  
+END

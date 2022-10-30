@@ -144,6 +144,22 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(NumDeadLT("rogron",6)\)~ ~\1 Global("CDDelonSpoke","GLOBAL",1)~
   END
   BUT_ONLY  
+
+// tbd, cam  (from MiH)
+// open all shadow doors if shade lord is defeated
+COPY_EXISTING ~ar1401.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(TriggerActivation("Tran1404",TRUE)\)~ ~\1 OpenDoor("ShadowDoor01") OpenDoor("ShadowDoor02") OpenDoor("ShadowDoor03")~
+  END
+  BUT_ONLY
+
+// tbd, cam (from MiH)
+// priest spawns inside slime
+COPY_EXISTING ~ar2200.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~CreateCreature("dagmag01",\[[0-9]+\.[0-9]+\],[0-9A-Z]+)~ ~CreateCreature("dagmag01",[4401.3527],NW)~
+  END
+  BUT_ONLY
   
 // tbd, cam  
 // siege camp reinforcements checking wrong blocks
@@ -249,6 +265,8 @@ EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add scri
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ // tbd, cam (from MiH): fix vertex issues for doors and regions
+
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
 LAF cd_move_actor INT_VAR old_x =  398 old_y =  527 new_x =  448 new_y =  537 STR_VAR area = ar0305 END // Shadow Thief (actor #4) at position [398.527] is on impassable terrain
@@ -293,8 +311,26 @@ COPY_EXISTING ~ar2900.are~ ~override~
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph~ // bulk general changes
 
+INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment changes
+
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+
+// tbd, cam (from MiH)
+// give Drizzt proper dual-wielding setup as he has in bg
+COPY_EXISTING ~c6drizz.cre~  ~override~ 
+              ~c6drizz2.cre~ ~override~ 
+              ~c6drizz3.cre~ ~override~
+              ~drizzt.cre~   ~override~ 
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = sw1h16 END // delete twinkle in glove slot
+  REPLACE_CRE_ITEM helmnoan #0 #0 #0 NONE HELMET          // add no-animation helmet (replaces Icingdeath)
+  REPLACE_CRE_ITEM sw1h16   #0 #0 #0 NONE WEAPON1 EQUIP   // re-add Twinkle as main weapon (replaces drizzts)
+  ADD_CRE_ITEM     sw1h15   #0 #0 #0 NONE SHIELD          // re-add icingdeath as offhand weapon
+  SET_BG2_PROFICIENCY PROFICIENCYLONGSWORD 2
+  SET_BG2_PROFICIENCY PROFICIENCYSCIMITARWAKISASHININJATO 2
+  SET_BG2_PROFICIENCY PROFICIENCYDAGGER 2
+  SET_BG2_PROFICIENCY PROFICIENCYSHORTBOW 2
+  SET_BG2_PROFICIENCY PROFICIENCY2WEAPON 3
 
 // tbd, cam
 // pocket plane challenge creatures shouldn't drop stuff
@@ -375,6 +411,14 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
               ~sw1h63.itm~  ~override~ // foebane +5
   LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 146 opcode = 324 parameter1 = 0 parameter2 = 55 timing = 0 resist_dispel = 0 STR_VAR match_resource = spin104a resource = EVAL ~%SOURCE_RES%~ END
   
+// tbd, cam (from MiH)
+// flindbar should decrease thac0 of target, not increase it
+COPY_EXISTING ~flind1.itm~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 54 END // alter_effect can't set negative, so MAX LAZINESS ENGAGED
+  LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 54 target = 2 parameter1 = "-4" duration = 20 savingthrow = BIT3 END
+  BUT_ONLY
+  
+// tbd, cam
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
@@ -466,6 +510,15 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
+  
+// tbd, cam (from MiH)
+// correct ground icon for quiver/case of plenty
+COPY_EXISTING ~quiver01.itm~ ~override~ // quiver of plenty +1
+              ~quiver02.itm~ ~override~ // case of plenty +1
+              ~quiver03.itm~ ~override~ // quiver of plenty +2
+              ~quiver04.itm~ ~override~ // case of plenty +2
+  WRITE_ASCII 0x44 ~gquiver0~ #8 // ground icon
+  BUT_ONLY
   
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
