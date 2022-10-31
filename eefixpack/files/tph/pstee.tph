@@ -28,6 +28,7 @@ COPY_EXISTING ~animate.ids~ ~override~
 BUT_ONLY
 
 INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
