@@ -16,6 +16,8 @@ END
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+
 /*
 luke
 **splprot.2da**
@@ -59,7 +61,7 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
 INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
  
-// CLEAR_IDS_MAP // reload ids, if we end up having any changes
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\

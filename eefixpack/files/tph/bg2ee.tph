@@ -16,6 +16,8 @@ END
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+
 /*
 luke
 **splprot.2da**
@@ -47,6 +49,8 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 COPY_EXISTING ~25stweap.2da~ ~override~
   REPLACE_TEXTUALLY ~[ %TAB%]ham07[ %TAB%]~ ~ hamm07 ~
   PRETTY_PRINT_2DA
+ 
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\

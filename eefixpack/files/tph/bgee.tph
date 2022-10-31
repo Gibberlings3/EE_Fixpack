@@ -38,6 +38,8 @@ COPY_EXISTING ~bgee.lua~ ~override~
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+
 // tbd, cam (from jmerry)
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
@@ -137,6 +139,8 @@ WITH_SCOPE BEGIN
 END
 
 LAM "SPELL_IDS" // relaunch so as to take into account the BG2 entries
+ 
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
