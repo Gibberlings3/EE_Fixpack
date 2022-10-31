@@ -594,6 +594,15 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 COMPILE ~eefixpack/files/baf/gretek.baf~
 
 // tbd, cam
+// mulahey stutter fix (see also mulahe.dlg) https://www.gibberlings3.net/forums/topic/35178-scripting-bugs/#comment-308786
+COPY_EXISTING ~mulahey.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("\(CDMulahey\|TalkedToMulahey\)","\(AR5405\|GLOBAL\)",0)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
+    REPLACE_TEXTUALLY ~\(Allegiance(Myself,NEUTRAL)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
+  END
+  BUT_ONLY  
+
+// tbd, cam
 // region/container scripts can't use LOCALS-scoped variables
 // https://www.gibberlings3.net/forums/topic/35914-scripting-using-locals-in-non-sprite-triggers/
 COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop once rilsa is buried
