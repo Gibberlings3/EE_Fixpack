@@ -77,3 +77,7 @@ ALTER_TRANS cyderm BEGIN 5 END BEGIN 2 END BEGIN ACTION ~SetGlobal("DMWWCyd","Gl
 // disable silke's chap-7-specific dialogue that implies she's at the coronation, when she's still in beregost
 ADD_TRANS_TRIGGER silke 12 ~False()~ DO 0 // leads to silke dialogue about a 'wondrous party'
 ADD_TRANS_TRIGGER silke 17 ~False()~ DO 2 // reply mentions you're there to save the dukes
+
+// tbd, cam
+// rasaad's quest can be missed when kicking him out under certain conditions: https://www.gibberlings3.net/forums/topic/35424-b
+ADD_STATE_TRIGGER rasaadj 69 ~!Global("RASAAD_ROMANCE","GLOBAL",1)~ // nice
