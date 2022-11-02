@@ -1,0 +1,23 @@
+// tbd, cam
+// [lore] What the heck is Ur-gothoz anyway? https://www.gibberlings3.net/forums/topic/35636-lore-what-the-heck-is-ur-gothoz-anyway/
+
+// ohdugoth.cre has animation corrected from cornugon (devil) to glabrezu (demon) in bulk creature changes (docs/eefixpack_array.ods and eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph)
+// has alignment corrected from le (devil) to ce (demon) for ohdugcut.cre/ohdugoth.cre in alignment changes (eefixpack/files/tph/alignment_changes_bg2ee.tph)
+
+// a second animation correction when he reveals his true form
+COPY_EXISTING ~ohdugoth.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Polymorph(CORNUGON)~ ~Polymorph(GLABREZU)~
+  END
+  BUT_ONLY  
+  
+// corrections for Dorn's Abyssal Blade
+COPY_EXISTING ~ohdsw2hb.eff~ ~override~ // bonus damage vs. devils (originally for class: imp) [already filtered via race: demonic]
+  WRITE_LONG 0x1c 19 // lawful evil
+  WRITE_LONG 0x20  8 // from alignmen.ids
+  BUT_ONLY  
+  
+COPY_EXISTING ~ohdsw2hc.eff~ ~override~ // bonus damage vs. demons (originally for class: tanarri) [already filtered via race: demonic]
+  WRITE_LONG 0x1c 51 // chaotic evil
+  WRITE_LONG 0x20  8 // from alignmen.ids
+  BUT_ONLY  
