@@ -27,3 +27,26 @@ END
 // npcs spawning/moving on impassable terrain (see also ar0800.are, ar1000.are)
 REPLACE_ACTION_TEXT aeriej ~MoveGlobal("AR0607","Aerie",\[1034.1034\])~ ~MoveGlobal("AR0607","Aerie",[469.437])~
 REPLACE_ACTION_TEXT baerie ~MoveGlobal("AR0607","Aerie",\[1034.1034\])~ ~MoveGlobal("AR0607","Aerie",[469.437])~
+
+// tbd, cam (from MiH)
+// the option to ask Karthis al-Hezzar about the fire giants should be there on future visits
+EXTEND_TOP "hgkar01" 8 #1 IF ~~ REPLY #73162 GOTO 14 END
+
+// tbd, cam (from MiH)
+// blessed bracers should be an option to resurrect dad in saradush
+EXTEND_TOP "orphan1" 3 #3
+  IF ~HasItemEquiped("brac23",LastTalkedToBy(Myself))~ REPLY @102 DO 
+~ClearAllActions()
+StartCutSceneMode()
+FadeToColor([20.0], 0)
+Wait(2)
+MoveViewPoint([2402.1482], INSTANT)
+ActionOverride(LastTalkedToBy(Myself), JumpToPoint([2386.1386]))
+ActionOverride(LastTalkedToBy(Myself), Face(S))
+FadeFromColor([20.0], 0)
+Wait(1)
+ActionOverride(LastTalkedToBy(Myself), ForceSpellRES("jworphan","orphan2"))
+Wait(5)
+EndCutSceneMode()~ 
+  EXIT
+END

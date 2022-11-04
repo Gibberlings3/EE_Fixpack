@@ -143,4 +143,20 @@ COPY_EXISTING ~ar2200.are~ ~override~
   LPF cd_define_area_vertices INT_VAR bounding_left = 2126 bounding_top = 902 bounding_right = 2179 bounding_bottom = 988 launch_point_x = 2163 launch_point_y = 1559
                               STR_VAR struct_name = StairsD struct_type = region END
   BUT_ONLY 
+    
+COPY_EXISTING ~ar5007.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    416, 810 => 0
+    373, 788 => 0
+    373, 722 => 0
+    383, 716 => 0
+    396, 716 => 0
+    408, 726 => 0
+    411, 729 => 0
+    416, 745 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 373 bounding_top = 716 bounding_right = 416 bounding_bottom = 810 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  BUT_ONLY  
 
