@@ -219,3 +219,68 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
+
+ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
+  INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
+END
+
+
+/*
+COPY_EXISTING_REGEXP GLOB ~^.+\itm$~ ~override~ 
+  READ_SHORT 0x26 str
+  READ_BYTE 0x28 strex
+  READ_BYTE 0x2a int
+  READ_BYTE 0x2c dex
+  READ_BYTE 0x2e wis
+  READ_BYTE 0x30 con
+  READ_BYTE 0x32 chr
+  TO_LOWER SOURCE_RES
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_str BEGIN ~%SOURCE_RES%~ => ~%str%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_strex BEGIN ~%SOURCE_RES%~ => ~%strex%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_int BEGIN ~%SOURCE_RES%~ => ~%int%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_dex BEGIN ~%SOURCE_RES%~ => ~%dex%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_wis BEGIN ~%SOURCE_RES%~ => ~%wis%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_con BEGIN ~%SOURCE_RES%~ => ~%con%~ END
+  DEFINE_ASSOCIATIVE_ARRAY cd_item_min_chr BEGIN ~%SOURCE_RES%~ => ~%chr%~ END
+  BUT_ONLY
+  
+//COPY_EXISTING ~gnoll01.cre~ ~override~
+COPY_EXISTING_REGEXP GLOB ~^.+\cre$~ ~override~ 
+  READ_LONG 0x2c0 item_num
+  PATCH_IF item_num > 0 BEGIN 
+    READ_BYTE 0x238 str
+    READ_BYTE 0x239 strex
+    READ_BYTE 0x23a int
+    READ_BYTE 0x23c dex
+    READ_BYTE 0x23b wis
+    READ_BYTE 0x23d con
+    READ_BYTE 0x23e chr
+    READ_LONG 0x2bc item_off
+    FOR (index = 0 ; index < item_num ; ++index) BEGIN
+      SPRINT debug ~~
+      READ_ASCII (item_off + 0x00 + (index * 0x14)) item
+      TO_LOWER item
+      PATCH_IF VARIABLE_IS_SET $cd_item_min_str("%item%") BEGIN 
+        //PATCH_PRINT ~checking %item% in %SOURCE_RES%~
+        SET str_check = $cd_item_min_str("%item%")
+        SET strex_check = $cd_item_min_strex("%item%")
+        SET int_check = $cd_item_min_int("%item%")
+        SET dex_check = $cd_item_min_dex("%item%")
+        SET wis_check = $cd_item_min_wis("%item%")
+        SET con_check = $cd_item_min_con("%item%")
+        SET chr_check = $cd_item_min_chr("%item%")
+        PATCH_IF str_check   > str   BEGIN SPRINT debug ~%debug% STR (%str_check% > %str%)~ END
+        PATCH_IF strex_check > strex BEGIN SPRINT debug ~%debug% STREX (%strex_check% > %strex%)~ END
+        PATCH_IF int_check   > int   BEGIN SPRINT debug ~%debug% INT (%int_check% > %int%)~ END
+        PATCH_IF dex_check   > dex   BEGIN SPRINT debug ~%debug% DEX (%dex_check% > %dex%)~ END
+        PATCH_IF wis_check   > wis   BEGIN SPRINT debug ~%debug% WIS (%wis_check% > %wis%)~ END
+        PATCH_IF con_check   > con   BEGIN SPRINT debug ~%debug% CON (%con_check% > %con%)~ END
+        PATCH_IF chr_check   > chr   BEGIN SPRINT debug ~%debug% CHR (%chr_check% > %chr%)~ END
+        PATCH_IF (~%debug%~ STRING_COMPARE_CASE ~~) BEGIN
+          PATCH_PRINT ~ == %item% cannot be wielded by %SOURCE_FILE%:%debug%~
+        END
+      END
+    END
+  END
+  BUT_ONLY
+*/

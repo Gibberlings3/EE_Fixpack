@@ -1,0 +1,22 @@
+IF
+	!See([ANYONE])
+THEN
+	RESPONSE #80
+		NoAction()
+	RESPONSE #20
+		DestroySelf()
+END
+
+IF
+	See([ANYONE])
+THEN
+	RESPONSE #20
+		RandomWalkContinuous()
+	RESPONSE #20
+		RandomWalk()
+	RESPONSE #40
+		MoveToObject(LastSeenBy(Myself))
+	RESPONSE #20
+		NoAction()
+END
+

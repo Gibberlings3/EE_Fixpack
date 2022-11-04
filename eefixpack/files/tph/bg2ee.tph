@@ -49,6 +49,12 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 COPY_EXISTING ~25stweap.2da~ ~override~
   REPLACE_TEXTUALLY ~[ %TAB%]ham07[ %TAB%]~ ~ hamm07 ~
   PRETTY_PRINT_2DA
+
+// tbd, cam
+// sync bgee/bg2ee spell.ids entries with extra sod spells
+ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
+  INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
+END
  
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 

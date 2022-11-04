@@ -1,4 +1,112 @@
+@52366 = ~Escuridão Raio de 3 Metros~
+@52367 = ~Escuridão Raio de 3 Metros
+(Alteração)
+
+Nível: 2
+Alcance: 9 metros
+Duração: 1 turno
+Tempo de Lançamento: 2
+Área de Efeito: Raio de 3 metros
+Jogada de Salvamento: Nenhuma
+
+Este feitiço causa uma escuridão completa e impenetrável. Luz normal ou mágica não funcionam dentro da área de efeito. Toda visão (incluindo infravisão) fica muito limitada, e todas as criaturas hostis dentro da área de efeito ficam cegas como se estivessem afetadas pelo feitiço de mago de primeiro círculo. Criaturas que saem da área coberta pela escuridão recuperam sua visão depois de 1 rodada.~
+@52368 = ~Fogo das Fadas~
+@52369 = ~Fogo das Fadas 
+(Alteração)
+
+Nível: 1
+Esfera: Tempo
+Alcance: Visão do laçador
+Duração: 4 rodadas/nível
+Tempo de Lançamento: 4
+Área de Efeito: Raio de 3 metros
+Jogada de Salvamento: Nenhuma
+
+Este feitiço destaca uma ou mais criaturas com um brilho violeta pálido, deixando posições e movimentos mais facilmente visíveis. Criaturas destacadas são mais fáceis de serem atingidas, recebendo uma penalidade de -2 para a Classe de Armadura.~
+@52370 = ~Luzes Dançantes~
+@52371 = ~Luzes Dançantes
+(Alteração)
+
+Nível: 1
+Alcance: Visão do lançador
+Duração: 2 rodadas/nível
+Tempo de Lançamento: 1
+Área de Efeito: Especial
+Jogada de Salvamento: Nenhuma
+
+Este feitiço cria até quatro esferas brilhantes de luz ou uma forma de luz fraca, vagamente parecida com um humanoide, e de certa forma similar a um elemental do fogo. As luzes dançantes se movem aleatoriamente sem concentração. Embora as luzes não causem dano físico, elas podem distrair os inimigos até serem dissipadas ou dispersadas por arma ou magia.~
+@56587 = ~Luz Dançante~
+@61978 = ~Armadura de Placas +1~
+@61979 = ~A armadura de placas é uma combinação da cota de malha com placas de metal cobrindo as áreas vitais, como o peito, o abdômen e a virilha. De construção similar à armadura de placas de bronze, a armadura de placas verdadeira inclui malha e couro. Este conjunto está encantado e concede bônus adicionais para a Classe de Armadura do usuário.
+
+ESTATÍSTICAS:
+
+Classe de Armadura: 2 (-1 contra corte)
+Requer:
+12 Força
+
+Peso: 20~
 @62005 = ~Amuleto de Proteção +1~
+@62009 = ~Botas da Velocidade~
+@62010 = ~Estas botas são feitas com o couro curtido de um animal como um cavalo ou um guepardo. Elas então são encantadas para permitir que o usuário se mova quase tão rápido quanto esse animal. Esse tipo de calçado é valorizado porque permite ao usuário enganar ou até evitar os oponentes. As botas não cansam o usuário para além do que a sua taxa normal de movimento lhe permitiria.
+
+ESTATÍSTICAS:
+
+Habilidades Equipadas:
+- Dobra a taxa de movimentação
+
+Peso: 4~
+@62033 = ~Anel de Resistência ao Fogo~
+@62034 = ~O usuário deste anel recebe resistência parcial à chamas, sejam elas de fontes comuns, como tochas e fogueiras, ou mágicas, como sopro de dragão e feitiços.
+
+ESTATÍSTICAS:
+
+Habilidades Equipadas:
+- Resistência ao Fogo: +40%
+
+Peso: 0~
+@62052 = ~Anel de Proteção +2~
+@62053 = ~Um anel de proteção melhora a Classe de Armadura e as Jogadas de Salvamento do usuário contra todas as formas de ataque. As propriedades mágicas desses anéis os impedem de serem utilizados com outros objetos de proteção mágica, incluindo armaduras mágicas. 
+
+ESTATÍSTICAS:
+
+Habilidades Equipadas:
+– Classe de Armadura: +2
+– Jogadas de Salvamento: +2
+
+Peso: 0~
+@62076 = ~Anel da Ação Livre~
+@62077 = ~Os inimigos têm dificuldade de parar o usuário deste anel. As runas gravadas no elo prateado protegem contra feitiços que impedem o movimento, concedendo ao usuário uma liberdade de movimento que outros não podem ter.
+
+ESTATÍSTICAS:
+
+Habilidades Equipadas:
+– O usuário fica imune a tudo que afete a mobilidade de alguma forma, seja mágico ou não. Isso inclui os feitiços Velocidade e Diminuir Velocidade. 
+
+Peso: 0~
+@69261 = ~A cimitarra, ou "shamshir", como era originalmente chamada, tem uma lâmina de gume simples com uma curva significativa, que termina num ponto afiado e longo. Ela talvez seja mais lenta do que outras armas do mesmo tipo, mas ela compensa isso com o dano que é capaz de causar. Esta arma em particular recebeu melhoramentos mágicos que complementam a habilidade de seu usuário.
+
+ESTATÍSTICAS:
+
+PACA0: +2
+Dano: 1d8+2 (cortante)
+Fator de Velocidade: 3
+Tipo de Proficiência: Cimitarra/Wakizashi/Ninjatõ
+Tipo: Uma mão
+Requer:
+10 Força
+
+Peso: 4~
+@69262 = ~Cimitarra +2~
+@70356 = ~Manoplas da Habilidade em Armas~
+@70357 = ~Estas manoplas mágicas ajudam o usuário no maneio de armas. Mesmo uma arma estranha pode ser usada com certa habilidade.
+
+ESTATÍSTICAS:
+
+Habilidades Equipadas:
+– PACA0: +1
+
+Peso: 2~
 @70365 = ~Este amuleto melhora a Classe de Armadura e Jogadas de Salvamento do usuário contra todas as formas de ataque. As propriedades mágicas do amuleto impedem que ele seja utilizado com outros objetos mágicos de proteção, incluindo armaduras encantadas.
 
 ESTATÍSTICAS:
@@ -17,57 +125,6 @@ Habilidades Equipadas:
 – Classe de Armadura: +4 contra ataques de esmagamento
 
 Peso: 2~
-@62009 = ~Botas da Velocidade~
-@62010 = ~Estas botas são feitas com o couro curtido de um animal como um cavalo ou um guepardo. Elas então são encantadas para permitir que o usuário se mova quase tão rápido quanto esse animal. Esse tipo de calçado é valorizado porque permite ao usuário enganar ou até evitar os oponentes. As botas não cansam o usuário para além do que a sua taxa normal de movimento lhe permitiria.
-
-ESTATÍSTICAS:
-
-Habilidades Equipadas:
-- Dobra a taxa de movimentação
-
-Peso: 4~
-@62076 = ~Anel da Ação Livre~
-@62077 = ~Os inimigos têm dificuldade de parar o usuário deste anel. As runas gravadas no elo prateado protegem contra feitiços que impedem o movimento, concedendo ao usuário uma liberdade de movimento que outros não podem ter.
-
-ESTATÍSTICAS:
-
-Habilidades Equipadas:
-– O usuário fica imune a tudo que afete a mobilidade de alguma forma, seja mágico ou não. Isso inclui os feitiços Velocidade e Diminuir Velocidade. 
-
-Peso: 0~
-@62033 = ~Anel de Resistência ao Fogo~
-@62034 = ~O usuário deste anel recebe resistência parcial à chamas, sejam elas de fontes comuns, como tochas e fogueiras, ou mágicas, como sopro de dragão e feitiços.
-
-ESTATÍSTICAS:
-
-Habilidades Equipadas:
-- Resistência ao Fogo: +40%
-
-Peso: 0~
-@61978 = ~Armadura de Placas +1~
-@61979 = ~A armadura de placas é uma combinação da cota de malha com placas de metal cobrindo as áreas vitais, como o peito, o abdômen e a virilha. De construção similar à armadura de placas de bronze, a armadura de placas verdadeira inclui malha e couro. Este conjunto está encantado e concede bônus adicionais para a Classe de Armadura do usuário.
-
-ESTATÍSTICAS:
-
-Classe de Armadura: 2 (-1 contra corte)
-Requer:
-12 Força
-
-Peso: 20~
-@69262 = ~Cimitarra +2~
-@69261 = ~A cimitarra, ou "shamshir", como era originalmente chamada, tem uma lâmina de gume simples com uma curva significativa, que termina num ponto afiado e longo. Ela talvez seja mais lenta do que outras armas do mesmo tipo, mas ela compensa isso com o dano que é capaz de causar. Esta arma em particular recebeu melhoramentos mágicos que complementam a habilidade de seu usuário.
-
-ESTATÍSTICAS:
-
-PACA0: +2
-Dano: 1d8+2 (cortante)
-Fator de Velocidade: 3
-Tipo de Proficiência: Cimitarra/Wakizashi/Ninjatõ
-Tipo: Uma mão
-Requer:
-10 Força
-
-Peso: 4~
 @70384 = ~Cinto de Perfuração~
 @70385 = ~Fabricado em couro cortado grosseiramente e sem adornos, este cinto de lombo obviamente foi criado com utilidade ao invés de beleza (ou até mesmo conforto) em mente. Embora feio, ele é útil, encantado com feitiços de proteção que conferem ao seu usuário alguma proteção mágica contra as balas e flechas de seus inimigos.
 
@@ -75,24 +132,5 @@ ESTATÍSTICAS:
 
 Habilidades Equipadas:
 – Classe de Armadura: +3 contra perfuração e projéteis
-
-Peso: 2~
-@62052 = ~Anel de Proteção +2~
-@62053 = ~Um anel de proteção melhora a Classe de Armadura e as Jogadas de Salvamento do usuário contra todas as formas de ataque. As propriedades mágicas desses anéis os impedem de serem utilizados com outros objetos de proteção mágica, incluindo armaduras mágicas. 
-
-ESTATÍSTICAS:
-
-Habilidades Equipadas:
-– Classe de Armadura: +2
-– Jogadas de Salvamento: +2
-
-Peso: 0~
-@70356 = ~Manoplas da Habilidade em Armas~
-@70357 = ~Estas manoplas mágicas ajudam o usuário no maneio de armas. Mesmo uma arma estranha pode ser usada com certa habilidade.
-
-ESTATÍSTICAS:
-
-Habilidades Equipadas:
-– PACA0: +1
 
 Peso: 2~
