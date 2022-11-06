@@ -1,0 +1,17 @@
+// tbd, graion
+// Populate BGEE_ACTION4-7 slots for SoD NPCs
+
+// Notes:
+// Jaheira's skipped, since she's using the oBG1 set
+// there are no unused lines around Neera's post-Adoy tlk definitions
+// updated both bdcaelar and bdcaela3 because I'm not sure which one is allowed to enter the party 
+
+ACTION_FOR_EACH CRE IN ~baelot7~ ~bdcaelar~ ~bdcaela3~ ~bdmkhi7~ ~corwin7~ ~dorn7~ ~dynahe7~ ~edwin7~ ~glint7~ ~khalid7~ ~minsc7~ ~neera7~ ~rasaad7~ ~safana7~ ~viconi7~ ~voghil7~ BEGIN
+	COPY_EXISTING ~%CRE%.CRE~ ~override~
+		READ_LONG SELECT_ACTION3 action3
+		WRITE_LONG 0x1E0 (action3 + 1)
+		WRITE_LONG 0x1E4 (action3 + 2)
+		WRITE_LONG 0x1E8 (action3 + 3)
+		WRITE_LONG 0x1EC (action3 + 4)
+		BUT_ONLY IF_EXISTS
+END
