@@ -82,6 +82,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~  ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~    ~override~ // tbd, cam: add basic 2das to enable fog
+     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -608,7 +609,6 @@ COPY_EXISTING ~%CLERIC_STORM_SHELL%.spl~ ~override~ // sppr327
   LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=2 timing=0 resist_dispel=3 STR_VAR resource="%CLERIC_STORM_SHELL%" END
   LPF ALTER_EFFECT INT_VAR target=1 END // for some subtle reason, ability_target=5 and target=2 doesn't play nice with the 321 trick
   BUT_ONLY
-
 
 // tbd, cam
 // poison icon expires too early, just build into poison effect

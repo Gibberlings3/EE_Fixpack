@@ -174,6 +174,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/wqnf2oa8.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 ACTION_IF game_includes_sod BEGIN
 
@@ -570,12 +571,14 @@ EXTEND_TOP ~banditcy.bcs~ ~eefixpack/files/baf/bancyadd.baf~
 
 // tbd, cam
 // bad string refs for AI scripting
+/*
 COPY_EXISTING ~bdimoenc.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~DisplayString(Myself,46150)~ ~DisplayString(Myself,31249)~ // *quaffs a potion*
   END
   BUT_ONLY
-  
+*/
+
 COPY_EXISTING ~bdeldotc.bcs~ ~override~
               ~bdgarrcc.bcs~ ~override~
               ~bdgarric.bcs~ ~override~
