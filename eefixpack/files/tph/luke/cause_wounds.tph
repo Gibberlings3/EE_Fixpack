@@ -3,7 +3,7 @@
 COPY_EXISTING "%BEHOLDER_CAUSE_SERIOUS_WOUNDS%.spl" "override"
               "ohbdcsw.spl" "override"
               "%HIVE_MOTHER_CAUSE_SERIOUS_WOUNDS%.spl" "override"
-  LPF ALTER_HEADER INT_VAR match_projectile = 1 range = 0 END
+  LPF ALTER_HEADER INT_VAR silent = 1 match_projectile = 1 range = 0 END
   BUT_ONLY IF_EXISTS
 
 COPY_EXISTING "slaylive.itm" "override" // range handled in bulk effects
