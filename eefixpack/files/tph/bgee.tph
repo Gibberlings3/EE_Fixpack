@@ -736,6 +736,10 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+// tbd, graion
+// restore SoD ACTION4-ACTION7 lines
+INCLUDE ~eefixpack/files/tph/tbd_sod_action4-7_restoration.tph~
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
