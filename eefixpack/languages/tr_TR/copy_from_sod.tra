@@ -1,4 +1,112 @@
+@52366 = ~Darkness, 15' Radius~
+@52367 = ~Darkness, 15' Radius
+(Alteration)
+
+Level: 2
+Range: 30 ft.
+Duration: 1 turn
+Casting Time: 2
+Area of Effect: 15-ft. radius
+Saving Throw: None
+
+This spell causes total, impenetrable darkness. Neither normal nor magical light works in the area of effect. All vision (including infravision) is severely limited; anyone hostile caught in the area of effect is for all practical purposes blinded as per the 1st-level wizard spell. Creatures that leave the area covered by darkness will have their vision restored after 1 round.~
+@52368 = ~Faerie Fire~
+@52369 = ~Faerie Fire 
+(Alteration)
+
+Level: 1
+Sphere: Weather
+Range: Sight
+Duration: 4 rounds/level
+Casting Time: 4
+Area of Effect: 10-ft. radius
+Saving Throw: None
+
+This spell outlines one or more creatures with a pale violet glow, making positions and movements easily visible. Outlined creatures are easier to strike, giving them an Armor Class penalty of -2.~
+@52370 = ~Dancing Lights~
+@52371 = ~Dancing Lights
+(Alteration)
+
+Level: 1
+Range: Sight
+Duration: 2 rds./level
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: None
+
+This spell creates up to four glowing spheres of light (such as evidenced by will-o-wisps) or one faintly glowing, vaguely humanoid shape, somewhat similar to a fire elemental. The dancing lights move randomly without concentration upon such movement by the wizard. Although the lights cause no physical harm, they can distract enemies until either their duration expires or dispersed by weapon or magic.~
+@56587 = ~Dancing Light~
+@61978 = ~Plate Mail +1~
+@61979 = ~Plate mail is a combination of chain armor with metal plates covering the vital areas such as the chest, abdomen and groin. Similar in construction to bronze plate mail, true plate mail comprises chain and leather. In addition, this suit of plate mail is enchanted and gives additional bonuses to the wearer's Armor Class.
+
+STATISTICS:
+
+Armor Class: 2 (-1 vs. slashing)
+Requires:
+ 12 Strength
+
+Weight: 20~
 @62005 = ~Korunma Muskası +1~
+@62009 = ~Boots of Speed~
+@62010 = ~These boots are made from the tanned hide of an animal such as a horse or a cheetah. They are then enchanted to enable the wearer to move nearly as fast as that animal. Footgear of this sort is prized for allowing one to outmaneuver or even escape one's foes. The boots do not fatigue the wearer beyond what would result from moving at a normal rate.
+
+STATISTICS:
+
+Equipped abilities:
+– Doubles movement rate
+
+Weight: 4~
+@62033 = ~Ring of Fire Resistance~
+@62034 = ~The wearer of this ring enjoys partial resistance to flame, whether its origins be in mundane sources, like torches or bonfires, or magical ones, such as fiery dragon breath or spells.
+
+STATISTICS:
+
+Equipped abilities:
+– Fire Resistance: +40%
+
+Weight: 0~
+@62052 = ~Ring of Protection +2~
+@62053 = ~A ring of protection improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of such a ring prevent it from being worn with other magical items of protection, including enchanted armor.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +2
+– Saving Throws: +2
+
+Weight: 0~
+@62076 = ~Ring of Free Action~
+@62077 = ~Enemies have a hard time slowing this ring's wearer down. The runes etched in the silver band ward off spells designed to impede movement, granting its owner a freedom of mobility others affected by such magic are denied.
+
+STATISTICS:
+
+Equipped abilities:
+– The wearer is immune to everything, magical and otherwise, that affects mobility in any way. This includes Haste and Slow spells.
+
+Weight: 0~
+@69261 = ~The scimitar, or "shamshir" as it was originally called, has a single-edged blade with a significant curve and is tapered to an elongated, sharp point. It is perhaps slower than other weapons of the same type, though it compensates by the amount of damage it is capable of. This particular weapon has been enhanced magically to complement the skill of the wielder.
+
+STATISTICS:
+
+THAC0: +2
+Damage: 1d8+2 (slashing)
+Speed Factor: 3
+Proficiency Type: Scimitar/Wakizashi/Ninjatō
+Type: One-handed
+Requires:
+ 10 Strength
+
+Weight: 4~
+@69262 = ~Scimitar +2~
+@70356 = ~Gauntlets of Weapon Skill~
+@70357 = ~These magical gauntlets aid the wearer in the use of weapons. Even an unfamiliar weapon may be used with some skill.
+
+STATISTICS:
+
+Equipped abilities:
+– THAC0: +1
+
+Weight: 2~
 @70365 = ~This amulet improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of the amulet prevent it from being worn with other magical items of protection, including enchanted armor.
 
 STATISTICS:
@@ -17,57 +125,6 @@ Equipped abilities:
 – Armor Class: +4 vs. crushing attacks
 
 Weight: 2~
-@62009 = ~Boots of Speed~
-@62010 = ~These boots are made from the tanned hide of an animal such as a horse or a cheetah. They are then enchanted to enable the wearer to move nearly as fast as that animal. Footgear of this sort is prized for allowing one to outmaneuver or even escape one's foes. The boots do not fatigue the wearer beyond what would result from moving at a normal rate.
-
-STATISTICS:
-
-Equipped abilities:
-– Doubles movement rate
-
-Weight: 4~
-@62076 = ~Ring of Free Action~
-@62077 = ~Enemies have a hard time slowing this ring's wearer down. The runes etched in the silver band ward off spells designed to impede movement, granting its owner a freedom of mobility others affected by such magic are denied.
-
-STATISTICS:
-
-Equipped abilities:
-– The wearer is immune to everything, magical and otherwise, that affects mobility in any way. This includes Haste and Slow spells.
-
-Weight: 0~
-@62033 = ~Ring of Fire Resistance~
-@62034 = ~The wearer of this ring enjoys partial resistance to flame, whether its origins be in mundane sources, like torches or bonfires, or magical ones, such as fiery dragon breath or spells.
-
-STATISTICS:
-
-Equipped abilities:
-– Fire Resistance: +40%
-
-Weight: 0~
-@61978 = ~Plate Mail +1~
-@61979 = ~Plate mail is a combination of chain armor with metal plates covering the vital areas such as the chest, abdomen and groin. Similar in construction to bronze plate mail, true plate mail comprises chain and leather. In addition, this suit of plate mail is enchanted and gives additional bonuses to the wearer's Armor Class.
-
-STATISTICS:
-
-Armor Class: 2 (-1 vs. slashing)
-Requires:
- 12 Strength
-
-Weight: 20~
-@69262 = ~Scimitar +2~
-@69261 = ~The scimitar, or "shamshir" as it was originally called, has a single-edged blade with a significant curve and is tapered to an elongated, sharp point. It is perhaps slower than other weapons of the same type, though it compensates by the amount of damage it is capable of. This particular weapon has been enhanced magically to complement the skill of the wielder.
-
-STATISTICS:
-
-THAC0: +2
-Damage: 1d8+2 (slashing)
-Speed Factor: 3
-Proficiency Type: Scimitar/Wakizashi/Ninjatō
-Type: One-handed
-Requires:
- 10 Strength
-
-Weight: 4~
 @70384 = ~Girdle of Piercing~
 @70385 = ~Fabricated from crudely cut, unadorned leather, this loin belt was obviously created with utility rather than beauty (or even comfort) in mind. Though not pretty, it is useful, enchanted with warding spells that grant its wearer some magical protection from the slings and arrows of their enemies.
 
@@ -75,24 +132,5 @@ STATISTICS:
 
 Equipped abilities:
 – Armor Class: +3 vs. missile and piercing attacks
-
-Weight: 2~
-@62052 = ~Ring of Protection +2~
-@62053 = ~A ring of protection improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of such a ring prevent it from being worn with other magical items of protection, including enchanted armor.
-
-STATISTICS:
-
-Equipped abilities:
-– Armor Class: +2
-– Saving Throws: +2
-
-Weight: 0~
-@70356 = ~Gauntlets of Weapon Skill~
-@70357 = ~These magical gauntlets aid the wearer in the use of weapons. Even an unfamiliar weapon may be used with some skill.
-
-STATISTICS:
-
-Equipped abilities:
-– THAC0: +1
 
 Weight: 2~

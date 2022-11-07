@@ -1,0 +1,57 @@
+// tbd, cam
+// tieflings should not be included in effects that target 'outer' or 'extraplanars'
+
+// the easy ones: cure and cause wounds spells should work for tieflings (324)
+COPY_EXISTING ~devaheal.spl~ ~override~ // heal (deva)
+              ~spcl102.spl~  ~override~ // absorb health
+              ~spcl111.spl~  ~override~ // cure disease (innate)
+              ~spcl211.spl~  ~override~ // lay on hands
+              ~spin200.spl~  ~override~ // cure serious wounds (innate)
+              ~spin202.spl~  ~override~ // cause serious wounds (innate)
+              ~spin923.spl~  ~override~ // heal (via limited wish)
+              ~sppr103.spl~  ~override~ // cure light wounds
+              ~sppr114.spl~  ~override~ // cause light wounds
+              ~sppr217.spl~  ~override~ // cure moderate wounds
+              ~sppr220.spl~  ~override~ // cause moderate wounds
+              ~sppr315.spl~  ~override~ // cure medium wounds
+              ~sppr317.spl~  ~override~ // cure disease
+              ~sppr320.spl~  ~override~ // cause disease
+              ~sppr330.spl~  ~override~ // cause medium wounds
+              ~sppr331.spl~  ~override~ // favor of ilmater
+              ~sppr401.spl~  ~override~ // cure serious wounds
+              ~sppr414.spl~  ~override~ // cause serious wounds
+              ~sppr417.spl~  ~override~ // lesser restoration
+              ~sppr502.spl~  ~override~ // cure critical wounds
+              ~sppr510.spl~  ~override~ // cause critical wounds
+              ~sppr514.spl~  ~override~ // mass cure light wounds
+              ~sppr523.spl~  ~override~ // mass cause light wounds
+              ~sppr607.spl~  ~override~ // heal 
+              ~sppr608.spl~  ~override~ // harm
+              ~sppr699.spl~  ~override~ // harm (enemy)
+              ~sppr711.spl~  ~override~ // regeneration
+              ~sppr713.spl~  ~override~ // greater restoration
+              ~sppr739.spl~  ~override~ // energy drain (divine)
+              ~sppr740.spl~  ~override~ // wither
+              ~spwi914.spl~  ~override~ // energy drain (arcane)
+              ~spwish07.spl~ ~override~ // greater restoration (via wish)
+              ~spwish19.spl~ ~override~ // energy drain (via wish)
+              ~spwish28.spl~ ~override~ // heal (via wish)
+              ~spwish39.spl~ ~override~ // heal (via wish)
+              ~spwish46.spl~ ~override~ // greater restoration (via wish)
+              ~spwm168.spl~  ~override~ // heal (via wild surge)
+  LPF DELETE_EFFECT INT_VAR match_opcode = 324 match_parameter1 = 153 match_parameter2 = 104 END 
+  
+// bolt of glory should treat tieflings as prime material beings
+COPY_EXISTING ~sppr612.spl~ ~override~ // bolt of glory
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter1 = 153 match_parameter2 = 104 END 
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 153 match_parameter2 = 4 END 
+  
+// deleting item effs that target tieflings for the wrong reasons
+COPY_EXISTING ~debian.itm~  ~override~ // Debian's Rod of Smiting +3: does extra damage to outer-planars
+              ~doves.itm~   ~override~ // Three White Doves +3: double damage, chance to be destroyed for outer-planars
+              ~smcudge.itm~ ~override~ // Star Metal Cudgel: bonus damage vs. outer-planar
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 153 match_parameter2 = 4 END 
+
+COPY_EXISTING ~sw1h51.itm~  ~override~ // solemn duty: bonus damage, thac0, enchantment vs. outer-planar
+  LPF DELETE_EFFECT INT_VAR match_parameter1 = 153 match_parameter2 = 4 END // bonus enchantment (op344), damage (op177)
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 STR_VAR match_resource = sw1h51k END // bonus to-hit

@@ -14,13 +14,26 @@ END
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
 
+// tbd, cam
+// Names of parameters 2 and 3 for ExploreMapChunk() should be swapped in ACTION.IDS
+// adding non-res version of ForceSpellNoFeedback action
+COPY_EXISTING ~action.ids~ ~override~
+  REPLACE_TEXTUALLY ~435 ExploreMapChunk(P:Center\*,I:Radius\*,I:Mode\*)~ ~435 ExploreMapChunk(P:Center*,I:Mode*,I:Radius*)~
+  REPLACE_TEXTUALLY ~^\(466[ %TAB%].+\)$~ ~466 ForceSpellNoFeedback(O:Target,I:Spell*Spell)%WNL%\1~ // add non-res version
+  BUT_ONLY
+
 COPY_EXISTING ~animate.ids~ ~override~
   REPLACE_TEXTUALLY ~0xf005[ %TAB%]+cl_4_Collector_Thug~ ~0xf006 cl_4_Collector_Thug~
   REPLACE_TEXTUALLY ~0xf042[ %TAB%]+Trelon~ ~0xf043 Trelon~
 BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
+ 
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\

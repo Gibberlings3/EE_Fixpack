@@ -17,6 +17,12 @@ Simply put the creature file name on the left and new alignment on the right. Al
 ACTION_CLEAR_ARRAY cd_bulk_cre_changes_align
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_cre_changes_align BEGIN
 
+  gnoll02  => 51 // gnoll, from chaotic_neutral
+  gnoll03  => 51 // gnoll, from chaotic_neutral
+  gnoll04  => 51 // gnoll, from chaotic_neutral
+  gnoll05  => 51 // gnoll, from chaotic_neutral
+  gnoll2   => 51 // gnoll, from chaotic_neutral
+  gnoll3   => 51 // gnoll, from chaotic_neutral
   nethgua1 => 35 // Thayan Bodyguard, from NEUTRAL to NEUTRAL_EVIL (shout script could turn townspeople hostile, credit k4thos/eet)
   nethgua2 => 35 // Thayan Bodyguard, from NEUTRAL to NEUTRAL_EVIL (shout script could turn townspeople hostile, credit k4thos/eet)
   

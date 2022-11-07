@@ -1,0 +1,22 @@
+IF 
+  Global("AR1006_visited","GLOBAL",0)
+  Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    XEquipItem("helmsun",Myself,SLOT_HELMET,EQUIP)
+    XEquipItem("elfchan",Myself,SLOT_ARMOR,EQUIP)
+    XEquipItem("lyre",Myself,SLOT_SHIELD,EQUIP)
+    XEquipItem("potn08",Myself,SLOT_MISC0,EQUIP)
+    XEquipItem("bardic",Myself,SLOT_MISC2,EQUIP)
+    XEquipItem("zz05we",Myself,SLOT_WEAPON0,EQUIP)
+    SetGlobal("CD_how_starting_equip","LOCALS",1)
+END
+      
+IF 
+  OR(2)
+    !Global("AR1006_visited","GLOBAL",0)
+    !Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeAIScript("",OVERRIDE)
+END

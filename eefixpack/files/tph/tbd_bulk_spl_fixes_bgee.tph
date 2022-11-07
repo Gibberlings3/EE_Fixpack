@@ -34,6 +34,9 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
   ~senspihe~, null, 2, null, null, null, null, 0, null, null, null, null => ~senspihe~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~spin109~, null, 2, null, null, null, null, 0, null, null, null, null => ~spin109~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~spin200~, null, 2, null, null, null, null, 0, null, null, null, null => ~spin200~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
+  ~spin685~, null, 1, null, null, null, null, null, null, null, null, null => ~spin685~ // tbd, cam: cutscene magic missile has wrong resist/dispel on first header
+  ~spin828~, 3, null, null, null, null, null, null, null, null, null, null => ~spin828~ // tbd, cam: mazzy’s haste: power is wrong (1) on first header
+  ~spwi411~, null, 1, null, null, null, null, null, null, null, null, null => ~spwi411~ // tbd, cam: a few opcodes bypassed MR at level 16 specifically
   ~spwish07~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish07~ // luke: restoration spells should be 0 range, not dispellable (from files/tph/luke/restoration.tph)
   ~spwish28~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish28~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~spwish39~, null, 2, null, null, null, null, 0, null, null, null, null => ~spwish39~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)

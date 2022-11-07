@@ -37,6 +37,8 @@ COPY_EXISTING ~bgee.lua~ ~override~
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
 // tbd, cam (from jmerry)
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
@@ -136,7 +138,15 @@ WITH_SCOPE BEGIN
   END
 END
 
+// tbd, cam
+// sync bgee/bg2ee spell.ids entries with extra sod spells
+ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
+  INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
+END
+
 LAM "SPELL_IDS" // relaunch so as to take into account the BG2 entries
+ 
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
@@ -164,6 +174,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/wqnf2oa8.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
+     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 ACTION_IF game_includes_sod BEGIN
 
@@ -560,12 +571,14 @@ EXTEND_TOP ~banditcy.bcs~ ~eefixpack/files/baf/bancyadd.baf~
 
 // tbd, cam
 // bad string refs for AI scripting
+/*
 COPY_EXISTING ~bdimoenc.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~DisplayString(Myself,46150)~ ~DisplayString(Myself,31249)~ // *quaffs a potion*
   END
   BUT_ONLY
-  
+*/
+
 COPY_EXISTING ~bdeldotc.bcs~ ~override~
               ~bdgarrcc.bcs~ ~override~
               ~bdgarric.bcs~ ~override~
@@ -588,6 +601,15 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 // tbd, cam (from scs)
 // make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
 COMPILE ~eefixpack/files/baf/gretek.baf~
+
+// tbd, cam
+// mulahey stutter fix (see also mulahe.dlg) https://www.gibberlings3.net/forums/topic/35178-scripting-bugs/#comment-308786
+COPY_EXISTING ~mulahey.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("\(CDMulahey\|TalkedToMulahey\)","\(AR5405\|GLOBAL\)",0)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
+    REPLACE_TEXTUALLY ~\(Allegiance(Myself,NEUTRAL)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
+  END
+  BUT_ONLY  
 
 // tbd, cam
 // region/container scripts can't use LOCALS-scoped variables
@@ -816,6 +838,12 @@ COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to 
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 128 opcode = 296 parameter2 = 0 STR_VAR resource = spconfus END
   BUT_ONLY IF_EXISTS
 
+//tbd, cam
+// unused, but shield of devotion adding two level 1-2 spells instead of one level 1-3 spells
+COPY_EXISTING ~shld09p.itm~ ~override~ // hell hound flame
+  LPF ALTER_EFFECT INT_VAR match_opcode = 62 match_parameter2 = (BIT0 + BIT1) parameter2 = BIT2 END 
+  BUT_ONLY
+
 // the feeblemind effect already sets INT=3, so purging redundant effects
 COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
   LPF DELETE_EFFECT INT_VAR match_opcode = 19 END
@@ -1023,11 +1051,24 @@ COPY_EXISTING ~spin804.spl~  ~override~ // psychic drain - plays spmindat
   LPF ALTER_EFFECT INT_VAR match_opcode = 215 STR_VAR match_resource = spmindat resource = spflayer END
   BUT_ONLY
 
+//tbd, cam
+// should be setting ex str, not incrementing
+COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
+  LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
+  BUT_ONLY
+
 // tbd, cam
 // delayed sound effect doesn't bypass mr though the rest of the spell does
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
   BUT_ONLY 
+
+//tbd, cam
+// wrong projectiles for mephit flame fan and hell hound breath https://www.gibberlings3.net/forums/topic/36105-a-projectile-issue/
+COPY_EXISTING ~spin938.spl~ ~override~ // mephit flame fan
+              ~spin956.spl~ ~override~ // hell hound flame
+  LPF ALTER_HEADER INT_VAR projectile = 361 END // burnhand.pro
+  BUT_ONLY
 
 // tbd, cam
 // shield spell shouldn't stack
@@ -1040,6 +1081,12 @@ COPY_EXISTING ~spwi114.spl~ ~override~
 COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw
               ~sppr209.spl~ ~override~ // know alignment, divine - has -2 penalty
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT0 savebonus = 0 END
+  BUT_ONLY
+
+//tbd, cam
+// conjure fire elemental pauses the caster five rounds at level 19, correct three rounds at all other levels
+COPY_EXISTING ~spwi620.spl~ ~override~ // conjure fire elemental
+  LPF ALTER_EFFECT INT_VAR match_opcode = 165 duration = 18 END // pause target is wrong specifically at level 19
   BUT_ONLY
 
 // luke

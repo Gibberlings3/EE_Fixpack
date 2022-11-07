@@ -43,7 +43,7 @@ END
 // clear up the mass of 177s in Holy Smite/Unholy Blight
 // (arguably not necessary, but smoother to handle)
 
-ACTION_IF GAME_IS "bgee bg2ee" BEGIN
+ACTION_IF GAME_IS "bgee bg2ee iwdee" BEGIN
 	INCLUDE "%library_path%/holy_unholy.tph"
 	LAF holy_unholy END
 END

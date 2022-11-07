@@ -1,0 +1,162 @@
+// tbd, cam (from MiH)
+// fixes for open door vertices--missing or misplaced outlines for eight open doors in seven areas
+COPY_EXISTING ~ar0406.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    796, 904 => 0
+    800, 905 => 0
+    841, 893 => 0
+    841, 848 => 0
+    833, 841 => 0
+    829, 839 => 0
+    816, 837 => 0
+    809, 839 => 0
+    802, 843 => 0
+    799, 851 => 0
+    796, 856 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 796 bounding_top = 837 bounding_right = 841 bounding_bottom = 905 
+                              STR_VAR struct_name = Door25 struct_type = door_open END
+  BUT_ONLY
+
+COPY_EXISTING ~ar0711.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    412, 563 => 0
+    423, 563 => 0
+    423, 682 => 0
+    412, 682 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 412 bounding_top = 563 bounding_right = 423 bounding_bottom = 682 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar1202.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    3118, 565 => 0
+    3099, 553 => 0
+    3099, 492 => 0
+    3105, 492 => 0
+    3113, 496 => 0
+    3118, 501 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 3099 bounding_top = 492 bounding_right = 3118 bounding_bottom = 565 
+                              STR_VAR struct_name = Door11 struct_type = door_open END
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    3226, 568 => 0
+    3231, 567 => 0
+    3249, 558 => 0
+    3249, 493 => 0
+    3226, 505 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 3099 bounding_top = 492 bounding_right = 3118 bounding_bottom = 565 
+                              STR_VAR struct_name = Door12 struct_type = door_open END
+  BUT_ONLY  
+
+ACTION_CLEAR_ARRAY cd_define_area_vertices_array
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+  430, 1524 => 0
+  434, 1529 => 0
+  482, 1509 => 0
+  482, 1447 => 0
+  472, 1442 => 0
+  459, 1443 => 0
+  448, 1448 => 0
+  439, 1456 => 0
+  433, 1464 => 0
+  430, 1476 => 0
+END
+COPY_EXISTING ~ar1302.are~ ~override~
+              ~ar1306.are~ ~override~
+  LPF cd_define_area_vertices INT_VAR bounding_left = 430 bounding_top = 1442 bounding_right = 482 bounding_bottom = 1529 
+                              STR_VAR struct_name = Door08 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar1307.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    1524, 639 => 0
+    1527, 641 => 0
+    1562, 614 => 0
+    1562, 562 => 0
+    1560, 553 => 0
+    1555, 549 => 0
+    1550, 547 => 0
+    1540, 548 => 0
+    1535, 552 => 0
+    1530, 559 => 0
+    1526, 565 => 0
+    1524, 573 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 1524 bounding_top = 547 bounding_right = 1562 bounding_bottom = 641 
+                              STR_VAR struct_name = Door02 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar1514.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    950, 1702 => 0
+    980, 1719 => 0
+    980, 1638 => 0
+    977, 1635 => 0
+    973, 1633 => 0
+    968, 1631 => 0
+    960, 1630 => 0
+    955, 1631 => 0
+    950, 1636 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 950 bounding_top = 1630 bounding_right = 980 bounding_bottom = 1719 
+                              STR_VAR struct_name = Door15 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar2200.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    2119, 1563 => 0
+    2121, 1539 => 0
+    2124, 1510 => 0
+    2131, 1487 => 0
+    2141, 1471 => 0
+    2150, 1464 => 0
+    2158, 1466 => 0
+    2165, 1475 => 0
+    2171, 1493 => 0
+    2173, 1523 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 2119 bounding_top = 1464 bounding_right = 2173 bounding_bottom = 1563 launch_point_x = 2174 launch_point_y = 988
+                              STR_VAR struct_name = StairsC struct_type = region END
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    2179, 962 => 0
+    2126, 988 => 0
+    2129, 959 => 0
+    2132, 939 => 0
+    2137, 924 => 0
+    2142, 912 => 0
+    2152, 902 => 0
+    2166, 902 => 0
+    2173, 913 => 0
+    2179, 934 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 2126 bounding_top = 902 bounding_right = 2179 bounding_bottom = 988 launch_point_x = 2163 launch_point_y = 1559
+                              STR_VAR struct_name = StairsD struct_type = region END
+  BUT_ONLY 
+    
+COPY_EXISTING ~ar5007.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    416, 810 => 0
+    373, 788 => 0
+    373, 722 => 0
+    383, 716 => 0
+    396, 716 => 0
+    408, 726 => 0
+    411, 729 => 0
+    416, 745 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 373 bounding_top = 716 bounding_right = 416 bounding_bottom = 810 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  BUT_ONLY  
+

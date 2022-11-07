@@ -1,0 +1,29 @@
+IF 
+  Global("AR1006_visited","GLOBAL",0)
+  Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    XEquipItem("helmdef",Myself,SLOT_HELMET,EQUIP)
+    XEquipItem("usltr3a",Myself,SLOT_ARMOR,EQUIP)
+    XEquipItem("kayglov",Myself,SLOT_GAUNTLETS,EQUIP)
+    XEquipItem("shadows",Myself,SLOT_RING_LEFT,EQUIP)
+    XEquipItem("shboots",Myself,SLOT_BOOTS,EQUIP)
+    XEquipItem("ulxbw3b",Myself,SLOT_WEAPON1,EQUIP)
+    XEquipItem("bolt02",Myself,SLOT_AMMO0,EQUIP)
+    XEquipItem("bolt04",Myself,SLOT_AMMO1,EQUIP)
+    XEquipItem("bolt03",Myself,SLOT_AMMO2,EQUIP)
+    XEquipItem("potn08",Myself,SLOT_MISC0,EQUIP)
+    XEquipItem("potn36",Myself,SLOT_MISC1,EQUIP)
+    XEquipItem("potn10",Myself,SLOT_MISC2,EQUIP)
+    XEquipItem("usswd3c",Myself,SLOT_WEAPON0,EQUIP)
+    SetGlobal("CD_how_starting_equip","LOCALS",1)
+END
+      
+IF 
+  OR(2)
+    !Global("AR1006_visited","GLOBAL",0)
+    !Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeAIScript("",OVERRIDE)
+END

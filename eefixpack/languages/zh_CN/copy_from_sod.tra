@@ -1,4 +1,112 @@
+@52366 = ~Darkness, 15' Radius~
+@52367 = ~Darkness, 15' Radius
+(Alteration)
+
+Level: 2
+Range: 30 ft.
+Duration: 1 turn
+Casting Time: 2
+Area of Effect: 15-ft. radius
+Saving Throw: None
+
+This spell causes total, impenetrable darkness. Neither normal nor magical light works in the area of effect. All vision (including infravision) is severely limited; anyone hostile caught in the area of effect is for all practical purposes blinded as per the 1st-level wizard spell. Creatures that leave the area covered by darkness will have their vision restored after 1 round.~
+@52368 = ~Faerie Fire~
+@52369 = ~Faerie Fire 
+(Alteration)
+
+Level: 1
+Sphere: Weather
+Range: Sight
+Duration: 4 rounds/level
+Casting Time: 4
+Area of Effect: 10-ft. radius
+Saving Throw: None
+
+This spell outlines one or more creatures with a pale violet glow, making positions and movements easily visible. Outlined creatures are easier to strike, giving them an Armor Class penalty of -2.~
+@52370 = ~Dancing Lights~
+@52371 = ~Dancing Lights
+(Alteration)
+
+Level: 1
+Range: Sight
+Duration: 2 rds./level
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: None
+
+This spell creates up to four glowing spheres of light (such as evidenced by will-o-wisps) or one faintly glowing, vaguely humanoid shape, somewhat similar to a fire elemental. The dancing lights move randomly without concentration upon such movement by the wizard. Although the lights cause no physical harm, they can distract enemies until either their duration expires or dispersed by weapon or magic.~
+@56587 = ~舞光术~
+@61978 = ~铠甲+1~
+@61979 = ~铠甲是锁子甲和金属片结合的一种盔甲。这种盔甲上有钢片保护特别重要的部位，例如胸口、腹部和下体。真正的铠甲结构和铜铠甲类似，包括铁环和皮革。此外，这套铠甲附有魔法，使穿戴者的防御等级获得额外的提高。
+
+数据资料：
+
+防御等级：2（对钝击攻击为-1）
+需求：
+力量12
+
+重量：20~
 @62005 = ~防御护符+1~
+@62009 = ~速度之靴~
+@62010 = ~这双靴子是用马或猎豹等动物晒黑的皮做成的。它们被施了魔法，使穿戴者的移动速度几乎与动物一样快。这类靴子因能让人机动灵活，甚至能逃脱敌人的追捕而备受赞誉。这双靴子不会让穿戴者因为超出正常速度运动而疲劳。
+
+数据资料：
+
+装备能力：
+-移动速度加倍
+
+重量：4~
+@62033 = ~抗火戒指~
+@62034 = ~佩戴这枚戒指的人对火焰有部分抵抗力，无论是来自普通的火源，如火把或篝火；还是来自魔法的火源，如火热的龙息或法术。
+
+数据资料：
+
+装备能力：
+-火焰抗性：+40%
+
+重量：0~
+@62052 = ~守护之戒+2~
+@62053 = ~一个可以提高穿戴者的防御等级和对所有攻击类型豁免检定的戒指。这种戒指的魔法属性使它不能与其他有保护魔法的物品一起佩戴，包括附魔的盔甲。
+
+数据资料：
+
+装备能力：
+-防御等级：+2
+-豁免检定：+2
+
+重量：0~
+@62076 = ~自由行动之戒~
+@62077 = ~敌人很难让此戒指的佩戴者减速。铭刻在银带上的符文是用来阻挡移动的咒语，给予其佩戴者行动的自由，而其他受此魔法影响的人则被不行。
+
+数据资料：
+
+装备能力：
+-佩戴者将对任何影响移动力所有效果，不管是魔法还是其他形式，包括加速和减速效果。
+
+重量：0~
+@69261 = ~弯刀，或它的本名“舍施尔”，有一个明显弯曲的单刃，逐渐收窄为一个细长尖锐的尖端。它或许比其他同类武器慢，不过它用能造成的伤害量弥补。这把特别的武器被附有魔法，以补充持有者的技巧。
+
+数据资料：
+
+命中：+2
+伤害：1d8+2（挥砍）
+速度值：3
+专精类型：弯刀/胁差/忍者刀
+类型：单手
+需求：
+10力量
+
+重量：4~
+@69262 = ~弯刀 +2~
+@70356 = ~武技手套~
+@70357 = ~这些魔法手套帮助穿戴者使用武器。即使是不熟悉的武器也能用出技巧。
+
+数据资料：
+
+装备能力：
+-命中：+1
+
+重量：2~
 @70365 = ~这个护符提升佩戴者的防御等级和对所有形式攻击的豁免检定。护符的魔法特性阻止它被与其他防御魔法物品一起穿戴，包括附魔铠甲。
 
 数据资料：
@@ -17,57 +125,6 @@
 -防御等级：对钝击攻击+4
 
 重量：2~
-@62009 = ~速度之靴~
-@62010 = ~这双靴子是用马或猎豹等动物晒黑的皮做成的。它们被施了魔法，使穿戴者的移动速度几乎与动物一样快。这类靴子因能让人机动灵活，甚至能逃脱敌人的追捕而备受赞誉。这双靴子不会让穿戴者因为超出正常速度运动而疲劳。
-
-数据资料：
-
-装备能力：
--移动速度加倍
-
-重量：4~
-@62076 = ~自由行动之戒~
-@62077 = ~敌人很难让此戒指的佩戴者减速。铭刻在银带上的符文是用来阻挡移动的咒语，给予其佩戴者行动的自由，而其他受此魔法影响的人则被不行。
-
-数据资料：
-
-装备能力：
--佩戴者将对任何影响移动力所有效果，不管是魔法还是其他形式，包括加速和减速效果。
-
-重量：0~
-@62033 = ~抗火戒指~
-@62034 = ~佩戴这枚戒指的人对火焰有部分抵抗力，无论是来自普通的火源，如火把或篝火；还是来自魔法的火源，如火热的龙息或法术。
-
-数据资料：
-
-装备能力：
--火焰抗性：+40%
-
-重量：0~
-@61978 = ~铠甲+1~
-@61979 = ~铠甲是锁子甲和金属片结合的一种盔甲。这种盔甲上有钢片保护特别重要的部位，例如胸口、腹部和下体。真正的铠甲结构和铜铠甲类似，包括铁环和皮革。此外，这套铠甲附有魔法，使穿戴者的防御等级获得额外的提高。
-
-数据资料：
-
-防御等级：2（对钝击攻击为-1）
-需求：
-力量12
-
-重量：20~
-@69262 = ~弯刀 +2~
-@69261 = ~弯刀，或它的本名“舍施尔”，有一个明显弯曲的单刃，逐渐收窄为一个细长尖锐的尖端。它或许比其他同类武器慢，不过它用能造成的伤害量弥补。这把特别的武器被附有魔法，以补充持有者的技巧。
-
-数据资料：
-
-命中：+2
-伤害：1d8+2（挥砍）
-速度值：3
-专精类型：弯刀/胁差/忍者刀
-类型：单手
-需求：
-10力量
-
-重量：4~
 @70384 = ~穿刺束带~
 @70385 = ~这条狮皮腰带用简朴、加工粗糙的皮革制成，显然制作时考虑的是效用而不是美观（甚至舒适）。虽然它不起眼，但很实用，附有防护法术，为穿戴者提供一些对敌人的弹丸和箭矢的魔法防御。
 
@@ -75,24 +132,5 @@
 
 装备能力：
 -防御等级：穿刺和远程攻击+3
-
-重量：2~
-@62052 = ~守护之戒+2~
-@62053 = ~一个可以提高穿戴者的防御等级和对所有攻击类型豁免检定的戒指。这种戒指的魔法属性使它不能与其他有保护魔法的物品一起佩戴，包括附魔的盔甲。
-
-数据资料：
-
-装备能力：
--防御等级：+2
--豁免检定：+2
-
-重量：0~
-@70356 = ~武技手套~
-@70357 = ~这些魔法手套帮助穿戴者使用武器。即使是不熟悉的武器也能用出技巧。
-
-数据资料：
-
-装备能力：
--命中：+1
 
 重量：2~

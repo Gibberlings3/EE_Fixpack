@@ -1,4 +1,112 @@
+@52366 = ~Ténèbres, rayon de 4,5 m~
+@52367 = ~Ténèbres, rayon de 4,5 m
+(Transmutation)
+
+Niveau : 2
+Portée : 9 m
+Durée : 1 tour
+Temps d'incantation : 2
+Zone d'effet : rayon de 2,5 m
+Jet de sauvegarde : aucun
+
+Ce sort provoque des ténèbres impénétrables. Ni la lumière normale ni la lumière magique ne fonctionnent dans la zone d'effet. Toute vision (y compris l'infravision) est sévèrement limitée ; toute unité hostile prise dans la zone d'effet est, à toutes fins pratiques, aveuglée selon le sort de niveau 1 de magicien. Les créatures qui quittent la zone couverte par les ténèbres verront leur vision restaurée après 1 round.~
+@52368 = ~Lueur féérique~
+@52369 = ~Lueur féérique 
+(Transmutation)
+
+Niveau : 1
+Sphère : climat
+Portée : champ de vision
+Durée : 4 rounds par niveau
+Temps d'incantation : 4
+Zone d'effet : rayon de 3 mètres
+Jet de sauvegarde : aucun
+
+Ce sort entoure une ou plusieurs créatures d'une pâle lueur violette, rendant les positions et les déplacements facilement visibles. Les créatures entourées sont plus faciles à attaquer, ce qui leur donne un malus de classe d'armure de -2.~
+@52370 = ~Lumières dansantes~
+@52371 = ~Lumières dansantes
+(Transmutation)
+
+Niveau : 1
+Portée : champ de vision
+Durée : 2 rounds par niveau
+Temps d'incantation : 1
+Zone d'effet : spéciale
+Jet de sauvegarde : aucun
+
+Ce sort crée jusqu'à quatre sphères de lumière brillante (comme des feux follets) ou une forme légèrement brillante, vaguement humanoïde, un peu semblable à un élémentaire de feu. Les lumières dansantes se déplacent au hasard sans que le magicien n'ait à se concentrer sur leurs mouvements. Bien que les lumières n'infligent aucun dommage physique, elles peuvent distraire les ennemis jusqu'à ce qu'elles expirent ou qu'elles soient dispersées par une arme ou par la magie.~
+@56587 = ~Lumière dansante~
+@61978 = ~Armure de plates +1~
+@61979 = ~L'armure de plates est une combinaison de cotte de mailles et de plaques métalliques recouvrant les zones vitales telles que le torse, l'abdomen et l'aine. De fabrication semblable à l'armure de plates en bronze, la véritable armure de plates est constituée de mailles et de cuir. Celle-ci a été enchantée et procure des bonus supplémentaires à la classe d'armure de son porteur.
+
+PARAMÈTRES :
+
+Classe d'armure : 2 (-1 contre les armes tranchantes)
+Nécessite :
+ 12 en Force
+
+Poids : 20~
 @62005 = ~Amulette de protection +1~
+@62009 = ~Bottes de rapidité~
+@62010 = ~Ces bottes sont fabriquées à partir de la peau tannée d'un animal comme un cheval ou un guépard. Elles sont ensuite enchantées pour permettre à leur porteur de se déplacer presque aussi rapidement que cet animal. Ce type de bottes est apprécié par ceux qui souhaitent être plus agiles que leurs adversaires ou leur échapper. Le porteur n'est pas plus fatigué que s'il se déplaçait à un rythme normal.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Double la vitesse de déplacement
+
+Poids : 4~
+@62033 = ~Anneau de résistance au feu~
+@62034 = ~Le porteur de cet anneau bénéficie d'une résistance partielle au feu, qu'il provienne de sources ordinaires, telles que les torches ou les feux de camp, ou de sources magiques, telles que le souffle d'un dragon ou les sorts.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Résistance au feu : +40 %
+
+Poids : 0~
+@62052 = ~Anneau de protection +2~
+@62053 = ~Un anneau de protection améliore la classe d'armure et les jets de sauvegarde de son porteur contre tous les types d'attaques. Les propriétés magiques de l'anneau l'empêchent d'être porté avec d'autres objets magiques accordant une protection, dont les armures enchantées.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Classe d'armure : +2
+- Jets de sauvegarde : +2
+
+Poids : 0~
+@62076 = ~Anneau d'action libre~
+@62077 = ~Les ennemis ont du mal à ralentir le porteur de cet anneau. Les runes gravées dans la bande d'argent protègent des sorts visant à entraver la mobilité, ce qui confère à son porteur une liberté de mouvement que les autres personnes affectées par cette magie n'ont pas.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+- Le porteur est immunisé contre toute action, magique ou autre, affectant sa mobilité, ce qui inclut les sorts de Hâte et de Lenteur.
+
+Poids : 0~
+@69261 = ~Le cimeterre, ou « shamshir », comme il était appelé initialement, se caractérise par une lame large à simple tranchant et incurvée, et se termine par une longue pointe effilée. Certes plus lent que d'autres armes du même type, il compense par des dégâts plus importants. Ce cimeterre a été renforcé par magie afin d'améliorer les compétences de celui ou celle qui le manie.
+
+PARAMÈTRES :
+
+TAC0 : +2
+Dégâts : 1d8 +2 (tranchants)
+Facteur de vitesse : 3
+Type de compétence : cimeterre/wakizashi/ninjatō
+Type : arme à une main
+Nécessite :
+10 en Force
+
+Poids : 4~
+@69262 = ~Cimeterre +2~
+@70356 = ~Gantelets de Compétence~
+@70357 = ~Ces gantelets magiques améliorent le maniement des armes de leur porteur, même lorsqu'il n'a pas l'habitude de les manier.
+
+PARAMÈTRES :
+
+Capacités d'équipement :
+– TAC0 : +1
+
+Poids : 2~
 @70365 = ~Cette amulette améliore la classe d'armure et les jets de sauvegarde de son porteur contre tous les types d'attaques. Les propriétés magiques de l'amulette l'empêchent d'être portée avec d'autres objets magiques accordant une protection, dont les armures enchantées.
 
 PARAMÈTRES :
@@ -17,57 +125,6 @@ Capacités d'équipement :
 - Classe d'armure : +4 contre les armes contondantes
 
 Poids : 2~
-@62009 = ~Bottes de rapidité~
-@62010 = ~Ces bottes sont fabriquées à partir de la peau tannée d'un animal comme un cheval ou un guépard. Elles sont ensuite enchantées pour permettre à leur porteur de se déplacer presque aussi rapidement que cet animal. Ce type de bottes est apprécié par ceux qui souhaitent être plus agiles que leurs adversaires ou leur échapper. Le porteur n'est pas plus fatigué que s'il se déplaçait à un rythme normal.
-
-PARAMÈTRES :
-
-Capacités d'équipement :
-- Double la vitesse de déplacement
-
-Poids : 4~
-@62076 = ~Anneau d'action libre~
-@62077 = ~Les ennemis ont du mal à ralentir le porteur de cet anneau. Les runes gravées dans la bande d'argent protègent des sorts visant à entraver la mobilité, ce qui confère à son porteur une liberté de mouvement que les autres personnes affectées par cette magie n'ont pas.
-
-PARAMÈTRES :
-
-Capacités d'équipement :
-- Le porteur est immunisé contre toute action, magique ou autre, affectant sa mobilité, ce qui inclut les sorts de Hâte et de Lenteur.
-
-Poids : 0~
-@62033 = ~Anneau de résistance au feu~
-@62034 = ~Le porteur de cet anneau bénéficie d'une résistance partielle au feu, qu'il provienne de sources ordinaires, telles que les torches ou les feux de camp, ou de sources magiques, telles que le souffle d'un dragon ou les sorts.
-
-PARAMÈTRES :
-
-Capacités d'équipement :
-- Résistance au feu : +40 %
-
-Poids : 0~
-@61978 = ~Armure de plates +1~
-@61979 = ~L'armure de plates est une combinaison de cotte de mailles et de plaques métalliques recouvrant les zones vitales telles que le torse, l'abdomen et l'aine. De fabrication semblable à l'armure de plates en bronze, la véritable armure de plates est constituée de mailles et de cuir. Celle-ci a été enchantée et procure des bonus supplémentaires à la classe d'armure de son porteur.
-
-PARAMÈTRES :
-
-Classe d'armure : 2 (-1 contre les armes tranchantes)
-Nécessite :
- 12 en Force
-
-Poids : 20~
-@69262 = ~Cimeterre +2~
-@69261 = ~Le cimeterre, ou « shamshir », comme il était appelé initialement, se caractérise par une lame large à simple tranchant et incurvée, et se termine par une longue pointe effilée. Certes plus lent que d'autres armes du même type, il compense par des dégâts plus importants. Ce cimeterre a été renforcé par magie afin d'améliorer les compétences de celui ou celle qui le manie.
-
-PARAMÈTRES :
-
-TAC0 : +2
-Dégâts : 1d8 +2 (tranchants)
-Facteur de vitesse : 3
-Type de compétence : cimeterre/wakizashi/ninjatō
-Type : arme à une main
-Nécessite :
-10 en Force
-
-Poids : 4~
 @70384 = ~Ceinturon de perforation~
 @70385 = ~Fabriqué à partir de cuir découpé sans soin, dépourvu de décoration, il est évident que ce ceinturon n'a pas été conçu comme un ornement ou pour être confortable, mais pour être utile. Malgré sa piètre apparence, ses enchantements se révèlent précieux, car ils protègent son porteur contre les billes de fronde et les flèches de ses ennemis.
 
@@ -75,24 +132,5 @@ PARAMÈTRES :
 
 Capacités d'équipement :
 - Classe d'armure : +3 contre les projectiles et les armes perforantes
-
-Poids : 2~
-@62052 = ~Anneau de protection +2~
-@62053 = ~Un anneau de protection améliore la classe d'armure et les jets de sauvegarde de son porteur contre tous les types d'attaques. Les propriétés magiques de l'anneau l'empêchent d'être porté avec d'autres objets magiques accordant une protection, dont les armures enchantées.
-
-PARAMÈTRES :
-
-Capacités d'équipement :
-- Classe d'armure : +2
-- Jets de sauvegarde : +2
-
-Poids : 0~
-@70356 = ~Gantelets de Compétence~
-@70357 = ~Ces gantelets magiques améliorent le maniement des armes de leur porteur, même lorsqu'il n'a pas l'habitude de les manier.
-
-PARAMÈTRES :
-
-Capacités d'équipement :
-– TAC0 : +1
 
 Poids : 2~

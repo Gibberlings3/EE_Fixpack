@@ -1,0 +1,28 @@
+IF 
+  Global("AR1006_visited","GLOBAL",0)
+  Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    XEquipItem("helmded",Myself,SLOT_HELMET,EQUIP)
+    XEquipItem("blood",Myself,SLOT_ARMOR,EQUIP)
+    XEquipItem("brac09",Myself,SLOT_GAUNTLETS,EQUIP)
+    XEquipItem("ring09",Myself,SLOT_RING_LEFT,EQUIP)
+    XEquipItem("bwtalis",Myself,SLOT_AMULET,EQUIP)
+    XEquipItem("belt03",Myself,SLOT_BELT,EQUIP)
+    XEquipItem("boot03",Myself,SLOT_BOOTS,EQUIP)
+    XEquipItem("potn08",Myself,SLOT_MISC0,EQUIP)
+    XEquipItem("potn52",Myself,SLOT_MISC1,EQUIP)
+    XEquipItem("potn05",Myself,SLOT_MISC2,EQUIP)
+    XEquipItem("utswd3a",Myself,SLOT_WEAPON0,EQUIP)
+    ApplySpellRES("cdhp3000",Myself)  // full heal, otherwise 10HP short because of bwtalis
+    SetGlobal("CD_how_starting_equip","LOCALS",1)
+END
+      
+IF 
+  OR(2)
+    !Global("AR1006_visited","GLOBAL",0)
+    !Global("CD_how_starting_equip","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeAIScript("",OVERRIDE)
+END

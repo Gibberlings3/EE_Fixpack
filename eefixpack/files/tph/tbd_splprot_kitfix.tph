@@ -1,0 +1,7 @@
+// tbd, cam
+// splprot kit check is ising a bitwise check instead of a straight numerical compare
+COPY_EXISTING ~splprot.2da~ ~override~
+  REPLACE_TEXTUALLY ~^KIT[ %TAB%].+$~ ~KIT 152 -1 1~ // pstee
+  REPLACE_TEXTUALLY ~^109_.+$~ ~109_STAT(KIT)=n 152 -1 1~ // non-pstee
+  PRETTY_PRINT_2DA
+  BUT_ONLY

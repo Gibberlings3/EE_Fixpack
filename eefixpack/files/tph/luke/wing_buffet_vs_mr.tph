@@ -17,7 +17,7 @@ BEGIN
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet" BEGIN
 					// parent resref => ability
-					"%PSIONIC_PROJECT_FORCE%" => "-1"
+					"%PSIONIC_PROJECT_FORCE%" => "-1" // sod asset
 					"%HELL_BUFFET%" => "-1"
 					"%DRAGON_WING_BUFFET%" => "-1"
 					"%MAGNET%" => "-1"
@@ -64,7 +64,7 @@ BEGIN
 		ACTION_PHP_EACH "wing_buffet" AS "resref" => "ext_header" BEGIN
 			COPY_EXISTING "%resref%.spl" "override"
 				LAUNCH_PATCH_FUNCTION "wing_buffet_vs_mr_patch" INT_VAR "ability" = "%ext_header%" END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS // for sod stuff
 		END
 	END
 END

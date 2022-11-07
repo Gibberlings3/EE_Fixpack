@@ -1,4 +1,112 @@
+@52366 = ~Oscurità nel Raggio di 4,5 Metri~
+@52367 = ~Oscurità nel Raggio di 4,5 Metri
+(Alterazione)
+Livello: 2
+Raggio d'azione: 9 metri
+Durata: 1 turno
+Tempo di lancio: 2
+Area d'effetto: Raggio di 2,5 metri
+Tiro-salvezza: Nessuno
+
+Questo incantesimo crea una totale e impenetrabile oscurità. Nessuna luce normale o magica funziona nell'area d'effetto. Qualsiasi tipo di vista (inclusa l'infravisione) è gravemente limitata. Qualunque nemico catturato nell'area d'effetto è, a tutti gli scopi pratici, accecato come succede con l'incantesimo arcano di 1° livello. Le creature che lasciano l'area coperta dalle tenebre recupereranno completamente la vista dopo 1 round.~
+@52368 = ~Luminescenza~
+@52369 = ~Luminescenza
+(Alterazione)
+Livello: 1
+Sfera: Tempo atmosferico
+Raggio d'azione: Visuale del lanciatore
+Durata: 4 round per livello
+Tempo di lancio: 4
+Area d'effetto: Raggio di 3 metri
+Tiro-salvezza: Nessuno
+
+Questo incantesimo evidenzia una o più creature con un bagliore viola pallido, rendendo la loro posizione e il loro movimento facilmente individuabili. Le creature evidenziate sono più facili da colpire e soffrono di una penalità pari a -2 alla Classe Armatura.~
+@52370 = ~Luci Danzanti~
+@52371 = ~Luci Danzanti
+(Alterazione)
+Livello: 1
+Raggio d'azione: Visuale del lanciatore
+Durata: 2 round per livello
+Tempo di lancio: 1
+Area d'effetto: Speciale
+Tiro-salvezza: Nessuno
+
+Questo incantesimo crea fino a quattro sfere pulsanti di luce (come quelle dei fuochi fatui) o una debole forma luminescente vagamente umanoide, approssimativamente simile ad un elementale del fuoco. Le luci danzanti si muovono a caso senza essere influenzate dai movimenti dal mago. Anche se le luci non provocano danni fisici, possono distrarre i nemici fino a quando la loro durata termina o vengono disperse da armi o magie.~
+@56587 = ~Luce Danzante~
+@61978 = ~Cotta di Piastre +1~
+@61979 = ~La cotta di piastre è il risultato della combinazione della cotta di maglia con piastre che proteggono parti vitali come il petto, l'addome e l'inguine. Simile nella struttura a quella realizzata in bronzo, la cotta di piastre è una via di mezzo tra la maglia e il cuoio. Inoltre, questa cotta di piastre è incantata e fornisce dei bonus aggiuntivi alla Classe Armatura.
+
+STATISTICHE:
+
+Classe Armatura: 2 (-1 contro danno tagliente)
+
+Richiede:
+Forza 12
+
+Peso: 20~
 @62005 = ~Amuleto di Protezione +1~
+@62009 = ~Stivali della Velocità~
+@62010 = ~Questi stivali sono realizzati con la pelle conciata di un animale come un cavallo o un ghepardo. Quindi vengono incantati per permettere a chi li indossa di muoversi velocemente quasi come l'animale da cui è stata presa la pelle. Le calzature di questo tipo sono preziose in quanto permettono a chi le indossa di battere in velocità il nemico o, perfino, di sfuggirgli. Gli stivali, nonostante donino una maggiore velocità, non causano una fatica maggiore di quanta ne deriverebbe da un normale movimento.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- Raddoppiano il Fattore-movimento
+
+Peso: 4~
+@62033 = ~Anello di Resistenza al Fuoco~
+@62034 = ~Il portatore di questo anello gode di una parziale resistenza alle fiamme, sia che provengano da fonti terrene, come fiaccole o falò, sia che provengano da fonti magiche, come il soffio ardente del drago o gli incantesimi.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- Resistenza al Fuoco: +40%
+
+Peso: 0~
+@62052 = ~Anello di Protezione +2~
+@62053 = ~Un anello di protezione migliora la Classe Armatura e i Tiri-salvezza del portatore contro tutte le forme di attacco. Le proprietà magiche di questo anello gli impediscono di essere indossato con altri oggetti magici di protezione, incluse le armature magiche.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- Classe Armatura: +2
+- Tiri-salvezza: +2
+
+Peso: 0~
+@62076 = ~Anello della Libertà di Azione~
+@62077 = ~I nemici faticano a rallentare chi indossa questo anello. Le rune incise nella banda d'argento allontanano gli incantesimi concepiti per intralciare il movimento, conferendo al suo portatore una libertà di movimento negata a quanti sono affetti da tali magie.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- Il portatore è immune a ogni cosa, magica o meno, che influenzi in qualsiasi modo il movimento. Questo include gli incantesimi Velocità e Lentezza.
+
+Peso: 0~
+@69261 = ~La scimitarra, o "shamshir", come veniva un tempo chiamata quest'arma, possiede una lama con un unico filo con una significativa curva e ha un'affusolata, allungata ed affilata punta. Questo rende l'arma leggermente più lenta, ma più efficace e più letale in combattimento. Questa specifica lama è stata incantata magicamente per fare da complemento all'abilità di chi la brandisce.
+
+STATISTICHE:
+
+THAC0: +2
+Danno: 1d8+2 (tagliente)
+Fattore-velocità: 3
+Tipo di Competenza: Scimitarra/Wakizashi/Ninjato
+Tipo: A una mano
+
+Richiede:
+Forza 10
+
+Peso: 4~
+@69262 = ~Scimitarra +2~
+@70356 = ~Guanti dell'Armigero~
+@70357 = ~Questi guanti magici aiutano chi l'indossa nell'uso delle armi. Anche un'arma poco familiare può essere usata con una certa abilità.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- THAC0: +1
+
+Peso: 2
+~
 @70365 = ~Questo amuleto migliora la Classe Armatura e i Tiri-salvezza del portatore contro qualsiasi forma di attacco. Le proprietà magiche dell'amuleto gli impediscono di essere indossato con altri oggetti magici di protezione, incluse le armature incantate.
 
 STATISTICHE:
@@ -17,59 +125,6 @@ Abilità durante l'uso:
 - Classe Armatura: +4 contro attacchi con armi contundenti
 
 Peso: 2~
-@62009 = ~Stivali della Velocità~
-@62010 = ~Questi stivali sono realizzati con la pelle conciata di un animale come un cavallo o un ghepardo. Quindi vengono incantati per permettere a chi li indossa di muoversi velocemente quasi come l'animale da cui è stata presa la pelle. Le calzature di questo tipo sono preziose in quanto permettono a chi le indossa di battere in velocità il nemico o, perfino, di sfuggirgli. Gli stivali, nonostante donino una maggiore velocità, non causano una fatica maggiore di quanta ne deriverebbe da un normale movimento.
-
-STATISTICHE:
-
-Abilità durante l'uso:
-- Raddoppiano il Fattore-movimento
-
-Peso: 4~
-@62076 = ~Anello della Libertà di Azione~
-@62077 = ~I nemici faticano a rallentare chi indossa questo anello. Le rune incise nella banda d'argento allontanano gli incantesimi concepiti per intralciare il movimento, conferendo al suo portatore una libertà di movimento negata a quanti sono affetti da tali magie.
-
-STATISTICHE:
-
-Abilità durante l'uso:
-- Il portatore è immune a ogni cosa, magica o meno, che influenzi in qualsiasi modo il movimento. Questo include gli incantesimi Velocità e Lentezza.
-
-Peso: 0~
-@62033 = ~Anello di Resistenza al Fuoco~
-@62034 = ~Il portatore di questo anello gode di una parziale resistenza alle fiamme, sia che provengano da fonti terrene, come fiaccole o falò, sia che provengano da fonti magiche, come il soffio ardente del drago o gli incantesimi.
-
-STATISTICHE:
-
-Abilità durante l'uso:
-- Resistenza al Fuoco: +40%
-
-Peso: 0~
-@61978 = ~Cotta di Piastre +1~
-@61979 = ~La cotta di piastre è il risultato della combinazione della cotta di maglia con piastre che proteggono parti vitali come il petto, l'addome e l'inguine. Simile nella struttura a quella realizzata in bronzo, la cotta di piastre è una via di mezzo tra la maglia e il cuoio. Inoltre, questa cotta di piastre è incantata e fornisce dei bonus aggiuntivi alla Classe Armatura.
-
-STATISTICHE:
-
-Classe Armatura: 2 (-1 contro danno tagliente)
-
-Richiede:
-Forza 12
-
-Peso: 20~
-@69262 = ~Scimitarra +2~
-@69261 = ~La scimitarra, o "shamshir", come veniva un tempo chiamata quest'arma, possiede una lama con un unico filo con una significativa curva e ha un'affusolata, allungata ed affilata punta. Questo rende l'arma leggermente più lenta, ma più efficace e più letale in combattimento. Questa specifica lama è stata incantata magicamente per fare da complemento all'abilità di chi la brandisce.
-
-STATISTICHE:
-
-THAC0: +2
-Danno: 1d8+2 (tagliente)
-Fattore-velocità: 3
-Tipo di Competenza: Scimitarra/Wakizashi/Ninjato
-Tipo: A una mano
-
-Richiede:
-Forza 10
-
-Peso: 4~
 @70384 = ~Cinghia della Perforazione~
 @70385 = ~Realizzata in cuoio crudo e disadorno, questa cintura di lino è stata ovviamente creata pensando all'utilità piuttosto che alla bellezza (o anche nella comodità). Anche se non bella, è utile, incantata con magie che conferiscono, a chi lo indossa, una magica protezione dalle fionde e dalle frecce dei suoi nemici.
 
@@ -79,23 +134,3 @@ Abilità durante l'uso:
 - Classe Armatura: +3 contro attacchi perforanti e attacchi con armi da lancio
 
 Peso: 2~
-@62052 = ~Anello di Protezione +2~
-@62053 = ~Un anello di protezione migliora la Classe Armatura e i Tiri-salvezza del portatore contro tutte le forme di attacco. Le proprietà magiche di questo anello gli impediscono di essere indossato con altri oggetti magici di protezione, incluse le armature magiche.
-
-STATISTICHE:
-
-Abilità durante l'uso:
-- Classe Armatura: +2
-- Tiri-salvezza: +2
-
-Peso: 0~
-@70356 = ~Guanti dell'Armigero~
-@70357 = ~Questi guanti magici aiutano chi l'indossa nell'uso delle armi. Anche un'arma poco familiare può essere usata con una certa abilità.
-
-STATISTICHE:
-
-Abilità durante l'uso:
-- THAC0: +1
-
-Peso: 2
-~

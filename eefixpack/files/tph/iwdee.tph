@@ -15,7 +15,12 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
+INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
+INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
+// tbd, cam
+// fixing missing starting equipment in HoW games for shaman, others
+COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
 /*
 luke
 **splprot.2da**
@@ -59,7 +64,7 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
 INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
  
-// CLEAR_IDS_MAP // reload ids, if we end up having any changes
+CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
 ///// mass copy/includes actions                       \\\\\
@@ -80,6 +85,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~  ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~    ~override~ // tbd, cam: add basic 2das to enable fog
+     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -93,12 +99,14 @@ BEGIN
 END  
 
 // there's another section of INCLUDEs at the bottom if it should be late in the process
-INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~      // ie-5943 , cam: lots of mold touch fixes
-INCLUDE ~eefixpack/files/tph/6018_lizardmen.tph~       // ie-6018 , cam: Summoned lizardmen lack visible weapons
-INCLUDE ~eefixpack/files/tph/6020_bullets.tph~         // ie-6020 , cam: Bullets +1 and Bullets +2 use the same projectile
-INCLUDE ~eefixpack/files/tph/6036_clostsbfbhnaeig.tph~ // ie-6036 , cam: Cam's List o' Stuff That Should Be Fixed But Has No Actual Effect In Game
-INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~   // bgcs-3460, cam: death tyrant animation fixes
-INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~       // bgcs-3397, cam: revenant animation fixes
+INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~           // ie-5943 , cam: lots of mold touch fixes
+INCLUDE ~eefixpack/files/tph/6018_lizardmen.tph~            // ie-6018 , cam: Summoned lizardmen lack visible weapons
+INCLUDE ~eefixpack/files/tph/6020_bullets.tph~              // ie-6020 , cam: Bullets +1 and Bullets +2 use the same projectile
+INCLUDE ~eefixpack/files/tph/6036_clostsbfbhnaeig.tph~      // ie-6036 , cam: Cam's List o' Stuff That Should Be Fixed But Has No Actual Effect In Game
+INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~        // bgcs-3460, cam: death tyrant animation fixes
+INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~            // bgcs-3397, cam: revenant animation fixes
+INCLUDE ~eefixpack/files/tph/tbd_extraplanar_tieflings.tph~ // tbd, cam: tieflings should not be included in effects that target 'outer' or 'extraplanars'
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_chargen.tph~         // tbd, cam: very specific circumstances can crash if starting HoW game
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -542,7 +550,7 @@ COPY_EXISTING ~%MONK_LAY_ON_HANDS%.spl~ ~override~ // spcl815 lay on hands (monk
 COPY_EXISTING ~%MONK_LAY_ON_HANDS%.spl~          ~override~ // spcl815 lay on hands (monk)
               ~%WIZARD_LARLOCH_MINOR_DRAIN%.spl~ ~override~ // spwi119 larloch's minor drain
               ~%WIZARD_VAMPIRIC_TOUCH%.spl~      ~override~ // spwi314 vampiric touch
-  PATCH_FOR_EACH race IN 121 139 145 147 153 156 157 158 159 169 BEGIN // demonic mephit elemental genie tiefling (anti)solar (dark)planetar salamander
+  PATCH_FOR_EACH race IN 121 139 145 147 156 157 158 159 169 BEGIN // demonic mephit elemental genie (anti)solar (dark)planetar salamander
     LPF CLONE_EFFECT INT_VAR match_opcode = 324 match_parameter2 = 55 parameter1 = race parameter2 = 104 END 
   END   
   BUT_ONLY
@@ -605,7 +613,6 @@ COPY_EXISTING ~%CLERIC_STORM_SHELL%.spl~ ~override~ // sppr327
   LPF ADD_SPELL_EFFECT INT_VAR insert_point=0 opcode=321 target=2 timing=0 resist_dispel=3 STR_VAR resource="%CLERIC_STORM_SHELL%" END
   LPF ALTER_EFFECT INT_VAR target=1 END // for some subtle reason, ability_target=5 and target=2 doesn't play nice with the 321 trick
   BUT_ONLY
-
 
 // tbd, cam
 // poison icon expires too early, just build into poison effect
