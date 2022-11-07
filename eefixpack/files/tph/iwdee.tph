@@ -18,6 +18,9 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
+// tbd, cam
+// fixing missing starting equipment in HoW games for shaman, others
+COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
 /*
 luke
 **splprot.2da**
@@ -103,6 +106,7 @@ INCLUDE ~eefixpack/files/tph/6036_clostsbfbhnaeig.tph~      // ie-6036 , cam: Ca
 INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~        // bgcs-3460, cam: death tyrant animation fixes
 INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~            // bgcs-3397, cam: revenant animation fixes
 INCLUDE ~eefixpack/files/tph/tbd_extraplanar_tieflings.tph~ // tbd, cam: tieflings should not be included in effects that target 'outer' or 'extraplanars'
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_chargen.tph~         // tbd, cam: very specific circumstances can crash if starting HoW game
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
