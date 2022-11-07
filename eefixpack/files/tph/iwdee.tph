@@ -215,6 +215,16 @@ COPY_EXISTING ~d5yxudor.bcs~ ~override~
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
+
+// tbd, cam
+// dupe random treasure, two containers overlay one another
+COPY_EXISTING ~ar6006.are~ ~override~
+  LPF DELETE_AREA_ITEM STR_VAR item_to_delete = scrl6j END // delete items out of container being removed
+  LPF DELETE_AREA_ITEM STR_VAR item_to_delete = potn31 END
+  LPF fj_are_structure INT_VAR fj_delete_mode = 3 STR_VAR fj_structure_type = container END // delete container 4
+  LPF ALTER_AREA_ITEM STR_VAR match_item = rndtre57 item = scrl6j END // replace dupe random treasure with one of the items from the deleted container
+  LPF ADD_AREA_ITEM INT_VAR container_to_add_to = 1 STR_VAR item_to_add = potn31 END // re-add the second deleted item
+  BUT_ONLY
   
 // ie-6016, cam
 // Untrapped doors shouldn't show as trapped
@@ -226,8 +236,6 @@ COPY_EXISTING ~ar7002.are~ ~override~
   LPF ALTER_AREA_DOOR INT_VAR flag_detectable = 0 STR_VAR door_name = AR7002Door1 END
   BUT_ONLY
   
-  
-  
 // ie-6017, cam
 // Wrong random treasures in HoW
 COPY_EXISTING ~ar9200.are~ ~override~ // swap back the old extres4 dupe fix
@@ -237,8 +245,6 @@ COPY_EXISTING ~ar9200.are~ ~override~ // swap back the old extres4 dupe fix
 COPY_EXISTING ~ar9601.are~ ~override~ // swap back the old extres4 dupe fix
   LPF REPLACE_AREA_ITEM INT_VAR charges1 = 1 charges2 = 1 charges3 = 0 STR_VAR old_item = rndtre78 new_item = rndtre75 END // 1/1/0 charges for beltbon/helmsh/stomper  
   BUT_ONLY
-  
-  
   
 // ie-6013, cam
 // Harpies should despawn for lower level parties
