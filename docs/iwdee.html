@@ -37,6 +37,8 @@
   <li>The non-proficiency penalty for Shadowdancers and Mage-Thieves were incorrect. <span class="bg2fp_modder">(clswpbon.2da)</span></li>
   <li>Wing buffet/knockback effects were not being applied to all creatures who should be affected. <span class="bg2fp_modder">(cdwb220.eff, cdwb230.eff, cdwb3100.eff, spcl911b.spl, spwi818.spl, spwi918.spl, spwi922.spl, spwi925.spl, spwish27.spl, spyanc01.spl)</span></li>
   <li>Crippling Strike should extend out to -10 for assassins. <span class="bg2fp_modder">(backstab.spl)</span></li>
+  <li>Several items and spells have effects specifically applied or blocked for &quot;outer planar&quot; or &quot;extra planar&quot; creatures. Tieflings were included in these definitions, but should not be. <span class="bg2fp_modder">(debian.itm, devaheal.spl, doves.itm, smcudge.itm, spcl102.spl, spcl111.spl, spcl211.spl, spin200.spl, spin202.spl, spin923.spl, sppr103.spl, sppr114.spl, sppr217.spl, sppr220.spl, sppr315.spl, sppr317.spl, sppr320.spl, sppr330.spl, sppr331.spl, sppr401.spl, sppr414.spl, sppr417.spl, sppr502.spl, sppr510.spl, sppr514.spl, sppr523.spl, sppr607.spl, sppr608.spl, sppr612.spl, sppr699.spl, sppr711.spl, sppr713.spl, sppr739.spl, sppr740.spl, spwi914.spl, spwish07.spl, spwish19.spl, spwish28.spl, spwish39.spl, spwish46.spl, spwm168.spl, sw1h51.itm)</span></li>
+  <li>When starting a new HoW game, new characters were given default equipment based on their class. Due to errors in the table, some classes and kits (notably shamans) received nothing at all. <span class="bg2fp_modder">(25stweap.2da)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -128,6 +130,7 @@
   <li>When Berserk was used for non-party members, the messages about the expiration damage was still being displayed as combat feedback. <span class="bg2fp_modder">(spcl321.spl, spcl321d.spl, spin117a.eff, spin117b.eff)</span></li>
   <li>A sound effect for Lance of Disruption was not playing due to a typo. <span class="bg2fp_modder">(idpro313.pro)</span></li>
   <li>The Song of Kaudies provides 50% protection from sonic-based attacks. However, it was coded in such a way that, every round, the target would either be completely immune or completely susceptible to all such attacks, rather than rolling for each attack individually.<span class="bg2fp_modder"> (spcl117.spl, spin115.spl, spin116.spl, spin117.spl, spin118.spl, spin119.spl, spin138.spl, splstate.ids, sppr102.spl, sppr211.spl, sppr512.spl, sppr988.spl, spwi431.spl, spwi612.spl, spwi806.spl, spwi913.spl)</span></li>
+  <li>Unholy Blight was providing a -2 AC penalty to its target instead of the intended -2 to damage rolls. A new portrait icon for Unholy Blight's effects has been added. <span class="bg2fp_modder">(<span data-code-marker="+">sppr314.spl</span>, <span data-code-marker="+">sppr314d.bam</span>, statdesc.2da)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>School: Several innate creature abilities were assigned as 'generalist' school spells instead of schoolless, which gave generalist mages an unwarranted +2 saving throw against them. Corrections were also made for Blade Barrier and special versions of Confusion, Flame Strike, and Call Lightning. <span class="bg2fp_modder">(spin176.spl, spin177.spl, spin180.spl, spin181.spl, spin182.spl, spin183.spl, spin184.spl, spin186.spl, spin187.spl, spin188.spl, spin189.spl, spin190.spl, spin192.spl, spin193.spl, spin194.spl, sppr603d.spl, sppr983.spl, 
@@ -163,6 +166,7 @@
   <li>One of the player cleric scripts would check for magical weapons such as Chill Touch before casting Shillelagh, but it was looking for the BG/BG2 resources and not the IWD-specific ones. <span class="bg2fp_modder">(cleric1.bs)</span></li>
   <li>Jorn would heal all of his fellow barbarians save one due to a bad check. <span class="bg2fp_modder">(iljorn.bcs)</span></li>
   <li>The Talonite priests in the second level of Dragon's Eye were supposed to heal one another if hurt, but weren't due to some targeting issues. <span class="bg2fp_modder">(d2talon3.bcs, d2talon4.bcs)</span></li>
+  <li>IWDEE lacked many of the normal 'object' definitions used for targeting in scripts. Two typos are also fixed in the object list. <span class="bg2fp_modder"> (object.ids)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -191,6 +195,7 @@
 <h3> <a name="other_fixes" id="other_fixes"></a>Other Fixes <a href="#other_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Travel times between Severed Hand-Dragon's Eye and between Severed Hand-Wyrm's Tooth were inconsistent. <span class="bg2fp_modder">(worldmap.wmp)</span></li>
+  <li>Under <a href="https://www.gibberlings3.net/forums/topic/36150-iwd-crash-in-iwdee-chargen">very specific circumstances</a>, you could get a crash or other wonkiness during character generation for HoW games. While the bug utlimately needs a code fix, steps have been taken to make the bug substantially less likely. <span class="bg2fp_modder">(hparty01.bcs, hparty01.cre, hparty02.bcs, hparty02.cre, hparty03.bcs, hparty03.cre, hparty04.bcs, hparty04.cre, hparty05.bcs, hparty05.cre, hparty06.bcs, hparty06.cre)</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
@@ -214,6 +219,7 @@
     <li>Disease  icons are folded into op78 directly on various disease effects (sppr320.spl) </li>
     <li>Removed duplicate and/or redundant effects from many items and spells (bdspirim.itm, bdspnaim.itm, blakblad.spl, doves.itm, dwfpgs03.spl, iplat05.itm, ipsion.itm, minhp1.itm, ohtmps2d.spl, ohtmps2e.spl, potn21.itm, ring91.itm, sceptre.itm, scrl03.itm, spcl152.spl, spcl242.spl, spcl321.spl, spcl900.spl, spcl901.spl, spin203.spl, sppr416.spl, sppr426.spl,  sppr613.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spwi515.spl, spwi802.spl, spwi806.spl, trollimm.itm) </li>
     <li>Various spells and items had to have effects reorganized to facilitate other fixes (wand19.itm, wand19a.spl, wand19b.spl, wand19c spl)</li>
+    <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
   </ul>
 </div>
 <!-- documentation ends here -->

@@ -41,6 +41,7 @@
   <li>Items with poison effects  block their own effects on a poison-immune target. However, in some cases, they were also blocking other, non-poison-related effects which should still apply.<span class="bg2fp_modder"> (potn48.itm)</span></li>
   <li>Similar to the above, sleep and charms could also block unrelated effects when stopped by (half-)elven immunity.<span class="bg2fp_modder"> (gorwom1.itm)</span></li>
   <li>The slow caused by an otyugh hit was a disease effect, but was not being alleviated by various disease cures. <span class="bg2fp_modder">(iotyugh.itm, ohrslng1.itm, otyugh.itm)</span></li>
+  <li>Three spells from SoD are added to the game even though they're not made available. This helps properly preserve BGEE/SoD spellbooks for characters being transferred into BG2EE games. <span class="bg2fp_modder">(bddanc01.bcs, bddanc01.cre, bddanc02.cre, bddanc01.eff, bddanc02.eff, bddark15.pro, bddarka.bam, bddarka.vvc, bddarkx.bam, hidespl.2da, spell.ids, sppr116.spl, <span data-code-marker="+">spprismt.vvc</span>, spschgi.vvc, spwi126.spl, spwi228.spl</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -48,6 +49,8 @@
   <li>The area script in one of Hexxat's quest areas can loop. <span class="bg2fp_modder">(oh7200.bcs)</span></li>
   <li>Several creatures were placed on impassable terrain, making them unable to move, or outside the bounds of the area. <span class="bg2fp_modder">(ar0305.are, ar0800.are, ar1000.are, ar2000.are, ar5202.are, ar6005.are, oh5500.are)</span></li>
   <li>Floor or container traps could potentially crash the game if the trap effects were channeled through an unnamed spell and blocked by a target who is immune.<span class="bg2fp_modder"> (spcl415.spl, spin627.spl, spin642.spl, spin707.spl, spwi008.spl, spwi016.spl, spwi023.spl)</span></li>
+  <li>Several doors would <a href="https://www.gibberlings3.net/gallery/image/833-bg2-door-fixes/"> disappear when opened</a>, leaving no way to close them. <span class="bg2fp_modder">(ar0406.are, ar0711.are, ar1302.are, ar1307.are, ar1307.are, ar5007.are)</span></li>
+  <li>Several doors had the wrong <a href="https://www.gibberlings3.net/gallery/image/833-bg2-door-fixes/">clickable area</a> when opened. <span class="bg2fp_modder">(ar1202, ar1514.are)</span></li>
 </ul>
 <h3> <a name="dialogue_fixes" id="dialogue_fixes"></a>Dialogue Fixes <a href="#dialogue_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -56,6 +59,7 @@
   <li>If you spare Solaufein, depending on the PC's replies Solaufein can hand over his cloak even though you never asked for it. He also misses setting some journal entries. <span class="bg2fp_modder">(udsola01.dlg)</span></li>
   <li>When Aerie leaves the party and returns to the circus, she could move to impassable ground. <span class="bg2fp_modder">(aeriej.dlg, baerie.dlg)</span></li>
   <li>Dorn's first  talk with the PC is supposed to be one of three, depending on your reputation and whether you known him from the events in BG. However, his script was always setting the variable that you knew him, so you always got one of the three banters and never saw the other two options. <span class="bg2fp_modder">(dorn.bcs)</span></li>
+  <li>You can only ask Karthis al-Hezzar about the fire giants the first time you talk to him; the option has been added for subsequent visits. <span class="bg2fp_modder">(hgkar01.dlg)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -84,6 +88,10 @@
   <li>On 10% of hits Neera's Staff is supposed to inflict a point of fire damage on its wielder <strong>or</strong> its target, but was instead inflicting a point of fire damage on both. <span class="bg2fp_modder">(stafn1.itm)</span></li>
   <li>Natural weapons (claws, bites, etc.) and magically-created weapons (e.g. Chill Touch) should not benefit from weapon style proficencies. <span class="bg2fp_modder">(</span><span class="bg2fp_modder">brblp.itm, brbrp.itm, cdbrbrp.itm, cdbrbrp2.itm, cdgoliro.itm, cdmindfl.itm, cdwolfm.itm, cdwstyl1.eff, cdwstyl1.spl, cdwstyl2.eff, cdwstyl2.spl, chillt.itm, critical.itm, druear.itm, drufir.itm, earthrn.itm, firern.itm, ghoult.itm, harm.itm, plybass.itm, plybear1.itm, plybear2.itm, plymstar.itm, plyspid.itm, plyspid2.itm, plytroll.itm, plywolf1.itm, plywyvrn.itm, polyrat.itm, sgrasp.itm, slayerw1.itm, slayerw2.itm, slayerw3.itm, slayerw4.itm, slaylive.itm, squirp.itm, statdesc.2da, trollall.itm, wolfgr.itm, wolfm.itm, wswolf.itm)</span></li>
   <li>Goodberries should not play the *gulp* string when used as they are not potions. <span class="bg2fp_modder">(gberry.itm)</span></li>
+  <li>Launchers that generate their own ammo (e.g. Gesen's Bow or the Firetooth crossbow) would override the projectile of loaded ammo, meaning it could interact with the target protections incorrectly.<span class="bg2fp_modder"> (bow15.itm, <span data-code-marker="+">bow19.itm</span>, <span data-code-marker="+">compb15.itm</span>, <span data-code-marker="+">compb19.itm</span>, <span data-code-marker="+">slng07.itm</span>, <span data-code-marker="+">wasling.itm</span>, <span data-code-marker="+">xbow15.itm</span>, <span data-code-marker="+">xbow16.itm</span>)</span></li>
+  <li>The flindbar weapon of flinds is supposed to penalize the target's THAC0 on hit, but was instead improving it. <span class="bg2fp_modder">(flind1.itm)</span></li>
+  <li>The Quiver and Case of Plenty had custom ground icons that were not being used. <span class="bg2fp_modder">(quiver01.itm, quiver02.itm, quiver03.itm, quiver04.itm)</span></li>
+  <li>Dorn's various, upgraded Abyssal Blades were not very good at targeting demons and devils for bonus damage. <span class="bg2fp_modder">(<span data-code-marker="+">ohdsw2hb.eff</span>, <span data-code-marker="+">ohdsw2hc.eff</span>)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, goodberries, ghoul touch, Melf's Minute Meteors). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, gberry.itm, ghoult.itm, melfmet.itm)</span></li>
@@ -138,10 +146,13 @@
   <li>Sol's Searing Orb  could be blocked by spell protections, and the spell was rebuilt in a substantially cleaner fashion. <span class="bg2fp_modder">(sorb.itm, sppr614a.spl, sppr614b.spl)</span></li>
   <li>Ice Storm should last four rounds, not three. <span class="bg2fp_modder">(icestorm.pro)</span></li>
   <li>Per its descript, Insect Plague should affect up to six creatures. <span class="bg2fp_modder">(insec2.pro)</span></li>
+  <li>At its lowest level, Mazzy's strength buff was setting the exceptional strength bonus instead of incrementing it. <span class="bg2fp_modder">(spin826.spl)</span></li>
+  <li>When cast at level 19 specifically, Conjure Fire Elemental would pause the caster for five rounds instead of three. <span class="bg2fp_modder">(spwi620.spl)</span></li>
+  <li>Holy Smite and Unholy Blight were updated to better target by alignment. A new portrait icon for Unholy Blight's effects has been added. <span class="bg2fp_modder">(<span data-code-marker="+">sppr313.spl, sppr314.spl</span>, <span data-code-marker="+">sppr314d.bam</span>, statdesc.2da)</span></li>
   <li>Bulk Fixes:
     <ul>
-      <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spwi117a.spl)</span></li>
-      <li>Magic resistance determines whether a spell has to check against the target's magic resistance before going into effect. <span class="bg2fp_modder">(spwi223.spl, spwi625.spl, spwi711.spl)</span></li>
+      <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spin828.spl, spwi117a.spl)</span></li>
+      <li>Magic resistance determines whether a spell has to check against the target's magic resistance before going into effect. <span class="bg2fp_modder">(spin685.spl, spwi223.spl, spwi411.spl, spwi625.spl, spwi711.spl)</span></li>
       <li>Dispellability: Wraith Form effects should be dispellable. <span class="bg2fp_modder">(spwi315.spl)</span></li>
       <li>School: Some spells had the wrong spell school set. <span class="bg2fp_modder">(balth07.spl, bhaal2a.spl, spcl212.spl, spin552.spl, spin553.spl, spin839.spl, spin920.spl, spin940.spl, spin943.spl, spin961.spl, spin962.spl, spin982.spl, spin997.spl, spin998.spl, spwi940.spl, spwm179.spl)</span></li>
       <li>Secondary: Some spells had the wrong secondary type set. <span class="bg2fp_modder">(balth07.spl, bhaal2a.spl, spcl212.spl, spcl722.spl, spin553.spl, spin558.spl, spin673.spl, spin686.spl, spin920.spl, spin940.spl, spin961.spl, spin962.spl, spin984.spl, spin997.spl, spin998.spl, spwi004.spl, spwi016.spl, spwi940.spl, spwm123.spl)</span></li>
@@ -164,9 +175,13 @@
   <li>When sirines cause intelligence drain, they were using the 'feeblemind' icon instead of 'ability score drained'. <span class="bg2fp_modder">(magiconf.itm, sirine1.itm)</span></li>
   <li>Generalist mages were getting a +2 bonus to saves against dragon breath attacks because the spells providing the effects were not properly classed as schoolless. The blue dragon breath attack also needs some additional minor fixes. <span class="bg2fp_modder">(drgrbrht.spl, spin535.spl, spin595.spl, spin595v.spl, spin596.spl, spin596v.spl, spin597.spl, spin691.spl, spin691v.spl, spin693.spl, spin832.spl, spin832v.spl, spin833.spl, spin833v.spl, spin893.spl, spin893v.spl, spin894.spl)</span></li>
   <li>Nishruu and hakeashar should be destroyed by dispel magic, their attack used the wrong type, they had some basic creature errors (general, race, class, animation, resistances), and some other minor errors. <span class="bg2fp_modder">(haksu.cre, nishruu.itm, nishru01.bcs, nishrusu.cre, spcl231.spl, specific.ids, spin112.spl, sppr303.spl, spwi302.spl, spwi326.spl) </span></li>
+  <li>Drizzt was updated to properly dual-wield his weapons in BGEE, and this has been done for BG2EE as well. <span class="bg2fp_modder">(c6drizz.cre, c6drizz2.cre, c6drizz3.cre, drizzt.cre)</span></li>
+  <li>Shambling Mounds had their race and class set as earth elementals instead of their own custom values. <span class="bg2fp_modder">(<span data-code-marker="+">globsham</span>.cre, <span data-code-marker="+">hgmnd2</span>.cre, <span data-code-marker="+">hgmound</span>.cre, <span data-code-marker="+">smound01</span>.cre, <span data-code-marker="+">smoundsu</span>.cre)</span></li>
   <li>Bulk fixes:
     <ul>
-      <li>Race: Three lizardmen were not set as Lizardmen race. <span class="bg2fp_modder">(ohbliz01.cre, ohbliz02.cre, ohbliz03.cre)</span></li>
+      <li>Race: Three lizardmen were not set as Lizardmen race.. <span class="bg2fp_modder">(ohbliz01.cre, ohbliz02.cre, ohbliz03.cre)</span></li>
+      <li>Class: Water elementals were not using their custom water elemental class. <span class="bg2fp_modder">(elemhydr.cre, elwatg01.cre, ohbwat01.cre)</span></li>
+      <li>Alignment: some gnolls were chaotic neutral instead of chaotic evil <span class="bg2fp_modder">(aegnoll.cre, dagnoll.cre, gnollhp1.cre)</span></li>
     </ul>
   </li>
 </ul>
@@ -177,12 +192,17 @@
   <li>If you leave Brynnlaw with Saemon, you get caught by the Githyanki &quot;on the fourth morn&quot;. However, no game time actually passes. <span class="bg2fp_modder">(cut41q.bcs)</span></li>
   <li>Despite ending the romance right before the encounter, bandits could still spawn and threaten Jaheira. <span class="bg2fp_modder">(jaheira.bcs)</span></li>
   <li>The golem fight in the Black Pits can not be completed on Legacy of Bhaal difficulty; the HD boosts to the creatures means the golems don't split properly. <span class="bg2fp_modder">(ohb_t302.bcs)</span></li>
+  <li>Anomen was not always setting variables indicating the status of his romance. <span class="bg2fp_modder">(banomen.dlg)</span></li>
+  <li>When the Shade Lord is defeated, all shadow doors open. <span class="bg2fp_modder">(ar1401.bcs)</span></li>
+  <li>Dorn's patron Ur-gothoz is inconsistently depicted during his questline; its alignment and appearance have been standardized. <span class="bg2fp_modder">(<span data-code-marker="+">ohdugcut</span>.cre, <span data-code-marker="+">ohdugoth.bcs</span>, <span data-code-marker="+">ohdugoth.cre)</span></span></li>
+  <li>When speaking with the boy in Saradush who wants to resurrect his dad, the option to use the Blessed Bracers is now available. <span class="bg2fp_modder">(orphan1.dlg)</span></li>
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Two guards at the Copper Coronet had scripts that would indefinitely loop. <span class="bg2fp_modder">(guard1a.bcs, guard1b.bcs)</span></li>
   <li>Several container and region scripts used local variables, which containers and regions cannot store, causing minor errors. <span class="bg2fp_modder">(ohbpot.bcs)</span></li>
   <li>One of the generic enemy cleric scripts had a block that could force the script to loop and the character to do nothing as a result. <span class="bg2fp_modder">(pries14a.bcs)</span></li>
+  <li>When fighting the slimes in Ust Natha, one of the slimes and priests spawn on top of one another. <span class="bg2fp_modder">(ar2200.bcs)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -246,7 +266,10 @@
     <li>Removed duplicate and/or redundant effects from many items and spells (amul17.itm, bdddoorx.spl, bdsha01c.spl, bdsha06b.spl, bdspirim.itm, bdspnaim.itm, bhaalhp1.itm, bhaalimm.itm, blun30.itm, chalcy3.itm, clck04.itm, clck27.itm, dgarchon.spl, dragring.itm, gorchr.itm, gorfirg.itm, gorjelfu.itm, gorjelgr.itm, gormisti.itm, imoenhp1.itm, ipsion.itm, jwsuper.itm, lichtel.spl, mel01.itm, minhp1.itm, misc9y.itm, ohbbanno.spl, ohbdrkrg.itm, ohbjoke2.spl, ohdmhp1.itm, ohrboot1.itm, ohrfear.spl, ohtmps2d.spl, ohtmps2e.spl, potn23.itm, potn25.itm, potn32.itm, potn40.itm, potn45.itm, potn46.itm, ring09.itm, ring95.itm, rodsword.itm, rossring.itm, scrl10.itm, scrl11.itm, scrl12.itm, scrl13.itm, scrl18.itm, scrlpet.itm, sengua04.itm, shld24.itm, shld24a.itm, spcl152.spl, spcl321.spl, spcl611.spl, spcl612.spl, spcl613.spl, spcl632.spl, spcl633.spl, spcl634.spl, spcl643.spl, spcl644.spl, spcl722.spl, spcl900.spl, spcl901.spl, spdr301.spl, sper12.itm, spin107.spl, spin110.spl, spin111.spl, spin117.spl, spin121.spl, spin122.spl, spin123.spl, spin124.spl, spin125.spl, spin126.spl, spin127.spl, spin150.spl, spin151.spl, spin152.spl, spin153.spl, spin154.spl, spin155.spl, spin156.spl, spin157.spl, spin529.spl, spin632.spl, spin667.spl, spin710.spl, spin714.spl, spin717.spl, spin718.spl, spin718a.spl, spin783.spl, spin823.spl, spin852.spl, spin920.spl, spin952.spl, spinhum.spl, sppr111.spl, sppr319.spl, sppr508.spl, sppr517.spl, sppr613.spl, sppr701.spl, sppr704.spl, sppr717.spl, sppr717a.spl, sppr731.spl, sppr732.spl, spra302.spl, spra303.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spwi002.spl, spwi222.spl, spwi308.spl, spwi311.spl, spwi318.spl, spwi415.spl, spwi489.spl, spwi490.spl, spwi491.spl, spwi493.spl, spwi494.spl, spwi495.spl, spwi496.spl, spwi497.spl, spwi498.spl, spwi499.spl, spwi511.spl, spwi522.spl, spwi618.spl, spwi701.spl, spwi705.spl, spwi711.spl, spwi723.spl, spwi902.spl, spwi997.spl, surehp1.itm, sw1h27.itm, sw2h21.itm, trollimm.itm, tstatue.itm, wand09.itm, wand19.itm)</li>
     <li>Effects with permanent timing shouldn't have durations (sppr202.spl)</li>
     <li>Various spells and items had to have effects reorganized to facilitate other fixes (ax1h10.itm, blun12.itm, blun25.itm, deva.itm, dwfpdeva.spl, dwfpdgcn.spl, dwfpdgfb.spl, dwfpohdv.spl, dwfpsmsl.spl, dwfpsmst.spl, dwfpwwfs.spl, dwfpwwhs.spl, hamm10.itm, hamm11.itm, insanity.spl, ohbdeva.itm, spermel.itm, wand12.itm)</li>
-    <li>Several spells that used swarms of EFFs have been recoded with cleaner  implementations  (sppr313.spl, sppr314.spl, sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl, sppr710.spl, sppr715.spl) </li>
+    <li>Several spells that used swarms of EFFs have been recoded with cleaner  implementations  (sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl, sppr710.spl, sppr715.spl) </li>
+    <li>Targeting for bhaal1a.spl was incorrect (bhaal1a.spl)</li>
+    <li>The duplicate, unused, and misspelled EigthNearestEnemyOfType and EigthNearestMyGroupOfType objects are removed. (object.ids)</li>
+    <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
   </ul>
 </div>
 <!-- documentation ends here -->

@@ -87,6 +87,10 @@
     <li>Four creatures had %resource% set as their DVs, which are cleared (apprent2.cre, apprent3.cre, apprent4.cre, apprent5.cre)</li>
     <li>Blank-named scripts are removed from the key (chitin.key)</li>
     <li>The non-proficiency penalty for Shadowdancers and Mage-Thieves were incorrect. (clswpbon.2da)</li>
+    <li>The names of the parameters for ExploreMapChunk() were mislabeled. (action.ids)</li>
+    <li>The duplicate, unused, and misspelled EigthNearestEnemyOfType and EigthNearestMyGroupOfType objects are removed. (object.ids)</li>
+    <li>Added <span data-code-marker="+">ForceSpellNoFeedback</span> as an action (a RES version was already present). (action.ids)</li>
+    <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
   </ul>
 </div>
 <!-- documentation ends here -->

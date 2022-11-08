@@ -38,6 +38,7 @@
   <li>Items with poison effects  block their own effects on a poison-immune target. However, in some cases, they were also blocking other, non-poison-related effects which should still apply.<span class="bg2fp_modder"> (bdbelhi1.itm, bdbelhi2.itm, bdmisc1c.itm, bdplant.itm, bdpotn02.itm, potn48.itm, sw1p01.itm)</span></li>
   <li>Similar to the above, sleep and charms could have blocked unrelated effects when stopped by (half-)elven immunity.<span class="bg2fp_modder"> (gorwom1.itm)</span></li>
   <li>The slow caused by an otyugh hit was a disease effect, but was not being alleviated by various disease cures. <span class="bg2fp_modder">(bddraggh.itm, bdotyg01.itm, bdotyg02.itm, otyugh.itm, pudden01.itm)</span></li>
+  <li>If SoD is not installed, three spells from SoD are added to the game even though they're not made available. This helps properly preserve BGEE/SoD spellbooks for characters being transferred into BG2EE games. <span class="bg2fp_modder">(bddanc01.bcs, bddanc01.cre, bddanc02.cre, bddanc01.eff, bddanc02.eff, bddark15.pro, bddarka.bam, bddarka.vvc, bddarkx.bam, hidespl.2da, spell.ids, sppr116.spl, <span data-code-marker="+">spprismt.vvc</span>, spschgi.vvc, spwi126.spl, spwi228.spl</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -80,6 +81,7 @@
   <li>The nighttime THAC0 bonus from the Night Club could stack multiple times. <span class="bg2fp_modder">(blun38.spl)</span></li>
   <li>The Barbed Defense and Suncatcher could cause spurious 'one of the spells has failed' messages. <span class="bg2fp_modder">(bdbarbde.spl, bdshld02.spl)</span></li>
   <li>The Sandthief's Ring for sale in the Black Pits had the wrong number of charges. <span class="bg2fp_modder">(bpxith03.sto)</span></li>
+  <li>The unused Shield of Devotion was granting two spells of levels 1 and 2, instead of one spell of levels 1-3. <span class="bg2fp_modder">(shld09p.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, ghoul touch, Melf's Minute Meteors); several wands are changed to power 1 to better match thier effects (Wands of Fear, Magic Missiles, Sleep). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, ghoult.itm, melfmet.itm, wand02.itm, wand03.itm, wand08.itm, wand12.itm)</span></li>
@@ -127,9 +129,12 @@
   <li>Blackguard's Absorb Health should not bypass magic resistance and had some other minor issues. <span class="bg2fp_modder">(spcl102.spl, spdn01a.spl)</span></li>
   <li>Ice Storm should last four rounds, not three. <span class="bg2fp_modder">(icestorm.pro)</span></li>
   <li>Per its descript, Insect Plague should affect up to six creatures. <span class="bg2fp_modder">(insec2.pro)</span></li>
+  <li>When cast at level 19 specifically, Conjure Fire Elemental would pause the caster for five rounds instead of three. <span class="bg2fp_modder">(spwi620.spl)</span></li>
+  <li>Holy Smite and Unholy Blight were updated to better target by alignment. A new portrait icon for Unholy Blight's effects has been added. <span class="bg2fp_modder">(<span data-code-marker="+">sppr313.spl, sppr314.spl</span>, <span data-code-marker="+">sppr314d.bam</span>, statdesc.2da)</span></li>
   <li>Bulk Fixes:
     <ul>
-      <li>Magic resistance: Sphere of Chaos effects should be subject to magic resistance; effects from Improved Haste and Stone to Flesh should not. <span class="bg2fp_modder">(spwi613.spl, spwi625.spl, spwi711.spl)</span></li>
+      <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spin828.spl)</span></li>
+      <li>Magic resistance determines whether a spell has to check against the target's magic resistance before going into effect. <span class="bg2fp_modder">(spin685.spl, spwi411.spl, spwi613.spl, spwi625.spl, spwi711.spl)</span></li>
       <li>Dispellability: Wraith Form effects should be dispellable. <span class="bg2fp_modder">(spwi315.spl)</span></li>
       <li>School: Some spells had the wrong spell school set. <span class="bg2fp_modder">(spcl212.spl, spin572.spl, spin839.spl, spin920.spl, spin940.spl, spin943.spl, spin958.spl, spin961.spl, spin962.spl, spin982.spl, spin997.spl, spin998.spl, spin999.spl, spwi940.spl, spwm179.spl)</span></li>
       <li>Secondary: Some spells had the wrong secondary type set. <span class="bg2fp_modder">(spcl212.spl, spcl722.spl, spin558.spl, spin572.spl, spin673.spl, spin694.spl, spin920.spl, spin940.spl, spin950.spl, spin958.spl, spin961.spl, spin962.spl, spin982.spl, spin984.spl, spin997.spl, spin998.spl, spin999.spl, spwi004.spl, spwi016.spl, spwi940.spl, spwm123.spl)</span></li>
@@ -150,10 +155,14 @@
   <li>Ordulian has his cloak, but also creates a new one to give the player, potentially opening up a pickpocket/duplicate exploit.<span class="bg2fp_modder"> (orduli.cre)</span></li>
   <li>One of the mutated carrion crawlers and a magma mephit attacked without weapons due to typos.<span class="bg2fp_modder"> (bdmcarri.cre, mepmag.itm)</span></li>
   <li>Nishruu and hakeashar should be destroyed by dispel magic, their attack used the wrong type, they had some basic creature errors (general, race, class, animation, resistances), and some other minor errors. <span class="bg2fp_modder">(haksu.cre, nishruu.itm, nishru01.bcs, nishrusu.cre, spcl231.spl, specific.ids, spin112.spl, sppr303.spl, spwi302.spl, spwi326.spl) </span></li>
+  <li>The breath attack of hell hounds was using an invisible, single-target projectile instead of a small area-of-effect projectile. The flame fan attack from mephits had the same issue, though it's unused.<span class="bg2fp_modder"> (<span data-code-marker="+">spin938.spl</span>, spin956.spl)</span></li>
+  <li>Shambling Mounds had inconsistent race and class values instead of their own custom values. <span class="bg2fp_modder">(<span data-code-marker="+">bdshamb.cre, bpshamb.cre, globsham</span>.cre,<span data-code-marker="+"> smoundsu</span>.cre)</span></li>
+  <li>Several joinable NPCs in SoD had four additional 'action' lines in their soundsets which were not assigned. <span class="bg2fp_modder">(baelot7.cre, bdcaelar.cre, bdcaela3.cre, bdmkhi7.cre, corwin7.cre, dorn7.cre, dynahe7.cre, edwin7.cre, glint7.cre, khalid7.cre, minsc7.cre, neera7.cre, rasaad7.cre, safana7.cre, viconi7.cre, voghil7.cre)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Class (note that monsters can use special, non-player classes for identification): Krystin and Tellan are mages; Fahrington is a druid; Kiel the Legion Killer is a doppleganger; Kaishas Gan is a werewolf. <span class="bg2fp_modder">(dopkie.cre, fahrin.cre, kaish2.cre, kaisha.cre, krysti.cre, tellan.cre)</span></li>
       <li>General: Andris is a humanoid. <span class="bg2fp_modder">(andris.cre)</span></li>
+      <li>Alignment: some gnolls were chaotic neutral instead of chaotic evil <span class="bg2fp_modder">(gnoll02.cre, gnoll03.cre, gnoll04.cre, gnoll05.cre, gnoll2.cre, gnoll3.cre)</span></li>
     </ul>
   </li>
 </ul>
@@ -164,6 +173,8 @@
   <li>Kharm offers you a reward for finding his nephew, but only delivers on one of the four replies. <span class="bg2fp_modder">(bdkharm.dlg)</span></li>
   <li>At the end of the Candlekeep Catacombs, you find three dopplegangers imitating Elminster, Gorion, and Tethoril. If you one-shot kill one of them, the others will fail to transform and attack.<span class="bg2fp_modder"> (elmins4.bcs, ar2619.bcs)</span></li>
   <li>In the Menhir quest, if you failed at certain menhirs they would spawn an enemy. After defeating the enemy, the menhir was supposed to activate, but was not. <span class="bg2fp_modder">(bdmenhi1.bcs, bdmenhi4.bcs)</span></li>
+  <li>Mulahey could get trapped in a stuttering script loop if he was damaged too quickly, e.g. via backstab. <span class="bg2fp_modder">(mulahe.dlg, mulahey.bcs)</span></li>
+  <li>Rasaad's quest can be missed if he's kicked out and rejoins at just the right times. <span class="bg2fp_modder">(rasaadj.dlg)</span></li>
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_10/link.png.212d985d82c1e89d4e69e2a306e33e61.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -232,8 +243,11 @@
     <li>Sleep icons are folded into op39 directly on various sleep effects (spin940.spl, spwi004.spl, spwi213.spl, spwi411.spl, spwm187.spl)</li>
     <li>'Bypass mirror image' flags were set on a number of opcodes that don't support it (spin673.spl, spin940.spl, spwi004.spl, spwi016.spl, spwi213.spl, spwi502.spl, spwm187.spl)</li>
     <li>Spells which use improved invisibility will no longer set normal invisibility as it's redundant (spwi405.spl, spwi505.spl, spwi721.spl)</li>
-    <li>Several spells that used swarms of EFFs have been recoded with cleaner  implementations  (sppr313.spl, sppr314.spl, sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl, sppr710.spl, sppr715.spl)</li>
+    <li>Several spells that used swarms of EFFs have been recoded with cleaner  implementations  (sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl, sppr710.spl, sppr715.spl)</li>
+    <li>At its lowest level, Mazzy's strength buff was setting the exceptional strength bonus instead of incrementing it. (spin826.spl)</li>
     <li>Removed duplicatee and/or redundant effects from many items and spells (amul17.itm, bdbeltel.spl, bdddoorx.spl, bddraggh.itm, bddrggra.itm, bddrggry.itm, bdforcew.spl, bdleat05.itm, bdmisc05.itm, bdneoimm.itm, bdring09.itm, bdringge.itm, bdringgh.itm, bdsper1a.spl, bdspirim.itm, bdspnaim.itm, bdtelwe.spl, bdwyv03.itm, bhaalhp1.itm, bhaalimm.itm, chalcy3.itm, clck04.itm, dragring.itm, gorchr.itm, imoenhp1.itm, ipsion.itm, jwsuper.itm, minhp1.itm, ohtmps2d.spl, ohtmps2e.spl, potn21.itm, potn23.itm, potn25.itm, potn32.itm, potn33.itm, potn40.itm, potn45.itm, potn46.itm, ref1.itm, ring09.itm, ring94.itm, ring95.itm, ring99.itm, scrl07.itm, scrl09.itm, scrl10.itm, scrl11.itm, scrl12.itm, scrl13.itm, scrl18.itm, scrlpet.itm, sengua04.itm, spcl121.spl, spcl144.spl, spcl152.spl, spcl321.spl, spcl542a.spl, spcl611.spl, spcl612.spl, spcl613.spl, spcl632.spl, spcl633.spl, spcl634.spl, spcl643.spl, spcl644.spl, spcl722.spl, spdr301.spl, spdwd02.spl, spin117.spl, spin122.spl, spin123.spl, spin124.spl, spin710.spl, spin714.spl, spin823.spl, spin852.spl, spin920.spl, spin952.spl, sppr111.spl, sppr319.spl, sppr508.spl,  sppr517.spl, sppr613.spl, sppr701.spl, sppr704.spl, sppr717.spl, sppr717a.spl, spra302.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spwi002.spl, spwi101.spl, spwi222.spl, spwi308.spl,  spwi311.spl, spwi318.spl, spwi491.spl, spwi511.spl, spwi522.spl, spwi618.spl, spwi701.spl, spwi705.spl, spwi723.spl,  spwi902.spl, spwi997.spl, surehp1.itm, trollimm.itm, wand19.itm)</li>
+    <li>The duplicate, unused, and misspelled EigthNearestEnemyOfType and EigthNearestMyGroupOfType objects are removed. (object.ids)</li>
+    <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
   </ul>
 </div>
 <!-- documentation ends here -->
