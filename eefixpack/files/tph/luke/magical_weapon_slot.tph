@@ -156,6 +156,9 @@ BEGIN
 			~slayerw3.itm~ ~override~ // Slayer Change
 			~slayerw4.itm~ ~override~ // Slayer Change
 			PATCH_MATCH "%DEST_RES%" WITH
+				~bclaw~ ~serious~ ~critical~ ~slaylive~ ~harm~ ~ctouch~ ~chillt~ ~ghoult~ ~ltouch~ ~ibody~ BEGIN
+					WRITE_LONG 0x18 (THIS BAND BNOT IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") BOR IDS_OF_SYMBOL ("ITEMFLAG" "LEFTHANDED")) // make sure to completely disable off-hand (including passive bonuses / maluses)
+				END
 				~plymstar~ BEGIN
 					LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
 					INT_VAR
