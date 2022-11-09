@@ -158,6 +158,17 @@ BEGIN
 			PATCH_MATCH "%DEST_RES%" WITH
 				~bclaw~ ~serious~ ~critical~ ~slaylive~ ~harm~ ~ctouch~ ~chillt~ ~ghoult~ ~ltouch~ ~ibody~ BEGIN
 					WRITE_LONG 0x18 (THIS BAND BNOT IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") BOR IDS_OF_SYMBOL ("ITEMFLAG" "LEFTHANDED")) // make sure to completely disable off-hand (including passive bonuses / maluses)
+					LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
+					INT_VAR
+						"insert_point" = "-1" // Last
+						"opcode" = 272 // Use EFF file on condition
+						"target" = 1
+						"parameter1" = 1 // any non-zero value
+						"parameter2" = 0 // Once per second
+						"timing" = 2
+					STR_VAR
+						"resource" = "cdwstyl1"
+					END
 				END
 				~plymstar~ BEGIN
 					LAUNCH_PATCH_FUNCTION "ADD_ITEM_EQEFFECT"
