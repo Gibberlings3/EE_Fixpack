@@ -1007,7 +1007,7 @@ BEGIN
 			ACTION_TO_LOWER ~item_~
 			COPY_EXISTING ~%item_%.itm~ ~override~
 				/* Header */
-				WRITE_LONG 0x18 (THIS BAND IDS_OF_SYMBOL ("ITEMFLAG" "TWOHANDED")) ? THIS : THIS BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") // Forbid off-hand weapon
+				WRITE_LONG 0x18 (THIS BAND IDS_OF_SYMBOL ("ITEMFLAG" "TWOHANDED")) ? THIS : THIS BAND BNOT IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") BOR IDS_OF_SYMBOL ("ITEMFLAG" "LEFTHANDED") // Make sure to completely disable off-hand (including passive bonuses / maluses) if needed!
 				WRITE_SHORT 0x1C (THIS == IDS_OF_SYMBOL ("ITEMCAT" "MISC") ? IDS_OF_SYMBOL ("ITEMCAT" "FIST") : THIS) // Hand-to-hand weapons (it seems as if this category was designed to ignore weapon styles. However, it just hides them from the UI: the actual bonuses still apply!)
 				PATCH_MATCH "%DEST_RES%" WITH
 					"BRBRP" "BRBLP" BEGIN // Shapeshift: Brown/Black Bear
@@ -1022,7 +1022,7 @@ BEGIN
 					"CDGOLIRO" WHEN (GAME_IS ~bgee bg2ee eet~) BEGIN // Shapechange: Iron Golem
 						WRITE_LONG NAME1 10966 // Attack
 						WRITE_LONG NAME2 10966 // Attack
-						WRITE_LONG 0x18 IDS_OF_SYMBOL ("ITEMFLAG" "NOTCOPIABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "MAGIC") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISABLE_OFFHAND") BOR IDS_OF_SYMBOL ("ITEMFLAG" "BODYPART")
+						WRITE_LONG 0x18 IDS_OF_SYMBOL ("ITEMFLAG" "NOTCOPIABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "MAGIC") BOR IDS_OF_SYMBOL ("ITEMFLAG" "LEFTHANDED") BOR IDS_OF_SYMBOL ("ITEMFLAG" "BODYPART")
 						WRITE_SHORT 0x1C IDS_OF_SYMBOL ("ITEMCAT" "FIST")
 						WRITE_ASCII 0x22 "" #2 // Equipped appearance
 						WRITE_ASCII 0x3A "ISHAPE03" #8 // Inventory icon
