@@ -33,3 +33,11 @@ ADD_STATE_TRIGGER bddynahj 85 ~Range("wyrm_sense",20)~
 ADD_STATE_TRIGGER bdjaheij 47 ~Range("wyrm_sense",20)~ 
 ADD_STATE_TRIGGER bdminscj 85 ~Range("wyrm_sense",20)~
 ADD_STATE_TRIGGER bdmkhiij 80 ~Range("wyrm_sense",20)~
+
+// tbd, cam
+// you can charm zelma to get your stuff back, but she'll have nothing to say between you getting your stuff returned and the charm expiring
+APPEND bdzelma
+  IF ~NumTimesTalkedToGT(0) Global("bd_zelma_charmed","BD0020",1) StateCheck(Myself,STATE_CHARMED)~ THEN BEGIN bdzelma_intermediate SAY #67420 // Hello again.
+    IF ~~ THEN EXIT
+  END
+END

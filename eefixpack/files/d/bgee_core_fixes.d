@@ -81,3 +81,86 @@ ADD_TRANS_TRIGGER silke 17 ~False()~ DO 2 // reply mentions you're there to save
 // tbd, cam
 // rasaad's quest can be missed when kicking him out under certain conditions: https://www.gibberlings3.net/forums/topic/35424-b
 ADD_STATE_TRIGGER rasaadj 69 ~!Global("RASAAD_ROMANCE","GLOBAL",1)~ // nice
+
+// tbd, cam
+// when flam5 leaves, he doesn't take his cronies
+ADD_TRANS_ACTION flam5 BEGIN 5 8 12 14 END BEGIN END ~ActionOverride("flam5a",EscapeArea()) ActionOverride("flam5b",EscapeArea())~
+
+// tbd, cam
+// wench at FAI has triggers for charmed and NTTT=0, 1, and 3 (?); change =3 to true() (unused, but fix anyway)
+REPLACE_STATE_TRIGGER friwen 2 ~True()~
+
+// tbd, cam
+// says she's summoning guards, actually does nothing
+ADD_TRANS_ACTION ftobe4 BEGIN 2 END BEGIN END ~Wait(3) CreateCreature("FLAMEN",[-1.-1],S) CreateCreature("FLAMEN2",[-1.-1],S)~
+
+// tbd, cam
+// fix 'nothing to say to you' bug, NTTT/charmed issue
+REPLACE_STATE_TRIGGER helsha 8 ~True()~ // remove NTTT trigger
+EXTEND_BOTTOM helsha 8
+  IF ~StateCheck("ithmeera",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if ithmeera not capable of dialogue
+END
+REPLACE_STATE_TRIGGER ithmee 9 ~True()~ // remove NTTT trigger
+EXTEND_BOTTOM ithmee 9
+  IF ~StateCheck("helshara",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if helshara not capable of dialogue
+END
+
+// tbd, cam
+// hentold assumes he has the dagger for states 1,2
+ADD_STATE_TRIGGER hentol 1 ~HasItem("DAGG03",Myself)~ 2
+
+// tbd, cam
+// carl blindly hands off dialogue to jurgen (housg1.cre, housg2.cre assigned DVs to make this work in bulk cre fixes)
+EXTEND_BOTTOM housg1 0
+  IF ~StateCheck("housg2",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if partner not capable of dialogue
+END
+EXTEND_BOTTOM housg1 1
+  IF ~StateCheck("housg2",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if partner not capable of dialogue
+END
+EXTEND_BOTTOM housg1 2
+  IF ~StateCheck("housg2",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if partner not capable of dialogue
+END
+
+// tbd, cam
+// better checks for Dunkin in Marl's dialogue (see also changes to marl.bcs)
+REPLACE_STATE_TRIGGER marl 0 ~NumberOfTimesTalkedTo(0)~ // remove !Dead("Dunkin") trigger
+EXTEND_BOTTOM marl 0
+  IF ~StateCheck("Dunkin",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if Dunkin not capable of dialogue
+END
+EXTEND_BOTTOM marl 1
+  IF ~StateCheck("Dunkin",CD_STATE_NOTVALID)~ THEN DO ~SetNumTimesTalkedTo(1)~ EXIT // keep it here is dunkin not dead, but unavailable
+END
+EXTEND_BOTTOM marl 18
+  IF ~StateCheck("Dunkin",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if Dunkin not capable of dialogue
+END
+
+// tbd, cam
+// not checking for farm4 before handing off dialogue (assign farm4.cre a DV for this in bulk cre fixes)
+EXTEND_BOTTOM mtown2 0
+  IF ~StateCheck("farm4",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if farm4 not capable of dialogue
+END
+
+// tbd, cam
+// has several conditions that lead to NVLOR
+EXTEND_BOTTOM nobl4 0
+  IF ~StateCheck("Noblewom",CD_STATE_NOTVALID)~ THEN EXIT // exit dialogue if partner not capable of dialogue
+END
+
+// tbd, cam
+// should check for ring before giving it away in charmed dialogues
+ADD_STATE_TRIGGER ftobe5 4 ~HasItem("ring11",Myself)~
+ADD_STATE_TRIGGER nobl8  6 ~HasItem("ring17",Myself)~
+
+// tbd, cam
+// nothing to say bug: since this is a shared dialogue between multiple diggers with different soundsets, can't do the usual of re-using a common select
+REPLACE_STATE_TRIGGER digger 0 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(5,1)~ // change away from NTTT triggers
+REPLACE_STATE_TRIGGER digger 1 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(5,2)~ // change away from NTTT triggers
+REPLACE_STATE_TRIGGER digger 2 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(5,3)~ // change away from NTTT triggers
+REPLACE_STATE_TRIGGER digger 3 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(5,4)~ // change away from NTTT triggers
+REPLACE_STATE_TRIGGER digger 4 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(5,5)~ // change away from NTTT triggers
+
+// tbd, cam
+// these three just have chap=7 triggers so tow never play; adding rep conditions
+ADD_STATE_TRIGGER ftowba 3 ~ReputationGT(Player1,9)~  // copy rep conditions from ftowb5
+ADD_STATE_TRIGGER ftowba 2 ~ReputationLT(Player1,10)~ // copy rep conditions from ftowb5
+ADD_STATE_TRIGGER ftowba 1 ~ReputationLT(Player1,3)~  // copy rep conditions from ftowb5

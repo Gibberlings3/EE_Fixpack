@@ -202,6 +202,10 @@ INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death ty
 // revenant animation fixes
 INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
 
+// tbd, cam
+// charmed dialogue fixes: https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
+INCLUDE ~eefixpack/files/tph/tbd_bgee_charm_dlg_fixes.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -232,6 +236,8 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 ACTION_IF game_includes_sod BEGIN
   COMPILE ~eefixpack/files/d/%game%_sod_core_fixes.d~ // misc dialogue fixes
 END
+
+COMPILE ~eefixpack/files/d/bgee_tbd_nothing_to_say.d~ // nothing to say fixes for obg dialogues https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
 
 /////                                                  \\\\\
 ///// script fixes                                     \\\\\
@@ -600,6 +606,14 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 // make gretek and friends go hostile more reliably (see also arlin.cre et al, gretek.dlg)
 COMPILE ~eefixpack/files/baf/gretek.baf~
 
+//tbd, cam
+// make marl's second bark dependent on Dunkin being available for dialogue (see marl.dlg)
+COPY_EXISTING ~marl.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\([ %TAB%]Num\(berOf\)?TimesTalkedTo(1)\)~ ~\1 !StateCheck("Dunkin",CD_STATE_NOTVALID)~
+  END
+  BUT_ONLY  
+
 // tbd, cam
 // mulahey stutter fix (see also mulahe.dlg) https://www.gibberlings3.net/forums/topic/35178-scripting-bugs/#comment-308786
 COPY_EXISTING ~mulahey.bcs~ ~override~
@@ -725,6 +739,14 @@ COPY_EXISTING ~cultd1.cre~ ~override~
               ~cultd6.cre~ ~override~
   WRITE_ASCII 0x248 ~~ #8 // override script
   BUT_ONLY
+
+// tbd, cam
+// restore unique dialogues to creatures
+COPY_EXISTING ~ftobe7.cre~ ~override~
+              ~mtob4.cre~  ~override~ // for ub: currently unused, should be in a room at the splurgin' sturgeon
+              ~mtob5.cre~  ~override~ // for ub: currently unused, should be at elfsong
+              ~read4.cre~  ~override~
+  WRITE_ASCIIE 0x2cc ~%SOURCE_RES%~ #8 // dialogue
 
 // tbd, cam
 // ordulian should give his cloak, or not have it. We choose that he doesn't have it
