@@ -4,13 +4,13 @@
 
 /*
 jazira
-It is south of the battlefield, not north
+It should be "south of the battlefield", not "north of the battlefield".
 */
 @6511   = ~I do believe that you are correct. We should make our way there now. He said that it was just south of the battlefield, did he not?~
 
 /*
 jazira
-offers the demon the fake eggs, not the dragon
+It should be "offers the demon the fake eggs", not "offers the dragon the fake eggs".
 */
 @7148   = ~The drow summoning ritual
 
@@ -22,13 +22,13 @@ I must be careful if I go to the treasury... killing the guards, if it is done, 
 
 /*
 jazira
-It is south of the battlefield, not north
+It should be "south of the battlefield", not "north of the battlefield".
 */
 @7417   = ~I do believe that you are correct. We should make our way there now. He said that is was just south of the battlefield, did he not?~
 
 /*
 jazira
-It is south of the battlefield, not north
+It should be "south of the battlefield", not "north of the battlefield".
 */
 @7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
 
@@ -47,6 +47,18 @@ Mazzy
 
 Below this section, the page is torn and jagged, as if it has been ripped from its other half.~
 
+/*
+jazira
+According to all online drow dictionary/translator i've found, it should be "a dobluth", not "an obluth".
+*/
+@25308  = ~And my sister's suitor, Gomph, was prodigiously endowed but bowlegged. A dobluth... an outcast. She must have heard us in bedchambers and couldn't help herself.~
+
+/*
+jazira
+Double space in the middle of the sentence.
+*/
+@28025  = ~Tell me next time, then, if you intend to tune me out, and I shall be sure to include colorful drawings and cartoonish dances to keep your infantile mind interested.~
+
 // second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
 // same fix required for bg (26586), bg2 (29212), and iwd (35784)
 @29212 = ~Carrion Summons
@@ -60,6 +72,18 @@ Area of Effect: Special
 Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
+/*
+jazira
+It should be "Ma Jansen", not "Ma Jensen".
+*/
+@48516  = ~Ah, yes, the old puzzle-box trick. Ma Jansen used to hide the keys to the breadbox the same way, not that it ever stopped us. "Jan," she used to say, "one of these days, you're going to have one too many sweetbreads!" I never did, although my cousin Arfie once did that day he exploded. Sad story, that.~
+
+/*
+jazira
+It should be "could elicit a response", not "could illicit a response".
+*/
+@48747  = ~Not interested in her, or not interested in women? I do so wonder, ranger, if even my charms could elicit a response on behalf of females everywhere...~
 
 // this item's name should state its enchantment level
 @57918 = "Paralytic Bolt +1"
