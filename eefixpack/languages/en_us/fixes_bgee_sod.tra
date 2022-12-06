@@ -4,6 +4,35 @@
 
 // any strings < 34000 are non-sod strings and should go into the fixes_bgee.tra file instead. 
 
+/*
+jazira
+It should be "Ajantis Ilvastarr", not "Ajantis Ilvarstarr".
+*/
+@46138 = ~This is a bloody business we're in, Ajantis Ilvastarr. Sometimes, we must do things we would find... distasteful... to ensure a venture's success.~
+
+/*
+jazira
+It should be "(4 vs. crushing)", not "(-4 vs. crushing)".
+*/
+@51969 = ~The sturdy craftsmanship of the drow allows them to design many beautiful yet utilitarian goods. Among these is drow chain mail, which is so finely wrought that it can be worn under normal clothing without revealing its presence. This and its lightness allows it to be worn by Thieves and Fighter/Mages with few restrictions.
+
+This item, like most drow equipment, is created using adamantine, an alloy of adamantite that quickly turns to dust if exposed to sunlight.
+
+STATISTICS:
+
+Equipped abilities:
+– Open Locks: -5%
+– Find Traps: -5%
+– Pick Pockets: -20%
+– Move Silently: -10%
+– Spellcasting is not disabled
+
+Armor Class: 0 (4 vs. crushing)
+Requires:
+ 5 Strength
+
+Weight: 12~
+
 // The weight in the description and in-game should be 0
 @52365 = "Any target hit by this bolt must making a Saving Throw or be paralyzed for 5 rounds.
 
