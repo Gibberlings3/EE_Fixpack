@@ -1,0 +1,44 @@
+// better notes here than I can put into comments: https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
+
+// scripts tied to these also should skip if State=charmed to prevent loops
+COPY_EXISTING ~alora.bcs~    ~override~
+              ~centeol.bcs~  ~override~
+              ~davaeorn.bcs~ ~override~
+              ~flam2.bcs~    ~override~
+              ~flam7.bcs~    ~override~
+              ~initdlg.bcs~  ~override~
+              ~marl.bcs~     ~override~
+              ~monken.bcs~   ~override~
+              ~prat.bcs~     ~override~
+              ~rieltar.bcs~  ~override~
+              ~shoutdlg.bcs~ ~override~
+              ~sil.bcs~      ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\([ %TAB%]Num\(berOf\)?TimesTalkedTo\([GL]T\)?([0-9]+)\)~ ~!StateCheck(Myself,STATE_CHARMED)\1~
+  END
+  BUT_ONLY   
+
+// deke's dialogue calls should not happen if charmed
+COPY_EXISTING ~bandic.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(NumDeadGT("Bandcap",4)\)~ ~!StateCheck(Myself,STATE_CHARMED) \1~
+  END
+  BUT_ONLY  
+
+// ramizath's dialogue calls should not happen if charmed
+COPY_EXISTING ~ramazith.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(See(\[PC\])\)~ ~!StateCheck(Myself,STATE_CHARMED) \1~
+    REPLACE_TEXTUALLY ~\(GlobalTimerExpired("Ramazith","GLOBAL")\)~ ~!StateCheck(Myself,STATE_CHARMED) \1~
+  END
+  BUT_ONLY   
+
+// yago's dialogue calls should not happen if charmed
+COPY_EXISTING ~yago.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(HPLT(Myself,11)\)~ ~!StateCheck(Myself,STATE_CHARMED) \1~
+  END
+  BUT_ONLY  
+  
+COMPILE ~eefixpack/files/d/bgee_tbd_charm_fixes_manual.d~
+        ~eefixpack/files/d/bgee_tbd_charm_fixes_auto.d~
