@@ -144,6 +144,45 @@ COPY_EXISTING ~ar2200.are~ ~override~
                               STR_VAR struct_name = StairsD struct_type = region END
   BUT_ONLY 
     
+COPY_EXISTING ~ar3019.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    1376, 1629 => 0
+    1291, 1622 => 0
+    1291, 1465 => 0
+    1376, 1472 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 1291 bounding_top = 1465 bounding_right = 1376 bounding_bottom = 1629 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    2226, 3013 => 0
+    2168, 3043 => 0
+    2168, 2880 => 0
+    2226, 2850 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 2168 bounding_top = 2850 bounding_right = 2226 bounding_bottom = 3043 
+                              STR_VAR struct_name = Door04 struct_type = door_open END
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    2742, 3035 => 0
+    2793, 3105 => 0
+    2793, 2940 => 0
+    2742, 2870 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 2742 bounding_top = 2870 bounding_right = 2793 bounding_bottom = 3105
+                              STR_VAR struct_name = Door05 struct_type = door_open END
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    3047, 2906 => 0
+    2974, 2876 => 0
+    2974, 2714 => 0
+    3047, 2744 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 2974 bounding_top = 2714 bounding_right = 3047 bounding_bottom = 2906 
+                              STR_VAR struct_name = Door06 struct_type = door_open END
+  BUT_ONLY  
+
 COPY_EXISTING ~ar5007.are~ ~override~
   CLEAR_ARRAY cd_define_area_vertices_array
   DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
