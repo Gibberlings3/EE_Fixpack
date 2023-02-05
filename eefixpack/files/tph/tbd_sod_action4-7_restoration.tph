@@ -13,5 +13,77 @@ ACTION_FOR_EACH CRE IN ~baelot7~ ~bdcaelar~ ~bdcaela3~ ~bdmkhi7~ ~corwin7~ ~dorn
 		WRITE_LONG 0x1E4 (action3 + 2)
 		WRITE_LONG 0x1E8 (action3 + 3)
 		WRITE_LONG 0x1EC (action3 + 4)
-		BUT_ONLY IF_EXISTS
+	BUT_ONLY IF_EXISTS
 END
+
+// update BGEE->SoD audio transition blocks
+
+COPY_EXISTING ~BDBAELOT.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,67811,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,67789,BGEE_ACTION4) SetPlayerSound(Myself,67790,BGEE_ACTION5) SetPlayerSound(Myself,67791,BGEE_ACTION6) SetPlayerSound(Myself,67792,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bddorn.BCS~ ~override~
+	DECOMPILE_AND_PATCH BEGIN
+	  REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68243,SET_A_TRAP)\)~
+		~\1 SetPlayerSound(Myself,68221,BGEE_ACTION4) SetPlayerSound(Myself,68222,BGEE_ACTION5) SetPlayerSound(Myself,68223,BGEE_ACTION6) SetPlayerSound(Myself,68224,BGEE_ACTION7)~
+	END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bddynahe.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68051,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,68029,BGEE_ACTION4) SetPlayerSound(Myself,68030,BGEE_ACTION5) SetPlayerSound(Myself,68031,BGEE_ACTION6) SetPlayerSound(Myself,68032,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdedwin.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68195,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,68173,BGEE_ACTION4) SetPlayerSound(Myself,68174,BGEE_ACTION5) SetPlayerSound(Myself,68175,BGEE_ACTION6) SetPlayerSound(Myself,68176,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdkhalid.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68003,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,67981,BGEE_ACTION4) SetPlayerSound(Myself,67982,BGEE_ACTION5) SetPlayerSound(Myself,67983,BGEE_ACTION6) SetPlayerSound(Myself,67984,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdminsc.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68099,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,68077,BGEE_ACTION4) SetPlayerSound(Myself,68078,BGEE_ACTION5) SetPlayerSound(Myself,68079,BGEE_ACTION6) SetPlayerSound(Myself,68080,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdneera.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68551,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,68529,BGEE_ACTION4) SetPlayerSound(Myself,68530,BGEE_ACTION5) SetPlayerSound(Myself,68531,BGEE_ACTION6) SetPlayerSound(Myself,68532,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdrasaad.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,67859,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,67837,BGEE_ACTION4) SetPlayerSound(Myself,67838,BGEE_ACTION5) SetPlayerSound(Myself,67839,BGEE_ACTION6) SetPlayerSound(Myself,67840,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdsafana.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,67907,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,67885,BGEE_ACTION4) SetPlayerSound(Myself,67886,BGEE_ACTION5) SetPlayerSound(Myself,67887,BGEE_ACTION6) SetPlayerSound(Myself,67888,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~bdviconi.BCS~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetPlayerSound(Myself,68147,SET_A_TRAP)\)~
+      ~\1 SetPlayerSound(Myself,68125,BGEE_ACTION4) SetPlayerSound(Myself,68126,BGEE_ACTION5) SetPlayerSound(Myself,68127,BGEE_ACTION6) SetPlayerSound(Myself,68128,BGEE_ACTION7)~
+  END
+BUT_ONLY IF_EXISTS
