@@ -80,7 +80,7 @@ BEGIN
 				/* Feature block(s) */
 				LPF "DELETE_EFFECT" END // delete current content
 				PATCH_WITH_SCOPE BEGIN
-					LPF "GET_FIRST_LEVEL_YOU_CAN_LEARN_XTH_LEVEL_SPELLS"
+					LPF "GET_FIRST_LEVEL_YOU_CAN_LEARN_X-TH_LEVEL_SPELLS"
 					INT_VAR
 						"spell_level" = LONG_AT 0x34
 					RET
@@ -158,7 +158,7 @@ BEGIN
 					"target" = 2 // Preset target
 					"parameter1" = "%game_is_bgee%" ? 31786 : 14674
 					"timing" = 1
-					"resist_dispel" = BIT1
+					"resist_dispel" = BIT0 + BIT1
 					"savingthrow" = BIT0 // Save vs. Spell
 				END
 			BUT_ONLY_IF_IT_CHANGES
@@ -316,7 +316,7 @@ Auxiliary function
 */
 //////////////////////////////////////////////////////////////////
 
-DEFINE_PATCH_FUNCTION "GET_FIRST_LEVEL_YOU_CAN_LEARN_XTH_LEVEL_SPELLS"
+DEFINE_PATCH_FUNCTION "GET_FIRST_LEVEL_YOU_CAN_LEARN_X-TH_LEVEL_SPELLS"
 INT_VAR
 	"spell_level" = "-1"
 RET
