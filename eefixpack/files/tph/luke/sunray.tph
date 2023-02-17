@@ -118,19 +118,13 @@ BEGIN
 			COPY_EXISTING "%CLERIC_SUNRAY%a.spl" "override/%CLERIC_SUNRAY%b.spl"
 				// Should not scale with character level
 				PATCH_WITH_SCOPE BEGIN
-					SET "#_abilities" = SHORT_AT 0x68
-					FOR ("ab_ind" = 0 ; "ab_ind" < "%#_abilities%" ; "ab_ind" += 1) BEGIN
-						PATCH_IF (SHORT_AT (0x72 + "%ab_ind%" * 0x28 + 0x10) != 1) BEGIN
-							LPF "DELETE_SPELL_HEADER"
-							INT_VAR
-								"header_type" = "-1" // all types
-								"min_level" = SHORT_AT (0x72 + "%ab_ind%" * 0x28 + 0x10)
-							END
-							// We need to take into account the ability we've just deleted
-							SET "ab_ind" -= 1 // current index
-							SET "#_abilities" -= 1 // total number of abilities
+					GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+					PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+						PATCH_IF (SHORT_AT ("%ab_off%" + 0x10) > 1) BEGIN
+							WRITE_BYTE "%ab_off%" 0xFF // mark it for later deletion
 						END
 					END
+					LPF "DELETE_SPELL_HEADER" INT_VAR "header_type" = 0xFF END
 				END
 				/* Feature blocks */
 				LPF "DELETE_EFFECT" END // delete current content
@@ -144,6 +138,25 @@ BEGIN
 				STR_VAR
 					"resource" = "%CLERIC_SUNRAY%c"
 				END
+				LPF "ADD_SPELL_EFFECT"
+				INT_VAR
+					"opcode" = 12 // Damage
+					"target" = 2 // Preset target
+					"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
+					"timing" = 1
+					"resist_dispel" = BIT1
+					"dicenumber" = 3
+					"dicesize" = 6
+					"savingthrow" = BIT24 // Bypass Mirror Image
+				END
+			BUT_ONLY_IF_IT_CHANGES
+		END
+		// Subspell C => GENERAL != UNDEAD => "All creatures within the area of effect must save vs. Spell or be blinded for 1 turn"
+		WITH_SCOPE BEGIN
+			COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
+				/* Feature blocks */
+				LPF "DELETE_EFFECT" END // delete current content
+				//
 				LPF "ADD_SPELL_EFFECT"
 				INT_VAR
 					"opcode" = 74 // Blindness
@@ -163,42 +176,16 @@ BEGIN
 				END
 			BUT_ONLY_IF_IT_CHANGES
 		END
-		// Subspell C => GENERAL != UNDEAD => "All creatures within the area of effect take 3d6 points of damage"
-		WITH_SCOPE BEGIN
-			COPY_EXISTING "%CLERIC_SUNRAY%b.spl" "override/%CLERIC_SUNRAY%c.spl"
-				/* Feature blocks */
-				LPF "DELETE_EFFECT" END // delete current content
-				LPF "ADD_SPELL_EFFECT"
-				INT_VAR
-					"opcode" = 12 // Damage
-					"target" = 2 // Preset target
-					"parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "MAGIC")
-					"timing" = 1
-					"resist_dispel" = BIT1
-					"dicenumber" = 3
-					"dicesize" = 6
-					"savingthrow" = BIT24 // Bypass Mirror Image
-				END
-			BUT_ONLY_IF_IT_CHANGES
-		END
 		// Main SPL file should not scale with character level
 		WITH_SCOPE BEGIN
 			COPY_EXISTING "%CLERIC_SUNRAY%.spl" "override"
-				PATCH_WITH_SCOPE BEGIN
-					SET "#_abilities" = SHORT_AT 0x68
-					FOR ("ab_ind" = 0 ; "ab_ind" < "%#_abilities%" ; "ab_ind" += 1) BEGIN
-						PATCH_IF (SHORT_AT (0x72 + "%ab_ind%" * 0x28 + 0x10) != 1) BEGIN
-							LPF "DELETE_SPELL_HEADER"
-							INT_VAR
-								"header_type" = "-1" // all types
-								"min_level" = SHORT_AT (0x72 + "%ab_ind%" * 0x28 + 0x10)
-							END
-							// We need to take into account the ability we've just deleted
-							SET "ab_ind" -= 1 // current index
-							SET "#_abilities" -= 1 // total number of abilities
-						END
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+					PATCH_IF (SHORT_AT ("%ab_off%" + 0x10) > 1) BEGIN
+						WRITE_BYTE "%ab_off%" 0xFF // mark it for later deletion
 					END
 				END
+				LPF "DELETE_SPELL_HEADER" INT_VAR "header_type" = 0xFF END
 			BUT_ONLY_IF_IT_CHANGES
 		END
 	END ELSE BEGIN

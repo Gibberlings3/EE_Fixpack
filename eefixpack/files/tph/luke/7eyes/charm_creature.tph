@@ -10,45 +10,54 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"clck07" , "-1" , "2,3" => "clck07" // Nymph Cloak
-					"clck08" , "-1" , "2,3" => "clck08" // Algernon's Cloak
-					"gorwom1" , "-1" , "14,15,18" => "gorwom1" // 
-					"hgnymph" , "-1" , "4,3,5,6" => "hgnymph" // 
-					"misc2p" , "-1" , "2,3,4,5,6,8" => "misc2p" // The Captive Audience
-					"ring03" , "-1" , "3,4,5,6" => "ring03" // Druid's Ring
-					//"sw1p01" "override" // Viper's Edge +2
+					// parent resref => child resref
+					"clck07" => "clck07" // Nymph Cloak
+					"clck08" => "clck08" // Algernon's Cloak
+					"gorwom1" => "gorwom1" // 
+					"hgnymph" => "hgnymph" // 
+					"misc2p" => "misc2p" // The Captive Audience
+					"ring03" => "ring03" // Druid's Ring
+					"sw1p01" => "sw1p01a" // Viper's Edge +2
 				END
 			END
-			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~bg2ee eet~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref => child resref
+					"clck07" => "clck07" // Nymph Cloak
+					"gorwom1" => "gorwom1" // 
+					"hgnymph" => "hgnymph" // 
+					"misc2p" => "misc2p" // The Captive Audience
+					"regisamu" => "regisamu" // Ruby Pendant of Beguiling
+					"ring03" => "ring03" // Druid's Ring
+					"ring30" => "ring30" // Ring of Human Influence
+					"staf09" => "staf09" // Staff of Command
+					"staf14" => "staf14" // Staff of the Woodlands +4
+				END
+			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"ring03" , "-1" , "3,4,5,6,7" => "ring03" // Ring of Animal Friendship
+					// parent resref => child resref
+					"ring03" => "ring03" // Ring of Animal Friendship
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.itm" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.itm" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 5
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"string" = "^\(Charmed\|Dominated\)$"
+						"icon" = "^\(0\|1\|43\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 5 END
 				END
 			BUT_ONLY_IF_IT_CHANGES
 		END
@@ -64,64 +73,43 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					//"bdhamadc" "override" // Charm Person
-					//"bdnerau2" "override" // Charm Person
-					//"%RANGER_CHARM_ANIMAL%" "override"
-					//"spcl641" "override" // Charm Person or Mammal
-					//"spin108" "override" // Charm Animal
-					//"%SAFANA_CHARM%" "override"
-					//"%ERINYES_CHARM%" "override"
-					//"%PERM_CHARM%" "override"
-					//"%VAMPIRE_DOMINATION%" "override"
-					//"%PSIONIC_DOMINATION%" "override"
-					//"%MIND_FLAYER_DOMINATION%" "override"
-					//"%BEHOLDER_CHARM_PERSON%" "override"
-					//"%BEHOLDER_DOMINATION%" "override"
-					"%CLERIC_CHARM_PERSON%" , "-1" , "3=>7,3=>7" => ""
-					//"%CLERIC_MENTAL_DOMINATION%" "override"
-					//"%TRAP_DIRE_CHARM%" "override"
-					//"%WIZARD_CHARM_PERSON%" "override"
-					//"%WIZARD_DIRE_CHARM%" "override"
-					//"%WIZARD_DOMINATION%" "override"
-					//"%SUCCUBUS_CHARM_FEMALE%" "override"
-					//"%SUCCUBUS_CHARM_MALE%" "override"
-					//"%CHARM_HERO%" "override"
-					//"%SIRINE_DIRE_CHARM%" "override"
-					//"%CHARM_KORAX%" "override"
-					"spwm179" , "-1" , "5=>2" => "" // Polymorph Other
+					// parent resref => child resref
+					"%CLERIC_CHARM_PERSON%" => ""
+					"spwm179" => "" // Polymorph Other (Wild Magic)
 				END
 			END
-			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~bg2ee eet~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref => child resref
+					"%CLERIC_CHARM_PERSON%" => ""
+					"spwm179" => "" // Polymorph Other (Wild Magic)
+				END
+			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.spl" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.spl" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%parent_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 5
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"string" = "^\(Charmed\|Dominated\)$"
+						"icon" = "^\(0\|1\|43\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 5 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 END

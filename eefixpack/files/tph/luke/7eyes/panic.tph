@@ -10,57 +10,65 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					//"bdfeyrwp" , "-1" , "" "override" // Used by Feyrs
-					"bdpotn01" , "-1" , "0,1,2" => "bdpotn01"
-					//"bearspir" , "" "override" // Attack
-					"mistice" , "-1" , "1,2,3,4" => "mistice" // Attack
-					"spbatt1" , "-1" , "0,1,2" => "spbatt1" // Attack
-					"spbatt2" , "-1" , "0,1,2" => "spbatt2" // Attack
-					"spbatt3" , "-1" , "0,1,2" => "spbatt3" // Attack
-					"spbatt4" , "-1" , "0,1,2" => "spbatt4" // Attack
-					"spbatt5" , "-1" , "0,1,2" => "spbatt5" // Attack
-					"wand02" , "-1" , "0,1,2,3,4" => "wand02" // Wand of Fear
+					// parent resref => child resref
+					"bdpotn01" => "bdpotn01"
+					"mistice" => "mistice" // Attack
+					"spbatt1" => "spbatt1" // Attack
+					"spbatt2" => "spbatt2" // Attack
+					"spbatt3" => "spbatt3" // Attack
+					"spbatt4" => "spbatt4" // Attack
+					"spbatt5" => "spbatt5" // Attack
+					"wand02" => "wand02" // Wand of Fear
 				END
 			END
-			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~bg2ee eet~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref => child resref
+					"helm32" => "helm32" // Helm of the Rock
+					"mistho" => "mistho" // Skull
+					"mistice" => "mistice" // Skull
+					"rods05" => "rods05" // Rod of Terror
+					"spbatt1" => "spbatt1" // Attack
+					"spbatt2" => "spbatt2" // Attack
+					"spbatt3" => "spbatt3" // Attack
+					"spbatt4" => "spbatt4" // Attack
+					"spbatt5" => "spbatt5" // Attack
+					"wand02" => "wand02" // Wand of Fear
+				END
+			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"spbatt1" , "-1" , "0,1" => "spbatt1" // Attack
-					"spbatt2" , "-1" , "0,1" => "spbatt2" // Attack
-					"spbatt3" , "-1" , "0,1" => "spbatt3" // Attack
-					"spbatt4" , "-1" , "0,1" => "spbatt4" // Attack
-					"spbatt5" , "-1" , "0,1" => "spbatt5" // Attack
-					"wand02" , "-1" , "0,1,2,3,4" => "wand02" // Wand of Fear
-					"zzj6sp" , "-1" , "0,1,2,3,4" => "zzj6sp" // Selûne's Promise +1
-					"zzm5mh" , "-1" , "1,2,3,4,5,6" => "zzm5mh" // Misery's Herald +3
+					// parent resref => child resref
+					"spbatt1" => "spbatt1" // Attack
+					"spbatt2" => "spbatt2" // Attack
+					"spbatt3" => "spbatt3" // Attack
+					"spbatt4" => "spbatt4" // Attack
+					"spbatt5" => "spbatt5" // Attack
+					"wand02" => "wand02" // Wand of Fear
+					"zzj6sp" => "zzj6sp" // Selûne's Promise +1
+					"zzm5mh" => "zzm5mh" // Misery's Herald +3
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.itm" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.itm" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 24
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"icon" = "^36$"
+						"string" = "^\(Panic\|Morale Failure: Panic\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 24 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 
@@ -74,87 +82,63 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					//"bdaurafe" , "-1" "override" // Aura of Fear
-					"bddragg2" , "-1" , "2,1" => "bddragg0" // Dragon Fear
-					//"bdfear" "override" // Panic
-					"bdgfear" , "-1" , "0,5,6,7,8" => "bdgfear0" // Ghost Fear
-					//"bdhafear" "override" // Unnamed
-					//"bdneoawe" "override" // 
-					//"bdpanic" "override" // Panic
-					//"bdsha01c" "override" // Hound Spirit
-					//"bdtgaze" "override" // Terrifying Gaze
-					"%AURA_OF_DESPAIR%" , 2 , "4=>8" => ""
-					"%AURA_OF_DESPAIR%" , 3 , "4=>8" => ""
-					//"%INNATE_HORROR%" "override" // 
-					//"%MIST_HORROR%" "override"
-					//"%HARPER_DEATH_SONG%" "override"
-					"%HELL_FEAR%" , "-1" , "2=>-1,1=>-1" => ""
-					"%SLAYER_FEAR%" , "-1" , "2=>0" => ""
-					//"%VAMPIRE_FEAR%" "override"
-					//"%DEMON_FEAR%" "override"
-					"%DRAGON_FEAR%" , "-1" , "3=>2" => ""
-					//"spin921" "override" // Deathsong
-					//"%BEHOLDER_FEAR%" "override"
-					//"%CLERIC_CLOAK_OF_FEAR%" "override"
-					//"%CLERIC_INSECT_PLAGUE%" "override" -- reworked elsewhere
-					//"%CLERIC_SYMBOL_FEAR%" "override"
-					"%WIZARD_SPOOK%" , 0 , "2=>0" => ""
-					"%WIZARD_SPOOK%" , 1 , "2=>0" => ""
-					"%WIZARD_SPOOK%" , 2 , "2=>0" => ""
-					"%WIZARD_SPOOK%" , 3 , "2=>0" => ""
-					"%WIZARD_SPOOK%" , 4 , "2=>0" => ""
-					"%WIZARD_SPOOK%" , 5 , "2=>0" => ""
-					//"%WIZARD_HORROR%" "override"
-					//"%WIZARD_SYMBOL_FEAR%" "override" -- fix duration...?
-					//"%WIZARD_NPC_SYMBOL_FEAR%" "override"
-					//"%FEAR%" "override"
-					//"spwm123" "override" // Symbol, Fear (wild surge)
+					// parent resref => child resref
+					"bddragg2" => "bddragg0" // Dragon Fear
+					"bdgfear" => "bdgfear0" // Ghost Fear
+					"%AURA_OF_DESPAIR%" => "%AURA_OF_DESPAIR%a"
+					"%HELL_FEAR%" => ""
+					"%SLAYER_FEAR%" => "%SLAYER_FEAR%a"
+					"%DRAGON_FEAR%" => ""
+					//"%CLERIC_INSECT_PLAGUE%" -- reworked elsewhere
+					"%WIZARD_SPOOK%" => ""
 				END
 			END
-			(GAME_IS ~bg2ee eet~) BEGIN END
-			(GAME_IS ~iwdee~) BEGIN
+			(GAME_IS ~bg2ee eet~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
 					// parent resref , ability , permutation/extract => child resref
-					"%AURA_OF_DESPAIR%" , 2 , "4=>7" => ""
-					"%AURA_OF_DESPAIR%" , 3 , "4=>7" => ""
-					"%WARRIOR_WAR_CRY%" , "-1" , "2=>1" => ""
+					"ohbdrag2" => "" // Dragon Fear
+					"%AURA_OF_DESPAIR%" => "%AURA_OF_DESPAIR%a"
+					"%WARRIOR_WAR_CRY%" => ""
+					"%LICH_FEAR%" => "" // Fear
+					"%BURNING_MAN_KEENING%" => ""
+					"%HELL_FEAR%" => ""
+					"%SLAYER_FEAR%" => "%SLAYER_FEAR%a"
+					"%DRAGON_FEAR%" => ""
+					//"%CLERIC_INSECT_PLAGUE%" -- reworked elsewhere
+					"%WIZARD_SPOOK%" => ""
+				END
+			END
+			(GAME_IS ~iwdee~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref => child resref
+					"%AURA_OF_DESPAIR%" => "%AURA_OF_DESPAIR%a"
+					"%WARRIOR_WAR_CRY%" => ""
 					//"%INNATE_GREAT_ROAR%" -- should EYEMIND absorb the 'Strength bonus' penalty...? Yes, probably (see here => https://www.gibberlings3.net/forums/topic/35652-removing-that-dang-spinny-head-animation/?do=findComment&comment=312015)
-					"%INNATE_HARPY_WAIL_INTERNAL%" , "-1" , "5,8,9" => "%INNATE_HARPY_WAIL_INTERNAL%A"
-					"%CLERIC_INSECT_PLAGUE%" , "-1" , "4,6,13" => "%CLERIC_INSECT_PLAGUE%B" // "... creatures with 2 or fewer Hit Dice will immediately panic..."
-					"%CLERIC_INSECT_PLAGUE%" , "-1" , "5,6,12" => "%CLERIC_INSECT_PLAGUE%B" // "... while creatures with 3 to 5 Hit Dice must save vs. Spell to avoid the same fate."
-					"%WIZARD_SPOOK%" , 0 , "3=>1" => ""
-					"%WIZARD_SPOOK%" , 1 , "3=>1" => ""
-					"%WIZARD_SPOOK%" , 2 , "3=>1" => ""
-					"%WIZARD_SPOOK%" , 3 , "3=>1" => ""
-					"%WIZARD_SPOOK%" , 4 , "3=>1" => ""
-					"%WIZARD_SPOOK%" , 5 , "3=>1" => ""
+					"%INNATE_HARPY_WAIL_INTERNAL%" => "%INNATE_HARPY_WAIL_INTERNAL%a"
+					//"%CLERIC_INSECT_PLAGUE%" => "%CLERIC_INSECT_PLAGUE%b" // "... creatures with 2 or fewer Hit Dice will immediately panic..." -- fixed elsewhere
+					"%WIZARD_SPOOK%" => ""
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.spl" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.spl" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 24
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"icon" = "^36$"
+						"string" = "^\(Panic\|Morale Failure: Panic\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 24 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 END

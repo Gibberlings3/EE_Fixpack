@@ -10,43 +10,39 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			(GAME_IS ~bg2ee eet~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.itm" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.itm" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 210
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"string" = "^\(Stun\|Stunned\)$"
+						"icon" = "^55$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 210 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 
@@ -60,43 +56,39 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			(GAME_IS ~bg2ee eet~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.spl" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.spl" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 210
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"string" = "^\(Stun\|Stunned\)$"
+						"icon" = "^55$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 210 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 END

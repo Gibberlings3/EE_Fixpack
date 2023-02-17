@@ -7,11 +7,23 @@ BEGIN
 				"projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect")
 			END
 			PATCH_WITH_SCOPE BEGIN
-				SET "parameter2" = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE")
 				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
-				PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-					LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "233" "parameter2" RET "count" END
-					LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 233 ~check_globals~ = 0 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ ~match_parameter2~ = IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE") END
+				PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+					SET "found" = 0
+					GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+					PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+						PATCH_MATCH SHORT_AT "%fx_off%" WITH
+							233 WHEN (LONG_AT ("%fx_off%" + 0x8) == IDS_OF_SYMBOL ("STATS" "CLERIC_INSECT_PLAGUE")) BEGIN
+								PATCH_IF !("%found%") BEGIN
+									SET "found" = 1
+								END ELSE BEGIN
+									WRITE_SHORT "%fx_off%" 999 // mark it for later deletion
+								END
+							END
+							DEFAULT
+						END
+					END
+					LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 999 ~check_globals~ = 0 ~header~ = ~%ab_ind%~ END
 				END
 			END
 			/* "For each round the victim remains inside the cloud, <PRO_HESHE> must make a Save vs. Spell at -2 or run away in fear for one round."
@@ -87,7 +99,7 @@ BEGIN
 			INT_VAR
 				"opcode" = 139 // Display string
 				"target" = 2 // Preset target
-				"parameter1" = 14007  // ~Panic~
+				"parameter1" = 14007 // ~Panic~
 				"timing" = 1
 				"resist_dispel" = BIT0 + BIT1
 				"savingthrow" = BIT0 // Save vs. Spell

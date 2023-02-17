@@ -1,66 +1,68 @@
-DEFINE_ACTION_FUNCTION "7EYES"
+DEFINE_ACTION_FUNCTION "7EYESification"
 BEGIN
 	// Include function library
 	INCLUDE "eefixpack/files/lib/gt_7eyes.tph"
-	// Main
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/berserk.tph"
-		LAF "BERSERK" END
+	//
+	ACTION_MATCH 1 WITH
+		GAME_IS "bgee" BEGIN
+			OUTER_TEXT_SPRINT "game_folder" "bg1"
+		END
+		GAME_IS "bg2ee eet" BEGIN
+			OUTER_TEXT_SPRINT "game_folder" "bg2"
+		END
+		GAME_IS "iwdee" BEGIN
+			OUTER_TEXT_SPRINT "game_folder" "iwd"
+		END
+		DEFAULT
+			FAIL "Game not supported (should not happen)"
 	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/charm_creature.tph"
-		LAF "CHARM_CREATURE" END
+	ACTION_DEFINE_ASSOCIATIVE_ARRAY "7eyes-o-matic" BEGIN
+		// effectID , damageType , splState , opcodeExtra , feedbackString , feedbackIcon , feedbackVfx => 2daFile
+		3 , "null" , "BERSERK_IMMUNITY" , "" , "Berzerk, Berserk" , "4" , "" => "berserk.2da"
+		5 , "null" , "CHARM_IMMUNITY" , "" , "Charmed, Dire Charmed, Dominated, Turned" , "0 1 43" , "" => "charm.2da"
+		12 , "fire" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "fireh firel" => "damage_fire.2da"
+		12 , "cold" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "coldh coldl" => "damage_cold.2da"
+		12 , "electricity" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "electrh electrl" => "damage_electricity.2da"
+		12 , "acid" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "acidh" => "damage_acid.2da"
+		12 , "missile" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_missile.2da"
+		12 , "crushing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_crushing.2da"
+		12 , "slashing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_slashing.2da"
+		12 , "piercing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_piercing.2da"
+		24 , "null" , "PANIC_IMMUNITY" , "23 106" , "Panic, Morale Failure: Panic, *flees in terror*" , "36" , "cdhorror" => "panic.2da"
+		38 , "null" , "SILENCE_IMMUNITY" , "" , "Silence, Silenced, Bard Song Silenced" , "34" , "" => "silence.2da"
+		45 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "spflayer" => "stun.2da"
+		74 , "null" , "BLIND_IMMUNITY" , "54" , "Blind, Blinded, Blindness" , "8" , "" => "blind.2da"
+		76 , "null" , "FEEBLEMIND_IMMUNITY" , "" , "Feeblemind, Feebleminded, Feeblemindedness" , "48" , "" => "feeblemind.2da"
+		80 , "null" , "DEAF_IMMUNITY" , "" , "Deaf, Deafened, Deafness" , "112" , "" => "deaf.2da"
+		109 , "null" , "PARALYZE_IMMUNITY" , "157" , "Paralyzed, Paralysed, Held" , "13" , "" => "paralyze.2da"
+		128 , "null" , "CONFUSION_IMMUNITY" , "" , "Confused, Rigid Thinking, Chaos" , "2 3 47" , "spconfus confush" => "confusion.2da"
+		134 , "null" , "PETRIFY_IMMUNITY" , "" , "Petrification, Petrified" , "171" , "" => "petrify.2da"
+		154 , "null" , "ENTANGLE_IMMUNITY" , "0 126" , "Entangle, Entangled" , "144" , "spentaci entangc" => "entangle.2da"
+		157 , "null" , "WEB_IMMUNITY" , "109" , "Webbed, Held" , "129" , "webentd webc" => "web.2da"
+		158 , "null" , "GREASE_IMMUNITY" , "126" , "Grease, Greased" , "145" , "greased greaseb" => "grease.2da"
+		175 , "null" , "HOLD_IMMUNITY" , "" , "Held" , "13" , "spmindat ohnwand1" => "hold.2da"
+		210 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "" => "power_word_stun.2da"
 	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/damage.tph"
-		LAF "DAMAGE" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/panic.tph"
-		LAF "PANIC" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/poison.tph"
-		LAF "POISON" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/silence.tph"
-		LAF "SILENCE" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/stun.tph"
-		LAF "STUN" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/blindness.tph"
-		LAF "BLINDNESS" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/feeblemindedness.tph"
-		LAF "FEEBLEMINDEDNESS" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/deafness.tph"
-		LAF "DEAFNESS" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/paralyze.tph"
-		LAF "PARALYZE" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/confusion.tph"
-		LAF "CONFUSION" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/petrification.tph"
-		LAF "PETRIFICATION" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/hold_creature.tph"
-		LAF "HOLD_CREATURE" END
-	END
-	WITH_SCOPE BEGIN
-		INCLUDE "eefixpack/files/tph/luke/7eyes/power_word_stun.tph"
-		LAF "POWER_WORD_STUN" END
+	//
+	ACTION_PHP_EACH "7eyes-o-matic" AS "key" => "2daFile" BEGIN
+		ACTION_IF ("%key_2%" STRING_COMPARE_CASE "") BEGIN
+			LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "%key_2%" RET "value" END
+		END ELSE BEGIN
+			OUTER_SET "value" = "-1"
+		END
+		//
+		LAF "7EYES-O-MATIC"
+		INT_VAR
+			"splstate" = "%value%"
+			"effectID" = "%key_0%"
+			"damage_type" = IDS_OF_SYMBOL ("dmgtype" "%key_1%")
+		STR_VAR
+			"opcode_extra" = "%key_3%"
+			"feedback_string" = "%key_4%"
+			"feedback_icon" = "%key_5%"
+			"feedback_vfx" = "%key_6%"
+			//
+			"2da_filespec" = "eefixpack\files\tph\luke\7eyes\%game_folder%\%2daFile%"
+		END
 	END
 END

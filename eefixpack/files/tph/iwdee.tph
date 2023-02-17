@@ -124,10 +124,10 @@ END
 luke
 "7eyes.2da" vs. SPL/ITM files
 */
-/*WITH_SCOPE BEGIN
+WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
   LAUNCH_ACTION_FUNCTION "7EYES" END
-END*/
+END
 
 /*
 luke
@@ -477,6 +477,17 @@ WITH_SCOPE BEGIN
     LPF CLONE_EFFECT INT_VAR match_opcode = 25 opcode = 321 parameter1 = 0 parameter2 = 2 duration = 0 special = 0 STR_VAR insert = above resource = EVAL ~%SOURCE_RES%~ END
 //    LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 1 "opcode" = 318 "target" = 2 "probability1" = 10 STR_VAR "resource" = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**Three White Doves +3**
+- Redone from scratch via op326 (instead of op177)
+- Fixed incorrect probability values
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/three_white_doves.tph"
+  LAUNCH_ACTION_FUNCTION "THREE_WHITE_DOVES" END
 END
 
 /////                                                  \\\\\
@@ -990,13 +1001,3 @@ END
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
 INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_iwd.tph~                 // use effect batches to remove vfx from effects which have been removed
-
-/*
-luke
-**"7eyes.2da" vs. SPL/ITM files**
-- See "https://github.com/Gibberlings3/EE_Fixpack/pull/23" for further details
-*/
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack\files\lib\gt_7eyes-o-matic.tph"
-  LAF "GT_7EYES-O-MATIC" END
-END

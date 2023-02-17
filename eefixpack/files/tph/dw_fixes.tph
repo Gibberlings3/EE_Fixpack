@@ -25,8 +25,8 @@ LAF declutter INT_VAR write END
 // Rearrange various orderings of effects; extract various effect blocks to subspells
 // (Prepares for other changes, notably immunities_via_324)
 
-INCLUDE "%library_path%/rearrange_itm_spl.tph"
-LAF rearrange_itm_spl END
+//INCLUDE "%library_path%/rearrange_itm_spl.tph"
+//LAF rearrange_itm_spl END
 
 // Sort out the various issues with 109/175/185 (this is the conservative bit) 
 

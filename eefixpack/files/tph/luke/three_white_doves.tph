@@ -1,0 +1,51 @@
+DEFINE_ACTION_FUNCTION "THREE_WHITE_DOVES"
+BEGIN
+	// Subspell creation
+	COPY_EXISTING "#evasion.spl" "override\doves1.spl"
+		WRITE_ASCII 0x3A "idoves" #8
+		LPF "ALTER_SPELL_HEADER" INT_VAR "range" = 0x7FFF STR_VAR "icon" = "idoves" END
+		LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = "-1" END // fresh start
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 215 "target" = 2 "timing" = 1 STR_VAR "resource" = "cldamah" END // Play visual effect
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 12 "target" = 2 "parameter2" = IDS_OF_SYMBOL ("DMGTYPE" "CRUSHING") "timing" = 1 "parameter1" = 4 "dicenumber" = 1 "dicesize" = 6 END // 1d6+4 (crushing)
+	BUT_ONLY_IF_IT_CHANGES
+	//
+	COPY_EXISTING "doves1.spl" "override\doves2.spl"
+		LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = "-1" END // fresh start
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "timing" = 1 "parameter1" = 40195 END // Display string (Outer planar destroyed)
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 13 "target" = 2 "parameter2" = BIT2 "timing" = 1 END // Kill target (normal death)
+	BUT_ONLY_IF_IT_CHANGES
+	//
+	COPY_EXISTING "doves1.spl" "override\doves3.spl"
+		LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = "-1" END // fresh start
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "timing" = 1 "parameter1" = 35600 END // Display string (Undead destroyed)
+		LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 13 "target" = 2 "parameter2" = BIT2 "timing" = 1 END // Kill target (normal death)
+	BUT_ONLY_IF_IT_CHANGES
+	//
+	COPY_EXISTING "doves.itm" "override"
+		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 END // Fresh start
+		// Double damage against outer planar creatures / 5% chance of being destroyed
+		PATCH_WITH_SCOPE BEGIN
+			PATCH_FOR_EACH "race" IN "DEMONIC" "MEPHIT" "IMP" "GITHYANKI" "ELEMENTAL" "GENIE" "SOLAR" "ANTISOLAR" "PLANATAR" "DARKPLANATAR" "SALAMANDER" BEGIN
+				LPF "ADD_ITEM_EFFECT" INT_VAR "target" = 2 "type" = 1 "opcode" = 326 "parameter1" = IDS_OF_SYMBOL ("RACE" "%race%") "parameter2" = 104 "timing" = 1 STR_VAR "resource" = "doves1" END // Apply effects list (double damage)
+				LPF "ADD_ITEM_EFFECT" INT_VAR "target" = 2 "type" = 1 "opcode" = 326 "parameter1" = IDS_OF_SYMBOL ("RACE" "%race%") "parameter2" = 104 "timing" = 1 "probability1" = 95 STR_VAR "resource" = "doves2" END // Apply effects list (kill creature)
+			END
+		END
+		// Double damage against undead
+		LPF "ADD_ITEM_EFFECT" INT_VAR "target" = 2 "type" = 1 "opcode" = 326 "parameter2" = 1 "timing" = 1 STR_VAR "resource" = "doves1" END // Apply effects list (double damage)
+		PATCH_WITH_SCOPE BEGIN
+			DEFINE_ASSOCIATIVE_ARRAY "three_white_doves" BEGIN
+				// max level , min level , probability2 => ""
+				4 , 0 , 0 => "" // [Undead] 1-4 Hit Dice: Automatically destroyed
+				5 , 5 , 5 => "" // [Undead] 5 Hit Dice: 95% chance of being destroyed
+				6 , 6 , 20 => "" // [Undead] 6 Hit Dice: 80% chance of being destroyed
+				7 , 7 , 35 => "" // [Undead] 7 Hit Dice: 65% chance of being destroyed
+				9 , 8 , 50 => "" // [Undead] 8-9 Hit Dice: 50% chance of being destroyed
+				10 , 10 , 65 => "" // [Undead] 10 Hit Dice: 35% chance of being destroyed
+				0 , 11 , 80 => "" // [Undead] 11+ Hit Dice: 20% chance of being destroyed
+			END
+			PHP_EACH "three_white_doves" AS "key" => "" BEGIN
+				LPF "ADD_ITEM_EFFECT" INT_VAR "target" = 2 "type" = 1 "opcode" = 326 "parameter2" = 1 "timing" = 1 "dicenumber" = "%key_0%" "dicesize" = "%key_1%" "probability2" = "%key_2%" STR_VAR "resource" = "doves3" END // Apply effects list (kill creature)
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+END

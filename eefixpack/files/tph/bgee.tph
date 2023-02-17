@@ -220,6 +220,15 @@ END
 
 /*
 luke
+"7eyes.2da" vs. SPL/ITM files
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
+  LAUNCH_ACTION_FUNCTION "7EYES" END
+END
+
+/*
+luke
 **Wing Buffet vs. MR**
 */
 WITH_SCOPE BEGIN
@@ -1924,13 +1933,3 @@ END
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
 INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~                  // use effect batches to remove vfx from effects which have been removed
-
-/*
-luke
-**"7eyes.2da" vs. SPL/ITM files**
-- See "https://github.com/Gibberlings3/EE_Fixpack/pull/23" for further details
-*/
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack\files\lib\gt_7eyes-o-matic.tph"
-  LAF "GT_7EYES-O-MATIC" END
-END

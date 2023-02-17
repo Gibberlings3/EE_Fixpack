@@ -482,3 +482,96 @@ BEGIN
 		OUTER_SET "count" += 1
 	END
 END
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Language-independant version of WeiDU's native GET_STRREF
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_DIMORPHIC_FUNCTION "GT_GET_STRING"
+INT_VAR
+	"strref" = 0
+RET
+	"string"
+BEGIN
+	OUTER_TEXT_SPRINT "string" ""
+	COPY - "lang\en_us\dialog.tlk" "override"
+		READ_LONG 0xE "base_off" // Offset to base data
+		READ_LONG (0x12 + 0x12 + ("%strref%" * 0x1A)) "off" // Relative offset of current string
+		READ_LONG (0x12 + 0x16 + ("%strref%" * 0x1A)) "length" // Length of this string
+		READ_ASCII ("%base_off%" + "%off%") "string" ("%length%")
+	BUT_ONLY_IF_IT_CHANGES
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ~ADD_SPELL_ABILITY~
+INT_VAR
+	~type~ = 1 // Melee (should be irrelevant for `spl` files...)
+	~location~ = 4 // Ability (F13 button)
+	~target~ = 1 // Living actor
+	~#_targets~ = 0
+	~range~ = 30 // Default visual range
+	~minimum_level~ = 1
+	~casting_speed~ = 0
+	~projectile~ = IDS_OF_SYMBOL ("MISSILE" "None")
+	//
+	~copy_header~ = 0
+	~insert_point~ = ~-1~ // insert last
+STR_VAR
+	~icon~ = ~~
+RET
+	~insert_point~
+BEGIN
+	//LPF ~FJ_SPL_ITM_REINDEX~ END
+	~hs~ = 0x28
+
+	READ_LONG 0x64 ~ho~
+	READ_SHORT 0x68 ~hc~
+	READ_LONG 0x6a ~eo~
+	~insert_point~ = ("%insert_point%" > "%hc%" || "%insert_point%" < 0) ? "%hc%" : "%insert_point%"
+	~copy_header~ = ("%copy_header%" < 0) ? 0 : "%copy_header%"
+
+	PATCH_IF "%copy_header%" > "%hc%" BEGIN
+		PATCH_WARN ~Unable to copy %copy_header%th header, "%DEST_FILE%" contains only %hc% headers!~
+	END ELSE BEGIN
+		INSERT_BYTES ("%ho%" + "%insert_point%" * "%hs%") "%hs%"
+		"hc" += 1
+		"eo" += "%hs%"
+		PATCH_IF "%copy_header%" BEGIN
+			READ_SHORT ("%ho%" + ("%copy_header%" - 1) * "%hs%" + 0x1e) "ec"
+			READ_SHORT ("%ho%" + ("%copy_header%" - 1) * "%hs%" + 0x20) "ei"
+			READ_ASCII ("%eo%" + "%ei%" * 0x30) "effs" ("%ec%" * 0x30)
+			READ_ASCII ("%ho%" + ("%copy_header%" - 1) * "%hs%") "copy" ("%hs%")
+			WRITE_ASCII ("%ho%" + "%insert_point%" * "%hs%") ~%copy%~ ("%hs%")
+		END
+		WRITE_SHORT 0x68 "%hc%"
+		WRITE_LONG 0x6a "%eo%"
+
+		READ_SHORT 0x70 "ei" // technically, it is a counter
+		FOR ("i" = "%ho%" ; "%i%" < "%ho%" + "%hc%" * "%hs%" ; "i" += "%hs%") BEGIN
+			READ_SHORT "%i%" + 0x1e "ec"
+			WRITE_SHORT "%i%" + 0x20 "%ei%"
+			"ei" += "%ec%"
+		END
+
+		PATCH_IF "%copy_header%" BEGIN
+			READ_SHORT ("%ho%" + "%insert_point%" * "%hs%" + 0x1e) "ec"
+			READ_SHORT ("%ho%" + "%insert_point%" * "%hs%" + 0x20) "ei"
+			INSERT_BYTES ("%eo%" + "%ei%" * 0x30) ("%ec%" * 0x30)
+			WRITE_ASCII ("%eo%" + "%ei%" * 0x30) ~%effs%~ ("%ec%" * 0x30)
+		END ELSE BEGIN
+			"off" = "%ho%" + "%insert_point%" * "%hs%"
+			WRITE_BYTE "%off%" "%type%"
+			WRITE_SHORT ("%off%" + 0x2) "%location%"
+			WRITE_ASCII ("%off%" + 0x4) ~%icon%~ #8
+			WRITE_BYTE ("%off%" + 0xc) "%target%"
+			WRITE_BYTE ("%off%" + 0xd) "%#_targets%"
+			WRITE_SHORT ("%off%" + 0xe) "%range%"
+			WRITE_SHORT ("%off%" + 0x10) "%minimum_level%"
+			WRITE_SHORT ("%off%" + 0x12) "%casting_speed%"
+			WRITE_SHORT ("%off%" + 0x26) "%projectile%"
+		END
+	END
+END
