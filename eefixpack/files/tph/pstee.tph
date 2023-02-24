@@ -32,7 +32,7 @@ INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit che
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
- 
+
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
@@ -52,7 +52,9 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 COMPILE ~eefixpack/files/baf/pst~
 
 INCLUDE ~eefixpack/files/tph/pst_script_fixes.tph~
-  
+
+INCLUDE ~eefixpack/files/tph/pst_chapter_saves.tph~
+
 // tbd, cam  
 // remove LOCALS set as it doesn't actually do anything in region script
 COPY_EXISTING ~1204trig.bcs~ ~override~

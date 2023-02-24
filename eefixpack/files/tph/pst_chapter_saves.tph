@@ -1,0 +1,77 @@
+// Implementation of "chapter saves" for PSTEE:
+// https://www.gibberlings3.net/forums/topic/36368-pstee-chapter-saves-for-pstee
+
+// The following saves will be created:
+
+// 000000002-Final-Save: When TNO arrives at the top of the Fortress of Regrets.
+<<<<<<<< .../fp-inline/pstee/ar1204-save.baf
+IF
+  Global("1204_Savegame","AR1204",0)
+  Global("AR1204_Visited","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("1204_Savegame","AR1204",1)
+    SaveGame(2)
+    Continue()
+END
+>>>>>>>>
+EXTEND_TOP ~ar1204.bcs~ ~.../fp-inline/pstee/ar1204-save.baf~
+
+// 000000003-Mortuary: At the beginning of the game, after waking up in the Mortuary.
+<<<<<<<< .../fp-inline/pstee/ar0202-save.baf
+IF
+  Global("0202_Savegame","AR0202",0)
+  Global("Morte","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("0202_Savegame","AR0202",1)
+    SaveGame(3)
+    Continue()
+END
+>>>>>>>>
+EXTEND_TOP ~ar0202.bcs~ ~.../fp-inline/pstee/ar0202-save.baf~
+
+// 000000004-Lower Ward: At arriving for the first time at the Lower Ward.
+<<<<<<<< .../fp-inline/pstee/ar0500-save.baf
+IF
+  Global("0500_Savegame","AR0500",0)
+  OR(2)
+    Global("Morte_Stolen","GLOBAL",1)
+    !InParty("Morte")
+THEN
+  RESPONSE #100
+    SetGlobal("0500_Savegame","AR0500",1)
+    SaveGame(4)
+    Continue()
+END
+>>>>>>>>
+EXTEND_TOP ~ar0500.bcs~ ~.../fp-inline/pstee/ar0500-save.baf~
+
+// 000000005-To Ravel's Maze: When teleporting to Ravel's Maze.
+<<<<<<<< .../fp-inline/pstee/duportal.d
+ADD_TRANS_ACTION ~duportal~ BEGIN 1 END BEGIN 0 END ~SaveGame(5)~ UNLESS ~SaveGame~
+>>>>>>>>
+COMPILE ~.../fp-inline/pstee/duportal.d~
+
+
+// Updating savename entries
+ACTION_DEFINE_ASSOCIATIVE_ARRAY pstee_save_slots BEGIN
+  // save slot => tra reference in pstee.tra
+  3 => 100
+  4 => 101
+  5 => 102
+END
+
+COPY_EXISTING ~savename.2da~ ~override~
+  READ_2DA_ENTRIES_NOW savename 1
+  FOR (row = 3; row < savename; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER savename row 2 slot
+    PATCH_IF (VARIABLE_IS_SET $pstee_save_slots(~%slot%~)) BEGIN
+      TEXT_SPRINT tra_ref $pstee_save_slots(~%slot%~)
+      SET strref = RESOLVE_STR_REF((AT ~%tra_ref%~))
+      SET_2DA_ENTRY_LATER savename_out row 1 ~%strref%~
+    END
+  END
+  SET_2DA_ENTRIES_NOW savename_out 1
+  PRETTY_PRINT_2DA
+BUT_ONLY
