@@ -1019,8 +1019,10 @@ WITH_SCOPE BEGIN
 END
 
 // expiry sound has wrong duration  
+// [luke] Make sure all effects bypass Magic Resistance / are dispellable (so as to match op39, which bypasses MR and it's dispellable)
 COPY_EXISTING ~bdsleep.spl~  ~override~ // <Invalid Strref -1> - causes sleep - plays sound EFF_E05
   LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 300 END
+  LPF "ALTER_EFFECT" INT_VAR "resist_dispel" = (BIT0 + BIT1) END
   IF_EXISTS // sod asset
 
 // tbd, cam
@@ -1234,10 +1236,13 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Stinking Cloud
-// 1) op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
-// 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
+/*
+luke
+**Stinking Cloud**
+1. op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
+2. remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
+3. op324's resource field should not be empty
+*/
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override" // spwi213
     PATCH_WITH_SCOPE BEGIN
@@ -1251,6 +1256,7 @@ WITH_SCOPE BEGIN
     END
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 126 END
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 324 STR_VAR ~resource~ = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1850,6 +1856,20 @@ WITH_SCOPE BEGIN
   LAF ~NISHRUU_HAKEASHAR~ END
 END
 
+/*
+luke
+**Earthquake**
+- Make sure all effects bypass Magic Resistance (since the spell is supposed to alter the environment instead of directly affecting the targeted creatures)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING
+    "bpgiaqke.spl" "override"
+    "spogre01.spl" "override"
+    "%CLERIC_EARTHQUAKE%.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "resist_dispel" = 0 END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
@@ -1925,3 +1945,22 @@ INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // functio
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
 INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~                  // use effect batches to remove vfx from effects which have been removed
 
+/*
+luke
+**"7eyes.2da" vs. SPL/ITM files**
+- See "https://github.com/Gibberlings3/EE_Fixpack/pull/23" for further details
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\lib\gt_7eyes-o-matic.tph"
+  LAF "GT_7EYES-O-MATIC" END
+END
+
+/*
+luke
+**Opcode #39 overhaul**
+- See "https://www.gibberlings3.net/forums/topic/35902-opcode-39-issues/" for further details
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\tph\luke\op39_overhaul.tph"
+  LAF "OPCODE39_OVERHAUL" END
+END

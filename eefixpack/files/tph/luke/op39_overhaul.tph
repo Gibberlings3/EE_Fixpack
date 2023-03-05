@@ -1,0 +1,1122 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+See "https://www.gibberlings3.net/forums/topic/35902-opcode-39-issues/" for further details
+
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION "OPCODE39_OVERHAUL"
+BEGIN
+	// Initialize
+	CLEAR_ARRAYS
+	ACTION_DEFINE_ARRAY "digit" BEGIN "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" END
+	ACTION_DEFINE_ARRAY "letter" BEGIN "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z" END
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "SLEEP_IMMUNITY" END
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "NAUSEA_IMMUNITY" END
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "KNOCKBACK_IMMUNITY" END
+	//LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "HOPELESSNESS_IMMUNITY" END // same as SLEEP_IMMUNITY ...?
+	//LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "UNCONSCIOUSNESS_IMMUNITY" END // same as SLEEP_IMMUNITY ...?
+	//LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "KNOCKDOWN_GROUND-BASED_IMMUNITY" END // This is probably best done via other checks (f.i. RACE=WYVERN)
+
+	/*
+	==========================================================================================
+	**Opcode #39**
+	- Overall revision
+	==========================================================================================
+	*/
+
+	LAF "OPCODE39_OVERHAUL#DETERMINE_SLEEP_TYPE" RET_ARRAY "sleep_resref" "earthquake_resref" END
+
+	/*
+	========================================================================================
+	**Opcode #101 (p2==39)**
+	- The following code deals with creatures natural immunity to op39
+	========================================================================================
+	*/
+
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.cre$" "override"
+			PATCH_MATCH LONG_AT 0x28 WITH
+				// The following animations are hardcoded to be immune to op235. As a result, flag them as appropriate
+				IDS_OF_SYMBOL ("ANIMATE" "TANARRI")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_RED")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BLACK")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_SILVER")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_GREEN")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_AQUA")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BLUE")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BROWN")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_MULTICOLOR")
+				IDS_OF_SYMBOL ("ANIMATE" "DRAGON_PURPLE")
+				IDS_OF_SYMBOL ("ANIMATE" "DEMOGORGON")
+				IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_EARTH")
+				IDS_OF_SYMBOL ("ANIMATE" "SHAMBLING_MOUND")
+				IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_FIRE")
+				IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_FIRE_PURPLE")
+				IDS_OF_SYMBOL ("ANIMATE" "BURNING_MAN")
+				IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_AIR")
+				IDS_OF_SYMBOL ("ANIMATE" "RAVER")
+				IDS_OF_SYMBOL ("ANIMATE" "SLAYER")
+				IDS_OF_SYMBOL ("ANIMATE" "SOLAR")
+				IDS_OF_SYMBOL ("ANIMATE" "DEVA_MONADIC")
+				IDS_OF_SYMBOL ("ANIMATE" "MELISSAN")
+				IDS_OF_SYMBOL ("ANIMATE" "GIANT_FIRE")
+				IDS_OF_SYMBOL ("ANIMATE" "GIANT_YAGA-SHURA")
+				IDS_OF_SYMBOL ("ANIMATE" "GOLEM_ICE") BEGIN
+					LPF "ADD_CRE_EFFECT" INT_VAR "insert_point" = "-1" "opcode" = 328 "target" = 1 "timing" = 1 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKBACK_IMMUNITY") "special" = 1 END
+				END
+				DEFAULT
+			END
+			// Check CRE effects
+			PATCH_WITH_SCOPE BEGIN
+				SET "found" = 0
+				PATCH_MATCH BYTE_AT 0x33 WITH
+					0 BEGIN
+						GET_OFFSET_ARRAY "fx_array" 0x2C4 4 0x2C8 4 0 0 0x30
+					END
+					1 BEGIN
+						GET_OFFSET_ARRAY "fx_array" CRE_V10_EFFECTS
+					END
+					DEFAULT
+						PATCH_FAIL "%DEST_FILE%: unknown effect version"
+				END
+				PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+					PATCH_MATCH BYTE_AT 0x33 WITH
+						0 BEGIN
+							SET "fx_opcode" = SHORT_AT "%fx_off%"
+							SET "fx_parameter2" = SLONG_AT ("%fx_off%" + 0x8)
+						END
+						1 BEGIN
+							// Unlike ordinary V2 EFF files, CRE effect V2 structures omit the 8-byte EFF V2 header
+							SET "fx_opcode" = LONG_AT ("%fx_off%" + 0x10 - 0x8)
+							SET "fx_parameter2" = SLONG_AT ("%fx_off%" + 0x20 - 0x8)
+						END
+						DEFAULT
+					END
+					PATCH_MATCH "%fx_opcode%" WITH
+						101 WHEN ("%fx_parameter2%" == 39) BEGIN
+							// Immunity to effect => Effect: Sleep
+							SET "found" = 1
+						END
+						DEFAULT
+					END
+				END
+				PATCH_IF "%found%" BEGIN
+					LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "special" = 1 END
+					LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "special" = 1 END
+					LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 END
+				END
+			END
+			// Check CRE items
+			PATCH_WITH_SCOPE BEGIN
+				GET_OFFSET_ARRAY "itm_array" CRE_V10_ITEMS
+				PHP_EACH "itm_array" AS "itm_ind" => "itm_off" BEGIN
+					READ_ASCII ("%itm_off%" + 0x0) "itm_resref"
+					PATCH_MATCH "%itm_resref%" WITH
+						~bdbelhia~ ~demogorg~ ~behamu~ ~cibossb~ BEGIN END // Demogorgon, Belhifet, Luremaster (arbitrary boss immunities)
+						~bddraggh~ ~bdringgh~ ~sprngb02~ ~sprngb03~ ~sprngb04~ ~sprngs04~ ~sprngw01~ ~sprngs02~ "sprngw02" ~sprngw03~ ~sprngw04~ ~sprngz05~ BEGIN END // Exclusive to "Spirits/Ghosts" (Ghost Dragon, Shaman/Druid Spirits) (All Immunities - skip)
+						DEFAULT
+							INNER_ACTION BEGIN
+								COPY_EXISTING "%itm_resref%.itm" "override"
+									PATCH_IF ((BYTE_AT 0x18) BAND IDS_OF_SYMBOL ("ITEMFLAG" "DROPPABLE")) BEGIN
+										// Skip droppable (player) items
+									END ELSE BEGIN
+										// Undroppable creature skin
+										SET "found_101#39" = 0
+										SET "revive_spl" = 0
+										GET_OFFSET_ARRAY "fx_array" ITM_V10_GEN_EFFECTS
+										PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+											PATCH_MATCH SHORT_AT "%fx_off%" WITH
+												101 WHEN (SLONG_AT ("%fx_off%" + 0x8) == 39) BEGIN
+													SET "found_101#39" = 1
+												END
+												98 BEGIN // Regeneration
+													SET "revive_spl" += 1
+												END
+												232 BEGIN // Cast spell on condition
+													PATCH_MATCH SLONG_AT ("%fx_off%" + 0x8) WITH
+														2 3 4 19 20 BEGIN // HP-related triggers
+															SET "revive_spl" += 1
+														END
+														DEFAULT
+													END
+												END
+												DEFAULT
+											END
+										END
+										PATCH_IF "%found_101#39%" BEGIN
+											PATCH_MATCH "%revive_spl%" WITH
+												2 BEGIN
+													PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+														PATCH_MATCH SHORT_AT "%fx_off%" WITH
+															267 BEGIN // Disable display string
+																LPF "GT_GET_STRING" INT_VAR "strref" = SLONG_AT ("%fx_off%" + 0x4) RET "string" END
+																PATCH_MATCH "%string%" WITH
+																	"Sleep" BEGIN
+																		WRITE_SHORT "%fx_off%" 998
+																	END
+																	DEFAULT
+																END
+															END
+															DEFAULT
+														END
+													END
+													LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 998 END
+													LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 101 "match_parameter2" = 39 END // Sleep
+													LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 101 "match_parameter2" = 217 END // Power word, sleep
+												END
+												DEFAULT
+													LPF "CLONE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "special" = 1 END
+													LPF "CLONE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "special" = 1 END
+													LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 101 "match_parameter2" = 39 END
+											END
+										END
+									END
+								BUT_ONLY IF_EXISTS
+							END
+					END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	/*
+	====================================================================================================================================================================
+	**Opcode #101 (p2==39)**
+	- Polymorph-related ITMs
+	====================================================================================================================================================================
+	*/
+
+	WITH_SCOPE BEGIN
+		COPY_EXISTING_REGEXP "^.+\.itm$" "override"
+			SET "found_101#39" = 0
+			SET "found_135" = 0
+			GET_OFFSET_ARRAY "fx_array" ITM_V10_GEN_EFFECTS
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				PATCH_MATCH SHORT_AT "%fx_off%" WITH
+					101 WHEN (SLONG_AT ("%fx_off%" + 0x8) == 39) BEGIN
+						SET "found_101#39" = 1
+					END
+					135 BEGIN
+						READ_ASCII ("%fx_off%" + 0x14) "cre_resref"
+						SET "found_135" = 1
+					END
+					DEFAULT
+				END
+			END
+			// 
+			PATCH_IF "%found_135%" BEGIN
+				SET "immunize_against_knockback" = 0
+				SET "immunize_against_earthquake" = 0
+				INNER_PATCH_FILE "%cre_resref%.cre" BEGIN
+					PATCH_MATCH LONG_AT 0x28 WITH
+						// The following animations are hardcoded to be immune to op235
+						IDS_OF_SYMBOL ("ANIMATE" "TANARRI")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_RED")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BLACK")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_SILVER")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_GREEN")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_AQUA")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BLUE")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_BROWN")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_MULTICOLOR")
+						IDS_OF_SYMBOL ("ANIMATE" "DRAGON_PURPLE")
+						IDS_OF_SYMBOL ("ANIMATE" "DEMOGORGON")
+						IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_EARTH")
+						IDS_OF_SYMBOL ("ANIMATE" "SHAMBLING_MOUND")
+						IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_FIRE")
+						IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_FIRE_PURPLE")
+						IDS_OF_SYMBOL ("ANIMATE" "BURNING_MAN")
+						IDS_OF_SYMBOL ("ANIMATE" "ELEMENTAL_AIR")
+						IDS_OF_SYMBOL ("ANIMATE" "RAVER")
+						IDS_OF_SYMBOL ("ANIMATE" "SLAYER")
+						IDS_OF_SYMBOL ("ANIMATE" "SOLAR")
+						IDS_OF_SYMBOL ("ANIMATE" "DEVA_MONADIC")
+						IDS_OF_SYMBOL ("ANIMATE" "MELISSAN")
+						IDS_OF_SYMBOL ("ANIMATE" "GIANT_FIRE")
+						IDS_OF_SYMBOL ("ANIMATE" "GIANT_YAGA-SHURA")
+						IDS_OF_SYMBOL ("ANIMATE" "GOLEM_ICE") BEGIN
+							SET "immunize_against_knockback" = 1
+						END
+						DEFAULT
+					END
+					PATCH_MATCH BYTE_AT 0x271 WITH
+						IDS_OF_SYMBOL ("GENERAL" "UNDEAD") BEGIN
+							SET "immunize_against_earthquake" = 1
+						END
+						DEFAULT
+					END
+					PATCH_MATCH BYTE_AT 0x272 WITH
+						IDS_OF_SYMBOL ("RACE" "WYVERN")
+						IDS_OF_SYMBOL ("RACE" "BEHOLDER")
+						IDS_OF_SYMBOL ("RACE" "HARPY")
+						IDS_OF_SYMBOL ("RACE" "IMP")
+						IDS_OF_SYMBOL ("RACE" "MEPHIT")
+						IDS_OF_SYMBOL ("RACE" "DRAGON")
+						IDS_OF_SYMBOL ("RACE" "DEMILICH")
+						IDS_OF_SYMBOL ("RACE" "SHADOW")
+						IDS_OF_SYMBOL ("RACE" "SPECTRE")
+						IDS_OF_SYMBOL ("RACE" "WRAITH")
+						IDS_OF_SYMBOL ("RACE" "SPECTRAL_UNDEAD")
+						IDS_OF_SYMBOL ("RACE" "WILL-O-WISP")
+						IDS_OF_SYMBOL ("RACE" "SLIME")
+						IDS_OF_SYMBOL ("RACE" "MIST") BEGIN
+							SET "immunize_against_earthquake" = 1
+						END
+						DEFAULT
+					END
+					PATCH_MATCH BYTE_AT 0x273 WITH
+						IDS_OF_SYMBOL ("CLASS" "SPIDER_WRAITH")
+						IDS_OF_SYMBOL ("CLASS" "SPECTRAL_TROLL") BEGIN
+							SET "immunize_against_earthquake" = 1
+						END
+						DEFAULT
+					END
+				END
+				// 
+				PATCH_IF "%immunize_against_knockback%" BEGIN
+					LPF "ADD_ITEM_EQEFFECT" INT_VAR "insert_point" = "-1" "opcode" = 328 "target" = 1 "timing" = 2 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKBACK_IMMUNITY") "special" = 1 END
+				END
+				PATCH_IF "%immunize_against_earthquake%" BEGIN
+					PHP_EACH "earthquake_resref" AS "resource" => "" BEGIN
+						LPF "ADD_ITEM_EQEFFECT" INT_VAR "insert_point" = "-1" "opcode" = 318 "target" = 1 "timing" = 2 STR_VAR "resource" END
+					END
+				END
+				// 
+				PATCH_IF "%found_101#39%" BEGIN
+					LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "special" = 1 END
+					LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "multi_match" = 1 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "special" = 1 END
+					LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 END
+				END
+			END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+
+	/*
+	====================================================================================================================================================================
+	**Opcode #101 (p2==39)**
+	- Everything below here is for Player SPLs/ITMs intended to block specific effects regardless of the recipient, each has to be manually specified (for best results)
+	====================================================================================================================================================================
+	*/
+
+	// IMM: Mind-affecting
+
+	WITH_SCOPE BEGIN
+		COPY_EXISTING
+			// SPL files
+			~%CLERIC_EXALTATION%.spl~ "override"
+			~%CLERIC_BLOOD_RAGE%.spl~ "override"
+			~%CLERIC_CHAOTIC_COMMANDS%.spl~ "override"
+			~%CLERIC_IMPERVIOUS_SANCTITY_OF_MIND%.spl~ "override"
+			~%WIZARD_MIND_BLANK%.spl~ "override"
+			~%MINSC_BERSERK%.spl~ "override"
+			~%SLAYER_ENEMY%.spl~ "override"
+			~%SLAYER_CHANGE_TWO%.spl~ "override"
+			~%SLAYER_CHANGE%.spl~ "override"
+			~%THREE_ROUND_ENCHANTMENT_IMMUNITY%.spl~ "override"
+			~%FIVE_ROUND_ENCHANTMENT_IMMUNITY%.spl~ "override"
+			~%BARBARIAN_RAGE%.spl~ "override"
+			~%BERSERKER_RAGE%.spl~ "override"
+			~ohrrage.spl~ "override" // Animal Rage
+			~ohtyr1.spl~ "override" // Exaltation
+			// ITM files
+			~gvalor1.itm~ "override" // Gauntlets of Valor
+			~amul17.itm~ "override" // Greenstone Amulet
+			~chalcy3.itm~ "override" // Greenstone Amulet
+			~helmdef.itm~ "override" // Helm of the Trusted Defender (IWD:EE)
+				LPF	"CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "special" = 1 STR_VAR "resource" = ~~ END
+				LPF	"DELETE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 END
+		BUT_ONLY IF_EXISTS
+	END
+
+	// IMM: Mind-affecting, Nausea
+
+	WITH_SCOPE BEGIN
+		COPY_EXISTING
+			// SPL files
+			~ohbbanno.spl~ "override" // Iron Golem Transformation
+			// ITM files
+				LPF	"CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "special" = 1 STR_VAR "resource" = ~~ END
+				LPF	"CLONE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 "opcode" = 328 "parameter1" = 0 "parameter2" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "special" = 1 STR_VAR "resource" = ~~ END
+				LPF	"DELETE_EFFECT" INT_VAR "match_opcode" = 101 "match_parameter2" = 39 END
+		BUT_ONLY IF_EXISTS
+	END
+
+	/*
+	==============================================================================================================================================================
+	**Opcode #2 (Cure Sleep)**
+	- Everything below here is for SPLs/ITMs intended to remove specific effects regardless of the recipient, each has to be manually specified (for best results)
+	==============================================================================================================================================================
+	*/
+
+	WITH_SCOPE BEGIN
+		COPY_EXISTING "#cureslp.spl" "override"
+			PHP_EACH "sleep_resref" AS "resource" => "" BEGIN
+				LPF	"CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 2 "opcode" = 321 "parameter1" = 0 "parameter2" = 2 "special" = 0 STR_VAR "resource" END
+			END
+			LPF	"DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 2 END
+		BUT_ONLY_IF_IT_CHANGES
+	END
+END
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+Helper functions
+
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION "OPCODE39_OVERHAUL#DETERMINE_SLEEP_TYPE"
+RET_ARRAY
+	"sleep_resref"
+	"earthquake_resref"
+BEGIN
+	COPY_EXISTING_REGEXP "^.+\.\(itm\|spl\)$" "override"
+		PATCH_MATCH "%DEST_EXT%" WITH
+			"ITM" BEGIN
+				GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+			END
+			"SPL" BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+			END
+			DEFAULT
+				PATCH_FAIL "'%DEST_FILE%': unexpected file!"
+		END
+		PATCH_CLEAR_ARRAY "fx_match"
+		TEXT_SPRINT "file_ext" "%DEST_EXT%" // keep a copy of original "%DEST_EXT%"
+		TEXT_SPRINT "file_res" "%DEST_RES%" // keep a copy of original "%DEST_RES%"
+		// Make sure troll / wolf revive spl files target '1|Self'
+		PATCH_MATCH "%file_res%" WITH
+			"bdwolfd1" "bdtroll1" BEGIN // wolf / troll revive spl files
+				LPF "ALTER_EFFECT" INT_VAR "silent" = 1 "check_globals" = 0 "target" = 1 END
+			END
+			DEFAULT
+		END
+		// Record all op39 effects
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS // NB.: same for "*.spl" and "*.itm"
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				// Take note of current effect's attributes
+				READ_SHORT ("%fx_off%" + 0x0) "ITMSPL_effect_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "ITMSPL_effect_target"
+				READ_BYTE ("%fx_off%" + 0x3) "ITMSPL_effect_power"
+				READ_SLONG ("%fx_off%" + 0x4) "ITMSPL_effect_parameter1"
+				READ_SLONG ("%fx_off%" + 0x8) "ITMSPL_effect_parameter2"
+				READ_BYTE ("%fx_off%" + 0xC) "ITMSPL_effect_timing"
+				READ_BYTE ("%fx_off%" + 0xD) "ITMSPL_effect_resist_dispel"
+				READ_LONG ("%fx_off%" + 0xE) "ITMSPL_effect_duration"
+				READ_BYTE ("%fx_off%" + 0x12) "ITMSPL_effect_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "ITMSPL_effect_probability2"
+				READ_ASCII ("%fx_off%" + 0x14) "ITMSPL_effect_resource"
+				READ_LONG ("%fx_off%" + 0x1C) "ITMSPL_effect_dicenumber"
+				READ_LONG ("%fx_off%" + 0x20) "ITMSPL_effect_dicesize"
+				READ_LONG ("%fx_off%" + 0x24) "ITMSPL_effect_savingthrow"
+				READ_SLONG ("%fx_off%" + 0x28) "ITMSPL_effect_savebonus"
+				READ_SLONG ("%fx_off%" + 0x2C) "ITMSPL_effect_special"
+				// Skip Self-targeted effects (that is to say, skip the various troll revive SPL files, WIZARD_GREATE_SHOUT, etc...)
+				PATCH_IF ("%ITMSPL_effect_opcode%" == 39) AND ("%ITMSPL_effect_target%" != 1) BEGIN
+					PATCH_MATCH "%ITMSPL_effect_timing%" WITH
+						1 2 5 6 7 8 9 BEGIN END // Ignore permanent and invalid timing modes
+						DEFAULT
+							DEFINE_ASSOCIATIVE_ARRAY "fx_match" BEGIN
+								"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "%ab_ind%" , "%fx_ind%" => ""
+							END
+							WRITE_SHORT "%fx_off%" 999 // mark it for later detection
+					END
+				END
+			END
+		END
+		// 
+		SET "is_op39_on_all_abilities" = 0
+		PHP_EACH "fx_match" AS "fx_match_attribute" => "" BEGIN
+			PATCH_IF ("%fx_match_attribute_16%" == (SHORT_AT 0x68) - 1) BEGIN // Ability count starts from 0 (that is to say, the 1st Ability is Ability #0)
+				SET "is_op39_on_all_abilities" = 1
+			END
+		END
+		// For each op39 found, get its ancillary effects (if any)
+		PHP_EACH "fx_match" AS "fx_match_attribute" => "" BEGIN
+			// Initialize
+			SET "non-cosmetic_effects" = 0 // Suppose there are no non-cosmetic effects
+			SET "racial_sleep_immunity" = 0
+			TEXT_SPRINT "sleep_type" "Unconsciousness"
+			SET "ab_off" = ("%file_ext%" STR_EQ "ITM") ? LONG_AT 0x64 + ("%fx_match_attribute_16%" * 0x38) : LONG_AT 0x64 + ("%fx_match_attribute_16%" * 0x28)
+			SET "ab_ind" = "%fx_match_attribute_16%"
+			PATCH_CLEAR_ARRAY "fx_ancillary"
+			// Main
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS // NB.: same for "*.spl" and "*.itm"
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				// Take note of current effect's attributes
+				READ_SHORT ("%fx_off%" + 0x0) "ITMSPL_effect_opcode"
+				READ_BYTE ("%fx_off%" + 0x2) "ITMSPL_effect_target"
+				READ_BYTE ("%fx_off%" + 0x3) "ITMSPL_effect_power"
+				READ_SLONG ("%fx_off%" + 0x4) "ITMSPL_effect_parameter1"
+				READ_SLONG ("%fx_off%" + 0x8) "ITMSPL_effect_parameter2"
+				READ_BYTE ("%fx_off%" + 0xC) "ITMSPL_effect_timing"
+				READ_BYTE ("%fx_off%" + 0xD) "ITMSPL_effect_resist_dispel"
+				READ_LONG ("%fx_off%" + 0xE) "ITMSPL_effect_duration"
+				READ_BYTE ("%fx_off%" + 0x12) "ITMSPL_effect_probability1"
+				READ_BYTE ("%fx_off%" + 0x13) "ITMSPL_effect_probability2"
+				READ_ASCII ("%fx_off%" + 0x14) "ITMSPL_effect_resource"
+				READ_LONG ("%fx_off%" + 0x1C) "ITMSPL_effect_dicenumber"
+				READ_LONG ("%fx_off%" + 0x20) "ITMSPL_effect_dicesize"
+				READ_LONG ("%fx_off%" + 0x24) "ITMSPL_effect_savingthrow"
+				READ_SLONG ("%fx_off%" + 0x28) "ITMSPL_effect_savebonus"
+				READ_SLONG ("%fx_off%" + 0x2C) "ITMSPL_effect_special"
+				// 
+				PATCH_MATCH "%ITMSPL_effect_opcode%" WITH
+					999 BEGIN
+						PATCH_MATCH "%ITMSPL_effect_special%" WITH
+							126 BEGIN
+								TEXT_SPRINT "sleep_type" "Nausea"
+							END
+							DEFAULT
+						END
+						/*PATCH_IF ("%ITMSPL_effect_duration%" < 6) BEGIN
+							TEXT_SPRINT "sleep_type" "Knockback"
+						END*/
+					END
+					39 WHEN ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") AND ("%ITMSPL_effect_parameter1%" == "%fx_match_attribute_3%") AND ("%ITMSPL_effect_parameter2%" == "%fx_match_attribute_4%") BEGIN END // skip subspell in case of multiple op39 effects of the same type
+					7 8 9 41 50 51 52 61 141 215 BEGIN // Visual effects (since these are just cosmetic effects, don't bother checking for Min/Max level and Savetype/Savebonus ...)
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+											DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+												"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+											END
+											WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+										END
+									END
+								END
+							END
+						END
+					END
+					139 BEGIN // Display string
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_dicesize%" == "%fx_match_attribute_12%") BEGIN
+													PATCH_IF ("%ITMSPL_effect_savingthrow%" == "%fx_match_attribute_13%") BEGIN
+														PATCH_IF ("%ITMSPL_effect_savebonus%" == "%fx_match_attribute_14%") BEGIN
+															// WeiDU's GET_STRREF is language-dependant, so we need to fetch the corresponding string from the english version of "dialog.tlk"
+															LPF "GT_GET_STRING" INT_VAR "strref" = "%ITMSPL_effect_parameter1%" RET "string" END
+															PATCH_MATCH "%string%" WITH
+																"Sleep" "Unconscious" "Too high level for Color Spray" BEGIN
+																	DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																		"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																	END
+																	WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+																END
+																DEFAULT
+																	SET "non-cosmetic_effects" = 1
+															END
+														END
+													END
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					142 BEGIN // Display portrait icon
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+													PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
+														PATCH_IF ("%ITMSPL_effect_dicesize%" == "%fx_match_attribute_12%") BEGIN
+															PATCH_IF ("%ITMSPL_effect_savingthrow%" == "%fx_match_attribute_13%") BEGIN
+																PATCH_IF ("%ITMSPL_effect_savebonus%" == "%fx_match_attribute_14%") BEGIN
+																	PATCH_MATCH "%ITMSPL_effect_parameter2%" WITH
+																		14 44 130 BEGIN // Sleep Hopelessness Unconscious
+																			DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																				"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																			END
+																			WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+																		END
+																		126 BEGIN // Nauseated
+																			DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																				"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																			END
+																			WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+																			TEXT_SPRINT "sleep_type" "Nausea"
+																		END
+																		DEFAULT
+																			SET "non-cosmetic_effects" = 1
+																	END
+																END
+															END
+														END
+													END
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					174 WHEN ("%ITMSPL_effect_timing%" == 1) BEGIN // Play sound (initial sound - since these are just cosmetic effects, don't bother checking for Min/Max level and Savetype/Savebonus ...)
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+											DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+												"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+											END
+											WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+										END
+									END
+								END
+							END
+						END
+					END
+					174 WHEN ("%ITMSPL_effect_timing%" == 4) BEGIN // Play sound (expiry sound)
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
+													PATCH_IF ("%ITMSPL_effect_dicesize%" == "%fx_match_attribute_12%") BEGIN
+														PATCH_IF ("%ITMSPL_effect_savingthrow%" == "%fx_match_attribute_13%") BEGIN
+															PATCH_IF ("%ITMSPL_effect_savebonus%" == "%fx_match_attribute_14%") BEGIN
+																DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																	"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																END
+																WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+																WRITE_LONG ("%fx_off%" + 0x2C) 998 // mark it for later detection
+															END
+														END
+													END
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					321 WHEN ("%ITMSPL_effect_resource%" STRING_EQUAL_CASE "%file_res%") BEGIN // Remove effects by resource
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_dicesize%" == "%fx_match_attribute_12%") BEGIN
+												DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+													"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+												END
+												WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					318 324 WHEN ("%ITMSPL_effect_resource%" STRING_EQUAL_CASE "%file_res%") BEGIN
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_MATCH "%ITMSPL_effect_parameter2%" WITH
+								15 19 BEGIN // RACE=ELF RACE=HALF_ELF
+									SET "racial_sleep_immunity" += 1
+									PATCH_IF ("racial_sleep_immunity" == 2) BEGIN
+										TEXT_SPRINT "sleep_type" "Sleep"
+									END
+								END
+								47 55 BEGIN // RACE=GOLEM|GENERAL=UNDEAD|RACE=MYCONID GENERAL=UNDEAD|RACE=GOLEM
+									TEXT_SPRINT "sleep_type" "Nausea"
+								END
+								DEFAULT
+							END
+						END
+					END
+					235 BEGIN // Wing buffet - ignore savingthrow and savebonus, match duration or less (see f.i. Dragon Wing Buffet "SPIN695.SPL")
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_duration%" <= "%fx_match_attribute_7%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+													DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+														"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+													END
+													WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+													TEXT_SPRINT "sleep_type" "Knockback"
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					177 BEGIN // Use EFF file (see "https://github.com/Gibberlings3/EE_Fixpack/pull/37" for further details)
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_duration%" <= "%fx_match_attribute_7%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+													INNER_PATCH_FILE "%ITMSPL_effect_resource%.eff" BEGIN
+														PATCH_MATCH LONG_AT 0x10 WITH
+															235 BEGIN // Wing buffet
+																TEXT_SPRINT "sleep_type" "Knockback"
+																DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																	"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																END
+																WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+															END
+															DEFAULT
+																SET "non-cosmetic_effects" = 1
+														END
+													END
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					328 BEGIN // Set splstate
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+										PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
+											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
+												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
+													PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
+														PATCH_IF ("%ITMSPL_effect_dicesize%" == "%fx_match_attribute_12%") BEGIN
+															PATCH_IF ("%ITMSPL_effect_savingthrow%" == "%fx_match_attribute_13%") BEGIN
+																PATCH_IF ("%ITMSPL_effect_savebonus%" == "%fx_match_attribute_14%") BEGIN
+																	PATCH_IF ("%ITMSPL_effect_special%" == 1) AND ("%ITMSPL_effect_parameter2%" == 0) BEGIN
+																		DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
+																			"%ITMSPL_effect_opcode%" , "%ITMSPL_effect_target%" , "%ITMSPL_effect_power%" , "%ITMSPL_effect_parameter1%" , "%ITMSPL_effect_parameter2%" , "%ITMSPL_effect_timing%" , "%ITMSPL_effect_resist_dispel%" , "%ITMSPL_effect_duration%" , "%ITMSPL_effect_probability1%" , "%ITMSPL_effect_probability2%" , "%ITMSPL_effect_resource%" , "%ITMSPL_effect_dicenumber%" , "%ITMSPL_effect_dicesize%" , "%ITMSPL_effect_savingthrow%" , "%ITMSPL_effect_savebonus%" , "%ITMSPL_effect_special%" , "#%fx_ind%" => ""
+																		END
+																		WRITE_SHORT "%fx_off%" 998 // mark it for later detection
+																		TEXT_SPRINT "sleep_type" "Hopelessness"
+																	END ELSE BEGIN
+																		SET "non-cosmetic_effects" = 1
+																	END
+																END
+															END
+														END
+													END
+												END
+											END
+										END
+									END
+								END
+							END
+						END
+					END
+					269 BEGIN // Shake screen (effect is usually self-targeted, so no need to match fields)
+						TEXT_SPRINT "sleep_type" "Knockdown_ground-based"
+					END
+					206 WHEN ("%ITMSPL_effect_resource%" STRING_EQUAL_CASE "%file_res%") BEGIN END
+					DEFAULT
+						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
+							SET "non-cosmetic_effects" = 1
+							//PATCH_PRINT "non-cosmetic_effects => %ITMSPL_effect_opcode%, resource => %ITMSPL_effect_resource%"
+						END
+				END
+			END
+			// Special cases
+			PATCH_MATCH "%file_res%" WITH
+				"sper12" BEGIN // Ixil's Spike +6 (Hit target is pinned for 3 rounds ...)
+					TEXT_SPRINT "sleep_type" "Knockdown_ground-based" // treat it as a sui generis earthquake
+				END
+				DEFAULT
+			END
+			// If there are non-cosmetic effects, patch accordingly
+			PATCH_IF ("%non-cosmetic_effects%") OR !("%is_op39_on_all_abilities%") BEGIN
+				//PATCH_PRINT "%file_res%.%file_ext% needs subspell ..."
+				PATCH_IF ("%non-cosmetic_effects%") BEGIN
+					PHP_EACH "fx_ancillary" AS "fx_ancillary_attribute" => "" BEGIN
+						//PATCH_PRINT "Restoring ancillary effect #%fx_ancillary_attribute_0% ..."
+						PATCH_MATCH "%fx_ancillary_attribute_0%" WITH
+							7 8 9 41 50 51 52 61 141 174 215 321 BEGIN // if there are non-cosmetic effects, then keep the cosmetic ones (plus op321) on the parent file ...
+								LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "silent" = 1 "header" = "%ab_ind%" "match_opcode" = 998 "multi_match" = 1 "opcode" = "%fx_ancillary_attribute_0%" END
+							END
+							DEFAULT
+								// op139, op142, ...
+								LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 998 "multi_match" = 1 END
+						END
+					END
+				END ELSE BEGIN
+					LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 998 END
+				END
+				// Generate a filename for the child "*.spl" file
+				LPF "OPCODE39_OVERHAUL#GET_UNIQUE_FILE_NAME" RET "filename" END
+				// Keep track of some parent file data
+				PATCH_MATCH "%file_ext%" WITH
+					"SPL" BEGIN
+						SET "parent_spell_type" = SHORT_AT 0x1C
+						SET "parent_primary_type" = BYTE_AT 0x25
+						SET "parent_secondary_type" = BYTE_AT 0x27
+						READ_ASCII 0x3A "parent_icon_c"
+						READ_ASCII ("%ab_off%" + 0x4) "parent_icon_b"
+						SET "parent_ability_target" = BYTE_AT ("%ab_off%" + 0xC)
+					END
+					"ITM" BEGIN
+						SET "parent_spell_type" = 4 // Innate
+						READ_ASCII 0x3A "parent_icon_c"
+						READ_ASCII ("%ab_off%" + 0x4) "parent_icon_b"
+						SET "parent_ability_target" = BYTE_AT ("%ab_off%" + 0xC)
+						SET "parent_primary_type" = BYTE_AT ("%ab_off%" + 0x17)
+						SET "parent_secondary_type" = BYTE_AT ("%ab_off%" + 0x19)
+					END
+					DEFAULT
+				END
+				// Get current projectile type (so as to properly set the 'power' attribute)
+				LPF "OPCODE39_OVERHAUL#GET_PROJECTILE_TYPE" RET "projectile_type" END
+				// Create subspell
+				INNER_ACTION BEGIN
+					WITH_SCOPE BEGIN
+						CREATE "SPL" "%filename%"
+						COPY_EXISTING "%filename%.spl" "override"
+							/* Header */
+							WRITE_LONG NAME1 "-1"
+							WRITE_LONG NAME2 "-1"
+							WRITE_SHORT 0x1C "%parent_spell_type%"
+							WRITE_BYTE 0x25 "%parent_primary_type%"
+							WRITE_BYTE 0x27 "%parent_secondary_type%"
+							WRITE_LONG 0x34 1 // Spell level
+							WRITE_ASCII 0x3A "%parent_icon_c%"
+							WRITE_LONG UNIDENTIFIED_DESC "-1"
+							WRITE_LONG DESC "-1"
+							WRITE_LONG 0x64 0x72 // Extended Header offset
+							WRITE_SHORT 0x68 1 // Extended Header count
+							WRITE_LONG 0x6A 0x9A // Feature Block Table offset
+							INSERT_BYTES 0x72 0x28
+							/* Extended Header */
+							WRITE_BYTE 0x72 1 // Ability type
+							WRITE_SHORT 0x74 4 // Ability location: F13 (Special Ability)
+							WRITE_ASCII 0x76 ~%parent_icon_b%~ // Ability icon
+							WRITE_BYTE 0x7E "%parent_ability_target%" // Ability target
+							WRITE_SHORT 0x80 0x7FFF // Ability range
+							WRITE_SHORT 0x82 1 // Minimum level
+							WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+						BUT_ONLY
+					END
+				END
+				// 
+				LPF "ALTER_EFFECT" INT_VAR "silent" = 1 "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 999 "opcode" = 146 "parameter1" = 0 "parameter2" = 1 "timing" = 1 "duration" = 0 "special" = 0 STR_VAR "resource" = "%filename%" END
+				INNER_ACTION BEGIN
+					COPY_EXISTING "%filename%.spl" "override"
+						/* Feature blocks */
+						PATCH_MATCH "%sleep_type%" WITH
+							"Sleep" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								TEXT_SPRINT $"sleep_resref"("%DEST_RES%") ""
+							END
+							"Unconsciousness" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								TEXT_SPRINT $"sleep_resref"("%DEST_RES%") ""
+							END
+							"Nausea" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+							END
+							"Hopelessness" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								TEXT_SPRINT $"sleep_resref"("%DEST_RES%") ""
+							END
+							"Knockback" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKBACK_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+							END
+							"Knockdown_ground-based" BEGIN
+								TEXT_SPRINT $"earthquake_resref"("%DEST_RES%") ""
+								//LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKDOWN_GROUND-BASED_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("GENERAL" "WEAPON") "parameter2" = 103 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								PATCH_IF !("%game_is_iwdee%") BEGIN
+									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "WYVERN") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "BEHOLDER") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+									LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "HARPY") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "IMP") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "MEPHIT") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "DRAGON") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "DEMILICH") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "SHADOW") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRE") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "WRAITH") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRAL_UNDEAD") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "WILL-O-WISP") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "SLIME") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("RACE" "MIST") "parameter2" = 104 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPIDER_WRAITH") "parameter2" = 105 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 318 "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPECTRAL_TROLL") "parameter2" = 105 "timing" = 0 "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = 0 "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 STR_VAR "resource" = "%DEST_RES%" END
+							END
+							DEFAULT
+						END
+						// 
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = "%fx_match_attribute_0%" "target" = "%fx_match_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = "%fx_match_attribute_3%" "parameter2" = "%fx_match_attribute_4%" "timing" = "%fx_match_attribute_5%" "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = "%fx_match_attribute_7%" "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = "%fx_match_attribute_15%" STR_VAR "resource" = "%fx_match_attribute_10%" END
+						PHP_EACH "fx_ancillary" AS "fx_ancillary_attribute" => "" BEGIN
+							PATCH_MATCH "%fx_ancillary_attribute_0%" WITH
+								7 8 9 41 50 51 52 61 141 215 WHEN ("%non-cosmetic_effects%") BEGIN END
+								174 WHEN !(("%non-cosmetic_effects%") AND ("%fx_ancillary_attribute_5%" == 4)) BEGIN END // skip non-expiry sound effects
+								DEFAULT
+									PATCH_MATCH "%fx_ancillary_attribute_0%" WITH
+										321 BEGIN
+											LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = ("%fx_ancillary_attribute_0%" == 321 ? 0 : "-1") "opcode" = "%fx_ancillary_attribute_0%" "target" = "%fx_ancillary_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = "%fx_ancillary_attribute_3%" "parameter2" = ("%fx_ancillary_attribute_0%" == 321 ? 2 : "%fx_ancillary_attribute_4%") "timing" = "%fx_ancillary_attribute_5%" "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = "%fx_ancillary_attribute_7%" "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = ("%fx_ancillary_attribute_0%" == 174 ? 0 : "%fx_ancillary_attribute_15%") STR_VAR "resource" = "%DEST_RES%" END
+										END
+										DEFAULT
+											LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = ("%fx_ancillary_attribute_0%" == 321 ? 0 : "-1") "opcode" = "%fx_ancillary_attribute_0%" "target" = "%fx_ancillary_attribute_1%" "power" = ("%projectile_type%" == 3 ? 0 : "%fx_match_attribute_2%") "parameter1" = "%fx_ancillary_attribute_3%" "parameter2" = ("%fx_ancillary_attribute_0%" == 321 ? 2 : "%fx_ancillary_attribute_4%") "timing" = "%fx_ancillary_attribute_5%" "resist_dispel" = ("%fx_match_attribute_6%" == BIT0 ? BIT0 + BIT1 : "%fx_match_attribute_6%") "duration" = "%fx_ancillary_attribute_7%" "probability1" = 100 "probability2" = 0 "dicenumber" = 0 "dicesize" = 0 "savingthrow" = 0 "savebonus" = 0 "special" = ("%fx_ancillary_attribute_0%" == 174 ? 0 : "%fx_ancillary_attribute_15%") STR_VAR "resource" = "%fx_ancillary_attribute_10%" END
+									END
+							END
+						END
+					BUT_ONLY_IF_IT_CHANGES
+				END
+			END ELSE BEGIN
+				// Just reorder effect stack
+				LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 999 "multi_match" = 1 END // main effect
+				LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 998 END // ancillary effects
+				// 
+				PATCH_MATCH "%file_ext%" WITH
+					"SPL" BEGIN
+						SET "opcode" = (SLONG_AT NAME1 > 0 ? 324 : 318)
+					END
+					"ITM" BEGIN
+						SET "opcode" = ((LONG_AT 0x18 BAND (IDS_OF_SYMBOL ("ITEMFLAG" "DROPPABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISPLAYABLE"))) == (IDS_OF_SYMBOL ("ITEMFLAG" "DROPPABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISPLAYABLE")) ? 324 : 318)
+					END
+					DEFAULT
+				END
+				PATCH_MATCH "%sleep_type%" WITH
+					"Sleep" BEGIN
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+						TEXT_SPRINT $"sleep_resref"("%file_res%") ""
+					END
+					"Unconsciousness" BEGIN
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+						TEXT_SPRINT $"sleep_resref"("%file_res%") ""
+					END
+					"Nausea" BEGIN
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "NAUSEA_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+					END
+					"Hopelessness" BEGIN
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "SLEEP_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+						TEXT_SPRINT $"sleep_resref"("%file_res%") ""
+					END
+					"Knockback" BEGIN
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKBACK_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKBACK_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+					END
+					"Knockdown_ground-based" BEGIN
+						TEXT_SPRINT $"earthquake_resref"("%file_res%") ""
+						PATCH_MATCH "%file_ext%" WITH
+							"SPL" BEGIN
+								//LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKDOWN_GROUND-BASED_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("GENERAL" "WEAPON") "parameter2" = 103 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								PATCH_IF !("%game_is_iwdee%") BEGIN
+									LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WYVERN") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+									LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "BEHOLDER") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+									LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "HARPY") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "IMP") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "MEPHIT") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "DRAGON") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "DEMILICH") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SHADOW") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRE") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WRAITH") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRAL_UNDEAD") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WILL-O-WISP") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SLIME") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "MIST") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPIDER_WRAITH") "parameter2" = 105 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPECTRAL_TROLL") "parameter2" = 105 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							"ITM" BEGIN
+								//LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("SPLSTATE" "KNOCKDOWN_GROUND-BASED_IMMUNITY") "parameter2" = 110 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("GENERAL" "WEAPON") "parameter2" = 103 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								PATCH_IF !("%game_is_iwdee%") BEGIN
+									LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WYVERN") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+									LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "BEHOLDER") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+									LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "HARPY") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "IMP") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "MEPHIT") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "DRAGON") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "DEMILICH") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SHADOW") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRE") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WRAITH") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SPECTRAL_UNDEAD") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "WILL-O-WISP") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "SLIME") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("RACE" "MIST") "parameter2" = 104 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPIDER_WRAITH") "parameter2" = 105 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+								LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = IDS_OF_SYMBOL ("CLASS" "SPECTRAL_TROLL") "parameter2" = 105 "timing" = 0 "resist_dispel" = "%fx_match_attribute_6%" "duration" = 0 "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" STR_VAR "resource" = "%file_res%" END
+							END
+							DEFAULT
+						END
+					END
+					DEFAULT
+				END
+				PATCH_MATCH "%file_ext%" WITH
+					"SPL" BEGIN
+						LPF "ADD_SPELL_EFFECT" INT_VAR "header" = ("%ab_ind%" + 1) "opcode" = "%fx_match_attribute_0%" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = "%fx_match_attribute_3%" "parameter2" = "%fx_match_attribute_4%" "timing" = "%fx_match_attribute_5%" "resist_dispel" = "%fx_match_attribute_6%" "duration" = "%fx_match_attribute_7%" "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" "special" = "%fx_match_attribute_15%" STR_VAR "resource" = "%fx_match_attribute_10%" END
+						PHP_EACH "fx_ancillary" AS "fx_ancillary_attribute" => "" BEGIN
+							LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = ("%fx_ancillary_attribute_0%" == 321 ? 0 : "-1") "header" = ("%ab_ind%" + 1) "opcode" = "%fx_ancillary_attribute_0%" "target" = "%fx_ancillary_attribute_1%" "power" = "%fx_ancillary_attribute_2%" "parameter1" = "%fx_ancillary_attribute_3%" "parameter2" = ("%fx_ancillary_attribute_0%" == 321 ? 2 : "%fx_ancillary_attribute_4%") "timing" = "%fx_ancillary_attribute_5%" "resist_dispel" = "%fx_ancillary_attribute_6%" "duration" = "%fx_ancillary_attribute_7%" "probability1" = "%fx_ancillary_attribute_8%" "probability2" = "%fx_ancillary_attribute_9%" "dicenumber" = "%fx_ancillary_attribute_11%" "dicesize" = "%fx_ancillary_attribute_12%" "savingthrow" = "%fx_ancillary_attribute_13%" "savebonus" = "%fx_ancillary_attribute_14%" "special" = "%fx_ancillary_attribute_15%" STR_VAR "resource" = "%fx_ancillary_attribute_10%" END
+						END
+					END
+					"ITM" BEGIN
+						LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "header" = ("%ab_ind%" + 1) "opcode" = "%fx_match_attribute_0%" "target" = "%fx_match_attribute_1%" "power" = "%fx_match_attribute_2%" "parameter1" = "%fx_match_attribute_3%" "parameter2" = "%fx_match_attribute_4%" "timing" = "%fx_match_attribute_5%" "resist_dispel" = "%fx_match_attribute_6%" "duration" = "%fx_match_attribute_7%" "probability1" = "%fx_match_attribute_8%" "probability2" = "%fx_match_attribute_9%" "dicenumber" = "%fx_match_attribute_11%" "dicesize" = "%fx_match_attribute_12%" "savingthrow" = "%fx_match_attribute_13%" "savebonus" = "%fx_match_attribute_14%" "special" = "%fx_match_attribute_15%" STR_VAR "resource" = "%fx_match_attribute_10%" END
+						PHP_EACH "fx_ancillary" AS "fx_ancillary_attribute" => "" BEGIN
+							LPF "ADD_ITEM_EFFECT" INT_VAR "type" = 99 "insert_point" = ("%fx_ancillary_attribute_0%" == 321 ? 0 : "-1") "header" = ("%ab_ind%" + 1) "opcode" = "%fx_ancillary_attribute_0%" "target" = "%fx_ancillary_attribute_1%" "power" = "%fx_ancillary_attribute_2%" "parameter1" = "%fx_ancillary_attribute_3%" "parameter2" = ("%fx_ancillary_attribute_0%" == 321 ? 2 : "%fx_ancillary_attribute_4%") "timing" = "%fx_ancillary_attribute_5%" "resist_dispel" = "%fx_ancillary_attribute_6%" "duration" = "%fx_ancillary_attribute_7%" "probability1" = "%fx_ancillary_attribute_8%" "probability2" = "%fx_ancillary_attribute_9%" "dicenumber" = "%fx_ancillary_attribute_11%" "dicesize" = "%fx_ancillary_attribute_12%" "savingthrow" = "%fx_ancillary_attribute_13%" "savebonus" = "%fx_ancillary_attribute_14%" "special" = "%fx_ancillary_attribute_15%" STR_VAR "resource" = "%fx_ancillary_attribute_10%" END
+						END
+					END
+					DEFAULT
+				END
+			END
+		END
+		// Clean up
+		PATCH_WITH_SCOPE BEGIN
+			PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+				GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS // NB.: same for "*.spl" and "*.itm"
+				PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+					PATCH_MATCH SHORT_AT "%fx_off%" WITH
+						174 WHEN SLONG_AT ("%fx_off%" + 0x2C) == 998 BEGIN
+							WRITE_SHORT "%fx_off%" 998
+						END
+						DEFAULT
+					END
+				END
+				LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 998 "match_special" = 998 END
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+END
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Determine the projectile type (Single or AoE) of the current SPL/ITM ability
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION "OPCODE39_OVERHAUL#GET_PROJECTILE_TYPE"
+RET
+	"projectile_type"
+BEGIN
+	SET "projectile_type" = 2 // Single target
+	PATCH_MATCH "%file_ext%" WITH
+		"SPL" BEGIN
+			LOOKUP_IDS_SYMBOL_OF_INT "projectile_res" "PROJECTL" (SHORT_AT ("%ab_off%" + 0x26) - 1)
+		END
+		"ITM" BEGIN
+			LOOKUP_IDS_SYMBOL_OF_INT "projectile_res" "PROJECTL" (SHORT_AT ("%ab_off%" + 0x2A) - 1)
+		END
+		DEFAULT
+	END
+	INNER_PATCH_FILE "%projectile_res%.pro" BEGIN
+		READ_SHORT 0x8 "projectile_type"
+	END
+END
+
+DEFINE_PATCH_FUNCTION "OPCODE39_OVERHAUL#GET_UNIQUE_FILE_NAME"
+RET
+	"filename"
+BEGIN
+	PATCH_IF (STRING_LENGTH "%file_res%" <= 7) BEGIN
+		SNPRINT "-1" "last_character" "%file_res%"
+		PATCH_MATCH "%last_character%" WITH
+			"[a-z]" BEGIN
+				SET "count" = 0
+				TEXT_SPRINT "suffix" $"digit"("%count%") // "0"
+				TEXT_SPRINT "filename" "%file_res%%suffix%"
+				WHILE (FILE_EXISTS_IN_GAME "%filename%.spl") BEGIN
+					SET "count" += 1
+					TEXT_SPRINT "suffix" $"digit"("%count%")
+					TEXT_SPRINT "filename" "%file_res%%suffix%"
+				END
+				PATCH_IF ("%count%" == 10) BEGIN
+					TO_UPPER "file_res"
+					TO_UPPER "file_ext"
+					LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "CD_SleepType_%sleep_type%_Ability#%fx_match_attribute_16%_Effect#%fx_match_attribute_17%_%file_res%.%file_ext%" RET "filename" END
+				END
+			END
+			"[0-9]" BEGIN
+				SET "count" = 0
+				TEXT_SPRINT "suffix" $"letter"("%count%") // "a"
+				TEXT_SPRINT "filename" "%file_res%%suffix%"
+				WHILE (FILE_EXISTS_IN_GAME "%filename%.spl") BEGIN
+					SET "count" += 1
+					TEXT_SPRINT "suffix" $"letter"("%count%")
+					TEXT_SPRINT "filename" "%file_res%%suffix%"
+				END
+				PATCH_IF ("%count%" == 26) BEGIN
+					TO_UPPER "file_res"
+					TO_UPPER "file_ext"
+					LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "CD_SleepType_%sleep_type%_Ability#%fx_match_attribute_16%_Effect#%fx_match_attribute_17%_%file_res%.%file_ext%" RET "filename" END
+				END
+			END
+			DEFAULT
+				TO_UPPER "file_res"
+				TO_UPPER "file_ext"
+				LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "CD_SleepType_%sleep_type%_Ability#%fx_match_attribute_16%_Effect#%fx_match_attribute_17%_%file_res%.%file_ext%" RET "filename" END
+		END
+	END ELSE BEGIN
+		TO_UPPER "file_res"
+		TO_UPPER "file_ext"
+		LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "CD_SleepType_%sleep_type%_Ability#%fx_match_attribute_16%_Effect#%fx_match_attribute_17%_%file_res%.%file_ext%" RET "filename" END
+	END
+	//
+	INNER_PATCH_SAVE "filename" "%filename%" BEGIN
+		REPLACE_TEXTUALLY EVALUATE_REGEXP "^__" "cd"
+	END
+	TO_LOWER "filename"
+END

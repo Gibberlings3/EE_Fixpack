@@ -1540,6 +1540,20 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
   WRITE_LONG  0x34 1     // set spell level 1
   LPF ALTER_EFFECT INT_VAR power = 0 resist_dispel = 0 END
 
+/*
+luke
+**Earthquake**
+- Make sure all effects bypass Magic Resistance (since the spell is supposed to alter the environment instead of directly affecting the targeted creatures)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING
+    "ohbquake.spl" "override"
+    "spogre01.spl" "override"
+    "%CLERIC_EARTHQUAKE%.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "resist_dispel" = 0 END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
@@ -1586,3 +1600,23 @@ END
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
 INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
 INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~                 // use effect batches to remove vfx from effects which have been removed
+
+/*
+luke
+**"7eyes.2da" vs. SPL/ITM files**
+- See "https://github.com/Gibberlings3/EE_Fixpack/pull/23" for further details
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\lib\gt_7eyes-o-matic.tph"
+  LAF "GT_7EYES-O-MATIC" END
+END
+
+/*
+luke
+**Opcode #39 overhaul**
+- See "https://www.gibberlings3.net/forums/topic/35902-opcode-39-issues/" for further details
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\tph\luke\op39_overhaul.tph"
+  LAF "OPCODE39_OVERHAUL" END
+END
