@@ -82,18 +82,9 @@ BEGIN
 						PATCH_FAIL "%DEST_FILE%: unknown effect version"
 				END
 				PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
-					PATCH_MATCH BYTE_AT 0x33 WITH
-						0 BEGIN
-							SET "fx_opcode" = SHORT_AT "%fx_off%"
-							SET "fx_parameter2" = SLONG_AT ("%fx_off%" + 0x8)
-						END
-						1 BEGIN
-							// Unlike ordinary V2 EFF files, CRE effect V2 structures omit the 8-byte EFF V2 header
-							SET "fx_opcode" = LONG_AT ("%fx_off%" + 0x10 - 0x8)
-							SET "fx_parameter2" = SLONG_AT ("%fx_off%" + 0x20 - 0x8)
-						END
-						DEFAULT
-					END
+					// Unlike ordinary V2 EFF files, CRE effect V2 structures omit the 8-byte EFF V2 header
+					SET "fx_opcode" = BYTE_AT 0x33 ? LONG_AT ("%fx_off%" + 0x10 - 0x8) : SHORT_AT "%fx_off%"
+					SET "fx_parameter2" = BYTE_AT 0x33 ? SLONG_AT ("%fx_off%" + 0x20 - 0x8) SLONG_AT ("%fx_off%" + 0x8)
 					PATCH_MATCH "%fx_opcode%" WITH
 						101 WHEN ("%fx_parameter2%" == 39) BEGIN
 							// Immunity to effect => Effect: Sleep
