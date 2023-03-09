@@ -32,6 +32,48 @@ It should be "south of the battlefield", not "north of the battlefield".
 */
 @7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
 
+/*
+jazira
+It should be "southeast", not "south".
+*/
+@11195  = ~Take them to the Fairy Queen who lives in the southeast end of the Windspear Hills. This will be our deliverance from this... this Irenicus and his dungeon!~
+
+/*
+jazira
+It should be "southeast", not "south".
+*/
+@11354  = ~Thank you! You must take the acorns and deliver them to the Fairy Queen in the southeast end of the Windspear Hills.~
+
+/*
+jazira
+It should be "southeast", not "south".
+*/
+@11381  = ~If you take the acorns to the Fairy Queen, then she can regrow our trees and free us! She lives in the southeast end of the Windspear Hills! Will you do this for us?~
+
+/*
+jazira
+It should be "Soldier", not "Soldiers".
+*/
+@11488  = ~Tombelthen Soldier~
+
+/*
+jazira
+It should be "Soldier", not "Soldiers".
+*/
+@11489  = ~Tombelthen Soldier~
+
+/*
+jazira
+The audio file associated should be "[SURGN03]", not "[STORE05]".
+*/
+@12433 = ~[THE SURGEON 3]~ [SURGN03]
+
+/*
+jazira
+The audio file associated should be "[SURGN04]", not "[STORE06]".
+*/
+@12434 = ~[THE SURGEON 4]~ [SURGN04]
+
 // last line: the ruins are west of imnesvale, not north
 @17169 = ~Wallag,
 We travel this day to search out the wolf lair. My own scouting of the region has confirmed Merella's suspicions that there is a large pack of wolves acting in this area. On the map included, I have indicated where I believe the wolf den to be located. Follow us if you can, but be cautious. We can ill-afford another mysterious disappearance. Until we meet again. 
@@ -39,6 +81,24 @@ We travel this day to search out the wolf lair. My own scouting of the region ha
 Mazzy
 
 (On the same sheet is drawn a crude but effective map which indicates the path to a forested area several hours west of the Imnesvale region.)~
+
+/*
+jazira
+It should be "who lives in the southeast end of the Windspear Hills", not "who lives northeast of the human settlement called Trademeet".
+*/
+@17759  = ~You have done a noble thing for us. Please take these acorns to the Fairy Queen who lives in the southeast end of the Windspear Hills, just northeast of the human settlement called Trademeet.~
+
+/*
+jazira
+It should be "southeast", not "south".
+*/
+@17774  = ~You have done a noble thing for us. Please take these acorns to the Fairy Queen who lives in the southeast end of the Windspear Hills.~
+
+/*
+jazira
+It should be "southeast", not "south".
+*/
+@17788  = ~You have done a noble thing for us. Please take these acorns to the Fairy Queen who lives in the southeast end of the Windspear Hills.~
 
 // second line: the ruins are west of imnesvale, not east
 @19723 = ~This is half of a page of parchment, yellowed with age, the ink faded but still legible, and reads:
@@ -72,6 +132,14 @@ Area of Effect: Special
 Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
+/*
+jazira
+It should be "duergar", not "dwarf".
+*/
+@34092  = ~Helping Irenicus's captive dryads
+
+I have agreed to help a trio of dryads return their acorns to the Fairy Queen. Somewhere in the dungeon is a duergar by the name of Ilyich who has the acorns.~
 
 /*
 jazira

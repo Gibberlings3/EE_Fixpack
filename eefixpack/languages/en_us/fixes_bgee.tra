@@ -4,6 +4,23 @@
 
 // any strings >= 34000 are sod strings and should go into the fixes_bgee_sod.tra file instead. 
 
+/*
+jazira
+It should be "Shandalar", not "Shandelar".
+*/
+@4783  = ~[HELSHARA 2] Only a fool would goad a daughter of Shandalar so!~ [HELSH02]
+
+/*
+jazira
+The audio file associated should be "[SURGN03]", not "[STORE05]".
+*/
+@12433 = ~[THE SURGEON 3]~ [SURGN03]
+
+/*
+jazira
+The audio file associated should be "[SURGN04]", not "[STORE06]".
+*/
+@12434 = ~[THE SURGEON 4]~ [SURGN04]
 
 // second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
 // same fix required for bg (26586), bg2 (29212), and iwd (35784)
