@@ -472,7 +472,7 @@ BEGIN
 					7 8 9 41 50 51 52 61 141 215 BEGIN // Visual effects (since these are just cosmetic effects, don't bother checking for Min/Max level and Savetype/Savebonus ...)
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
-								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
 											DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
@@ -488,7 +488,7 @@ BEGIN
 					139 BEGIN // Display string
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
-								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_dicenumber%" == "%fx_match_attribute_11%") BEGIN
@@ -521,7 +521,7 @@ BEGIN
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
 								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
-									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 										PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
@@ -561,7 +561,7 @@ BEGIN
 					174 WHEN ("%ITMSPL_effect_timing%" == 1) BEGIN // Play sound (initial sound - since these are just cosmetic effects, don't bother checking for Min/Max level and Savetype/Savebonus ...)
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
-								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 									PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 										PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
 											DEFINE_ASSOCIATIVE_ARRAY "fx_ancillary" BEGIN
@@ -577,7 +577,7 @@ BEGIN
 					174 WHEN ("%ITMSPL_effect_timing%" == 4) BEGIN // Play sound (expiry sound)
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
-								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+								PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 									PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
 										PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
@@ -639,7 +639,7 @@ BEGIN
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
 								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
-									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 										PATCH_IF ("%ITMSPL_effect_duration%" <= "%fx_match_attribute_7%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
@@ -660,7 +660,7 @@ BEGIN
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
 								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
-									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 										PATCH_IF ("%ITMSPL_effect_duration%" <= "%fx_match_attribute_7%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
@@ -689,7 +689,7 @@ BEGIN
 						PATCH_IF ("%ITMSPL_effect_target%" == "%fx_match_attribute_1%") BEGIN
 							PATCH_IF ("%ITMSPL_effect_power%" == "%fx_match_attribute_2%") BEGIN
 								PATCH_IF ("%ITMSPL_effect_timing%" == "%fx_match_attribute_5%") BEGIN
-									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") BEGIN
+									PATCH_IF ("%ITMSPL_effect_resist_dispel%" == "%fx_match_attribute_6%") OR ("%ITMSPL_effect_resist_dispel%" == 0 AND "%fx_match_attribute_6%" == BIT1) OR ("%ITMSPL_effect_resist_dispel%" == BIT1 AND "%fx_match_attribute_6%" == 0) BEGIN // 'resist_dispel=0' and 'resist_dispel=2' are basically the same thing (unless I'm missing something ...)
 										PATCH_IF ("%ITMSPL_effect_duration%" == "%fx_match_attribute_7%") BEGIN
 											PATCH_IF ("%ITMSPL_effect_probability1%" == "%fx_match_attribute_8%") BEGIN
 												PATCH_IF ("%ITMSPL_effect_probability2%" == "%fx_match_attribute_9%") BEGIN
