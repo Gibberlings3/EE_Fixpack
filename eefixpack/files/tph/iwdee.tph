@@ -63,6 +63,8 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 // tbd, cam
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
 INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
+
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tpa~ // tbd, graion: more consistent op5 setup, see header
  
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 

@@ -55,6 +55,8 @@ COPY_EXISTING ~25stweap.2da~ ~override~
 ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
   INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
 END
+
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tpa~ // tbd, graion: more consistent op5 setup, see header
  
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
