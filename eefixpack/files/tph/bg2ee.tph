@@ -66,6 +66,9 @@ COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
 BUT_ONLY
 
+// tbd, graion: more consistent op5 setup, see header
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tpa~
+
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
@@ -242,9 +245,9 @@ COPY_EXISTING ~ar2200.bcs~ ~override~
     REPLACE_TEXTUALLY ~CreateCreature("dagmag01",\[[0-9]+\.[0-9]+\],[0-9A-Z]+)~ ~CreateCreature("dagmag01",[4401.3527],NW)~
   END
   BUT_ONLY
-  
+
 // wk spawn points - defer spawn point activion to area script (see also ar3001.are)
-EXTEND_BOTTOM ~ar3001.bcs~ ~eefixpack/files/baf/ar3001.baf~   
+EXTEND_BOTTOM ~ar3001.bcs~ ~eefixpack/files/baf/ar3001.baf~
 
 // tbd, cam
 // siege camp reinforcements checking wrong blocks
@@ -273,9 +276,9 @@ EXTEND_BOTTOM ~bernard.bcs~ ~eefixpack/files/baf/bernard.baf~
 
 // prevent ler from initiating dialogue once chapter is advanced
 COPY_EXISTING ~bystand1.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("CutScene01","AR0700",5)\)~ ~\1 GlobalLT("Chapter","GLOBAL",2)~
-  END   
+  END
 
 // tbd, cam
 // when leaving Brynnlaw with Saemon, the Githyanki catch you "on the fourth morn" but no time actually passes
@@ -290,10 +293,10 @@ COPY_EXISTING ~cut41q.bcs~ ~override~
 
 // bodari's subcontract takes multiple days, have party rested
 COPY_EXISTING ~cut244b.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
-    REPLACE_TEXTUALLY ~\(ApplySpell(Player1,HEAL_NO_VISUAL)\)~ 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(ApplySpell(Player1,HEAL_NO_VISUAL)\)~
       ~\1 Rest() ActionOverride(Player2,Rest()) ActionOverride(Player3,Rest()) ActionOverride(Player4,Rest()) ActionOverride(Player5,Rest()) ActionOverride(Player6,Rest())~
-  END  
+  END
 
 // tbd, cam
 // variable that tracks if you know Dorn always get set when sorting out journal entries
@@ -372,7 +375,7 @@ COPY_EXISTING ~oh7200.bcs~ ~override~
   END
   BUT_ONLY
 
-// jmerry: several items for BP2 stores weren't being added due to AddStoreItem quirks 
+// jmerry: several items for BP2 stores weren't being added due to AddStoreItem quirks
 COPY_EXISTING ~ohbhub.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~TriggerActivation("ohb_messhall2",TRUE)~ ~~ // remove reference to non-existent trigger while we're here
@@ -388,10 +391,10 @@ COPY_EXISTING ~ohbhub.bcs~ ~override~
 
 // fear via 'Eyes of the Beholder' item should also work to scare viekang in ToB
 COPY_EXISTING ~sarvie01.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~OR(12)~ ~OR(13) SpellCastOnMeRES("OHREYEB3",[ANYONE])~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // tbd, cam (two issues here, see bysohim in main d compile)
 // Yoshimo Should Have Follow-Up Banters with the PC
@@ -459,7 +462,7 @@ COPY_EXISTING ~ar2900.are~ ~override~
 COPY_EXISTING ~ar3001.are~ ~override~
   READ_LONG 0x60 spawn_off
   READ_LONG 0x64 spawn_num
-  FOR (index = 0 ; index < spawn_num ; ++index) BEGIN 
+  FOR (index = 0 ; index < spawn_num ; ++index) BEGIN
     WRITE_SHORT (spawn_off + 0x86 + (index * 0xc8)) 0 /// turns off all spawn points
   END
   BUT_ONLY
@@ -547,11 +550,11 @@ COPY_EXISTING ~basigaze.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
 
 // mismatched icons between inventory and item ability
-COPY_EXISTING ~book06.itm~ ~override~ 
+COPY_EXISTING ~book06.itm~ ~override~
               ~book07.itm~ ~override~ // fine in IWDEE
-              ~book08.itm~ ~override~ 
-  WRITE_ASCIIE 0x3a ~i%SOURCE_RES%~ #8   
-  BUT_ONLY   
+              ~book08.itm~ ~override~
+  WRITE_ASCIIE 0x3a ~i%SOURCE_RES%~ #8
+  BUT_ONLY
 
 // fixing waterdeep books (fix also used for bg2ee)
 INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
@@ -586,7 +589,7 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
 
 // poison icon shouldn't be dispellable
 COPY_EXISTING ~dart05.itm~ ~override~ // asp's nest
-  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END 
+  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END
 
 // tbd, cam (from MiH)
 // flindbar should decrease thac0 of target, not increase it
@@ -616,7 +619,7 @@ COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
 
 // prevent hexxat, haer'dalis from using racially-restricted items (see also npbow.itm, npsw01.itm, hlolth.itm)
 COPY_EXISTING ~hamm06.itm~ ~override~
-  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=4 parameter2=4 special=1100 END // dwarves only 
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=4 parameter2=4 special=1100 END // dwarves only
 
 // tbd, cam
 // helmet appearance corrections
@@ -651,7 +654,7 @@ COPY_EXISTING ~helm32.itm~   ~override~ // Helm of the Rock - causes fear - port
 COPY_EXISTING ~hlolth.itm~ ~override~
   LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=153 parameter2=4 special=8330 END // not usable by Tieflings - display this
   LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=125 parameter2=4 special=0 END // not usable by Vampires - silent, since vampire isn't really a race
-  
+
 // tbd, cam
 // blocks confusion animation, but is subject to confusion
 COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to hold - blocks spmindat - blocks spconfus - probably intentional since animation isn't right for dragons
@@ -676,7 +679,7 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
   LPF CLONE_EFFECT INT_VAR match_opcode = 19 opcode = 142 parameter1 = 0 parameter2 = 91 END
 
 // book of infinite spells casts true sight, not true seeing
-COPY_EXISTING ~misc3a3.itm~   ~override~ 
+COPY_EXISTING ~misc3a3.itm~   ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = sppr505 resource = spwi609 END
 
 // tbd, cam
@@ -695,7 +698,7 @@ INCLUDE ~eefixpack/files/tph/dragomir.tph~ // making cloak of dragomir a critica
 // prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, hlolth.itm)
 COPY_EXISTING ~npbow.itm~  ~override~
               ~npsw01.itm~ ~override~
-  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=5 parameter2=4 special=1101 END // halflings only 
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=5 parameter2=4 special=1101 END // halflings only
 
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
@@ -741,7 +744,7 @@ COPY_EXISTING ~quiver01.itm~ ~override~ // quiver of plenty +1
 // rod of terror's fear affect lasts 5 rounds instead of the stated 4
 COPY_EXISTING ~rods05.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 24 END
-  
+
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
 COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
@@ -960,7 +963,7 @@ WITH_SCOPE BEGIN
 END
 
 // resurrection should remove salamander fireballs from polymorph (also for bg, iwd)
-COPY_EXISTING ~#rdremov.spl~ ~override~ 
+COPY_EXISTING ~#rdremov.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 172 STR_VAR match_resource = spin974 resource = spin160 END
 
 //tbd, cam
@@ -975,11 +978,11 @@ COPY_EXISTING ~bhaal1b.spl~ ~override~ // Regeneration (unused, fixed anyway)
 
 OUTER_FOR (index = 1 ; index < 6 ; ++index) BEGIN // for bhaal3b (unused, fixed anyway)
   COPY_EXISTING ~bdpweapn.eff~ ~override/bh3b%index%.eff~
-    WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8  
-END     
+    WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8
+END
 
 // double 'freedom' strings as subspell also has name (same patch for iwdee)
-COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+COPY_EXISTING ~cdwi917a.spl~ ~override~
   WRITE_LONG 0x08 `0
   BUT_ONLY
 
@@ -992,7 +995,7 @@ COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 49                                  END // change summon #2 to 50%
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 74                                  END // change summon #3 to 75%
   BUT_ONLY
-  
+
 // kai using dispel magic icon
 COPY_EXISTING ~spcl144.spl~ ~override~
   WRITE_ASCII 0x3a ~spcl144~ #8
@@ -1049,11 +1052,11 @@ COPY_EXISTING ~SPIN906.SPL~ ~override~
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
   BUT_ONLY
-  
+
 // writhing fog should stack better
 COPY_EXISTING ~sppr250.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
 
 // tbd, cam
 // shield spell shouldn't stack
@@ -1117,13 +1120,13 @@ END
 COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
   WRITE_SHORT 0x210 100 // one round
   WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
-ADD_PROJECTILE ~override/grease1.pro~  
+ADD_PROJECTILE ~override/grease1.pro~
 
 OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
 
   COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
     WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
-  ADD_PROJECTILE ~override/grease%index%.pro~  
+  ADD_PROJECTILE ~override/grease%index%.pro~
 
 END
 
@@ -1142,7 +1145,7 @@ WITH_SCOPE BEGIN
       FOR (index = 1 ; index < (abil_num + 1) ; ++index) BEGIN
         LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (18 + (6 * index)) duration = 6 END
         LPF ALTER_HEADER INT_VAR header = (index - 1) projectile = EVAL ~grease%index%~ END
-      END   
+      END
     END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1667,8 +1670,8 @@ END
 WITH_SCOPE BEGIN
   COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
     // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
-    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
-    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")
@@ -1832,7 +1835,7 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
 
-// grease projectiles created in spell section since vars needed 
+// grease projectiles created in spell section since vars needed
 
 // luke
 // Ice Storm should last 4 rounds (not 3)
@@ -1867,7 +1870,7 @@ COPY_EXISTING ~bernard.sto~ ~override/bernard2.sto~
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
-COPY ~music/vb.mus~ ~music/vb.mus~ 
+COPY ~music/vb.mus~ ~music/vb.mus~
   REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
 
 /////                                                  \\\\\
@@ -1890,11 +1893,11 @@ COPY_EXISTING ~ax1h10.itm~   ~override~ // azuredge
               ~dwfpdeva.spl~ ~override~ // used by deva.itm for, you guessed it, disruption
               ~dwfpohdv.spl~ ~override~ // used by ohbdeva.itm for, you guessed it, disruption
               ~hamm10.itm~   ~override~ // runehammer +4
-              ~hamm11.itm~   ~override~ // runehammer +5              
+              ~hamm11.itm~   ~override~ // runehammer +5
   LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = mesdie insert = last END // copy mesdie, die to last effects
-  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = die    insert = last END    
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = die    insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = mesdie               END // then delete the source of the copied effects
-  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = die                  END              
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = die                  END
 
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
