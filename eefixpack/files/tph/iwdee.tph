@@ -70,22 +70,23 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
 
-COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossbow BAM
-     ~eefixpack/files/bam/ixbow09.bam~  ~override~ // tbd, cam: fix HQ light crossbow BAM
-     ~eefixpack/files/wav/#choke.wav~   ~override~ // ie-6009, cam: missing sound for talonite poison
-     ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
-     ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
-     ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
-     ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
-     ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
-     ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-     ~eefixpack/files/bam/mwdr~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
-     ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
-     ~eefixpack/files/2da/fogarea.2da~  ~override~ // tbd, cam: add basic 2das to enable fog
-     ~eefixpack/files/2da/fogpt.2da~    ~override~ // tbd, cam: add basic 2das to enable fog
-     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
+COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light crossbow BAM
+     ~eefixpack/files/bam/ixbow09.bam~      ~override~ // tbd, cam: fix HQ light crossbow BAM
+     ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing sound for talonite poison
+     ~eefixpack/files/2da/clabmo02.2da~     ~override~ // tbd, cam: borked kit ability table, dark moon monk
+     ~eefixpack/files/2da/clabmo03.2da~     ~override~ // tbd, cam: borked kit ability table, sun soul monk
+     ~eefixpack/files/2da/spwi417.2da~      ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
+     ~eefixpack/files/bam/mdem~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
+     ~eefixpack/files/bam/mdr1~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
+     ~eefixpack/files/bam/mdr2~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
+     ~eefixpack/files/bam/mdr3~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
+     ~eefixpack/files/bam/mwdr~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
+     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/cmnk1inv.bam~     ~override~ // monk (tutorial, not pc) paperdoll
+     ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
+     ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
+     ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
+     ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
