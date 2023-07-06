@@ -26,8 +26,5 @@ ADD_TRANS_ACTION DACCALIA BEGIN 6 END BEGIN 1 END ~SetGlobal("Jered_Stone","GLOB
 // upgrade for bren muller's crossbow doesn't work
 REPLACE_ACTION_TEXT dplanar ~TransformItem("lxbowbm","cdxbowbm")~ ~TakePartyItem("lxbowbm") DestroyItem("lxbowbm") GiveItemCreate("cdxbowbm",LastTalkedToBy,0,1,0)~
 
-
-
-
-
-
+// Tarnelm's dialog lacks a non-evil reply when asking about the oubliette
+EXTEND_BOTTOM DTARNELM 4 IF ~~ REPLY #11383 EXIT END
