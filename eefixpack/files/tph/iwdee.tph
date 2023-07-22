@@ -267,6 +267,7 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_iwdee.tph~ // bulk general changes (nothing actually here yet)
 
+INCLUDE ~eefixpack/files/tph/a7/iwd_blast_skeleton.tph~ // blast skeleton should self-destruct more reliably
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
   
 // ie-6035, cam
