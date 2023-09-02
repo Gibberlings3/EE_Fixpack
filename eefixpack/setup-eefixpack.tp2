@@ -112,11 +112,19 @@ ACTION_IF !game_is_pstee AND FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinit
   INCLUDE ~eefixpack/files/lib/cd_infinity_processing.tph~
 END
 
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%.tph~ BEGIN // updates from BD translation tool
+  INCLUDE ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%.tph~
+END
+
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ BEGIN // mainline tlk updates
   INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~
 END
 
 ACTION_IF game_includes_sod BEGIN
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%_sod.tph~ BEGIN // updates from BD translation tool, SoD edition
+    INCLUDE ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%_sod.tph~
+  END
+
   ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ BEGIN // mainline tlk updates, SoD edition
     INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~
   END
@@ -173,7 +181,7 @@ ACTION_FOR_EACH game IN sod iwdee bg2ee /* pstee */ BEGIN
     m_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_m_tool.tlk~ // male/sole tlk from the Beamdog tool (with path)
     f_tlk_26       = ~eefixpack/tlk/%game%_%lang%_f_26.tlk~   // female tlk that ships with 2.6 (with path)
     f_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_f_tool.tlk~ // female tlk from the Beamdog tool (with path)
-    output         = ~gtu_%game%.tra~
+    output         = ~bd_tool_%game%.tra~
   END
 END
 
@@ -194,7 +202,7 @@ DEPRECATED ~For internal use only~
 
 ACTION_FOR_EACH lang IN cs_cz de_de en_us es_es fr_fr hu_hu it_it ja_jp ko_kr nb_no pl_pl pt_br ru_ru tr_tr uk_ua zh_cn BEGIN
 
-  ACTION_FOR_EACH prefix IN gtu fixes BEGIN
+  ACTION_FOR_EACH prefix IN gtu fixes bd_tool BEGIN
 
     ACTION_FOR_EACH tra_file IN bgee bgee_sod bg2ee iwdee pstee BEGIN 
   
