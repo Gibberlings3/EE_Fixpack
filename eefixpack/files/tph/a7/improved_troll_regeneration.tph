@@ -1,0 +1,104 @@
+// Eliminates the waiting time for trolls and revenants before they can be permanently killed
+// https://www.gibberlings3.net/forums/topic/37248-improved-handling-of-troll-regeneration/
+
+// Intermediate filter spells
+ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
+  // original SPL resref, cur. HP => intermediate SPL resref
+  ~trollreg~, 4 => ~#trollre~
+END
+
+// Regeneration items
+ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
+  // ITM resref => intermediate SPL resref
+  ~trollreg~ => ~#TROLLRE~
+END
+
+ACTION_IF (game_includes_sod) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
+    // original SPL resref, cur. HP => intermediate SPL resref
+    ~bdwolfd1~, 4 => ~#bdwlfd1~
+    ~bdtroll1~, 4 => ~#bdtrll1~
+  END
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
+    // ITM resref => intermediate SPL resref
+    ~bdwolfd1~ => ~#BDWLFD1~
+    ~bdtroll1~ => ~#BDTRLL1~
+  END
+END
+
+ACTION_IF (game_is_bg2ee) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
+    // original SPL resref, cur. HP => intermediate SPL resref
+    ~cdhgtrl~,  4 => ~#cdhgtrl~
+    ~cdtrlblz~, 4 => ~#cdtrlbl~
+    ~cdtorgal~, 4 => ~#cdtorga~
+  END
+
+  // Regeneration items
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
+    // ITM resref => intermediate SPL resref
+    ~cdhgtrl~  => ~#CDHGTRL~
+    ~cdtrlblz~ => ~#CDTRLBL~
+    ~cdtorgal~ => ~#CDTORGA~
+  END
+END
+
+ACTION_IF (game_is_iwdee) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
+    // original SPL resref, cur. HP => intermediate SPL resref
+    ~cdiwdtr1~, 3 => ~#cdidtr1~
+    ~cdiwdtr2~, 3 => ~#cdidtr2~
+  END
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
+    // ITM resref => intermediate SPL resref
+    ~reg1hp2~ => ~#CDIDTR1~
+    ~cireve~  => ~#CDIDTR2~
+  END
+END
+
+
+// Creating intermediate filter spells
+ACTION_PHP_EACH reg_spl AS keys => resref2 BEGIN
+  OUTER_SPRINT resref1 $keys(~0~)
+  OUTER_SET cur_hp = $keys(~1~)
+  COPY_EXISTING ~%resref1%.spl~ ~override/%resref2%.spl~
+    LPF DELETE_SPELL_EFFECT
+      INT_VAR opcode_to_delete = "-1" // all effects
+    END
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode = 318        // Protection from resource
+        target = 1          // Self
+        parameter1 = cur_hp
+        parameter2 = 144    // STAT CURHITPOINTS >= [parameter1]
+      STR_VAR
+        resource = EVAL ~%DEST_RES%~
+    END
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode = 146        // Cast spell
+        target = 1          // Self
+        parameter2 = 1      // Cast instantly (caster level)
+        timing = 1          // Instant/Permanent until death
+      STR_VAR
+        resource = EVAL ~%SOURCE_RES%~
+    END
+  IF_EXISTS
+END
+
+// Updating regeneration items
+ACTION_PHP_EACH reg_itm AS resref1 => resref2 BEGIN
+  COPY_EXISTING ~%resref1%.itm~ ~override~
+    LPF ADD_ITEM_EQEFFECT
+      INT_VAR
+        opcode = 232      // Cast spell on condition
+        target = 1        // Self
+        timing = 2        // While equipped
+        parameter2 = 11   // TookDamage() / instant
+      STR_VAR
+        resource = EVAL ~%resref2%~
+    END
+  BUT_ONLY IF_EXISTS
+END
