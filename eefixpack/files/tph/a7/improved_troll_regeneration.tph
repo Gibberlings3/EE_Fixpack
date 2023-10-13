@@ -3,8 +3,8 @@
 
 // Intermediate filter spells
 ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
-  // original SPL resref, cur. HP => intermediate SPL resref
-  ~trollreg~, 4 => ~#trollre~
+  // original SPL resref => intermediate SPL resref
+  ~trollreg~ => ~#trollre~
 END
 
 // Regeneration items
@@ -15,9 +15,9 @@ END
 
 ACTION_IF (game_includes_sod) BEGIN
   ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
-    // original SPL resref, cur. HP => intermediate SPL resref
-    ~bdwolfd1~, 4 => ~#bdwlfd1~
-    ~bdtroll1~, 4 => ~#bdtrll1~
+    // original SPL resref => intermediate SPL resref
+    ~bdwolfd1~ => ~#bdwlfd1~
+    ~bdtroll1~ => ~#bdtrll1~
   END
 
   ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
@@ -29,10 +29,10 @@ END
 
 ACTION_IF (game_is_bg2ee) BEGIN
   ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
-    // original SPL resref, cur. HP => intermediate SPL resref
-    ~cdhgtrl~,  4 => ~#cdhgtrl~
-    ~cdtrlblz~, 4 => ~#cdtrlbl~
-    ~cdtorgal~, 4 => ~#cdtorga~
+    // original SPL resref => intermediate SPL resref
+    ~cdhgtrl~  => ~#cdhgtrl~
+    ~cdtrlblz~ => ~#cdtrlbl~
+    ~cdtorgal~ => ~#cdtorga~
   END
 
   // Regeneration items
@@ -46,9 +46,9 @@ END
 
 ACTION_IF (game_is_iwdee) BEGIN
   ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_spl BEGIN
-    // original SPL resref, cur. HP => intermediate SPL resref
-    ~cdiwdtr1~, 3 => ~#cdidtr1~
-    ~cdiwdtr2~, 3 => ~#cdidtr2~
+    // original SPL resref => intermediate SPL resref
+    ~cdiwdtr1~ => ~#cdidtr1~
+    ~cdiwdtr2~ => ~#cdidtr2~
   END
 
   ACTION_DEFINE_ASSOCIATIVE_ARRAY reg_itm BEGIN
@@ -60,28 +60,17 @@ END
 
 
 // Creating intermediate filter spells
-ACTION_PHP_EACH reg_spl AS keys => resref2 BEGIN
-  OUTER_SPRINT resref1 $keys(~0~)
-  OUTER_SET cur_hp = $keys(~1~)
+ACTION_PHP_EACH reg_spl AS resref1 => resref2 BEGIN
   COPY_EXISTING ~%resref1%.spl~ ~override/%resref2%.spl~
     LPF DELETE_SPELL_EFFECT
       INT_VAR opcode_to_delete = "-1" // all effects
     END
     LPF ADD_SPELL_EFFECT
       INT_VAR
-        opcode = 318        // Protection from resource
-        target = 1          // Self
-        parameter1 = cur_hp
-        parameter2 = 144    // STAT CURHITPOINTS >= [parameter1]
-      STR_VAR
-        resource = EVAL ~%DEST_RES%~
-    END
-    LPF ADD_SPELL_EFFECT
-      INT_VAR
-        opcode = 146        // Cast spell
-        target = 1          // Self
-        parameter2 = 1      // Cast instantly (caster level)
-        timing = 1          // Instant/Permanent until death
+        opcode = 326      // Apply effects list
+        target = 1        // Self
+        parameter1 = 2
+        parameter2 = 145  // STAT CURHITPOINTS < [parameter1]
       STR_VAR
         resource = EVAL ~%SOURCE_RES%~
     END
