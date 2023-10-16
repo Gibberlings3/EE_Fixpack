@@ -8,434 +8,481 @@ See "https://www.gibberlings3.net/forums/topic/35902-opcode-39-issues/" for furt
 
 DEFINE_ACTION_FUNCTION "OPCODE39_OVERHAUL"
 BEGIN
-	ACTION_IF (MOD_IS_INSTALLED "EEex.tp2" 0) BEGIN
-		LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "SLEEP_IMMUNITY" END
-		LAF "GET_BULKY_CREATURES" RET_ARRAY "bulky_creature_list" END // get all creatures whose animation is hardcoded to be immune to op235 (Wing Buffet)
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "SLEEP_IMMUNITY" END
+	LAF "GET_BULKY_CREATURES" RET_ARRAY "bulky_creature_list" END // get all creatures whose animation is hardcoded to be immune to op235 (Wing Buffet)
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
 
-		Sleep / Unconscious
+	Sleep / Unconscious
 
-		*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	*/
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		WITH_SCOPE BEGIN
-			ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-				"SPLSTATE" , "SLEEP_IMMUNITY" => 110
+	WITH_SCOPE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY "op39_overhaul_reserved_hash" BEGIN
+			"SPLSTATE" , "SLEEP_IMMUNITY" => 110
+		END
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
+					"bdblun07.spl" => "" // Backwhacker +2
+					"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
+					"bdxbow01.spl" => "" // Astral Crossbow +2
+					"spcl751a.spl" => "spcl751c" // Jester's Song
+					"%PSIONIC_MIND_BLAST%.spl" => ""
+					"%MIND_CRIPPLE%.spl" => ""
+					"%MEPHIT_COLOR_SPRAY%.spl" => ""
+					"%CLERIC_COMMAND%.spl" => ""
+					"%CLERIC_GREATER_COMMAND%.spl" => ""
+					"%WIZARD_COLOR_SPRAY%.spl" => ""
+					"%WIZARD_SLEEP%.spl" => ""
+					"%WIZARD_EMOTION_HOPELESSNESS%.spl" => ""
+					"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
+					//
+					"bdgibbbr.itm" => "bdgibbbr" // used by "bdgibbbr.cre" (Brood Gibberling)
+					"bdspidga.itm" => "bdspdga0" // used by "bdspidga.cre" (Gargantuan Spider)
+					"bdwyrmli.itm" => "bdwyrmli" // used by "bdwyrmli.cre" (Blind Albino Wyrmling)
+					"cdfampsd.itm" => ""
+					"dwbolt01.itm" => "dwbolt01" // Drow Bolt of Sleep +1
+					"dwdart01.itm" => "dwdart01" // Drow Dart of Sleep +1
+					"psdclaw.itm" => ""
+					"wand08.itm" => "wand08" // Wand of Sleep
+				END
 			END
-			ACTION_MATCH 1 WITH
-				GAME_IS "bgee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
-						"bdblun07.spl" => "" // Backwhacker +2
-						"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
-						"bdxbow01.spl" => "" // Astral Crossbow +2
-						"spcl751a.spl" => "spcl751c" // Jester's Song
-						"%PSIONIC_MIND_BLAST%.spl" => ""
-						"%MIND_CRIPPLE%.spl" => ""
-						"%MEPHIT_COLOR_SPRAY%.spl" => ""
-						"%CLERIC_COMMAND%.spl" => ""
-						"%CLERIC_GREATER_COMMAND%.spl" => ""
-						"%WIZARD_COLOR_SPRAY%.spl" => ""
-						"%WIZARD_SLEEP%.spl" => ""
-						"%WIZARD_EMOTION_HOPELESSNESS%.spl" => ""
-						"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
-						//
-						"bdgibbbr.itm" => "bdgibbbr" // used by "bdgibbbr.cre" (Brood Gibberling)
-						"bdspidga.itm" => "bdspidga" // used by "bdspidga.cre" (Gargantuan Spider)
-						"bdwyrmli.itm" => "bdwyrmli" // used by "bdwyrmli.cre" (Blind Albino Wyrmling)
-						"cdfampsd.itm" => ""
-						"dwbolt01.itm" => "dwbolt01" // Drow Bolt of Sleep +1
-						"dwdart01.itm" => "dwdart01" // Drow Dart of Sleep +1
-						"psdclaw.itm" => ""
-						"wand08.itm" => "wand08" // Wand of Sleep
-					END
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
+					"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
+					"spcl751a.spl" => "spcl751c" // Jester's Song
+					"%PSIONIC_MIND_BLAST%.spl" => ""
+					"%MIND_CRIPPLE%.spl" => ""
+					"%MEPHIT_COLOR_SPRAY%.spl" => ""
+					"%CLERIC_COMMAND%.spl" => ""
+					"%CLERIC_GREATER_COMMAND%.spl" => ""
+					"%WIZARD_COLOR_SPRAY%.spl" => ""
+					"%WIZARD_SLEEP%.spl" => ""
+					"%WIZARD_EMOTION_HOPELESSNESS%.spl" => ""
+					"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
+					//
+					"cdfampsd.itm" => ""
+					"dagg13.itm" => "dagg13" // Pixie Prick +3
+					"dwbolt01.itm" => "dwbolt01" // Drow Bolt of Sleep
+					"ohbbrvgr.itm" => "ohbbrvgr" // used by "ohbbrvgr.cre" (The Ravager)
+					"psdclaw.itm" => ""
+					"staf15.itm" => "" // Staff of Air +2
+					"wand08.itm" => "wand08" // Wand of Sleep
 				END
-				GAME_IS "bg2ee eet" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
-						"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
-						"spcl751a.spl" => "spcl751c" // Jester's Song
-						"%PSIONIC_MIND_BLAST%.spl" => ""
-						"%MIND_CRIPPLE%.spl" => ""
-						"%MEPHIT_COLOR_SPRAY%.spl" => ""
-						"%CLERIC_COMMAND%.spl" => ""
-						"%CLERIC_GREATER_COMMAND%.spl" => ""
-						"%WIZARD_COLOR_SPRAY%.spl" => ""
-						"%WIZARD_SLEEP%.spl" => ""
-						"%WIZARD_EMOTION_HOPELESSNESS%.spl" => ""
-						"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
-						//
-						"cdfampsd.itm" => ""
-						"dagg13.itm" => "dagg13" // Pixie Prick +3
-						"dwbolt01.itm" => "dwbolt01" // Drow Bolt of Sleep
-						"ohbbrvgr.itm" => "ohbbrvgr" // used by "ohbbrvgr.cre" (The Ravager)
-						"psdclaw.itm" => ""
-						"staf15.itm" => "" // Staff of Air +2
-						"wand08.itm" => "wand08" // Wand of Sleep
-					END
-				END
-				GAME_IS "iwdee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
-						"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
-						"spcl751a.spl" => "spcl751c" // Jester's Song
-						"%INNATE_BEHOLDER_SLEEP%.spl" => ""
-						"%INNATE_JACKALWERE_GAZE_INTERNAL%.spl" => ""
-						"%MIND_CRIPPLE%.spl" => ""
-						"%CLERIC_COMMAND%.spl" => ""
-						"%CLERIC_SMASHING_WAVE%.spl" => ""
-						"%CLERIC_GREATER_COMMAND%.spl" => ""
-						"%TRAP_SLEEP%.spl" => "%TRAP_SLEEP%c"
-						"%WIZARD_COLOR_SPRAY%.spl" => ""
-						"%WIZARD_SLEEP%.spl" => ""
-						"%WIZARD_POWER_WORD_SLEEP%.spl" => ""
-						"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
-						//
-						"cdfampsd.itm" => ""
-						"uhalb3b.itm" => "uhalb3b" // Darig's Rest +2
-						"wand08.itm" => "wand08" // Wand of Sleep
-					END
-				END
-				DEFAULT
-					FAIL "Game not supported"
 			END
-			ACTION_PHP_EACH "sleep_unconscious_list" AS "file" => "subspell" BEGIN
-				COPY_EXISTING "%file%" "override"
-					PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
-						// Transfer effects onto a new SPL file (if needed)
-						LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell" INT_VAR "effectID" = 39 STR_VAR "subspell_resref" = "%subspell%" END
-						//
-						INNER_ACTION BEGIN
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "sleep_unconscious_list" BEGIN
+					"bdsha12c.spl" => "" // used by "bdsha12c.cre" (Lesser Earth Spirit)
+					"spcl751a.spl" => "spcl751c" // Jester's Song
+					"%INNATE_BEHOLDER_SLEEP%.spl" => ""
+					"%INNATE_JACKALWERE_GAZE_INTERNAL%.spl" => ""
+					"%MIND_CRIPPLE%.spl" => ""
+					"%CLERIC_COMMAND%.spl" => ""
+					"%CLERIC_SMASHING_WAVE%.spl" => ""
+					"%CLERIC_GREATER_COMMAND%.spl" => ""
+					"%TRAP_SLEEP%.spl" => "%TRAP_SLEEP%c"
+					"%WIZARD_COLOR_SPRAY%.spl" => ""
+					"%WIZARD_SLEEP%.spl" => ""
+					"%WIZARD_POWER_WORD_SLEEP%.spl" => ""
+					"WIZARD_SPHERE_OF_CHAOS.spl" => "%WIZARD_SPHERE_OF_CHAOS%d"
+					//
+					"cdfampsd.itm" => ""
+					"uhalb3b.itm" => "uhalb3b" // Darig's Rest +2
+					"wand08.itm" => "wand08" // Wand of Sleep
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		ACTION_PHP_EACH "sleep_unconscious_list" AS "file" => "subspell" BEGIN
+			COPY_EXISTING "%file%" "override"
+				PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
+					// Transfer effects onto a new SPL file (if needed)
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+						INT_VAR
+							"effectID" = 39
+						STR_VAR
+							"subspell_resref" = "%subspell%"
+							"splstate" = "SLEEP_IMMUNITY"
+							"string" = "Sleep, Unconscious"
+							"icon" = "14 44 130"
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 39 END
+					LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+				END
+			BUT_ONLY IF_EXISTS
+		END
+	END
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+
+	"Forced" Sleep (f.i. cutscenes, dialogs, troll/wolf-death mechanics, ...)
+
+	*/
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
+					"bdgassa1.spl" => "" // used by "bd0103.bcs" , "bd0104.bcs" , "bddausto.bcs" , "bddausto.dlg" , "bdtiax.dlg"
+					"bdgassa3.spl" => "" // unused...?
+					"bdsleep.spl" => "" // used by "bd6100.bcs" , "bdcutslp.bcs"
+					"bdtroll1.spl" => ""
+					"bdulori.spl" => ""
+					"bdwolfd1.spl" => ""
+					"shoal1.spl" => "shoal1b" // Nereid's Kiss (used by "shoal.dlg")
+					"%VIEKANG_LIGHTNING%.spl" => "%VIEKANG_LIGHTNING%b" // unused...?
+					"%SURE_SLEEP%.spl" => "" // used by "bpfinal.bcs" , "chasel3.bcs" , "drunk.dlg"
+					"%TROLL_SLEEP%.spl" => ""
+					"trollreg.spl" => ""
+					//
+					"bddagg06.itm" => "" // Dagger +2 (used by "bdfinal[1-2].cre", "bdfinal4.cre")
+					"bddagg07.itm" => "" // Throwing Dagger +1 (used by "bdfinal3.cre", "bdfinal5.cre")
+				END
+			END
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
+					"cdhgtrl.spl" => ""
+					"cdtorgal.spl" => ""
+					"cdtrlblz.spl" => ""
+					"ch3drain.spl" => "" // unused...?
+					"ch3flash.spl" => "" // unused...?
+					"ch3weak.spl" => "" // unused...?
+					"jwfall.spl" => "" // used by "itladr1[a-b].dlg" , "itladr2[a-b].dlg" , "itladr3[a-b].dlg"
+					"jwsleep.spl" => "" // used by "cut233g.bcs"
+					"ohddivrt.spl" => "" // used by "ohdddorl.bcs" , "ohddixth.bcs"
+					"%ABAZIGAL_SHOCKWAVE%.spl" => "%ABAZIGAL_SHOCKWAVE%b" // used by "abazdrag.bcs"
+					"%SAREVOK_SOULSTEAL%.spl" => "" // used by "cut206[a-b].bcs"
+					"%VIEKANG_LIGHTNING%.spl" => "%VIEKANG_LIGHTNING%b" // used by "sarvie01.dlg" , "viekang.dlg"
+					"%SURE_SLEEP%.spl" => "" // used by "cut28a.bcs" , "cut49a.bcs" , "cut67a.bcs" , "drunk.dlg"
+					"%TROLL_SLEEP%.spl" => ""
+					"trollreg.spl" => ""
+				END
+			END
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
+					"#jedslp.spl" => "" // used by "doldjed.dlg"
+					"cdiwdtr1.spl" => ""
+					"cdiwdtr2.spl" => ""
+					"%INNATE_RETRIBUTION%.spl" => "" // used by "bcscut2a.bcs" , "bcscut2d.bcs"
+					"%INNATE_WEREWOLF_DEATH%.spl" => ""
+					"%INNATE_WYLFDENES_DEATH_ANIMATION%.spl" => ""
+					"%INNATE_DRAGON_DEATH_ANIMATION%.spl" => ""
+					"%INNATE_POLYMORPH_TO_DOG%.spl" => ""
+					"%WIZARD_GREAT_SHOUT%.spl" => ""
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		ACTION_PHP_EACH "forced_sleep_list" AS "file" => "subspell" BEGIN
+			COPY_EXISTING "%file%" "override"
+				PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
+					// Transfer effects onto a new SPL file (if needed)
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+						INT_VAR
+							"effectID" = 39
+						STR_VAR
+							"subspell_resref" = "%subspell%"
+							"string" = "Sleep, Unconscious"
+							"icon" = "14 44 126 130"
+					END
+					//
+					INNER_ACTION BEGIN
+						WITH_SCOPE BEGIN
 							COPY_EXISTING "%subspell%.spl" "override"
-								LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+								LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END
 							BUT_ONLY
 						END
-					END ELSE BEGIN
-						LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" END
-						LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
 					END
-				BUT_ONLY IF_EXISTS
-			END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 39 END
+					LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END
+				END
+			BUT_ONLY IF_EXISTS
 		END
+	END
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
 
-		"Forced" Sleep (f.i. cutscenes, dialogs, troll/wolf-death mechanics, ...)
+	Physical knockdown (Earthquake)
 
-		*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	*/
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		WITH_SCOPE BEGIN
-			ACTION_MATCH 1 WITH
-				GAME_IS "bgee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
-						"bdgassa1.spl" => "" // used by "bd0103.bcs" , "bd0104.bcs" , "bddausto.bcs" , "bddausto.dlg" , "bdtiax.dlg"
-						"bdgassa3.spl" => "" // unused...?
-						"bdsleep.spl" => "" // used by "bd6100.bcs" , "bdcutslp.bcs"
-						"bdtroll1.spl" => ""
-						"bdulori.spl" => ""
-						"bdwolfd1.spl" => ""
-						"shoal1.spl" => "shoal1b" // Nereid's Kiss (used by "shoal.dlg")
-						"%VIEKANG_LIGHTNING%.spl" => "%VIEKANG_LIGHTNING%b" // unused...?
-						"%SURE_SLEEP%.spl" => "" // used by "bpfinal.bcs" , "chasel3.bcs" , "drunk.dlg"
-						"%TROLL_SLEEP%.spl" => ""
-						"trollreg.spl" => ""
-						//
-						"bddagg06.itm" => "" // Dagger +2 (used by "bdfinal[1-2].cre", "bdfinal4.cre")
-						"bddagg07.itm" => "" // Throwing Dagger +1 (used by "bdfinal3.cre", "bdfinal5.cre")
-					END
-				END
-				GAME_IS "bg2ee eet" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
-						"cdhgtrl.spl" => ""
-						"cdtorgal.spl" => ""
-						"cdtrlblz.spl" => ""
-						"ch3drain.spl" => "" // unused...?
-						"ch3flash.spl" => "" // unused...?
-						"ch3weak.spl" => "" // unused...?
-						"jwfall.spl" => "" // used by "itladr1[a-b].dlg" , "itladr2[a-b].dlg" , "itladr3[a-b].dlg"
-						"jwsleep.spl" => "" // used by "cut233g.bcs"
-						"ohddivrt.spl" => "" // used by "ohdddorl.bcs" , "ohddixth.bcs"
-						"%ABAZIGAL_SHOCKWAVE%.spl" => "%ABAZIGAL_SHOCKWAVE%b" // used by "abazdrag.bcs"
-						"%SAREVOK_SOULSTEAL%.spl" => "" // used by "cut206[a-b].bcs"
-						"%VIEKANG_LIGHTNING%.spl" => "%VIEKANG_LIGHTNING%b" // used by "sarvie01.dlg" , "viekang.dlg"
-						"%SURE_SLEEP%.spl" => "" // used by "cut28a.bcs" , "cut49a.bcs" , "cut67a.bcs" , "drunk.dlg"
-						"%TROLL_SLEEP%.spl" => ""
-						"trollreg.spl" => ""
-					END
-				END
-				GAME_IS "iwdee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "forced_sleep_list" BEGIN
-						"#jedslp.spl" => "" // used by "doldjed.dlg"
-						"cdiwdtr1.spl" => ""
-						"cdiwdtr2.spl" => ""
-						"%INNATE_RETRIBUTION%.spl" => "" // used by "bcscut2a.bcs" , "bcscut2d.bcs"
-						"%INNATE_WEREWOLF_DEATH%.spl" => ""
-						"%INNATE_WYLFDENES_DEATH_ANIMATION%.spl" => ""
-						"%INNATE_DRAGON_DEATH_ANIMATION%.spl" => ""
-						"%INNATE_POLYMORPH_TO_DOG%.spl" => ""
-						"%WIZARD_GREAT_SHOUT%.spl" => ""
-					END
-				END
-				DEFAULT
-					FAIL "Game not supported"
-			END
-			ACTION_PHP_EACH "forced_sleep_list" AS "file" => "subspell" BEGIN
-				COPY_EXISTING "%file%" "override"
-					LPF "EEex_bypass_op101" END
-					//
-					PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
-						// Transfer effects onto a new SPL file (if needed)
-						LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell" INT_VAR "effectID" = 39 STR_VAR "subspell_resref" = "%subspell%" END
-					END ELSE BEGIN
-						LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" END
-					END
-				BUT_ONLY IF_EXISTS
-			END
+	WITH_SCOPE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY "op39_overhaul_reserved_hash" BEGIN
+			"GENERAL" , "WEAPON" => 103 // reason: Mordenkainen's Sword (can levitate)
+			//
+			"RACE" , "DRAGON" => 104 // reason: can fly
+			"RACE" , "WYVERN" => 104 // reason: can fly
+			"RACE" , "DEMILICH" => 104 // reason: can levitate
+			"RACE" , "HARPY" => 104 // reason: can fly
+			"RACE" , "MEPHIT" => 104 // reason: can fly
+			"RACE" , "IMP" => 104 // reason: can fly
+			"RACE" , "SPECTRAL_UNDEAD" => 104 // reason: incorporeal creature
+			"RACE" , "SPECTRE" => 104 // reason: incorporeal creature
+			"RACE" , "WRAITH" => 104 // reason: incorporeal creature
+			"RACE" , "SHADOW" => 104 // reason: incorporeal creature
+			"RACE" , "SLIME" => 104 // reason: cannot fall to the ground
+			"RACE" , "BEHOLDER" => 104 // reason: can levitate
+			"RACE" , "FEYR" => 104 // reason: can levitate...?
+			"RACE" , "WILL-O-WISP" => 104 // reason: can levitate
+			//
+			"CLASS" , "ELEMENTAL_EARTH" => 105 // reason: should be immune to its own element
+			"CLASS" , "GENIE_DAO" => 105 // reason: should be immune to its own element
+			//
+			"PERSONAL_SPACE" , "" => 13 // PERSONALSPACE>3 (this is inherited from iwdee), reason: "large" creatures
 		END
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*
-
-		Physical knockdown (Earthquake)
-
-		*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		WITH_SCOPE BEGIN
-			ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-				"GENERAL" , "WEAPON" => 103
-				//
-				"RACE" , "DRAGON" => 104
-				"RACE" , "WYVERN" => 104
-				"RACE" , "DEMILICH" => 104
-				"RACE" , "HARPY" => 104
-				"RACE" , "MEPHIT" => 104
-				"RACE" , "IMP" => 104
-				"RACE" , "SPECTRAL_UNDEAD" => 104
-				"RACE" , "SPECTRE" => 104
-				"RACE" , "WRAITH" => 104
-				"RACE" , "SHADOW" => 104
-				"RACE" , "SLIME" => 104
-				"RACE" , "BEHOLDER" => 104
-				"RACE" , "FEYR" => 104
-				"RACE" , "WILL-O-WISP" => 104
-				//
-				"CLASS" , "ELEMENTAL_EARTH" => 105
-				//
-				"PERSONAL_SPACE" , "" => 13 // PERSONALSPACE>3 (this is inherited from iwdee)
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
+					"bpgiaqke.spl" => ""
+					"spogre01.spl" => "spogre03" // Earthquake
+					"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
+				END
 			END
-			ACTION_MATCH 1 WITH
-				GAME_IS "bgee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
-						"bpgiaqke.spl" => ""
-						"spogre01.spl" => "spogre03" // Earthquake
-						"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
-					END
-				END
-				GAME_IS "bg2ee eet" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
-						"jwsiege.spl" => "jwsiege2"
-						"ohbquake.spl" => "ohbquak2" // Earthquake
-						"spogre01.spl" => "spogre03" // Earthquake
-						"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
-						//
-						"sper12.itm" => "sper12" // Ixil's Spike +6 (consider this as a special, edge-case earthquake)
-					END
-				END
-				GAME_IS "iwdee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
-						"spogre01.spl" => "spogre03"
-						"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
-					END
-				END
-				DEFAULT
-					FAIL "Game not supported"
-			END
-			ACTION_PHP_EACH "earthquake_list" AS "file" => "subspell" BEGIN
-				COPY_EXISTING "%file%" "override"
-					LPF "EEex_bypass_op101" END
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
+					"jwsiege.spl" => "jwsiege2"
+					"ohbquake.spl" => "ohbquak2" // Earthquake
+					"spogre01.spl" => "spogre03" // Earthquake
+					"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
 					//
-					PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
-						// Transfer effects onto a new SPL file (if needed)
-						LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell" INT_VAR "effectID" = 39 STR_VAR "subspell_resref" = "%subspell%" END
-						//
-						INNER_ACTION BEGIN
+					"sper12.itm" => "sper12" // Ixil's Spike +6 (consider this as a special, edge-case earthquake)
+				END
+			END
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "earthquake_list" BEGIN
+					"spogre01.spl" => "spogre03"
+					"%CLERIC_EARTHQUAKE%.spl" => "%CLERIC_EARTHQUAKE%b"
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		ACTION_PHP_EACH "earthquake_list" AS "file" => "subspell" BEGIN
+			COPY_EXISTING "%file%" "override"
+				PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
+					// Transfer effects onto a new SPL file (if needed)
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+						INT_VAR
+							"effectID" = 39
+						STR_VAR
+							"subspell_resref" = "%subspell%"
+							"string" = "Sleep, Unconscious"
+							"icon" = "14 44 126 130"
+					END
+					//
+					INNER_ACTION BEGIN
+						WITH_SCOPE BEGIN
 							COPY_EXISTING "%subspell%.spl" "override"
 								LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+								LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END // a brand new icon would probably be better...
 							BUT_ONLY
 						END
-					END ELSE BEGIN
-						LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" END
-						LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
 					END
-				BUT_ONLY IF_EXISTS
-			END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 39 END
+					LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+					LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END // a brand new icon would probably be better...
+				END
+			BUT_ONLY IF_EXISTS
 		END
+	END
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
 
-		Physical knockdown (+ Wing Buffet)
+	Physical knockdown (+ Wing Buffet)
 
-		*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	*/
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		WITH_SCOPE BEGIN
-			ACTION_MATCH 1 WITH
-				GAME_IS "bgee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
-						"%PSIONIC_PROJECT_FORCE%.spl" => "%PSIONIC_PROJECT_FORCE%a"
-						"%HELL_BUFFET%.spl" => ""
-						"%DRAGON_WING_BUFFET%.spl" => "%DRAGON_WING_BUFFET%b"
-						"spyanc01.spl" => "spyanc03" // Air Elemental Whirlwind
-						//
-						"ax1h16.itm" => "ax1h16" // K'logarath +4
-						"ravag01.itm" => "ravag01" // 
-					END
-				END
-				GAME_IS "bg2ee eet" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
-						"abzaway.spl" => "abzaway1"
-						"balth01.spl" => "balth01d" // Solar Stance!
-						"balth09.spl" => "balth09b" // Shadowless Kick
-						"ch3away.spl" => "ch3away2"
-						"dgwhirl.spl" => "dgwhirl1"
-						"jwwhirl.spl" => "jwwhirl1"
-						"ohbbclt0.spl" => ""
-						"%ROGUE_SET_EXPLODING_TRAP%b.spl" => "%ROGUE_SET_EXPLODING_TRAP%d"
-						"%PSIONIC_PROJECT_FORCE%.spl" => "%PSIONIC_PROJECT_FORCE%a"
-						"%FAN_BLOW%.spl" => "%FAN_BLOW%a"
-						"%HELL_BUFFET%.spl" => ""
-						"%DRAGON_WING_BUFFET%.spl" => "%DRAGON_WING_BUFFET%b"
-						"%WIZARD_DRAGONS_BREATH%.spl" => "%WIZARD_DRAGONS_BREATH%b"
-						"%WIZARD_COMET%.spl" => "%WIZARD_COMET%b"
-						"spwish27.spl" => "spwsh27b" // Knockback
-						"spyanc01.spl" => "spyanc03" // Air Elemental Whirlwind
-						//
-						"aurstaf.itm" => "aurstaf" // Staff of the Ram +4
-						"ax1h16.itm" => "ax1h16" // K'logarath +4
-						"ravag01.itm" => "ravag01" // 
-						"staf21.itm" => "staf21" // Staff of the Ram +4
-						"staf22.itm" => "staf22" // Staff of the Ram +6
-					END
-				END
-				GAME_IS "iwdee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
-						"dgwhirl.spl" => "" // Air Elemental Whirlwind
-						"%ROGUE_SET_EXPLODING_TRAP%b.spl" => ""
-						"%WIZARD_DRAGONS_BREATH%.spl" => "%WIZARD_DRAGONS_BREATH%b"
-						"%WIZARD_COMET%.spl" => "%WIZARD_COMET%b"
-						"spwish27.spl" => "spwis27b"
-						"spyanc01.spl" => "" // Air Elemental Whirlwind
-					END
-				END
-				DEFAULT
-					FAIL "Game not supported"
-			END
-			ACTION_PHP_EACH "wing_buffet_list" AS "file" => "subspell" BEGIN
-				COPY_EXISTING "%file%" "override"
-					LPF "EEex_bypass_op101" END
+	WITH_SCOPE BEGIN
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
+					"%PSIONIC_PROJECT_FORCE%.spl" => "%PSIONIC_PROJECT_FORCE%a"
+					"%HELL_BUFFET%.spl" => ""
+					"%DRAGON_WING_BUFFET%.spl" => "%DRAGON_WING_BUFFET%b"
+					"spyanc01.spl" => "spyanc03" // Air Elemental Whirlwind
 					//
-					PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
-						// Transfer effects onto a new SPL file (if needed)
-						LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell" INT_VAR "effectID" = 39 STR_VAR "subspell_resref" = "%subspell%" END
-						//
-						PHP_EACH "bulky_creature_list" AS "cre_resref" => "" BEGIN
-							INNER_ACTION BEGIN
-								WITH_SCOPE BEGIN
-									COPY_EXISTING "%cre_resref%.cre" BEGIN
-										LPF "ADD_CRE_EFFECT" INT_VAR "insert_point" = "-1" "target" = 1 "opcode" = 206 "parameter1" = "-1" "timing" = 9 STR_VAR "resource" = "%subspell%" END
-									BUT_ONLY_IF_IT_CHANGES
-								END
+					"ax1h16.itm" => "ax1h16" // K'logarath +4
+					"ravag01.itm" => "ravag01" // 
+				END
+			END
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
+					"abzaway.spl" => "abzaway1"
+					"balth01.spl" => "balth01d" // Solar Stance!
+					"balth09.spl" => "balth09b" // Shadowless Kick
+					"ch3away.spl" => "ch3away2"
+					"dgwhirl.spl" => "dgwhirl1"
+					"jwwhirl.spl" => "jwwhirl1"
+					"ohbbclt0.spl" => ""
+					"%ROGUE_SET_EXPLODING_TRAP%b.spl" => "%ROGUE_SET_EXPLODING_TRAP%d"
+					"%PSIONIC_PROJECT_FORCE%.spl" => "%PSIONIC_PROJECT_FORCE%a"
+					"%FAN_BLOW%.spl" => "%FAN_BLOW%a"
+					"%HELL_BUFFET%.spl" => ""
+					"%DRAGON_WING_BUFFET%.spl" => "%DRAGON_WING_BUFFET%b"
+					"%WIZARD_DRAGONS_BREATH%.spl" => "%WIZARD_DRAGONS_BREATH%b"
+					"%WIZARD_COMET%.spl" => "%WIZARD_COMET%b"
+					"spwish27.spl" => "spwsh27b" // Knockback
+					"spyanc01.spl" => "spyanc03" // Air Elemental Whirlwind
+					//
+					"aurstaf.itm" => "aurstaf" // Staff of the Ram +4
+					"ax1h16.itm" => "ax1h16" // K'logarath +4
+					"ravag01.itm" => "ravag01" // 
+					"staf21.itm" => "staf21" // Staff of the Ram +4
+					"staf22.itm" => "staf22" // Staff of the Ram +6
+				END
+			END
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "wing_buffet_list" BEGIN
+					"dgwhirl.spl" => "" // Air Elemental Whirlwind
+					"%ROGUE_SET_EXPLODING_TRAP%b.spl" => "%ROGUE_SET_EXPLODING_TRAP%d"
+					"%WIZARD_DRAGONS_BREATH%.spl" => "%WIZARD_DRAGONS_BREATH%b"
+					"%WIZARD_COMET%.spl" => "%WIZARD_COMET%b"
+					"spwish27.spl" => "spwsh27b"
+					"spyanc01.spl" => "spyanc03" // Air Elemental Whirlwind
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		ACTION_PHP_EACH "wing_buffet_list" AS "file" => "subspell" BEGIN
+			COPY_EXISTING "%file%" "override"
+				PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
+					// Transfer effects onto a new SPL file (if needed)
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+						INT_VAR
+							"effectID" = 39
+						STR_VAR
+							"subspell_resref" = "%subspell%"
+							"string" = "Sleep, Unconscious"
+							"icon" = "14 44 126 130"
+					END
+					//
+					INNER_ACTION BEGIN
+						WITH_SCOPE BEGIN
+							COPY_EXISTING "%subspell%.spl" "override"
+								LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END // a brand new icon would probably be better...
+							BUT_ONLY
+						END
+					END
+					//
+					PHP_EACH "bulky_creature_list" AS "cre_resref" => "" BEGIN
+						INNER_ACTION BEGIN
+							WITH_SCOPE BEGIN
+								COPY_EXISTING "%cre_resref%.cre" BEGIN
+									LPF "ADD_CRE_EFFECT" INT_VAR "insert_point" = "-1" "target" = 1 "opcode" = 206 "parameter1" = "-1" "timing" = 9 STR_VAR "resource" = "%subspell%" END
+								BUT_ONLY_IF_IT_CHANGES
 							END
 						END
-					END ELSE BEGIN
-						LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" END
-						TEXT_SPRINT "file_res" "%DEST_RES%"
-						TEXT_SPRINT "file_ext" "%DEST_EXT%"
-						PHP_EACH "bulky_creature_list" AS "cre_resref" => "" BEGIN
-							INNER_ACTION BEGIN
-								WITH_SCOPE BEGIN
-									COPY_EXISTING "%cre_resref%.cre" BEGIN
-										LPF "ADD_CRE_EFFECT" INT_VAR "insert_point" = "-1" "target" = 1 "opcode" = ("%file_ext%" STR_EQ "SPL" ? 206 : 318) "parameter1" = ("%file_ext%" STR_EQ "SPL" ? "-1" : 0) "timing" = 9 STR_VAR "resource" = "%file_res%" END
-									BUT_ONLY_IF_IT_CHANGES
-								END
+					END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 39 END
+					LPF "BYPASS_OP101" INT_VAR "slpIcon" = 130 END // a brand new icon would probably be better...
+					TEXT_SPRINT "file_res" "%DEST_RES%"
+					TEXT_SPRINT "file_ext" "%DEST_EXT%"
+					PHP_EACH "bulky_creature_list" AS "cre_resref" => "" BEGIN
+						INNER_ACTION BEGIN
+							WITH_SCOPE BEGIN
+								COPY_EXISTING "%cre_resref%.cre" BEGIN
+									LPF "ADD_CRE_EFFECT" INT_VAR "insert_point" = "-1" "target" = 1 "opcode" = ("%file_ext%" STR_EQ "SPL" ? 206 : 318) "parameter1" = ("%file_ext%" STR_EQ "SPL" ? "-1" : 0) "timing" = 9 STR_VAR "resource" = "%file_res%" END
+								BUT_ONLY_IF_IT_CHANGES
 							END
 						END
 					END
-				BUT_ONLY IF_EXISTS
-			END
+				END
+			BUT_ONLY IF_EXISTS
 		END
+	END
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
 
-		Unconscious (nausea)
+	Unconscious (nausea)
 
-		*/
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	*/
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		WITH_SCOPE BEGIN
-			ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-				"GENERAL" , "WEAPON" => 103
-				"GENERAL" , "UNDEAD" => 103
-				"GENERAL" , "PLANT" => 103
-				//
-				"RACE" , "GOLEM" => 104
-				"RACE" , "ELEMENTAL" => 104
-				//
-				"CLASS" , "GREEN_DRAGON" => 105
+	WITH_SCOPE BEGIN
+		ACTION_DEFINE_ASSOCIATIVE_ARRAY "op39_overhaul_reserved_hash" BEGIN
+			"GENERAL" , "WEAPON" => 103 // reason: Mordenkainen's Sword (does not breathe)
+			"GENERAL" , "UNDEAD" => 103 // reason: do not breathe
+			"GENERAL" , "PLANT" => 103 // reason: do not breathe
+			//
+			"RACE" , "GOLEM" => 104 // reason: do not breathe
+			"RACE" , "ELEMENTAL" => 104 // reason: do not breathe
+			//
+			"CLASS" , "GREEN_DRAGON" => 105 // reason: they breathe, but are supposed to be immune to poison-like-based attacks
+		END
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
+					"%MEPHIT_STINKING_CLOUD%.spl" => ""
+					"%TRAP_STINKING_CLOUD%.spl" => ""
+					"%WIZARD_STINKING_CLOUD%.spl" => ""
+					"spwm187.spl" => "" // Stinking Cloud (wild magic)
+				END
 			END
-			ACTION_MATCH 1 WITH
-				GAME_IS "bgee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
-						"%MEPHIT_STINKING_CLOUD%.spl" => ""
-						"%TRAP_STINKING_CLOUD%.spl" => ""
-						"%WIZARD_STINKING_CLOUD%.spl" => ""
-						"spwm187.spl" => "" // Stinking Cloud (wild magic)
-					END
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
+					"ohdmask.spl" => "ohdmask2" // Breath Acid
+					"ohrgrog.spl" => "ohrgrog2"
+					"%MEPHIT_STINKING_CLOUD%.spl" => ""
+					"%TRAP_STINKING_CLOUD%.spl" => ""
+					"%WIZARD_STINKING_CLOUD%.spl" => ""
+					"spwm187.spl" => "" // Stinking Cloud (wild magic)
 				END
-				GAME_IS "bg2ee eet" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
-						"ohdmask.spl" => "ohdmask2" // Breath Acid
-						"ohrgrog.spl" => "ohrgrog2"
-						"%MEPHIT_STINKING_CLOUD%.spl" => ""
-						"%TRAP_STINKING_CLOUD%.spl" => ""
-						"%WIZARD_STINKING_CLOUD%.spl" => ""
-						"spwm187.spl" => "" // Stinking Cloud (wild magic)
-					END
-				END
-				GAME_IS "iwdee" BEGIN
-					ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
-						"%INNATE_ZOMBIE_LORD_AURA%.spl" => ""
-						"%TRAP_STINKING_CLOUD%.spl" => ""
-						"%WIZARD_STINKING_CLOUD%.spl" => ""
-						"spwm187.spl" => "" // Stinking Cloud (wild magic)
-					END
-				END
-				DEFAULT
-					FAIL "Game not supported"
 			END
-			ACTION_PHP_EACH "nausea_list" AS "file" => "subspell" BEGIN
-				COPY_EXISTING "%file%" "override"
-					LPF "EEex_bypass_op101" END
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "nausea_list" BEGIN
+					"%INNATE_ZOMBIE_LORD_AURA%.spl" => ""
+					"%TRAP_STINKING_CLOUD%.spl" => ""
+					"%WIZARD_STINKING_CLOUD%.spl" => ""
+					"spwm187.spl" => "" // Stinking Cloud (wild magic)
+				END
+			END
+			DEFAULT
+				FAIL "Game not supported"
+		END
+		ACTION_PHP_EACH "nausea_list" AS "file" => "subspell" BEGIN
+			COPY_EXISTING "%file%" "override"
+				PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
+					// Transfer effects onto a new SPL file (if needed)
+					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
+						INT_VAR
+							"effectID" = 39
+						STR_VAR
+							"subspell_resref" = "%subspell%"
+							"string" = "Sleep, Unconscious"
+							"icon" = "14 44 126 130"
+					END
 					//
-					PATCH_IF ("%subspell%" STRING_COMPARE_CASE "") BEGIN
-						// Transfer effects onto a new SPL file (if needed)
-						LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell" INT_VAR "effectID" = 39 STR_VAR "subspell_resref" = "%subspell%" END
-						//
-						INNER_ACTION BEGIN
+					INNER_ACTION BEGIN
+						WITH_SCOPE BEGIN
 							COPY_EXISTING "%subspell%.spl" "override"
 								LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+								LPF "BYPASS_OP101" INT_VAR "slpIcon" = 126 END
 							BUT_ONLY
 						END
-					END ELSE BEGIN
-						LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" END
-						LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
 					END
-				BUT_ONLY IF_EXISTS
-			END
+				END ELSE BEGIN
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 39 END
+					LPF "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY" END
+					LPF "BYPASS_OP101" INT_VAR "slpIcon" = 126 END
+				END
+			BUT_ONLY IF_EXISTS
 		END
 	END
 END
@@ -448,7 +495,9 @@ Helper functions
 */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DEFINE_PATCH_FUNCTION "EEex_bypass_op101"
+DEFINE_PATCH_FUNCTION "BYPASS_OP101"
+INT_VAR
+	"slpIcon" = "-1"
 BEGIN
 	PATCH_MATCH "%DEST_EXT%" WITH
 		"itm" BEGIN
@@ -465,9 +514,67 @@ BEGIN
 		PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
 			PATCH_MATCH SHORT_AT "%fx_off%" WITH
 				39 BEGIN
-					WRITE_LONG ("%fx_off%" + 0x24) (THIS | BIT23) // https://github.com/Bubb13/EEex/pull/61
+					PATCH_IF (MOD_IS_INSTALLED "EEex.tp2" 0) BEGIN
+						WRITE_LONG ("%fx_off%" + 0x24) (THIS | BIT23) // see "https://github.com/Bubb13/EEex/pull/61"
+						WRITE_LONG ("%fx_off%" + 0x2C) "%splIcon%"
+					END ELSE BEGIN
+						WRITE_SHORT "%fx_off%" 177 // Use EFF file
+						WRITE_LONG ("%fx_off%" + 0x4) 0 // ANYONE
+						WRITE_LONG ("%fx_off%" + 0x8) 2 // EA.IDS
+						PATCH_MATCH "%slpIcon%" WITH
+							14 BEGIN
+								WRITE_ASCII ("%fx_off%" + 0x14) "#slp01a" #8
+								TEXT_SPRINT "slpResRef" "#slp01"
+							END
+							44 BEGIN
+								WRITE_ASCII ("%fx_off%" + 0x14) "#slp02a" #8
+								TEXT_SPRINT "slpResRef" "#slp02"
+							END
+							126 BEGIN
+								WRITE_ASCII ("%fx_off%" + 0x14) "#slp03a" #8
+								TEXT_SPRINT "slpResRef" "#slp03"
+							END
+							130 BEGIN
+								WRITE_ASCII ("%fx_off%" + 0x14) "#slp04a" #8
+								TEXT_SPRINT "slpResRef" "#slp04"
+							END
+							DEFAULT
+								PATCH_FAIL "Unexpected Sleep icon"
+						END
+						WRITE_LONG ("%fx_off%" + 0x2C) 0 // blank 'special' field
+					END
+				END
+				142 BEGIN
+					PATCH_MATCH LONG_AT ("%fx_off%" + 0x8) WITH
+						14 44 126 130 BEGIN
+							WRITE_SHORT "%fx_off%" 999 // mark it for later deletion
+						END
+						DEFAULT
+					END
 				END
 				DEFAULT
+			END
+		END
+		//
+		LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 999 END
+	END
+	//
+	PATCH_IF !(MOD_IS_INSTALLED "EEex.tp2" 0) BEGIN
+		PATCH_IF !(FILE_EXISTS_IN_GAME "%slpResRef%a.eff") BEGIN
+			INNER_ACTION BEGIN
+				CREATE "eff" "%slpResRef%a"
+					WRITE_LONG 0x10 182 // Use EFF while ITM
+					WRITE_SHORT 0x2C 100 // probability1
+					WRITE_ASCII 0x70 "%slpResRef%b" #8
+			END
+		END
+		PATCH_IF !(FILE_EXISTS_IN_GAME "%slpResRef%b.eff") BEGIN
+			INNER_ACTION BEGIN
+				CREATE "eff" "%slpResRef%b"
+					WRITE_LONG 0x10 39 // Sleep
+					WRITE_LONG 0x20 1 // Wake on Damage? No
+					WRITE_SHORT 0x2C 100 // probability1
+					WRITE_LONG 0x48 "%slpIcon%"
 			END
 		END
 	END
@@ -475,16 +582,49 @@ END
 
 DEFINE_PATCH_FUNCTION "GENERAL_RACE_CLASS_SPLSTATE_PERSONALSPACE_IMMUNITY"
 BEGIN
-	PHP_EACH "patch_data" AS "key" => "value" BEGIN
+	PHP_EACH "op39_overhaul_reserved_hash" AS "key" => "value" BEGIN
 		PATCH_MATCH "%DEST_EXT%" WITH
-			"SPL" WHEN (SLONG_AT NAME1 > 0) BEGIN
-				LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 39 "opcode" = 324 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+			"SPL" BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
 			END
-			"ITM" WHEN (LONG_AT 0x18 BAND (IDS_OF_SYMBOL ("ITEMFLAG" "DROPPABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISPLAYABLE")) > 0) BEGIN
-				LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 39 "opcode" = 324 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+			"ITM" BEGIN
+				GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
 			END
 			DEFAULT
-				LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 39 "opcode" = 318 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+		END
+		//
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS // same for "*.spl" and "*.itm"
+			SET "found" = 0
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				PATCH_MATCH SHORT_AT "%fx_off%" WITH
+					318 324 BEGIN
+						PATCH_MATCH "%key_0%" WITH
+							"PERSONAL_SPACE" WHEN (SLONG_AT ("%fx_off%" + 0x4) == 0) AND (LONG_AT ("%fx_off%" + 0x8) == 13) BEGIN
+								SET "found" = 1
+							END
+							DEFAULT
+								PATCH_IF (SLONG_AT ("%fx_off%" + 0x4) == IDS_OF_SYMBOL ("%key_0%" "%key_1%")) AND (LONG_AT ("%fx_off%" + 0x8) == "%value%") BEGIN
+									SET "found" = 1
+								END
+						END
+					END
+					DEFAULT
+				END
+			END
+			//
+			PATCH_IF !("%found%") BEGIN
+				PATCH_MATCH "%DEST_EXT%" WITH
+					"SPL" WHEN (SLONG_AT NAME1 > 0) BEGIN
+						LPF "CLONE_EFFECT" INT_VAR "header" = "%ab_ind%" "match_opcode" = 39 "opcode" = 324 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+					END
+					"ITM" WHEN (LONG_AT 0x18 BAND (IDS_OF_SYMBOL ("ITEMFLAG" "DROPPABLE") BOR IDS_OF_SYMBOL ("ITEMFLAG" "DISPLAYABLE")) > 0) BEGIN
+						LPF "CLONE_EFFECT" INT_VAR "header" = "%ab_ind%" "match_opcode" = 39 "opcode" = 324 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+					END
+					DEFAULT
+						LPF "CLONE_EFFECT" INT_VAR "header" = "%ab_ind%" "match_opcode" = 39 "opcode" = 318 "parameter1" = ("%key_0%" STR_EQ "PERSONAL_SPACE" ? 0 : IDS_OF_SYMBOL ("%key_0%" "%key_1%")) "parameter2" = "%value%" "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+				END
+			END
 		END
 	END
 END
@@ -520,6 +660,7 @@ BEGIN
 			IDS_OF_SYMBOL ("ANIMATE" "GIANT_FIRE")
 			IDS_OF_SYMBOL ("ANIMATE" "GIANT_YAGA-SHURA")
 			IDS_OF_SYMBOL ("ANIMATE" "GOLEM_ICE")
+			// we should probably add more bulky animations, shouldn't we (see f.i. DRAGON_WHITE...?)
 				BEGIN
 					TEXT_SPRINT $"bulky_creature_list"("%DEST_RES%") ""
 				END
