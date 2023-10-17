@@ -515,6 +515,10 @@ COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun 
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
   LPF ALTER_EFFECT INT_VAR match_opcode = 94 opcode = 164 parameter2 = 0 END // flesh out effects below
 
+// potion of perception should provide bonus to Hide in Shadows
+COPY_EXISTING ~potn39.itm~ ~override~
+  LPF CLONE_EFFECT INT_VAR match_opcode = 59 opcode = 275 STR_VAR insert = below END
+
 // poison resistance blocking con penalty, choking noises
 COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes poison
   LPF CLONE_EFFECT INT_VAR match_opcode = 324 STR_VAR insert = last END
