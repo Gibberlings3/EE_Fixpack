@@ -41,3 +41,8 @@ APPEND bdzelma
     IF ~~ THEN EXIT
   END
 END
+
+// tbd, graion
+// corinth hands over his armor and his sword when blackmailed without clearing out the undroppable flag first
+ADD_TRANS_ACTION bdcorint BEGIN 15 END BEGIN 0 1 END ~SetItemFlags("leat10",NONDROPABLE,FALSE)
+SetItemFlags("sw1h07",NONDROPABLE,FALSE)~
