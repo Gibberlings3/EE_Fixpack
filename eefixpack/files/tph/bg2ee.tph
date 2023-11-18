@@ -700,6 +700,13 @@ ACTION_PHP_EACH cd_paperdoll_animations AS item => anim BEGIN
 
 END
 
+// tbd, graion
+// the Potion of Extra Healing used in the tutorial uses BG1EE string indices instead of oBG2 ones
+COPY_EXISTING ~ttpot.itm~ ~override~
+  WRITE_LONG 0xC 18893
+  WRITE_LONG 0x50 16264
+  WRITE_LONG 0x54 18896
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
