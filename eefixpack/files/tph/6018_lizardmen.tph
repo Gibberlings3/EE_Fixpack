@@ -17,6 +17,5 @@ COPY_EXISTING ~ms3tliz.cre~ ~override~ // Tough Lizard Man (monster summoning)
   BUT_ONLY
 
 COPY_EXISTING ~b1-12.itm~ ~override/ms3tliz.itm~ // create new tough lizardman weapon
+  WRITE_SHORT 0x1c 20 // Category: Large Swords
   WRITE_ASCII 0x22 QS #2 // staff animation
-  
-COPY_EXISTING_REGEXP GLOB ~^mliz\([QqHh].+\)\.bam$~ ~override/mli2\1.bam~ // create missing BAMs from existing animations
