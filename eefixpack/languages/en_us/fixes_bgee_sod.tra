@@ -45,3 +45,6 @@ Damage: 1d10 (missile)
 Launcher: Crossbow
 
 Weight: 0"
+
+// Name for sodcin05 cinematics: Original string is empty
+@67456 = ~[movie]Ambush~

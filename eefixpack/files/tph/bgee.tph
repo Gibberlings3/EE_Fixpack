@@ -17,6 +17,12 @@ END
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
 
+ACTION_IF game_includes_sod BEGIN
+  WITH_SCOPE BEGIN
+    INCLUDE ~eefixpack/files/tph/a7/sod_cinematics.tph~ // enable subtitles for sod cinematics
+  END
+END
+
 COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_includes_sod BEGIN
     REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
