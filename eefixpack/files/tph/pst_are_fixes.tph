@@ -39,7 +39,7 @@ COPY_EXISTING ~ar13wz.are~ ~override~
     // clearing bogus animation flags
     FOR (i = 0; i < anim_num; ++i) BEGIN
       SET off = anim_off + (i * 76)
-      WRITE_LONG (off + 0x34) (THIS BAND BNOT (BIT13 + BIT16))
+      WRITE_LONG (off + 0x34) (THIS BAND BNOT BIT13)
     END
   END
 BUT_ONLY
