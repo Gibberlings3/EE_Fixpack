@@ -39,6 +39,15 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
 
+// tbd, sam.
+// merging multi-part area animations to eliminate issues
+ACTION_FOR_EACH file IN
+  a0508bl2 a0508bl3 a0508bl4 a0508tr1 a0508tr2 a0508tr3 a1201g1l a1201g1r a1201g2l a1201g2r
+  a1201g3l a1201g3r a1202gb1 a1202gb2 a1202gb3 a1202gb4 a13wzc2a a13wzc2b a13wzca a13wzcb
+BEGIN
+  COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
+END
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
