@@ -199,3 +199,31 @@ COPY_EXISTING ~ar5007.are~ ~override~
                               STR_VAR struct_name = Door01 struct_type = door_open END
   BUT_ONLY  
 
+COPY_EXISTING ~ar6002.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    1695, 442 => 0
+    1675, 485 => 0
+    1675, 413 => 0
+    1695, 370 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 1675 bounding_top = 370 bounding_right = 1695 bounding_bottom = 485 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar6105.are~ ~override~
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    503, 627 => 0
+    457, 599 => 0
+    457, 533 => 0
+    462, 526 => 0
+    469, 524 => 0
+    481, 526 => 0
+    495, 537 => 0
+    499, 544 => 0
+    503, 556 => 0
+  END
+  LPF cd_define_area_vertices INT_VAR bounding_left = 457 bounding_top = 524 bounding_right = 503 bounding_bottom = 627 
+                              STR_VAR struct_name = Door01 struct_type = door_open END
+  BUT_ONLY  
