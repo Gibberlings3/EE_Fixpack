@@ -26,7 +26,6 @@ BEGIN
 		LAF ~TO_HEX_NUMBER~ INT_VAR ~value~ = "%damage_type%" ~prefix~ = 1 RET ~hexNumber~ END
 	END
 	ACTION_IF "%write%" BEGIN
-		OUTER_SET "count" = 0
 		WITH_SCOPE BEGIN
 			COPY_EXISTING "kitlist.2da" "%2da_filespec%"
 				DELETE_BYTES 0x0 BUFFER_LENGTH
@@ -36,7 +35,7 @@ BEGIN
 		END
 		COPY_EXISTING_REGEXP "^.+\.\(spl\|itm\)$" "override"
 			PATCH_IF ("%DEST_RES%" STRING_CONTAINS_REGEXP "^__") BEGIN
-				LPF "7EYES-O-MATIC#CORE" RET "count" END
+				LPF "7EYES-O-MATIC#CORE" END
 			END
 		BUT_ONLY
 	END ELSE BEGIN
@@ -59,8 +58,6 @@ END
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
 DEFINE_PATCH_FUNCTION "7EYES-O-MATIC#CORE"
-RET
-	"count"
 BEGIN
 	PATCH_IF !("%effectID%" == 12) OR ("%DEST_EXT%" STR_EQ "SPL") BEGIN // intentionally skip ITM files if "%effectID%" == 0xC (since op12 is usually applied with no ancillary effects...)
 		PATCH_MATCH "%DEST_EXT%" WITH
@@ -156,13 +153,19 @@ BEGIN
 			END
 			//
 			PATCH_IF "%found%" BEGIN
-				//
-				PATCH_IF "%write%" BEGIN
-					PATCH_IF !(FILE_CONTAINS_EVALUATED ("%2da_filespec%" "%DEST_FILE%")) BEGIN
+				// Record "%DEST_FILE%" if in 'write' mode
+				PATCH_WITH_SCOPE BEGIN
+					PATCH_IF "%write%" BEGIN
 						INNER_ACTION BEGIN
-							APPEND_OUTER "%2da_filespec%" "%count% %DEST_FILE%"
+							OUTER_TEXT_SPRINT "outer_destFile" "%DEST_FILE%"
+							COPY_EXISTING "%2da_filespec%" "%2da_filespec%"
+								COUNT_2DA_ROWS 0 "rows"
+								SET "count" = "%rows%" - 3
+								INSERT_2DA_ROW "%rows%" 0 "%count% %outer_destFile%"
+								// prettify
+								PRETTY_PRINT_2DA
+							BUT_ONLY UNLESS "%outer_destFile%"
 						END
-						SET "count" += 1
 					END
 				END
 				//
