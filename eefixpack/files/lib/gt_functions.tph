@@ -420,17 +420,17 @@ BEGIN
 	// Initialize
 	OUTER_TEXT_SPRINT "list_out" "%list_in%"
 	// Find the first instance of "%separator%"
-	OUTER_SET "x" = INDEX (CASE_INSENSITIVE EXACT_MATCH "%separator%" "%list_in%")
-	ACTION_IF ("%x%" == "-1") BEGIN
+	OUTER_SET "found" = INDEX (CASE_INSENSITIVE EXACT_MATCH "%separator%" "%list_in%")
+	ACTION_IF ("%found%" == "-1") BEGIN
 		// If it can't find "%separator%", then this is the last entry => Find end of string
-		OUTER_SET "x" = INDEX (CASE_INSENSITIVE EVALUATE_REGEXP "$" "%list_in%")
+		OUTER_SET "found" = INDEX (CASE_INSENSITIVE EVALUATE_REGEXP "$" "%list_in%")
 		OUTER_TEXT_SPRINT "list_out" ""
 	END
-	OUTER_SET "y" = STRING_LENGTH "%list_in%"
+	OUTER_SET "string_length" = STRING_LENGTH "%list_in%"
 	// Return the first entry
 	LAF "SUBSTRING"
 	INT_VAR
-		"length" = "%x%"
+		"length" = "%found%"
 	STR_VAR
 		"string" = "%list_in%"
 	RET
@@ -440,13 +440,53 @@ BEGIN
 	ACTION_IF ("%list_out%" STRING_COMPARE_CASE "") BEGIN
 		LAF "SUBSTRING"
 		INT_VAR
-			"start" = "%x%" + STRING_LENGTH "%separator%" // we need to take into account the length of "%separator%"
-			"length" = "%y%" - ("%x%" + STRING_LENGTH "%separator%") // we need to take into account the length of "%separator%"
+			"start" = "%found%" + STRING_LENGTH "%separator%" // we need to take into account the length of "%separator%"
+			"length" = "%string_length%" - ("%found%" + STRING_LENGTH "%separator%") // we need to take into account the length of "%separator%"
 		STR_VAR
 			"string" = "%list_in%"
 		RET
 			"list_out" = "substring"
 		END
+	END
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////// Return the number of times ~%element%~ appears in ~%list%~ (matching is case-insensitive)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_DIMORPHIC_FUNCTION "COUNT_ELEMENT_INSTANCES"
+STR_VAR
+	"list_in" = ""
+	"element" = ""
+	"separator" = " "
+RET
+	"count"
+	"list_out"
+BEGIN
+	// Initialize
+	OUTER_SET "count" = 0
+	OUTER_TEXT_SPRINT "list_out" ""
+	// Main
+	OUTER_WHILE ("%list_in%" STRING_COMPARE_CASE "") BEGIN
+		LAF "RETURN_FIRST_ENTRY"
+		STR_VAR
+			"list_in"
+			"separator"
+		RET
+			"list_in" = "list_out"
+			"entry"
+		END
+		ACTION_IF ("%entry%" STRING_EQUAL_CASE "%element%") BEGIN
+			OUTER_SET "count" += 1
+		END ELSE BEGIN
+			OUTER_TEXT_SPRINT "list_out" "%list_out%%separator%%entry%"
+		END
+	END
+	// Remove leading ~%separator%~
+	OUTER_PATCH_SAVE "list_out" "%list_out%" BEGIN
+		REPLACE_TEXTUALLY CASE_SENSITIVE EVALUATE_REGEXP "^%separator%" ""
 	END
 END
 

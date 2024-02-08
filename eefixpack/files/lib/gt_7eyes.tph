@@ -228,7 +228,13 @@ BEGIN
 							WRITE_SHORT "%fx_off%" 999
 						END*/
 						//
-						7 8 9 41 50 51 52 61 140 141 165 170 265 269 BEGIN END
+						7 8 9 50 51 52 BEGIN
+							PATCH_IF ("%fx_duration%" > 0) AND ("%effectID%" != 12) BEGIN
+								TEXT_SPRINT $"7eyes-o-matic#ancillary"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
+								WRITE_SHORT "%fx_off%" 998
+							END
+						END
+						41 61 140 141 165 170 265 269 BEGIN END
 						206 318 324 BEGIN
 							PATCH_IF ("%fx_ind%" == SHORT_AT ("%ab_off%" + 0x1E) - 1) BEGIN // if last in the effect stack...
 								SET "found_other" = 1
@@ -242,7 +248,8 @@ BEGIN
 						END
 						139 BEGIN
 							LPF "GT_GET_STRING" INT_VAR "strref" = "%fx_parameter1%" RET "string" END
-							PATCH_IF (("%feedback_string%" STRING_CONTAINS_REGEXP "\b%string%\b") == 0) BEGIN
+							LPF "COUNT_ELEMENT_INSTANCES" STR_VAR "list_in" = "%feedback_string%" "element" = "%string%" "separator" = ", " RET "count" END
+							PATCH_IF "%count%" BEGIN
 								TEXT_SPRINT $"7eyes-o-matic#ancillary"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
 								WRITE_SHORT "%fx_off%" 999
 							END
@@ -273,7 +280,8 @@ BEGIN
 									7 8 9 41 50 51 52 61 140 141 165 170 265 269 BEGIN END
 									139 BEGIN
 										LPF "GT_GET_STRING" INT_VAR "strref" = SLONG_AT 0x1C RET "string" END
-										PATCH_IF (("%feedback_string%" STRING_CONTAINS_REGEXP "\b%string%\b") == 0) BEGIN
+										LPF "COUNT_ELEMENT_INSTANCES" STR_VAR "list_in" = "%feedback_string%" "element" = "%string%" "separator" = ", " RET "count" END
+										PATCH_IF "%count%" BEGIN
 											SET "found_eff" = 1
 											TEXT_SPRINT $"7eyes-o-matic#ancillary"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
 										END
@@ -366,38 +374,38 @@ BEGIN
 								PATCH_WITH_SCOPE BEGIN
 									LPF "ADD_SPELL_ABILITY" INT_VAR ~range~ = 0x7FFF ~minimum_level~ = SHORT_AT 0x68 == 0 ? 1 : "%ab_level%" STR_VAR "icon" = "%ab_icon%" END
 									PHP_EACH "7eyes-o-matic#main" AS "fx_attribute" => "" BEGIN
-										LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
+										LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = "%fx_attribute_8%" "probability2" = "%fx_attribute_9%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = "%fx_attribute_13%" "savebonus" = "%fx_attribute_14%" "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
 									END
 									PHP_EACH "7eyes-o-matic#ancillary" AS "fx_attribute" => "" BEGIN
 										PATCH_MATCH "%fx_attribute_0%" WITH
 											321 BEGIN
-												LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%DEST_RES%" END
+												LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = "%fx_attribute_8%" "probability2" = "%fx_attribute_9%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = "%fx_attribute_13%" "savebonus" = "%fx_attribute_14%" "special" = "%fx_attribute_15%" STR_VAR "resource" = "%DEST_RES%" END
 											END
 											DEFAULT
-												LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
+												LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = "%fx_attribute_8%" "probability2" = "%fx_attribute_9%" "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = "%fx_attribute_13%" "savebonus" = "%fx_attribute_14%" "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
 										END
 									END
 								END
 							BUT_ONLY
 						END
 					END
-					// Patch parent file
-					LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 1000 "opcode" = ("%effectID%" == 12 ? 146 : 326) "parameter1" = ("%effectID%" == 12 ? 0 : "%splstate%") "parameter2" = ("%effectID%" == 12 ? 1 : 111) "timing" = 1 "duration" = 0 "savingthrow" = ("%effectID%" == 12 ? 0 : "-1") "savebonus" = ("%effectID%" == 12 ? 0 : "-20") "dicenumber" = ("%effectID%" == 12 ? 0 : "-1") "dicesize" = ("%effectID%" == 12 ? 0 : "-1") "special" = 0 STR_VAR "resource" = "%subspell_resref%" END
+					// Patch parent file => intentionally check probabilities (see iwdee "sflail.itm", possibly others...) and saving throw (needed for op12, "%WIZARD_GREAT_SHOUT%", possibly others...) on the subspell
+					LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 1000 "opcode" = ("%effectID%" == 12 ? 146 : 326) "parameter1" = ("%effectID%" == 12 ? 0 : "%splstate%") "parameter2" = ("%effectID%" == 12 ? 1 : 111) "timing" = 1 "duration" = 0 "probability1" = 100 "probability2" = 0 "savingthrow" = 0 "savebonus" = 0 "dicenumber" = ("%effectID%" == 12 ? 0 : "-1") "dicesize" = ("%effectID%" == 12 ? 0 : "-1") "special" = 0 STR_VAR "resource" = "%subspell_resref%" END
 					LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 1000 END
 					LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 999 END
 					//
 					PATCH_WITH_SCOPE BEGIN
 						PHP_EACH "7eyes-o-matic#ancillary" AS "fx_attribute" => "" BEGIN
 							PATCH_MATCH "%fx_attribute_0%" WITH
-								174 BEGIN
-									SET "restore_wav" = 0
+								7 8 9 50 51 52 174 BEGIN
+									SET "restore_cosmetic" = 0
 									PHP_EACH "7eyes-o-matic#other" AS "fx_attribute2" => "" BEGIN
-										PATCH_IF ("%fx_attribute2_7%" == "%fx_attribute_7%") BEGIN
-											SET "restore_wav" = 1
+										PATCH_IF ("%fx_attribute2_7%" == "%fx_attribute_7%") AND ("%fx_attribute2_0%" != 0xC) BEGIN
+											SET "restore_cosmetic" = 1
 										END
 									END
-									PATCH_IF "%restore_wav%" BEGIN
-										LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 998 "opcode" = 174 END
+									PATCH_IF "%restore_cosmetic%" BEGIN
+										LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 998 "opcode" = "%fx_attribute_0%" END
 									END ELSE BEGIN
 										LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "multi_match" = 1 "match_opcode" = 998 END
 									END
