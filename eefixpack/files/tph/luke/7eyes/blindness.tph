@@ -10,46 +10,44 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
+					"wand19" => "wand19a"
 				END
 			END
 			(GAME_IS ~bg2ee eet~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
+					// parent resref => child resref
+					"wand19" => "wand19a"
 				END
 			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"udart3b" , "-1" , "0,1,2,3,4" => "udart3b" // Blinding Dart +2
-					"wand19" , "-1" , "3,9,0,4" => "wand19b" // Wand of Cursing
-					"zze6pe" , "-1" , "1,2,3,4,5,6" => "zze6pe" // Pig's Eye +2
+					// parent resref => child resref
+					"udart3b" => "udart3b" // Blinding Dart +2
+					"wand19" => "wand19a" // Wand of Cursing
+					"zze6pe" => "zze6pe" // Pig's Eye +2
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.itm" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.itm" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 74
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"icon" = "^8$"
+						"string" = "^\(Blinded\|Blindness\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 74 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 
@@ -63,66 +61,82 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			(GAME_IS ~bgee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"bdbrac01" , "-1" , "1=>0" => "" // Bracers of the Shuttered Lid
-					"bdshld02" , "-1" , "3,1,2,4,5,6,7,8" => "bdshld02" // Shield of Barnassus: The Suncatcher
-					"bdvenoms" , "-1" , "3,4,6,10" => "bdvenom0" // Venom Spit ("bdnereid.bcs")
-					"bdvenoms" , "-1" , "3=>0" => "" // Venom Spit ("bdnereid.bcs")
-					"%SUN_SOUL_SUN_SOULBEAM%a" , "-1" , "3,4,5" => "%SUN_SOUL_SUN_SOULBEAM%b"
-					"spdr101" , 0 , "2=>0,0=>2" => "" // Chromatic Orb (Avenger)
-					"spdr101" , 3 , "0=>3" => "" // Chromatic Orb (Avenger)
-					"%SHADOW_DRAIN%" , "-1" , "1=>-1,0=>-1,2=>-1" => ""
-					"%SHADOW_DRAGON_BREATH%" , "-1" , "1=>-1,0=>-1,2=>-1" => ""
-					"%MEPHIT_MIST%" , "-1" , "3=>0,5=>0" => ""
-					"%MEPHIT_SOOTY_BALL%" , "-1" , "4,0,2,3,5,6" => "%MEPHIT_SOOTY_BALL%A"
-					//"%CLERIC_SUNRAY%" "override" // fixed elsewhere
-					"%WIZARD_BLINDNESS%" , "-1" , "1=>0" => ""
-					"%WIZARD_CHROMATIC_ORB%" , 0 , "2=>0,0=>2" => ""
-					"%WIZARD_CHROMATIC_ORB%" , 3 , "0=>3" => ""
-					"%WIZARD_GLITTERDUST%" , "-1" , "3,0,4" => "%WIZARD_GLITTERDUST%A"
-					"%WIZARD_DARKNESS_15_FOOT%" , "-1" , "3=>2" => ""
-					"%WIZARD_PRISMATIC_SPRAY%" , "-1" , "7,0,8" => "%WIZARD_PRISMATIC_SPRAY%C"
-					"%WIZARD_POWER_WORD_BLIND%" , "-1" , "1=>0" => ""
-					"%POWERWORD_BLIND%" , "-1" , "1=>0" => ""
-					"spwm178" , "-1" , "1=>0" => "" // Blindness (wild surge)
+					// parent resref => child resref
+					"bdbrac01" => "" // Bracers of the Shuttered Lid
+					"bdshld02" => "bdshd02a" // Shield of Barnassus: The Suncatcher
+					"bdvenoms" => "bdvenomb" // Venom Spit ("bdnereid.bcs")
+					"%SUN_SOUL_SUN_SOULBEAM%a" => "%SUN_SOUL_SUN_SOULBEAM%b"
+					"spdr101" => "spdr101a" // Chromatic Orb (Avenger)
+					"%SHADOW_DRAIN%" => "%SHADOW_DRAIN%a"
+					"%SHADOW_DRAGON_BREATH%" => "%SHADOW_DRAGON_BREATH%a"
+					"%MEPHIT_MIST%" => "%MEPHIT_MIST%a"
+					"%MEPHIT_SOOTY_BALL%" => "%MEPHIT_SOOTY_BALL%a"
+					//"%CLERIC_SUNRAY%" // fixed elsewhere
+					"%WIZARD_BLINDNESS%" => ""
+					"%WIZARD_CHROMATIC_ORB%" => "%WIZARD_CHROMATIC_ORB%a"
+					"%WIZARD_GLITTERDUST%" => "%WIZARD_GLITTERDUST%a"
+					"%WIZARD_DARKNESS_15_FOOT%" => ""
+					"%WIZARD_PRISMATIC_SPRAY%" => "%WIZARD_PRISMATIC_SPRAY%a"
+					"%WIZARD_POWER_WORD_BLIND%" => ""
+					"%POWERWORD_BLIND%" => ""
+					"spwm178" => "" // Blindness (wild surge)
 				END
 			END
-			(GAME_IS ~bg2ee eet~) BEGIN END
+			(GAME_IS ~bg2ee eet~) BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
+					// parent resref => child resref
+					"ohrdark" => "" // Darkness, 15' Radius
+					"%SUN_SOUL_SUN_SOULBEAM%a" => "%SUN_SOUL_SUN_SOULBEAM%b"
+					"spdr101" => "spdr101a" // Chromatic Orb (Avenger)
+					"%YELLOW_DRAGON_BREATH%" => "%YELLOW_DRAGON_BREATH%a"
+					"%SHADOW_DRAIN%" => "%SHADOW_DRAIN%a"
+					"%SHADOW_DRAGON_BREATH%" => "%SHADOW_DRAGON_BREATH%a"
+					"%MEPHIT_MIST%" => "%MEPHIT_MIST%a"
+					"%MEPHIT_SOOTY_BALL%" => "%MEPHIT_SOOTY_BALL%a"
+					//"%CLERIC_SUNRAY%" "override" // fixed elsewhere
+					"%WIZARD_BLINDNESS%" => ""
+					"%WIZARD_CHROMATIC_ORB%" => "%WIZARD_CHROMATIC_ORB%a"
+					"%WIZARD_GLITTERDUST%" => "%WIZARD_GLITTERDUST%a"
+					"%WIZARD_PRISMATIC_SPRAY%" => "%WIZARD_PRISMATIC_SPRAY%a"
+					"%WIZARD_POWER_WORD_BLIND%" => ""
+					"%POWERWORD_BLIND%" => ""
+					"spwm178" => "" // Blindness (wild surge)
+				END
+			END
 			(GAME_IS ~iwdee~) BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
-					// parent resref , ability , permutation/extract => child resref
-					"#sunrund" , "-1" , "3=>1" => ""
-					"%CLERIC_SUNSCORCH%" , "-1" , "1=>-1,2=>-1,3=>-1" => ""
-					"%CLERIC_SOL_SEARING_ORB%B" , "-1" , "0,1,2" => "%CLERIC_SOL_SEARING_ORB%D"
-					"%CLERIC_SOL_SEARING_ORB%C" , "-1" , "0,1,2" => "%CLERIC_SOL_SEARING_ORB%E"
-					//"%CLERIC_SUNRAY%" , "-1" , "0,2,3,4,5" => "%CLERIC_SUNRAY%A" -- fixed elsewhere
-					"%WIZARD_GLITTERDUST%" , "-1" , "2,1,3" => "%WIZARD_GLITTERDUST%A"
+					// parent resref => child resref
+					"#sunrund" => "#sunrun0"
+					"spdr101" => "spdr101a" // Chromatic Orb (Avenger)
+					"%CLERIC_SUNSCORCH%" => "%CLERIC_SUNSCORCH%a"
+					"%CLERIC_SOL_SEARING_ORB%b" => "%CLERIC_SOL_SEARING_ORB%d"
+					"%CLERIC_SOL_SEARING_ORB%c" => "%CLERIC_SOL_SEARING_ORB%e"
+					//"%CLERIC_SUNRAY%" => "%CLERIC_SUNRAY%A" -- fixed elsewhere
+					"%WIZARD_CHROMATIC_ORB%" => "%WIZARD_CHROMATIC_ORB%a"
+					"%WIZARD_GLITTERDUST%" => "%WIZARD_GLITTERDUST%a"
+					"%WIZARD_PRISMATIC_SPRAY%" => "%WIZARD_PRISMATIC_SPRAY%a"
 				END
 			END
 			DEFAULT
 				FAIL "Game not supported"
 		END
 		/* Main */
-		ACTION_PHP_EACH "patch_data" AS "x" => "y" BEGIN
-			COPY_EXISTING "%x_0%.spl" "override"
+		ACTION_PHP_EACH "patch_data" AS "parent_resref" => "child_resref" BEGIN
+			COPY_EXISTING "%parent_resref%.spl" "override"
 				// Transfer effects onto a new SPL file (if needed)
-				PATCH_IF ("%y%" STRING_COMPARE_CASE "") BEGIN
+				PATCH_IF ("%child_resref%" STRING_COMPARE_CASE "") BEGIN
 					LAUNCH_PATCH_FUNCTION "gt_extract_effects_as_subspell"
 					INT_VAR
-						"ability" = "%x_1%"
+						"effectID" = 74
 					STR_VAR
-						"subspell_resref" = "%y%"
-						"extract" = "%x_2%"
+						"subspell_resref" = "%child_resref%"
+						"extract" = "^8$"
+						"string" = "^\(Blinded\|Blindness\)$"
 					END
 				END ELSE BEGIN
-					LAUNCH_PATCH_FUNCTION "gt_permute_effects"
-					INT_VAR
-						"ability" = "%x_1%"
-					STR_VAR
-						"permutation" = "%x_2%"
-					END
+					LAUNCH_PATCH_FUNCTION "gt_reorder_effect_stack" INT_VAR "effectID" = 74 END
 				END
-			BUT_ONLY_IF_IT_CHANGES
+			BUT_ONLY_IF_IT_CHANGES IF_EXISTS
 		END
 	END
 END

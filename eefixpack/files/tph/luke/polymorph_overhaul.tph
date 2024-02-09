@@ -115,7 +115,8 @@ BEGIN
 	ACTION_CLEAR_ARRAY ~%WIZARD_SHAPECHANGE%~
 	ACTION_CLEAR_ARRAY ~POLYITEM~
 	ACTION_CLEAR_ARRAY ~POLYFORM_abort~
-	// 
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "POLYMORPH_IMMUNITY" END
+	//
 	LAUNCH_ACTION_FUNCTION "ADD_SPLPROT_ENTRY"
 	INT_VAR
 		"stat" = IDS_OF_SYMBOL ("STATS" "POLYMORPHED")
@@ -748,6 +749,7 @@ BEGIN
 										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 174 "power" "target" = ("%hostile%" ? 2 : 1) "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~EFF_P07~ END // Play sound
 									END
 							END
+							LPF "CLONE_EFFECT" INT_VAR "check_globals" = 0 "check_headers" = ("%hostile%" ? 1 : 0) "match_opcode" = 146 "opcode" = 324 "parameter1" = IDS_OF_SYMBOL ("splstate" "POLYMORPH_IMMUNITY") "parameter2" = 110 "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "match_resource" = "spinhumr" "resource" = "%DEST_RES%" END
 						BUT_ONLY
 					END
 					// Polymorph effect moved to subspell if it needs a duration
