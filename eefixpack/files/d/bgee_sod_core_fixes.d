@@ -41,3 +41,6 @@ APPEND bdzelma
     IF ~~ THEN EXIT
   END
 END
+
+// buy and sell markup arguments are specified in the wrong order
+REPLACE_ACTION_TEXT ~bdjegg~ ~ChangeStoreMarkup("\([^"]+\)",\([0-9]+\),\([0-9]+\))~ ~ChangeStoreMarkup("\1",\3,\2)~
