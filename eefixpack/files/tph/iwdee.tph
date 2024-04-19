@@ -139,6 +139,11 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "WING_BUFFET_VS_MR" END
 END
 
+// argent77
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/a7/improved_troll_regeneration.tph"
+END
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
