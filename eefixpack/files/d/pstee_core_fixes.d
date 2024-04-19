@@ -20,3 +20,8 @@ ALTER_TRANS DPILLAR BEGIN 35 36 END BEGIN 3 END BEGIN "JOURNAL" "#53500" END
 ALTER_TRANS IPTEETH BEGIN 3 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("IPTeeth","M1PTeeth",1,0,0)~ END
 ALTER_TRANS IPTEETH BEGIN 4 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("M1PTeeth","M2PTeeth",1,0,0)~ END
 ALTER_TRANS IPTEETH BEGIN 5 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("M2PTeeth","M3PTeeth",1,0,0)~ END
+
+// TTO/Companion cutscenes in Fortress of Regrets should clear all actions to prevent TNO from being killed
+REPLACE_TRANS_ACTION DMACH1 BEGIN 2 4 6 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~
+REPLACE_TRANS_ACTION DMACH3 BEGIN 2 3 5 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~
+REPLACE_TRANS_ACTION DMACH4 BEGIN 2 3 5 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~

@@ -200,3 +200,20 @@ COPY_EXISTING ~0000bxd2.bcs~ ~override~
       ~%action%(~
   END
 BUT_ONLY
+
+
+// TTO's voiced line "TRA011.WAV" should not be cut off by his following voiced line
+COPY_EXISTING ~1201csg8.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~WaitSync(1)~ ~WaitSync(3)~
+  END
+BUT_ONLY
+
+
+// Fix for Nordom sometimes not "dying" in the TTO/Nordom cutscene in the Fortress of Regrets
+// Note: Issue is possibly a side effect of adding ClearAllActions() to DMACH3.DLG (see ../d/pstee_core_fixes.d)
+COPY_EXISTING ~1201csn8.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Attack("Trans")~ ~AttackOneRound("Trans")~
+  END
+BUT_ONLY
