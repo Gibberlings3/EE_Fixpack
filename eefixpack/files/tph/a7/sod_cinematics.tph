@@ -1,0 +1,35 @@
+// Enables missing or disabled cinematics subtitles
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY sodcin03_entries BEGIN
+  // strref => lua subtitle entry
+  ~37711~ => ~{'sodcin03', 100, 175, 37711, 2, 1},~
+  ~37712~ => ~{'sodcin03', 205, 345, 37712, 2, 1},~
+  ~37713~ => ~{'sodcin03', 445, 525, 37713, 2, 1},~
+  ~37714~ => ~{'sodcin03', 550, 575, 37714, 2, 1},~
+  ~37715~ => ~{'sodcin03', 595, 705, 37715, 2, 1},~
+  ~37716~ => ~{'sodcin03', 725, 820, 37716, 2, 1},~
+END
+
+OUTER_SPRINT sodcin05_block ~%TAB%{'sodcin05', 165, 305, 70244, 2, 1},
+%TAB%{'sodcin05', 380, 500, 70245, 2, 1},
+%TAB%{'sodcin05', 550, 715, 70247, 2, 1}~
+
+COPY_EXISTING ~bgee.lua~ ~override~
+  // update "Murder" cinematics subtitles
+  PHP_EACH sodcin03_entries AS strref => entry BEGIN
+    REPLACE_TEXTUALLY
+      ~^\([ %TAB%]*\)--[ %TAB%]*{'sodcin03',[ %TAB%]*[0-9]+,[ %TAB%]*[0-9]+,[ %TAB%]*%strref%,[ %TAB%]*\([0-9]+\),[ %TAB%]*\([0-9]+\)}[,]?~
+      ~\1%entry%~
+  END
+
+  // add "Ambush" cinematics subtitles
+  REPLACE_TEXTUALLY
+    ~^\([ %TAB%]*--[ %TAB%]*{'sodcin03',[ %TAB%]*[0-9]+,[ %TAB%]*[0-9]+,[ %TAB%]*37718,[ %TAB%]*\([0-9]+\),[ %TAB%]*\([0-9]+\)}.*\)~
+    ~\1%WNL%%WNL%%sodcin05_block%~
+BUT_ONLY
+
+COPY_EXISTING ~movidesc.2da~ ~override~
+  PATCH_IF (INDEX_BUFFER(~SODCIN05~) < 0) BEGIN
+    REPLACE_TEXTUALLY CASE_INSENSITIVE ~^\(SODCIN03[ %TAB%]+[0-9]+.*\)~ ~\1%WNL%SODCIN05   67456~
+  END
+BUT_ONLY
