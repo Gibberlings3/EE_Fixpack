@@ -1,0 +1,99 @@
+// Blast Skeletons should self-destruct more reliably
+// https://www.gibberlings3.net/forums/topic/37005-iwd-blast-skeletons-scripted-self-destruction-is-unreliable/
+
+WITH_SCOPE BEGIN
+  // Scripts responsible for triggering self-destruct sequence
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY scripts BEGIN
+    ~4003BLST~ => 1
+    ~EFBSTSKL~ => 1
+  END
+
+  // Remove reference to original script
+  COPY_EXISTING ~ar4003.are~ ~override~
+                ~ar9714.are~ ~override~
+    GET_OFFSET_ARRAY actors 0x54 4 0x58 2 0 0 0x110
+    PHP_EACH actors AS idx => ofs BEGIN
+      READ_ASCII (ofs + 0x80) resref (8) NULL
+      PATCH_IF (~%resref%~ STR_EQ ~SKELBLST~) BEGIN
+        // Scan available script slots
+        FOR (cur_ofs = (ofs + 0x50); cur_ofs < (ofs + 0x80); cur_ofs += 8) BEGIN
+          READ_ASCII cur_ofs script (8) NULL
+          TO_UPPER ~script~
+          PATCH_IF (VARIABLE_IS_SET $scripts(~%script%~)) BEGIN
+            WRITE_ASCII cur_ofs ~~ (8)
+          END
+        END
+      END
+    END
+  BUT_ONLY
+
+  // Create self-destruct spell
+  COPY_EXISTING ~vorpal.spl~ ~override/sklblsta.spl~
+    // [Cosmetic] Use more suitable spell icon (Snilloc's Snowball Swarm)
+    WRITE_ASCII 0x3a ~SPWI204C~ (8)
+    WRITE_ASCII (LONG_AT 0x64) + 4 ~SPWI204C~ (8)
+
+    // Clear existing effects
+    LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = "-1" END
+
+/*
+    // [*** OPTIONAL ***] Prevent self-destruction when creature is helpless (e.g. under effect of Hold Undead)
+    // 
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode = 318      // Protection from Resource
+        target = 2        // Preset target
+        parameter1 = BIT5 // Value: STATE_HELPLESS
+        parameter2 = 138  // Type: STATE is specified value
+        timing = 0        // Instant/Limited
+        resist_dispel = 0 // Natural/Nonmagical
+      STR_VAR
+        resource = ~SKLBLSTA~
+    END
+*/
+
+    // Add "Cast spell: Snilloc's Snowball Swarm"
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode = 146      // Cast spell
+        target = 2        // Preset target
+        parameter2 = 1    // Mode: Cast instantly (caster level)
+        timing = 1        // Instant/Permanent until death
+        resist_dispel = 2 // Not dispel/Bypass resistance
+      STR_VAR
+        resource = ~SPWI204~
+    END
+    // Add "Kill target"
+    LPF ADD_SPELL_EFFECT
+      INT_VAR
+        opcode = 13       // Kill target
+        target = 2        // Preset target
+        parameter2 = BIT2 // Death type: Normal
+        timing = 1        // Instant/Permanent until death
+        resist_dispel = 2 // Not dispel/Bypass resistance
+    END
+  BUT_ONLY
+
+  // Create self-destruct item
+  COPY_EXISTING ~ring95.itm~ ~override/sklblst.itm~
+    // Clear existing effects
+    LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = "-1" END
+
+    // Add conditional effect
+    LPF ADD_ITEM_EQEFFECT
+      INT_VAR
+        opcode = 232    // Cast Spell on Condition
+        target = 1      // Self
+        parameter1 = 0  // Target: Myself
+        parameter2 = 11 // Condition: TookDamage() / instant
+        timing = 2      // Instant/While equipped
+      STR_VAR
+        resource = ~SKLBLSTA~
+    END
+  BUT_ONLY
+
+  // Equip self-destruct item
+  COPY_EXISTING ~skelblst.cre~ ~override~
+    ADD_CRE_ITEM ~SKLBLST~ #0 #0 #0 ~none~ ~ring~
+  BUT_ONLY
+END
