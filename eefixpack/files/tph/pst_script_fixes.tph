@@ -1,3 +1,72 @@
+// Add workaround for buggy GlobalTimer() actions:
+// https://www.gibberlings3.net/forums/topic/34892-1/?do=findComment&comment=320376
+
+// Replace: SetGlobalTimer(name,scope,time) -> SetGlobalTimerRandom(name,scope,time,time)
+COPY_EXISTING ~0500bedi.bcs~ ~override~
+              ~0500ggrd.bcs~ ~override~
+              ~0502gena.bcs~ ~override~
+              ~0502gfcl.bcs~ ~override~
+              ~0502guaa.bcs~ ~override~
+              ~0503bedi.bcs~ ~override~
+              ~0503ggrd.bcs~ ~override~
+              ~0503keld.bcs~ ~override~
+              ~0503rosa.bcs~ ~override~
+              ~0503sars.bcs~ ~override~
+              ~0503smth.bcs~ ~override~
+              ~0503work.bcs~ ~override~
+              ~0503xand.bcs~ ~override~
+              ~0511ing1.bcs~ ~override~
+              ~0511ing2.bcs~ ~override~
+              ~0512grd1.bcs~ ~override~
+              ~0512grd2.bcs~ ~override~
+              ~0512grd3.bcs~ ~override~
+              ~0512grd4.bcs~ ~override~
+              ~0512wkat.bcs~ ~override~
+              ~0600dilg.bcs~ ~override~
+              ~0600ral1.bcs~ ~override~
+              ~0602sen8.bcs~ ~override~
+              ~0604sen4.bcs~ ~override~
+              ~0612pat1.bcs~ ~override~
+              ~1600t1ld.bcs~ ~override~
+              ~1600t2ld.bcs~ ~override~
+              ~1600t3ld.bcs~ ~override~
+              ~1600t4ld.bcs~ ~override~
+              ~1600t5ld.bcs~ ~override~
+              ~1600t6ld.bcs~ ~override~
+              ~1600t7ld.bcs~ ~override~
+              ~ar0500.bcs~ ~override~
+              ~ar0502.bcs~ ~override~
+              ~ar0503.bcs~ ~override~
+              ~ar0511.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY
+      ~SetGlobalTimer("\([^"]+\)","\([^"]+\)",\([^)]+\))~
+      ~SetGlobalTimerRandom("\1","\2",\3,\3)~
+  END
+BUT_ONLY
+
+// Dialogue actions require a different approach, as using the same timer value
+// for min and max results in a random timer between 0 and max.
+COPY_EXISTING ~dgaoha.dlg~ ~override~
+              ~dgspirit.dlg~ ~override~
+              ~dlenny.dlg~ ~override~
+              ~dsabast.dlg~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    // SetGlobalTimer(name,scope,time) -> SetGlobalTimerRandom(name,scope,time,time+1)
+    REPLACE_EVALUATE
+    ~SetGlobalTimer("\([^"]+\)","\([^"]+\)",\([^)]+\))~
+    BEGIN
+      PATCH_IF (IS_AN_INT ~MATCH3~) BEGIN
+        SET MATCH4 = MATCH3 + 1
+      END ELSE BEGIN
+        SET MATCH4 = IDS_OF_SYMBOL(~gtimes~ ~%MATCH3%~) + 1
+      END
+    END
+    ~SetGlobalTimerRandom("%MATCH1%","%MATCH2%",%MATCH3%,%MATCH4%)~
+  END
+BUT_ONLY
+
+
 // Replace instances of Attack() -> RunningAttack() in combat scripts
 
 // Controls which "Attack()" instance should be updated
