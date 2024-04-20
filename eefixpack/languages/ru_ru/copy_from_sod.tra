@@ -1,136 +1,173 @@
-@52366 = ~Малая массовая темнота~
-@52367 = ~Малая массовая темнота
-(Изменение)
+/* added manually by cam so this can be re-run more easily
+
+INCLUDE "%MOD_FOLDER%/files/tph/dw/get_strings_from_game.tph"
+
+OUTER_SPRINT $strings("52366") "" // [cam] darkness 15' name
+OUTER_SPRINT $strings("52367") "" // [cam] darkness 15' descript
+OUTER_SPRINT $strings("52368") "" // [cam] faerie fire name
+OUTER_SPRINT $strings("52369") "" // [cam] faerie fire descript
+OUTER_SPRINT $strings("52370") "" // [cam] dancing lights name
+OUTER_SPRINT $strings("52371") "" // [cam] dancing lights descript
+OUTER_SPRINT $strings("56587") "" // [cam] dancing lights creature name
+OUTER_SPRINT $strings("61978") ""
+OUTER_SPRINT $strings("61979") ""
+OUTER_SPRINT $strings("62005") ""
+OUTER_SPRINT $strings("62009") ""
+OUTER_SPRINT $strings("62010") ""
+OUTER_SPRINT $strings("62033") ""
+OUTER_SPRINT $strings("62034") ""
+OUTER_SPRINT $strings("62052") ""
+OUTER_SPRINT $strings("62053") ""
+OUTER_SPRINT $strings("62076") ""
+OUTER_SPRINT $strings("62077") ""
+OUTER_SPRINT $strings("69261") ""
+OUTER_SPRINT $strings("69262") ""
+OUTER_SPRINT $strings("70356") ""
+OUTER_SPRINT $strings("70357") ""
+OUTER_SPRINT $strings("70365") ""
+OUTER_SPRINT $strings("70382") ""
+OUTER_SPRINT $strings("70383") ""
+OUTER_SPRINT $strings("70384") ""
+OUTER_SPRINT $strings("70385") ""
+
+LAF get_strings_from_game END
+
+*/
+
+@52366 = ~Темнота в радиусе 15 футов~
+@52367 = ~Темнота в радиусе 15 футов
+(Преобразование)
 
 Уровень: 2
-Дальность: 30 футов
+Дистанция: 30 футов
 Длительность: 1 ход
 Время чтения: 2
-Область действия: в радиусе 8 футов
+Зона действия: радиус 8 футов
 Спасбросок: нет
 
-Вызывает полную кромешную тьму. Ни дневной, ни магический свет не работает в области эффекта. Все видения (включая инфравидение) строго ограничено; любое враждебное существо попавшее в зону эффекта ослепляется в соответствии с заклинанием волшебника 1-го уровня. Существа, покинувшие зону, покрытую темнотой, восстанавливают своё видение через 1 раунд.~
+Это заклинание вызывает полную, кромешную тьму. Ни дневной, ни магический свет не работает в области эффекта. Любое зрение (включая инфравидение) строго ограничено; любое враждебное существо попавшее в зону эффекта практически ослеплено, (эффекты, как от соответствующего заклинания волшебника первого уровня). Существа, покинувшие зону, покрытую тьмой, восстанавливают своё зрение через 1 раунд.~
 @52368 = ~Волшебный огонь~
 @52369 = ~Волшебный огонь
-(Изменение)
+(Преобразование)
 
 Уровень: 1
 Сфера: Погода
-Дальность: поле зрения заклинателя
+Дистанция: поле зрения заклинателя
 Длительность: 4 раунда/уровень
 Время чтения: 4
-Область действия: в радиусе 10 футов
+Зона действия: радиус 10 футов
 Спасбросок: нет
 
-Это заклинание обводит одно или несколько существ бледно-фиолетовым сиянием, из-за чего их позиции и движения становятся легко видимыми. По обведённым существам легче наносить удары, данные существа получают ухудшение −2 к классу защиты.~
+Это заклинание обводит одно или несколько существ бледно-фиолетовым сиянием из-за чего их позиции и движения становятся легко видимыми. По обведённым существам легче наносить удары, данные существа получают штраф -2 к классу защиты.~
 @52370 = ~Танцующие огоньки~
 @52371 = ~Танцующие огоньки
-(Изменение)
+(Преобразование)
 
 Уровень: 1
-Дальность: поле зрения заклинателя
+Дистанция: поле зрения заклинателя
 Длительность: 2 раунда/уровень
 Время чтения: 1
-Область действия: особая
+Зона действия: особая
 Спасбросок: нет
 
-Создаёт до четырёх сфер света (таких, как блуждающие огоньки) или одну слегка светящуюся, слегка гуманоидную форму, в некоторой степени похожую на элементаля огня. Танцующие огоньки летят произвольно, не зависимо от движения волшебника. Хотя огоньки не причиняют никакого физического вреда, они могут отвлекать врагов, пока заклинания не истечёт или не рассеется оружием или магией.~
-@56587 = ~Dancing Light~
-@61978 = ~Plate Mail +1~
-@61979 = ~Plate mail is a combination of chain armor with metal plates covering the vital areas such as the chest, abdomen and groin. Similar in construction to bronze plate mail, true plate mail comprises chain and leather. In addition, this suit of plate mail is enchanted and gives additional bonuses to the wearer's Armor Class.
+Это заклинание создаёт до четырёх светящихся сфер света (таких, как блуждающие огоньки) или одну слегка светящуюся, человекообразную форму, в некоторой степени похожу на элемент огня. Танцующие огоньки летят произвольно, не следуя за движением волшебника. Хотя огоньки не причиняют никакого физического вреда, они могут отвлекать врагов, пока их длительность не истечёт или не рассеется оружием или магией.~
+@56587 = ~Танцующий огонёк~
+@61978 = ~Латный доспех +1~
+@61979 = ~Латный доспех представляет собой комбинацию кольчужного доспеха с металлическими пластинами, закрывающими жизненно важные области, такие как грудь, живот и пах. Похожий по строению на бронзовый латный доспех, настоящий латный доспех включает в себя кольчугу и кожу. Кроме того, этот доспех зачарован и даёт дополнительные бонусы к классу защиты владельцу.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Armor Class: 2 (-1 vs. slashing)
-Requires:
- 12 Strength
+Класс защиты: 2 (-1 против рубящего)
+Требования:
+ Сила 12
 
-Weight: 20~
-@62005 = ~Amulet of Protection +1~
-@62009 = ~Boots of Speed~
-@62010 = ~These boots are made from the tanned hide of an animal such as a horse or a cheetah. They are then enchanted to enable the wearer to move nearly as fast as that animal. Footgear of this sort is prized for allowing one to outmaneuver or even escape one's foes. The boots do not fatigue the wearer beyond what would result from moving at a normal rate.
+Вес: 20~
+@62005 = ~Амулет защиты +1~
+@62009 = ~Сапоги скорости~
+@62010 = ~Эти сапоги делают из дублёной шкуры животных, таких как лошадь или гепард. Затем их зачаровывают, чтобы позволить владельцу двигаться почти так же быстро, как это животное. Такая обувь ценится за то, что она позволяет обходить врагов и даже сбегать от них. Сапоги не утомляют носящего их сверх того, что было бы при движении с обычной скоростью.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Doubles movement rate
+Свойства экипировки:
+- удваивают скорость передвижения.
 
-Weight: 4~
-@62033 = ~Ring of Fire Resistance~
-@62034 = ~The wearer of this ring enjoys partial resistance to flame, whether its origins be in mundane sources, like torches or bonfires, or magical ones, such as fiery dragon breath or spells.
+Вес: 4~
+@62033 = ~Кольцо сопротивления огню~
+@62034 = ~Владелец этого кольца получает частичное сопротивление огню, независимо от его происхождения, будь то обычные источники огня, такие как факелы или костры, или магические, такие как огненное дыхание дракона или заклинания.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Fire Resistance: +40%
+Свойства экипировки:
+- сопротивление огню: +40%.
 
-Weight: 0~
-@62052 = ~Ring of Protection +2~
-@62053 = ~A ring of protection improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of such a ring prevent it from being worn with other magical items of protection, including enchanted armor.
+Вес: 0~
+@62052 = ~Кольцо защиты +2~
+@62053 = ~Кольцо защиты улучшает класс защиты и спасброски владельца против всех форм атак. Магические свойства такого кольца не позволяют носить его с другими магическими предметами защиты, включая зачарованные доспехи.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Armor Class: +2
-– Saving Throws: +2
+Свойства экипировки:
+- класс защиты: +2;
+- спасброски: +2.
 
-Weight: 0~
-@62076 = ~Ring of Free Action~
-@62077 = ~Enemies have a hard time slowing this ring's wearer down. The runes etched in the silver band ward off spells designed to impede movement, granting its owner a freedom of mobility others affected by such magic are denied.
+Вес: 0~
+@62076 = ~Кольцо свободы действий~
+@62077 = ~Врагам трудно остановить обладателя этого кольца. Руны, выгравированные на серебряной оправе, отклоняют заклинания препятствующие движению, предоставляя владельцу возможность свободно передвигаться даже под воздействием запрещающей это магии.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– The wearer is immune to everything, magical and otherwise, that affects mobility in any way. This includes Haste and Slow spells.
+Свойства экипировки:
+- обладатель получает иммунитет к любым воздействиям, как полезным, так и негативным, которые влияют его на передвижение. Это включает эффекты это заклинаний, таких как "Ускорение" и "Замедление".
 
-Weight: 0~
-@69261 = ~The scimitar, or "shamshir" as it was originally called, has a single-edged blade with a significant curve and is tapered to an elongated, sharp point. It is perhaps slower than other weapons of the same type, though it compensates by the amount of damage it is capable of. This particular weapon has been enhanced magically to complement the skill of the wielder.
+Вес: 0~
 
-STATISTICS:
+@69261 = ~Скимитар, или «шамшир», как его первоначально называли, имеет одностороннее лезвие со значительным изгибом, которое сужается к удлинённому острию. Возможно, он медленнее, чем другие оружия подобного типа, но это компенсируется количеством наносимого им урона. Конкретно это оружие было магически улучшено, чтобы дополнить мастерство владельца.
+
+ПАРАМЕТРЫ:
 
 THAC0: +2
-Damage: 1d8+2 (slashing)
-Speed Factor: 3
-Proficiency Type: Scimitar/Wakizashi/Ninjatō
-Type: One-handed
-Requires:
- 10 Strength
+Урон: 1d8+2 (рубящий)
+Фактор скорости: 3
+Навык: скимитар/вакизаши/ниндзя-то
+Тип: одноручное
+Требования:
+ Сила 10
 
-Weight: 4~
-@69262 = ~Scimitar +2~
-@70356 = ~Gauntlets of Weapon Skill~
-@70357 = ~These magical gauntlets aid the wearer in the use of weapons. Even an unfamiliar weapon may be used with some skill.
+Вес: 4~
+@69262 = ~Скимитар +2~
+@70356 = ~Рукавицы оружейного навыка~
+@70357 = ~Эти волшебные рукавицы помогают носящему их во владении оружием. Даже незнакомое оружие может быть использовано с некоторым умением.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– THAC0: +1
+Свойства экипировки:
+- THAC0: +1.
 
-Weight: 2~
-@70365 = ~This amulet improves the wearer's Armor Class and Saving Throws versus all forms of attack. The magical properties of the amulet prevent it from being worn with other magical items of protection, including enchanted armor.
+Вес: 2 ~
+@70365 = ~Амулет защиты улучшает класс защиты и спасброски владельца против всех форм атак. Магические свойства такого амулета не позволяют носить его с другими магическими предметами защиты, включая зачарованные доспехи.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Armor Class: +1
-– Saving Throws: +1
+Свойства экипировки:
+- класс защиты: +1;
+- спасбросок: +1.
 
-Weight: 1~
-@70382 = ~Girdle of Bluntness~
-@70383 = ~Covered in intricate designs sewn into its leather with golden thread, at first glance this girdle seems more decorative than practical. Closer examination is rewarded by the realization that it functions as far more than it appears, bestowing magical protection from hammers, clubs, and other blunt weapons to its wearer.
+Вес: 1~
+@70382 = ~Пояс затупления~
+@70383 = ~Покрытый в замысловатыми узорами, вышитыми на коже золотой нитью, на первый взгляд этот пояс кажется скорее декоративным изделием, чем практичной вещью. Более тщательное обследование показывает, что пояс зачарован на защиту от молотов, палиц и другого дробящего оружия.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Armor Class: +4 vs. crushing attacks
+Свойства экипировки:
+- класс защиты: +4 против дробящего.
 
-Weight: 2~
-@70384 = ~Girdle of Piercing~
-@70385 = ~Fabricated from crudely cut, unadorned leather, this loin belt was obviously created with utility rather than beauty (or even comfort) in mind. Though not pretty, it is useful, enchanted with warding spells that grant its wearer some magical protection from the slings and arrows of their enemies.
+Вес: 2~
+@70384 = ~Пояс непрокалывания~
+@70385 = ~Изготовленный из грубо вырезанной, ничем не украшенной кожи, этот пояс был, очевидно, создан в первую очередь для каждодневного использования, а не для красоты или даже удобства. Он зачарован заклинаниями, которые дают его обладателю магическую защиту от снарядов и стрел.
 
-STATISTICS:
+ПАРАМЕТРЫ:
 
-Equipped abilities:
-– Armor Class: +3 vs. missile and piercing attacks
+Свойства экипировки:
+- класс защиты: +3 против метательного и колющего.
 
-Weight: 2~
+Вес: 2~

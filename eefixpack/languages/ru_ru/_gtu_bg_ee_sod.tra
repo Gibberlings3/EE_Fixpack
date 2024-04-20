@@ -2,7 +2,5 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
-// any strings < 34000 are non-sod strings and should go into the gtu_bgee.tra file instead. 
-
-// removing extra space at the end
-@53484 = ~Уходи. Уходи!~
+// strref #12345, updating because "X is misspelled"
+@12345 = ~This is a test replacement string.~
