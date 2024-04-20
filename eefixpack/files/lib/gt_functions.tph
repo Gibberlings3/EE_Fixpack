@@ -105,64 +105,6 @@ BEGIN
 END
 
 //////////////////////////////////////////////////////////
-/////// TO_HEX_NUMBER (borrowed from Argent77)
-//////////////////////////////////////////////////////////
-
-/*
-** Converts any decimal number into a hexadecimal number
-*/
-
-DEFINE_DIMORPHIC_FUNCTION ~TO_HEX_NUMBER~
-INT_VAR
-	~value~     = 0   // the decimal number
-	~minDigits~ = 1   // min. number of digits in return value (not counting sign)
-	~prefix~    = 0   // whether to return number with "0x" prefix
-	~signed~    = 1   // whether number is treated as a signed number
-	~upperCase~ = 0   // whether to represent alphabetic digits in upper case
-RET
-	~hexNumber~       // returned as string without prefix
-BEGIN
-	ACTION_IF (~%minDigits%~ < 1) BEGIN
-		OUTER_SET ~minDigits~ = 1
-	END
-	ACTION_IF ("%minDigits%" > 8) BEGIN
-		OUTER_SET ~minDigits~ = 8
-	END
-	OUTER_TEXT_SPRINT ~hexNumber~ ~~
-	ACTION_DEFINE_ARRAY ~digit~ BEGIN ~0~ ~1~ ~2~ ~3~ ~4~ ~5~ ~6~ ~7~ ~8~ ~9~ ~a~ ~b~ ~c~ ~d~ ~e~ ~f~ END
-
-	ACTION_IF ("%signed%" && "%value%" < 0) BEGIN
-		OUTER_SET ~isSigned~ = 1
-		OUTER_SET ~value~ = 0 - "%value%"
-	END ELSE BEGIN
-		OUTER_SET ~isSigned~ = 0
-	END
-
-	OUTER_WHILE ("%value%" != 0) BEGIN
-		OUTER_SET ~curDigit~ = "%value%" BAND 0xf
-		OUTER_SET ~value~ = "%value%" BLSR 4
-		OUTER_TEXT_SPRINT ~hexDigit~ $~digit~(~%curDigit%~)
-		OUTER_TEXT_SPRINT ~hexNumber~ ~%hexDigit%%hexNumber%~
-	END
-
-	OUTER_WHILE (STRING_LENGTH ~%hexNumber%~ < "%minDigits%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~0%hexNumber%~
-	END
-
-	ACTION_IF ("%upperCase%") BEGIN
-		ACTION_TO_UPPER ~hexNumber~
-	END
-
-	ACTION_IF ("%prefix%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~0x%hexNumber%~
-	END
-
-	ACTION_IF ("%isSigned%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~-%hexNumber%~
-	END
-END
-
-//////////////////////////////////////////////////////////
 /////// ADD_SPLPROT_ENTRY (borrowed from Argent77)
 //////////////////////////////////////////////////////////
 
@@ -191,12 +133,8 @@ BEGIN
 	OUTER_SET "index" = "-1"
 	// Main
 	ACTION_IF ("%stat%" >= 0) BEGIN
-		LAF "TO_HEX_NUMBER"
-		INT_VAR
-			"value" = "%stat%"
-			"prefix" = 1
-		RET
-			"valueHex" = "hexNumber"
+		OUTER_PATCH "" BEGIN
+			SPRINTF "valueHex" "%x" ("%stat%")
 		END
 		ACTION_IF (~%value%~ STRING_EQUAL ~~) BEGIN
 			OUTER_TEXT_SPRINT "value" ~*~
@@ -317,13 +255,10 @@ BEGIN
 			// Adding new entry
 			ACTION_IF ("%value%" != "-1") BEGIN
 				ACTION_IF ("%hexadecimal%") BEGIN
-					LAF "TO_HEX_NUMBER"
-					INT_VAR
-						"value"
-					RET
-						"hexNumber"
+					OUTER_PATCH "" BEGIN
+						SPRINTF "idsValue" "%x" ("%value%")
+						TO_UPPER "idsValue"
 					END
-					OUTER_TEXT_SPRINT ~idsValue~ ~0x%hexNumber%~
 				END ELSE BEGIN
 					OUTER_TEXT_SPRINT ~idsValue~ ~%value%~
 				END
@@ -523,9 +458,13 @@ BEGIN
 	END
 END
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Language-independant version of WeiDU's native GET_STRREF
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+De-localized (i.e., not language dependant) function to get the string corresponding to index #"%strref%"
+
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_DIMORPHIC_FUNCTION "GT_GET_STRING"
 INT_VAR
@@ -536,9 +475,49 @@ BEGIN
 	OUTER_TEXT_SPRINT "string" ""
 	COPY - "lang\en_us\dialog.tlk" "override"
 		READ_LONG 0xE "base_off" // Offset to base data
-		READ_LONG (0x12 + 0x12 + ("%strref%" * 0x1A)) "off" // Relative offset of current string
+		READ_LONG (0x12 + 0x12 + ("%strref%" * 0x1A)) "off" // Relative offset of this string
 		READ_LONG (0x12 + 0x16 + ("%strref%" * 0x1A)) "length" // Length of this string
 		READ_ASCII ("%base_off%" + "%off%") "string" ("%length%")
+	BUT_ONLY_IF_IT_CHANGES
+END
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+De-localized (i.e., not language dependant) function to get the index number string corresponding to string "%string%"
+
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_DIMORPHIC_FUNCTION "GT_GET_STRREF"
+INT_VAR
+	"match_case" = 0 // Default: case insensitive
+STR_VAR
+	"string" = ""
+RET
+	"strref"
+BEGIN
+	// Initialize
+	OUTER_SET "strref" = "-1"
+	// Main
+	COPY - "lang\en_us\dialog.tlk" "override"
+		READ_LONG 0xE "base_off" // Offset to base data
+		FOR ("i" = 0 ; "%i%" < NEXT_STRREF ; "i" += 1) BEGIN
+			READ_LONG (0x12 + 0x12 + ("%i%" * 0x1A)) "off" // Relative offset of this string
+			READ_LONG (0x12 + 0x16 + ("%i%" * 0x1A)) "length" // Length of this string
+			READ_ASCII ("%base_off%" + "%off%") "current_string" ("%length%")
+			PATCH_IF "%match_case%" BEGIN
+				PATCH_IF ("%current_string%" STRING_EQUAL "%string%") BEGIN
+					SET "strref" = "%i%"
+					SET "i" = NEXT_STRREF // kill FOR-loop
+				END
+			END ELSE BEGIN
+				PATCH_IF ("%current_string%" STRING_EQUAL_CASE "%string%") BEGIN
+					SET "strref" = "%i%"
+					SET "i" = NEXT_STRREF // kill FOR-loop
+				END
+			END
+		END
 	BUT_ONLY_IF_IT_CHANGES
 END
 

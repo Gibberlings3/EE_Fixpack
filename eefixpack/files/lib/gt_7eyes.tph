@@ -23,14 +23,17 @@ STR_VAR
 	"2da_filespec" = ""
 BEGIN
 	ACTION_IF ("%effectID%" == 12) BEGIN
-		LAF ~TO_HEX_NUMBER~ INT_VAR ~value~ = "%damage_type%" ~prefix~ = 1 RET ~hexNumber~ END
+		OUTER_PATCH "" BEGIN
+			SPRINTF "hexNumber" "%x" ("%damage_type%")
+		END
 	END
 	ACTION_IF "%write%" BEGIN
+		OUTER_TEXT_SPRINT "preferred_subspell_resref" "****"
 		WITH_SCOPE BEGIN
 			COPY_EXISTING "kitlist.2da" "%2da_filespec%"
 				DELETE_BYTES 0x0 BUFFER_LENGTH
-				INSERT_BYTES 0x0 STRING_LENGTH "2DA V1.0%WNL%****%WNL%%TAB%FILE%WNL%"
-				WRITE_ASCII 0x0 "2DA V1.0%WNL%****%WNL%%TAB%FILE%WNL%"
+				INSERT_BYTES 0x0 STRING_LENGTH "2DA V1.0%WNL%****%WNL%%TAB%FILE SUBSPELL%WNL%"
+				WRITE_ASCII 0x0 "2DA V1.0%WNL%****%WNL%%TAB%FILE SUBSPELL%WNL%"
 			BUT_ONLY_IF_IT_CHANGES
 		END
 		COPY_EXISTING_REGEXP "^.+\.\(spl\|itm\)$" "override"
@@ -43,6 +46,7 @@ BEGIN
 			READ_2DA_ENTRIES_NOW "read_2da_file" 0
 			FOR ("i" = 3 ; "%i%" < "%read_2da_file%" ; "i" += 1) BEGIN // skip first 3 rows...
 				READ_2DA_ENTRY_FORMER "read_2da_file" "%i%" 1 "file_to_patch"
+				READ_2DA_ENTRY_FORMER "read_2da_file" "%i%" 2 "preferred_subspell_resref"
 				INNER_ACTION BEGIN
 					COPY_EXISTING "%file_to_patch%" "override"
 						LPF "7EYES-O-MATIC#CORE" END
@@ -161,10 +165,10 @@ BEGIN
 					PATCH_IF "%write%" BEGIN
 						INNER_ACTION BEGIN
 							OUTER_TEXT_SPRINT "outer_destFile" "%DEST_FILE%"
-							COPY_EXISTING "%2da_filespec%" "%2da_filespec%"
+							COPY "%2da_filespec%" "%2da_filespec%"
 								COUNT_2DA_ROWS 0 "rows"
 								SET "count" = "%rows%" - 3
-								INSERT_2DA_ROW "%rows%" 0 "%count% %outer_destFile%"
+								INSERT_2DA_ROW "%rows%" 0 "%count% %outer_destFile% ****"
 								// prettify
 								PRETTY_PRINT_2DA
 							BUT_ONLY UNLESS "%outer_destFile%"
@@ -281,6 +285,7 @@ BEGIN
 							INNER_PATCH_FILE "%fx_resource%.eff" BEGIN
 								PATCH_MATCH LONG_AT 0x10 WITH
 									7 8 9 41 50 51 52 61 140 141 165 170 265 269 BEGIN END
+									33 34 35 36 37 325 WHEN LONG_AT 0x20 == 3 BEGIN END // save vs. X (Increment instantaneously)
 									139 BEGIN
 										LPF "GT_GET_STRING" INT_VAR "strref" = SLONG_AT 0x1C RET "string" END
 										LPF "COUNT_ELEMENT_INSTANCES" STR_VAR "list_in" = "%feedback_string%" "element" = "%string%" "separator" = ", " RET "count" END
@@ -334,9 +339,17 @@ BEGIN
 						"SPL" BEGIN
 							PATCH_IF ("%subspell_resref%" STRING_EQUAL_CASE "") BEGIN
 								PATCH_IF ("%effectID%" == 12) BEGIN
-									LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Subspell_Applying_Opcode#%effectID%#%hexNumber%" RET "subspell_resref" = "filename" END
+									PATCH_IF ("%preferred_subspell_resref%" STRING_COMPARE_CASE "****") BEGIN
+										TEXT_SPRINT "subspell_resref" "%preferred_subspell_resref%"
+									END ELSE BEGIN
+										LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Subspell_Applying_Opcode#%effectID%#%hexNumber%" RET "subspell_resref" = "filename" END
+									END
 								END ELSE BEGIN
-									LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Subspell_Applying_Opcode#%effectID%" RET "subspell_resref" = "filename" END
+									PATCH_IF ("%preferred_subspell_resref%" STRING_COMPARE_CASE "****") BEGIN
+										TEXT_SPRINT "subspell_resref" "%preferred_subspell_resref%"
+									END ELSE BEGIN
+										LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Subspell_Applying_Opcode#%effectID%" RET "subspell_resref" = "filename" END
+									END
 								END
 								PATCH_WITH_SCOPE BEGIN
 									INNER_ACTION BEGIN
@@ -352,7 +365,11 @@ BEGIN
 							END
 						END
 						"ITM" BEGIN
-							LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Ability#%ab_ind%_Subspell_Applying_Opcode#%effectID%" RET "subspell_resref" = "filename" END
+							PATCH_IF ("%preferred_subspell_resref%" STRING_COMPARE_CASE "****") BEGIN
+								TEXT_SPRINT "subspell_resref" "%preferred_subspell_resref%"
+							END ELSE BEGIN
+								LPF "GET_UNIQUE_FILE_NAME" STR_VAR "extension" = "spl" "base" = "%DEST_FILE%-Ability#%ab_ind%_Subspell_Applying_Opcode#%effectID%" RET "subspell_resref" = "filename" END
+							END
 							PATCH_WITH_SCOPE BEGIN
 								INNER_ACTION BEGIN
 									CREATE "spl" "%subspell_resref%"
