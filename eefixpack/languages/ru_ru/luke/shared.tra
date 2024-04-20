@@ -1,0 +1,3 @@
+// To avoid namespace conflicts, use numbers > 100,000
+
+@100000 = "Модификатор оружейного навыка"
