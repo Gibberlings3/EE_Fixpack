@@ -1,28 +1,28 @@
 2DA          V1.0
 ****
-             FILE
-0            #SUNRUND.SPL
-1            SORB.ITM
-2            SPCL239A.SPL
-3            SPDM101.SPL
-4            SPDR101.SPL
-5            SPPR115.SPL
-6            SPPR313.SPL
-7            SPPR423.SPL
-8            SPPR609.SPL
-9            SPPR614B.SPL
-10           SPPR614C.SPL
-11           SPPR704.SPL
-12           SPPR707.SPL
-13           SPWI032.SPL
-14           SPWI105.SPL
-15           SPWI106.SPL
-16           SPWI118.SPL
-17           SPWI224.SPL
-18           SPWI226.SPL
-19           SPWI714.SPL
-20           SPWI815.SPL
-21           SPWM178.SPL
-22           UDART3B.ITM
-23           WAND19.ITM
-24           ZZE6PE.ITM
+             FILE         SUBSPELL
+0            #SUNRUND.SPL ****
+1            SORB.ITM     ****
+2            SPCL239A.SPL ****
+3            SPDM101.SPL  ****
+4            SPDR101.SPL  ****
+5            SPPR115.SPL  ****
+6            SPPR313.SPL  ****
+7            SPPR423.SPL  ****
+8            SPPR609.SPL  ****
+9            SPPR614B.SPL ****
+10           SPPR614C.SPL ****
+11           SPPR704.SPL  ****
+12           SPPR707.SPL  ****
+13           SPWI032.SPL  ****
+14           SPWI105.SPL  ****
+15           SPWI106.SPL  ****
+16           SPWI118.SPL  ****
+17           SPWI224.SPL  ****
+18           SPWI226.SPL  ****
+19           SPWI714.SPL  ****
+20           SPWI815.SPL  ****
+21           SPWM178.SPL  ****
+22           UDART3B.ITM  ****
+23           WAND19.ITM   ****
+24           ZZE6PE.ITM   ****

@@ -18,7 +18,7 @@ BEGIN
 	END
 	ACTION_DEFINE_ASSOCIATIVE_ARRAY "7eyes-o-matic" BEGIN
 		// effectID , damageType , splState , opcodeExtra , feedbackString , feedbackIcon , feedbackVfx => 2daFile
-		3 , "null" , "BERSERK_IMMUNITY" , "" , "Berzerk, Berserk" , "4" , "" => "berserk.2da"
+		3 , "null" , "BERSERK_IMMUNITY" , "" , "Berserk, Berzerk" , "4" , "" => "berserk.2da"
 		5 , "null" , "CHARM_IMMUNITY" , "" , "Charmed, Dire Charmed, Dominated, Turned" , "0 1 43" , "" => "charm.2da"
 		12 , "fire" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "fireh firel" => "damage_fire.2da"
 		12 , "cold" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "coldh coldl" => "damage_cold.2da"
@@ -28,20 +28,20 @@ BEGIN
 		12 , "crushing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_crushing.2da"
 		12 , "slashing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_slashing.2da"
 		12 , "piercing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_piercing.2da"
-		24 , "null" , "PANIC_IMMUNITY" , "23 106" , "Panic, Morale Failure: Panic, *flees in terror*" , "36" , "cdhorror" => "panic.2da"
+		24 , "null" , "PANIC_IMMUNITY" , "23 54 106" , "Panic, Morale Failure: Panic, *flees in terror*" , "36" , "cdhorror spmindat ohrmind" => "panic.2da"
 		38 , "null" , "SILENCE_IMMUNITY" , "" , "Silence, Silenced, Bard Song Silenced" , "34" , "" => "silence.2da"
-		45 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "spflayer spmindat" => "stun.2da"
+		45 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "cdstun spflayer spmindat" => "stun.2da"
 		74 , "null" , "BLIND_IMMUNITY" , "54" , "Blind, Blinded, Blindness" , "8" , "" => "blind.2da"
-		76 , "null" , "FEEBLEMIND_IMMUNITY" , "" , "Feeblemind, Feebleminded, Feeblemindedness, Mind Locked Away" , "48" , "" => "feeblemind.2da"
+		76 , "null" , "FEEBLEMIND_IMMUNITY" , "" , "Feeblemind, Feebleminded, Feeblemindedness, Mind Locked Away" , "48" , "cdfeeble spmindat" => "feeblemind.2da"
 		80 , "null" , "DEAF_IMMUNITY" , "" , "Deaf, Deafened, Deafness" , "112" , "" => "deaf.2da"
 		109 , "null" , "PARALYZE_IMMUNITY" , "157" , "Paralyzed, Paralysed, Held" , "13" , "" => "paralyze.2da"
-		128 , "null" , "CONFUSION_IMMUNITY" , "" , "Confused, Rigid Thinking, Chaos" , "2 3 47" , "spconfus confush" => "confusion.2da"
+		128 , "null" , "CONFUSION_IMMUNITY" , "" , "Confused, Rigid Thinking, Chaos" , "2 3 47" , "spconfus" => "confusion.2da"
 		134 , "null" , "PETRIFY_IMMUNITY" , "" , "Petrification, Petrified" , "171" , "" => "petrify.2da"
 		154 , "null" , "ENTANGLE_IMMUNITY" , "0 126" , "Entangle, Entangled" , "144" , "spentaci entangc" => "entangle.2da"
 		157 , "null" , "WEB_IMMUNITY" , "109" , "Webbed, Held" , "129" , "webentd webc" => "web.2da"
 		158 , "null" , "GREASE_IMMUNITY" , "126" , "Grease, Greased" , "145" , "greased greaseb" => "grease.2da"
 		175 , "null" , "HOLD_IMMUNITY" , "" , "Held" , "13" , "spmindat ohnwand1" => "hold.2da"
-		210 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "" => "power_word_stun.2da"
+		210 , "null" , "STUN_IMMUNITY" , "" , "Stun, Stunned" , "55" , "cdstun" => "power_word_stun.2da"
 	END
 	//
 	ACTION_PHP_EACH "7eyes-o-matic" AS "key" => "2daFile" BEGIN

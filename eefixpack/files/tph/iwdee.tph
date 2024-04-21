@@ -126,7 +126,7 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
-  LAUNCH_ACTION_FUNCTION "7EYES" END
+  LAUNCH_ACTION_FUNCTION "7EYESification" END
 END
 
 /*
@@ -490,6 +490,18 @@ WITH_SCOPE BEGIN
   LAUNCH_ACTION_FUNCTION "THREE_WHITE_DOVES" END
 END
 
+/*
+luke
+**Talon of the Gloomfrost +4, Holdfast Arrow +1**
+- Should display the Entangled icon instead of the Held icon
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "holdfst.itm" "override"
+                "talongf.itm" "override"
+    LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 142 "match_parameter2" = 13 END // portrait icon -- move to subspell
+  BUT_ONLY
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
@@ -574,12 +586,20 @@ COPY_EXISTING ~%MONK_LAY_ON_HANDS%.spl~          ~override~ // spcl815 lay on ha
   
 // ie-6029, cam
 // Hopelessness not always canceling Hope
+// "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
 COPY_EXISTING ~%INNATE_MOURNFUL_WAIL%.spl~ ~override~ // spin115 Mournful Wail; do separately since it has a 206 at top of stack
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 probability1 = 100 END // play on all stuns
   LPF CLONE_EFFECT INT_VAR match_opcode = 139 opcode = 321 STR_VAR resource = spwi429 END // remove Emotion: Hope
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 44 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 142 parameter1 = 0 parameter2 = 44 STR_VAR insert = last END
   BUT_ONLY
 COPY_EXISTING ~%CLERIC_SYMBOL_OF_HOPELESSNESS%.spl~ ~override~ // sppr716 Symbol: Hopelessness
+              ~%WIZARD_EMOTION_HOPELESSNESS%.spl~ ~override~ // spwi411
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 139 opcode = 321 parameter1 = 0 parameter2 = 0 STR_VAR resource = spwi429 END // remove Emotion: Hope
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 44 END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_parameter1 = 14980 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 142 parameter1 = 0 parameter2 = 44 STR_VAR insert = last END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 139 parameter1 = 14980 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = last END
   BUT_ONLY
 
 // ie-6033, cam
@@ -687,7 +707,7 @@ COPY_EXISTING ~%CLERIC_SPIKE_STONES%.spl~ ~override~ // sppr519
 COPY_EXISTING ~%CLERIC_ANIMAL_RAGE%.spl~  ~override~ // sppr522
   LPF DELETE_EFFECT INT_VAR match_opcode = 321 match_timing = 4 END
 COPY_EXISTING ~%CLERIC_ANIMAL_RAGE%b.spl~  ~override~ // sppr522b
-  LPF ALTER_EFFECT INT_VAR power = 0 END
+  LPF ALTER_EFFECT INT_VAR power = 5 END
 
 // ie-5942, cam
 // Mass Cause Light Wounds should not be available to druids
@@ -768,12 +788,55 @@ COPY_EXISTING ~%WIZARD_MIND_BLANK%.spl~ ~override~ // spwi802
  
 // ie-5939, cam
 // Great Shout duplicates combat feedback on a failed save
-COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
-  LPF DELETE_EFFECT INT_VAR match_opcode = 174 END
-  LPF DELETE_EFFECT INT_VAR match_opcode = 139 match_target = 2 match_savingthrow = BIT0 END // nuke dupe 'stunned' string
-  LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END 
-  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
+WITH_SCOPE BEGIN
+  COPY_EXISTING - ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
+    GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+    PHP_EACH ab_arr AS ab_ind => ab_off BEGIN
+      GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+      PHP_EACH fx_arr AS fx_ind => fx_off BEGIN
+        PATCH_MATCH SHORT_AT fx_off WITH
+          326 WHEN LONG_AT (0x8 + fx_off) = 111 BEGIN
+            PATCH_MATCH SLONG_AT (0x4 + fx_off) WITH
+              IDS_OF_SYMBOL("splstate" "STUN_IMMUNITY") IDS_OF_SYMBOL("splstate" "DEAF_IMMUNITY") BEGIN
+                READ_ASCII (0x14 + fx_off) subspell
+                // patch subspell
+                PATCH_WITH_SCOPE BEGIN
+                  INNER_ACTION BEGIN
+                    COPY_EXISTING "%subspell%.spl" "override"
+                      GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+                      PHP_EACH ab_arr AS ab_ind => ab_off BEGIN
+                        GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+                        PHP_EACH fx_arr AS fx_ind => fx_off BEGIN
+                          PATCH_MATCH LONG_AT (fx_off + 0x24) WITH
+                            0 BEGIN
+                              READ_ASCII fx_off $temp_arr("%fx_ind%") (0x30)
+                              WRITE_SHORT fx_off 999
+                            END
+                            DEFAULT
+                          END
+                        END
+                      END
+                      LPF DELETE_SPELL_EFFECT INT_VAR opcode_to_delete = 999 END
+                      LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 80 opcode = 139 timing = 1 duration = 0 parameter1 = 14073 STR_VAR insert = below END
+                      LPF ADD_SPELL_EFFECT INT_VAR opcode = 206 target = 2 savingthrow = BIT0 parameter1 = "-1" resist_dispel = 3 STR_VAR resource = "%DEST_RES%" END
+                      PHP_EACH temp_arr AS "" => fx_data BEGIN
+                        INSERT_BYTES (LONG_AT 0x6A + 0x30 * SHORT_AT (LONG_AT 0x64 + 0x1E)) 0x30
+                        WRITE_ASCII (LONG_AT 0x6A + 0x30 * SHORT_AT (LONG_AT 0x64 + 0x1E)) "%fx_data%"
+                        WRITE_SHORT (LONG_AT 0x64 + 0x1E) (THIS + 1)
+                      END
+                    BUT_ONLY
+                  END
+                END
+              END
+              DEFAULT
+            END
+          END
+          DEFAULT
+        END
+      END
+    END
   BUT_ONLY
+END
 
 // tbd, cam
 // expiry sound is way too early
@@ -875,12 +938,28 @@ END
 luke
 **Ghast attack**
 - Effects that grant a Save vs. Paralyze/Poison/Death should go into the new subspell
+- Add missing feedback string
 */
 WITH_SCOPE BEGIN
   COPY_EXISTING "ghast1.spl" "override"
     LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_savingthrow" = BIT2 END
   BUT_ONLY_IF_IT_CHANGES
-  COPY_EXISTING "ghast2.spl" "override"
+  COPY_EXISTING - "ghast1.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN LONG_AT (0x8 + "%fx_off%") == 111 AND SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "PARALYZE_IMMUNITY") BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+  BUT_ONLY
+  COPY_EXISTING "%subspell%.spl" "override"
+    LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "timing" = 1 "parameter1" = 14650 "resist_dispel" = 3 END // feedback string
     LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 1 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_P11" END
     LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 4 "duration" = 36 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_E05" END
   BUT_ONLY_IF_IT_CHANGES
@@ -929,6 +1008,241 @@ WITH_SCOPE BEGIN
       END
     BUT_ONLY_IF_IT_CHANGES
   END
+END
+
+/*
+luke
+**Sprays Spores**
+- make sure all effects are dispellable / bypass Magic Resistance
+  - this is a "eefixpack\files\tph\luke\7eyes\berserk.tph" follow-up
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%INNATE_MYCONID_SPORES%.spl" "override"
+    GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            PATCH_MATCH SLONG_AT (0x4 + "%fx_off%") WITH
+              IDS_OF_SYMBOL ("splstate" "BERSERK_IMMUNITY") IDS_OF_SYMBOL ("splstate" "STUN_IMMUNITY") IDS_OF_SYMBOL ("splstate" "PANIC_IMMUNITY") BEGIN
+                READ_ASCII (0x14 + "%fx_off%") $"subspell_arr"("%fx_ind%")
+                WRITE_BYTE (0xD + "%fx_off%") BIT0
+              END
+              DEFAULT
+            END
+          END
+          DEFAULT
+        END
+      END
+    END
+  BUT_ONLY_IF_IT_CHANGES
+  ACTION_PHP_EACH "subspell_arr" AS "" => "resref" BEGIN
+    COPY_EXISTING "%resref%.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "resist_dispel" = BIT0 | BIT1 END
+    BUT_ONLY
+  END
+END
+
+/*
+luke
+**Mental Domination**
+- should also block innate abilities (as per spell description)
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%CLERIC_MENTAL_DOMINATION%.spl" "override"
+    LPF "CLONE_EFFECT" INT_VAR "multi_match" = 1 "match_opcode" = 60 "parameter1" = 100 "parameter2" = 2 END // Casting failure
+  BUT_ONLY
+END
+
+/*
+luke
+**Talon of the Gloomfrost +4, Holdfast Arrow +1**
+- Should display the Entangled icon instead of the Held icon
+- Should display the "Entangled" string
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "holdfst.itm" "override"
+                "talongf.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "ENTANGLE_IMMUNITY") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+    INNER_ACTION BEGIN
+      COPY_EXISTING "%subspell%.spl" "override"
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 142 "parameter1" = 0 "parameter2" = 144 "special" = 0 STR_VAR "insert" = "below" "resource" = "" END
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 139 "parameter1" = 37709 "parameter2" = 0 "special" = 0 "timing" = 1 "duration" = 0 STR_VAR "insert" = "below" "resource" = "" END
+      BUT_ONLY
+    END
+  BUT_ONLY
+END
+
+/*
+luke
+**(unused, but fix anyway)**
+- Should display the Entangled icon instead of the Held icon
+- Should display the "Entangled" string
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "holdfst.spl" "override"
+                "talongf.spl" "override"
+    LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 142 "match_parameter2" = 13 END
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 142 "parameter1" = 0 "parameter2" = 144 "special" = 0 STR_VAR "insert" = "below" "resource" = "" END
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 139 "parameter1" = 37709 "parameter2" = 0 "special" = 0 "timing" = 1 "duration" = 0 STR_VAR "insert" = "below" "resource" = "" END
+  BUT_ONLY
+END
+
+/*
+luke
+**Club (unused, but fix anyway)**
+- Add missing ancillary effects (it currently only displays the entangle overlay, but does not actually cause Entangle!)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "gasp.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "entangle_immunity") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+    INNER_ACTION BEGIN
+      COPY_EXISTING "%subspell%.spl" "override"
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 142 "parameter1" = 0 "parameter2" = 144 "special" = 0 STR_VAR "insert" = "last" "resource" = "" END
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 139 "parameter1" = 37709 "parameter2" = 0 "special" = 0 "timing" = 1 "duration" = 0 STR_VAR "insert" = "last" "resource" = "" END
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 126 "parameter1" = 0 "parameter2" = 5 "special" = 0 STR_VAR "insert" = "last" "resource" = "" END
+      BUT_ONLY
+    END
+  BUT_ONLY
+END
+
+/*
+luke
+**(unused, but fix anyway)**
+- Add missing ancillary effects (it currently only displays the entangle overlay, but does not actually cause Entangle!)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "gasp.spl" "override"
+    GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "entangle_immunity") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+    INNER_ACTION BEGIN
+      COPY_EXISTING "%subspell%.spl" "override"
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 142 "parameter1" = 0 "parameter2" = 144 "special" = 0 STR_VAR "insert" = "last" "resource" = "" END
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 139 "parameter1" = 37709 "parameter2" = 0 "special" = 0 "timing" = 1 "duration" = 0 STR_VAR "insert" = "last" "resource" = "" END
+        LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 154 "opcode" = 126 "parameter1" = 0 "parameter2" = 5 "special" = 0 STR_VAR "insert" = "last" "resource" = "" END
+      BUT_ONLY
+    END
+  BUT_ONLY
+END
+
+/*
+luke
+**Warrior Cry, Fear, Aura of Fear, Spook, Emotion:Fear, Symbol:Fear**
+- op324 resource field should not be blank
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%WARRIOR_WAR_CRY%.spl" "override"
+                "%INNATE_BEHOLDER_FEAR%.spl" "override"
+                "%INNATE_AURA_OF_FEAR%.spl" "override"
+                "%WIZARD_SPOOK%.spl" "override"
+                "%WIZARD_EMOTION_FEAR%.spl" "override"
+                "spwm123.spl" "override" // Symbol, Fear
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 324 "match_parameter2" = 55 STR_VAR "match_resource" = "" "resource" = "%DEST_RES%" END
+  BUT_ONLY
+END
+
+/*
+luke
+**Cornugon**
+- "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "sflail.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "stun_immunity") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          12 139 BEGIN
+            READ_ASCII "%fx_off%" $"tosubspell"("%fx_ind%") (0x30)
+            WRITE_SHORT "%fx_off%" 999
+          END
+          DEFAULT
+        END
+      END
+      LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 999 END
+      LPF "CLONE_EFFECT" INT_VAR "check_globals" = 0 "header" = "%ab_ind%" "match_opcode" = 326 "opcode" = 146 "parameter1" = 0 "parameter2" = 1 "probability1" = 50 "probability2" = 0 STR_VAR "resource" = "sflail01" END
+    END
+  BUT_ONLY
+  //
+  COPY_EXISTING "%subspell%.spl" "override"
+    LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = 8 END
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 45 "opcode" = 8 "parameter1" = (46 << 8) + (56 << 16) + (0 << 24) "parameter2" = 255 STR_VAR "insert" = "last" END // Set color glow solid (Location: Character color)
+  BUT_ONLY
+  //
+  COPY_EXISTING "%subspell%.spl" "override\sflail01.spl"
+    LPF "DELETE_EFFECT" END
+    PHP_EACH "tosubspell" AS "" => "fx_data" BEGIN
+      INNER_PATCH "%fx_data%" BEGIN
+        READ_SHORT 0x0 "op"
+        PATCH_IF ("%op%" == 0xC) BEGIN
+          TEXT_SPRINT "insert" "first"
+        END ELSE BEGIN
+          TEXT_SPRINT "insert" "last"
+        END
+      END
+      PATCH_MATCH "%insert%" WITH
+        "first" BEGIN
+          SET "offset" = LONG_AT 0x6A
+        END
+        DEFAULT
+          SET "offset" = LONG_AT 0x6A + 0x30 * SHORT_AT (LONG_AT 0x64 + 0x1E)
+      END
+      INSERT_BYTES "%offset%" 0x30
+      WRITE_ASCII "%offset%" "%fx_data%"
+      WRITE_BYTE ("%offset%" + 0x12) 100 // prob1
+      WRITE_BYTE ("%offset%" + 0x13) 0 // prob2
+      WRITE_SHORT (LONG_AT 0x64 + 0x1E) (THIS + 1) // # effects
+    END
+  BUT_ONLY
+END
+
+/*
+luke
+**Searing Orb** // (unused, but fix anyway)
+- "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\tph\luke\searing_orb.tph"
+  LAF "CLERIC_SOL_SEARING_ORB" END
 END
 
 // tbd, cam

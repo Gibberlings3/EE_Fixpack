@@ -1,19 +1,19 @@
 2DA         V1.0
 ****
-            FILE
-0           OHDMASK.SPL
-1           OHRGROG.SPL
-2           SPDR101.SPL
-3           SPIN596.SPL
-4           SPIN691.SPL
-5           SPIN708.SPL
-6           SPIN715.SPL
-7           SPIN787.SPL
-8           SPIN792.SPL
-9           SPIN913.SPL
-10          SPIN917.SPL
-11          SPIN994.SPL
-12          SPIN996.SPL
-13          SPWI118.SPL
-14          SPWI211.SPL
-15          SPWI614.SPL
+            FILE        SUBSPELL
+0           OHDMASK.SPL ****
+1           OHRGROG.SPL ****
+2           SPDR101.SPL ****
+3           SPIN596.SPL ****
+4           SPIN691.SPL ****
+5           SPIN708.SPL ****
+6           SPIN715.SPL ****
+7           SPIN787.SPL ****
+8           SPIN792.SPL ****
+9           SPIN913.SPL ****
+10          SPIN917.SPL ****
+11          SPIN994.SPL ****
+12          SPIN996.SPL ****
+13          SPWI118.SPL ****
+14          SPWI211.SPL ****
+15          SPWI614.SPL ****

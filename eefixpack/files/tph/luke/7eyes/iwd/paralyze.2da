@@ -1,16 +1,16 @@
 2DA         V1.0
 ****
-            FILE
-0           BASILL1.ITM
-1           CARRIO1.ITM
-2           GHAST1.ITM
-3           GHOUL1.ITM
-4           GHOULT.ITM
-5           SPDR201.SPL
-6           SPPR728.SPL
-7           SPWATT2.ITM
-8           SPWATT3.ITM
-9           SPWATT4.ITM
-10          SPWATT5.ITM
-11          SPWI215.SPL
-12          SPWI711.SPL
+            FILE        SUBSPELL
+0           BASILL1.ITM ****
+1           CARRIO1.ITM ****
+2           GHAST1.ITM  GHAST1P
+3           GHOUL1.ITM  ****
+4           GHOULT.ITM  ****
+5           SPDR201.SPL ****
+6           SPPR728.SPL ****
+7           SPWATT2.ITM ****
+8           SPWATT3.ITM ****
+9           SPWATT4.ITM ****
+10          SPWATT5.ITM ****
+11          SPWI215.SPL ****
+12          SPWI711.SPL ****

@@ -393,11 +393,18 @@ BEGIN
 							COPY_EXISTING "%subspell_resref%.spl" "override"
 								PATCH_WITH_SCOPE BEGIN
 									LPF "ADD_SPELL_ABILITY" INT_VAR ~range~ = 0x7FFF ~minimum_level~ = SHORT_AT 0x68 == 0 ? 1 : "%ab_level%" STR_VAR "icon" = "%ab_icon%" END
+									TEXT_SPRINT "sfx_duration" "" // needed for special cases like bg(2) "ghast1.itm" (i.e multiple delayed op174 effects)
 									PHP_EACH "7eyes-o-matic#main" AS "fx_attribute" => "" BEGIN
+										TEXT_SPRINT "sfx_duration" "%sfx_duration% %fx_attribute_7%"
 										LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = ("%#_matches%" > 1 ? "%fx_attribute_8%" : 100) "probability2" = ("%#_matches%" > 1 ? "%fx_attribute_9%" : 0) "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
 									END
 									PHP_EACH "7eyes-o-matic#ancillary" AS "fx_attribute" => "" BEGIN
 										PATCH_MATCH "%fx_attribute_0%" WITH
+											174 BEGIN
+												PATCH_IF (("%sfx_duration%" STRING_CONTAINS_REGEXP "\b%fx_attribute_7%\b") == 0) BEGIN
+													LPF "ADD_SPELL_EFFECT" INT_VAR "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = ("%#_matches%" > 1 ? "%fx_attribute_8%" : 100) "probability2" = ("%#_matches%" > 1 ? "%fx_attribute_9%" : 0) "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%fx_attribute_10%" END
+												END
+											END
 											321 BEGIN
 												LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "header" = SHORT_AT 0x68 "opcode" = "%fx_attribute_0%" "target" = "%fx_attribute_1%" "power" = ("%fx_attribute_18%" == 3 ? 0 : "%fx_attribute_2%") "parameter1" = "%fx_attribute_3%" "parameter2" = "%fx_attribute_4%" "timing" = "%fx_attribute_5%" "resist_dispel" = ("%fx_attribute_6%" == BIT0 ? BIT0 | BIT1 : "%fx_attribute_6%") "duration" = "%fx_attribute_7%" "probability1" = ("%#_matches%" > 1 ? "%fx_attribute_8%" : 100) "probability2" = ("%#_matches%" > 1 ? "%fx_attribute_9%" : 0) "dicenumber" = ("%effectID%" == 12 ? "%fx_attribute_11%" : 0) "dicesize" = ("%effectID%" == 12 ? "%fx_attribute_12%" : 0) "savingthrow" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_13%" : 0) "savebonus" = ("%#_matches%" > 1 OR "%effectID%" == 12 ? "%fx_attribute_14%" : 0) "special" = "%fx_attribute_15%" STR_VAR "resource" = "%DEST_RES%" END
 											END

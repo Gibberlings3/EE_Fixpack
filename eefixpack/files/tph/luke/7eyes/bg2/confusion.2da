@@ -1,26 +1,26 @@
 2DA          V1.0
 ****
-             FILE
-0            BDSHA01A.SPL
-1            INSANITY.SPL
-2            MAGICONF.ITM
-3            MISC3M.ITM
-4            OHBJOKE1.SPL
-5            SIRINE1.ITM
-6            SPCL751A.SPL
-7            SPDR501.SPL
-8            SPIN582.SPL
-9            SPIN612.SPL
-10           SPIN674.SPL
-11           SPIN704.SPL
-12           SPIN839.SPL
-13           SPIN976.SPL
-14           SPPR311.SPL
-15           SPPR609.SPL
-16           SPPR709.SPL
-17           SPPR983.SPL
-18           SPWI401.SPL
-19           SPWI508.SPL
-20           SPWI711.SPL
-21           WA2HARP.ITM
-22           WAS2H.ITM
+             FILE         SUBSPELL
+0            BDSHA01A.SPL ****
+1            INSANITY.SPL ****
+2            MAGICONF.ITM ****
+3            MISC3M.ITM   ****
+4            OHBJOKE1.SPL ****
+5            SIRINE1.ITM  ****
+6            SPCL751A.SPL ****
+7            SPDR501.SPL  ****
+8            SPIN582.SPL  ****
+9            SPIN612.SPL  ****
+10           SPIN674.SPL  ****
+11           SPIN704.SPL  ****
+12           SPIN839.SPL  ****
+13           SPIN976.SPL  ****
+14           SPPR311.SPL  ****
+15           SPPR609.SPL  SPPR609B
+16           SPPR709.SPL  ****
+17           SPPR983.SPL  ****
+18           SPWI401.SPL  ****
+19           SPWI508.SPL  ****
+20           SPWI711.SPL  ****
+21           WA2HARP.ITM  ****
+22           WAS2H.ITM    ****

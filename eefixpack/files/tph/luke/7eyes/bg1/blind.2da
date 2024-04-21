@@ -10,7 +10,7 @@
 6            SORB.ITM     ****
 7            SPCL239A.SPL ****
 8            SPDM101.SPL  ****
-9            SPDR101.SPL  ****
+9            SPDR101.SPL  SPDR101B
 10           SPIN878.SPL  ****
 11           SPIN893.SPL  ****
 12           SPIN929.SPL  ****
@@ -19,7 +19,7 @@
 15           SPPR704.SPL  ****
 16           SPPR707.SPL  ****
 17           SPWI106.SPL  ****
-18           SPWI118.SPL  ****
+18           SPWI118.SPL  SPWI118B
 19           SPWI224.SPL  ****
 20           SPWI228.SPL  ****
 21           SPWI714.SPL  ****

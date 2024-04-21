@@ -1,19 +1,19 @@
 2DA          V1.0
 ****
-             FILE
-0            BDSHA01A.SPL
-1            INSANITY.SPL
-2            SPCL751A.SPL
-3            SPDR501.SPL
-4            SPIN976.SPL
-5            SPPR311.SPL
-6            SPPR709.SPL
-7            SPPR983.SPL
-8            SPWI029.SPL
-9            SPWI401.SPL
-10           SPWI508.SPL
-11           SPWI711.SPL
-12           UAROW3A.ITM
-13           ULSWD3B.ITM
-14           UMBERGAZ.SPL
-15           UMSTR2A.ITM
+             FILE         SUBSPELL
+0            BDSHA01A.SPL ****
+1            INSANITY.SPL INSANITC
+2            SPCL751A.SPL ****
+3            SPDR501.SPL  ****
+4            SPIN976.SPL  ****
+5            SPPR311.SPL  ****
+6            SPPR709.SPL  ****
+7            SPPR983.SPL  ****
+8            SPWI029.SPL  SPWI029C
+9            SPWI401.SPL  ****
+10           SPWI508.SPL  ****
+11           SPWI711.SPL  ****
+12           UAROW3A.ITM  ****
+13           ULSWD3B.ITM  ****
+14           UMBERGAZ.SPL ****
+15           UMSTR2A.ITM  ****

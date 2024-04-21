@@ -1,19 +1,19 @@
 2DA          V1.0
 ****
-             FILE
-0            OHNWAND1.SPL
-1            OHREYEB2.SPL
-2            SPCL415.SPL
-3            SPIN648.SPL
-4            SPIN988.SPL
-5            SPIN990.SPL
-6            SPIN996.SPL
-7            SPIN999.SPL
-8            SPPR208.SPL
-9            SPPR305.SPL
-10           SPPR728.SPL
-11           SPPR989.SPL
-12           SPWI306.SPL
-13           SPWI507.SPL
-14           SPWM114.SPL
-15           SPWM122.SPL
+             FILE         SUBSPELL
+0            OHNWAND1.SPL ****
+1            OHREYEB2.SPL ****
+2            SPCL415.SPL  SPCL415H
+3            SPIN648.SPL  ****
+4            SPIN988.SPL  ****
+5            SPIN990.SPL  ****
+6            SPIN996.SPL  ****
+7            SPIN999.SPL  ****
+8            SPPR208.SPL  ****
+9            SPPR305.SPL  ****
+10           SPPR728.SPL  ****
+11           SPPR989.SPL  ****
+12           SPWI306.SPL  ****
+13           SPWI507.SPL  ****
+14           SPWM114.SPL  ****
+15           SPWM122.SPL  ****

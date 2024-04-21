@@ -17,13 +17,13 @@
 13           GHOULC.ITM   ****
 14           GOLTOME4.ITM ****
 15           GORSNAKE.ITM ****
-16           ICETRL.ITM   ****
+16           ICETRL.ITM   ICETRLST
 17           PARACARR.ITM ****
 18           PARAGHAS.ITM ****
 19           PARAGHOU.ITM ****
 20           SAHBOLT.ITM  ****
 21           SPCL123.SPL  ****
-22           SPDR101.SPL  ****
+22           SPDR101.SPL  SPDR101S
 23           SPERMEL.ITM  ****
 24           SPIN191.SPL  ****
 25           SPIN543.SPL  ****
@@ -40,7 +40,7 @@
 36           SPPR715.SPL  ****
 37           SPPR718.SPL  ****
 38           SPPR984.SPL  ****
-39           SPWI118.SPL  ****
+39           SPWI118.SPL  SPWI118S
 40           SPWI816.SPL  ****
 41           SPWI898.SPL  ****
 42           SPWM152.SPL  ****

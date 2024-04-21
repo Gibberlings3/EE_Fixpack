@@ -1,40 +1,40 @@
 2DA          V1.0
 ****
-             FILE
-0            BALTH01.SPL
-1            JWSIEGE.SPL
-2            OHBEFLAM.SPL
-3            SPAURU.SPL
-4            SPCL236.SPL
-5            SPCL239A.SPL
-6            SPCL911B.SPL
-7            SPDD03.SPL
-8            SPDR101.SPL
-9            SPIMIX01.SPL
-10           SPIN539.SPL
-11           SPIN560.SPL
-12           SPIN561.SPL
-13           SPIN567.SPL
-14           SPIN636.SPL
-15           SPIN693.SPL
-16           SPIN701.SPL
-17           SPIN720.SPL
-18           SPIN721.SPL
-19           SPIN726.SPL
-20           SPIN799.SPL
-21           SPIN819.SPL
-22           SPIN877.SPL
-23           SPIN926.SPL
-24           SPPR503.SPL
-25           SPPR609.SPL
-26           SPPR722.SPL
-27           SPPR728.SPL
-28           SPPR985.SPL
-29           SPWI103.SPL
-30           SPWI118.SPL
-31           SPWI217.SPL
-32           SPWI303.SPL
-33           SPWI304.SPL
-34           SPWI711.SPL
-35           SPWI922.SPL
-36           SPWI925.SPL
+             FILE         SUBSPELL
+0            BALTH01.SPL  ****
+1            JWSIEGE.SPL  ****
+2            OHBEFLAM.SPL ****
+3            SPAURU.SPL   ****
+4            SPCL236.SPL  ****
+5            SPCL239A.SPL ****
+6            SPCL911B.SPL ****
+7            SPDD03.SPL   ****
+8            SPDR101.SPL  ****
+9            SPIMIX01.SPL ****
+10           SPIN539.SPL  ****
+11           SPIN560.SPL  ****
+12           SPIN561.SPL  ****
+13           SPIN567.SPL  ****
+14           SPIN636.SPL  ****
+15           SPIN693.SPL  ****
+16           SPIN701.SPL  ****
+17           SPIN720.SPL  ****
+18           SPIN721.SPL  ****
+19           SPIN726.SPL  ****
+20           SPIN799.SPL  ****
+21           SPIN819.SPL  ****
+22           SPIN877.SPL  ****
+23           SPIN926.SPL  ****
+24           SPPR503.SPL  ****
+25           SPPR609.SPL  ****
+26           SPPR722.SPL  ****
+27           SPPR728.SPL  ****
+28           SPPR985.SPL  ****
+29           SPWI103.SPL  ****
+30           SPWI118.SPL  ****
+31           SPWI217.SPL  ****
+32           SPWI303.SPL  ****
+33           SPWI304.SPL  ****
+34           SPWI711.SPL  ****
+35           SPWI922.SPL  ****
+36           SPWI925.SPL  ****

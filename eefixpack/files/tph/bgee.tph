@@ -224,7 +224,7 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
-  LAUNCH_ACTION_FUNCTION "7EYES" END
+  LAUNCH_ACTION_FUNCTION "7EYESification" END
 END
 
 /*
@@ -996,6 +996,29 @@ WITH_SCOPE BEGIN
   END
 END
 
+/*
+luke
+**Wand of Cursing**
+- add missing Deafness effect (as per item description)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "wand19.itm" "override"
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 326 "multi_match" = 1 "match_parameter2" = 111 "parameter1" = IDS_OF_SYMBOL ("splstate" "DEAFNESS_IMMUNITY") STR_VAR "resource" = "wand19df" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**MAGIWEB**
+- Should cause Web, not Paralysis
+  - "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "magiweb.itm" "override"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 326 "match_parameter1" = IDS_OF_SYMBOL ("splstate" "PARALYZE_IMMUNITY") "match_parameter2" = 111 "parameter1" = IDS_OF_SYMBOL ("splstate" "WEB_IMMUNITY") END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
@@ -1243,10 +1266,13 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// luke
-// Stinking Cloud
-// 1) op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
-// 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
+/*
+luke
+**Stinking Cloud**
+- op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
+- remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
+- op324 resource field should not be empty
+*/
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override" // spwi213
     PATCH_WITH_SCOPE BEGIN
@@ -1260,6 +1286,7 @@ WITH_SCOPE BEGIN
     END
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 126 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 324 ~match_parameter2~ = 55 STR_VAR ~resource~ = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1857,6 +1884,81 @@ Summon Nishruu / Hakeashar
 WITH_SCOPE BEGIN
   INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
   LAF ~NISHRUU_HAKEASHAR~ END
+END
+
+/*
+luke
+**Wand of Cursing**
+- add missing Deafness effect (as per item description)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING - "wand19.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "SILENCE_IMMUNITY") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+  BUT_ONLY_IF_IT_CHANGES
+  COPY_EXISTING "%subspell%.spl" "override\wand19df.spl"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 38 "opcode" = 80 "parameter1" = 0 "parameter2" = 0 "special" = 0 STR_VAR "resource" = "" END // deafness
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 142 "parameter1" = 0 "parameter2" = 112 "special" = 0 STR_VAR "resource" = "" END // portrait icon
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 139 "parameter1" = 31791 "parameter2" = 0 "special" = 0 STR_VAR "resource" = "" END // feedback string
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**Tail Constriction**
+- Should display the Webbed icon (instead of the Entangled icon)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "bdwyrmt.spl" "override"
+    LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // portrait icon -- move to subspell
+  BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+END
+
+/*
+luke
+**MAGIWEB, Tail Constriction**
+- Should display the Webbed icon (instead of the Held/Entangled icon)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "magiweb.spl" "override"
+                "bdwyrmtw.spl" "override"
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 157 "opcode" = 142 "parameter1" = 0 "parameter2" = 129 "special" = 0 STR_VAR "resource" = "" "insert" = "below" END // portrait icon
+  BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+END
+
+/*
+luke
+**Power Word, Stun - Power Word, Kill**
+- fix incorrect op318/op324 resource field
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%CUTSCENE_POWERWORD_STUN%.spl" "override"
+                "%POWERWORD_STUN%.spl" "override"
+                "%POWERWORD_KILL%.spl" "override"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 324 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+    LPF "ALTER_EFFECT" INT_VAR "silent" = 1 "match_opcode" = 318 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**False Dawn**
+- make sure it affects undead (undead are normally immune to confusion, so this spell is not working as expected...)
+  - if EEex is not installed, abuse op182 to bypass/ignore op101 ("https://www.gibberlings3.net/forums/topic/35616-effect-immunities-on-the-ee-engine-aka-taking-full-advantage-of-the-ee-fixpack/page/2/#comment-313805")
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\tph\luke\false_dawn.tph"
+  //LAF "CLERIC_FALSE_DAWN" END
 END
 
 /////                                                  \\\\\

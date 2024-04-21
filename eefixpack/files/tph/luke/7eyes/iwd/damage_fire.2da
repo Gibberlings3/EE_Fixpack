@@ -1,26 +1,26 @@
 2DA          V1.0
 ****
-             FILE
-0            #BELTYN.SPL
-1            #SUNRUND.SPL
-2            BDSUMST1.SPL
-3            FIRAU1D2.SPL
-4            SEKOLAH.SPL
-5            SPAURU.SPL
-6            SPCL236.SPL
-7            SPCL239A.SPL
-8            SPCL911B.SPL
-9            SPDD03.SPL
-10           SPDR101.SPL
-11           SPPR419.SPL
-12           SPPR609.SPL
-13           SPPR705.SPL
-14           SPPR722.SPL
-15           SPPR728.SPL
-16           SPWI118.SPL
-17           SPWI217.SPL
-18           SPWI303.SPL
-19           SPWI524B.SPL
-20           SPWI711.SPL
-21           SPWI922.SPL
-22           SPWI925.SPL
+             FILE         SUBSPELL
+0            #BELTYN.SPL  ****
+1            #SUNRUND.SPL ****
+2            BDSUMST1.SPL ****
+3            FIRAU1D2.SPL ****
+4            SEKOLAH.SPL  ****
+5            SPAURU.SPL   ****
+6            SPCL236.SPL  ****
+7            SPCL239A.SPL ****
+8            SPCL911B.SPL ****
+9            SPDD03.SPL   ****
+10           SPDR101.SPL  ****
+11           SPPR419.SPL  ****
+12           SPPR609.SPL  ****
+13           SPPR705.SPL  ****
+14           SPPR722.SPL  ****
+15           SPPR728.SPL  ****
+16           SPWI118.SPL  ****
+17           SPWI217.SPL  ****
+18           SPWI303.SPL  ****
+19           SPWI524B.SPL ****
+20           SPWI711.SPL  ****
+21           SPWI922.SPL  ****
+22           SPWI925.SPL  ****

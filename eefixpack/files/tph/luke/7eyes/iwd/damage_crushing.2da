@@ -1,20 +1,20 @@
 2DA          V1.0
 ****
-             FILE
-0            GASP.SPL
-1            SPIN132.SPL
-2            SPIN973.SPL
-3            SPOGRE01.SPL
-4            SPPR106.SPL
-5            SPPR323D.SPL
-6            SPPR426.SPL
-7            SPPR617.SPL
-8            SPPR720.SPL
-9            SPWI328.SPL
-10           SPWI818.SPL
-11           SPWI818A.SPL
-12           SPWI918.SPL
-13           SPWI918A.SPL
-14           SPWISH27.SPL
-15           SPWM188.SPL
-16           SPYANC01.SPL
+             FILE         SUBSPELL
+0            GASP.SPL     ****
+1            SPIN132.SPL  ****
+2            SPIN973.SPL  ****
+3            SPOGRE01.SPL ****
+4            SPPR106.SPL  ****
+5            SPPR323D.SPL ****
+6            SPPR426.SPL  ****
+7            SPPR617.SPL  ****
+8            SPPR720.SPL  ****
+9            SPWI328.SPL  ****
+10           SPWI818.SPL  ****
+11           SPWI818A.SPL ****
+12           SPWI918.SPL  ****
+13           SPWI918A.SPL ****
+14           SPWISH27.SPL ****
+15           SPWM188.SPL  ****
+16           SPYANC01.SPL ****
