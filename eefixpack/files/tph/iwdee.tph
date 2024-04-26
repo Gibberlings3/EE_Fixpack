@@ -268,6 +268,12 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
   END
   BUT_ONLY
 
+// argent77
+// Fixes positioning issues with Brother Harken and Sister Incylia in the Fallen Temple
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/a7/iwd_brother_harken_fix.tph"
+END
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
