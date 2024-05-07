@@ -1,40 +1,40 @@
-@52366 = ~Darkness, 15' Radius~
-@52367 = ~Darkness, 15' Radius
-(Alteration)
+@52366 = ~15呎黑暗术~
+@52367 = ~15呎黑暗术
+（变化系）
 
-Level: 2
-Range: 30 ft.
-Duration: 1 turn
-Casting Time: 2
-Area of Effect: 15-ft. radius
-Saving Throw: None
+等级：2
+有效距离：30呎
+持续时间：1轮
+施法时间：2
+影响范围：8呎半径
+豁免检定：无
 
-This spell causes total, impenetrable darkness. Neither normal nor magical light works in the area of effect. All vision (including infravision) is severely limited; anyone hostile caught in the area of effect is for all practical purposes blinded as per the 1st-level wizard spell. Creatures that leave the area covered by darkness will have their vision restored after 1 round.~
-@52368 = ~Faerie Fire~
-@52369 = ~Faerie Fire 
-(Alteration)
+这个咒语会造成完全无法穿透的黑暗。无论是普通光线还是魔法光线，在效果区域内都不起作用。所有的视觉（包括黑暗视觉）都会受到严重限制；任何陷入效果区域的敌方生物都会像 1 级法术致盲一样失明。离开黑暗覆盖区域的生物将在 1 个回合后恢复视力。
+@52368 = ~妖火~
+@52369 = ~妖火
+（变化系）
 
-Level: 1
-Sphere: Weather
-Range: Sight
-Duration: 4 rounds/level
-Casting Time: 4
-Area of Effect: 10-ft. radius
-Saving Throw: None
+等级：1
+领域：气候
+有效距离：施法者视线所及
+持续时间：4轮/每等级
+施法时间：4
+影响范围：半径10呎区域
+豁免检定：无
 
-This spell outlines one or more creatures with a pale violet glow, making positions and movements easily visible. Outlined creatures are easier to strike, giving them an Armor Class penalty of -2.~
-@52370 = ~Dancing Lights~
-@52371 = ~Dancing Lights
-(Alteration)
+这个咒语会将区域内生物用但紫色光芒包围起来，让他们的位置和动作一目了然。被光芒包围的生物更容易受到攻击，防御等级受到-2的惩罚。
+@52370 = ~舞光术~
+@52371 = ~舞光术
+（变化系）
 
-Level: 1
-Range: Sight
-Duration: 2 rds./level
-Casting Time: 1
-Area of Effect: Special
-Saving Throw: None
+等级：1
+有效距离：施法者视野范围
+持续时间：2轮/每个等级
+施法时间：1
+影响范围：特殊
+豁免检定：无
 
-This spell creates up to four glowing spheres of light (such as evidenced by will-o-wisps) or one faintly glowing, vaguely humanoid shape, somewhat similar to a fire elemental. The dancing lights move randomly without concentration upon such movement by the wizard. Although the lights cause no physical harm, they can distract enemies until either their duration expires or dispersed by weapon or magic.~
+这个法术可以最多创造四个火炬大小的光球。法术持续时间内，光源能够以火把，灯笼或光球的形态显现并在空中悬浮，或一个中型类人生物的模糊光影。光影会随即移动，施法者无需集中注意力。虽然这些光不会造成伤害，但是它们可以分散敌人的注意力，直到持续时间结束或者被魔法驱散。
 @56587 = ~舞光术~
 @61978 = ~铠甲+1~
 @61979 = ~铠甲是锁子甲和金属片结合的一种盔甲。这种盔甲上有钢片保护特别重要的部位，例如胸口、腹部和下体。真正的铠甲结构和铜铠甲类似，包括铁环和皮革。此外，这套铠甲附有魔法，使穿戴者的防御等级获得额外的提高。
