@@ -1,0 +1,44 @@
+// Fixes height offsets of health bar positions for creature animations
+// https://www.gibberlings3.net/forums/topic/38302-creature-animations-with-incorrect-health-bar-positions/
+
+WITH_SCOPE BEGIN
+  // loading height offsets into array
+  COPY ~eefixpack/data/cre_anim/height_offsets.2da~ ~eefixpack/data/cre_anim/height_offsets.2da~
+    READ_2DA_ENTRIES_NOW height_offsets 1
+    FOR (row = 3; row < height_offsets; ++row) BEGIN
+      READ_2DA_ENTRY_FORMER height_offsets row 0 resref
+      READ_2DA_ENTRY_FORMER height_offsets row 1 height
+      PATCH_IF (IS_AN_INT ~height~ && height > 0) BEGIN
+        SET $ini_entries(~%resref%~) = height
+      END
+    END
+
+  BUT_ONLY
+
+  // updating INI resources
+  ACTION_PHP_EACH ini_entries AS resref => height BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%resref%.INI~) BEGIN
+      COPY_EXISTING ~%resref%.INI~ ~override~
+        PATCH_IF (INDEX_BUFFER(~height_offset=~) < 0) BEGIN
+          // adding "height_offset" as last entry in [general] section
+          SET ofs = INDEX_BUFFER(EXACT_MATCH ~[general]~)
+          PATCH_IF (ofs >= 0) BEGIN
+            SET ofs = INDEX_BUFFER(EXACT_MATCH ~[~ (ofs + 1))
+            PATCH_IF (ofs > 0) BEGIN
+              SET ofs = RINDEX_BUFFER(~[^ %TAB%%WNL%]~ (ofs - 1))
+              PATCH_IF (ofs > 0) BEGIN
+                SET ofs = INDEX_BUFFER(~[%WNL%]~ ofs)
+                SPRINT line ~%WNL%height_offset=%height%~
+                SET len = STRING_LENGTH ~%line%~
+                INSERT_BYTES ofs len
+                WRITE_ASCIIE ofs ~%line%~ (len)
+              END
+            END
+          END
+        END ELSE BEGIN
+          PATCH_LOG ~Skipping %resref%.INI: height_offset entry already exists~
+        END
+      BUT_ONLY
+    END
+  END
+END
