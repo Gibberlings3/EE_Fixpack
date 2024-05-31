@@ -55,6 +55,11 @@ LANGUAGE
   ~Russian~
   ~ru_ru~
   ~eefixpack/languages/ru_ru/weidu.tra~
+LANGUAGE
+  ~Simplified Chinese~
+  ~zh_CN~
+  ~eefixpack/languages/zh_CN/weidu.tra~  
+  
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
