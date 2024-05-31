@@ -1,0 +1,92 @@
+// Fixes positioning issues with Brother Harken and Sister Incylia in the Fallen Temple area
+// https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/?do=findComment&comment=337031
+
+COPY_EXISTING ~ar8012.are~ ~override~
+  // Removing actors from area
+  PATCH_FOR_EACH idx IN 4 2 BEGIN
+    LPF fj_are_structure
+      INT_VAR
+        fj_delete_mode = idx
+      STR_VAR
+        fj_structure_type = ~actor~
+    END
+  END
+
+  // Adding preinitialized area-scope variable that is required by the ini spawn entries
+  LPF fj_are_structure
+    INT_VAR
+      fj_variable_value = 1
+    STR_VAR
+      fj_structure_type = ~variable~
+      fj_name = ~CD_Spawn_Harken~
+  END
+BUT_ONLY
+
+COPY_EXISTING ~ar8012.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    // Removing original creature positioning code
+    SET pos1 = 0
+    WHILE (pos1 >= 0) BEGIN
+      SET pos1 = INDEX_BUFFER(~^\IF[ %TAB%%WNL%]+Global("CD_Move_Harken","GLOBAL",[23])~)
+      PATCH_IF (pos1 >= 0) BEGIN
+        SET pos2 = INDEX_BUFFER(~^END$~ pos1)
+        PATCH_IF (pos2 > pos1) BEGIN
+          DELETE_BYTES pos1 (pos2 - pos1 + 3)
+        END
+      END
+    END
+
+    // Updating variable evaluation
+    REPLACE_TEXTUALLY ~IncrementGlobal("CD_Move_Harken","GLOBAL",2)~
+                      ~IncrementGlobal("CD_Move_Harken","GLOBAL",4) SetGlobal("CD_Spawn_Harken","MYAREA",0)~
+  END
+BUT_ONLY
+
+// Updating area ini file
+<<<<<<<< .../a7-inline/ar8012-block.ini
+[ENTERSPAWN]
+critters=BrotherHarken,SisterIncylia
+interval=1
+
+[BrotherHarken]
+spec                    = BrotherHarken
+spec_var                = AR8012::CD_Spawn_Harken
+spec_qty                = 1
+cre_file                = BHARKEN
+create_qty              = 1
+script_name             = BrotherHarken
+script_race             = LDIDLRNG
+script_general          = LDHARK
+dialog                  = DHARKEN
+death_scriptname        = 1
+ignore_can_see          = 1
+spawn_point             = [1690.1255:0],[0460.1010:0]
+point_select            = i
+point_select_var        = GLOBAL::CD_Move_Harken
+
+[SisterIncylia]
+spec                    = SisterIncylia
+spec_var                = AR8012::CD_Spawn_Harken
+spec_qty                = 1
+cre_file                = SINCYLIA
+create_qty              = 1
+script_name             = SisterIncylia
+script_race             = LDIDLRNG
+dialog                  = DINCYLIA
+death_scriptname        = 1
+ignore_can_see          = 1
+spawn_point             = [0460.1010:0],[1690.1255:0]
+point_select            = i
+point_select_var        = GLOBAL::CD_Move_Harken
+
+>>>>>>>>
+COPY_EXISTING ~ar8012.ini~ ~override~
+  SPRINT search ~[BONEGUARD01]~
+  SET ofs = INDEX_BUFFER(CASE_INSENSITIVE EXACT_MATCH ~%search%~)
+  PATCH_IF (ofs >= 0) BEGIN
+    INSERT_FILE ofs ~.../a7-inline/ar8012-block.ini~
+    REPLACE_TEXTUALLY ~^events=.*~ ~enter=ENTERSPAWN%WNL%\0~
+  END ELSE BEGIN
+    PATCH_WARN ~WARNING: Search text "%search%" not found in %SOURCE_FILE%~
+  END
+BUT_ONLY
