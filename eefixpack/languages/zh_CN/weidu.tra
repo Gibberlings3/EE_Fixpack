@@ -1,0 +1,14 @@
+// strings uesed only by the installer
+  @0 = ~核心修复~
+  @1 = ~测试核心修复~
+  @2 = ~游戏文本更新~
+  @3 = ~在此游戏安装Mod之前需要先安装DLC Merger。请阅读自述文件获取更多信息以及DLC Merger下载链接。~
+  @4 = ~未检测到针对你的游戏的修复。~
+  @5 = ~您的游戏语言中没有游戏文本更新。~
+  @6 = ~检测到博德之门Ⅰ增强版。~
+  @7 = ~检测到博德之门Ⅰ增强版及龙矛围攻。~
+  @8 = ~检测到博德之门Ⅱ增强版。~
+  @9 = ~检测到冰风谷Ⅰ增强版。~
+ @10 = ~检测到异域镇魂曲增强版。~
+ 
+// translators, feel free to put your weidu command prompt strings here (e.g. @-1000 et al)
