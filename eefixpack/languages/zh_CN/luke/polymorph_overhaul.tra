@@ -2,4 +2,23 @@
 
 @1 = ~变回原来形态 (变身异形)~
 
-@2 = "吞噬脑部"
+/*
+IWD:EE, @40313: This is used for both the druid shapeshift and the mage shapechange. A new text string should be created for the Shapechange version.
+Notably, "The Druid is healed 12 Hit Points after using this ability." should be missing in the mage shapechange
+*/
+@2 = "变形:　水元素
+力量:　18
+敏捷:　14
+基础护甲等级:　-2
+攻击次数:　1
+攻击伤害:　4d8　撞击
+特殊技能:
+–　寒冷抵抗:　-25%
+–　闪电抵抗:　-75%
+–　酸液抵抗:　75%
+–　割裂抵抗:　75%
+–　碾压抵抗:　75%
+–　刺骨抵抗:　75%
+–　投掷物抵抗:　75%"
+
+@3 = "吞噬大脑"
