@@ -167,7 +167,7 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
 // open all shadow doors if shade lord is defeated
 COPY_EXISTING ~ar1401.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(TriggerActivation("Tran1404",TRUE)\)~ ~\1 OpenDoor("ShadowDoor01") OpenDoor("ShadowDoor02") OpenDoor("ShadowDoor03")~
+    REPLACE_TEXTUALLY ~\(TriggerActivation("Tran1404",FALSE)\)~ ~\1 OpenDoor("ShadowDoor01") OpenDoor("ShadowDoor02") OpenDoor("ShadowDoor03")~
   END
   BUT_ONLY
 
