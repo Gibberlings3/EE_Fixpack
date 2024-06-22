@@ -80,6 +80,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
+     ~eefixpack/files/wmp/worldm25.wmp~ ~override~ // fixed travel routes for Deepstone Clanhold and Clearing to prevent bypassing The Oasis
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
