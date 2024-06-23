@@ -50,3 +50,12 @@ Wait(5)
 EndCutSceneMode()~ 
   EXIT
 END
+
+// Fixes an exploit that would allow the party to bypass the Oasis when travelling to Amkethran
+// via Deepstone Clanhold (Rasaad's quest) or the Clearing (Neera's quest).
+// https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/?do=findComment&comment=339326
+REPLACE_TRANS_ACTION ~sarmel01~
+  BEGIN 83 END
+  BEGIN 0 END
+  ~RevealAreaOnMap("AR5500")~ ~\0 RemoveWorldmapAreaFlag("AR5500",ENABLED)~
+  UNLESS ~RemoveWorldmapAreaFlag("AR5500",ENABLED)~

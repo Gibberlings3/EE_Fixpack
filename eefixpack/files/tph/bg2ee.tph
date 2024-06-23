@@ -278,6 +278,15 @@ COPY_EXISTING ~oh7200.bcs~ ~override~
 // Yoshimo Should Have Follow-Up Banters with the PC
 EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add script prompt for third banter
 
+// Fixes an exploit that would allow the party to bypass the Oasis when travelling to Amkethran
+// via Deepstone Clanhold (Rasaad's quest) or the Clearing (Neera's quest).
+// https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/?do=findComment&comment=339326
+ACTION_IF (NOT FILE_EXISTS_IN_GAME ~AR6300.BCS~) BEGIN
+  COPY - ~.../fp-inline/blank~ ~.../inlined/eefixpack/AR6300.BAF~
+  COMPILE ~.../inlined/eefixpack/AR6300.BAF~
+END
+EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
+
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\

@@ -1,0 +1,8 @@
+IF
+  Global("ar5500_enabled","AR6300",0)
+THEN
+  RESPONSE #100
+    SetGlobal("ar5500_enabled","AR6300",1)
+    AddWorldmapAreaFlag("AR5500",ENABLED)
+    Continue()
+END
