@@ -115,7 +115,9 @@ BEGIN
 	ACTION_CLEAR_ARRAY ~%WIZARD_SHAPECHANGE%~
 	ACTION_CLEAR_ARRAY ~POLYITEM~
 	ACTION_CLEAR_ARRAY ~POLYFORM_abort~
-	// 
+	//
+	LAF "ADD_IDS_ENTRY" STR_VAR "idsFile" = "splstate" "identifier" = "POLYMORPH_IMMUNITY" END
+	//
 	LAUNCH_ACTION_FUNCTION "ADD_SPLPROT_ENTRY"
 	INT_VAR
 		"stat" = IDS_OF_SYMBOL ("STATS" "POLYMORPHED")
@@ -213,8 +215,8 @@ BEGIN
 	END
 	// Various remaining Natural Form abilities => all redirected to cast SPINHUMR
 	WITH_SCOPE BEGIN
-		ACTION_DEFINE_ARRAY "human" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ ~SPCL110~ END
-		ACTION_PHP_EACH "human" AS "null" => "res_" BEGIN
+		ACTION_DEFINE_ARRAY "tohuman" BEGIN ~SPIN122~ ~SPIN123~ ~SPIN124~ ~SPIN151~ ~SPWI490~ ~SPWI491~ ~SPIN868~ ~SPCL110~ END
+		ACTION_PHP_EACH "tohuman" AS "null" => "res_" BEGIN
 			ACTION_TO_LOWER "res_"
 			COPY_EXISTING ~%res_%.spl~ ~override~
 				LPF "DELETE_EFFECT" END // delete current content
@@ -426,61 +428,102 @@ BEGIN
 	// Update "Flame Blade", "Phantom Blade" and the like (i.e., magically created weapons)
 	// This is only relevant when one of those spells is in a Sequencer / Contingency / etc... (since op135 automatically disables arcane/divine spellcasting)
 	WITH_SCOPE BEGIN
-		COPY_EXISTING_REGEXP ~^.+\.\(spl\|itm\)$~ ~override~
-			TO_UPPER "SOURCE_RES"
-			LPF ~ARRAY_CONTAINS~
-			STR_VAR
-				"array" = "POLYFORM_abort"
-				"key" = "%SOURCE_RES%"
-			RET
-				~found~
-			END
-			//PATCH_IF !VARIABLE_IS_SET $POLYFORM_abort(~%SOURCE_RES%~) BEGIN
-			PATCH_IF !("%found%") BEGIN
-				PATCH_WITH_SCOPE BEGIN
-					PATCH_MATCH "%DEST_EXT%" WITH
-						"SPL" BEGIN
-							GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
-						END
-						DEFAULT
-							GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
-					END
-					// Do not apply "CLONE_EFFECT" directly when COPY_EXISTING_REGEXPing
-					// Make sure the effect you want to clone is present before cloning it (should improve installation times)
-					PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
-						LPF "COUNT_V10_HEAD_EFFECTS"
-						STR_VAR
-							"opcode" = "111" // Create weapon
-						RET
-							"count"
-						END
-						PATCH_IF ("%count%") BEGIN
-							LPF "CLONE_EFFECT"
-							INT_VAR
-								//silent = 1
-								"check_globals" = 0
-								"match_opcode" = 111 // Create weapon
-								"header" = "%hdr%"
-								"opcode" = 326 // Apply effects list
-								"parameter1" = 0
-								"parameter2" = $~splprot~(~POLYMORPH=1~)
-								"timing" = 1
-								"duration" = 0
-								"special" = 0
-							STR_VAR
-								"resource" = ~SPINHUMW~
-							END
-						END
-					END
+		ACTION_MATCH 1 WITH
+			GAME_IS "bgee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "magically_created_weapon" BEGIN
+					"figure01.itm" => "" // Shakti Figurine
+					//
+					"ohbpr608.spl" => "" // Harm
+					"%HELM_SEEKING_SWORD%.spl" => ""
+					"spdm103.spl" => "" // Ghoul Touch
+					"spin113.spl" => "" // Spiritual Hammer
+					"spin202.spl" => "" // Cause Serious Wounds
+					"%CREATE_YOSHIMO_BLADE%.spl" => ""
+					"%CLERIC_SHILLELAGH%.spl" => ""
+					"%CLERIC_FLAME_BLADE%.spl" => ""
+					"%CLERIC_SPIRITUAL_HAMMER%.spl" => ""
+					"%CLERIC_CAUSE_SERIOUS_WOUNDS%.spl" => ""
+					"%CLERIC_CAUSE_CRITICAL_WOUNDS%.spl" => ""
+					"%CLERIC_SLAY_LIVING%.spl" => ""
+					"%CLERIC_HARM%.spl" => ""
+					"%CLERIC_SOL_SEARING_ORB%.spl" => ""
+					"%CLERIC_ENERGY_BLADES%.spl" => ""
+					"%WIZARD_SHOCKING_GRASP%.spl" => ""
+					"%WIZARD_CHILL_TOUCH%.spl" => ""
+					"%WIZARD_GHOUL_TOUCH%.spl" => ""
+					"%WIZARD_MELF_METEOR%.spl" => ""
+					"%WIZARD_PHANTOM_BLADE%.spl" => ""
+					"%WIZARD_BLACK_BLADE_OF_DISASTER%.spl" => ""
+					"%WIZARD_ENERGY_BLADES%.spl" => ""
 				END
 			END
-		BUT_ONLY
+			GAME_IS "bg2ee eet" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "magically_created_weapon" BEGIN
+					"figure01.itm" => "" // Shakti Figurine
+					//
+					"ohbpr608.spl" => "" // Harm
+					"%HELM_SEEKING_SWORD%.spl" => ""
+					"spdm103.spl" => "" // Ghoul Touch
+					"spin113.spl" => "" // Spiritual Hammer
+					"spin202.spl" => "" // Cause Serious Wounds
+					"%CREATE_YOSHIMO_BLADE%.spl" => ""
+					"%CLERIC_SHILLELAGH%.spl" => ""
+					"%CLERIC_FLAME_BLADE%.spl" => ""
+					"%CLERIC_SPIRITUAL_HAMMER%.spl" => ""
+					"%CLERIC_CAUSE_SERIOUS_WOUNDS%.spl" => ""
+					"%CLERIC_CAUSE_CRITICAL_WOUNDS%.spl" => ""
+					"%CLERIC_SLAY_LIVING%.spl" => ""
+					"%CLERIC_HARM%.spl" => ""
+					"%CLERIC_SOL_SEARING_ORB%.spl" => ""
+					"%CLERIC_ENERGY_BLADES%.spl" => ""
+					"%WIZARD_SHOCKING_GRASP%.spl" => ""
+					"%WIZARD_CHILL_TOUCH%.spl" => ""
+					"%WIZARD_GHOUL_TOUCH%.spl" => ""
+					"%WIZARD_MELF_METEOR%.spl" => ""
+					"%WIZARD_PHANTOM_BLADE%.spl" => ""
+					"%WIZARD_BLACK_BLADE_OF_DISASTER%.spl" => ""
+					"%WIZARD_ENERGY_BLADES%.spl" => ""
+				END
+			END
+			GAME_IS "iwdee" BEGIN
+				ACTION_DEFINE_ASSOCIATIVE_ARRAY "magically_created_weapon" BEGIN
+					"gvalor1.itm" => "" // Gauntlet of Valor
+					//
+					"%HELM_SEEKING_SWORD%.spl" => ""
+					"spdm103.spl" => "" // Ghoul Touch
+					"%INNATE_ANIMAL_AFFINITY%.spl" => ""
+					"%CLERIC_SHILLELAGH%.spl" => ""
+					"%CLERIC_FLAME_BLADE%.spl" => ""
+					"%CLERIC_SPIRITUAL_HAMMER%.spl" => ""
+					"%CLERIC_BEAST_CLAW%.spl" => ""
+					"%CLERIC_MOONBLADE%.spl" => ""
+					"%CLERIC_STAR_METAL_CUDGEL%.spl" => ""
+					"%CLERIC_ENERGY_BLADES%.spl" => ""
+					"%WIZARD_CHILL_TOUCH%.spl" => ""
+					"%WIZARD_DECASTAVE%.spl" => ""
+					"%WIZARD_GHOUL_TOUCH%.spl" => ""
+					"%WIZARD_MELF_METEOR%.spl" => ""
+					"%WIZARD_PHANTOM_BLADE%.spl" => ""
+					"%WIZARD_LICH_TOUCH%.spl" => ""
+					"%WIZARD_DARTS_OF_BONE%.spl" => ""
+					"%WIZARD_MORDENKAINENS_SWORD%.spl" => ""
+					"%WIZARD_IRON_BODY%.spl" => ""
+					"%WIZARD_BLACK_BLADE_OF_DISASTER%.spl" => ""
+					"%WIZARD_ENERGY_BLADES%.spl" => ""
+				END
+			END
+			DEFAULT
+		END
+		//
+		ACTION_PHP_EACH "magically_created_weapon" AS "file" => "" BEGIN
+			COPY_EXISTING ~%file%~ ~override~
+				LPF "CLONE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 111 "opcode" = 326 "parameter1" = 0 "parameter2" = $~splprot~(~POLYMORPH=1~) "timing" = 1 "duration" = 0 "special" = 0 STR_VAR "resource" = ~SPINHUMW~ END // Apply effects list
+			BUT_ONLY
+		END
 	END
 	// Update "Slayer Change"-related scripts
 	WITH_SCOPE BEGIN
-		COPY_EXISTING
-		~uddoor2.bcs~ ~override~
-		~uddoor3.bcs~ ~override~
+		COPY_EXISTING_REGEXP ~^uddoor[2-3]\.bcs$~ ~override~
 			DECOMPILE_AND_PATCH BEGIN
 				REPLACE_TEXTUALLY ~Global("Slayer10","GLOBAL",2)~ ~HasItem("slayerw3",Player1)~
 			END
@@ -748,6 +791,7 @@ BEGIN
 										LPF ~ADD_ITEM_EFFECT~ INT_VAR "type" = 99 "header" "opcode" = 174 "power" "target" = ("%hostile%" ? 2 : 1) "timing" = 1 "resist_dispel" "savingthrow" "probability1" STR_VAR "resource" = ~EFF_P07~ END // Play sound
 									END
 							END
+							LPF "CLONE_EFFECT" INT_VAR "silent" = 1 "check_globals" = 0 "check_headers" = ("%hostile%" ? 1 : 0) "match_opcode" = 146 "opcode" = 324 "parameter1" = IDS_OF_SYMBOL ("splstate" "POLYMORPH_IMMUNITY") "parameter2" = 110 "timing" = 0 "duration" = 0 "special" = 0 STR_VAR "match_resource" = "spinhumr" "resource" = "%DEST_RES%" END
 						BUT_ONLY
 					END
 					// Polymorph effect moved to subspell if it needs a duration

@@ -1,5 +1,5 @@
 /*
-This function moves Holy Smite and Unholy Blight so as to use 324 magic rather than a big block of 101s.
+This function moves Holy Smite and Unholy Blight so as to use 324 magic rather than a big block of 177s.
 In the process it also handles EE save-for-half functionality.
 */
 
@@ -11,17 +11,46 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
   ACTION_IF GAME_IS "bgee bg2ee" BEGIN // rebuild to use 324s instead of horrific pile of EFFs
   
     COPY_EXISTING "SPPR313.spl" override
+      // patch subspell [luke]
+      GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+      PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+        GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
+        PHP_EACH fx_arr AS fx_ind=>fx_off BEGIN
+          PATCH_MATCH SHORT_AT fx_off WITH
+            326 WHEN SLONG_AT (0x4+fx_off) = IDS_OF_SYMBOL ("splstate" "BLIND_IMMUNITY") && LONG_AT (0x8+fx_off) = 111 BEGIN
+              READ_ASCII (0x14+fx_off) subspell
+            END
+            DEFAULT
+          END
+        END
+      END
+      //
+      INNER_ACTION BEGIN
+        COPY_EXISTING "%subspell%.spl" override
+          GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
+          PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
+            PATCH_IF SHORT_AT (0x10+ab_off) > 1 BEGIN
+              WRITE_BYTE ab_off 0xff
+            END
+          END
+          LPF DELETE_SPELL_HEADER INT_VAR header_type=0xff END // subspell is not supposed to scale with level
+          LPF DELETE_EFFECT END
+          LPF ADD_SPELL_EFFECT INT_VAR opcode=74 resist_dispel=BIT0+BIT1 target=2 duration=6 END // blindness
+          LPF ADD_SPELL_EFFECT INT_VAR opcode=139 resist_dispel=BIT0+BIT1 target=2 timing=1 parameter1=14674 END // 'blinded' string
+        BUT_ONLY
+      END
       LPF DELETE_EFFECT END
       // level-independent effects
       splprot_param="%SOURCE_RES%" STR_EQ sppr313 ? 38 : 36
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=324 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=141 resist_dispel = 1 target=2 parameter2=26 END // lighting effect
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=174 resist_dispel = 1 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=74 resist_dispel = 1 target=2 duration=8 savingthrow=BIT0 END // blindness
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=324 power=3 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=141 power=3 resist_dispel=1 target=2 parameter2=26 END // lighting effect
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=174 power=3 resist_dispel=1 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=326 power=3 resist_dispel=1 target=2 timing=1 savingthrow=BIT0 parameter1=IDS_OF_SYMBOL(splstate blind_immunity) parameter2=111 STR_VAR resource="%subspell%" END // blindness, 'blinded' string
+      /*LPF ADD_SPELL_EFFECT INT_VAR opcode=74 resist_dispel = 1 target=2 duration=8 savingthrow=BIT0 END // blindness
       LPF ADD_SPELL_EFFECT INT_VAR opcode=139 resist_dispel = 1 target=2 timing=1 parameter1=14674 savingthrow=BIT0 END // 'blinded' string
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=142 resist_dispel = 1 target=2 duration=8 parameter2=8 savingthrow=BIT0 END // 'blind' icon
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=142 resist_dispel = 1 target=2 duration=8 parameter2=8 savingthrow=BIT0 END // 'blind' icon*/
       // level-dependent blocks
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=12 target=2 parameter2=64*0x10000 dicesize=4 savingthrow=BIT0+BIT24 special=BIT8 END
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=12 power=3 resist_dispel=1 target=2 parameter2=64*0x10000 dicesize=4 savingthrow=BIT0+BIT24 special=BIT8 END
       GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
       PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
         level=SHORT_AT (0x10+ab_off)
@@ -34,14 +63,14 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
       LPF DELETE_EFFECT END
       // level-independent effects
       splprot_param="%SOURCE_RES%" STR_EQ sppr313 ? 38 : 36
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=324 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=141 resist_dispel = 1 target=2 parameter2=26 END // lighting effect
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=174 resist_dispel = 1 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=325 resist_dispel = 1 target=2 duration=24 parameter1="-2" parameter2=2 savingthrow=BIT0 END // save penalty
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=54 resist_dispel = 1 target=2 parameter1="-2" duration=24 savingthrow=BIT0 END // THAC0 penalty
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=142 resist_dispel = 1 target=2 duration=24 parameter2=unholy savingthrow=BIT0 END // 'unholy blight' icon
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=324 power=3 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=141 power=3 resist_dispel=1 target=2 parameter2=26 END // lighting effect
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=174 power=3 resist_dispel=1 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=325 power=3 resist_dispel=1 target=2 duration=24 parameter1="-2" parameter2=2 savingthrow=BIT0 END // save penalty
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=54 power=3 resist_dispel=1 target=2 parameter1="-2" duration=24 savingthrow=BIT0 END // THAC0 penalty
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=142 power=3 resist_dispel=1 target=2 duration=24 parameter2=unholy savingthrow=BIT0 END // 'unholy blight' icon
       // level-dependent blocks
-      LPF ADD_SPELL_EFFECT INT_VAR opcode=12 target=2 parameter2=64*0x10000 dicesize=4 savingthrow=BIT0+BIT24 special=BIT8 END
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=12 power=3 resist_dispel=1 target=2 parameter2=64*0x10000 dicesize=4 savingthrow=BIT0+BIT24 special=BIT8 END
       GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
       PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
         level=SHORT_AT (0x10+ab_off)
@@ -50,7 +79,7 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
       END
     BUT_ONLY
     
-	END ELSE BEGIN // iwdee
+  END ELSE BEGIN // iwdee
    
     COPY_EXISTING ~sppr314.spl~ ~override~
       LPF CLONE_EFFECT INT_VAR match_opcode = 0 opcode = 142 parameter1 = 0 parameter2 = unholy END // add icon for unholy blight
@@ -58,7 +87,7 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
       LPF ALTER_EFFECT INT_VAR match_opcode = 0 opcode = 285 END
 
   END    
-	
-	
+  
+  
 
 END

@@ -1,0 +1,37 @@
+DEFINE_ACTION_FUNCTION "CLERIC_FALSE_DAWN"
+BEGIN
+	COPY_EXISTING "%CLERIC_FALSE_DAWN%.spl" "override" // sppr609
+		GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+		PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+			GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+			PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+				PATCH_MATCH SHORT_AT "%fx_off%" WITH
+					326 WHEN (SLONG_AT ("%fx_off%" + 0x4) == IDS_OF_SYMBOL ("splstate" "CONFUSION_IMMUNITY")) AND (LONG_AT ("%fx_off%" + 0x8) == 111) BEGIN
+						WRITE_SHORT "%fx_off%" 146 // Cast spell -- intentionally do not check for CONFUSION_IMMUNITY since this spell is meant to ignore it...
+						WRITE_LONG ("%fx_off%" + 0x4) 0 // param1 -- unused
+						WRITE_LONG ("%fx_off%" + 0x8) 1 // Cast instantly (caster level)
+						READ_ASCII ("%fx_off%" + 0x14) "subspell"
+					END
+					DEFAULT
+				END
+			END
+		END
+	BUT_ONLY_IF_IT_CHANGES
+	//
+	COPY_EXISTING "%subspell%.spl" "override"
+		PATCH_IF (MOD_IS_INSTALLED "EEex.tp2" 0) BEGIN
+			LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 177 "opcode" = 128 "parameter1" = 0 "parameter2" = 0 "savingthrow" = BIT23 STR_VAR "match_resource" = "dawncon" "resource" = "" END // EEex: savetype BIT23 (bypass op101)
+		END ELSE BEGIN
+			LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 177 STR_VAR "match_resource" = "dawncon" "resource" = "%CLERIC_FALSE_DAWN%" END
+			INNER_ACTION BEGIN
+				CREATE "eff" "%CLERIC_FALSE_DAWN%"
+					WRITE_LONG 0x10 182 // !EEex: Apply EFF while ITM (since this opcode is bugged, we abuse it in order to bypass op101)
+					WRITE_SHORT 0x2C 100 // probability1
+					WRITE_ASCII 0x70 "dawncon" #8 // real EFF applying Confusion (op128)
+			END
+		END
+		LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 177 "opcode" = 215 "parameter1" = 0 "parameter2" = 1 STR_VAR "match_resource" = "dawnvis" "resource" = "dawnvfx" END // Play visual effect (Over target (attached))
+	BUT_ONLY
+	//
+	COPY_EXISTING "spconfus.vvc" "override\dawnvfx.vvc" // a copy of "spconfus.vvc" (again, undead are normally immune to "spconfus.vvc", so we make a copy of it)
+END

@@ -96,6 +96,7 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~sbowebu.itm~  ~override~ // short bow of ebullience: 25% fire damage
               ~serrate.itm~  ~override~ // serrated bone blade: 20% cold damage
               ~sflail.itm~   ~override~ // conrnugon: 50% bleed, 25% stun 
+              ~sflailst.spl~ ~override~ // conrnugon: 25% stun
               ~shax4d4c.itm~ ~override~ // shadowed orc weapon: 40% cold damage
               ~shaxe2c.itm~  ~override~ // shadowed orc weapon: 40% cold damage
               ~shmblr.itm~   ~override~ // shambler weapon: 5% entangle
