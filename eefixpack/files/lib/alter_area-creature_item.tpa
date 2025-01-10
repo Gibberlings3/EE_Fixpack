@@ -1,0 +1,113 @@
+/////                                                  \\\\\
+///// ALTER_AREA/CREATURE_ITEM                         \\\\\
+/////                                                  \\\\\
+
+/*
+
+alter_creature and alter_area just feed into a common macro that does the work
+
+used:
+  BG2 Fixpack, as bg2fixpack/lib/alter_area-creature_item.tpa [symbolic link]
+  IWDification, as iwdification/iwdspells/lib/alter_area-creature_item.tpa [symbolic link]
+  IWDSpells library, as dw_iwdspells/iwdspells/lib/alter_area-creature_item.tpa [symbolic link]
+ 
+version history: 
+  unknown
+
+*/
+
+DEFINE_PATCH_FUNCTION ALTER_AREA_ITEM
+
+  // defines what we're going to check
+  INT_VAR expiry           = "-1"
+          charge1          = "-1"
+          charge2          = "-1"
+          charge3          = "-1"
+          flags            = "-1"
+          flag_identified  = "-1"
+          flag_unstealable = "-1"
+          flag_stolen      = "-1"
+          flag_undroppable = "-1"
+  STR_VAR item       = "same"
+          match_item = "same"
+
+BEGIN
+
+  READ_SHORT 0x76 item_num ELSE 0
+  READ_LONG  0x78 item_off ELSE 0
+  LPF ALTER_AREA-CREATURE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable flag_stolen flag_undroppable item_num item_off
+                               STR_VAR item match_item END
+
+END
+
+DEFINE_PATCH_FUNCTION ALTER_CREATURE_ITEM
+
+  // defines what we're going to check
+  INT_VAR expiry           = "-1"
+          charge1          = "-1"
+          charge2          = "-1"
+          charge3          = "-1"
+          flags            = "-1"
+          flag_identified  = "-1"
+          flag_unstealable = "-1"
+          flag_stolen      = "-1"
+          flag_undroppable = "-1"
+  STR_VAR item       = "same"
+          match_item = "same"
+
+BEGIN
+
+  READ_LONG  0x2bc item_off ELSE 0
+  READ_LONG  0x2c0 item_num ELSE 0
+  LPF ALTER_AREA-CREATURE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable flag_stolen flag_undroppable item_num item_off
+                               STR_VAR item match_item END
+
+END
+
+DEFINE_PATCH_FUNCTION ALTER_AREA-CREATURE_ITEM
+
+  // defines what we're going to check
+  INT_VAR expiry           = "-1"
+          charge1          = "-1"
+          charge2          = "-1"
+          charge3          = "-1"
+          flags            = "-1"
+          flag_identified  = "-1"
+          flag_unstealable = "-1"
+          flag_stolen      = "-1"
+          flag_undroppable = "-1"
+          item_num         = 0
+          item_off         = 0
+  STR_VAR item       = "same"
+          match_item = "same"
+
+BEGIN
+
+  FOR (index = 0 ; index < item_num ; ++index) BEGIN
+    SET base = (item_off + (index * 0x14))
+    READ_ASCII base o_item
+    PATCH_IF (("%o_item%" STRING_COMPARE_CASE "%match_item%" = 0) OR
+              ("all"      STRING_COMPARE_CASE "%match_item%" = 0)) BEGIN
+      PATCH_IF (expiry >= 0)  BEGIN WRITE_SHORT (base + 0x08) expiry END
+      PATCH_IF (charge1 >= 0) BEGIN WRITE_SHORT (base + 0x0a) charge1 END
+      PATCH_IF (charge2 >= 0) BEGIN WRITE_SHORT (base + 0x0c) charge2 END
+      PATCH_IF (charge3 >= 0) BEGIN WRITE_SHORT (base + 0x0e) charge3 END
+      PATCH_IF (flags >= 0)   BEGIN
+        WRITE_LONG (base + 0x10) flags
+      END ELSE BEGIN // only check individual flags if overall value not given
+        PATCH_IF (flag_identified = 0)  BEGIN WRITE_LONG  (base + 0x10) (THIS & `BIT0) END
+        PATCH_IF (flag_identified = 1)  BEGIN WRITE_LONG  (base + 0x10) (THIS BOR BIT0) END
+        PATCH_IF (flag_unstealable = 0) BEGIN WRITE_LONG  (base + 0x10) (THIS & `BIT1) END
+        PATCH_IF (flag_unstealable = 1) BEGIN WRITE_LONG  (base + 0x10) (THIS BOR BIT1) END
+        PATCH_IF (flag_stolen = 0)      BEGIN WRITE_LONG  (base + 0x10) (THIS & `BIT2) END
+        PATCH_IF (flag_stolen = 1)      BEGIN WRITE_LONG  (base + 0x10) (THIS BOR BIT2) END
+        PATCH_IF (flag_undroppable = 0) BEGIN WRITE_LONG  (base + 0x10) (THIS & `BIT3) END
+        PATCH_IF (flag_undroppable = 1) BEGIN WRITE_LONG  (base + 0x10) (THIS BOR BIT3) END
+      END
+      PATCH_IF ("%item%" STRING_COMPARE_CASE "same") BEGIN
+        WRITE_ASCIIE base ~%item%~ #8
+      END
+    END
+  END
+
+END
