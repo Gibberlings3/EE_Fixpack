@@ -398,7 +398,7 @@ END
 //////////////////////////////////////////////////////////////////
 //// Hold Undead should be using 175
 //////////////////////////////////////////////////////////////////
-
+/*
 ACTION_FOR_EACH spell IN
 	spwi324
 	spcl742
@@ -406,7 +406,7 @@ BEGIN
 	COPY_EXISTING "%spell%.spl" override
 		LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=185 opcode=175 END
 END
-	
+*/
 //////////////////////////////////////////////////////////////////
 //// Effects that impose 157 should not also impose 109
 //////////////////////////////////////////////////////////////////
@@ -487,10 +487,10 @@ ACTION_IF GAME_IS ~bg2ee~ BEGIN
 	BEGIN
 		COPY_EXISTING "%spell%.spl" override
 			LPF DELETE_EFFECT INT_VAR match_opcode=177 END
-			LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=174 timing=4 parameter1=0 parameter2=0 STR_VAR resource=EFF_E06 insert=below END
-			LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=174 timing=1 duration=0 parameter1=0 parameter2=0 STR_VAR resource=EFF_M15 insert=below END
-			LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=CDUNHVIS insert=below END
-			LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=324 parameter2=113 timing=0 duration=0 STR_VAR insert="first" resource="%SOURCE_RES%" END
+			LPF CLONE_EFFECT INT_VAR match_opcode=185 opcode=174 timing=4 parameter1=0 parameter2=0 STR_VAR resource=EFF_E06 insert=below END
+			LPF CLONE_EFFECT INT_VAR match_opcode=185 opcode=174 timing=1 duration=0 parameter1=0 parameter2=0 STR_VAR resource=EFF_M15 insert=below END
+			LPF CLONE_EFFECT INT_VAR match_opcode=185 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=CDUNHVIS insert=below END
+			LPF CLONE_EFFECT INT_VAR match_opcode=185 opcode=324 parameter2=113 timing=0 duration=0 STR_VAR insert="first" resource="%SOURCE_RES%" END
 		BUT_ONLY
 	END
 
