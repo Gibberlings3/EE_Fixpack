@@ -74,7 +74,7 @@ BEGIN
 					// parent resref , ability , permutation/extract => child resref
 					"%WIZARD_FEEBLEMIND%" , "-1" , "1=>0" => ""
 					"%WIZARD_PRISMATIC_SPRAY%" , "-1" , "7,14,15" => "%WIZARD_PRISMATIC_SPRAY%B"
-					"insanity" , "-1" , "5,6,7" => "insanit1" // Insanity Gaze
+					"insanity" , "-1" , "5,6,7" => "insanitf" // Insanity Gaze
 				END
 			END
 			DEFAULT

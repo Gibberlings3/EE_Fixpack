@@ -71,13 +71,13 @@ COPY_EXISTING ~ghast1.itm~ ~override~
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
 COPY ~override/ghast1.spl~ ~override/ghast1n.spl~ // nausea subspell
   LPF ALTER_EFFECT INT_VAR savingthrow = 0 END
-MOVE ~override/ghast2.spl~ ~override/ghast1p.spl~ // paralyze subspell
+//MOVE ~override/ghast2.spl~ ~override/ghast1p.spl~ // paralyze subspell
 
 // luke's seven eyes already split this, but it needs a unique resref
 COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = icetrl resource = icetrlst END
 
-MOVE ~override/icetrl.spl~ ~override/icetrlst.spl~
+//MOVE ~override/icetrl.spl~ ~override/icetrlst.spl~
 COPY_EXISTING ~icetrlst.spl~ ~override~
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 324 parameter1 = stun_immunity parameter2 = 110 STR_VAR resource = EVAL ~%DEST_RES%~ END
   
@@ -98,10 +98,10 @@ COPY ~eefixpack/files/spl/cdcure.spl~ ~override/sflailst.spl~
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 139 target = 2 parameter1 = 35568 timing = 1 END // stunned string
 
 // split out confusion from main insanity gaze spell
-MOVE ~override/insanit2.spl~ ~override/insanitc.spl~
+//MOVE ~override/insanit2.spl~ ~override/insanitc.spl~
 COPY_EXISTING ~insanitc.spl~ ~override~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
   LPF CLONE_EFFECT INT_VAR match_opcode = 128 opcode = 324 parameter1 = confusion_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
-MOVE ~override/insanit1.spl~ ~override/insanitf.spl~
+//MOVE ~override/insanit1.spl~ ~override/insanitf.spl~
 COPY_EXISTING ~insanitf.spl~ ~override~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
   LPF CLONE_EFFECT INT_VAR match_opcode = 76 opcode = 324 parameter1 = feeblemind_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 
@@ -111,7 +111,7 @@ COPY_EXISTING ~insanity.spl~ ~override~ // (spl) Insanity Gaze - causes confusio
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = insanit2 resource = insanitc END
   
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
-MOVE ~override/spcl415b.spl~ ~override/spcl415h.spl~
+//MOVE ~override/spcl415b.spl~ ~override/spcl415h.spl~
 COPY ~eefixpack/files/spl/spcl415h.spl~ ~override~ // just the hold ability farmed out into separate spell
   LPF ALTER_EFFECT INT_VAR match_opcode = 324 parameter1 = hold_immunity END
 COPY_EXISTING ~spcl415.spl~ ~override~

@@ -23,7 +23,7 @@ BEGIN
 					"ghoulc" , "-1" , "1,0" => "ghoulc" // Ghoul hand
 					"goltome4" , "-1" , "1,0,3" => "goltome4" // Attack
 					"gorsnake" , "-1" , "1,0,2" => "gorsnake" // Skull
-					"icetrl" , "-1" , "2,1" => "icetrl" // Attack
+					"icetrl" , "-1" , "2,1" => "icetrlst" // Attack
 					"paracarr" , "-1" , "1,0,2" => "paracarr" // Ghoul hand
 					"paraghas" , "-1" , "1,0,2,3,4" => "paraghas" // Ghoul Touch
 					"paraghou" , "-1" , "1,0,2,3,4" => "paraghou" // Ghoul Touch

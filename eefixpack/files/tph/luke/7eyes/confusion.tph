@@ -88,7 +88,7 @@ BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "patch_data" BEGIN
 					// parent resref , ability , permutation/extract => child resref
 					//"insanity" , "-1" , "9=>0,8=>0" => "insanity" // Insanity Gaze
-					"insanity" , "-1" , "0,1,2,3,4" => "insanit2" // Insanity Gaze
+					"insanity" , "-1" , "0,1,2,3,4" => "insanitc" // Insanity Gaze
 					"spcl751a" , 1 , "2,4,5" => "spcl751b" // Jester's song
 					"spcl751a" , 2 , "6,7" => "spcl751b" // Jester's song -- this is just to accomodate Cure Confusion SPL/ITM files...
 				END
