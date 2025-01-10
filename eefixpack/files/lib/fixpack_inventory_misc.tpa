@@ -94,7 +94,7 @@ BEGIN
     READ_LONG 0x320 slot_off ELSE 0
     READ_LONG 0x324 itm_off  ELSE 0
     READ_LONG 0x328 itm_num  ELSE 0
-  END ELSE
+  END ELSE BEGIN
     READ_LONG  0x2b8 slot_off ELSE 0
     READ_LONG  0x2bc itm_off ELSE 0
     READ_LONG  0x2c0 itm_num ELSE 0
@@ -141,7 +141,7 @@ DEFINE_PATCH_FUNCTION cd_equip_weapon BEGIN
   PATCH_IF ("%ver%" STRING_COMPARE_CASE "V9.0" = 0) BEGIN
     READ_LONG 0x320 slot_off ELSE 0
     READ_LONG 0x328 itm_num  ELSE 0
-  END ELSE
+  END ELSE BEGIN
     READ_LONG  0x2b8 slot_off ELSE 0
     READ_LONG  0x2c0 itm_num  ELSE 0
   END
@@ -169,7 +169,7 @@ BEGIN
   PATCH_IF ("%ver%" STRING_COMPARE_CASE "V9.0" = 0) BEGIN
     READ_LONG 0x320 slot_off ELSE 0
     READ_LONG 0x328 itm_num  ELSE 0
-  END ELSE
+  END ELSE BEGIN
     READ_LONG  0x2b8 slot_off ELSE 0
     READ_LONG  0x2c0 itm_num  ELSE 0
   END
@@ -200,7 +200,7 @@ BEGIN
     READ_LONG 0x320 slot_off ELSE 0
     READ_LONG 0x324 itm_off  ELSE 0
     READ_LONG 0x328 itm_num  ELSE 0
-  END ELSE
+  END ELSE BEGIN
     READ_LONG  0x2b8 slot_off ELSE 0
     READ_LONG  0x2bc itm_off ELSE 0
     READ_LONG  0x2c0 itm_num ELSE 0
