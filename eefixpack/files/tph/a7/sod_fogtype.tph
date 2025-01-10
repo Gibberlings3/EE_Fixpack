@@ -1,0 +1,95 @@
+// Removes usage of FOG_TYPE global from the game to work around an engine bug
+// https://www.gibberlings3.net/forums/topic/38407-sod-remove-usage-of-fog_type-variable-from-the-game
+
+// This function duplicates a 2DA table entry.
+DEFINE_PATCH_FUNCTION a7_clone_2da_entry
+INT_VAR
+  overwrite = 1   // whether to allow overwriting an existing target entry
+STR_VAR
+  from_name = ~~  // name (column 0 value) of the 2da source entry
+  to_name   = ~~  // name (column 0 value) of the 2da target entry
+RET
+  success
+BEGIN
+  SET success = 0
+  PATCH_IF (NOT ~%from_name%~ STR_EQ ~~ && NOT ~%from_name%~ STR_EQ ~%to_name%~) BEGIN
+    // initializations
+    COUNT_2DA_ROWS 1 num_rows
+    PATCH_IF (~%to_name%~ STR_EQ ~~) BEGIN
+      SET to_name = num_rows - 3
+    END
+    READ_2DA_ENTRIES_NOW ~table_in~ 1
+    SET src_row = 0
+    SET dst_row = num_rows
+    FOR (row = 3; row < table_in; ++row) BEGIN
+      SPRINT name $table_in(~%row%~ ~0~)
+      PATCH_IF (src_row = 0 && ~%name%~ STR_EQ ~%from_name%~) BEGIN
+        SET src_row = row
+      END
+      PATCH_IF (overwrite && dst_row = num_rows && ~%name%~ STR_EQ ~%to_name%~) BEGIN
+        SET dst_row = row
+      END
+    END
+
+    // cloning entry
+    PATCH_IF (src_row > 0) BEGIN
+      PATCH_IF (dst_row < num_rows) BEGIN
+        // overwriting existing row
+        FOR (c = 1; VARIABLE_IS_SET $table_in(~%src_row%~ ~%c%~) || VARIABLE_IS_SET $table_in(~%dst_row%~ ~%c%~); ++c) BEGIN
+          PATCH_IF (VARIABLE_IS_SET $table_in(~%src_row%~ ~%c%~)) BEGIN
+            SPRINT value $table_in(~%src_row%~ ~%c%~)
+          END ELSE BEGIN
+            SPRINT value ~~
+          END
+          SET_2DA_ENTRY_LATER ~table_out~ dst_row c ~%value%~
+        END
+        SET_2DA_ENTRIES_NOW ~table_out~ 1
+      END ELSE BEGIN
+        // adding new row
+        SPRINT line ~%WNL%%to_name%~
+        FOR (c = 1; VARIABLE_IS_SET $table_in(~%src_row%~ ~%c%~); ++c) BEGIN
+          SPRINT value $table_in(~%src_row%~ ~%c%~)
+          SPRINT line ~%line% %value%~
+        END
+        SET ofs = BUFFER_LENGTH
+        SET len = STRING_LENGTH ~%line%~
+        INSERT_BYTES ofs len
+        WRITE_ASCIIE ofs ~%line%~ (len)
+      END
+      PRETTY_PRINT_2DA
+      SET success = 1
+    END
+  END
+END
+
+
+WITH_SCOPE BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY fog_entries BEGIN
+    // source name => target name
+    ~1~ => ~BD1000~
+    ~4~ => ~BD6100~
+  END
+
+  COPY_EXISTING ~fogarea.2da~ ~override~
+                ~fogpt.2da~ ~override~
+    PHP_EACH fog_entries AS from_name => to_name BEGIN
+      LPF a7_clone_2da_entry STR_VAR from_name to_name RET success END
+      PATCH_IF (NOT success) BEGIN
+        PATCH_WARN ~WARNING: Could not clone fog definition (%SOURCE_FILE%: %from_name% => %to_name%)~
+      END
+    END
+  BUT_ONLY
+
+  COPY_EXISTING ~bd1000.are~ ~override~
+                ~bd6100.are~ ~override~
+    WRITE_SHORT 0x4e 0  // fog probability
+  BUT_ONLY
+
+  COPY_EXISTING ~bd6100.bcs~ ~override~
+                ~bdcut14.bcs~ ~override~
+                ~cutskip.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~SetGlobal("FOG_TYPE","GLOBAL",[0-9]+)~ ~~
+    END
+  BUT_ONLY
+END
