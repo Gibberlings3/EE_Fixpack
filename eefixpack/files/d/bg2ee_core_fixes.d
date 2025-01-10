@@ -59,3 +59,6 @@ REPLACE_TRANS_ACTION ~sarmel01~
   BEGIN 0 END
   ~RevealAreaOnMap("AR5500")~ ~\0 RemoveWorldmapAreaFlag("AR5500",ENABLED)~
   UNLESS ~RemoveWorldmapAreaFlag("AR5500",ENABLED)~
+  
+// can ask about voghilin's hunger without him mentioning he's hungry
+ADD_TRANS_TRIGGER OHBVOGHI 4 ~False()~ DO 1
