@@ -33,7 +33,9 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
     COPY_EXISTING "SPPR314.spl" override
       LPF DELETE_EFFECT END
       // level-independent effects
-      splprot_param="%SOURCE_RES%" STR_EQ sppr313 ? 38 : 36
+      splprot_param="%SOURCE_RES%" STR_EQ sppr314 ? 37 : 36
+      LPF ADD_SPELL_EFFECT INT_VAR opcode=324 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block evil
+      splprot_param="%SOURCE_RES%" STR_EQ sppr314 ? 34 : 36
       LPF ADD_SPELL_EFFECT INT_VAR opcode=324 target=2 parameter2=splprot_param STR_VAR resource="%SOURCE_RES%" END // block non-evil/non-good
       LPF ADD_SPELL_EFFECT INT_VAR opcode=141 resist_dispel = 1 target=2 parameter2=26 END // lighting effect
       LPF ADD_SPELL_EFFECT INT_VAR opcode=174 resist_dispel = 1 target=2 timing=1 STR_VAR resource=EFF_P85 END // sound
