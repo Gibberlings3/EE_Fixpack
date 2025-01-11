@@ -371,3 +371,63 @@ BEGIN
   END // end valid structure check
   
 END
+
+/////                                                  \\\\\
+///// cd_fx_unmisindex                                 \\\\\
+/////                                                  \\\\\
+
+// *very* crude function to fix a handful of misindexed items and spells
+DEFINE_PATCH_FUNCTION cd_fx_unmisindex
+  INT_VAR move = 0
+BEGIN
+  READ_ASCII 0x00 sig (3)
+  SET abil_length = 0x28
+  PATCH_IF ("%sig%" STRING_COMPARE_CASE "ITM" = 0) BEGIN
+    SET abil_length = 0x38
+  END
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  SET idx = 0
+  CLEAR_ARRAY cd_fx_reorder
+  FOR (index = "-1" ; index < abil_num ; ++index) BEGIN
+    PATCH_IF !move BEGIN
+      PATCH_IF index < 0 BEGIN
+        WRITE_SHORT 0x6e idx
+        READ_SHORT  0x70 abil_fx_num
+      END ELSE BEGIN
+        READ_SHORT  (abil_off + 0x1e + (index * abil_length)) abil_fx_num
+        WRITE_SHORT (abil_off + 0x20 + (index * abil_length)) idx
+      END
+      PATCH_IF abil_fx_num BEGIN
+        SET idx += abil_fx_num
+      END  
+    END ELSE BEGIN   
+      PATCH_IF index < 0 BEGIN
+        READ_SHORT 0x6e abil_fx_idx
+        READ_SHORT 0x70 abil_fx_num
+      END ELSE BEGIN
+        READ_SHORT (abil_off + 0x1e + (index * abil_length)) abil_fx_num
+        READ_SHORT (abil_off + 0x20 + (index * abil_length)) abil_fx_idx
+      END
+      READ_ASCII   (fx_off +        (abil_fx_idx * 0x30)) effects (48 * abil_fx_num) // read entire block of associated effects    
+      DEFINE_ASSOCIATIVE_ARRAY cd_fx_reorder BEGIN ~%index%~ => ~%effects%~ END
+    END  
+  END   
+  PATCH_IF move BEGIN
+    PATCH_PHP_EACH cd_fx_reorder AS index => effects BEGIN
+      PATCH_IF index < 0 BEGIN
+        WRITE_SHORT 0x6e idx
+        READ_SHORT  0x70 abil_fx_num
+      END ELSE BEGIN
+        READ_SHORT  (abil_off + 0x1e + (index * abil_length)) abil_fx_num
+        WRITE_SHORT (abil_off + 0x20 + (index * abil_length)) idx
+      END
+      PATCH_IF abil_fx_num BEGIN
+        WRITE_ASCIIE (fx_off + (idx * 0x30)) ~%effects%~
+        SET idx += abil_fx_num
+      END  
+    END  
+  END  
+  
+END  

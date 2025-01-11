@@ -808,6 +808,12 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
+// tbd, cam
+// misindexed effects
+COPY_EXISTING ~ption41.itm~   ~override~
+  LPF cd_fx_unmisindex END
+  BUT_ONLY
+
 ACTION_IF game_includes_sod BEGIN
 
   // poison resistance blocking dispel
@@ -1013,6 +1019,12 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+
+// tbd, cam
+// misindexed effects (only wrong with SoD, but harmless to run on BGEE)
+COPY_EXISTING ~spin558.spl~   ~override~
+  LPF cd_fx_unmisindex END
+  BUT_ONLY
 
 // luke
 // **Cure Wounds**
