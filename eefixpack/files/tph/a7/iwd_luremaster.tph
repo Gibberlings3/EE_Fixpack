@@ -1,0 +1,13 @@
+// Fixes cutscene that is triggered when the Luremaster is defeated
+// https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/22/#findComment-344975
+
+<<<<<<<< .../a7-inline/dlure.d
+REPLACE_TRANS_ACTION ~dlure~
+  BEGIN 31 END  // state 31
+  BEGIN 0 END   // transition 0
+  ~StartCutSceneMode~ ~CreateCreature("CUTSPY",[-1.-1],0) StartCutSceneMode~
+  UNLESS ~CreateCreature("CUTSPY"~
+>>>>>>>>
+COMPILE ~.../a7-inline/dlure.d~
+
+COMPILE ~eefixpack/files/baf/iwd/dulurbye.baf~
