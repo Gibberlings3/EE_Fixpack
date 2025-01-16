@@ -884,7 +884,7 @@ WITH_SCOPE BEGIN
   COPY_EXISTING "ghast1.spl" "override"
     LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_savingthrow" = BIT2 END
   BUT_ONLY_IF_IT_CHANGES
-  COPY_EXISTING "ghast2.spl" "override"
+  COPY_EXISTING "ghast1p.spl" "override"
     LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 1 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_P11" END
     LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 174 "target" = 2 "timing" = 4 "duration" = 36 "resist_dispel" = 3 STR_VAR "resource" = "#EFF_E05" END
   BUT_ONLY_IF_IT_CHANGES

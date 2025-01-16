@@ -66,7 +66,6 @@ COPY_EXISTING ~sppr716.spl~  ~override~ // (spl) Symbol, Hopelessness - causes s
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
 COPY_EXISTING ~ghast1.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 savingthrow = BIT1 STR_VAR match_resource = ghast1 resource = ghast1n END
-  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = ghast2 resource = ghast1p END
 
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
 COPY ~override/ghast1.spl~ ~override/ghast1n.spl~ // nausea subspell
@@ -74,8 +73,8 @@ COPY ~override/ghast1.spl~ ~override/ghast1n.spl~ // nausea subspell
 //MOVE ~override/ghast2.spl~ ~override/ghast1p.spl~ // paralyze subspell
 
 // luke's seven eyes already split this, but it needs a unique resref
-COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect
-  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = icetrl resource = icetrlst END
+//COPY_EXISTING ~icetrl.itm~   ~override~ // Attack - causes stun - unknown long effect - unknown long effect
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = icetrl resource = icetrlst END
 
 //MOVE ~override/icetrl.spl~ ~override/icetrlst.spl~
 COPY_EXISTING ~icetrlst.spl~ ~override~
@@ -106,16 +105,16 @@ COPY_EXISTING ~insanitf.spl~ ~override~ // (spl) Insanity Gaze - causes confusio
   LPF CLONE_EFFECT INT_VAR match_opcode = 76 opcode = 324 parameter1 = feeblemind_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
-COPY_EXISTING ~insanity.spl~ ~override~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
-  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = insanit1 resource = insanitf END
-  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = insanit2 resource = insanitc END
+//COPY_EXISTING ~insanity.spl~ ~override~ // (spl) Insanity Gaze - causes confusion feeblemind - portrait icon(s) 47 48 - sound(s) #eff_e05 - additional effects
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = insanit1 resource = insanitf END
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = insanit2 resource = insanitc END
   
 // luke's seven eyes fix already creates subspells, but renaming subspells for bg/bg2 consistency
 //MOVE ~override/spcl415b.spl~ ~override/spcl415h.spl~
 COPY ~eefixpack/files/spl/spcl415h.spl~ ~override~ // just the hold ability farmed out into separate spell
   LPF ALTER_EFFECT INT_VAR match_opcode = 324 parameter1 = hold_immunity END
-COPY_EXISTING ~spcl415.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = spcl415b resource = spcl415h END
+//COPY_EXISTING ~spcl415.spl~ ~override~
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = spcl415b resource = spcl415h END
 
 // chromatic orb - subspells for hold (7), blind (1,4), and stun (6)
 COPY_EXISTING ~spdr101.spl~  ~override~ // Chromatic Orb (druid)

@@ -42,7 +42,7 @@ BEGIN
 					"dazer" , "-1" , "0,1,2,3" => "dazer" // Dazer
 					"deva" , "-1" , "14,15,16" => "deva" // Mace of Disruption +2
 					"icegolem" , "-1" , "1,0,2,3" => "icegolem" // Skull
-					"icetrl" , "-1" , "1,2,3" => "icetrl" // Attack
+					"icetrl" , "-1" , "1,2,3" => "icetrlst" // Attack
 					"poq2-16" , "-1" , "0,1,2,3" => "poq2-16" // 
 					"sflail" , "-1" , "22,23,24,25,26,27,28,29,30" => "sflail1" // Flail (Stun: 6 seconds)
 					"sflail" , "-1" , "23,24,25,26,27,28,29,30,31" => "sflail2" // Flail (Stun: 12 seconds)
