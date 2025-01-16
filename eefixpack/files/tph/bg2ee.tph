@@ -730,6 +730,14 @@ INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - sim
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
+// tbd, cam
+// misindexed effects
+COPY_EXISTING ~ohbwi302.spl~ ~override~
+              ~ohbwi304.spl~ ~override~
+  LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  //LPF cd_fx_unmisindex END
+  BUT_ONLY
+
 // luke
 // **Cure Wounds**
 WITH_SCOPE BEGIN
