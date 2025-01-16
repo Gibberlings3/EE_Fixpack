@@ -157,6 +157,7 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_iwd_locals_scripts.tph~ // tbd, cam - region/container scripts can't use LOCALS-scoped variables
+INCLUDE ~eefixpack/files/tph/a7/iwd_luremaster.tph~ // luremaster cutscene fixes
   
 // tbd, cam
 // player ai checks if magical weapon present before casting shillelagh, but checks old resources
