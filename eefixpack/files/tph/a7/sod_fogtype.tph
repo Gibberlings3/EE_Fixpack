@@ -90,6 +90,7 @@ WITH_SCOPE BEGIN
                 ~cutskip.bcs~ ~override~
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~SetGlobal("FOG_TYPE","GLOBAL",[0-9]+)~ ~~
+      REPLACE_TEXTUALLY ~PlaySound("AMB_M160")~ ~PlaySound("AMB_M16O")~ // while we're here...
     END
   BUT_ONLY
 END

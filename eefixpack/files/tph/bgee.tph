@@ -808,12 +808,6 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
-// tbd, cam
-// misindexed effects
-COPY_EXISTING ~ption41.itm~   ~override~
-  LPF cd_fx_unmisindex END
-  BUT_ONLY
-
 ACTION_IF game_includes_sod BEGIN
 
   // poison resistance blocking dispel
@@ -1023,7 +1017,8 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can cras
 // tbd, cam
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
 COPY_EXISTING ~spin558.spl~   ~override~
-  LPF cd_fx_unmisindex END
+  LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  //LPF cd_fx_unmisindex END
   BUT_ONLY
 
 // luke

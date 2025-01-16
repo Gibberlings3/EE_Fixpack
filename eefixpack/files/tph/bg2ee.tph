@@ -408,15 +408,6 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
-// tbd, cam
-// misindexed effects
-COPY_EXISTING ~hamm06.itm~   ~override~
-  LPF cd_fx_unmisindex INT_VAR move = 1 END
-  BUT_ONLY
-COPY_EXISTING ~staf01.itm~   ~override~
-  LPF cd_fx_unmisindex END
-  BUT_ONLY
-
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~  ~override~
@@ -743,7 +734,8 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can cra
 // misindexed effects
 COPY_EXISTING ~ohbwi302.spl~ ~override~
               ~ohbwi304.spl~ ~override~
-  LPF cd_fx_unmisindex END
+  LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  //LPF cd_fx_unmisindex END
   BUT_ONLY
 
 // luke
