@@ -7793,9 +7793,6 @@ Usable only by Godsmen
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @68456 = ~"Then you shall die as well. Prepare yourself, spirit. We shall see if my mortality can be slain."~
 
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@68592 = ~Attack Roll~
-
 // [automatic scan] Issues: 2  | Surplus leading whitespace at line 1 | Surplus trailing whitespace at line 1
 @68620 = ~ Find Trap Mode~
 

@@ -2013,9 +2013,6 @@ Type: One-handed
 Weight: 0~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@14643 = ~Attack Roll~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @14695 = ~Potions are typically found in ceramic, crystal, glass, or metal flasks or vials. Flasks or other containers generally contain enough fluid to provide one person with one complete dose to achieve the effects of the potion.
 
 STATISTICS:
