@@ -34,6 +34,11 @@ ADD_STATE_TRIGGER bdjaheij 47 ~Range("wyrm_sense",20)~
 ADD_STATE_TRIGGER bdminscj 85 ~Range("wyrm_sense",20)~
 ADD_STATE_TRIGGER bdmkhiij 80 ~Range("wyrm_sense",20)~
 
+// insufficient daytime checks can lead to premature termination of dialogs if triggered at certain times of the day
+REPLACE_TRANS_TRIGGER bdsafanj BEGIN 63 END BEGIN 0 END ~TimeOfDay(DAY)~ ~!TimeOfDay(NIGHT)~
+REPLACE_TRANS_TRIGGER bddornj  BEGIN  7 END BEGIN 0 END ~TimeOfDay(DAY)~ ~!TimeOfDay(NIGHT)~
+REPLACE_TRANS_TRIGGER bdrasaaj BEGIN 24 END BEGIN 0 END ~TimeOfDay(DAY)~ ~!TimeOfDay(NIGHT)~
+
 // tbd, cam
 // you can charm zelma to get your stuff back, but she'll have nothing to say between you getting your stuff returned and the charm expiring
 APPEND bdzelma
