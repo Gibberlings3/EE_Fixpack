@@ -6,18 +6,18 @@ MODDER fun_args fail missing_eval none setup_tra none
 ALWAYS
 
   ACTION_IF NOT VARIABLE_IS_SET cd_always_eefixpack THEN BEGIN // just do this once per install
-  
+
     OUTER_SET cd_always_eefixpack = 1
 
     ACTION_FOR_EACH var IN game_includes_sod game_is_bgee game_is_bg2ee game_is_iwdee game_is_pstee BEGIN
       OUTER_SET ~%var%~ = 0
-    END  
-    
+    END
+
     ACTION_IF GAME_IS bgee BEGIN 
       ACTION_IF GAME_INCLUDES sod BEGIN 
         ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @3 END // DLC Merger check
-        OUTER_SET game_includes_sod = 1  
-        PRINT @7      
+        OUTER_SET game_includes_sod = 1
+        PRINT @7
       END ELSE BEGIN
         PRINT @6
       END
@@ -25,8 +25,9 @@ ALWAYS
     END ELSE  
     ACTION_IF GAME_IS bg2ee BEGIN OUTER_SPRINT game ~bg2ee~ PRINT @8 END ELSE
     ACTION_IF GAME_IS iwdee BEGIN OUTER_SPRINT game ~iwdee~ PRINT @9 END ELSE
-    ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END
-    
+    ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END ELSE
+    ACTION_IF GAME_IS eet BEGIN OUTER_SPRINT game ~eet~ PRINT @11 END
+
     OUTER_SET ~game_is_%game%~ = 1
     LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
     INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
@@ -58,8 +59,7 @@ LANGUAGE
 LANGUAGE
   ~Simplified Chinese~
   ~zh_CN~
-  ~eefixpack/languages/zh_CN/weidu.tra~  
-  
+  ~eefixpack/languages/zh_CN/weidu.tra~
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -70,14 +70,15 @@ LANGUAGE
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @0 DESIGNATED 0
-REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee.tph~)) OR
+REQUIRE_PREDICATE (((GAME_IS ~bgee~) AND (FILE_EXISTS ~eefixpack/files/tph/bgee.tph~)) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee.tph~)) OR
+                   ((GAME_IS ~eet~) AND (FILE_EXISTS ~eefixpack/files/tph/eet.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee.tph~))) @4
 
 WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
   INCLUDE ~eefixpack/files/tph/%game%.tph~
-END  
+END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -90,6 +91,7 @@ END
 BEGIN @1 DESIGNATED 1  
 REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee_beta.tph~)) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee_beta.tph~)) OR
+                  ((GAME_IS ~eet~) AND (FILE_EXISTS ~eefixpack/files/tph/eet_beta.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee_beta.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee_beta.tph~))) @4
 
@@ -109,6 +111,7 @@ END
 BEGIN @2 DESIGNATED 2
 REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tph~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tph~))) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tph~)) OR
+                   ((GAME_IS ~eet~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_eet.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tph~)) OR
                    ((!GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~))) @5
