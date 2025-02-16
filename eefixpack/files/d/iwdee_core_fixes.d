@@ -44,3 +44,6 @@ ALTER_TRANS DPLANAR BEGIN 21 31 32 END BEGIN 0 END BEGIN ACTION ~~ END // premat
 REPLACE_TRIGGER_TEXT DPLANAR ~Global("AR5405_Visited","GLOBAL",1)~ ~Global("AR5103_Visited","GLOBAL",1)~ // larrel questions checking wrong var
 ALTER_TRANS DPLANAR BEGIN 45 END BEGIN 4 END BEGIN TRIGGER ~Global("AR6006_Visited","GLOBAL",1) !Global("Forge_On","GLOBAL",0)~ END // jamoth tomb question wrong var
 ADD_TRANS_TRIGGER DPLANAR 57 ~Global("AR1100_Visited","GLOBAL",1)~ DO 7 // pomab answer should wait until you're in easthaven at least
+
+// adding some var sets and journal entries to valesti
+ADD_TRANS_ACTION dvalesti BEGIN 8 END BEGIN 1 END ~SetGlobal("ArborQuestGiveN","GLOBAL",1) AddJournalEntry(34235,QUEST)~
