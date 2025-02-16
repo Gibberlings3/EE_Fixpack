@@ -47,3 +47,6 @@ ADD_TRANS_TRIGGER DPLANAR 57 ~Global("AR1100_Visited","GLOBAL",1)~ DO 7 // pomab
 
 // adding some var sets and journal entries to valesti
 ADD_TRANS_ACTION dvalesti BEGIN 8 END BEGIN 1 END ~SetGlobal("ArborQuestGiveN","GLOBAL",1) AddJournalEntry(34235,QUEST)~
+
+// fixes Denaini's rewards if you complete her quest before speaking with her
+ALTER_TRANS ddenaini BEGIN 12 END BEGIN 2 END BEGIN ~EPILOGUE~ ~GOTO 19~ END
