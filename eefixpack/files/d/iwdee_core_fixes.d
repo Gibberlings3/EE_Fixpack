@@ -50,3 +50,6 @@ ADD_TRANS_ACTION dvalesti BEGIN 8 END BEGIN 1 END ~SetGlobal("ArborQuestGiveN","
 
 // fixes Denaini's rewards if you complete her quest before speaking with her
 ALTER_TRANS ddenaini BEGIN 12 END BEGIN 2 END BEGIN ~EPILOGUE~ ~GOTO 19~ END
+
+// kerish only setting journal entry on 1/3 paths
+ADD_TRANS_ACTION dkerish BEGIN 2 3 END BEGIN 1 END ~AddJournalEntry(9081,INFO)~
