@@ -418,6 +418,14 @@ COPY_EXISTING ~uhxbw2a.itm~ ~override~ // finest heavy crossbow
               ~xbow01.itm~  ~override~ // heavy crossbow
   WRITE_SHORT 0x26 11 // min str
   BUT_ONLY
+  
+// wand of fire should be using IWD-style Agannazar's Scorcher, not BG2-style
+// see also strref 17654
+COPY_EXISTING ~wand05.itm~ ~override~
+  LPF CLONE_EFFECT  INT_VAR header = 1 match_opcode = 12 match_savingthrow = (BIT3 + BIT11 + BIT24) parameter1 = 0 dicenumber = 3 savingthrow = (BIT11 + BIT24) 
+    special = 0 STR_VAR insert = first END // primary damage (needs to be moved above evasion check, changed from 6d6+6 save for half to 3d6 no save) 
+  LPF DELETE_EFFECT INT_VAR header = 1 match_opcode = 12 match_savingthrow = (BIT3 + BIT11 + BIT24) END // delete old primary damage
+  LPF ALTER_EFFECT  INT_VAR header = 1 match_opcode = 12 match_savingthrow = (BIT3 + BIT10 + BIT24) parameter1 = 0 dicesize = 8 dicenumber = 2 END // change secondary damage from 6d6+6 to 2d8
 
 // tbd, cam
 // feedback with limited timing and/or duration
@@ -947,6 +955,14 @@ INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
+
+// crieg's bag of holding has several items with charge issues
+COPY_EXISTING ~bagh02.sto~ ~override~
+  LPF alter_store_item INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = wand02 END 
+  LPF alter_store_item INT_VAR charge1 = 1 stock = 4 STR_VAR match_item = adisease END 
+  LPF alter_store_item INT_VAR charge1 = 1 stock = 2 STR_VAR match_item = philter END 
+  LPF alter_store_item INT_VAR charge1 = 1 stock = 4 STR_VAR match_item = flamoil END 
+  BUT_ONLY
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
