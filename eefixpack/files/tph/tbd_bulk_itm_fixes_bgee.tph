@@ -12,6 +12,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   ghoult, null, null, 0, null, null, null, null, null, null, null, null, null => ghoult // luke: Ghoul Touch – should not interact with spell protections
   harm, null, null, null, null, null, null, null, null, null, null, null, 0 => harm // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   melfmet, null, null, 0, null, null, null, null, null, null, null, null, null => melfmet // luke: Melf's Minute Meteors – should not interact with spell protections
+  misc83, null, null, null, null, null, null, null, 8, null, null, null, null => misc83 // tbd: cam: Changing the ‘Key to the River Plug’ from type: misc to type: key
+  misc93, null, null, null, null, null, null, null, 8, null, null, null, null => misc93 // tbd: cam: Changing the ‘Odd Looking Key’ from type: misc to type: key
   serious, null, null, null, null, null, null, null, null, null, null, null, 0 => serious // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   slaylive, null, null, null, null, null, null, null, null, null, null, null, 0 => slaylive // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   sw1h18, null, null, null, null, null, null, null, null, null, 0, null, null => sw1h18 // tbd, cam: sword of balduran should be zero enchantment
@@ -21,5 +23,5 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   wand12, null, null, 1, null, null, null, null, null, null, null, null, null => wand12 // tbd, cam (from scs): changing wand powers to better match their effects
 
 END
-
+PRINT ~ == executing~
 INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_code.tph~
