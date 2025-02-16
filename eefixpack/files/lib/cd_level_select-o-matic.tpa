@@ -1,0 +1,239 @@
+/////                                                  \\\\\
+///// spell extension library                          \\\\\
+/////                                                  \\\\\
+
+/*
+
+The CD_LEVEL_SELECT-O-MATIC invokes the CD_EXTEND-O-MATIC or
+CD_TRIM-O-MATIC function as necessary to extend or trim the selected spell
+to the desired level cap. Both TRIM and EXTEND can be invoked directly. 
+
+* Define round and cap variables before INCLUDEing these *
+
+more documentation here:
+https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/page/13/#comment-332943
+
+used:
+  Spell-50, as spell50/lib/cd_level_select-o-matic.tpa [symbolic link]
+  The Divine Remix, as divine_remix/lib/cd_level_select-o-matic.tpa [symbolic link]
+  Sword and Fist, as sword_and_fist/lib/cd_level_select-o-matic.tpa [symbolic link]
+  SP Collection, as spstuff/lib/cd_level_select-o-matic.tpa [symbolic link]
+ 
+version history: 
+  unk: creation of the original CD_EXTEND-O-MATIC
+  12/30/23: Added level select and trim macros; expended extend; bundled together for Spell-50
+  2/6/25: fixed bug where TRIM-O-MATIC never initialized the abil_delta variable
+
+platform:
+  everything except pst and iwd2
+
+*/
+
+/////                                                  \\\\\
+///// CD_LEVEL_SELECT-O-MATIC, patent pending          \\\\\
+/////                                                  \\\\\
+
+// this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
+DEFINE_PATCH_FUNCTION CD_LEVEL_SELECT-O-MATIC
+  INT_VAR base_dur       = 0     // constant to add to all durations
+          step_dur       = round // how much duration to add to each consecutive header
+          step_size      = 1     // how many levels between headers
+          level_cap      = cap   // stop extending at level
+          min_dur        = 4     // ignore effects with durations less than this (e.g. cosmetics)
+          dur_special    = 0     // just add step_dur to existing effects (ignore base_dur)
+          min_lev_alt    = 0     // if extending from level 1, use this value as its minimum level instead (e.g. fifth slevel spell with only one header, use 9 here)
+          base_dmg_rolls = 0     // base roll damage
+          base_dmg_fixed = 0     // base fixed damage
+          damage_rolls   = 0     // +die roll damage per level
+          damage_fixed   = 0     // +fixed damage per level
+          save_for_half  = 0     // if we need to split damage for non-ee
+          damage_special = 0     // just add damage_rolls/damage_fixed to existing effects (ignore base_dmg_rolls, base_dmg_fixed)
+          min_abil       = 2     // don't do anything unless the spell has at least this many headers
+  RET     abil_delta
+BEGIN
+
+  READ_SHORT 0x68 abil_num
+  PATCH_IF abil_num >= min_abil BEGIN
+    READ_LONG  0x64 abil_off
+    READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) last_level // read level of last ability
+    PATCH_IF last_level > level_cap BEGIN
+      LPF CD_TRIM-O-MATIC INT_VAR level_cap RET abil_delta END
+    END ELSE  
+    PATCH_IF last_level < level_cap BEGIN
+      LPF CD_EXTEND-O-MATIC INT_VAR base_dur step_dur step_size level_cap min_dur dur_special min_lev_alt base_dmg_rolls 
+                                    base_dmg_fixed damage_rolls damage_fixed save_for_half damage_special RET abil_delta END
+    END ELSE 
+    PATCH_IF last_level = level_cap BEGIN
+      SET abil_delta = 0
+    END  
+  END ELSE BEGIN
+    SET abil_delta = 0
+  END  
+
+END  
+
+/////                                                  \\\\\
+///// CD_EXTEND-O-MATIC, patent pending                \\\\\
+/////                                                  \\\\\
+
+// this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
+// added abil_delta tracking
+DEFINE_PATCH_FUNCTION CD_EXTEND-O-MATIC
+  INT_VAR base_dur       = 0     // constant to add to all durations
+          step_dur       = round // how much duration to add to each consecutive header
+          step_size      = 1     // how many levels between headers
+          level_cap      = cap   // stop extending at level
+          min_dur        = 4     // ignore effects with durations less than this (e.g. cosmetics)
+          dur_special    = 0     // just add step_dur to existing effects (ignore base_dur)
+          min_lev_alt    = 0     // if extending from level 1, use this value as its minimum level instead (e.g. fifth slevel spell with only one header, use 9 here)
+          base_dmg_rolls = 0     // base roll damage
+          base_dmg_fixed = 0     // base fixed damage
+          damage_rolls   = 0     // +die roll damage per level
+          damage_fixed   = 0     // +fixed damage per level
+          save_for_half  = 0     // if we need to split damage for non-ee: 0=no split, 1=split with odd totals going to no-save half, 2=split with odd totals going to save half
+          damage_special = 0     // just add damage_rolls/damage_fixed to existing effects (ignore base_dmg_rolls, base_dmg_fixed)
+  RET     abil_delta
+BEGIN
+
+  SET abil_delta = 0
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) min_lev // read level of last ability
+  // fudge factor is to determine which half of damage gets the full die when adding 1 per level
+  SET save_fudge_fixed = 0 SET save_fudge_rolls = 0 SET nonsave_fudge_fixed = 0 SET nonsave_fudge_rolls = 0
+  PATCH_IF save_for_half BEGIN  
+    PATCH_MATCH save_for_half WITH
+      2 BEGIN SET save_fudge_fixed = 1 SET save_fudge_rolls = 1 END
+      3 BEGIN SET save_fudge_rolls = 1 SET nonsave_fudge_fixed = 1 END
+      4 BEGIN SET save_fudge_fixed = 1 SET nonsave_fudge_rolls = 1  END
+      DEFAULT SET nonsave_fudge_fixed = 1 SET nonsave_fudge_rolls = 1 // 1, or non-valid
+    END
+  END    
+  PATCH_IF ((min_lev = 1) AND (min_lev_alt != 0)) BEGIN SET min_lev = min_lev_alt END
+  FOR (index = min_lev + step_size ; index < (level_cap + 1) ; index = index + step_size) BEGIN
+    READ_ASCII (abil_off +        (0x28 * (abil_num - 1))) abil (0x28) // read entire ability
+    READ_SHORT (abil_off + 0x1e + (0x28 * (abil_num - 1))) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (0x28 * (abil_num - 1))) abil_fx_idx
+    READ_ASCII (fx_off +        (0x30 * abil_fx_idx)) effects (abil_fx_num * 0x30) // read entire fx block
+    INSERT_BYTES (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num))) (abil_fx_num * 0x30) // insert bytes for new ability
+    WRITE_ASCIIE (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num))) "%effects%"          // write in effects block
+    // if damage_special & save_for_half, we use the first loop only to gather total damage between the split damage opcodes, then use it in a second loop
+    PATCH_IF damage_special BEGIN
+      SET special_fixed = 0  
+      SET special_rolls = 0 
+    END  
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_BYTE (fx_off + 0x0c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) timing
+      READ_LONG (fx_off + 0x0e + (0x30 * (abil_fx_idx + abil_fx_num + index2))) duration
+      PATCH_IF ((duration > min_dur) AND (timing < 10)) BEGIN // exclude instant/cosmetic efects, skip durations in ticks
+        PATCH_IF dur_special = 1 BEGIN
+          SET new_dur = duration + step_dur
+        END ELSE BEGIN
+          SET new_dur = (base_dur + (index * step_dur))
+        END
+        WRITE_LONG (fx_off + 0x0e + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_dur // adjust durations
+      END
+      PATCH_IF damage_rolls OR damage_fixed BEGIN // if any scaling damage
+        SET new_fixed = (base_dmg_fixed + (index * damage_fixed))
+        SET new_rolls = (base_dmg_rolls + (index * damage_rolls))
+        READ_SHORT (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num + index2))) opcode
+        PATCH_IF opcode = 12 BEGIN // damage
+          READ_LONG (fx_off + 0x2c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) special
+          PATCH_IF (save_for_half AND ((special & BIT8) = 0)) BEGIN // if we're saving for half and there's no EE save-for-half flag, split damage
+            PATCH_IF damage_special BEGIN
+              SET special_fixed = special_fixed + LONG_AT (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2)))
+              SET special_rolls = special_rolls + LONG_AT (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2)))
+            END ELSE BEGIN  
+              READ_LONG (fx_off + 0x24 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) save // have to account for non-EE damage split
+              PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens 
+                WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + nonsave_fudge_fixed) / 2)
+                WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + nonsave_fudge_rolls) / 2)
+              END ELSE BEGIN
+                WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + save_fudge_fixed) / 2)
+                WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + save_fudge_rolls) / 2)
+              END  
+            END
+          END ELSE BEGIN // either no save-for-half or on EE with its save-for-half flag
+            PATCH_IF damage_special BEGIN
+              WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) (THIS + damage_fixed)
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) (THIS + damage_rolls)   
+            END ELSE BEGIN
+              WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_fixed
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_rolls      
+            END  
+          END
+        END   
+      END    
+    END // closes effects loop
+    PATCH_IF (damage_special AND (special_fixed OR special_rolls)) BEGIN
+      SET new_fixed = (special_fixed + damage_fixed)
+      SET new_rolls = (special_rolls + damage_rolls)
+      FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+        READ_SHORT (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num + index2))) opcode
+        PATCH_IF opcode = 12 BEGIN // damage
+          READ_LONG (fx_off + 0x2c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) special
+          PATCH_IF (save_for_half AND ((special & BIT8) = 0)) BEGIN // if we're saving for half and there's no EE save-for-half flag, split damage
+            READ_LONG (fx_off + 0x24 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) save // have to account for non-EE damage split
+            PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens 
+              WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + nonsave_fudge_fixed) / 2)
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + nonsave_fudge_rolls) / 2)
+            END ELSE BEGIN
+              WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + save_fudge_fixed) / 2)
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + save_fudge_rolls) / 2)
+            END  
+          END
+        END   
+      END // closes second effects loop for damage_special
+    END // end patch_if for damage_special
+    INSERT_BYTES (abil_off +        (0x28 * abil_num)) 0x28 // insert new ability
+    WRITE_ASCIIE (abil_off +        (0x28 * abil_num)) "%abil%"
+    WRITE_SHORT  (abil_off + 0x10 + (0x28 * abil_num)) index
+    WRITE_SHORT  (abil_off + 0x20 + (0x28 * abil_num)) (abil_fx_idx + abil_fx_num)
+    SET abil_num += 1
+    SET abil_delta += 1
+    SET fx_off   += 0x28
+  END
+  WRITE_SHORT 0x68 abil_num
+  WRITE_LONG  0x6a fx_off
+
+END
+
+/////                                                  \\\\\
+///// CD_TRIM-O-MATIC, patent pending                  \\\\\
+/////                                                  \\\\\
+
+// this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
+DEFINE_PATCH_FUNCTION CD_TRIM-O-MATIC
+  INT_VAR level_cap   = cap // delete headers with a minmum level above this
+  RET     abil_delta
+BEGIN
+
+  SET abil_delta = 0
+  READ_SHORT 0x68 abil_num
+  PATCH_IF abil_num > 1 BEGIN // *always* leave at least one ability
+    READ_LONG  0x64 abil_off
+    READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) last_level // read level of last ability
+    PATCH_IF last_level > level_cap BEGIN // if last level is under the cap, nothing further to be done
+      READ_LONG  0x6a fx_off
+      READ_SHORT (abil_off + 0x1e + (0x28 * (abil_num - 1))) last_abil_fx_num
+      READ_SHORT (abil_off + 0x20 + (0x28 * (abil_num - 1))) last_abil_fx_idx
+      FOR (index = 1 ; index < abil_num ; ++index) BEGIN // now find the first ability over the cap; start at one to preserve at least one header
+        READ_SHORT (abil_off + 0x10 + (0x28 * index)) level // read level of ability
+        PATCH_IF level > level_cap BEGIN 
+          READ_SHORT (abil_off + 0x20 + (0x28 * index)) first_abil_fx_idx
+          SET abil_first = index
+          SET index = abil_num // kill loop
+        END
+      END
+      SET fx_length = (0x30 * (last_abil_fx_idx + last_abil_fx_num - first_abil_fx_idx))
+      DELETE_BYTES (fx_off + (first_abil_fx_idx * 0x30)) fx_length // delete all effects attached to these abilities
+      SET abil_delta = (abil_first - abil_num)
+      SET abil_length = ((abil_num - abil_first) * 0x28)
+      DELETE_BYTES (fx_off - abil_length) (abil_length) // now delete the abilities
+      WRITE_LONG 0x6a fx_off - abil_length // update effects offset to acocunt for deleted abilities
+      WRITE_SHORT 0x68 abil_first // update ability count
+    END
+  END  
+
+END

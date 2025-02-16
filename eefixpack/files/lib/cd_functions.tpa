@@ -51,6 +51,12 @@ END
 INCLUDE ~eefixpack/files/lib/alter_header.tpa~
 
 /////                                                  \\\\\
+///// alter_store_item                                 \\\\\
+/////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/lib/alter_store_item.tpa~
+
+/////                                                  \\\\\
 ///// ALTER_AREA/CREATURE_ITEM                         \\\\\
 /////                                                  \\\\\
 
@@ -118,10 +124,10 @@ DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
 END // end of function
 
 /////                                                  \\\\\
-///// CD_EXTEND-O-MATIC, patent pending                \\\\\
+///// level-o-matic stuff                              \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/lib/cd_extend-o-matic.tpa~
+INCLUDE ~eefixpack/files/lib/cd_level_select-o-matic.tpa~
 
 /////                                                  \\\\\
 ///// cd_make_subspell                                 \\\\\
