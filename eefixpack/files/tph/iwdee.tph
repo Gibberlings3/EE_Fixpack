@@ -426,7 +426,11 @@ COPY_EXISTING ~wand08.itm~   ~override~ // (itm) Wand of Sleep - causes sleep - 
               ~wand19b.spl~  ~override~ // if run after luke's seven eye fixes, busted string is here instead
   LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 timing = 1 duration = 0 END
   BUT_ONLY IF_EXISTS
-  
+
+// Hell's Bane should be usable by thieves, like other broad swords
+COPY_EXISTING ~zzc8hb.itm~ ~override~ // Hell's Bane +4
+  WRITE_LONG 0x1e THIS & `BIT22
+  BUT_ONLY
   
   
   
