@@ -36,3 +36,5 @@ ALTER_TRANS dogre BEGIN 2 END BEGIN 2 END BEGIN ~TRIGGER~ ~OR(2) Class(LastTalke
 ALTER_TRANS DKUTOWNG BEGIN 0 END BEGIN 13 END BEGIN 
   ~TRIGGER~ ~Global("Kuldahar_Rumor","GLOBAL",7)~        // swap trigger
   ~ACTION~  ~SetGlobal("Kuldahar_Rumor","GLOBAL",0)~ END // swap action
+  
+SET_WEIGHT dcapvil 20 #999 // two lines blocked because of weighting
