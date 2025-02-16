@@ -23,5 +23,5 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   wand12, null, null, 1, null, null, null, null, null, null, null, null, null => wand12 // tbd, cam (from scs): changing wand powers to better match their effects
 
 END
-PRINT ~ == executing~
+
 INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_code.tph~
