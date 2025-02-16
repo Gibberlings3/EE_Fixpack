@@ -38,3 +38,9 @@ ALTER_TRANS DKUTOWNG BEGIN 0 END BEGIN 13 END BEGIN
   ~ACTION~  ~SetGlobal("Kuldahar_Rumor","GLOBAL",0)~ END // swap action
   
 SET_WEIGHT dcapvil 20 #999 // two lines blocked because of weighting
+
+// contact other plane fixes
+ALTER_TRANS DPLANAR BEGIN 21 31 32 END BEGIN 0 END BEGIN ACTION ~~ END // premature cutscene call
+REPLACE_TRIGGER_TEXT DPLANAR ~Global("AR5405_Visited","GLOBAL",1)~ ~Global("AR5103_Visited","GLOBAL",1)~ // larrel questions checking wrong var
+ALTER_TRANS DPLANAR BEGIN 45 END BEGIN 4 END BEGIN TRIGGER ~Global("AR6006_Visited","GLOBAL",1) !Global("Forge_On","GLOBAL",0)~ END // jamoth tomb question wrong var
+ADD_TRANS_TRIGGER DPLANAR 57 ~Global("AR1100_Visited","GLOBAL",1)~ DO 7 // pomab answer should wait until you're in easthaven at least
