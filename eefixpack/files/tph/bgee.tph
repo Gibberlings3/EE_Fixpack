@@ -1018,7 +1018,6 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can cras
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
 COPY_EXISTING ~spin558.spl~   ~override~
   LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
-  //LPF cd_fx_unmisindex END
   BUT_ONLY
 
 // luke
