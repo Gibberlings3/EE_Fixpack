@@ -65,6 +65,11 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 // tbd, cam
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
 INCLUDE ~eefixpack/files/tph/iwdee_soundsets.tph~
+
+// ar7004 has two entries; one is meant for ar7005
+COPY_EXISTING ~tracking.2da~ ~override~ 
+  REPLACE_TEXTUALLY ~AR7004[ %TAB%]+O_24861~ ~AR7005    O_24861~ 
+  BUT_ONLY
  
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
