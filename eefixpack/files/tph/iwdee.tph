@@ -157,6 +157,7 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_iwd_locals_scripts.tph~ // tbd, cam - region/container scripts can't use LOCALS-scoped variables
+INCLUDE ~eefixpack/files/tph/a7/iwd_luremaster.tph~ // luremaster cutscene fixes
   
 // tbd, cam
 // player ai checks if magical weapon present before casting shillelagh, but checks old resources
@@ -946,7 +947,12 @@ INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
-            
+
+// Fix reference to non-existing ACM sound resource
+COPY ~music/bm2.mus~ ~music/bm2.mus~
+  REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~
+BUT_ONLY
+
 // ie-6008, cam
 // Worldmap travel fixes
 COPY_EXISTING ~worldmap.wmp~ ~override~ // inconsistent travel times

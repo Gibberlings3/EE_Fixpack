@@ -1,0 +1,35 @@
+IF
+  True()
+THEN
+  RESPONSE #100
+    CutSceneId(Myself)
+    MultiPlayerSync()
+    ClearAllActions()
+    MultiPlayerSync()
+    MoveViewObject(Myself,INSTANT)
+    MultiPlayerSync()
+    CreateItem("CIFADE",0,0,0)
+    SmallWait(1)
+    MultiPlayerSync()
+    EquipItem("CIFADE")
+    Wait(2)
+    DestroySelf()
+END
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    CutSceneId("cutspy")
+    Wait(3)
+    MoveViewPoint([861.364],VERY_FAST)
+    Wait(2)
+    Unlock("AR9711_CHAIR1")
+    OpenDoor("AR9711_CHAIR1")
+    Wait(2)
+    MoveViewObject([PC],INSTANT)
+    MultiPlayerSync()
+    Wait(1)
+    DestroySelf()
+    EndCutSceneMode()
+END
