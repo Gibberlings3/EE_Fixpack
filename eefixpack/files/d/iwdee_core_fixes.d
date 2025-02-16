@@ -53,3 +53,24 @@ ALTER_TRANS ddenaini BEGIN 12 END BEGIN 2 END BEGIN ~EPILOGUE~ ~GOTO 19~ END
 
 // kerish only setting journal entry on 1/3 paths
 ADD_TRANS_ACTION dkerish BEGIN 2 3 END BEGIN 1 END ~AddJournalEntry(9081,INFO)~
+
+// davin adding journal entry on wrong reply
+ALTER_TRANS ddavin BEGIN 1 END BEGIN 0 END BEGIN ~ACTION~ ~~ END // remove here
+ALTER_TRANS ddavin BEGIN 1 END BEGIN 1 END BEGIN ~ACTION~ ~AddJournalEntry(34294,QUEST)~ END // and add it back
+// three different paths to inform davin you killed frostbite - one lacks journal entry, one has wrong reward (22.0 is fine)
+REPLACE_ACTION_TEXT ddavin ~AddXP2DA("Level_10_Hard")~ ~AddXP2DA("Level_12_Hard")~ // fixes 7.0
+ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END ~AddJournalEntry(34291,QUEST_DONE) 
+                                                  EraseJournalEntry(34294)
+                                                  EraseJournalEntry(2097) 
+                                                  EraseJournalEntry(2119) 
+                                                  EraseJournalEntry(3422) 
+                                                  EraseJournalEntry(19286)
+                                                  EraseJournalEntry(20256)
+                                                  EraseJournalEntry(23442)~ // fixes 21.0
+~
+
+ALTER_TRANS ddavin BEGIN 7 END BEGIN 0 END BEGIN ~ACTION~ ~AddXP2DA("Level_12_Hard") DisplayStringNoNameDlg(Myself,9793) SetGlobal("Kill_Frost","GLOBAL",4) AddJournalEntry(34291,QUEST_DONE)
+EraseJournalEntry(34294) EraseJournalEntry(2097) EraseJournalEntry(2119) EraseJournalEntry(3422) EraseJournalEntry(19286) EraseJournalEntry(20256) EraseJournalEntry(23442)~ END // was giving Level_10_Hard
+ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END BEGIN ~JOURNAL~ ~#34281~ END // no journal entry
+// dupe var sets
+ALTER_TRANS ddavin BEGIN 19 END BEGIN 1 END BEGIN ~ACTION~ ~~ END // var is set in destination state 14
