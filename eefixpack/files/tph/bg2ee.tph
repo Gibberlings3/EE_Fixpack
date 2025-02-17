@@ -191,6 +191,16 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
   END
   BUT_ONLY  
 
+// holy symbols for not-the-PC shouldn't rely on the PC's choice of temple
+COPY_EXISTING ~baldur.bcs~   ~override~
+              ~baldur25.bcs~ ~override~ 
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODLATHANDER)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(5)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForHelm","GLOBAL",0)~
+      ~\1 OR(4)~
+    REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODHELM)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(3)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForLathander","GLOBAL",0)~
+      ~\1 OR(2)~
+  END     
+
 // tbd, cam
 // when leaving Brynnlaw with Saemon, the Githyanki catch you "on the fourth morn" but no time actually passes
 COPY_EXISTING ~cut41q.bcs~ ~override~
