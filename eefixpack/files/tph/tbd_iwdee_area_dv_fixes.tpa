@@ -1,0 +1,93 @@
+// oIWD uses area actor names as DVs, which means they should be limited to 18 characters (not counting
+// spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total. As such, we change:
+LAF cd_swap_actor_name STR_VAR area = ar1000 old_name = "Goblin Bow Elite (Quest)"     new_name = "GoblinBowEliteQ"    END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar2006 old_name = "Goblin Archer Marshal 1"      new_name = "GoblinArchMarshal1" END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar2006 old_name = "Goblin Archer Marshal 2"      new_name = "GoblinArchMarshal2" END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 1 Trap"     new_name = "TatteredSkel1Trap"  END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 2 Trap"     new_name = "TatteredSkel2Trap"  END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 3 Trap"     new_name = "TatteredSkel3Trap"  END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 4 Trap"     new_name = "TatteredSkel4Trap"  END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 5 Trap"     new_name = "TatteredSkel5Trap"  END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar3502 old_name = "Tattered Skeleton 6 Trap"     new_name = "TatteredSkel6Trap"  END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "Captive Villager 9 (SPECIAL)" new_name = "CaptiveVillager9SP" END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 1"      new_name = "NLizardManShaman1"  END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 2"      new_name = "NLizardManShaman2"  END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 3"      new_name = "NLizardManShaman3"  END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 4"      new_name = "NLizardManShaman4"  END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 5"      new_name = "NLizardManShaman5"  END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Lizard Man Shaman 6"      new_name = "NLizardManShaman6"  END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar4001 old_name = "NEW Tough Lizard Man 10"      new_name = "NToughLizardMan10"  END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar4002 old_name = "Lizard Man Shaman KID 2"      new_name = "LizardManShamanK2"  END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar4002 old_name = "Lizard Man Shaman KID 3"      new_name = "LizardManShamanK3"  END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 1"       new_name = "Yuan-tiEliteArch1"  END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 10"      new_name = "Yuan-tiEliteArch10" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 11"      new_name = "Yuan-tiEliteArch11" END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 12"      new_name = "Yuan-tiEliteArch12" END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 13"      new_name = "Yuan-tiEliteArch13" END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 14"      new_name = "Yuan-tiEliteArch14" END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 15"      new_name = "Yuan-tiEliteArch15" END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 16"      new_name = "Yuan-tiEliteArch16" END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 17"      new_name = "Yuan-tiEliteArch17" END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 18"      new_name = "Yuan-tiEliteArch18" END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 19"      new_name = "Yuan-tiEliteArch19" END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 2"       new_name = "Yuan-tiEliteArch2"  END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 20"      new_name = "Yuan-tiEliteArch20" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 21"      new_name = "Yuan-tiEliteArch21" END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 22"      new_name = "Yuan-tiEliteArch22" END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 23"      new_name = "Yuan-tiEliteArch23" END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 3"       new_name = "Yuan-tiEliteArch3"  END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 4"       new_name = "Yuan-tiEliteArch4"  END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 5"       new_name = "Yuan-tiEliteArch5"  END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 6"       new_name = "Yuan-tiEliteArch6"  END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 8"       new_name = "Yuan-tiEliteArch8"  END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer 9"       new_name = "Yuan-tiEliteArch9"  END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer Guard 1" new_name = "Yuan-tiEliteArchG1" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer Guard 2" new_name = "Yuan-tiEliteArchG2" END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer Guard 3" new_name = "Yuan-tiEliteArchG3" END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar4005 old_name = "Yuan-ti Elite Archer Guard 4" new_name = "Yuan-tiEliteArchG4" END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar8004 old_name = "Sleeping Svirfneblin 1"       new_name = "SleepSvirfneblin1"  END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar8004 old_name = "Sleeping Svirfneblin 2"       new_name = "SleepSvirfneblin2"  END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar8004 old_name = "Sleeping Svirfneblin 3"       new_name = "SleepSvirfneblin3"  END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar8004 old_name = "Sleeping Svirfneblin 4"       new_name = "SleepSvirfneblin4"  END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar8004 old_name = "Sleeping Svirfneblin 5"       new_name = "SleepSvirfneblin5"  END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar8010 old_name = "Malavon's Simulacrum"         new_name = "MalavonSimulacrum"  END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar8011 old_name = "Priest-Mage of Vhaer 1"       new_name = "PriestMageofVhaer1" END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar8011 old_name = "Priest-Mage of Vhaer 2"       new_name = "PriestMageofVhaer2" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 10"        new_name = "BoneguardSkel10"    END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 11"        new_name = "BoneguardSkel11"    END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 12"        new_name = "BoneguardSkel12"    END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 13"        new_name = "BoneguardSkel13"    END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 14"        new_name = "BoneguardSkel14"    END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 15"        new_name = "BoneguardSkel15"    END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 16"        new_name = "BoneguardSkel16"    END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 17"        new_name = "BoneguardSkel17"    END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 18"        new_name = "BoneguardSkel18"    END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 19"        new_name = "BoneguardSkel19"    END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 20"        new_name = "BoneguardSkel20"    END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 21"        new_name = "BoneguardSkel21"    END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 22"        new_name = "BoneguardSkel22"    END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 23"        new_name = "BoneguardSkel23"    END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar8012 old_name = "Boneguard Skeleton 24"        new_name = "BoneguardSkel24"    END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar8013 old_name = "Revered Brother Poquelin"     new_name = "ReveredBroPoquelin" END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar9300 old_name = "Neutral Ghost Shaman 1"       new_name = "NeutralGhstShaman1" END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar9300 old_name = "Neutral Ghost Shaman 2"       new_name = "NeutralGhstShaman2" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar9300 old_name = "Neutral Ghost Shaman 3"       new_name = "NeutralGhstShaman3" END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar9300 old_name = "Neutral Ghost Shaman 4"       new_name = "NeutralGhstShaman4" END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar9300 old_name = "Neutral Ghost Shaman 5"       new_name = "NeutralGhstShaman5" END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar9711 old_name = "Spectral Hero (Adran)"        new_name = "SpectralHeroAdran"  END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar9711 old_name = "Spectral Hero (Criek)"        new_name = "SpectralHeroCriek"  END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar9711 old_name = "Spectral Hero (Harald)"       new_name = "SpectralHeroHarald" END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar9711 old_name = "Spectral Hero (Hobart)"       new_name = "SpectralHeroHobart" END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar9711 old_name = "Spectral Hero (Shelhai)"      new_name = "SpectralHeroShelha" END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 10"        new_name = "BoneguardSkel10"    END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 11"        new_name = "BoneguardSkel11"    END // actor 1
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 12"        new_name = "BoneguardSkel12"    END // actor 2
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 13"        new_name = "BoneguardSkel13"    END // actor 3
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 14"        new_name = "BoneguardSkel14"    END // actor 4
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 15"        new_name = "BoneguardSkel15"    END // actor 5
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 16"        new_name = "BoneguardSkel16"    END // actor 6
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 17"        new_name = "BoneguardSkel17"    END // actor 7
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 18"        new_name = "BoneguardSkel18"    END // actor 8
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 19"        new_name = "BoneguardSkel19"    END // actor 9
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 20"        new_name = "BoneguardSkel20"    END // actor 0
+LAF cd_swap_actor_name STR_VAR area = ar9714 old_name = "Boneguard Skeleton 21"        new_name = "BoneguardSkel21"    END // actor 1

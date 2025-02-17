@@ -239,6 +239,10 @@ COPY_EXISTING ~d5yxudor.bcs~ ~override~
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+// oIWD uses area actor names as DVs, which means they should be limited to 18 characters (not counting
+// spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total.
+INCLUDE ~eefixpack/files/tph/tbd_iwdee_area_dv_fixes.tpa~
+
 // tbd, cam
 // dupe random treasure, two containers overlay one another
 COPY_EXISTING ~ar6006.are~ ~override~
