@@ -150,10 +150,13 @@ END
 /////                                                  \\\\\
 
 COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
+COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes in temple.tph)
 
 /////                                                  \\\\\
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
 
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg

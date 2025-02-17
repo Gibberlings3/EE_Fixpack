@@ -1,0 +1,44 @@
+// add override vars for everyone
+COPY_EXISTING ~ar0900.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY
+      ~\(Global("GaalSpoke","AR0900",1)[ %TAB%%LNL%%MNL%%WNL%]+OR([0-9]+)[ %TAB%%LNL%%MNL%%WNL%]+Alignment(Player1,LAWFUL_NEUTRAL)\)~ // helm
+      ~Global("OHLathanderOverride","GLOBAL",0) Global("OHTalosOverride","GLOBAL",0) \1~
+    REPLACE_TEXTUALLY
+      ~\(Global("GaalSpoke","AR0900",1)[ %TAB%%LNL%%MNL%%WNL%]+OR([0-9]+)[ %TAB%%LNL%%MNL%%WNL%]+Alignment(Player1,MASK_GOOD)\)~ // lathander
+      ~Global("OHHelmOverride","GLOBAL",0) Global("OHTalosOverride","GLOBAL",0) \1~
+    REPLACE_TEXTUALLY
+      ~\(Global("GaalSpoke","AR0900",1)[ %TAB%%LNL%%MNL%%WNL%]+OR([0-9]+)[ %TAB%%LNL%%MNL%%WNL%]+Alignment(Player1,CHAOTIC_NEUTRAL)\)~ // talos
+      ~Global("OHLathanderOverride","GLOBAL",0) Global("OHHelmOverride","GLOBAL",0) \1~ 
+  END    
+  BUT_ONLY  
+  
+COPY_EXISTING ~ar0901.bcs~ ~override~ // helm
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_EVALUATE ~\(Global("TelwynSpawn","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+Global("CDWorkingForLathander","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+OR(\)\([0-9]+\)\()[ %TAB%%LNL%%MNL%%WNL%]+\)\(Alignment(Player1,MASK_LAWFUL)\)~ BEGIN 
+      SET MATCH2 += 1
+    END ~Global("OHLathanderOverride","GLOBAL",0) Global("OHTalosOverride","GLOBAL",0) %MATCH1%%MATCH2%%MATCH3%Global("OHHelmOverride","GLOBAL",1)%MATCH4%~  
+  END    
+  BUT_ONLY  
+  
+COPY_EXISTING ~ar0902.bcs~ ~override~ // lathander
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY // fix a bg2ee bug while we're here
+      ~\(Global("SainSpawn","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+\(OR([0-9])+[ %TAB%%LNL%%MNL%%WNL%]+\)?Class(Player1,CLERIC\(_ALL\)?)\)~
+      ~False() \1~
+    REPLACE_EVALUATE ~\(Global("SainSpawn","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+OR(\)\([0-9]+\)\()[ %TAB%%LNL%%MNL%%WNL%]+\)\(Alignment(Player1,MASK_GOOD)\)~ BEGIN 
+      SET MATCH2 += 1
+    END ~Global("OHHelmOverride","GLOBAL",0) Global("OHTalosOverride","GLOBAL",0) %MATCH1%%MATCH2%%MATCH3%Global("OHLathanderOverride","GLOBAL",1)%MATCH4%~  
+  END    
+  BUT_ONLY  
+  
+COPY_EXISTING ~ar0904.bcs~ ~override~ // talos
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY // fix a bg2ee bug while we're here
+      ~\(Global("YarrylSpawn","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+\(OR([0-9])+[ %TAB%%LNL%%MNL%%WNL%]+\)?Class(Player1,CLERIC\(_ALL\)?)\)~
+      ~False() \1~
+    REPLACE_EVALUATE ~\(Global("YarrylSpawn","GLOBAL",0)[ %TAB%%LNL%%MNL%%WNL%]+OR(\)\([0-9]+\)\()[ %TAB%%LNL%%MNL%%WNL%]+\)\(Alignment(Player1,CHAOTIC_NEUTRAL)\)~  BEGIN 
+      SET MATCH2 += 1
+    END ~Global("OHLathanderOverride","GLOBAL",0) Global("OHHelmOverride","GLOBAL",0) %MATCH1%%MATCH2%%MATCH3%Global("OHTalosOverride","GLOBAL",1)%MATCH4%~  
+  END    
+  BUT_ONLY 
