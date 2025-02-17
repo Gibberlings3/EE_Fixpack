@@ -107,6 +107,29 @@ Requires:
 
 Weight: 6~
 
+// wand of fire should be using IWD-style Agannazar's Scorcher, not BG2-style
+// see also wand05
+@17654 = ~The wand will cough forth a huge, burning ball of fire that streaks out to the desired range and bursts in a fiery, violent blast, just like the Fireball spell. The fireball inflicts 6d6 points of damage, but all 1s rolled are counted as 2s. The victim(s) may make a Save vs. Wand in order to take only half damage. The second ability of the wand is akin to the spell Agannazar's Scorcher in that a column of flame will streak towards the victim, inflicting 6d6+6 damage with a Save vs. Wand for half.
+
+STATISTICS:
+
+Charge abilities:
+– Fireball
+  Damage: 6d6 fire (Save vs. Wand for half)
+  Range: 60 ft.
+  Area of Effect: 15-ft. radius
+
+– Agannazar's Scorcher
+  Damage (primary target): 3d6 fire (no save)
+  Damage (secondary targets): 2d8 fire (Save vs. Wand for half)
+  Range: 40 ft.
+  Area of Effect: 2-ft. by 40-ft. jet
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
 // ie-6024, cam - see also string 14432, patches to uhxbw2a.itm and xbow01.itm
 // Two crossbows have the wrong strength requirement
 @18095 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller. The bow is usually made of ash or yew. The crossbow fires a quarrel (also called a bolt).

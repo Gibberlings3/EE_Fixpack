@@ -1,0 +1,7 @@
+IF
+  Allegiance("MaidenIlmadia",ENEMY)
+  Global("MAP_GROUP_HOSTILE2","MYAREA",0) // fire giant group
+THEN
+	RESPONSE #100
+		SetGlobal("MAP_GROUP_HOSTILE2","MYAREA",1)
+END

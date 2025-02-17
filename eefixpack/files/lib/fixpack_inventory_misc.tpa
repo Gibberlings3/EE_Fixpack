@@ -21,6 +21,7 @@ platform:
 version history: 
   * inception: unknown
   * 5/31/24: added version checks so that iwd/bg2 fixpack macros could be combined
+  * 1/18/25: cd_equip_weapon_specific was not reading in itm_off
 
 */
 
@@ -168,9 +169,11 @@ BEGIN
   READ_ASCII 0x04 ver (4)
   PATCH_IF ("%ver%" STRING_COMPARE_CASE "V9.0" = 0) BEGIN
     READ_LONG 0x320 slot_off ELSE 0
+    READ_LONG 0x324 itm_off  ELSE 0
     READ_LONG 0x328 itm_num  ELSE 0
   END ELSE BEGIN
     READ_LONG  0x2b8 slot_off ELSE 0
+    READ_LONG  0x2bc itm_off  ELSE 0
     READ_LONG  0x2c0 itm_num  ELSE 0
   END
   FOR (index = 0; index < 4; ++index) BEGIN // cycles through weapon slots
