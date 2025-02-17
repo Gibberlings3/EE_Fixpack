@@ -74,6 +74,9 @@ ADD_TRANS_ACTION djoril BEGIN 17 END BEGIN 0 END ~SetGlobal("Know_Sacrifices","G
 // beorn should set journal entry on both replies
 ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 
+// should only be able to ask Flozem about Marketh if you know him
+ADD_TRANS_TRIGGER DFLOZEM 2 ~Global("Know_Marketh","GLOBAL",1)~ DO 0
+
 ALTER_TRANS ddavin BEGIN 7 END BEGIN 0 END BEGIN ~ACTION~ ~AddXP2DA("Level_12_Hard") DisplayStringNoNameDlg(Myself,9793) SetGlobal("Kill_Frost","GLOBAL",4) AddJournalEntry(34291,QUEST_DONE)
 EraseJournalEntry(34294) EraseJournalEntry(2097) EraseJournalEntry(2119) EraseJournalEntry(3422) EraseJournalEntry(19286) EraseJournalEntry(20256) EraseJournalEntry(23442)~ END // was giving Level_10_Hard
 ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END BEGIN ~JOURNAL~ ~#34281~ END // no journal entry
