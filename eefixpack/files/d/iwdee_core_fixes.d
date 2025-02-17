@@ -70,7 +70,9 @@ ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END ~AddJournalEntry(34291,QUEST_DO
                                                   
 // joril not setting var, journal as he does the two other places you can ask him this question
 ADD_TRANS_ACTION djoril BEGIN 17 END BEGIN 0 END ~SetGlobal("Know_Sacrifices","GLOBAL",1) AddJournalEntry(34241,INFO)~
-~
+
+// beorn should set journal entry on both replies
+ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 
 ALTER_TRANS ddavin BEGIN 7 END BEGIN 0 END BEGIN ~ACTION~ ~AddXP2DA("Level_12_Hard") DisplayStringNoNameDlg(Myself,9793) SetGlobal("Kill_Frost","GLOBAL",4) AddJournalEntry(34291,QUEST_DONE)
 EraseJournalEntry(34294) EraseJournalEntry(2097) EraseJournalEntry(2119) EraseJournalEntry(3422) EraseJournalEntry(19286) EraseJournalEntry(20256) EraseJournalEntry(23442)~ END // was giving Level_10_Hard
