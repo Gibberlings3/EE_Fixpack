@@ -491,6 +491,10 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
 COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 600 STR_VAR match_resource = eff_e07 END
 
+// prevent hexxat, haer'dalis from using racially-restricted items (see also npbow.itm, npsw01.itm, hlolth.itm)
+COPY_EXISTING ~hamm06.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=4 parameter2=4 special=1100 END // dwarves only 
+
 // tbd, cam
 // helmet appearance corrections
 COPY_EXISTING ~helm32.itm~ ~override~ // Helm of the Rock
@@ -519,6 +523,12 @@ COPY_EXISTING ~helm32.itm~   ~override~ // Helm of the Rock - causes fear - port
               ~spwi815.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
               ~spwi958.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
+
+
+// prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, npbow.itm, npsw01.itm)
+COPY_EXISTING ~hlolth.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=153 parameter2=4 special=8330 END // not usable by Tieflings - display this
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=125 parameter2=4 special=0 END // not usable by Vampires - silent, since vampire isn't really a race
   
 // tbd, cam  
 // blocks confusion animation, but is subject to confusion
@@ -547,6 +557,11 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
 // uses 'intoxication' icon for a confusion effect
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
+
+// prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, hlolth.itm)
+COPY_EXISTING ~npbow.itm~  ~override~
+              ~npsw01.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=5 parameter2=4 special=1101 END // halflings only 
 
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
