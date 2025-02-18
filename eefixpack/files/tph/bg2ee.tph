@@ -574,6 +574,10 @@ COPY_EXISTING ~quiver01.itm~ ~override~ // quiver of plenty +1
               ~quiver04.itm~ ~override~ // case of plenty +2
   WRITE_ASCII 0x44 ~gquiver0~ #8 // ground icon
   BUT_ONLY
+
+// rod of terror's fear affect lasts 5 rounds instead of the stated 4
+COPY_EXISTING ~rods05.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 24 END
   
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
