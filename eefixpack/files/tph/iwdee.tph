@@ -94,6 +94,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light cr
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
      ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
+     ~eefixpack/files/bam/spwi524d.bam~     ~override~ // fix rle-encoding error
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
@@ -112,6 +113,12 @@ ACTION_FOR_EACH file IN
 BEGIN  
   COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
 END  
+
+// installing BAM V2 resources
+INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
+ACTION_FOR_EACH bam_resref IN guiostur storstor BEGIN
+  LAF install_bam_v2 STR_VAR bam_resref END
+END
 
 // there's another section of INCLUDEs at the bottom if it should be late in the process
 INCLUDE ~eefixpack/files/tph/5943_mold_touch.tph~           // ie-5943 , cam: lots of mold touch fixes

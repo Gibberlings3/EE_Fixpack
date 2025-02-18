@@ -187,6 +187,9 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
+     ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
@@ -194,7 +197,13 @@ COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
      ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~  ~override~
 
+DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
+
 ACTION_IF game_includes_sod BEGIN
+
+  COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
+       ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
+       ~eefixpack/files/bam/pxbow15.bam~  ~override~ // fix item description image
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
   
@@ -203,6 +212,11 @@ ACTION_IF game_includes_sod BEGIN
        ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
        ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
   
+  // installing BAM V2 resources
+  INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
+  ACTION_FOR_EACH bam_resref IN cbdhel09 BEGIN
+    LAF install_bam_v2 STR_VAR bam_resref END
+  END
 END
 
 // tbd, sam.
@@ -839,6 +853,11 @@ ACTION_IF game_includes_sod BEGIN
                 ~bdplant.itm~  ~override~ // ring - immune to stun - immune to hold
     LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
     BUT_ONLY 
+
+  // apply new description image for Helmet of Dumathoin
+  COPY_EXISTING ~bdhelm09.itm~ ~override~
+    WRITE_ASCII 0x58 ~cbdhel09~ (8)
+  BUT_ONLY
 
 END
 
