@@ -82,12 +82,12 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 // fixing shadows on item icons
-COPY ~eefixpack/files/bam/bg2ee~           ~override~
-     ~eefixpack/files/bam/bg2ee_iwdee~     ~override~
-     ~eefixpack/files/bam/bgee_bg2ee~      ~override~
-     ~eefixpack/files/bam/sod_bg2ee~       ~override~
-     ~eefixpack/files/bam/sod_bg2ee_iwdee~ ~override~
-     ~eefixpack/files/bam/universal~       ~override~
+COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
+     ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
+     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~      ~override~
+     ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
+     ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
+     ~eefixpack/files/bam/item_shadows/universal~       ~override~
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues

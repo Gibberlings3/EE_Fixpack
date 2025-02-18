@@ -189,19 +189,19 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
 // fixing shadows on item icons
-COPY ~eefixpack/files/bam/bgee~       ~override~
-     ~eefixpack/files/bam/bgee_bg2ee~ ~override~
-     ~eefixpack/files/bam/bgee_iwdee~ ~override~
-     ~eefixpack/files/bam/universal~  ~override~
+COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
+     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~ ~override~
+     ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
+     ~eefixpack/files/bam/item_shadows/universal~  ~override~
 
 ACTION_IF game_includes_sod BEGIN
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
   
   // fixing shadows on item icons
-  COPY ~eefixpack/files/bam/sod~             ~override~
-       ~eefixpack/files/bam/sod_bg2ee~       ~override~
-       ~eefixpack/files/bam/sod_bg2ee_iwdee~ ~override~
+  COPY ~eefixpack/files/bam/item_shadows/sod~             ~override~
+       ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
+       ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
   
 END
 
@@ -869,6 +869,10 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
+// displaying null string instead of 'devour brain'; many other parameters also wrong
+COPY_EXISTING ~mindflay.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 target = 2 timing = 1 duration = 0 parameter1 = RESOLVE_STR_REF(@102) parameter2 = 0 END 
+  
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
