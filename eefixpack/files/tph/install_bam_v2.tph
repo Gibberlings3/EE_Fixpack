@@ -1,0 +1,57 @@
+/**
+ * Installs a new BAM V2 resource and updates PVRZ references to prevent collisions with existing game resources.
+ *
+ * INT_VAR subfolder    0: BAM resref and associated pvrz files can be found directly in "base_path".
+ *                      Non-zero: BAM resref and associated pvrz files can be found in a subfolder of the
+ *                      same name as "bam_resref" in "base_path".
+ *                      Default: 1
+ * STR_VAR bam_resref   Resref of the BAM file to install.
+ * STR_VAR base_path    Base path where to find the BAM file and associated PVRZ files.
+ *                      Default: eefixpack/files/bam
+ */
+DEFINE_ACTION_FUNCTION install_bam_v2
+INT_VAR
+  subfolder  = 1
+STR_VAR
+  bam_resref = ~~
+  base_path  = ~eefixpack/files/bam~
+BEGIN
+  ACTION_IF (NOT ~%bam_resref%~ STR_EQ ~~) BEGIN
+    // resolving source base path
+    ACTION_IF (subfolder) BEGIN
+      OUTER_SPRINT path ~%base_path%/%bam_resref%~
+    END ELSE BEGIN
+      OUTER_SPRINT path ~%base_path%~
+    END
+
+    OUTER_SPRINT src_bam_file ~%path%/%bam_resref%.bam~
+    ACTION_IF (FILE_EXISTS ~%src_bam_file%~) BEGIN
+      // installing BAM file and update PVRZ references
+      COPY ~%src_bam_file%~ ~override~
+        LPF UPDATE_PVRZ_INDICES
+          INT_VAR target_base_index = 0
+          RET original_base_index new_base_index index_range
+        END
+
+      // installing associated PVRZ files
+      OUTER_FOR (i = 0; i < index_range; ++i) BEGIN
+        OUTER_SET src_idx = original_base_index + i
+        OUTER_PATCH_SAVE index ~0000%src_idx%~ BEGIN DELETE_BYTES 0 (BUFFER_LENGTH - 4) END
+        OUTER_SPRINT src_pvrz_file ~%path%/mos%index%.pvrz~
+        ACTION_IF (FILE_EXISTS ~%src_pvrz_file%~) BEGIN
+          LAF INSTALL_PVRZ
+            INT_VAR
+              original_base_index
+              new_base_index
+            STR_VAR
+              source_file = EVAL ~%src_pvrz_file%~
+          END
+        END ELSE BEGIN
+          WARN ~WARNING: PVRZ resource does not exist: %src_pvrz_file%~
+        END
+      END
+    END ELSE BEGIN
+      WARN ~WARNING: BAM resource does not exist: %src_bam_file%~
+    END
+  END
+END
