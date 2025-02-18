@@ -1,0 +1,57 @@
+// https://www.gibberlings3.net/forums/topic/38480-all-areas-with-inconsistent-or-non-existing-area-script-references/
+// correcting/assigning area scripts
+ACTION_IF game_is_bgee BEGIN 
+
+  ACTION_FOR_EACH area IN 
+    // Empty script resref
+    ar0116 ar0133 ar0137 ar0501 ar0503 ar0504 ar0505 ar0506 ar0515 ar0619 ar0621 ar0810 ar1009 ar1010 
+    ar1502 ar1503 ar1504 ar1505 ar1903 ar2002 ar2003 ar2004 ar2005 ar2006 ar2007 ar2008 ar2009 ar2010 
+    ar2011 ar2012 ar2302 ar2622 ar2623 ar2635 ar2637 ar2638 ar4501 ar7100 ar9901 oh3010 
+    ar1005 ar1006 ar1007 // Script resref differs from ARE resref and does not exist (AR0170.BCS)
+    ar1001 // script differs from are resref (ar0162.bcs)
+  BEGIN
+
+    COPY_EXISTING ~%area%.are~ ~override~
+      WRITE_ASCIIE 0x94 ~%area%~ #8
+      BUT_ONLY IF_EXISTS
+
+  END
+
+END ELSE 
+
+ACTION_IF game_is_bg2ee BEGIN 
+
+  ACTION_FOR_EACH area IN 
+    // Empty script resref
+    ar0082 ar0086 ar0206 ar0302 ar0303 ar0305 ar0306 ar0310 ar0331 ar0332 ar0333 ar0335 ar0503 ar0504 
+    ar0509 ar0527 ar0528 ar0712 ar0713 ar0714 ar0805 ar0806 ar0807 ar0810 ar0812 ar0813 ar1010 ar1101 
+    ar1103 ar1201 ar1610 ar2014 ar2015 ar2016 ar2018 ar2210 ar2810 ar2811 ar3003 ar3006 ar3010 ar3014 
+    ar3018 ar3022 ar5502 ar5503 ar5506 ar5508 ar6012 ar6111 oh7310 
+    // script resref differs from are resref and does not exist
+    ar0021 ar0315 ar0316 ar0707 ar1603 ar1604 ar1612 ar2001 ar1107
+  BEGIN
+
+    COPY_EXISTING ~%area%.are~ ~override~
+      WRITE_ASCIIE 0x94 ~%area%~ #8
+      BUT_ONLY IF_EXISTS
+
+  END
+  
+END ELSE BEGIN // pstee (no fixes for iwdee, so don't include this file in iwdee.tph)
+
+  ACTION_FOR_EACH area IN 
+    // Empty script resref
+     ar0103 ar0103c ar0104a ar0104c ar0106 ar0107 ar0207 ar0303 ar0306b ar0306c ar0505 ar0506 ar0507 
+     ar0509 ar0512 ar0513 ar0607 ar0613 ar0706b ar1402 ar1403 ar1405 ar3001 ar3004a ar3004c ar3005a 
+     ar3005c ar3006c ar3007a ar3007b ar3007c ar3008a ar3008b ar3008c ar3008d ar3008e ar3008f ar3009 
+     ar3010a ar3010b ar3011a ar3011b ar3011c ar3012 ar3013a ar3013b ar3013c ar3013d ar3014
+  BEGIN
+
+    COPY_EXISTING ~%area%.are~ ~override~
+      WRITE_ASCIIE 0x94 ~%area%~ #8
+      BUT_ONLY IF_EXISTS
+
+  END
+
+END
+

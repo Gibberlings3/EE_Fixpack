@@ -315,6 +315,9 @@ EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
 INCLUDE ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ // tbd, cam (from MiH): fix vertex issues for doors and regions
 
+INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+
+
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
 LAF cd_move_actor INT_VAR old_x =  398 old_y =  527 new_x =  448 new_y =  537 STR_VAR area = ar0305 END // Shadow Thief (actor #4) at position [398.527] is on impassable terrain
