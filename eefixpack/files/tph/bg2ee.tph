@@ -619,6 +619,9 @@ COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
               ~sw1h61.itm~ ~override~ // Angurvadal +5
   LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 9 match_parameter2 = (5 + (20 << 16)) parameter2 = (20 + (20 << 16)) END
   BUT_ONLY 
+  
+// remove undocumented +2 save bonus from wand of fear
+INCLUDE ~eefixpack/files/tph/wand02.tph~
 
 // luke
 // Mis-indexed effects

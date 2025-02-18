@@ -450,6 +450,10 @@ COPY_EXISTING ~uhxbw2a.itm~ ~override~ // finest heavy crossbow
   WRITE_SHORT 0x26 11 // min str
   BUT_ONLY
   
+// remove undocumented +2 save bonus from wand of fear
+// luke's 7 eyes fix farms the effects into wand02.spl, but save bonus is still on the item
+INCLUDE ~eefixpack/files/tph/wand02.tph~
+  
 // wand of fire should be using IWD-style Agannazar's Scorcher, not BG2-style
 // see also strref 17654
 COPY_EXISTING ~wand05.itm~ ~override~

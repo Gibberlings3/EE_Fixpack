@@ -1,0 +1,3 @@
+// remove undocumented +2 save bonus
+COPY_EXISTING ~wand02.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_savebonus = 2 savebonus = 0 END 

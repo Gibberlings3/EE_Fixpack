@@ -909,6 +909,9 @@ COPY_EXISTING ~sw1p01.itm~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 318 END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 25 END
+  
+// remove undocumented +2 save bonus from wand of fear
+INCLUDE ~eefixpack/files/tph/wand02.tph~
 
 // tbd, cam
 // special wand of magic missiles shouldn't bypass shield
