@@ -856,6 +856,9 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
   
+// fixing waterdeep books (fix also used for bg2ee)
+INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~  
+  
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack

@@ -435,6 +435,9 @@ COPY_EXISTING ~basigaze.itm~ ~override~
               ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
   
+// fixing waterdeep books (fix also used for bg2ee)
+INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~  
+  
 // tbd, cam
 // set to 400% speed, not set a fixed value of 30
 COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
