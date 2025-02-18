@@ -81,6 +81,14 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
+// fixing shadows on item icons
+COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
+     ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
+     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~      ~override~
+     ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
+     ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
+     ~eefixpack/files/bam/item_shadows/universal~       ~override~
+
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
 ACTION_FOR_EACH file IN
@@ -150,10 +158,13 @@ END
 /////                                                  \\\\\
 
 COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
+COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes in temple.tph)
 
 /////                                                  \\\\\
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
 
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
@@ -187,6 +198,16 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
                       ~GlobalLT("EXTRACOUNT3","MYAREA",1) \1~
   END
   BUT_ONLY  
+
+// holy symbols for not-the-PC shouldn't rely on the PC's choice of temple
+COPY_EXISTING ~baldur.bcs~   ~override~
+              ~baldur25.bcs~ ~override~ 
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODLATHANDER)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(5)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForHelm","GLOBAL",0)~
+      ~\1 OR(4)~
+    REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODHELM)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(3)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForLathander","GLOBAL",0)~
+      ~\1 OR(2)~
+  END     
 
 // tbd, cam
 // when leaving Brynnlaw with Saemon, the Githyanki catch you "on the fourth morn" but no time actually passes
@@ -414,6 +435,9 @@ COPY_EXISTING ~basigaze.itm~ ~override~
               ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
   
+// fixing waterdeep books (fix also used for bg2ee)
+INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~  
+  
 // tbd, cam
 // set to 400% speed, not set a fixed value of 30
 COPY_EXISTING ~boot10.itm~ ~override~ // Boots of Lightning Speed
@@ -595,6 +619,9 @@ COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
               ~sw1h61.itm~ ~override~ // Angurvadal +5
   LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 9 match_parameter2 = (5 + (20 << 16)) parameter2 = (20 + (20 << 16)) END
   BUT_ONLY 
+  
+// remove undocumented +2 save bonus from wand of fear
+INCLUDE ~eefixpack/files/tph/wand02.tph~
 
 // luke
 // Mis-indexed effects

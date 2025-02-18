@@ -127,6 +127,7 @@ END // end of function
 ///// level-o-matic stuff                              \\\\\
 /////                                                  \\\\\
 
+OUTER_SET round = 6
 INCLUDE ~eefixpack/files/lib/cd_level_select-o-matic.tpa~
 
 /////                                                  \\\\\

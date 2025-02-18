@@ -1186,6 +1186,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_bgee.tra~ BEGIN STRING_SET
   28301 @28301
   28620 @28620
   29038 @29038
+  29060 @29060 // dart of acid descript - refers to them as 'arrows' in flavor text > missiles
   30178 @30178
   30179 @30179
   30191 @30191

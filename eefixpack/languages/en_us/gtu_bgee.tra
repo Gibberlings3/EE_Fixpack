@@ -8276,6 +8276,20 @@ Requires:
 
 Weight: 3~
 
+// dart of acid descript - refers to them as 'arrows' in flavor text
+@29060 = ~With the teeth of a black dragon for heads and the mighty wyrm's sinews for shafts, these wicked missiles dissolve into deadly acid on impact.
+
+STATISTICS:
+
+THAC0: +1
+Damage: 1d3+1, +1d6 acid damage (Save vs. Spell for none)
+Damage type: Missile
+Speed Factor: 1
+Proficiency Type: Dart
+Type: One-handed
+
+Weight: 0~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 3
 @30178 = ~Tutorial
 

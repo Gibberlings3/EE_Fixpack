@@ -1,0 +1,6 @@
+// books are out of order (book 5 events happen before book 4; swap 'em)
+COPY_EXISTING ~book65.itm~ ~override~
+  WRITE_LONG 0x50 13192
+  
+COPY_EXISTING ~book66.itm~ ~override~
+  WRITE_LONG 0x50 13191
