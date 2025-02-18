@@ -336,3 +336,205 @@ COPY_EXISTING_REGEXP GLOB ~^.+\cre$~ ~override~
     END
   END
   BUT_ONLY
+  
+  
+  
+  
+  
+  
+  
+  
+// used to sort Parys' pile of new item BAMs into folders, removing redundancies
+// the last bit only works if run in a bgee directory without SoD
+<<<<<<<<./inline/blank.txt
+>>>>>>>>
+
+COPY ~./inline/blank.txt~ ~eefixpack/newbam.txt~
+
+OUTER_SET bgee  = 1  
+ACTION_BASH_FOR ~eefixpack/newbams/bgee~ ~.+\.bam~ BEGIN 
+
+  OUTER_SET bg2ee = 0
+  OUTER_SET iwdee = 0
+  ACTION_IF FILE_EXISTS ~eefixpack/newbams/bg2ee/%BASH_FOR_FILE%~ BEGIN OUTER_SET bg2ee = 1 END
+  ACTION_IF FILE_EXISTS ~eefixpack/newbams/iwdee/%BASH_FOR_FILE%~ BEGIN OUTER_SET iwdee = 1 END
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_new_bams BEGIN ~%BASH_FOR_RES%~, ~%bgee%~, ~%bg2ee%~, ~%iwdee%~ => ~%BASH_FOR_RES%~ END
+
+END 
+
+OUTER_SET bgee  = 0  
+OUTER_SET bg2ee = 1
+ACTION_BASH_FOR ~eefixpack/newbams/bg2ee~ ~.+\.bam~ BEGIN 
+
+  ACTION_IF !FILE_EXISTS ~eefixpack/newbams/bgee/%BASH_FOR_FILE%~ BEGIN 
+    OUTER_SET iwdee = 0
+    ACTION_IF FILE_EXISTS ~eefixpack/newbams/iwdee/%BASH_FOR_FILE%~ BEGIN OUTER_SET iwdee = 1 END
+    ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_new_bams BEGIN ~%BASH_FOR_RES%~, ~%bgee%~, ~%bg2ee%~, ~%iwdee%~ => ~%BASH_FOR_RES%~ END
+  END
+  
+END 
+
+OUTER_SET bgee  = 0 
+OUTER_SET bg2ee = 0 
+OUTER_SET iwdee = 1
+ACTION_BASH_FOR ~eefixpack/newbams/bg2ee~ ~.+\.bam~ BEGIN 
+
+  ACTION_IF !FILE_EXISTS ~eefixpack/newbams/bgee/%BASH_FOR_FILE%~ AND 
+            !FILE_EXISTS ~eefixpack/newbams/bg2ee/%BASH_FOR_FILE%~ BEGIN  
+    ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_new_bams BEGIN ~%BASH_FOR_RES%~, ~%bgee%~, ~%bg2ee%~, ~%iwdee%~ => ~%BASH_FOR_RES%~ END
+  END  
+
+END 
+
+ACTION_PHP_EACH cd_new_bams AS pm => file BEGIN
+
+  OUTER_SPRINT report ~%file%.bam:%WNL%~
+  
+  ACTION_IF pm_1 BEGIN // has a BGEE bam
+    COPY - ~eefixpack/newbams/bgee/%file%.bam~ ~eefixpack/newbams/bgee/%file%.bam~ 
+      SET bg_size = SOURCE_SIZE
+      READ_ASCII 0x00 bg_contents (SOURCE_SIZE)
+  END   
+
+  ACTION_IF pm_2 BEGIN // has a BGEE bam
+    COPY - ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/newbams/bg2ee/%file%.bam~ 
+      SET bg2_size = SOURCE_SIZE
+      READ_ASCII 0x00 bg2_contents (SOURCE_SIZE)
+  END    
+
+  ACTION_IF pm_3 BEGIN // has a BGEE bam
+    COPY - ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/newbams/iwdee/%file%.bam~ 
+      SET iwd_size = SOURCE_SIZE
+      READ_ASCII 0x00 iwd_contents (SOURCE_SIZE)
+  END   
+
+  OUTER_SET bgee_bg2ee  = 0
+  OUTER_SET bgee_iwdee  = 0
+  OUTER_SET bg2ee_iwdee = 0
+  
+  ACTION_IF pm_1 AND pm_2 BEGIN 
+    ACTION_IF (bg_size = bg2_size) AND 
+              ("%bg_contents%" STRING_COMPARE_CASE "%bg2_contents%" = 0) BEGIN
+      OUTER_SET bgee_bg2ee  = 1
+    END
+  END     
+  
+  ACTION_IF pm_1 AND pm_3 BEGIN 
+    ACTION_IF (bg_size = iwd_size) AND 
+              ("%bg_contents%" STRING_COMPARE_CASE "%iwd_contents%" = 0) BEGIN
+      OUTER_SET bgee_iwdee  = 1
+    END
+  END       
+  
+  ACTION_IF pm_2 AND pm_3 BEGIN 
+    ACTION_IF (bg2_size = iwd_size) AND 
+              ("%bg2_contents%" STRING_COMPARE_CASE "%iwd_contents%" = 0) BEGIN
+      OUTER_SET bg2ee_iwdee  = 1
+    END
+  END     
+  
+  ACTION_IF pm_1 AND pm_2 AND pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - present for all games%WNL%~
+    ACTION_IF bgee_bg2ee AND bgee_iwdee BEGIN 
+      OUTER_SPRINT report ~%report% - identical in all games~
+      COPY ~eefixpack/newbams/bgee/%file%.bam~ ~eefixpack/sorted_bams/universal/%file%.bam~
+    END ELSE BEGIN  
+      ACTION_IF !bgee_bg2ee AND !bgee_iwdee AND !bg2ee_iwdee BEGIN 
+        OUTER_SPRINT report ~%report% - different in all games~
+        COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee/%file%.bam~
+        COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee/%file%.bam~
+        COPY ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/sorted_bams/iwdee/%file%.bam~
+      END ELSE  
+      ACTION_IF bgee_bg2ee BEGIN 
+        OUTER_SPRINT report ~%report% - BG, BG2 version match; IWD version different~
+        COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee_bg2ee/%file%.bam~
+        COPY ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/sorted_bams/iwdee/%file%.bam~
+      END ELSE   
+      ACTION_IF bgee_iwdee BEGIN 
+        OUTER_SPRINT report ~%report% - BG, IWD version match; BG2 version different~
+        COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee_iwdee/%file%.bam~
+        COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee/%file%.bam~
+      END ELSE BEGIN 
+        OUTER_SPRINT report ~%report% - BG2, IWD version match; BG version different~  
+        COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee/%file%.bam~
+        COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee_iwdee/%file%.bam~
+      END
+    END
+  END
+
+  ACTION_IF pm_1 AND pm_2 AND !pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - present for BG, BG2%WNL%~
+    ACTION_IF bgee_bg2ee BEGIN 
+      OUTER_SPRINT report ~%report% - identical in all games~
+        COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee_bg2ee/%file%.bam~
+    END ELSE BEGIN   
+      OUTER_SPRINT report ~%report% - do not match~
+      COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee/%file%.bam~
+      COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee/%file%.bam~
+    END
+  END     
+
+  ACTION_IF pm_1 AND !pm_2 AND pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - present for BG, IWD%WNL%~
+    ACTION_IF bgee_iwdee BEGIN 
+      OUTER_SPRINT report ~%report% - identical in all games~
+      COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee_iwdee/%file%.bam~
+    END ELSE BEGIN   
+      OUTER_SPRINT report ~%report% - do not match~
+      COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee/%file%.bam~
+      COPY ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/sorted_bams/iwdee/%file%.bam~
+    END
+  END        
+
+  ACTION_IF !pm_1 AND pm_2 AND pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - present for BG2, IWD%WNL%~
+    ACTION_IF bg2ee_iwdee BEGIN 
+      OUTER_SPRINT report ~%report% - identical in all games~
+      COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee_iwdee/%file%.bam~
+    END ELSE BEGIN   
+      OUTER_SPRINT report ~%report% - do not match~
+      COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee/%file%.bam~
+      COPY ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/sorted_bams/iwdee/%file%.bam~
+    END
+  END   
+
+  ACTION_IF pm_1 AND !pm_2 AND !pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - exclusive to BG%WNL%~  
+    COPY ~eefixpack/newbams/bgee/%file%.bam~  ~eefixpack/sorted_bams/bgee/%file%.bam~
+  END    
+
+  ACTION_IF !pm_1 AND pm_2 AND !pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - exclusive to BG2%WNL%~  
+    COPY ~eefixpack/newbams/bg2ee/%file%.bam~ ~eefixpack/sorted_bams/bg2ee/%file%.bam~
+  END     
+
+  ACTION_IF !pm_1 AND !pm_2 AND pm_3 BEGIN 
+    OUTER_SPRINT report ~%report% - exclusive to IWD%WNL%~  
+    COPY ~eefixpack/newbams/iwdee/%file%.bam~ ~eefixpack/sorted_bams/iwdee/%file%.bam~
+  END   
+  
+  APPEND_OUTER ~eefixpack/newbam.txt~ ~%report%%WNL%%WNL%~
+              
+END 
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_dirs BEGIN 
+
+  bgee       => sod
+  bgee_bg2ee => sod_bg2ee
+  bgee_iwdee => sod_iwdee
+  universal  => sod_bg2ee_iwdee
+  
+END 
+
+ACTION_PHP_EACH cd_dirs AS src => dst BEGIN 
+
+  ACTION_BASH_FOR ~eefixpack/files/bam/item_shadows/%src%~ ~.+\.bam~ BEGIN 
+
+    ACTION_IF !FILE_EXISTS_IN_GAME ~%BASH_FOR_FILE%~ BEGIN 
+      COPY "%BASH_FOR_FILESPEC%" ~eefixpack/files/bam/item_shadows/%dst%/%BASH_FOR_FILE%~
+      DELETE "%BASH_FOR_FILESPEC%"
+    END
+
+  END   
+  
+END 

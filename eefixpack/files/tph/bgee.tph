@@ -188,9 +188,20 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
 
+// fixing shadows on item icons
+COPY ~eefixpack/files/bam/bgee~       ~override~
+     ~eefixpack/files/bam/bgee_bg2ee~ ~override~
+     ~eefixpack/files/bam/bgee_iwdee~ ~override~
+     ~eefixpack/files/bam/universal~  ~override~
+
 ACTION_IF game_includes_sod BEGIN
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
+  
+  // fixing shadows on item icons
+  COPY ~eefixpack/files/bam/sod~             ~override~
+       ~eefixpack/files/bam/sod_bg2ee~       ~override~
+       ~eefixpack/files/bam/sod_bg2ee_iwdee~ ~override~
   
 END
 

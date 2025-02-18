@@ -95,6 +95,13 @@ COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light cr
      ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
      ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
 
+// fixing shadows on item icons
+COPY ~eefixpack/files/bam/bg2ee_iwdee~     ~override~
+     ~eefixpack/files/bam/bgee_iwdee~      ~override~
+     ~eefixpack/files/bam/iwdee~           ~override~
+     ~eefixpack/files/bam/sod_bg2ee_iwdee~ ~override~
+     ~eefixpack/files/bam/universal~       ~override~
+
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
 ACTION_FOR_EACH file IN
