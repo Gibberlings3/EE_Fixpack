@@ -8276,7 +8276,7 @@ Requires:
 
 Weight: 3~
 
-// dart of acid descript - refers to them as 'arrows' in flavor text
+// dart of acid descript - refers to them as 'arrows' in flavor text > missiles
 @29060 = ~With the teeth of a black dragon for heads and the mighty wyrm's sinews for shafts, these wicked missiles dissolve into deadly acid on impact.
 
 STATISTICS:

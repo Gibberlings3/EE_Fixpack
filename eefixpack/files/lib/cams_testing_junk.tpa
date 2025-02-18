@@ -538,3 +538,29 @@ ACTION_PHP_EACH cd_dirs AS src => dst BEGIN
   END   
   
 END 
+
+
+
+
+
+// for finding melee weapons without str flags
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+  READ_LONG 0x18 flags
+  PATCH_IF ((flags & BIT2) = 0) BEGIN // if undroppable
+    READ_LONG  0x64 abil_off
+    READ_SHORT 0x68 abil_num
+    FOR (index = 0 ; index < abil_num ; ++index) BEGIN
+      READ_BYTE  (abil_off + 0x00 + (index * 0x38)) type
+      READ_BYTE  (abil_off + 0x02 + (index * 0x38)) loc
+      READ_LONG  (abil_off + 0x26 + (index * 0x38)) aflags
+      READ_SHORT (abil_off + 0x1a + (index * 0x38)) dam
+      READ_BYTE  (abil_off + 0x18 + (index * 0x38)) dicenum
+      READ_BYTE  (abil_off + 0x16 + (index * 0x38)) dicesize
+      PATCH_IF (((type = 1) AND (loc = 1) AND ((aflags & BIT0) = 0)) AND
+                ((dam != 0) OR (dicenum != 0 AND dicesize != 0))) BEGIN
+        PATCH_PRINT "               ~%SOURCE_FILE%~ ~override~ // (iwdee) has a melee ability without strength bonus"
+      END
+    END
+  END
+  BUT_ONLY  
+  

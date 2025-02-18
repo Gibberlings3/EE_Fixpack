@@ -1,0 +1,137 @@
+ACTION_IF game_is_iwdee BEGIN 
+
+  COPY_EXISTING ~basill2.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - lesser basilisk melee attack, unused
+                ~cdfampsd.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - psuedodragon familiar claw
+                ~crpdoom.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - creeping doom
+                ~etterc1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - ettercap claw
+                ~etterc2.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - ettercap bite
+                ~flind1.itm~   ~override~ // (iwdee) has a melee ability without strength bonus - flind bar
+                ~m2d4slas.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - generic monster 2d8 slash (beetle)
+                ~m2d6slas.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - generic monster 1d10 slash (unused)
+                ~m3d6crsh.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - generic beetle mandible
+                ~m5d4slas.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - greater werewolf
+                ~m6d6fist.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - generic 6d6 crush (unused)
+                ~msword.itm~   ~override~ // (iwdee) has a melee ability without strength bonus - unused (bg2 mordy sword)
+                ~shamme1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - spiritual hammer
+                ~shamme2.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - spiritual hammer
+                ~shamme3.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - spiritual hammer
+                ~spidgi1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - giant spider
+                ~spidhu1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - huge spider
+                ~spidsw1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - sword spider
+                ~spidwr1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - wraith spider
+                ~squirp.itm~   ~override~ // (iwdee) has a melee ability without strength bonus - polymorphed squirrel paw
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    BUT_ONLY IF_EXISTS
+
+END ELSE
+
+ACTION_IF game_is_bgee BEGIN 
+
+  COPY_EXISTING ~ankheg2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ankheg melee
+                ~basilg2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - greaer basilisk melee attack
+                ~basill2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - lesser basilisk melee attack
+                ~cdfampsd.itm~ ~override~ // (bgee) has a melee ability without strength bonus - psuedodragon familiar claw
+                ~etterc1.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ettercap claw
+                ~etterc2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ettercap bite
+                ~finsol02.itm~ ~override~ // (bgee) has a melee ability without strength bonus - (I've) fallen (and i can't get up) solar
+                ~flind1.itm~   ~override~ // (bgee) has a melee ability without strength bonus - flind bar
+                ~ghoul1.itm~   ~override~ // (bgee) has a melee ability without strength bonus - ghouls, shadow fiends
+                ~hgnymph.itm~  ~override~ // (bgee) has a melee ability without strength bonus - nymph
+                ~impclaw.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ToB imp familiar
+                ~lichel01.itm~ ~override~ // (bgee) has a melee ability without strength bonus - fire, elemental lich
+                ~magispwr.itm~ ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~mistice.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ice mist
+                ~mistva2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - vampiric mist
+                ~paraghas.itm~ ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~paraghou.itm~ ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~poisa.itm~    ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~poisspid.itm~ ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~psdclaw.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ToB pseudodragon
+                ~revent2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - revenant
+                ~slaysh01.itm~ ~override~ // (bgee) has a melee ability without strength bonus - slayer shadow
+                ~spidgi1.itm~  ~override~ // (bgee) has a melee ability without strength bonus - giant spider
+                ~spidhu1.itm~  ~override~ // (bgee) has a melee ability without strength bonus - huge spider
+                ~spidsw1.itm~  ~override~ // (bgee) has a melee ability without strength bonus - sword spider
+                ~spidwr1.itm~  ~override~ // (bgee) has a melee ability without strength bonus - wraith spider
+                ~spspid3.itm~  ~override~ // (bgee) has a melee ability without strength bonus - mutated spider
+                ~squirp.itm~   ~override~ // (bgee) has a melee ability without strength bonus - polymorphed squirrel paw
+                ~sw1h14.itm~   ~override~ // (bgee) has a melee ability without strength bonus - unused short sword +1
+                ~sw1h98.itm~   ~override~ // (bgee) has a melee ability without strength bonus - unused
+                ~bddraggh.itm~ ~override~ // (sod) has a melee ability without strength bonus - Halatathlaer
+                ~bdneo1.itm~   ~override~ // (sod) has a melee ability without strength bonus - neothelid
+                ~bdneo2.itm~   ~override~ // (sod) has a melee ability without strength bonus - neothelid
+                ~bdneo3.itm~   ~override~ // (sod) has a melee ability without strength bonus - neothelid
+                ~bdspidgi.itm~ ~override~ // (sod) has a melee ability without strength bonus - giant spider
+                ~bdspidhu.itm~ ~override~ // (sod) has a melee ability without strength bonus - huge spider
+                ~figspid.itm~  ~override~ // (sod) has a melee ability without strength bonus - kitthix
+                ~ghast1.itm~   ~override~ // (sod) has a melee ability without strength bonus - ghast
+                ~lich02.itm~   ~override~ // (sod) has a melee ability without strength bonus - lich (general)
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    BUT_ONLY IF_EXISTS
+
+END ELSE
+
+ACTION_IF game_is_bg2ee BEGIN 
+
+  COPY_EXISTING ~ankheg2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ankheg melee
+                ~basilg2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - greaer basilisk melee attack
+                ~basill2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - lesser basilisk melee attack
+                ~cdfampsd.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - psuedodragon familiar claw
+                ~cdsquirp.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - squirrel via bolt of polymorphing
+                ~etterc1.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ettercap claw
+                ~etterc2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ettercap bite
+                ~figspid.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - kitthix
+                ~finsol02.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - (I've) fallen (and i can't get up) solar
+                ~flind1.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - flind bar
+                ~ghoul1.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - ghouls, shadow fiends
+                ~hgnymph.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - nymph
+                ~hspectre.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - spectral harpist
+                ~impclaw.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ToB imp familiar
+                ~lich02.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - lich (general)
+                ~lichel01.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - fire, elemental lich
+                ~magispwr.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~mistcd.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - crimson death
+                ~mistho.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - swamp/mist horror
+                ~mistice.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ice mist
+                ~mistva.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - vampiric mist
+                ~mistva2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - vampiric mist
+                ~paraghas.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~paraghou.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~plyjello.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~poisa.itm~    ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~poisspid.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~polycarr.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+                ~polyrat.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - cloak of the sewers
+                ~psdclaw.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ToB pseudodragon
+                ~revent2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - revenant
+                ~slaysh01.itm~ ~override~ // (bg2ee) has a melee ability without strength bonus - slayer shadow
+                ~spectr.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - spectre
+                ~spidgi1.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - giant spider
+                ~spidhu1.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - huge spider
+                ~spidsw1.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - sword spider
+                ~spidwr1.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - wraith spider
+                ~spspid.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - spider
+                ~spspid3.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - mutated spider
+                ~squirp.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - polymorphed squirrel paw
+                ~sw1h14.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - unused short sword +1
+                ~sw1h68a.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - spectral brand's spectral blade
+                ~sw1h98.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - unused
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    BUT_ONLY IF_EXISTS
+
+END ELSE BEGIN // pstee
+
+  COPY_EXISTING ~gronk.itm~    ~override~ // (pstee) has a melee ability without strength bonus - gronk smash
+                ~mshbite.itm~  ~override~ // (pstee) has a melee ability without strength bonus - Morte's Bite (Sharpened)
+                ~shadow1.itm~  ~override~ // (pstee) has a melee ability without strength bonus - shadow
+                ~shadow2.itm~  ~override~ // (pstee) has a melee ability without strength bonus - shadow
+                ~shadow3.itm~  ~override~ // (pstee) has a melee ability without strength bonus - shadow
+                ~trigit.itm~   ~override~ // (pstee) has a melee ability without strength bonus - Trigit's Smash
+                ~troco.itm~    ~override~ // (pstee) has a melee ability without strength bonus - Tropotoca Bite
+                ~vargbite.itm~ ~override~ // (pstee) has a melee ability without strength bonus - Vargouille Bite
+                ~zfist.itm~    ~override~ // (pstee) has a melee ability without strength bonus - Zombie Fist (Lunge)
+                ~zfistw.itm~   ~override~ // (pstee) has a melee ability without strength bonus - Zombie Fist, Weak (Lunge)
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    BUT_ONLY IF_EXISTS
+
+END
