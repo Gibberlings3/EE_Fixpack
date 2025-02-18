@@ -592,6 +592,11 @@ COPY_EXISTING ~backstab.spl~ ~override~
     END      
   END
   BUT_ONLY  
+
+// double 'freedom' strings as subspell also has name (same patch for bg2ee)
+COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+  WRITE_LONG 0x08 `0
+  BUT_ONLY
   
 // ie-5938, cam
 // Lich Touch should paralyze, not hold

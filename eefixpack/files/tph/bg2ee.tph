@@ -796,6 +796,11 @@ COPY_EXISTING ~bhaal1a.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR target = 2 END // some op164s are target party (3)
   BUT_ONLY
 
+// double 'freedom' strings as subspell also has name (same patch for iwdee)
+COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+  WRITE_LONG 0x08 `0
+  BUT_ONLY
+
 // tbd, cam
 // Hexxat's ability is supposed to summon 1d4 creatures, does something wacky intstead
 COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
