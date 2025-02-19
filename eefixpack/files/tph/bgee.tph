@@ -666,6 +666,8 @@ COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop onc
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+
 // bgcs-3454, cam
 // lady's house lacks its normal music
 COPY_EXISTING ~ar0132.are~ ~override~
@@ -1956,6 +1958,9 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
+
+// illusionary creatures shouldn't save when dispelled
+INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\

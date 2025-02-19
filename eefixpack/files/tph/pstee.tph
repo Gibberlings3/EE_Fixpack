@@ -75,6 +75,8 @@ COPY_EXISTING ~1204trig.bcs~ ~override~
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+
 INCLUDE ~eefixpack/files/tph/pst_are_fixes.tph~ // ARE-specific fixes
 INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
 INCLUDE ~eefixpack/files/tph/pst_wmp_fixes.tph~ // WMP-specific fixes

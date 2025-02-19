@@ -594,8 +594,13 @@ COPY_EXISTING ~backstab.spl~ ~override~
       END
     END
   END
-  BUT_ONLY
+  BUT_ONLY  
 
+// double 'freedom' strings as subspell also has name (same patch for bg2ee)
+COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+  WRITE_LONG 0x08 `0
+  BUT_ONLY
+  
 // ie-5938, cam
 // Lich Touch should paralyze, not hold
 COPY_EXISTING ~ltouch.spl~ ~override~
@@ -1003,6 +1008,9 @@ COPY_EXISTING ~bagh02.sto~ ~override~
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
 
+// illusionary creatures shouldn't save when dispelled
+INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
 // Fix reference to non-existing ACM sound resource
 COPY ~music/bm2.mus~ ~music/bm2.mus~
   REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~
@@ -1056,6 +1064,15 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 
 INCLUDE ~eefixpack/files/tph/6037_iwdee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+// fixes the hot mess of three white doves
+// death moved back below death messages; fixing HD targeting for undead destruction
+COPY_EXISTING ~doves.itm~   ~override~ // three white doves
+  LPF CLONE_EFFECT INT_VAR                   match_opcode = 177 STR_VAR match_resource = cddovdie insert = last END // copy die to last effects after messages
+  LPF DELETE_EFFECT INT_VAR multi_match = 18 match_opcode = 177 STR_VAR match_resource = cddovdie               END // yes, 18             
+  PATCH_FOR_EACH lev IN 5 6 7 8 10 11 BEGIN
+    LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 4 match_parameter2 = 3 match_dicesize = lev dicesize = 0 END 
+  END   
 
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"

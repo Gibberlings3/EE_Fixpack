@@ -320,6 +320,9 @@ EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
 INCLUDE ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ // tbd, cam (from MiH): fix vertex issues for doors and regions
 
+INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+
+
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
 LAF cd_move_actor INT_VAR old_x =  398 old_y =  527 new_x =  448 new_y =  537 STR_VAR area = ar0305 END // Shadow Thief (actor #4) at position [398.527] is on impassable terrain
@@ -493,6 +496,10 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
 COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 600 STR_VAR match_resource = eff_e07 END
 
+// prevent hexxat, haer'dalis from using racially-restricted items (see also npbow.itm, npsw01.itm, hlolth.itm)
+COPY_EXISTING ~hamm06.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=4 parameter2=4 special=1100 END // dwarves only 
+
 // tbd, cam
 // helmet appearance corrections
 COPY_EXISTING ~helm32.itm~ ~override~ // Helm of the Rock
@@ -522,6 +529,11 @@ COPY_EXISTING ~helm32.itm~   ~override~ // Helm of the Rock - causes fear - port
               ~spwi958.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
 
+// prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, npbow.itm, npsw01.itm)
+COPY_EXISTING ~hlolth.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=153 parameter2=4 special=8330 END // not usable by Tieflings - display this
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=0 parameter1=125 parameter2=4 special=0 END // not usable by Vampires - silent, since vampire isn't really a race
+  
 // tbd, cam
 // blocks confusion animation, but is subject to confusion
 COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to hold - blocks spmindat - blocks spconfus - probably intentional since animation isn't right for dragons
@@ -549,6 +561,11 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
 // uses 'intoxication' icon for a confusion effect
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
+
+// prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, hlolth.itm)
+COPY_EXISTING ~npbow.itm~  ~override~
+              ~npsw01.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=5 parameter2=4 special=1101 END // halflings only 
 
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
@@ -580,6 +597,10 @@ COPY_EXISTING ~quiver01.itm~ ~override~ // quiver of plenty +1
   WRITE_ASCII 0x44 ~gquiver0~ #8 // ground icon
   BUT_ONLY
 
+// rod of terror's fear affect lasts 5 rounds instead of the stated 4
+COPY_EXISTING ~rods05.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 24 END
+  
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
 COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
@@ -795,6 +816,11 @@ END
 // inconsistent targeting (unused, fixed anyway)
 COPY_EXISTING ~bhaal1a.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR target = 2 END // some op164s are target party (3)
+  BUT_ONLY
+
+// double 'freedom' strings as subspell also has name (same patch for iwdee)
+COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+  WRITE_LONG 0x08 `0
   BUT_ONLY
 
 // tbd, cam
@@ -1631,12 +1657,29 @@ END
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
 
+// illusionary creatures shouldn't save when dispelled
+INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+
+// the 324 vs death immunity is being inserted between the 'destroyed' message and the actual destruction
+// or, in a few cases, the order was just wrong
+COPY_EXISTING ~ax1h10.itm~   ~override~ // azuredge
+              ~blun12.itm~   ~override~ // mace o' disruption +1
+              ~blun25.itm~   ~override~ // mace o' disruption +2
+              ~dwfpdeva.spl~ ~override~ // used by deva.itm for, you guessed it, disruption
+              ~dwfpohdv.spl~ ~override~ // used by ohbdeva.itm for, you guessed it, disruption
+              ~hamm10.itm~   ~override~ // runehammer +4
+              ~hamm11.itm~   ~override~ // runehammer +5              
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = mesdie insert = last END // copy mesdie, die to last effects
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = die    insert = last END    
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = mesdie               END // then delete the source of the copied effects
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = die                  END              
 
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
