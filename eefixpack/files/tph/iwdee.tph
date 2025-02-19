@@ -1063,6 +1063,15 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 INCLUDE ~eefixpack/files/tph/6037_iwdee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
+// fixes the hot mess of three white doves
+// death moved back below death messages; fixing HD targeting for undead destruction
+COPY_EXISTING ~doves.itm~   ~override~ // three white doves
+  LPF CLONE_EFFECT INT_VAR                   match_opcode = 177 STR_VAR match_resource = cddovdie insert = last END // copy die to last effects after messages
+  LPF DELETE_EFFECT INT_VAR multi_match = 18 match_opcode = 177 STR_VAR match_resource = cddovdie               END // yes, 18             
+  PATCH_FOR_EACH lev IN 5 6 7 8 10 11 BEGIN
+    LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 4 match_parameter2 = 3 match_dicesize = lev dicesize = 0 END 
+  END   
+
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
   LAF "remove_redundant_effects" END
