@@ -1,0 +1,18 @@
+// called in bgee, bg2ee, iwdee.tph; not needed for pstee
+
+// the dispel effect to remove illusionary creatures was still being routed through die.eff instead of destself.eff
+// die is used by disruption weapons and kills with a save; destself has no save and just removes the creature
+COPY_EXISTING ~deva.itm~     ~override~ // bgee, bg2ee, iwdee
+              ~devaevil.itm~ ~override~ // bgee, bg2ee
+              ~elemchan.itm~ ~override~ // bgee, bg2ee, iwdee
+              ~elemcryo.itm~ ~override~ // bgee, bg2ee
+              ~elemhydr.itm~ ~override~ // bgee, bg2ee
+              ~elemimix.itm~ ~override~ // bgee, bg2ee
+              ~elemogre.itm~ ~override~ // bgee, bg2ee
+              ~elemsunn.itm~ ~override~ // bgee, bg2ee, iwdee
+              ~elemyanc.itm~ ~override~ // bgee, bg2ee
+              ~elemzaam.itm~ ~override~ // bgee, bg2ee, iwdee
+              ~planetar.itm~ ~override~ // bgee, bg2ee, iwdee
+              ~sppr303.spl~  ~override~ // bgee, bg2ee
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 177 match_parameter1 = 7 match_parameter2 = 7 STR_VAR match_resource = die resource = destself END
+  BUT_ONLY IF_EXISTS

@@ -1653,6 +1653,9 @@ END
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
 
+// illusionary creatures shouldn't save when dispelled
+INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
