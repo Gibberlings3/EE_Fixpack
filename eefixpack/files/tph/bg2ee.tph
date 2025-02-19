@@ -248,6 +248,9 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
   END
   BUT_ONLY
 
+// kangaxx-as-lich should always talk when he appears
+EXTEND_BOTTOM ~hlkang.bcs~ ~eefixpack/files/baf/hlkang.baf~
+
 // tbd, cam
 // love talk sets trigger for jaheira's bandits to spawn, but shouldn't occur if romance ends before timer is up
 COPY_EXISTING ~jaheira.bcs~ ~override~
