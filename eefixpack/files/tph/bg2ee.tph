@@ -313,6 +313,7 @@ ACTION_IF (NOT FILE_EXISTS_IN_GAME ~AR6300.BCS~) BEGIN
 END
 EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
+INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\

@@ -662,6 +662,8 @@ COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop onc
   END
   BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
