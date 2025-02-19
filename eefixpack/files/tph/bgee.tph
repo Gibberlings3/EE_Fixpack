@@ -27,7 +27,7 @@ COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_includes_sod BEGIN
     REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
     REPLACE_TEXTUALLY ~\({'BDORCF1L',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'SKAN',%TAB%2},~
-/* comment this section, pending verification for mobile versions   
+/* comment this section, pending verification for mobile versions
     REPLACE_TEXTUALLY ~\({'BAELOTH',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'NCERND',%TAB%1},%WNL%%TAB%{'NKELDOR',%TAB%1},%WNL%%TAB%{'NANOMEN',%TAB%1},%WNL%%TAB%{'NEDWIN',%TAB%1},%WNL%%TAB%{'NHAER',%TAB%1},%WNL%%TAB%{'NJAN',%TAB%1},%WNL%%TAB%{'NMINSC',%TAB%1},%WNL%%TAB%{'NVALYGA',%TAB%1},%WNL%%TAB%{'NYOSHIM',%TAB%1},%WNL%%TAB%{'NKORGAN',%TAB%1},~
     REPLACE_TEXTUALLY ~\({'NEERA',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'NNALIA', 2},%WNL%%TAB%{'NMAZZY', 2},%WNL%%TAB%{'NAERIE', 2},~
   END ELSE BEGIN
@@ -36,8 +36,8 @@ COPY_EXISTING ~bgee.lua~ ~override~
     END
 */
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// ids/2da fixes                                    \\\\\
 /////                                                  \\\\\
@@ -157,7 +157,7 @@ ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi12
 END
 
 LAM "SPELL_IDS" // relaunch so as to take into account the BG2 entries
- 
+
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\
@@ -187,6 +187,9 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
+     ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
@@ -194,23 +197,34 @@ COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
      ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~  ~override~
 
+DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
+
 ACTION_IF game_includes_sod BEGIN
 
+  COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
+       ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
+       ~eefixpack/files/bam/pxbow15.bam~  ~override~ // fix item description image
+
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
-  
+
   // fixing shadows on item icons
   COPY ~eefixpack/files/bam/item_shadows/sod~             ~override~
        ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
        ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
-  
+
+  // installing BAM V2 resources
+  INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
+  ACTION_FOR_EACH bam_resref IN cbdhel09 BEGIN
+    LAF install_bam_v2 STR_VAR bam_resref END
+  END
 END
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
 ACTION_IF game_includes_sod BEGIN
-  ACTION_FOR_EACH file IN bdfug01 bdfug02 bdfug03 bdfug04 BEGIN  
+  ACTION_FOR_EACH file IN bdfug01 bdfug02 bdfug03 bdfug04 BEGIN
     COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
-  END  
+  END
 END
 
 // tbd, cam (from jmerry)
@@ -288,9 +302,8 @@ COPY_EXISTING ~ar2700.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~Exists("\(Xzar\|Imoen\|Montaron\)")~ ~InMyArea("\1")~
   END
-  BUT_ONLY 
-  
-  
+  BUT_ONLY
+
 
 // tbd, cam
 // can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
@@ -299,8 +312,8 @@ COPY_EXISTING ~bd0120.bcs~ ~override~
     REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
   END
   BUT_ONLY IF_EXISTS // sod
-  
-  
+
+
 // tbd, cam
 // syntax: an OR(4) only has two conditions
 COPY_EXISTING ~bd1000.bcs~ ~override~
@@ -310,7 +323,6 @@ COPY_EXISTING ~bd1000.bcs~ ~override~
   BUT_ONLY IF_EXISTS // sod asset
 
 
-
 // tbd, cam
 // neera checking the wrong state of the skull
 COPY_EXISTING ~bd2000.bcs~ ~override~
@@ -318,7 +330,6 @@ COPY_EXISTING ~bd2000.bcs~ ~override~
     REPLACE_TEXTUALLY ~OpenState("Bhaal_Skull",TRUE)~ ~OpenState("Bhaal_Skull",FALSE)~ // wrong state
   END
   BUT_ONLY IF_EXISTS // sod
-
 
 
 // tbd, cam
@@ -333,7 +344,7 @@ COPY_EXISTING ~bd2000.bcs~   ~override~
 // tbd, cam
 // dialogues for blind albino cave can fire elsewhere (see also bddynahj.dlg et al)
 COPY_EXISTING ~bd5100aw.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~I[fs]ValidForPartyDialo\(g\|gue\)("\([^"]+\)")~ ~Range("\2",20) IfValidForPartyDialog("\2")~
   END
   BUT_ONLY IF_EXISTS // sod
@@ -349,8 +360,6 @@ COPY_EXISTING ~bd5300.bcs~ ~override~
   BUT_ONLY IF_EXISTS // sod
 
 
-
-
 // tbd, cam
 // referring to wrong DV for Imoen
 COPY_EXISTING ~bd6200.bcs~ ~override~
@@ -360,8 +369,6 @@ COPY_EXISTING ~bd6200.bcs~ ~override~
   BUT_ONLY IF_EXISTS // sod
 
 
-
-
 // tbd, cam
 // referring to wrong DV for Corwin
 COPY_EXISTING ~bd7300.bcs~ ~override~
@@ -369,7 +376,7 @@ COPY_EXISTING ~bd7300.bcs~ ~override~
     REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
   END
   BUT_ONLY IF_EXISTS // sod
-  
+
 // tbd, cam (from k4thos/eet)
 //Dead NPCs stays in party in chapter 13
 COPY_EXISTING ~bdcut61.bcs~ ~override~
@@ -388,7 +395,7 @@ ACTION_FOR_EACH script IN 1 4 BEGIN
     END
     BUT_ONLY IF_EXISTS
 
-END    
+END
 
 // tbd, cam
 // possibly missing Minsc-rasaad banter due to typo
@@ -399,31 +406,29 @@ COPY_EXISTING ~bdminsc.bcs~ ~override~
   BUT_ONLY IF_EXISTS // sod
 
 
-
-
 // tbd, cam
 // saying 'go back to the crypt entrance' in korlasz crypt doesn't make NPCs do anything
 COPY_EXISTING ~bdparty.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // dynaheir save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // edwin save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // baeloth save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // khalid save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[870.1710])~ // safana save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // dorn save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // minsc save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // neera save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // jaheira save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ 
+    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
       ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // viconia save location
     REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move dynaheir
     REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move edwin
@@ -437,9 +442,7 @@ COPY_EXISTING ~bdparty.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move viconia
   END
   BUT_ONLY IF_EXISTS // sod
- 
 
-  
 
 // tbd, cam
 // spike trigger is a little too happy to murderize everyone, swap trigger
@@ -453,7 +456,7 @@ COPY_EXISTING ~bdlever2.bcs~ ~override~
 // don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
 ACTION_IF game_includes_sod BEGIN
   EXTEND_TOP ~bdshadow.bcs~ ~eefixpack/files/baf/bdshadow.baf~
-END  
+END
 
 // tbd, cam (from jmerry)
 // bp: hogarl not using the right potion when he's hurt
@@ -461,7 +464,7 @@ COPY_EXISTING ~bpgiafir.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(SetGlobalTimer("GIANT_POTION","LOCALS",ONE_ROUND)[%TAB% %LNL%%MNL%%WNL%]+\)UseItem("POTN27",NearestEnemyOf(Myself))~ ~\1 UseItem("POTN52",Myself)~
   END
-  BUT_ONLY 
+  BUT_ONLY
 
 // tbd, cam (from jmerry)
 // characters imported from bp retain their bp scripting
@@ -474,7 +477,6 @@ ACTION_IF game_includes_sod BEGIN
 END
 
 
-
 // tbd, cam
 // NPCs should get their better starting equipment when doing the level-up thing; must follow the imoen.bcs script extension fix for sod games (currently immediately above)
 COPY_EXISTING ~ajantis.bcs~ ~override~ // ajantis gets better armor
@@ -484,120 +486,120 @@ COPY_EXISTING ~ajantis.bcs~ ~override~ // ajantis gets better armor
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~
       ~\1 TransformItem("chan01","chan04")~ // chain > splint
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~dorn.bcs~ ~override~ // dorn gets helmet at 9k, plate at 36k
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
       ~\1 TransformItem("chan04","plat01")~ // splint > plate
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~
       ~\1 CreateItem("helm01",0,0,0) XEquipItem("helm01",Myself,SLOT_HELMET,EQUIP)~ // add helmet
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~edwin.bcs~ ~override~ // edwin gets throwing daggers at 41k
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
       ~\1 CreateItem("dagg05",10,0,0) XEquipItem("dagg05",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing daggers
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~eldoth.bcs~ ~override~ // eldoth gets bow & arrows at 10k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\)000,SET)\)~
       ~\1 CreateItem("arow01",20,0,0) XEquipItem("arow01",Myself,SLOT_AMMO0,EQUIP) CreateItem("bow03",0,0,0) XEquipItem("bow03",Myself,SLOT_WEAPON1,EQUIP)~ // add bow, arrows
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~imoen.bcs~ ~override~ // imoen short sword at 1300, studded leather at 20k; imoen can still use imoen2 cre file so skip short sword
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~
       ~\1 CreateItem("leat04",0,0,0) XEquipItem("leat04",Myself,SLOT_ARMOR,EQUIP)~ // add studded leather
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~jaheira.bcs~ ~override~ // jaheira gets sling & bullets at 16k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~
       ~\1 CreateItem("bull01",20,0,0) XEquipItem("bull01",Myself,SLOT_AMMO0,EQUIP) CreateItem("slng01",0,0,0) XEquipItem("slng01",Myself,SLOT_WEAPON1,EQUIP)~ // add sling & bullets
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~kagain.bcs~ ~override~ // kagain gets throwing axes at 2k, armor upgrades at 8 and 32
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~
       ~\1 CreateItem("ax1h04",10,0,0) XEquipItem("ax1h04",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing axes
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~
       ~\1 TransformItem("leat04","chan01")~ // studded leather > chain
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
       ~\1 TransformItem("leat04","chan04")~ // studded leather > splint
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~khalid.bcs~ ~override~ // khalid gets bow & arrows at 2k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~
       ~\1 CreateItem("arow01",20,0,0) XEquipItem("arow01",Myself,SLOT_AMMO0,EQUIP) CreateItem("bow03",0,0,0) XEquipItem("bow03",Myself,SLOT_WEAPON1,EQUIP)~ // add bow, arrows
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~minsc.bcs~ ~override~ // minsc gets studded leather at 2k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~
       ~\1 TransformItem("leat01","leat04")~ // leather > studded leather
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~montaron.bcs~ ~override~ // montaron gets throwing axes at 16k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~
       ~\1 CreateItem("ax1h04",10,0,0) XEquipItem("ax1h04",Myself,SLOT_WEAPON1,EQUIP)~ // add throwing axes
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~safana.bcs~ ~override~ // montaron gets darts at 4k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\)000,SET)\)~
       ~\1 CreateItem("dart01",20,0,0) XEquipItem("dart01",Myself,SLOT_WEAPON1,EQUIP)~ // add darts
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~sharteel.bcs~ ~override~ // shar-teel gets xbow & bolts at 8k, armor upgrades at 8 and 32k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~
       ~\1 CreateItem("bolt01",20,0,0) XEquipItem("bolt01",Myself,SLOT_AMMO0,EQUIP) CreateItem("xbow04",0,0,0) XEquipItem("xbow04",Myself,SLOT_WEAPON1,EQUIP)~ // add sling & bullets
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(16\|8\)000,SET)\)~
       ~\1 TransformItem("leat04","chan04")~ // studded leather > splint
     REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,32000,SET)\)~
       ~\1 TransformItem("leat04","plat01")~ // studded leather > plate
   END
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 COPY_EXISTING ~skie.bcs~ ~override~ // skie gets short sword at 16k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\|8\|4\|2\)000,SET)\)~
       ~\1 CreateItem("sw1h07",0,0,0) XEquipItem("sw1h07",Myself,SLOT_WEAPON1,EQUIP)~ // add short sword
   END
-  BUT_ONLY 
-  
-COPY_EXISTING ~viconia.bcs~ ~override~ // viconia gets armor upgrades at 8k, 16k 
+  BUT_ONLY
+
+COPY_EXISTING ~viconia.bcs~ ~override~ // viconia gets armor upgrades at 8k, 16k
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,8000,SET)\)~ 
-      ~\1 TransformItem("leat01","leat04")~ // leather > studded leather 
-    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~ 
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,8000,SET)\)~
+      ~\1 TransformItem("leat01","leat04")~ // leather > studded leather
+    REPLACE_TEXTUALLY ~\(ChangeStat(Myself,XP,\(32\|16\)000,SET)\)~
       ~\1 TransformItem("leat01","chan01")~ // leather > chain
   END
-  BUT_ONLY 
+  BUT_ONLY
 
 // tbd, cam
-// tanar'ri do not hail from the nine hells; change albert to something more appropriate  
+// tanar'ri do not hail from the nine hells; change albert to something more appropriate
 COPY_EXISTING ~albert.bcs~   ~override~
               ~rufcut01.bcs~ ~override~
               ~rufcut02.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~Polymorph(TANARRI)~ ~Polymorph(CORNUGON)~  
+    REPLACE_TEXTUALLY ~Polymorph(TANARRI)~ ~Polymorph(CORNUGON)~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // tbd, cam (from scs)
 // make cydermac and friends go hostile more reliably (see also banditcy.baf)
@@ -619,7 +621,7 @@ COPY_EXISTING ~bdeldotc.bcs~ ~override~
     REPLACE_TEXTUALLY ~DisplayString(Myself,56560)~ ~DisplayString(Myself,31249)~ // *quaffs a potion*
   END
   BUT_ONLY
- 
+
 OUTER_SET use_wand = RESOLVE_STR_REF (@100)
 COPY_EXISTING ~bddefai.bcs~  ~override~
               ~bddynac.bcs~  ~override~
@@ -640,7 +642,7 @@ COPY_EXISTING ~marl.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\([ %TAB%]Num\(berOf\)?TimesTalkedTo(1)\)~ ~\1 !StateCheck("Dunkin",CD_STATE_NOTVALID)~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // tbd, cam
 // mulahey stutter fix (see also mulahe.dlg) https://www.gibberlings3.net/forums/topic/35178-scripting-bugs/#comment-308786
@@ -649,7 +651,7 @@ COPY_EXISTING ~mulahey.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(Global("\(CDMulahey\|TalkedToMulahey\)","\(AR5405\|GLOBAL\)",0)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
     REPLACE_TEXTUALLY ~\(Allegiance(Myself,NEUTRAL)\)~ ~\1 !StateCheck(Myself,STATE_CHARMED)~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // tbd, cam
 // region/container scripts can't use LOCALS-scoped variables
@@ -677,8 +679,8 @@ COPY_EXISTING ~ar0132.are~ ~override~
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
 LAF cd_move_actor INT_VAR old_x = 2028 old_y = 1213 new_x = 1880 new_y = 1222 STR_VAR area = ar0500 END // Greater ghoul (actor #15) at position [2028.1213] is on impassable terrain
 LAF cd_move_actor INT_VAR old_x = 1843 old_y =  188 new_x = 1400 new_y =  188 STR_VAR area = bd0020 END // Noblewoman (actor #122) at position [1843.188] is placed outside of map range
-LAF cd_move_actor INT_VAR old_x = 3953 old_y = 2018 new_x = 3967 new_y = 1992 STR_VAR area = bd5000 END // Ogre (actor #7) at position [3953.2018] is on impassable terrain 
-   
+LAF cd_move_actor INT_VAR old_x = 3953 old_y = 2018 new_x = 3967 new_y = 1992 STR_VAR area = bd5000 END // Ogre (actor #7) at position [3953.2018] is on impassable terrain
+
 // tbd, cam (from k4thos/eet)
 //junk in BG1801.ARE Rest Spawn entries (harmless but annoying during save update)
 COPY_EXISTING ~ar1801.are~ ~override~
@@ -686,7 +688,7 @@ COPY_EXISTING ~ar1801.are~ ~override~
   READ_SHORT rest_off + 0x98 cre_num
   FOR (index = cre_num ; index < 10 ; ++index) BEGIN
     WRITE_ASCII (rest_off + 0x48 + (0x08 * index)) ~~ #8 // blank any entry beyond the valid number of creatures
-  END  
+  END
   BUT_ONLY
 
 // tbd, cam
@@ -729,7 +731,7 @@ COPY_EXISTING ~arlin.cre~  ~override~
       SET index = 0x270
     END
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // tbd, cam (originally from jmerry)
 // Nonstandard wand of missiles on Imoen and Mordaine replaced
@@ -758,7 +760,7 @@ COPY_EXISTING ~bdpetr01.cre~ ~override~
               ~bdpetr05.cre~ ~override~
   WRITE_ASCII 0x268 ~~ #8 // had dplaye3 assigned
   BUT_ONLY IF_EXISTS // sod quest
-  
+
 // tbd, cam (from k4thos/eet)
 //Beamdog added SHOUT.BCS to Cultists that are meant to stay and do nothing during Aec'Letec fight. They react to shout by moving which can make them stuck on each other. Vanilla BG1 implementation is more safe in this case
 COPY_EXISTING ~cultd1.cre~ ~override~
@@ -783,7 +785,7 @@ COPY_EXISTING ~ftobe7.cre~ ~override~
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
-  
+
 // BGCS-483, luke
 // CRE files should not use non-existing resources
 WITH_SCOPE BEGIN
@@ -840,7 +842,12 @@ ACTION_IF game_includes_sod BEGIN
   COPY_EXISTING ~bdmisc1c.itm~ ~override~ // invulnerable - immune to fear - immune to stun - immune to hold - cures fear
                 ~bdplant.itm~  ~override~ // ring - immune to stun - immune to hold
     LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
-    BUT_ONLY 
+    BUT_ONLY
+
+  // apply new description image for Helmet of Dumathoin
+  COPY_EXISTING ~bdhelm09.itm~ ~override~
+    WRITE_ASCII 0x58 ~cbdhel09~ (8)
+  BUT_ONLY
 
 END
 
@@ -849,7 +856,7 @@ COPY_EXISTING ~bddraggh.itm~ ~override~ // (itm) Attack - causes disease level d
               ~pudden01.itm~ ~override~ // (itm) <Invalid Strref -1> - causes disease
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
-  
+
 // tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
 COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
               ~bdotyg02.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
@@ -857,10 +864,10 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete separate slow icon (not present on bddraggh and pudden01)
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
-  
+
 // fixing waterdeep books (fix also used for bg2ee)
-INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~  
-  
+INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
+
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
@@ -869,15 +876,15 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   PATCH_FOR_EACH op IN 5 215 142 BEGIN
     LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
     LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
-  END  
+  END
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
 // displaying null string instead of 'devour brain'; many other parameters also wrong
 COPY_EXISTING ~mindflay.itm~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 139 target = 2 timing = 1 duration = 0 parameter1 = RESOLVE_STR_REF(@102) parameter2 = 0 END 
-  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 target = 2 timing = 1 duration = 0 parameter1 = RESOLVE_STR_REF(@102) parameter2 = 0 END
+
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
@@ -889,7 +896,7 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
-  
+
 // immune to confusion, but missing spconfus immunity
 COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 128 opcode = 296 parameter2 = 0 STR_VAR resource = spconfus END
@@ -898,7 +905,7 @@ COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to 
 //tbd, cam
 // unused, but shield of devotion adding two level 1-2 spells instead of one level 1-3 spells
 COPY_EXISTING ~shld09p.itm~ ~override~ // hell hound flame
-  LPF ALTER_EFFECT INT_VAR match_opcode = 62 match_parameter2 = (BIT0 + BIT1) parameter2 = BIT2 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 62 match_parameter2 = (BIT0 + BIT1) parameter2 = BIT2 END
   BUT_ONLY
 
 // the feeblemind effect already sets INT=3, so purging redundant effects
@@ -911,7 +918,7 @@ COPY_EXISTING ~sw1p01.itm~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 318 END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 25 END
-  
+
 // remove undocumented +2 save bonus from wand of fear
 INCLUDE ~eefixpack/files/tph/wand02.tph~
 
@@ -921,8 +928,6 @@ COPY_EXISTING ~wand12.itm~ ~override~ // wand of missiles
   LPF ADD_ITEM_EFFECT INT_VAR opcode = 324 target = 2 parameter1 = 126 parameter2 = 110 timing = 0 resist_dispel = 2 insert_point = 0 STR_VAR resource = wand12 END // block with shield spell
   LPF ADD_ITEM_EFFECT INT_VAR opcode =  61 target = 2 parameter1 = ((0 << 24) + (30 << 16) + (120 << 8)) parameter2 = (25 << 16) timing = 1 resist_dispel = 1 END // rgb fade
   BUT_ONLY
-  
-
 
 
 // luke
@@ -1064,7 +1069,7 @@ WITH_SCOPE BEGIN
   //LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
-// expiry sound has wrong duration  
+// expiry sound has wrong duration
 COPY_EXISTING ~bdsleep.spl~  ~override~ // <Invalid Strref -1> - causes sleep - plays sound EFF_E05
   LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 300 END
   IF_EXISTS // sod asset
@@ -1085,7 +1090,7 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
               ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
-  IF_EXISTS // bdshriek is sod asset  
+  IF_EXISTS // bdshriek is sod asset
 
 // tbd, cam (from jmerry)
 // misordered 321 removes several (cosmetic) protections from barbarian rage
@@ -1101,7 +1106,7 @@ COPY_EXISTING ~spcl321.spl~ ~override~
   WRITE_ASCII 0x3a ~enrageb~ #8
   LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
   BUT_ONLY
-  
+
 // has permanent-timed effect with duration
 COPY_EXISTING ~spin672.spl~              ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
               ~spin878.spl~              ~override~
@@ -1127,7 +1132,7 @@ COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
 // delayed sound effect doesn't bypass mr though the rest of the spell does
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
-  BUT_ONLY 
+  BUT_ONLY
 
 //tbd, cam
 // wrong projectiles for mephit flame fan and hell hound breath https://www.gibberlings3.net/forums/topic/36105-a-projectile-issue/
@@ -1170,7 +1175,6 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
   BUT_ONLY_IF_IT_CHANGES
 END
-
 
 
 // luke
@@ -1899,7 +1903,7 @@ END
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
-  
+
 // tbd, cam
 // myconid cloud looks terrible w/o blending: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/7/#comment-314026
 COPY_EXISTING ~bdstink.pro~ ~override~
@@ -1931,12 +1935,12 @@ END
 
 // tbd, cam (from jmerry)
 // Correct number of charges on the Sandthief's Ring at tier 3
-COPY_EXISTING ~bpxith03.sto~ ~override~ 
+COPY_EXISTING ~bpxith03.sto~ ~override~
   LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
-  BUT_ONLY 
+  BUT_ONLY
 
 // tbd, cam
-// Frair Tajik is only merchant that takes helmets but not hats (peacock hat)  
+// Frair Tajik is only merchant that takes helmets but not hats (peacock hat)
 COPY_EXISTING ~bdfrair.sto~ ~override~
   READ_LONG 0x2c buy_off   ELSE 0
   READ_LONG 0x30 buy_num   ELSE 0
@@ -1949,7 +1953,7 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
       WRITE_LONG offset (off + 0x04)
     END
   END
-  BUT_ONLY IF_EXISTS // sod asset  
+  BUT_ONLY IF_EXISTS // sod asset
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
