@@ -1660,6 +1660,20 @@ END
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
+// the 324 vs death immunity is being inserted between the 'destroyed' message and the actual destruction
+// or, in a few cases, the order was just wrong
+COPY_EXISTING ~ax1h10.itm~   ~override~ // azuredge
+              ~blun12.itm~   ~override~ // mace o' disruption +1
+              ~blun25.itm~   ~override~ // mace o' disruption +2
+              ~dwfpdeva.spl~ ~override~ // used by deva.itm for, you guessed it, disruption
+              ~dwfpohdv.spl~ ~override~ // used by ohbdeva.itm for, you guessed it, disruption
+              ~hamm10.itm~   ~override~ // runehammer +4
+              ~hamm11.itm~   ~override~ // runehammer +5              
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = mesdie insert = last END // copy mesdie, die to last effects
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = die    insert = last END    
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = mesdie               END // then delete the source of the copied effects
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = die                  END              
+
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
   LAF "remove_redundant_effects" END
