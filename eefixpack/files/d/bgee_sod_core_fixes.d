@@ -54,3 +54,6 @@ REPLACE_ACTION_TEXT ~bdjegg~ ~ChangeStoreMarkup("\([^"]+\)",\([0-9]+\),\([0-9]+\
 REPLACE_ACTION_TEXT ~dorn~  ~\(ActionOverride("DORN",JoinPartyOverride())\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
 REPLACE_ACTION_TEXT ~dorn~  ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
 REPLACE_ACTION_TEXT ~dornp~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
+
+// fixing loop where you can't inform Corwin that the Bridgforters are ready to attack
+ADD_TRANS_ACTION BDKHALID BEGIN 70 END BEGIN 2 END ~SetGlobal("bd_bf_attack","GLOBAL",1)~  
