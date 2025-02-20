@@ -164,3 +164,7 @@ REPLACE_STATE_TRIGGER digger 4 ~Global("DiggersPossessed","GLOBAL",0) RandomNum(
 ADD_STATE_TRIGGER ftowba 3 ~ReputationGT(Player1,9)~  // copy rep conditions from ftowb5
 ADD_STATE_TRIGGER ftowba 2 ~ReputationLT(Player1,10)~ // copy rep conditions from ftowb5
 ADD_STATE_TRIGGER ftowba 1 ~ReputationLT(Player1,3)~  // copy rep conditions from ftowb5
+
+// actions queued after joinparty() get dumped
+REPLACE_ACTION_TEXT ~bdrasaad~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(RemoveMapNote(\[[0-9]+\.[0-9]+\],34352)\)~ ~\2 \1~
+REPLACE_ACTION_TEXT ~bdmkhiin~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(AddexperienceParty(3000)\)~ ~\2 \1~
