@@ -1669,6 +1669,9 @@ END
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
+COPY ~music/vb.mus~ ~music/vb.mus~ 
+  REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
