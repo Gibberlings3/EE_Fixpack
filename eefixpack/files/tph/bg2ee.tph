@@ -884,6 +884,11 @@ COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
   BUT_ONLY
+  
+// writhing fog should stack better
+COPY_EXISTING ~sppr250.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // tbd, cam
 // shield spell shouldn't stack
