@@ -1093,6 +1093,11 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
   IF_EXISTS // bdshriek is sod asset
+  
+// kai using dispel magic icon
+COPY_EXISTING ~spcl144.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl144~ #8
+  BUT_ONLY
 
 // tbd, cam (from jmerry)
 // misordered 321 removes several (cosmetic) protections from barbarian rage

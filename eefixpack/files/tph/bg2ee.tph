@@ -836,6 +836,11 @@ COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 49                                  END // change summon #2 to 50%
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 74                                  END // change summon #3 to 75%
   BUT_ONLY
+  
+// kai using dispel magic icon
+COPY_EXISTING ~spcl144.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl144~ #8
+  BUT_ONLY
 
 // tbd, cam
 // enrage is using berserk's spell icon
