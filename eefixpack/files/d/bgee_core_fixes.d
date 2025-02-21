@@ -166,5 +166,6 @@ ADD_STATE_TRIGGER ftowba 2 ~ReputationLT(Player1,10)~ // copy rep conditions fro
 ADD_STATE_TRIGGER ftowba 1 ~ReputationLT(Player1,3)~  // copy rep conditions from ftowb5
 
 // actions queued after joinparty() get dumped
-REPLACE_ACTION_TEXT ~bdrasaad~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(RemoveMapNote(\[[0-9]+\.[0-9]+\],34352)\)~ ~\2 \1~
-REPLACE_ACTION_TEXT ~bdmkhiin~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(AddexperienceParty(3000)\)~ ~\2 \1~
+REPLACE_ACTION_TEXT ~dorn~  ~\(ActionOverride("DORN",JoinPartyOverride())\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
+REPLACE_ACTION_TEXT ~dorn~  ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
+REPLACE_ACTION_TEXT ~dornp~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
