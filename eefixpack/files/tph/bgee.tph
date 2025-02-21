@@ -1099,6 +1099,10 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
   IF_EXISTS // bdshriek is sod asset
+
+// change survivable shoal kiss to use magic damage, not acid
+COPY_EXISTING ~shoal1.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
   
 // kai using dispel magic icon
 COPY_EXISTING ~spcl144.spl~ ~override~
