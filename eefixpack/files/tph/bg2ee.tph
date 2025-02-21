@@ -950,6 +950,8 @@ END
 
 // luke
 // Grease – Remove duplicate op321 effect
+// grease should work like web and check for grease once/round
+// see also the 20 new greaseX projectiles
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
@@ -958,6 +960,11 @@ WITH_SCOPE BEGIN
         LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "321" "resource" = "%DEST_RES%" RET "count" END
         LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 321 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ STR_VAR ~match_resource~ = ~%DEST_RES%~ END
       END
+      READ_SHORT 0x68 abil_num
+      FOR (index = 1 ; index < (abil_num + 1) ; ++index) BEGIN
+        LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (18 + (6 * index)) duration = 6 END
+        LPF ALTER_HEADER INT_VAR header = (index - 1) projectile = EVAL ~grease%index%~ END
+      END   
     END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1643,6 +1650,21 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
+
+// grease should work like web and check for grease once/round
+// see also spwi101
+COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
+  WRITE_SHORT 0x210 100 // one round
+  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
+ADD_PROJECTILE ~override/grease1.pro~  
+
+OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
+
+  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
+    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
+  ADD_PROJECTILE ~override/grease%index%.pro~  
+
+END
 
 // luke
 // Ice Storm should last 4 rounds (not 3)
