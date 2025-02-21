@@ -1243,10 +1243,23 @@ WITH_SCOPE BEGIN
   BUT_ONLY IF_EXISTS // sod
 END
 
+// grease should work like web and check for grease once/round
+COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
+  WRITE_SHORT 0x210 100 // one round
+  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
+ADD_PROJECTILE ~override/grease1.pro~  
+
+OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
+
+  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
+    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
+  ADD_PROJECTILE ~override/grease%index%.pro~  
+
+END
+
 // luke
 // Grease – Remove duplicate op321 effect
 // grease should work like web and check for grease once/round
-// see also the 20 new greaseX projectiles
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
@@ -1935,20 +1948,7 @@ COPY_EXISTING ~bdstink.pro~ ~override~
   WRITE_LONG 0x240 (THIS BOR BIT13) // add blend flag
   IF_EXISTS // sod asset
 
-// grease should work like web and check for grease once/round
-// see also spwi101
-COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
-  WRITE_SHORT 0x210 100 // one round
-  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
-ADD_PROJECTILE ~override/grease1.pro~  
-
-OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
-
-  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
-    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
-  ADD_PROJECTILE ~override/grease%index%.pro~  
-
-END
+// grease projectiles created in spell section since vars needed 
 
 // luke
 // Ice Storm should last 4 rounds (not 3)

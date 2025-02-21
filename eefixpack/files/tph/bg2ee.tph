@@ -468,6 +468,10 @@ COPY_EXISTING ~bow15.itm~   ~override~ // tansheron's bow
   LPF ALTER_HEADER INT_VAR match_type = 4 projectile = 1 END // remove projectile
   BUT_ONLY
 
+// gloves of healing are unusable by cleric, mages, but not cleric-mages
+COPY_EXISTING ~brac20.itm~ ~override~
+  WRITE_LONG 0x1e (THIS BOR BIT8) // adds c/m flag
+
 // tbd, cam
 // lmd via foebane lacks normal immunity for golems & undead
 COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
@@ -948,10 +952,23 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+// grease should work like web and check for grease once/round
+COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
+  WRITE_SHORT 0x210 100 // one round
+  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
+ADD_PROJECTILE ~override/grease1.pro~  
+
+OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
+
+  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
+    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
+  ADD_PROJECTILE ~override/grease%index%.pro~  
+
+END
+
 // luke
 // Grease – Remove duplicate op321 effect
 // grease should work like web and check for grease once/round
-// see also the 20 new greaseX projectiles
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
@@ -1651,20 +1668,7 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
 
-// grease should work like web and check for grease once/round
-// see also spwi101
-COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
-  WRITE_SHORT 0x210 100 // one round
-  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
-ADD_PROJECTILE ~override/grease1.pro~  
-
-OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
-
-  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
-    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
-  ADD_PROJECTILE ~override/grease%index%.pro~  
-
-END
+// grease projectiles created in spell section since vars needed 
 
 // luke
 // Ice Storm should last 4 rounds (not 3)
