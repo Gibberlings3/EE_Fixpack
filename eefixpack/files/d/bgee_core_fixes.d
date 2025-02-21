@@ -174,7 +174,7 @@ REPLACE_ACTION_TEXT ~dornp~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOver
 //REPLACE_TRIGGER_TEXT SHOAL ~IsGabber(Player1)~ ~OR(2) IsGabber(Player1)  IsGabber(Familiar)~
 //REPLACE_TRIGGER_TEXT SHOAL ~!OR(2) IsGabber(Player1)  IsGabber(Familiar)~ ~!IsGabber(Player1) !IsGabber(Familiar)~
 APPEND SHOAL
-  IF WEIGHT #-1 ~IsGabber(Familiar) NumberOfTimesTalkedTo(0)~ THEN BEGIN famtalk SAY #4830
+  IF WEIGHT #-1 ~!IsGabber(Player1) !IsGabber(Player2) !IsGabber(Player3) !IsGabber(Player4) !IsGabber(Player5) !IsGabber(Player6) NumberOfTimesTalkedTo(0)~ THEN BEGIN famtalk SAY #4830
     IF ~~ THEN DO ~SetNumTimesTalkedTo(0)~ EXIT
   END
 END 
