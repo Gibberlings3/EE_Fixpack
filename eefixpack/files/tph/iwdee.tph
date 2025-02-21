@@ -619,7 +619,16 @@ COPY_EXISTING ~cdwi917a.spl~ ~override~
 // Lich Touch should paralyze, not hold
 COPY_EXISTING ~ltouch.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 109 END
-  BUT_ONLY
+  BUT_ONLY 
+  
+// thac0 progression should be capped at 0, not 1
+COPY_EXISTING ~ohtmps1.spl~ ~override~ // holy power
+              ~sppr412.spl~ ~override~ // holy power
+  READ_SHORT 0x68 abil_num
+  PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_CASE "ohtmps1" = 0) BEGIN SET start = 20 END ELSE BEGIN start = 14 END 
+  FOR (index = start ; index < abil_num ; ++index) BEGIN 
+    LPF ALTER_EFFECT INT_VAR header = index match_opcode = 54 parameter1 = 0 END
+  END   
 
 // tbd, cam
 // stuns, but plays spmindat; iwd generally uses glows so change to that instead
@@ -854,9 +863,31 @@ COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
 
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities
+// thac0 progression should be capped at -2 (base fighter 0 + 2 bonus)
 COPY_EXISTING ~%WIZARD_TENSERS_TRANSFORMATION%.spl~ ~override~ // spwi603
-  LPF ALTER_EFFECT INT_VAR match_opcode = 145 match_parameter2 = 2 parameter2 = 3 END
-  BUT_ONLY
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 145 match_parameter2 = 2 parameter2 = 3 END // disable since i'm already having to go through manually
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = 0 ; index < abil_num ; ++index) BEGIN 
+    READ_SHORT (abil_off + 0x10 + (index * 0x28)) min_lev
+    READ_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+    SET thac0 = 19 - min_lev 
+    PATCH_IF thac0 < "-2" BEGIN SET thac0 = "-2" END
+    PATCH_IF min_lev = 1 BEGIN SET thac0 = 7 END 
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off + 0x00 + ((index2 + abil_fx_idx) * 0x30)) opcode
+      READ_LONG  (fx_off + 0x08 + ((index2 + abil_fx_idx) * 0x30)) parameter2
+      PATCH_IF opcode = 145 AND parameter2 = 2 BEGIN // disable spellcasting: innate
+        WRITE_LONG  (fx_off + 0x08 + ((index2 + abil_fx_idx) * 0x30)) 3 // change to magical
+      END ELSE   
+      PATCH_IF opcode = 54 BEGIN // thac0
+        WRITE_LONG  (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) thac0 // change to magical
+      END
+    END
+  END
+  BUT_ONLY  
 
 // tbd, cam
 // feeblemind and petrification are permanent, but icons are not

@@ -2,6 +2,19 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+// tenser's provides a +2 bonus to hit and damage, not just damage
+@7808 = ~Tenser's Transformation
+(Alteration, Evocation)
+
+Level: 6
+Range: 0
+Duration: 1 round/level
+Casting Time: 6
+Area of Effect: The caster
+Saving Throw: None
+
+Wizards need not always be wizards—Tenser's Transformation changes the caster into a heroic warrior, doubling the caster's Hit Points and giving <PRO_HIMHER> a +4 bonus to Armor Class, a +2 bonus to-hit and to damage, and one extra attack per round. All damage the caster sustains takes away from the bonus Hit Points first, and <PRO_HISHER> attacks have the same chance to hit as a Fighter of the same level. While transformed, the wizard cannot cast spells.~
+
 // symbol, pain is 12-ft radius; also adjusting trigger description to better match other symbol spells
 @8099 = ~Symbol, Pain
 (Conjuration/Summoning)
