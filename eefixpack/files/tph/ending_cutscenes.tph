@@ -1,0 +1,284 @@
+// https://www.gibberlings3.net/forums/topic/38214-iwdee-cutscene-to-dialog-transitions-should-not-allow-execution-of-unrelated-script-actions/
+// essentially, ending a cutscene allows a 2-tick window before the next action occurs, leaving a small window between the end of a cutscene
+// and e.g. a dialogue action. Manually reviewed all scripted EndCutceneMode()s across all games.
+
+ACTION_IF game_is_iwdee BEGIN 
+
+  COPY_EXISTING ~2004chef.bcs~ ~override~
+                ~bamebd.bcs~   ~override~
+                ~bcangtlk.bcs~ ~override~
+                ~bcanntlk.bcs~ ~override~
+                ~bcgatjmp.bcs~ ~override~
+                ~bchjol0.bcs~  ~override~
+                ~bcptyent.bcs~ ~override~
+                ~bcscut1a.bcs~ ~override~
+                ~bcscut1d.bcs~ ~override~
+                ~bcseetlk.bcs~ ~override~
+                ~bcwyltlk.bcs~ ~override~
+                ~cdyoung.bcs~  ~override~
+                ~cyhobtlk.bcs~ ~override~
+                ~d4alb.bcs~    ~override~
+                ~d4hirit.bcs~  ~override~
+                ~d5hibap.bcs~  ~override~
+                ~d5hitort.bcs~ ~override~
+                ~dudopenc.bcs~ ~override~
+                ~dulurcut.bcs~ ~override~
+                ~dulurend.bcs~ ~override~
+                ~dummtalk.bcs~ ~override~
+                ~eeendct2.bcs~ ~override~
+                ~eeendct4.bcs~ ~override~
+                ~eeevect0.bcs~ ~override~
+                ~eepeqtlk.bcs~ ~override~
+                ~eepomabt.bcs~ ~override~
+                ~eepoqct1.bcs~ ~override~
+                ~efdlgfc.bcs~  ~override~
+                ~efdlgpmc.bcs~ ~override~
+                ~ehhrotht.bcs~ ~override~
+                ~gnfdedlg.bcs~ ~override~
+                ~ildrgdie.bcs~ ~override~
+                ~kuardtlk.bcs~ ~override~
+                ~kuarundd.bcs~ ~override~
+                ~ldbeorn.bcs~  ~override~
+                ~ldfeng2.bcs~  ~override~
+                ~ldfgntg.bcs~  ~override~
+                ~ldhark.bcs~   ~override~
+                ~ldhark.bcs~   ~override~
+                ~ldilmad.bcs~  ~override~
+                ~ldmarkth.bcs~ ~override~
+                ~ldperd.bcs~   ~override~
+                ~ldpoque1.bcs~ ~override~
+                ~ldrebsal.bcs~ ~override~
+                ~ldseth.bcs~   ~override~
+                ~ldshik.bcs~   ~override~
+                ~ldsimmal.bcs~ ~override~
+                ~ldtarnel.bcs~ ~override~
+                ~lwprvfnd.bcs~ ~override~
+                ~lwvaarct.bcs~ ~override~
+                ~nehrpcut.bcs~ ~override~
+                ~nelurmst.bcs~ ~override~
+                ~nwlurmst.bcs~ ~override~
+                ~scmircut.bcs~ ~override~
+                ~sctieros.bcs~ ~override~
+                ~sctieshl.bcs~ ~override~
+                ~sctieswd.bcs~ ~override~
+                ~selurmst.bcs~ ~override~
+                ~swlurmst.bcs~ ~override~
+                ~tgverbd.bcs~  ~override~
+                ~vslysan.bcs~  ~override~
+                ~vstherik.bcs~ ~override~
+                ~wizwar2.bcs~  ~override~
+                ~wtkertlk.bcs~ ~override~
+                ~wtkontik.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(Start\)?Dialog\)~ ~\1~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~bcluawyl.bcs~ ~override~ // goes straight to another cutscene
+                ~bctoku.bcs~   ~override~
+                ~bcwylsnd.bcs~ ~override~
+                ~binedtvl.bcs~ ~override~
+                ~bitoku.bcs~   ~override~
+                ~kutobc.bcs~   ~override~
+                ~kutobi.bcs~   ~override~
+                ~lwnedtvl.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~eepomabs.bcs~ ~override~ // has 2x endcutscene
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(CreateVisualEffectObject\)~ ~\1~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~ilgemeff.bcs~ ~override~ // has premature endcutscene
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
+      REPLACE_TEXTUALLY ~\(DisplayString(Myself,26824)[ %TAB%%LNL%%MNL%%WNL%]+MultiPlayerSync()[ %TAB%%LNL%%MNL%%WNL%]+Wait(1)\)~ ~\1 EndCutSceneMode()~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~ilwngbuf.bcs~ ~override~ // has premature endcutscene
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
+      REPLACE_TEXTUALLY ~\(Wait(1)\)\([ %TAB%%LNL%%MNL%%WNL%]+END\)~ ~\1 EndCutSceneMode() \2~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~shlarkul.bcs~ ~override~ // has 2x endcutscene
+                ~shlarwrp.bcs~ ~override~
+                ~vstherc1.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(SmallWait(5)\)~ ~\1~
+    END
+    BUT_ONLY  
+  
+END ELSE
+
+ACTION_IF game_is_bgee BEGIN 
+
+  COPY_EXISTING ~ar1101.bcs~   ~override~
+                ~bd0102.bcs~   ~override~
+                ~bd0122.bcs~   ~override~
+                ~bd4000.bcs~   ~override~
+                ~bdc116d.bcs~  ~override~
+                ~bdcut03.bcs~  ~override~
+                ~bdcut04a.bcs~ ~override~
+                ~bdcutkor.bcs~ ~override~
+                ~bdintro.bcs~  ~override~
+                ~bdsd302f.bcs~ ~override~
+                ~bdsdd304.bcs~ ~override~
+                ~bphub.bcs~    ~override~
+                ~capcut03.bcs~ ~override~
+                ~capcut05.bcs~ ~override~
+                ~cutba01.bcs~  ~override~
+                ~cutbp01.bcs~  ~override~
+                ~cutne0a.bcs~  ~override~
+                ~cutrs1a.bcs~  ~override~
+                ~cutrs1b.bcs~  ~override~
+                ~cutrs1e.bcs~  ~override~
+                ~cuttutor.bcs~ ~override~
+                ~eldcut01.bcs~ ~override~
+                ~narcut.bcs~   ~override~
+                ~oh2010.bcs~   ~override~
+                ~oh9310.bcs~   ~override~
+                ~oh9350.bcs~   ~override~
+                ~prismcut.bcs~ ~override~
+                ~ttcut01.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
+    END
+    BUT_ONLY IF_EXISTS 
+
+  COPY_EXISTING ~bdcut09.bcs~  ~override~ // has premature endcutscene, goes directly into another one anyway
+                ~bdcut222.bcs~ ~override~ // has premature endcutscene, goes directly into dialogue anyway
+                ~bdcut223.bcs~ ~override~ // has premature endcutscene, goes directly into dialogue anyway
+                ~bddgobl.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
+                ~bdsdd252.bcs~ ~override~ // has premature endcutscene, goes directly into dialogue anyway
+                ~bdsdd315.bcs~ ~override~ // has premature endcutscene, goes directly into dialogue anyway
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
+    END
+    BUT_ONLY IF_EXISTS  
+  
+END ELSE
+
+ACTION_IF game_is_bg2ee BEGIN 
+
+  COPY_EXISTING ~ar0411.bcs~   ~override~
+                ~cut15a.bcs~   ~override~
+                ~cut15b.bcs~   ~override~
+                ~cut41i.bcs~   ~override~
+                ~cut41j.bcs~   ~override~
+                ~cuttutor.bcs~ ~override~
+                ~eldcut01.bcs~ ~override~
+                ~narcut01.bcs~ ~override~
+                ~oh4290.bcs~   ~override~
+                ~ohb_506.bcs~  ~override~
+                ~ohbcut11.bcs~ ~override~
+                ~ohbmardu.bcs~ ~override~
+                ~ohdbodh1.bcs~ ~override~
+                ~ohdbodhi.bcs~ ~override~
+                ~ohdcut02.bcs~ ~override~
+                ~ohdcut04.bcs~ ~override~
+                ~ohdcut05.bcs~ ~override~
+                ~ohdcut06.bcs~ ~override~
+                ~ohdcut07.bcs~ ~override~
+                ~ohdcut10.bcs~ ~override~
+                ~ohdcut12.bcs~ ~override~
+                ~ohdcut3b.bcs~ ~override~
+                ~ohdcut8a.bcs~ ~override~
+                ~ohdcut8b.bcs~ ~override~
+                ~ohdcut9c.bcs~ ~override~
+                ~ohdcut9d.bcs~ ~override~
+                ~ohddorn1.bcs~ ~override~
+                ~ohdfirej.bcs~ ~override~
+                ~ohdgrom.bcs~  ~override~
+                ~ohdgrom1.bcs~ ~override~
+                ~ohdnoob1.bcs~ ~override~
+                ~ohdnoob2.bcs~ ~override~
+                ~ohdptree.bcs~ ~override~
+                ~ohdsilve.bcs~ ~override~
+                ~ohdstree.bcs~ ~override~
+                ~ohdwston.bcs~ ~override~
+                ~ohhcab25.bcs~ ~override~
+                ~ohhcut02.bcs~ ~override~
+                ~ohhcut06.bcs~ ~override~
+                ~ohhcut4a.bcs~ ~override~
+                ~ohhcut4b.bcs~ ~override~
+                ~ohhcut4c.bcs~ ~override~
+                ~ohhfin1.bcs~  ~override~
+                ~ohhmum.bcs~   ~override~
+                ~ohnbell.bcs~  ~override~
+                ~ohnbodhi.bcs~ ~override~
+                ~ohncut05.bcs~ ~override~
+                ~ohrbodhi.bcs~ ~override~
+                ~ohrcut08.bcs~ ~override~
+                ~ohrcut11.bcs~ ~override~
+                ~ohrcut20.bcs~ ~override~
+                ~ttcut01.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~cut12c.bcs~ ~override~ // has premature endcutscene
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~ActionOverride("Ployer",EndCutSceneMode())~ ~~
+      REPLACE_TEXTUALLY ~\(DestroySelf()\)~ ~EndCutSceneMode() \1~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~cut232g.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
+                ~cut232i.bcs~  ~override~
+                ~cut32a.bcs~   ~override~
+                ~cut41q.bcs~   ~override~
+                ~newgame.bcs~  ~override~
+                ~oh4101.bcs~   ~override~
+                ~ohhcutkl.bcs~ ~override~
+                ~ohhmortl.bcs~ ~override~
+                ~ohncut30.bcs~ ~override~
+                ~ohrcollu.bcs~ ~override~
+                ~ohrcut02.bcs~ ~override~
+                ~ohrhhelm.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~\(ActionOverride("[^"]+",\)?EndCutSceneMode())?~ ~~
+    END
+    BUT_ONLY   
+
+  COPY_EXISTING ~oh4010.bcs~ ~override~ // same as above, but do separate since it has multiple endcutscene and not all need fixing
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~\(SetCutSceneLite(TRUE)\)[ %TAB%%LNL%%MNL%%WNL%]+EndCutSceneMode()~ ~\1~
+    END
+    BUT_ONLY     
+
+  COPY_EXISTING ~oh4101.bcs~ ~override~ // same as above, but do separate since it has multiple endcutscene and not all need fixing
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(SetInterrupt(TRUE)[ %TAB%%LNL%%MNL%%WNL%]+ActionOverride("[^"]+",StartDialog\)~ ~\1~
+    END
+    BUT_ONLY  
+  
+END ELSE BEGIN // pstee
+
+  COPY_EXISTING ~1201csa2.bcs~ ~override~
+                ~1204a1.bcs~   ~override~
+                ~1204d1.bcs~   ~override~
+                ~1204g1.bcs~   ~override~
+                ~1204i1.bcs~   ~override~
+                ~1204m1.bcs~   ~override~
+                ~1204n1.bcs~   ~override~
+                ~1204v1.bcs~   ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~1501cut4.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~\(ActionOverride("[^"]+",\)?EndCutSceneMode())?~ ~~
+    END
+    BUT_ONLY   
+
+END 

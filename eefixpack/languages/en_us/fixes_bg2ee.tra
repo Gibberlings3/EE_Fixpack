@@ -141,6 +141,50 @@ It should be "duergar", not "dwarf".
 
 I have agreed to help a trio of dryads return their acorns to the Fairy Queen. Somewhere in the dungeon is a duergar by the name of Ilyich who has the acorns.~
 
+// book of infinite spells casts true sight, not true seeing
+// copy-paste true sight descript from strref 25936 
+@39430 = ~This ancient tome creaks as you open it. Each page of the Book of Infinite Spells contains a spell described in layman's terms, easy enough for a thief, a cleric, or even a fighter to understand and cast it. Each spell on a page can be cast once per day.
+
+A second function of the book is to turn to a different page of the book. This allows for the possibility of getting a better spell. However, once the page has been turned, the previous spell is lost forever unless it happens to appear again.
+
+Be warned: Once you turn to the last page of the book, you are stuck with that spell.
+
+The spell on this page is:
+
+True Sight
+(Divination)
+
+Level: 6
+Range: 0
+Duration: 1 turn
+Casting Time: 8
+Area of Effect: 120-ft. radius
+Saving Throw: None 
+
+When this spell is cast, an area roughly 120 ft. in radius around the caster will be affected. Instantly and once per round for 1 turn after this spell is cast, all hostile Illusion/Phantasm spells in the area of effect will be dispelled. The spells that are affected by this are Reflected Image, Invisibility, Mirror Image, Non-Detection, Improved Invisibility, Shadow Door, Mislead, Project Image, and Simulacrum. The area of effect is roughly a 120-ft. radius around the caster. The target's Magic Resistance, if any, does not come into effect with this spell. This spell only affects enemies, thus it is unable to dispel invisibility from a party member.~
+
+// book of infinite spells
+// copy-paste the lightning bolt description from strref 12179
+@39437 = ~This ancient tome creaks as you open it. Each page of the Book of Infinite Spells contains a spell described in layman's terms, easy enough for a thief, a cleric, or even a fighter to understand and cast it. Each spell on a page can be cast once per day.
+
+A second function of the book is to turn to a different page of the book. This allows for the possibility of getting a better spell. However, once the page has been turned, the previous spell is lost forever unless it happens to appear again.
+
+Be warned: Once you turn to the last page of the book, you are stuck with that spell.
+
+The spell on this page is:
+
+Lightning Bolt
+(Evocation) 
+
+Level: 3
+Range: 70 ft.
+Duration: Instant 
+Casting Time: 3 
+Area of Effect: Path of bolt
+Saving Throw: 1/2
+
+Upon casting this spell, the wizard releases a powerful stroke of electrical energy that inflicts 1d6 points of damage per level of the caster (maximum damage of 10d6) to each creature within its area of effect. A successful Saving Throw vs. Spell reduces this damage to half (round fractions down). If the lightning bolt intersects with a wall, it will bounce until it reaches its full length.~
+
 /*
 jazira
 It should be "Ma Jansen", not "Ma Jensen".

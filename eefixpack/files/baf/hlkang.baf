@@ -1,0 +1,6 @@
+IF
+	NumberOfTimesTalkedTo(0)
+THEN
+	RESPONSE #100
+		StartDialogueNoSet([PC])
+END

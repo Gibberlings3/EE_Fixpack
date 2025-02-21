@@ -247,6 +247,8 @@ COPY_EXISTING ~d5yxudor.bcs~ ~override~
   END
   BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
@@ -373,6 +375,12 @@ COPY_EXISTING ~storm.itm~ ~override~ // storm bow
 COPY_EXISTING ~flailsk.itm~ ~override~ // skullflail
   LPF ALTER_ITEM_HEADER INT_VAR header_type = 1 damage_bonus = 5 END // is +4 weapon, base flail damage is 1d6+1, so damage should be 1d6+5
   BUT_ONLY
+  
+// swapping stacking protection from 206/318/324 for 321
+// see also #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101/b/c.spl
+COPY_EXISTING ~cwoslim.itm~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 0 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 25 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // tbd, cam
 // item blocks spmindat, but isn't immune to hold
@@ -563,6 +571,12 @@ INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
 // circle of bone subspell has illegal character in sig
  COPY_EXISTING "#bonecir.spl" override WRITE_ASCII 0x0 "SPL "
 
+// swapping stacking protection from 206/318/324 for 321
+// see also cwoslim.itm, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101/b/c.spl
+COPY_EXISTING ~#cofear.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
+
 // feedback with limited timing and/or duration
 COPY_EXISTING ~#sunrund.spl~ ~override~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
               ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects
@@ -605,7 +619,16 @@ COPY_EXISTING ~cdwi917a.spl~ ~override~
 // Lich Touch should paralyze, not hold
 COPY_EXISTING ~ltouch.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 109 END
-  BUT_ONLY
+  BUT_ONLY 
+  
+// thac0 progression should be capped at 0, not 1
+COPY_EXISTING ~ohtmps1.spl~ ~override~ // holy power
+              ~sppr412.spl~ ~override~ // holy power
+  READ_SHORT 0x68 abil_num
+  PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_CASE "ohtmps1" = 0) BEGIN SET start = 20 END ELSE BEGIN start = 14 END 
+  FOR (index = start ; index < abil_num ; ++index) BEGIN 
+    LPF ALTER_EFFECT INT_VAR header = index match_opcode = 54 parameter1 = 0 END
+  END   
 
 // tbd, cam
 // stuns, but plays spmindat; iwd generally uses glows so change to that instead
@@ -632,6 +655,11 @@ COPY_EXISTING ~%MONK_LAY_ON_HANDS%.spl~          ~override~ // spcl815 lay on ha
   END
   BUT_ONLY
 
+// chromatic orb missing 2d8 magic damage at levels 7+  
+COPY_EXISTING ~spdr101.spl~ ~override~
+              ~spwi118.spl~ ~override~
+  LPF ADD_SPELL_EFFECT INT_VAR header = 6 opcode = 12 target = 2 parameter2 = (64 << 16) timing = 1 resist_dispel = 1 dicenumber = 2 dicesize = 8 END // adding missing 2d8 magic damage 
+
 // ie-6029, cam
 // Hopelessness not always canceling Hope
 COPY_EXISTING ~%INNATE_MOURNFUL_WAIL%.spl~ ~override~ // spin115 Mournful Wail; do separately since it has a 206 at top of stack
@@ -652,6 +680,21 @@ COPY_EXISTING ~%INNATE_GREAT_ROAR%.spl~ ~override~ // spin119 great roar
 // mismatching durations
 COPY_EXISTING ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects
   LPF ALTER_EFFECT INT_VAR match_duration = 85 duration = 8571 END // 139 dealt with elsewhere
+
+// swapping stacking protection from 206/318/324 for 321
+// see also cwoslim.itm, #cofear.spl, sppr250.spl, spwi101/b/c.spl
+COPY_EXISTING ~spin132.spl~ ~override~
+              ~sppr617.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 13 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+  
+COPY_EXISTING ~spin139.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 0 END
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 146 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
+  
+COPY_EXISTING ~spin161.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 0 END
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 139 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // tbd, davidw
 // The projectile for Bombardier Beetle clouds has a duplicate string
@@ -676,6 +719,12 @@ COPY_EXISTING ~spitm99.spl~ ~override~
 // IWDEE bug 321 should be subject to same MR check as AC effect
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 resist_dispel = 1 END
+
+// swapping stacking protection from 206/318/324 for 321
+// see also cwoslim.itm, #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, spwi101/b/c.spl
+COPY_EXISTING ~sppr250.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // ie-5947, cam
 // Cloudburst should remove Fireshields
@@ -768,6 +817,17 @@ COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615
 COPY_EXISTING ~%CLERIC_WHIRLWIND%.spl~  ~override~ // sppr617
   LPF ALTER_EFFECT INT_VAR match_resist_dispel = 0 resist_dispel = 1 END
 
+// death fog's slow icon could be blocked on round 2+
+COPY_EXISTING ~spwi030.spl~ ~override~ // via trap
+              ~spwi614.spl~ ~override~ // via trap
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete from end of effect stack
+  LPF CLONE_EFFECT INT_VAR match_opcode = 126 opcode = 142 parameter1 = 0 parameter2 = 41 END // move to middle
+
+// swapping stacking protection from 206/318/324 for 321
+// see also cwoslim.itm, #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101b/c.spl
+COPY_EXISTING ~spwi101.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+
 // tbd, cam
 // stun icons provided by stun effect, remove redundant 142
 COPY_EXISTING ~%WIZARD_ICELANCE%.spl~    ~override~ // spwi327
@@ -803,9 +863,31 @@ COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
 
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities
+// thac0 progression should be capped at -2 (base fighter 0 + 2 bonus)
 COPY_EXISTING ~%WIZARD_TENSERS_TRANSFORMATION%.spl~ ~override~ // spwi603
-  LPF ALTER_EFFECT INT_VAR match_opcode = 145 match_parameter2 = 2 parameter2 = 3 END
-  BUT_ONLY
+//  LPF ALTER_EFFECT INT_VAR match_opcode = 145 match_parameter2 = 2 parameter2 = 3 END // disable since i'm already having to go through manually
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = 0 ; index < abil_num ; ++index) BEGIN 
+    READ_SHORT (abil_off + 0x10 + (index * 0x28)) min_lev
+    READ_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+    SET thac0 = 19 - min_lev 
+    PATCH_IF thac0 < "-2" BEGIN SET thac0 = "-2" END
+    PATCH_IF min_lev = 1 BEGIN SET thac0 = 7 END 
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off + 0x00 + ((index2 + abil_fx_idx) * 0x30)) opcode
+      READ_LONG  (fx_off + 0x08 + ((index2 + abil_fx_idx) * 0x30)) parameter2
+      PATCH_IF opcode = 145 AND parameter2 = 2 BEGIN // disable spellcasting: innate
+        WRITE_LONG  (fx_off + 0x08 + ((index2 + abil_fx_idx) * 0x30)) 3 // change to magical
+      END ELSE   
+      PATCH_IF opcode = 54 BEGIN // thac0
+        WRITE_LONG  (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) thac0 // change to magical
+      END
+    END
+  END
+  BUT_ONLY  
 
 // tbd, cam
 // feeblemind and petrification are permanent, but icons are not
@@ -851,6 +933,9 @@ WITH_SCOPE BEGIN
                 ~%WIZARD_GREASE%c.spl~ ~override~ // spwi101c
     LPF ~ALTER_EFFECT~ INT_VAR ~power~ = 0 END
     LPF ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 215 ~opcode~ = 158 END // Play visual effect => Grease overlay
+  // swapping stacking protection from 206/318/324 for 321
+  // see also cwoslim.itm, #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101.spl
+    LPF CLONE_EFFECT INT_VAR match_opcode = 158 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1014,7 +1099,11 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 // Fix reference to non-existing ACM sound resource
 COPY ~music/bm2.mus~ ~music/bm2.mus~
   REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~
-BUT_ONLY
+
+// fixing grease projectile to fire once/round instead of twice/round
+COPY_EXISTING ~idpro101.pro~ ~override~
+  WRITE_SHORT 0x210 100
+  WRITE_BYTE  0x216 10
 
 // ie-6008, cam
 // Worldmap travel fixes

@@ -49,3 +49,16 @@ END
 
 // buy and sell markup arguments are specified in the wrong order
 REPLACE_ACTION_TEXT ~bdjegg~ ~ChangeStoreMarkup("\([^"]+\)",\([0-9]+\),\([0-9]+\))~ ~ChangeStoreMarkup("\1",\3,\2)~
+
+// actions queued after joinparty() get dumped
+REPLACE_ACTION_TEXT ~bdrasaad~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(RemoveMapNote(\[[0-9]+\.[0-9]+\],34352)\)~ ~\2 \1~
+REPLACE_ACTION_TEXT ~bdmkhiin~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(AddexperienceParty(3000)\)~ ~\2 \1~
+
+// fixing loop where you can't inform Corwin that the Bridgforters are ready to attack
+ADD_TRANS_ACTION BDKHALID BEGIN 70 END BEGIN 2 END ~SetGlobal("bd_bf_attack","GLOBAL",1)~  
+
+// two journal entries never removed
+ADD_TRANS_ACTION BDRHYNWI BEGIN 0 END BEGIN END ~EraseJournalEntry(61532) EraseJournalEntry(61531)~  
+
+// two journal entries never removed
+ADD_TRANS_ACTION bdstoneh BEGIN 63 END BEGIN END ~EraseJournalEntry(61530) EraseJournalEntry(61537)~

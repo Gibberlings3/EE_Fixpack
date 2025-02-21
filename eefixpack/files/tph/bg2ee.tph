@@ -248,6 +248,9 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
   END
   BUT_ONLY
 
+// kangaxx-as-lich should always talk when he appears
+EXTEND_BOTTOM ~hlkang.bcs~ ~eefixpack/files/baf/hlkang.baf~
+
 // tbd, cam
 // love talk sets trigger for jaheira's bandits to spawn, but shouldn't occur if romance ends before timer is up
 COPY_EXISTING ~jaheira.bcs~ ~override~
@@ -313,6 +316,7 @@ ACTION_IF (NOT FILE_EXISTS_IN_GAME ~AR6300.BCS~) BEGIN
 END
 EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
+INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
@@ -464,6 +468,10 @@ COPY_EXISTING ~bow15.itm~   ~override~ // tansheron's bow
   LPF ALTER_HEADER INT_VAR match_type = 4 projectile = 1 END // remove projectile
   BUT_ONLY
 
+// gloves of healing are unusable by cleric, mages, but not cleric-mages
+COPY_EXISTING ~brac20.itm~ ~override~
+  WRITE_LONG 0x1e (THIS BOR BIT8) // adds c/m flag
+
 // tbd, cam
 // lmd via foebane lacks normal immunity for golems & undead
 COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
@@ -556,6 +564,10 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
               ~sirine1.itm~  ~override~ // Ghoul hand - causes confusion - unknown long effect - portrait icon 3 - portrait icon 48
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 48 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 19 opcode = 142 parameter1 = 0 parameter2 = 91 END
+
+// book of infinite spells casts true sight, not true seeing
+COPY_EXISTING ~misc3a3.itm~   ~override~ 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = sppr505 resource = spwi609 END
 
 // tbd, cam
 // uses 'intoxication' icon for a confusion effect
@@ -832,6 +844,11 @@ COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 49                                  END // change summon #2 to 50%
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 74                                  END // change summon #3 to 75%
   BUT_ONLY
+  
+// kai using dispel magic icon
+COPY_EXISTING ~spcl144.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl144~ #8
+  BUT_ONLY
 
 // tbd, cam
 // enrage is using berserk's spell icon
@@ -875,6 +892,11 @@ COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 2 END
   BUT_ONLY
+  
+// writhing fog should stack better
+COPY_EXISTING ~sppr250.spl~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // tbd, cam
 // shield spell shouldn't stack
@@ -934,8 +956,23 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+// grease should work like web and check for grease once/round
+COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
+  WRITE_SHORT 0x210 100 // one round
+  WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
+ADD_PROJECTILE ~override/grease1.pro~  
+
+OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
+
+  COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
+    WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
+  ADD_PROJECTILE ~override/grease%index%.pro~  
+
+END
+
 // luke
 // Grease – Remove duplicate op321 effect
+// grease should work like web and check for grease once/round
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
     PATCH_WITH_SCOPE BEGIN
@@ -944,6 +981,11 @@ WITH_SCOPE BEGIN
         LPF "COUNT_V10_HEAD_EFFECTS" STR_VAR "opcode" = "321" "resource" = "%DEST_RES%" RET "count" END
         LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 321 ~check_headers~ = (~%count%~ <= 1 ? 0 : 1) ~multi_match~ = (~%count%~ - 1) ~header~ = ~%hdr%~ STR_VAR ~match_resource~ = ~%DEST_RES%~ END
       END
+      READ_SHORT 0x68 abil_num
+      FOR (index = 1 ; index < (abil_num + 1) ; ++index) BEGIN
+        LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (18 + (6 * index)) duration = 6 END
+        LPF ALTER_HEADER INT_VAR header = (index - 1) projectile = EVAL ~grease%index%~ END
+      END   
     END
   BUT_ONLY_IF_IT_CHANGES
 END
@@ -1630,6 +1672,8 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
 
+// grease projectiles created in spell section since vars needed 
+
 // luke
 // Ice Storm should last 4 rounds (not 3)
 WITH_SCOPE BEGIN
@@ -1659,6 +1703,9 @@ END
 
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
+COPY ~music/vb.mus~ ~music/vb.mus~ 
+  REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\

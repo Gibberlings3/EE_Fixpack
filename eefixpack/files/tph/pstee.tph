@@ -71,6 +71,8 @@ COPY_EXISTING ~1204trig.bcs~ ~override~
   END
   BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
+
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\

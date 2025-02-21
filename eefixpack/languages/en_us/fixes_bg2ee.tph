@@ -8,6 +8,8 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_bg2ee.tra~ BEGIN STRING_SET
   17169 @17169
   19723 @19723
   29212 @29212
+  39430 @39430 // book of infinite spells casts true sight, not true seeing
+  39437 @39437 // updating book of infinite spells: lightning bolt description
   57918 @57918
   74310 @74310
   100356 @100356
