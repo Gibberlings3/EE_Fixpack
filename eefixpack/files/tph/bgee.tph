@@ -794,6 +794,10 @@ COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
 
+// should not be able to pickpocket the spider body from the spider
+COPY_EXISTING ~spidland.cre~ ~override~
+  LPF cd_no_pickpocket STR_VAR item = misc60 END
+
 // BGCS-483, luke
 // CRE files should not use non-existing resources
 WITH_SCOPE BEGIN
