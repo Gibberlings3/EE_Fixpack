@@ -26,6 +26,3 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_bg2ee.tra~ BEGIN STRING_SET
   100395 @100395
 END
 
-WITH_TRA ~eefixpack/languages/en_us/copy_from_iwdee.tra~ BEGIN STRING_SET
-  29214 @35786 // use iwdee's summon nishruu description
-END

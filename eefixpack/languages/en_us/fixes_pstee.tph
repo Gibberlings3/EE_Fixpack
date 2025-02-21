@@ -4,10 +4,14 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_pstee.tra~ BEGIN STRING_SET
   4845 @4845
   5127 @5127
   30450 @30450
+  46627 @46627 // Acidic Sponge Bolts (BOLT02.ITM, strref 46627): Enchanted: +1
   48826 @48826
   48846 @48846
   48848 @48848
   48851 @48851
+  49044 @49044 // Baatezu Mace (BMACE.ITM, strref 49044): Enchanted: +1 
+  50886 @50886 // Green Steel Knife (GSKNIFE.ITM, strref 50886): Enchanted: +1
+  50891 @50891 // Green Steel Dagger (GSDAGGER.ITM, strref 50891): Enchanted: +1
   51013 @51013
   51019 @51019
   51068 @51068
@@ -17,6 +21,9 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_pstee.tra~ BEGIN STRING_SET
   51352 @51352
   52070 @52070
   52837 @52837
+  63075 @63075 // Fiend's Teeth (FTEETH.ITM, strref 63075): Enchanted: +1
   64294 @64294
   66178 @66178
 END
+
+
