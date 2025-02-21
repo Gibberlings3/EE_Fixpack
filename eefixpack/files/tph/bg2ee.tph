@@ -565,6 +565,10 @@ COPY_EXISTING ~magiconf.itm~ ~override~ // Ghoul hand - causes confusion - unkno
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 48 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 19 opcode = 142 parameter1 = 0 parameter2 = 91 END
 
+// book of infinite spells casts true sight, not true seeing
+COPY_EXISTING ~misc3a3.itm~   ~override~ 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = sppr505 resource = spwi609 END
+
 // tbd, cam
 // uses 'intoxication' icon for a confusion effect
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
