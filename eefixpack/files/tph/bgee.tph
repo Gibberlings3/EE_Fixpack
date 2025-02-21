@@ -839,6 +839,13 @@ ACTION_IF game_includes_sod BEGIN
     LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 400 STR_VAR insert = first END
     LPF DELETE_EFFECT INT_VAR match_opcode = 146 END
     LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 146 END
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 25 parameter1 = 3 END // weapon for 'stronger' belhifet has weaker poison
+ 
+  // belgifet immue to arcae lightning bolt, but not avenger ot sotrmlord versions
+  COPY_EXISTING ~bdbelhia.itm~ ~override~
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spdr301 END 
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spcl722 END 
+    BUT_ONLY IF_EXISTS 
 
   // poison resistance blocking *gulp*
   COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
