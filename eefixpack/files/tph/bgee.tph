@@ -1101,6 +1101,11 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
   IF_EXISTS // bdshriek is sod asset
 
 // change survivable shoal kiss to use magic damage, not acid
+COPY_EXISTING ~shoal.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 opcode = 55 parameter1 = 0 parameter2 = BIT2 END 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 324 parameter1 = 3 parameter2 = 113 STR_VAR resource = shoal insert = below END
+
+// change survivable shoal kiss to use magic damage, not acid
 COPY_EXISTING ~shoal1.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
   
