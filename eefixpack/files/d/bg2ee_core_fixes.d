@@ -62,3 +62,6 @@ REPLACE_TRANS_ACTION ~sarmel01~
   
 // can ask about voghilin's hunger without him mentioning he's hungry
 ADD_TRANS_TRIGGER OHBVOGHI 4 ~False()~ DO 1
+
+// With reputation of 15, "sir zarath" don't talk to PC. 
+REPLACE_STATE_TRIGGER HEARTG3 1 ~ReputationGT(LastTalkedToBy,14)~
