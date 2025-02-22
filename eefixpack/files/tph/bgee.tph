@@ -759,6 +759,12 @@ INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
 // poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
 INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 
+// corinth shouldn't have undroppable items, especially since the player can be given them
+COPY_EXISTING ~bdcorint.cre~ ~override~
+  LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = leat10 END
+  LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = sw1h07 END
+  BUT_ONLY // sod quest
+
 // tbd, cam (from k4thos/eet)
 // telania's victims shouldn't have player scripting, could potentially offer to join party
 COPY_EXISTING ~bdpetr01.cre~ ~override~
