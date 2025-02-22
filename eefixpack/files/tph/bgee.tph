@@ -1167,6 +1167,12 @@ COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
   LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
   BUT_ONLY
 
+// Psychic struggle for control of wizard elemental summons breaks when elemental is issued order (also in bg2ee.tph)
+COPY_EXISTING ~SPIN906.SPL~ ~override~
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=365 parameter1=0 parameter2=1 timing=1 duration=0 STR_VAR insert=first END
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=321 parameter1=0 parameter2=0 timing=4 STR_VAR insert=first resource= EVAL ~%SOURCE_RES%~ END
+  BUT_ONLY // Make elemental unselectable during psychic struggle
+
 // tbd, cam
 // delayed sound effect doesn't bypass mr though the rest of the spell does
 COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
