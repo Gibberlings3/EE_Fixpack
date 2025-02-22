@@ -1,0 +1,94 @@
+// Galctygon: This has been my pet peeve since the early days of BGo. Even if the casting graphics and sound of the 
+// child spell is blank, the launched spell still disrupts other ongoing sounds i.e. spellcasting. It turns out the EE 
+// engine does have a fix for this! There's a flag in the special field that removes this disruption completely, even 
+// if the child spell has casting graphics and sound enabled so it should be an easy fix to go through those external 
+// .effects, preferrably with a REGEXP GLOB.  
+// https://www.gibberlings3.net/forums/topic/37011-fireshield-type-spells-shouldnt-play-sounds-or-disrupt-ongoing-sounds/
+
+
+ACTION_IF game_is_pstee BEGIN
+    
+  COPY_EXISTING ~spwi108.spl~   ~override~ // pacify
+    LPF ALTER_EFFECT INT_VAR match_opcode = 232 match_special = 0 special = BIT2 END
+    BUT_ONLY IF_EXISTS  
+
+END ELSE BEGIN 
+
+  COPY_EXISTING ~spbgbfs2.eff~ ~override~ // bigby's clenched fist, crushing hand
+                ~spcl237d.eff~ ~override~ // greater sun
+                ~sppr515d.eff~ ~override~ // repulse undead
+                ~sppr603d.eff~ ~override~ // blade barrier
+                ~sppr698d.eff~ ~override~ // blade barrier (non-party version)
+                ~sppr725d.eff~ ~override~ // globe of blades (bg2, iwd)
+                ~sppr730d.eff~ ~override~ // aura of flaming death (bg2, iwd)
+                ~spwi403d.eff~ ~override~ // fireshield (blue)
+                ~spwi418d.eff~ ~override~ // fireshield (red)
+                ~spwi818a.eff~ ~override~ // bigby's clenched fist
+                ~spwi918a.eff~ ~override~ // bigby's crushing hand
+                ~spwm101d.eff~ ~override~ // repulse (wild surge)
+    WRITE_LONG  0x48 (THIS BOR BIT2) 
+    BUT_ONLY IF_EXISTS  
+    
+  COPY_EXISTING // spells
+                //~spin128.spl~  ~override~ // salamander aura (iwd) - uses special for distance
+                //~spin138.spl~  ~override~ // harpy wail (iwd) - uses special for distance
+                //~spin159.spl~  ~override~ // jackalwere gaze (iwd) - uses special for distance
+                //~spin187.spl~  ~override~ // salamander aura [shikata] (iwd) - uses special for distance
+                //~spin192.spl~  ~override~ // umber hulk gaze (iwd) - uses special for distance
+                //~spin193.spl~  ~override~ // salamander aura (iwd) - uses special for distance
+                //~spin194.spl~  ~override~ // salamander aura (iwd) - uses special for distance
+                ~1tarss.spl~   ~override~ // fireshield (blue) - 1pp? (bg)
+                ~balshld.spl~  ~override~ // balthazar shield (bg2)
+                ~bddispb2.spl~ ~override~ // displacement (bg)
+                ~melis02.spl~  ~override~ // melissan globe of blades (bg2)
+                ~spcl941.spl~  ~override~ // Favored of the Spirits
+                ~spin644.spl~  ~override~ // balor fireshield (bg2)
+                ~sppr725.spl~  ~override~ // globe of blades (bg)
+                ~spcl118.spl~  ~override~ // the siren's yearning -> proximity charm (iwd)
+                // items
+                //~bdsw2h01.itm~ ~override~ // dragon blade +3 -> bonuses when enraged - special used for state
+                //~blun38.itm~   ~override~ // night club +1 -> nighttime bonuses - special used for time of day (bg)
+                //~ohrclck4.itm~ ~override~ // cloak of the dark moon -> night bonuses - special used for time of day (bg2)
+                ~aurstaf.itm~  ~override~ // Aurumach Rilmani's weapon -> fireshield (bg2)
+                ~bdclck03.itm~ ~override~ // crommus's capelet  - chance for blur on hit (bg)
+                ~bdhamat2.itm~ ~override~ // hamatula's barbed defense (bg)
+                ~bdleat02.itm~ ~override~ // goblin hide armor +2 -> casts slow poison on self if poisoned (bg)
+                ~bdleat07.itm~ ~override~ // the night's embrace +3 -> turns invisible if rendered helpless (bg)
+                ~bdsalf01.itm~ ~override~ // spear -> fire salamander proximity damage (bg)
+                ~bdsha12a.itm~ ~override~ // attack -> fire spirit retaliation
+                ~bdsha18a.itm~ ~override~ // attack -> fire spirit retaliation
+                ~bdshld02.itm~ ~override~ // the suncatcher +2 -> retaliation (bg)
+                ~bdshld08.itm~ ~override~ // the bloodied guardian +2 -> str bonus at hp < 50% (bg)
+                ~bdsw1h01.itm~ ~override~ // crimson dawn +2 -> hastes wielder after 15% of kills (bg)
+                ~bdsw1h08.itm~ ~override~ // dervish crescent +2 -> casts fireshield (red) on 10% of kills (bg)
+                ~bdsw1h14.itm~ ~override~ // fractal blade +3 -> 10% chance for mirror image when hit (bg)
+                ~bdtroll1.itm~ ~override~ // ring -> troll death sequencing (bg)
+                ~bdwolfd1.itm~ ~override~ // revive sequence (bg)
+                ~cdhgtrl.itm~  ~override~ // ring -> troll revive (bg2)
+                ~cdtorgal.itm~ ~override~ // ring -> troll revive (bg2)
+                ~cdtrlblz.itm~ ~override~ // ring -> troll revive (bg2)
+                ~cireve.itm~   ~override~ // ring -> revenant revive (iwd)
+                ~elemchan.itm~ ~override~ // attack -> proximity damage
+                ~elemcryo.itm~ ~override~ // attack -> proximity damage (bg, bg2)
+                ~elemhydr.itm~ ~override~ // attack -> proximity damage (bg, bg2)
+                ~elemimix.itm~ ~override~ // attack -> proximity damage (bg, bg2)
+                ~elemyanc.itm~ ~override~ // attack -> proximity damage (bg, bg2)
+                ~elemzaam.itm~ ~override~ // attack -> proximity damage
+                ~leat23.itm~   ~override~ // studded leather of thorns +6 -> retaliation (bg2)
+                ~npsw03.itm~   ~override~ // hallowed redeemer +2 -> retaliation (bg2)
+                ~ohbglov1.itm~ ~override~ // the winged's gauntlet -> retaliation (bg2)
+                ~ohdarmor.itm~ ~override~ // silver dragon scale -> heals wearer on hit (bg2)
+                ~ohrbelt2.itm~ ~override~ // belt of minor invulnerability -> chance of MGoI on hit (bg2)
+                ~plysala.itm~  ~override~ // ring -> proximity damage (iwd)
+                ~reg1hp2.itm~  ~override~ // ring -> troll revive (iwd)
+                ~salgrfir.itm~ ~override~ // salamander proximity damage (bg, bg2)
+                ~salgrice.itm~ ~override~ // salamander proximity damage (bg, bg2)
+                ~shld08p.itm~  ~override~ // tarloc's contingency +1 -> multiple conditional effects (bg)
+                ~sklblst.itm~  ~override~ // ring -> blast skelston... blast (iwd)
+                ~sw1p01.itm~   ~override~ // viper's edge +2 -> regen at low hp (bg)
+                ~sw2hd1.itm~   ~override~ // rancor +1 -> bonus on kill (bg, bg2)
+                ~trollreg.itm~ ~override~ // ring -> troll revive
+    LPF ALTER_EFFECT INT_VAR match_opcode = 232 match_special = 0 special = BIT2 END
+    BUT_ONLY IF_EXISTS  
+  
+END

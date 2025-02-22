@@ -143,6 +143,9 @@ BUT_ONLY
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
 
+// prevent spell called via op232 from interrupting caster sounds
+INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+
 // removing reference to invalid game file
 DISABLE_FROM_KEY ~.bcs~
 

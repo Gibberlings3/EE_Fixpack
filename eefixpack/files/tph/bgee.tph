@@ -2062,6 +2062,9 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
+// prevent spell called via op232 from interrupting caster sounds
+INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+
 INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
