@@ -67,10 +67,10 @@ ADD_TRANS_ACTION bdstoneh BEGIN 63 END BEGIN END ~EraseJournalEntry(61530) Erase
 ///// angry rejoins                                    \\\\\
 /////                                                  \\\\\
 
-// npcs who leave because they're upset at the party rep levae and go to the camp. At the camp
+// npcs who leave because they're upset at the party rep leave and go to the camp. At the camp
 // you can ask them to rejoin, at which point they'll immediately leave since rep is still bad
 // to them. To prevent this, the NPC will now repeat their 'angry leave' line at the camp if
-// rep is bad, rpeventing rejoining. For NPCs without an 'angry leave' line, we simply disable
+// rep is bad, preventing rejoining. For NPCs without an 'angry leave' line, we simply disable
 // replies which would lead to a rejoin. 
 // https://www.gibberlings3.net/forums/topic/37077-angry-leave-because-of-rep-in-sod-somehow-weird/
 
