@@ -2831,6 +2831,9 @@ Requires:
 
 Weight: 2~
 
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@12061 = ~Fireshield~
+
 // [automatic scan] Issues: 3  | Surplus trailing whitespace at line 7 | Surplus trailing whitespace at line 8 | Surplus trailing whitespace at line 9
 @12140 = ~Armor
 (Conjuration/Summoning)
@@ -3784,6 +3787,12 @@ Casting a Goodberry spell creates 5 magical berries that the caster can carry wi
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @12343 = ~Innkeeper~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@13000 = ~Fireshield~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@13070 = ~Fireshield~
 
 // [automatic scan] Issues: 9  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 3 | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 7 | Surplus trailing whitespace at line 9 | Surplus trailing whitespace at line 11 | Surplus trailing whitespace at line 13 | Surplus trailing whitespace at line 15 | Surplus trailing whitespace at line 17
 @13136 = ~History of Amn:
@@ -6087,6 +6096,10 @@ Proficient (1 slot): The wielder's penalties are reduced to -2 with the main wea
 Specialized (2 slots): The wielder's penalties are reduced to 0 with the main weapon and -4 with the off-hand weapon.
 
 Master (3 slots): The wielder's penalties are reduced to 0 with the main weapon and -2 with the off-hand weapon.~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@25058 = ~Fireshield (Red)~
+@25059 = ~Fireshield (Blue)~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 4 | Surplus trailing whitespace at line 10
 @25364 = ~INQUISITOR: The Inquisitor has dedicated <PRO_HISHER> life to finding and eliminating practitioners of evil magic and defeating the forces of darkness, and <PRO_HISHER> god has provided <PRO_HIMHER> with special abilities toward that end.

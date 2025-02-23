@@ -169,3 +169,12 @@ ADD_STATE_TRIGGER ftowba 1 ~ReputationLT(Player1,3)~  // copy rep conditions fro
 REPLACE_ACTION_TEXT ~dorn~  ~\(ActionOverride("DORN",JoinPartyOverride())\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
 REPLACE_ACTION_TEXT ~dorn~  ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
 REPLACE_ACTION_TEXT ~dornp~ ~\(JoinParty()\)[%LNL%%MNL%%WNL% %TAB%]*\(ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))\)~ ~\2 \1~
+
+// make familiars also always get non-fatal kiss, like player1
+//REPLACE_TRIGGER_TEXT SHOAL ~IsGabber(Player1)~ ~OR(2) IsGabber(Player1)  IsGabber(Familiar)~
+//REPLACE_TRIGGER_TEXT SHOAL ~!OR(2) IsGabber(Player1)  IsGabber(Familiar)~ ~!IsGabber(Player1) !IsGabber(Familiar)~
+APPEND SHOAL
+  IF WEIGHT #-1 ~!IsGabber(Player1) !IsGabber(Player2) !IsGabber(Player3) !IsGabber(Player4) !IsGabber(Player5) !IsGabber(Player6) NumberOfTimesTalkedTo(0)~ THEN BEGIN famtalk SAY #4830
+    IF ~~ THEN DO ~SetNumTimesTalkedTo(0)~ EXIT
+  END
+END 

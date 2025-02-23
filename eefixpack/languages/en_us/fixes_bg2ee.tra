@@ -133,6 +133,21 @@ Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
 
+// using iwdee's summon nishruu; see @35786 in your local copy_from_iwdee.tra
+@29214 = ~Summon Nishruu
+(Conjuration/Summoning)
+
+Level: 6
+Range: 25 ft.
+Duration: 1 round/level
+Casting Time: 9
+Area of Effect: Special
+Saving Throw: None
+
+By casting Summon Nishruu, a wizard calls into existence a magical being of considerable power: the nishruu. At first glance, this appears to be some sort of mist, but upon closer examination, this boiling, churning gray mass of vapors and shapes moves with a life of its own. Drawn toward magic like a moth to the flame, the nishruu feeds on the energies surrounding and used by wizards. Luckily, there is no question as to the loyalty of the creature, and it will not attack its summoner even though it would like nothing better.
+
+The nishruu has no physical attacks at all, although physical attacks can hurt it. Each time a nishruu touches a target wizard and wraps its tendrils around <PRO_HIMHER>, two things happen: First, all magical items with charges in the possession of the target will be drained by 1 charge, destroying them if only 1 charge was left; second, the wizard loses 1 random spell of the highest level currently memorized. The nishruu is completely immune to energy damage, and magic will actually heal it. The creature will remain under the wizard's control until slain or until the spell's duration expires.~
+
 /*
 jazira
 It should be "duergar", not "dwarf".

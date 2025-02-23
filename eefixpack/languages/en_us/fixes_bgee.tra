@@ -22,6 +22,19 @@ The audio file associated should be "[SURGN04]", not "[STORE06]".
 */
 @12434 = ~[THE SURGEON 4]~ [SURGN04]
 
+// cone of cold's AoE is 18 ft long, not 17
+@26493 = ~Cone of Cold
+(Evocation)
+
+Level: 5
+Range: 0
+Duration: Instant
+Casting Time: 5
+Area of Effect: 18-ft. cone with 90-deg. arc
+Saving Throw: 1/2
+
+When this spell is cast, it generates a cone-shaped area of extreme cold originating at the wizard's hand and extending outward in a cone 18 ft. long with a 90-deg. arc. It drains heat and causes 1d4+1 points of damage per level of the caster. For example, a 10th-level wizard would cast a cone of cold causing 10d4+10 points of damage.~
+
 // second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
 // same fix required for bg (26586), bg2 (29212), and iwd (35784)
 @26586 = ~Carrion Summons
@@ -35,6 +48,21 @@ Area of Effect: Special
 Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
+// using iwdee's summon nishruu; see @35786 in your local copy_from_iwdee.tra
+@26588 = ~Summon Nishruu
+(Conjuration/Summoning)
+
+Level: 6
+Range: 25 ft.
+Duration: 1 round/level
+Casting Time: 9
+Area of Effect: Special
+Saving Throw: None
+
+By casting Summon Nishruu, a wizard calls into existence a magical being of considerable power: the nishruu. At first glance, this appears to be some sort of mist, but upon closer examination, this boiling, churning gray mass of vapors and shapes moves with a life of its own. Drawn toward magic like a moth to the flame, the nishruu feeds on the energies surrounding and used by wizards. Luckily, there is no question as to the loyalty of the creature, and it will not attack its summoner even though it would like nothing better.
+
+The nishruu has no physical attacks at all, although physical attacks can hurt it. Each time a nishruu touches a target wizard and wraps its tendrils around <PRO_HIMHER>, two things happen: First, all magical items with charges in the possession of the target will be drained by 1 charge, destroying them if only 1 charge was left; second, the wizard loses 1 random spell of the highest level currently memorized. The nishruu is completely immune to energy damage, and magic will actually heal it. The creature will remain under the wizard's control until slain or until the spell's duration expires.~
 
 // sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 32224)
 @31984 = ~SUN SOUL MONK: Sun Soul Monks were once worshippers of Amaunator in the time of the Netheril, but today their worship is divided between Lathander, Selûne, and Sune. Sun Soul Monks adhere strictly to the law, using their martial arts and magical abilities to drive out darkness and corruption wherever they find it.

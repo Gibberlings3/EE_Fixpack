@@ -562,6 +562,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_iwdee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_iwdee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
 // tbd, cam (from jmerry)
 // prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
@@ -1150,6 +1151,9 @@ COPY_EXISTING ~idpro313.pro~ ~override~
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+// prevent spell called via op232 from interrupting caster sounds
+INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
 
 INCLUDE ~eefixpack/files/tph/6037_iwdee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more

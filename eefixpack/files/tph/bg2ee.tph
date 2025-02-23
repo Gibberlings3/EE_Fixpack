@@ -794,6 +794,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ // bulk general chang
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
 // tbd, cam
 // misindexed effects
@@ -886,6 +887,12 @@ COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait 
 COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
   LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
   BUT_ONLY
+
+// Psychic struggle for control of wizard elemental summons breaks when elemental is issued order (also in bgee.tph)
+COPY_EXISTING ~SPIN906.SPL~ ~override~
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=365 parameter1=0 parameter2=1 timing=1 duration=0 STR_VAR insert=first END
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=321 parameter1=0 parameter2=0 timing=4 STR_VAR insert=first resource= EVAL ~%SOURCE_RES%~ END
+  BUT_ONLY // Make elemental unselectable during psychic struggle
 
 // tbd, cam
 // delayed sound effect doesn't bypass mr though the rest of the spell does
@@ -1710,6 +1717,9 @@ COPY ~music/vb.mus~ ~music/vb.mus~
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+// prevent spell called via op232 from interrupting caster sounds
+INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more

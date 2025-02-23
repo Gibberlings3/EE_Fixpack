@@ -2734,6 +2734,10 @@ This spell enables the caster to create a black, blade-shaped planar rift about 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8259 = ~We have been sent by the church to search these depths for missing followers.~
 
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@8277 = ~Fireshield (Red)~
+@8279 = ~Fireshield (Blue)~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @8349 = ~But it matters not. I am no longer under his thumb. I've no reason to return to my father's house. Let us get back to sleep.~
 
@@ -3333,6 +3337,9 @@ Weight: 2~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 1 | Surplus trailing line break at line 1
 @11899 = ~You will not last long on your own with your meager equipment. Perhaps you can get some help from the friends Gorion mentioned, the ones at the Friendly Arm.~ [CHAP00C]
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@12061 = ~Fireshield (Blue)~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @12134 = ~Really? Well, I am impressed. Fortunately, all your work has left you a physique which has stirred my hunger.~
@@ -4140,6 +4147,9 @@ Casting a Goodberry spell creates 5 magical berries that the caster can carry wi
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @12737 = ~Do for me? Do for me?! After all that thou hast already done!~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@13000 = ~Fireshield~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @13083 = ~Males of the realms can excel in whatever profession they choose, whether wizardry, thievery, or the arts of war.~
@@ -6633,6 +6643,9 @@ Area of Effect: The caster
 Saving Throw: None
 
 When a wizard casts this powerful spell upon <PRO_HIMHER>self, an outer skin of stone will move up from the ground, completely covering <PRO_HIMHER>. This skin is of course magical and will hinder the wizard in no way. The effect of this is to protect the wizard from physical attacks such as melee weapons and projectiles. For every 2 levels of the caster, an additional skin is gained upon casting. For example, a 10th-level wizard would receive 5 skins while a 20th-level wizard would receive 10. For each skin the wizard possesses, the spell will stop one attack, so a 10th-level wizard would be protected from the first 5 attacks made against <PRO_HIMHER>, but the 6th would affect <PRO_HIMHER> normally. The skins will remain on the wizard until <PRO_HESHE> is affected by a Dispel Magic, all of the skins are removed due to physical attacks, or the spell duration expires. It is important to note that this will not protect the wizard from any magical attacks, such as Fireball.~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@25880 = ~Fireshield (Red)~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 8
 @25929 = ~Magic Tattoo
@@ -9613,6 +9626,35 @@ Requires:
 
 Weight: 2~
 
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@39633 = ~This staff bears an ancient rune that may link it to the wizards of faraway Halruaa, but it is impossible to be certain. Drawing from the Plane of Fire, it can erupt in a Fireshield that damages attackers, it can summon a fire elemental under the control of the wielder, and it can potentially draw all the energy from any fire elemental that it hits, destroying them instantly. Some abilities are limited with charges however.
+
+STATISTICS:
+
+Combat abilities:
+– Struck fire elementals must save vs. Spell or be destroyed
+
+Charge abilities:
+– Summon 8-HD Lesser Fire Elemental
+  Range: 20 ft.
+  Duration: 1 hour
+
+– Fireshield (Red)
+  Fire Resistance: +50%
+  Special: Any who strike the user within a 5-ft. radius suffers 1d8+2 fire damage
+  Duration: 13 rounds
+  Area of Effect: The user
+
+THAC0: +2
+Damage: 1d6+2 (crushing)
+Speed Factor: 2
+Proficiency Type: Quarterstaff
+Type: Two-handed
+Requires:
+ 5 Strength
+
+Weight: 3~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 6
 @39679 = ~Dragonslayer: Peridan
 Few dare to create items such as this, for who does not fear the wrath of dragons, and what action would more tempt their reckoning? Yet, at a time lost in Faerûn's past, there was a need, and this sword was forged in answer. Tempered by a wizard's skill, this blade protects the wielder from the fear they should rightly feel while staring down a dragon's maw. It also bolsters with regeneration, dispels the trickery of illusions, and dares to do double damage against the greatest creatures of the realms.
@@ -9728,6 +9770,9 @@ You have lost the day.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @40190 = ~They guard the main room of the dungeon, but they feed in one of the cells... to the south down the hall, in the back of the room where they first broke in.~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@40243 = ~Spell Sequencer—Fireshield (Red)~
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @40579 = ~'Twas the old dikes, my <PRO_LADYLORD>. Lord de'Arnise was planning on building new ones to replace them, but it was always a project for the next year, it seems.~
@@ -10113,6 +10158,9 @@ What crueler a destiny... could await a heavenly star?~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @43021 = ~You have done well, and for that I am grateful. We had a deal, and I am certain you are eager to see it fulfilled.~ [ARAN18]
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@43047 = ~Spell Trigger—Fireshield (Red)~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @43055 = ~He must be found, and that is best facilitated by helping you find Imoen. They were taken to the same place, you see.~
@@ -14833,6 +14881,9 @@ The effects vary by level as follows:
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @72580 = ~If the child is born before we finish our adventures, I shall bundle it on my back—as is the custom of my people, the avariel.~
+
+// standardizing 'fireshield' to fireshield (blue), fireshield (red) or just fireshield
+@72784 = ~Imix Fireshield~
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @72836 = ~'Tis dangerous work, orc. If we dig too fast, the roof will collapse.~

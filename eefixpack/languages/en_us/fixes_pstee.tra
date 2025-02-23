@@ -28,6 +28,21 @@ This cranium rat tail charm is particularly filthy and smells faintly of vomit. 
 
 When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
 
+// missing enchantment line
+@46627 = ~ACIDIC SPONGE BOLTS
+Damage: 1-2 Crushing
+Enchanted: +1
+Special: 6 Acid Damage on Impact
+Speed: 10
+Weight: 0
+Proficiency: Missiles
+
+The putty-like globes on the heads of these crossbow bolts are actually dried-up aquatic sponges found in many of the great lakes of Bytopia. Seemingly unremarkable to most scholars, these tiny sponges were accidentally discovered to have the property of being able to absorb acids and store them in their bodies with no harm to themselves. 
+
+As a result, great masses of these creatures were gathered and bred for use as weapons against fiends in the Blood War. After being fed a steady diet of acid for a few days, the sponges are harvested, dried, and covered with a resin that keeps a soft bubble around the sponge. The sponge is then mounted on the head of an arrow or crossbow bolt and is ready for use. 
+
+When the tip of the bolt strikes a creature with sufficient force, the resin bubble bursts, the sponge flattens, and the target is doused with acid.~
+
 // TATTOO OF TRIST -> TATTOO OF TRIST'S SAVIOR - Matching item name. There is also a surplus space after "individual."
 @48826 = ~TATTOO OF TRIST'S SAVIOR
 Special: +3 to Saves vs. Paralyzation
@@ -82,6 +97,41 @@ Usable only by Priests
 This spell surrounds the target with a circle of protection that helps protect him against attacks by those with evil intent.
 
 This spell bestows protection from evil creatures through a magical barrier that surrounds the recipient of the spell. It gives a -2 penalty to attack rolls by evil creatures and bestows a +2 bonus to all saving throws that are caused by such evil attacks for a duration of 10 seconds / level of the caster.~
+
+
+// missing enchantment line
+@49044 = ~BAATEZU MACE
+Damage: 3-9 Crushing
+Enchanted: +1
+THAC0: +1
+Speed: 6 
+Weight: 10
+Proficiency: Clubs
+Usable only by Fighters
+
+Made from ore found only in the wastelands of Avernus. Baatezu have created a metal called Baatorian green steel. Weapons produced from this metal are lighter and stronger than those forged of ordinary steel and tend to inflict greater damage. Although produced in great quantities for the Blood Wars, weapons such as these are rarely found outside of Baator.~
+
+// missing enchantment line
+@50886 = ~GREEN STEEL KNIFE
+Damage: 1-4 Piercing
+Enchanted: +1
+Speed: 1
+Weight: 0
+Proficiency: Edged
+Not usable by Priests
+
+This razor sharp knife has been forged out of the famed Baatorian green steel. Found only in the wastelands of Avernus, this peculiar green ore can be tempered into metal much lighter than normal steel. In addition, green steel weapons tend to retain their remarkably fine edges and are capable of dealing out more damage than their standard counterparts.~
+
+// missing enchantment line
+@50891 = ~GREEN STEEL DAGGER
+Damage: 2-5 Piercing
+Enchanted: +1
+Speed: 1
+Weight: 0
+Proficiency: Edged
+Not usable by Priests
+
+This slim dagger has been forged out of the famed Baatorian green steel. Found only in the wastelands of Avernus, this peculiar green ore can be tempered into metal much lighter than normal steel. In addition, green steel weapons tend to retain their remarkably fine edges and are capable of dealing out more damage than their standard counterparts.~
 
 // changing class names in table
 @51013 = ~POWER OF ONE
@@ -187,6 +237,23 @@ Invokes: "Blessing"
 Weight: 0
 
 This piece of delicious milk chocolate has had its creamy, caramel center blessed by a powerful priest of an unnamed power of good. Eating it will confer this blessing upon the devourer.~
+
+// missing enchantment line
+@63075 = ~FIEND'S TEETH
+Damage: 1-6 Crushing
+Enchanted: +1
+Special:
+   18/30 Base Strength
+   +50% Resistance to Cold
+   +10% Resistance to Fire
+   +10% Resistance to Electricity
+   +10% Resistance to Poison
+Speed: 4
+Weight: 1
+Proficiency: Fists
+Usable only by Morte
+
+These teeth are short, dull and radiate a feeling of unease. They appear to have been taken from a fiend of the Lower Planes, but their exact origin is unknown. Using the teeth grants the wearer certain benefits normally possessed only by fiends.~
 
 //  Book of Tome and Ash -> Tome of Bone and Ash; The book is TomeBA.itm - Tome of Bone and Ash. There is also a surplus space after "Ash."
 @64294 = ~Compare the runes to the runes in the Tome of Bone and Ash.~

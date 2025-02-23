@@ -391,6 +391,16 @@ COPY_EXISTING ~bdcut61.bcs~ ~override~
   END
   BUT_ONLY IF_EXISTS // sod
 
+// correctly count monsters where you have to kill a specific number of them (see also bdwe1str.bcs et al)
+COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff). 
+              ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals. 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)~ ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0)~
+    REPLACE_TEXTUALLY ~\(GiveItemCreate("misc07",Myself,250,0,0)\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdffdop1
+    REPLACE_TEXTUALLY ~\(ActionOverride("BDCUTID",ChangeAIScript("BDSPAWN",OVERRIDE))\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdhelp
+  END
+  BUT_ONLY IF_EXISTS // both are SoD 
+
 // tbd, cam
 // sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
 ACTION_FOR_EACH script IN 1 4 BEGIN
@@ -475,6 +485,20 @@ COPY_EXISTING ~bpgiafir.bcs~ ~override~
 // tbd, cam (from jmerry)
 // characters imported from bp retain their bp scripting
 EXTEND_TOP ~bpplot.bcs~ ~eefixpack/files/baf/bpplotpatch.baf~ // BP script removes itself if not in BP area
+
+// correctly count monsters where you have to kill a specific number of them (see also bdffdop1.bcs et al)
+COPY_EXISTING ~bdwe1str.bcs~ ~override~
+              ~dopald.bcs~   ~override~ // Result: Aldeth thanks you prematurely for killing all doppelgangers (ALDETH.DLG). Other dialogs may be affected as well (e.g. Brandilar or Scar). 
+              ~gnolldr.bcs~  ~override~ // Result: Drizzt does not respond when you try to talk to him after all gnolls have been defeated (DRIZZT.DLG). 
+              ~negoblin.bcs~ ~override~ // Result: The ranger Magreb doesn't recogize that you've killed all the goblins (NEMAGREB.DLG). 
+              ~ogres.bcs~    ~override~ // Result: Sarhedra doesn't acknowledge that you defeated the ogres; quest cannot be completed (SARHED.DLG). 
+              ~zombiew.bcs~  ~override~ // zombie farm count
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)\([ %TAB%%LNL%%MNL%%WNL%]+\)\(AreaCheck("OH2010")\)~ ~\3\2\1~ // invert negoblin triggers so we can use the same patch below
+    REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\|Die()\)\([ %TAB%%LNL%%MNL%%WNL%]+THEN[ %TAB%%LNL%%MNL%%WNL%]+RESPONSE #[0-9]+[ %TAB%%LNL%%MNL%%WNL%]+\)\(IncrementGlobal("[^"]+","[^"]+",1)\)~
+      ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0) \2 SetInterrupt(FALSE) SetGlobal("cd_dead_do_once","LOCALS",1) \3 SetInterrupt(TRUE)~
+  END
+  BUT_ONLY IF_EXISTS // bdwe1str is SoD 
 
 // tbd, cam
 // sod imoen missing xp-matching scripting, among other things
@@ -759,6 +783,12 @@ INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
 // poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
 INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 
+// corinth shouldn't have undroppable items, especially since the player can be given them
+COPY_EXISTING ~bdcorint.cre~ ~override~
+  LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = leat10 END
+  LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = sw1h07 END
+  BUT_ONLY // sod quest
+
 // tbd, cam (from k4thos/eet)
 // telania's victims shouldn't have player scripting, could potentially offer to join party
 COPY_EXISTING ~bdpetr01.cre~ ~override~
@@ -793,6 +823,10 @@ COPY_EXISTING ~ftobe7.cre~ ~override~
 COPY_EXISTING ~orduli.cre~ ~override~
   LPF DELETE_CRE_ITEM STR_VAR item_to_delete = clck06 END
   BUT_ONLY
+
+// should not be able to pickpocket the spider body from the spider
+COPY_EXISTING ~spidland.cre~ ~override~
+  LPF cd_no_pickpocket STR_VAR item = misc60 END
 
 // BGCS-483, luke
 // CRE files should not use non-existing resources
@@ -839,6 +873,13 @@ ACTION_IF game_includes_sod BEGIN
     LPF CLONE_EFFECT INT_VAR match_opcode = 146 opcode = 400 STR_VAR insert = first END
     LPF DELETE_EFFECT INT_VAR match_opcode = 146 END
     LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 146 END
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 25 parameter1 = 3 END // weapon for 'stronger' belhifet has weaker poison
+ 
+  // belgifet immue to arcae lightning bolt, but not avenger ot sotrmlord versions
+  COPY_EXISTING ~bdbelhia.itm~ ~override~
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spdr301 END 
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spcl722 END 
+    BUT_ONLY IF_EXISTS 
 
   // poison resistance blocking *gulp*
   COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
@@ -1049,6 +1090,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ // bulk general change
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
 // tbd, cam
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
@@ -1099,6 +1141,15 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
   IF_EXISTS // bdshriek is sod asset
+
+// change survivable shoal kiss to use magic damage, not acid
+COPY_EXISTING ~shoal.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 opcode = 55 parameter1 = 0 parameter2 = BIT2 END 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 324 parameter1 = 3 parameter2 = 113 STR_VAR resource = shoal insert = below END
+
+// change survivable shoal kiss to use magic damage, not acid
+COPY_EXISTING ~shoal1.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
   
 // kai using dispel magic icon
 COPY_EXISTING ~spcl144.spl~ ~override~
@@ -1140,6 +1191,12 @@ COPY_EXISTING ~spin804.spl~  ~override~ // psychic drain - plays spmindat
 COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
   LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
   BUT_ONLY
+
+// Psychic struggle for control of wizard elemental summons breaks when elemental is issued order (also in bg2ee.tph)
+COPY_EXISTING ~SPIN906.SPL~ ~override~
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=365 parameter1=0 parameter2=1 timing=1 duration=0 STR_VAR insert=first END
+	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=321 parameter1=0 parameter2=0 timing=4 STR_VAR insert=first resource= EVAL ~%SOURCE_RES%~ END
+  BUT_ONLY // Make elemental unselectable during psychic struggle
 
 // tbd, cam
 // delayed sound effect doesn't bypass mr though the rest of the spell does
@@ -2005,6 +2062,9 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+// prevent spell called via op232 from interrupting caster sounds
+INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
