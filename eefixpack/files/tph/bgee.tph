@@ -961,6 +961,8 @@ COPY_EXISTING ~shld09p.itm~ ~override~ // hell hound flame
 COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
   LPF DELETE_EFFECT INT_VAR match_opcode = 19 END
 
+INCLUDE ~eefixpack/files/tph/burning_earth.tph~ // fix burning earth bonuses
+
 // viper's edge poison immunity block poorly placed
 COPY_EXISTING ~sw1p01.itm~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 318 probability1 = 23 probability2 = 0 STR_VAR insert = last END

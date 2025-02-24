@@ -644,6 +644,8 @@ COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
 COPY_EXISTING ~staf22.itm~  ~override~ // staff of the ram +6
   LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 235 opcode = 318 parameter1 = 0 parameter2 = 13 timing = 0 duration = 0 resist_dispel = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
 
+INCLUDE ~eefixpack/files/tph/burning_earth.tph~ // fix burning earth bonuses
+
 // tbd, cam
 // ilbratha's mirror image can be blocked by wielder's MR
 COPY_EXISTING ~sw1h26.itm~ ~override~ // ilbratha

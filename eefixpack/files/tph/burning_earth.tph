@@ -1,0 +1,28 @@
+// burning earth's effects fall down on opponents who qualify under multiple categores (e.g. undead trolls) 
+// re-ordering effects fixes most of the issues, but also neeed some 318s to make the bonus slashing damage
+// exclusive. Using an array so that if we add more distinctions to race/class.ids, we can expand the list
+// especially the "cold using" category
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_burning_earth BEGIN
+ // descript (just something to make line unique), bonus, param1, param2 => thac0 eff
+ // order these largest > smallest bonuses
+  undead,    3,   4, 3 => ft3hit
+  wwolf,     2, 146, 5 => ft2hit
+//icegolem,  2, 215, 5 => cdfticeg // if we expand class.ids with GOLEM_ICE
+//frostsal,  2, 219, 5 => cdftfsal // if we expand class.ids with SALAMANDER_FROST
+//elem_ice,  2, ???, 5 => cdftelei // if we expand class.ids with elemental_ice
+  lycan,     1, 122, 4 => ft1hit
+  troll,     1, 129, 4 => trollh1
+END 
+
+COPY_EXISTING ~sw1h24.itm~ ~override~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 END  
+  LPF DELETE_EFFECT INT_VAR check_headers = 0 match_opcode = 344 END  
+  SET idx = 0
+  PATCH_PHP_EACH cd_burning_earth AS pm => eff BEGIN
+    LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 344 target = 1 parameter1 = pm_2 parameter2 = pm_3 timing = 2 special = (pm_1 + 1) insert_point = idx END // enchantment bonus
+    LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 177 target = 1 parameter2 = 2 timing = 2 insert_point = (999 + idx) STR_VAR resource = EVAL ~%eff%~ END           // thac0 vs. type
+    LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 177 target = 2 parameter1 = pm_2 parameter2 = pm_3 timing = 1 insert_point = (998 + idx) STR_VAR resource = EVAL ~ft%pm_1%dam~ END // damage
+    LPF ADD_ITEM_EFFECT INT_VAR type = 1 opcode = 318 target = 2 parameter1 = pm_2 parameter2 = (pm_3 + 100) insert_point = (999 + idx) STR_VAR resource = sw1h24 END // block other slash damage
+    SET idx += 1
+  END  
