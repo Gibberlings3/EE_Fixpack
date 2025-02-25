@@ -195,6 +195,9 @@ COPY_EXISTING ~ar2200.bcs~ ~override~
     REPLACE_TEXTUALLY ~CreateCreature("dagmag01",\[[0-9]+\.[0-9]+\],[0-9A-Z]+)~ ~CreateCreature("dagmag01",[4401.3527],NW)~
   END
   BUT_ONLY
+  
+// wk spawn points - defer spawn point activion to area script (see also ar3001.are)
+EXTEND_BOTTOM ~ar3001.bcs~ ~eefixpack/files/baf/ar3001.baf~   
 
 // tbd, cam
 // siege camp reinforcements checking wrong blocks
@@ -363,6 +366,15 @@ COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
 // make tear door transparent so #3 eye graphic can be seen
 COPY_EXISTING ~ar2900.are~ ~override~
   LPF ALTER_AREA_DOOR INT_VAR flag_no_look = 1 STR_VAR door_name = door01 END
+  BUT_ONLY
+
+// wk spawn points - defer spawn point activion to area script (see also ar3001.bcs)
+COPY_EXISTING ~ar3001.are~ ~override~
+  READ_LONG 0x60 spawn_off
+  READ_LONG 0x64 spawn_num
+  FOR (index = 0 ; index < spawn_num ; ++index) BEGIN 
+    WRITE_SHORT (spawn_off + 0x86 + (index * 0xc8)) 0 /// turns off all spawn points
+  END
   BUT_ONLY
 
 /////                                                  \\\\\
