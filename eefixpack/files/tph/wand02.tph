@@ -1,3 +1,15 @@
+ACTION_IF game_is_iwdee BEGIN 
+
+  COPY_EXISTING ~idpro255.pro~ ~override/cdwand02.pro~
+    WRITE_SHORT 0x204 170 // explosion size 10'
+    WRITE_SHORT 0x206 170
+  ADD_PROJECTILE  ~override/cdwand02.pro~
+  
+END 
+
 // remove undocumented +2 save bonus
 COPY_EXISTING ~wand02.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_savebonus = 2 savebonus = 0 END 
+  PATCH_IF game_is_iwdee BEGIN
+    LPF ALTER_HEADER INT_VAR projectile = cdwand02 END
+  END  

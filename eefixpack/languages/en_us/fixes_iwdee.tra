@@ -120,6 +120,46 @@ Requires:
 
 Weight: 6~
 
+// wand of fear's AoE is a 10' radius, not 15'
+@17287 = ~A wand of fear strikes terror into the heart of any creature within its target area. This panic is not universal, however, as the stout of heart have been known to resist its magic. Like all wands, the wand of fear can only be used a limited number of times before it is destroyed.
+
+STATISTICS:
+
+Charge abilities:
+– Fear (Save vs. Spell negates)
+  Range: 100 ft.
+  Duration: 15 rounds
+  Area of Effect: 10-ft. radius
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
+// acid storm lasts for 15 rounds, not 30
+@17621 = ~A trio of wizards worked on this wand using a number of material components they had available to them and more that were relatively easy to acquire. Otterly the Rotund, Mabdek of the Seventh Star, and Yrgon the Moron only crafted the wand so they could sell it. Their long-term goal was the construction of a vast magical research facility based on the designs of the Naturalist Guild in Myth Drannor. Their wand was a greater success than their research facility.
+
+STATISTICS:
+
+Charge abilities:
+– Death Fog
+  Damage: 4 acid in the 1st round, 8 acid in the 2nd round, 16 acid in the 3rd round
+  Special: Movement speed limited to 50% within fog; must save vs. Spell or suffer -2 to Strength and Dexterity that round
+  Range: Visual range of the user
+  Duration: 15 rounds
+  Area of Effect: 12-ft. radius
+
+– Acid Storm
+  Damage: 1d4 acid for 3 rounds, 1d6 acid for the next 3 rounds, and 1d8 acid for the remaining rounds (Save vs. Spell for half)
+  Range: Visual range of the user
+  Duration: 15 rounds
+  Area of Effect: 12-ft. radius
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
 // wand of fire should be using IWD-style Agannazar's Scorcher, not BG2-style
 // see also wand05
 @17654 = ~The wand will cough forth a huge, burning ball of fire that streaks out to the desired range and bursts in a fiery, violent blast, just like the Fireball spell. The fireball inflicts 6d6 points of damage, but all 1s rolled are counted as 2s. The victim(s) may make a Save vs. Wand in order to take only half damage. The second ability of the wand is akin to the spell Agannazar's Scorcher in that a column of flame will streak towards the victim, inflicting 6d6+6 damage with a Save vs. Wand for half.

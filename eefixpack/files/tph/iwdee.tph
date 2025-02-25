@@ -483,6 +483,14 @@ COPY_EXISTING ~wand08.itm~   ~override~ // (itm) Wand of Sleep - causes sleep - 
   LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 timing = 1 duration = 0 END
   BUT_ONLY IF_EXISTS
 
+// acid storm lasts 15 rds in oIWD, so fix the wand to match
+COPY_EXISTING ~wandcor.itm~ ~override~ // Wand of Corrosion
+  LPF ALTER_EFFECT INT_VAR parameter1 = 15 parameter2 = 2 END // only effects are 146/48, so change all to cast at caster level 15, instantly
+
+// description says snilloc's does 4d8, which means it should be casting at a fixed level of four
+COPY_EXISTING ~wandfre.itm~ ~override~ // Wand of Freezing Death
+  LPF ALTER_EFFECT INT_VAR parameter1 = 4 parameter2 = 2 END // only effects are 146/48, so change all to cast at caster level 4, instantly
+
 // Hell's Bane should be usable by thieves, like other broad swords
 COPY_EXISTING ~zzc8hb.itm~ ~override~ // Hell's Bane +4
   WRITE_LONG 0x1e THIS & `BIT22
