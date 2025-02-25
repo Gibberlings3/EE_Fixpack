@@ -318,7 +318,7 @@ ACTION_FOR_EACH item IN
 BEGIN
 	COPY_EXISTING "%item%.itm" override
 		PATCH_FOR_EACH otiluke IN spin853 spwi413 spwi853 BEGIN
-			LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 match_parameter2=185 parameter1=0 parameter2=0 STR_VAR resource="%otiluke%" END
+			LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=101 opcode = 206 match_parameter2=185 parameter1=0 parameter2=0 STR_VAR resource="%otiluke%" END
 		END
 	IF_EXISTS
 END
