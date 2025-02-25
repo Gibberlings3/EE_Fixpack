@@ -17,8 +17,32 @@ END
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
-INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+
+APPEND ~object.ids~ 
+~57 EighthNearestEnemyOfType
+67 EighthNearestMyGroupOfType
+94 LastKilled
+95 NearestAllyOf
+96 SecondNearestAllyOf
+97 ThirdNearestAllyOf
+98 FourthNearestAllyOf
+99 FifthNearestAllyOf
+100 SixthNearestAllyOf
+101 SeventhNearestAllyOf
+102 EighthNearestAllyOf
+103 NinthNearestAllyOf
+104 TenthNearestAllyOf
+105 FarthestEnemyOf
+106 SecondFarthestEnemyOf
+107 ThirdFarthestEnemyOf
+108 FourthFarthestEnemyOf
+109 FifthFarthestEnemyOf
+110 SixthFarthestEnemyOf
+111 SeventhFarthestEnemyOf
+112 EighthFarthestEnemyOf
+113 NinthFarthestEnemyOf
+114 TenthFarthestEnemyOf~
 
 // tbd, cam
 // fixing missing starting equipment in HoW games for shaman, others
