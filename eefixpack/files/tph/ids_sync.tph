@@ -1,0 +1,123 @@
+// syncing class, kit, race.ids between games
+
+// first get bgee to match sod
+ACTION_IF game_is_bgee BEGIN
+
+  APPEND ~kit.ids~ ~0x4027 FAKIE~ UNLESS ~^0x4027[ %TAB%]+FAKIE~
+  
+END 
+
+ACTION_IF !game_is_iwdee BEGIN
+
+  COPY_EXISTING ~class.ids~ ~override~
+    REPLACE_TEXTUALLY ~221 SOD_TMP~ ~221 NEOTHELID~
+    
+  APPEND ~class.ids~
+~214 REMORHAZ
+215 GOLEM_ICE
+217 BEETLE_RHINO
+218 SALAMANDER_FIRE
+219 SALAMANDER_FROST~ 
+    
+  APPEND ~race.ids~
+~163 SVIRFNEBLIN~     
+                
+  COPY_EXISTING ~golice01.cre~ ~override~ // ice golem
+                ~gorgoli.cre~  ~override~ // ice golem
+    WRITE_BYTE 0x273 215 // class:GOLEM_ICE              
+                
+  COPY_EXISTING ~hgsal01.cre~  ~override~ // fire salamander
+                ~icsalfir.cre~ ~override~ // salamander
+                ~plysala.cre~  ~override~ // fire salamander
+                ~salgrfir.cre~ ~override~ // salamander noble
+                ~wrmons01.cre~ ~override~ // salamander
+    WRITE_BYTE 0x273 218 // class:SALAMANDER_FIRE              
+    
+  COPY_EXISTING ~icsalcol.cre~ ~override~ // ice salamander
+                ~salgrice.cre~ ~override~ // frost salamander
+                ~telicesa.cre~ ~override~ // ice salamander
+    WRITE_BYTE 0x273 224 // class:salamander_frost              
+
+  COPY_EXISTING ~udsvdead.cre~ ~override~ // svirfneblin
+                ~udsvir01.cre~ ~override~ // Odendal Breachgnome
+                ~udsvir02.cre~ ~override~ // svirfneblin
+                ~udsvir03.cre~ ~override~ // Goldander Blackenrock
+                ~udsvir04.cre~ ~override~ // Innkeeper
+                ~udsvir05.cre~ ~override~ // Therndle Daglefodd
+                ~udsvir06.cre~ ~override~ // svirfneblin
+                ~udsvir07.cre~ ~override~ // svirfneblin
+                ~udsvir08.cre~ ~override~ // svirfneblin leader
+    WRITE_BYTE 0x272 163 // race:svirfneblin              
+    IF_EXISTS
+  
+END ELSE BEGIN
+
+  COPY_EXISTING ~class.ids~ ~override~
+    REPLACE_TEXTUALLY ~221 SOD_TMP~ ~221 NEOTHELID~
+    REPLACE_TEXTUALLY ~213 SALAMANDER_FROST~ ~219 SALAMANDER_FROST~
+    
+  APPEND ~class.ids~ 
+~211 CANDLEKEEP_WATCHER
+212 AMNISH_SOLDIER
+213 TOWN_GUARD
+220 GREEN_DRAGON
+223 WIGHT~ 
+
+  COPY_EXISTING ~race.ids~ ~override~
+    REPLACE_TEXTUALLY ~165 SNOW_TROLL~  ~165 BUGBEAR~     // nothing uses this (snow trolls use a specifics value)
+    REPLACE_TEXTUALLY ~166 MANTICORE~   ~166 FEYR~        // nothing uses this
+    REPLACE_TEXTUALLY ~167 BARBARIAN~   ~167 HOOK_HORROR~ // nothing uses this (barbarians use a specifics value)
+    REPLACE_TEXTUALLY ~170 CHICKEN~     ~170 BIRD~
+    REPLACE_TEXTUALLY ~172 BARBARIAN~   ~172 DRIDER~
+    REPLACE_TEXTUALLY ~173 POMAB_IMAGE~ ~173 SIMULACRUM~
+    
+  APPEND ~race.ids~ 
+~177 CHIMERA
+178 HALF_DRAGON
+179 YETI
+180 KEG
+181 WILL-O-WISP
+182 MAMMAL
+183 REPTILE
+184 TREANT
+185 AASIMAR~ 
+
+  COPY_EXISTING ~dlyeti.cre~   ~override~ // berg yeti
+                ~kuyeti.cre~   ~override~ // tundra yeti
+                ~rvsyeti.cre~  ~override~ // yeti
+                ~vscyeti.cre~  ~override~ // yeti chieftain
+                ~vsyeti.cre~   ~override~ // yeti
+                ~vsyetii.cre~  ~override~ // yeti
+                ~vsyetii2.cre~ ~override~ // yeti
+                ~wtcyeti.cre~  ~override~ // yeti chieftain
+                ~wtyeti.cre~   ~override~ // glacier yeti
+    WRITE_BYTE 0x272 179 // race:yeti       
+
+  COPY_EXISTING ~ktwgt1.cre~   ~override~ // wight
+                ~ktwgti1.cre~  ~override~ // imbued wight
+                ~lwight.cre~   ~override~ // wight
+                ~rbibarr.cre~  ~override~ // barrow wight
+                ~rdecwig.cre~  ~override~ // cold wight
+                ~udwight.cre~  ~override~ // wight
+                ~wight.cre~    ~override~ // wight
+                ~wight2.cre~   ~override~ // wight
+                ~wight3.cre~   ~override~ // wight
+                ~wightba.cre~  ~override~ // barrow wight
+                ~wightcld.cre~ ~override~ // cold wight
+    WRITE_BYTE 0x273 223 // class:wight              
+
+  COPY_EXISTING ~frostsal.cre~ ~override~ // frost salamander
+                ~invissal.cre~ ~override~ // frost 
+                ~kerish.cre~   ~override~ // kerish
+                ~ms6salc.cre~  ~override~ // frost salamander
+                ~msmsalc.cre~  ~override~ // frost salamander
+                ~rndfsal.cre~  ~override~ // frost salamander
+                ~sal8013.cre~  ~override~ // frost salamander
+                ~salamanf.cre~ ~override~ // frost salamander
+                ~wtsalf1.cre~  ~override~ // frost salamander
+                ~wtsalf2.cre~  ~override~ // frost salamander
+                ~wtsalf3.cre~  ~override~ // frost salamander
+                ~wtsalfd.cre~  ~override~ // dead salamander
+    WRITE_BYTE 0x273 224 // class:salamander_frost              
+
+END
