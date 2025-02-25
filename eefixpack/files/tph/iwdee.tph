@@ -1111,7 +1111,7 @@ COPY_EXISTING ~idpro101.pro~ ~override~
   WRITE_BYTE  0x216 10
 
 // ie-6008, cam
-// Worldmap travel fixes
+// Worldmap travel fixes, https://www.gibberlings3.net/forums/topic/36416-iwd-worldmap/
 COPY_EXISTING ~worldmap.wmp~ ~override~ // inconsistent travel times
   READ_LONG 0x0c mos_off
   READ_LONG (mos_off + 0x20) area_num
@@ -1119,11 +1119,17 @@ COPY_EXISTING ~worldmap.wmp~ ~override~ // inconsistent travel times
   READ_LONG (mos_off + 0x28) link_off
   FOR (index = 0 ; index < area_num ; ++index) BEGIN
     READ_ASCII (area_off + 0x08 + (index * 0xf0)) area
+    PATCH_IF ("%area%" STRING_COMPARE_CASE "ar2100" = 0) BEGIN // kuldahar
+      SET kuld = index
+    END ELSE
     PATCH_IF ("%area%" STRING_COMPARE_CASE "ar5000" = 0) BEGIN // severed hand
       SET hand = index
     END ELSE
     PATCH_IF ("%area%" STRING_COMPARE_CASE "ar4000" = 0) BEGIN // dragon's eye
       SET deye = index
+    END ELSE
+    PATCH_IF ("%area%" STRING_COMPARE_CASE "ar6000" = 0) BEGIN // dorn's deep
+      SET dorn = index
     END ELSE
     PATCH_IF ("%area%" STRING_COMPARE_CASE "ar7000" = 0) BEGIN // wyrm's tooth
       SET wyrm = index
@@ -1135,11 +1141,29 @@ COPY_EXISTING ~worldmap.wmp~ ~override~ // inconsistent travel times
       READ_LONG (area_off + 0x54 + (index2 * 0x08) + (index * 0xf0)) link_num
       FOR (index3 = 0 ; index3 < link_num ; ++index3) BEGIN // loop through actual links
         READ_LONG (link_off +        ((link_idx + index3) * 0xd8)) target
-        PATCH_IF ((index = deye) AND (target = hand)) BEGIN // dragon's eye to severed hand
+        PATCH_IF (((index = deye) AND (target = hand)) OR
+                  ((index = hand) AND (target = deye))) BEGIN // dragon's eye <> severed hand
           WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 12 // travel time
         END ELSE
-        PATCH_IF ((index = wyrm) AND (target = hand)) BEGIN // wyrm's tooth to severed hand
-          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 72 // travel time
+        PATCH_IF (((index = wyrm) AND (target = hand)) OR
+                  ((index = hand) AND (target = wyrm))) BEGIN // wyrm's tooth <> severed hand
+          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 18 // travel time
+        END ELSE
+        PATCH_IF (((index = deye) AND (target = dorn)) OR
+                  ((index = dorn) AND (target = deye))) BEGIN // dorn's deep <> severed hand
+          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 12 // travel time
+        END ELSE
+        PATCH_IF (((index = kuld) AND (target = hand)) OR
+                  ((index = hand) AND (target = kuld))) BEGIN // kuldahar <> severed hand
+          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 20 // travel time
+        END ELSE
+        PATCH_IF (((index = wyrm) AND (target = kuld)) OR
+                  ((index = kuld) AND (target = wyrm))) BEGIN // wyrm's tooth <> kuldahar
+          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 24 // travel time
+        END ELSE
+        PATCH_IF (((index = deye) AND (target = kuld)) OR
+                  ((index = kuld) AND (target = deye))) BEGIN // dragon's eye <> kuldahar
+          WRITE_LONG (link_off + 0x24 + ((link_idx + index3) * 0xd8)) 18 // travel time
         END
       END
     END
