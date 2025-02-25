@@ -578,6 +578,10 @@ COPY_EXISTING ~#cofear.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
+// resurrection should remove salamander fireballs from polymorph (also for bg, bg2)
+COPY_EXISTING ~#rdremov.spl~ ~override~ 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 172 STR_VAR match_resource = spin974 resource = spin160 END
+
 // feedback with limited timing and/or duration
 COPY_EXISTING ~#sunrund.spl~ ~override~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
               ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects
