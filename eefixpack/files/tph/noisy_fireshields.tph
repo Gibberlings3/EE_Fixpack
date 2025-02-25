@@ -88,7 +88,7 @@ END ELSE BEGIN
                 ~sw1p01.itm~   ~override~ // viper's edge +2 -> regen at low hp (bg)
                 ~sw2hd1.itm~   ~override~ // rancor +1 -> bonus on kill (bg, bg2)
                 ~trollreg.itm~ ~override~ // ring -> troll revive
-    LPF ALTER_EFFECT INT_VAR match_opcode = 232 match_special = 0 special = BIT2 END
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 232 match_special = 0 special = BIT2 END
     BUT_ONLY IF_EXISTS  
   
 END
