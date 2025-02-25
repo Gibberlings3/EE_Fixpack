@@ -1,5 +1,5 @@
-// burning earth's effects fall down on opponents who qualify under multiple categores (e.g. undead trolls) 
-// re-ordering effects fixes most of the issues, but also neeed some 318s to make the bonus slashing damage
+// burning earth's effects fall down on opponents who qualify under multiple categories (e.g. undead trolls) 
+// re-ordering effects fixes most of the issues, but also need some 318s to make the bonus slashing damage
 // exclusive. Using an array so that if we add more distinctions to race/class.ids, we can expand the list
 // especially the "cold using" category
 

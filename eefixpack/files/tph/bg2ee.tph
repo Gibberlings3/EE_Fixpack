@@ -890,6 +890,9 @@ COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
   LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
   BUT_ONLY
 
+COPY_EXISTING ~spin891.spl~ ~override~ // make moon dog howl only affect enemies
+  LPF ALTER_HEADER INT_VAR projectile = 159 END // inarea > inareanp
+
 // Psychic struggle for control of wizard elemental summons breaks when elemental is issued order (also in bgee.tph)
 COPY_EXISTING ~SPIN906.SPL~ ~override~
 	LPF CLONE_EFFECT INT_VAR match_opcode=169 match_parameter2=55 opcode=365 parameter1=0 parameter2=1 timing=1 duration=0 STR_VAR insert=first END
