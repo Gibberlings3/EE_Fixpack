@@ -1743,6 +1743,8 @@ COPY ~music/vb.mus~ ~music/vb.mus~
 // prevent spell called via op232 from interrupting caster sounds
 INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
 
+INCLUDE ~eefixpack/files/tph/free_action.tph~ // free action swap from 126 > 337
+
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 

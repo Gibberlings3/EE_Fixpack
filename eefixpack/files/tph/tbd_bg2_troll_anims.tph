@@ -34,7 +34,7 @@ ACTION_PHP_EACH cd_troll_anims AS cre => anim BEGIN
   COPY_EXISTING ~%cre%.cre~ ~override~
     WRITE_SHORT 0x28 anim
     PATCH_IF (anim = 0xe0c0) BEGIN // for the snow trolls, add an effect to keep them at speed 8
-      LPF ADD_CRE_EFFECT INT_VAR opcode = 126 parameter1 = 8 parameter2 = 1 timing = 9 END
+      LPF ADD_CRE_EFFECT INT_VAR opcode = 176 parameter1 = 8 parameter2 = 1 timing = 9 END
     END  
     BUT_ONLY
     
