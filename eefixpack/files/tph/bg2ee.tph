@@ -585,6 +585,8 @@ COPY_EXISTING ~misc3a3.itm~   ~override~
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
 
+INCLUDE ~eefixpack/files/tph/dragomir.tph~ // making cloak of dragomir a critical item to prevent destruction
+
 // prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, hlolth.itm)
 COPY_EXISTING ~npbow.itm~  ~override~
               ~npsw01.itm~ ~override~
