@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Beta 1~
+VERSION ~Nightly 022525~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
