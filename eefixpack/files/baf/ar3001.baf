@@ -1,0 +1,11 @@
+IF
+	Global("SetDifficulty","AR3001",0)  // Watcher's Keep -- Altar level
+	Global("cdActivateSpawns","AR3001",0)  // Watcher's Keep -- Altar level
+THEN
+	RESPONSE #100
+		SetGlobal("cdActivateSpawns","AR3001",1)  // Watcher's Keep -- Altar level
+		SpawnPtActivate("SpawnPoint1")
+		SpawnPtActivate("SpawnPoint2")
+		SpawnPtActivate("SpawnPoint3")
+		SpawnPtActivate("SpawnPoint4")
+END

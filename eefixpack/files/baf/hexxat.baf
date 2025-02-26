@@ -1,0 +1,26 @@
+IF
+  !InParty(Myself)
+  PartyHasItem("ohhcloak")
+THEN
+  RESPONSE #100
+    TakePartyItem("ohhcloak")
+END
+
+IF
+  !InParty(Myself)
+  HasItem("ohhcloak",Myself)
+  !HasItemEquiped("ohhcloak",Myself)
+  Global("cd_equip_cloak","LOCALS",0)
+THEN
+  RESPONSE #100
+    XEquipItem("ohhcloak",Myself,SLOT_CLOAK,EQUIP)
+    SetGlobal("cd_equip_cloak","LOCALS",1)
+END
+
+IF
+  InParty(Myself)
+  Global("cd_equip_cloak","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("cd_equip_cloak","LOCALS",0)
+END

@@ -17,7 +17,6 @@ END
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
-INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
 /*
@@ -195,6 +194,9 @@ COPY_EXISTING ~ar2200.bcs~ ~override~
     REPLACE_TEXTUALLY ~CreateCreature("dagmag01",\[[0-9]+\.[0-9]+\],[0-9A-Z]+)~ ~CreateCreature("dagmag01",[4401.3527],NW)~
   END
   BUT_ONLY
+  
+// wk spawn points - defer spawn point activion to area script (see also ar3001.are)
+EXTEND_BOTTOM ~ar3001.bcs~ ~eefixpack/files/baf/ar3001.baf~   
 
 // tbd, cam
 // siege camp reinforcements checking wrong blocks
@@ -363,6 +365,15 @@ COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
 // make tear door transparent so #3 eye graphic can be seen
 COPY_EXISTING ~ar2900.are~ ~override~
   LPF ALTER_AREA_DOOR INT_VAR flag_no_look = 1 STR_VAR door_name = door01 END
+  BUT_ONLY
+
+// wk spawn points - defer spawn point activion to area script (see also ar3001.bcs)
+COPY_EXISTING ~ar3001.are~ ~override~
+  READ_LONG 0x60 spawn_off
+  READ_LONG 0x64 spawn_num
+  FOR (index = 0 ; index < spawn_num ; ++index) BEGIN 
+    WRITE_SHORT (spawn_off + 0x86 + (index * 0xc8)) 0 /// turns off all spawn points
+  END
   BUT_ONLY
 
 /////                                                  \\\\\
@@ -574,6 +585,8 @@ COPY_EXISTING ~misc3a3.itm~   ~override~
 COPY_EXISTING ~misc3m.itm~   ~override~ // Harp of Discord - causes confusion - plays animation SPCONFUS - portrait icon 5 - plays sound EFF_P05
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 5 parameter2 = 3 END
 
+INCLUDE ~eefixpack/files/tph/dragomir.tph~ // making cloak of dragomir a critical item to prevent destruction
+
 // prevent hexxat, haer'dalis from using racially-restricted items (see also hamm06.itm, hlolth.itm)
 COPY_EXISTING ~npbow.itm~  ~override~
               ~npsw01.itm~ ~override~
@@ -643,6 +656,8 @@ COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
 // per descript knockback shouldn't work on 'large creatures'
 COPY_EXISTING ~staf22.itm~  ~override~ // staff of the ram +6
   LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 235 opcode = 318 parameter1 = 0 parameter2 = 13 timing = 0 duration = 0 resist_dispel = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+
+INCLUDE ~eefixpack/files/tph/burning_earth.tph~ // fix burning earth bonuses
 
 // tbd, cam
 // ilbratha's mirror image can be blocked by wielder's MR
@@ -825,6 +840,10 @@ WITH_SCOPE BEGIN
   //LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
 
+// resurrection should remove salamander fireballs from polymorph (also for bg, iwd)
+COPY_EXISTING ~#rdremov.spl~ ~override~ 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 172 STR_VAR match_resource = spin974 resource = spin160 END
+
 //tbd, cam
 // inconsistent targeting (unused, fixed anyway)
 COPY_EXISTING ~bhaal1a.spl~ ~override~
@@ -887,6 +906,9 @@ COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait 
 COPY_EXISTING ~spin826.spl~ ~override~ // mazzy strength buff
   LPF ALTER_EFFECT INT_VAR match_opcode = 97 parameter2 = 1 END // wrong on first header only
   BUT_ONLY
+
+COPY_EXISTING ~spin891.spl~ ~override~ // make moon dog howl only affect enemies
+  LPF ALTER_HEADER INT_VAR projectile = 159 END // inarea > inareanp
 
 // Psychic struggle for control of wizard elemental summons breaks when elemental is issued order (also in bgee.tph)
 COPY_EXISTING ~SPIN906.SPL~ ~override~

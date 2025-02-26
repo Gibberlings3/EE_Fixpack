@@ -120,6 +120,46 @@ Requires:
 
 Weight: 6~
 
+// wand of fear's AoE is a 10' radius, not 15'
+@17287 = ~A wand of fear strikes terror into the heart of any creature within its target area. This panic is not universal, however, as the stout of heart have been known to resist its magic. Like all wands, the wand of fear can only be used a limited number of times before it is destroyed.
+
+STATISTICS:
+
+Charge abilities:
+– Fear (Save vs. Spell negates)
+  Range: 100 ft.
+  Duration: 15 rounds
+  Area of Effect: 10-ft. radius
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
+// acid storm lasts for 15 rounds, not 30
+@17621 = ~A trio of wizards worked on this wand using a number of material components they had available to them and more that were relatively easy to acquire. Otterly the Rotund, Mabdek of the Seventh Star, and Yrgon the Moron only crafted the wand so they could sell it. Their long-term goal was the construction of a vast magical research facility based on the designs of the Naturalist Guild in Myth Drannor. Their wand was a greater success than their research facility.
+
+STATISTICS:
+
+Charge abilities:
+– Death Fog
+  Damage: 4 acid in the 1st round, 8 acid in the 2nd round, 16 acid in the 3rd round
+  Special: Movement speed limited to 50% within fog; must save vs. Spell or suffer -2 to Strength and Dexterity that round
+  Range: Visual range of the user
+  Duration: 15 rounds
+  Area of Effect: 12-ft. radius
+
+– Acid Storm
+  Damage: 1d4 acid for 3 rounds, 1d6 acid for the next 3 rounds, and 1d8 acid for the remaining rounds (Save vs. Spell for half)
+  Range: Visual range of the user
+  Duration: 15 rounds
+  Area of Effect: 12-ft. radius
+
+Requires:
+ 9 Intelligence
+
+Weight: 1~
+
 // wand of fire should be using IWD-style Agannazar's Scorcher, not BG2-style
 // see also wand05
 @17654 = ~The wand will cough forth a huge, burning ball of fire that streaks out to the desired range and bursts in a fiery, violent blast, just like the Fireball spell. The fireball inflicts 6d6 points of damage, but all 1s rolled are counted as 2s. The victim(s) may make a Save vs. Wand in order to take only half damage. The second ability of the wand is akin to the spell Agannazar's Scorcher in that a column of flame will streak towards the victim, inflicting 6d6+6 damage with a Save vs. Wand for half.
@@ -477,6 +517,67 @@ Special Abilities:
 – Immunity to stun, sleep, fear, poison, petrification, confusion, charm, paralysis, and level drain
 – Immunity to non-magical weapons
 – Increased movement rate"
+
+// archer's hit/damage bonuses change after level 18
+@37111 = ~ARCHER: The Archer is the epitome of skill with the bow—the ultimate marks<PRO_MANWOMAN>, able to make almost any shot, no matter how difficult. To become so skilled with the bow, the Archer has had to sacrifice some of <PRO_HISHER> proficiency with melee weapons and armor.
+
+Advantages:
+– +1 to hit and damage rolls with any missile weapon every 3 levels through level 18.
+– +1 to hit and damage rolls with any missile weapon every 5 levels from level 23 onwards.
+– May achieve Grand Mastery (5 slots) in longbows, shortbows, and crossbows.
+– May use the Called Shot ability once per day. Gains one use at level 4 and an additional use every 4 levels thereafter.
+
+CALLED SHOT: All successful ranged attacks within the next 10 seconds have the following cumulative effects besides normal damage, according to the level of the Archer:
+ 4th level: -1 penalty to target's THAC0.
+ 8th level: -1 penalty to target's Saving Throws vs. Spell.
+ 12th level: -1 penalty to the target's Strength score.
+ 16th level: +2 bonus to damage roll.
+
+Disadvantages:
+– May only wear leather, studded leather, and hide armor.
+– May only become Proficient (one slot) with melee weapons.
+– May not use the Charm Animal ability.~
+
+// monk AC bonus progression changes at levels 23 and 35
+@37256 = ~MONK: Monks are warriors who pursue perfection through contemplation as well as action. They are versatile fighters, especially skilled in combat without weapons or armor. Though Monks cannot cast spells, they have a unique magic of their own: They channel a subtle energy, called ki, which allows them to perform amazing feats. The Monk's best known feat is their ability to stun an opponent with an unarmed blow.
+
+CLASS FEATURES:
+
+– May not wear any armor.
+– May only use weapons available to the Thief class (except two-handed).
+– May only become Proficient (one slot) in any weapon class.
+– May only become Proficient (one slot) in Single-Weapon Style and may not put slots into any other style.
+– Moves 2 points faster than other characters. Movement rate further improves by 1 every 5 levels.
+– May make 1 unarmed attack per round. An additional 1/2 attack per round is gained every 3 levels. Damage dealt by unarmed attacks increases with level as follows:
+  Level 1-2: 1d6
+  Level 3-5: 1d8
+  Level 6-8: 1d10
+  Level 9-14: 1d12
+  Level 15+: 1d20
+– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25. 
+– Receives a +2 bonus to Saving Throws vs. Spell.
+– Deflect Missiles: +1 bonus to AC vs. missile attacks every 3 levels.
+– Starts with an Armor Class of 9 at 1st level and gains an additional +1 bonus every 2 levels through level 18.
+– Gains an additional +1 AC bonus every 3 levels from level 21 through level 30.
+– Gains an additional +1 AC bonus every 5 levels from level 35 onwards.
+– May use the Stunning Blow ability once per day. Gains one use at level 1 and an additional use every 4 levels thereafter.
+
+STUNNING BLOW: All successful attacks within the next round force the victim to save vs. Spell or be stunned. This special ability automatically modifies normal attacks; no targeting needs to be done.
+
+– 5th level: Becomes immune to all diseases and cannot be slowed or hasted.
+– 7th level: May use the Lay On Hands ability on <PRO_HIMHER>self to heal 2 Hit Points per level.
+– 8th level: Gains a -1 bonus to Speed Factor.
+– 9th level: Gains a +1 bonus to all Saving Throws and becomes immune to charm.
+– 11th level: Becomes immune to poison.
+– 12th level: Gains another -1 bonus to Speed Factor.
+– 13th level: May use the Quivering Palm ability once per day.
+
+QUIVERING PALM: The next successful attack forces the opponent to save vs. Spell or die. This special ability automatically modifies normal attacks; no targeting needs to be done.
+
+– 14th level: Gains 3% Magic Resistance per level (starting with 42% at 14th level).
+– 20th level: Becomes immune to non-magical weapons.
+– Alignment restricted to lawful.
+– Hit Die: d8~
 
 // sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 36015)
 @37263 = ~SUN SOUL MONK: Sun Soul Monks were once worshippers of Amaunator in the time of the Netheril, but today their worship is divided between Lathander, Selûne, and Sune. Sun Soul Monks adhere strictly to the law, using their martial arts and magical abilities to drive out darkness and corruption wherever they find it.

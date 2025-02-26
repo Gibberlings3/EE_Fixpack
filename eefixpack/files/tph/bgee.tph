@@ -45,7 +45,6 @@ COPY_EXISTING ~bgee.lua~ ~override~
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
-INCLUDE ~eefixpack/files/tph/tbd_object_ids.tph~ // tbd, cam: missing/dupe entries in object.ids
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
 ACTION_IF (game_includes_sod) BEGIN
@@ -787,7 +786,7 @@ INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
 COPY_EXISTING ~bdcorint.cre~ ~override~
   LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = leat10 END
   LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = sw1h07 END
-  BUT_ONLY // sod quest
+  BUT_ONLY IF_EXISTS // sod quest
 
 // tbd, cam (from k4thos/eet)
 // telania's victims shouldn't have player scripting, could potentially offer to join party
@@ -961,6 +960,8 @@ COPY_EXISTING ~shld09p.itm~ ~override~ // hell hound flame
 COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
   LPF DELETE_EFFECT INT_VAR match_opcode = 19 END
 
+INCLUDE ~eefixpack/files/tph/burning_earth.tph~ // fix burning earth bonuses
+
 // viper's edge poison immunity block poorly placed
 COPY_EXISTING ~sw1p01.itm~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 318 probability1 = 23 probability2 = 0 STR_VAR insert = last END
@@ -1118,6 +1119,10 @@ WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/restoration.tph"
   //LAUNCH_ACTION_FUNCTION ~RESTORATION~ END
 END
+
+// resurrection should remove salamander fireballs from polymorph (also for bg2, iwd)
+COPY_EXISTING ~#rdremov.spl~ ~override~ 
+  LPF CLONE_EFFECT INT_VAR match_opcode = 172 STR_VAR match_resource = spin974 resource = spin160 END
 
 // expiry sound has wrong duration
 COPY_EXISTING ~bdsleep.spl~  ~override~ // <Invalid Strref -1> - causes sleep - plays sound EFF_E05
