@@ -32,6 +32,26 @@ It should be "south of the battlefield", not "north of the battlefield".
 */
 @7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
 
+// no change to the text, just added the REPUP sound reference
+@10468 = ~Your donation to the church was greatly appreciated, and your reputation has gone up by one point.~ [REPUP]
+
+// shield of the archons cannot be dispelled, but it also doesn't absorb dispel - just use strref 15965 from iwdee
+@11015 = ~Shield of the Archons
+(Abjuration)
+
+Level: 7
+Sphere: Protection
+Range: Touch
+Duration: 3 rounds/level
+Casting Time: 9
+Area of Effect: The caster
+Saving Throw: None
+
+This powerful abjuration spell causes the spells cast against the priest to be absorbed and consumed. This affects a total number of spell levels equal to half the level of the caster. It includes spells cast from scrolls and innate spell-like abilities, but excludes area effects that are not centered directly upon the priest and area effects that are stationary, such as Cloudkill and Stinking Cloud.
+
+As long as there are levels remaining, the spell will be absorbed. For example, if there is only 1 level left and a 3rd-level spell is cast at the priest, the spell will be absorbed while canceling the shield.
+
+This spell will not protect the caster from Dispel Magic, but it will not be dispelled by Dispel Magic either.~
 /*
 jazira
 It should be "southeast", not "south".
@@ -99,6 +119,9 @@ jazira
 It should be "southeast", not "south".
 */
 @17788  = ~You have done a noble thing for us. Please take these acorns to the Fairy Queen who lives in the southeast end of the Windspear Hills.~
+
+// no change to the text, just added the REPUP sound reference
+@19686 = ~The Party's Reputation Has Increased~ [REPUP]
 
 // second line: the ruins are west of imnesvale, not east
 @19723 = ~This is half of a page of parchment, yellowed with age, the ink faded but still legible, and reads:

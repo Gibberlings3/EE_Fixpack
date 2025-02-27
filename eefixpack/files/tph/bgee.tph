@@ -1880,6 +1880,9 @@ END
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
+    // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")

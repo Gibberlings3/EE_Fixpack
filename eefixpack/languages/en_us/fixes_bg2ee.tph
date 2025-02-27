@@ -5,6 +5,8 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_bg2ee.tra~ BEGIN STRING_SET
   7148 @7148
   7417 @7417
   7421 @7421
+  10468 @10468
+  11015 @11015
   11195 @11195
   11354 @11354
   11381 @11381
@@ -16,6 +18,7 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_bg2ee.tra~ BEGIN STRING_SET
   17759 @17759
   17774 @17774
   17788 @17788
+  19686 @19686
   19723 @19723
   25308 @25308
   28025 @28025
