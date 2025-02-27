@@ -196,6 +196,8 @@ COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
      ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~  ~override~
 
+INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
+
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
 ACTION_IF game_includes_sod BEGIN

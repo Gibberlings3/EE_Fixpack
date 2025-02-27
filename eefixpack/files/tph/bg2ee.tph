@@ -88,6 +88,8 @@ COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
      ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~       ~override~
 
+INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
+
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
 ACTION_FOR_EACH file IN
