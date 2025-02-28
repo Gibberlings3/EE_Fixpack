@@ -1,0 +1,8 @@
+IF
+  !Global("AR7004_visited","GLOBAL",1)
+	Global("CHAPTER","GLOBAL",5)
+THEN
+	RESPONSE #100
+		IncrementChapter("CHPTXT6a")
+		Continue()
+END

@@ -169,7 +169,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
      ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/bam/wphf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wplf2inv.bam~ ~override~ // missing short flaming sword bams (f2)
@@ -189,12 +189,17 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
      ~eefixpack/files/bam/item_shadows/bgee_bg2ee~ ~override~
      ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~  ~override~
+
+INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
@@ -1878,6 +1883,9 @@ END
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
+    // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")
@@ -2070,6 +2078,8 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
 // prevent spell called via op232 from interrupting caster sounds
 INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+
+INCLUDE ~eefixpack/files/tph/free_action.tph~ // free action swap from 126 > 337
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more

@@ -47,6 +47,11 @@ APPEND ~object.ids~
 // tbd, cam
 // fixing missing starting equipment in HoW games for shaman, others
 COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
+
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/cd_ch6a.wav~ BEGIN
+  INCLUDE ~eefixpack/files/tph/iwdee_alt_ch6.tph~ // alternatve ch 6 narration
+END 
+
 /*
 luke
 **splprot.2da**
@@ -111,13 +116,16 @@ COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light cr
      ~eefixpack/files/bam/mdr2~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
      ~eefixpack/files/bam/mdr3~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
      ~eefixpack/files/bam/mwdr~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
-     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/bam/cmnk1inv.bam~     ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
      ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
      ~eefixpack/files/bam/spwi524d.bam~     ~override~ // fix rle-encoding error
+     ~eefixpack/files/bam/mvaf~             ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~             ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~             ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
@@ -125,6 +133,8 @@ COPY ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
      ~eefixpack/files/bam/item_shadows/iwdee~           ~override~
      ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~       ~override~
+
+INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -854,6 +864,12 @@ COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615
 // oiwd fix
 COPY_EXISTING ~%CLERIC_WHIRLWIND%.spl~  ~override~ // sppr617
   LPF ALTER_EFFECT INT_VAR match_resist_dispel = 0 resist_dispel = 1 END
+
+// at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
+COPY_EXISTING ~sppr701.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
+  BUT_ONLY
 
 // death fog's slow icon could be blocked on round 2+
 COPY_EXISTING ~spwi030.spl~ ~override~ // via trap

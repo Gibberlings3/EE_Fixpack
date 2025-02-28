@@ -1,4 +1,4 @@
-// making cloak of dragomir a critical item to prevent destruction (see also ohhcloak.itm)
+// making cloak of dragomir a critical item to prevent destruction
 EXTEND_BOTTOM ~hexxat.bcs~  ~eefixpack/files/baf/hexxat.baf~
 EXTEND_BOTTOM ~hexxa25.bcs~ ~eefixpack/files/baf/hexxat.baf~
 
@@ -7,7 +7,6 @@ COPY_EXISTING ~oh7000.bcs~ ~override~
     REPLACE_TEXTUALLY ~StateCheck("ohhdrago",STATE_STONE_DEATH)~ ~False()~
   END  
 
-// making cloak of dragomir a critical item to prevent destruction (see also hexxat/hexxa25.bcs)
 COPY_EXISTING ~ohhcloak.itm~ ~override~
   WRITE_LONG 0x18 (THIS | BIT0)  // add critical flag
   BUT_ONLY

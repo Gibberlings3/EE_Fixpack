@@ -1,0 +1,57 @@
+// updated spell BAMs from Parys
+// https://www.gibberlings3.net/forums/topic/35883-spellsabilities-icons-inconsistency/
+
+COPY ~eefixpack/files/bam/spl_bams/ohtmps2b.bam~ ~override~ // Chaos of Battle (tempus)
+     ~eefixpack/files/bam/spl_bams/spcl236b.bam~ ~override~ // Sun Soulray
+     ~eefixpack/files/bam/spl_bams/spcl237b.bam~ ~override~ // Greater Sun
+     ~eefixpack/files/bam/spl_bams/spcl238b.bam~ ~override~ // Flaming Fists
+     ~eefixpack/files/bam/spl_bams/spcl239b.bam~ ~override~ // Sun Soulbeam
+     ~eefixpack/files/bam/spl_bams/spcl940b.bam~ ~override~ // spirit form
+     ~eefixpack/files/bam/spl_bams/spcl941b.bam~ ~override~ // favored of the spirits
+     ~eefixpack/files/bam/spl_bams/spdd03b.bam~  ~override~ // breath weapon (dragon disciple)
+     ~eefixpack/files/bam/spl_bams/spdwd02b.bam~ ~override~ // defensive stance (dwarven defender)
+     ~eefixpack/files/bam/spl_bams/spin205b.bam~ ~override~ // Summon Ghostly Defender (k'khiin)
+     ~eefixpack/files/bam/spl_bams/sppr150b.bam~ ~override~ // Spirit Ward
+     ~eefixpack/files/bam/spl_bams/sppr150c.bam~ ~override~
+     ~eefixpack/files/bam/spl_bams/sppr250b.bam~ ~override~ // Writhing Fog
+     ~eefixpack/files/bam/spl_bams/sppr350b.bam~ ~override~ // Spiritual Clarity
+     ~eefixpack/files/bam/spl_bams/sppr350c.bam~ ~override~
+     ~eefixpack/files/bam/spl_bams/sppr450b.bam~ ~override~ // Spirit Fire
+     ~eefixpack/files/bam/spl_bams/sppr550b.bam~ ~override~ // Recall Spirit
+     ~eefixpack/files/bam/spl_bams/sppr550c.bam~ ~override~
+     ~eefixpack/files/bam/spl_bams/sppr650b.bam~ ~override~ // Spiritual Lock
+     ~eefixpack/files/bam/spl_bams/sppr719c.bam~ ~override~ // Symbol, Death
+     ~eefixpack/files/bam/spl_bams/sppr751b.bam~ ~override~ // Ethereal Retribution
+     ~eefixpack/files/bam/spl_bams/spsd02b.bam~  ~override~ // shadowstep (shadowdancer)
+
+ACTION_IF !game_is_iwdee BEGIN // iwdee uses a different color scheme, so some of these end up the wrong color
+
+  COPY ~eefixpack/files/bam/spl_bams/ohtyr1b.bam~  ~override~ // iwdee uses sppr321b, and is a different color
+       ~eefixpack/files/bam/spl_bams/sppr750b.bam~ ~override~ // Ether Gate
+       ~eefixpack/files/bam/spl_bams/sppr750c.bam~ ~override~
+  
+END 
+
+ACTION_IF game_is_bg2ee BEGIN  
+
+  COPY ~eefixpack/files/bam/spl_bams/ohhdraib.bam~ ~override~ // blood drain (hexxat)
+       ~eefixpack/files/bam/spl_bams/ohhdraic.bam~ ~override~
+       ~eefixpack/files/bam/spl_bams/ohhsummb.bam~ ~override~ // children of the night (hexxat)
+       ~eefixpack/files/bam/spl_bams/ohhsummc.bam~ ~override~ 
+
+END 
+
+ACTION_IF !game_is_bgee BEGIN  
+
+  COPY ~eefixpack/files/bam/spl_bams/spcl937b.bam~ ~override~ // shadow maze
+       ~eefixpack/files/bam/spl_bams/spcl938b.bam~ ~override~ // shadow form
+
+END ELSE BEGIN 
+
+  ACTION_IF game_includes_sod BEGIN 
+
+    COPY ~eefixpack/files/bam/spl_bams/spin205b.bam~ ~override~ // Summon Ghostly Defender (k'khiin)
+
+  END 
+  
+END 

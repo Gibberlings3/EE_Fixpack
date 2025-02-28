@@ -72,13 +72,17 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
      ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
      ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
      ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
+     ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
+     ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
@@ -87,6 +91,8 @@ COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
      ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
      ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
      ~eefixpack/files/bam/item_shadows/universal~       ~override~
+
+INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 // tbd, sam.
 // merging multi-part area animations to eliminate issues
@@ -170,6 +176,38 @@ COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes 
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
+
+// reduce chance for love talk interruption
+COPY_EXISTING ~aeri25.bcs~   ~override~
+              ~aerie25d.bcs~ ~override~
+              ~aerie.bcs~    ~override~
+              ~aeried.bcs~   ~override~
+              ~anom25.bcs~   ~override~
+              ~anomen.bcs~   ~override~
+              ~anomend.bcs~  ~override~
+              ~dorn.bcs~     ~override~
+              ~dornd.bcs~    ~override~
+              ~hexxa25.bcs~  ~override~
+              ~hexxat.bcs~   ~override~
+              ~hexxatd.bcs~  ~override~
+              ~jahe25.bcs~   ~override~
+              ~jaheira.bcs~  ~override~
+              ~jaheirad.bcs~ ~override~
+              ~neer25.bcs~   ~override~
+              ~neera.bcs~    ~override~
+              ~rasa25.bcs~   ~override~
+              ~rasaad.bcs~   ~override~
+              ~rasaadd.bcs~  ~override~
+              ~vico25.bcs~   ~override~
+              ~vicon25d.bcs~ ~override~
+              ~vicond.bcs~   ~override~
+              ~viconia.bcs~  ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY // should i have done this as one regexp?
+      ~\(\(SetGlobal("\(Exp\)?LoveTalk","LOCALS",[0-9]+)[ %TAB%%LNL%%MNL%]+\)?\(IncrementGlobal("\(Exp\)?LoveTalk","LOCALS",1)[ %TAB%%LNL%%MNL%]+\)?\(SetGlobal("talkedYoc","LOCALS",1)[ %TAB%%LNL%%MNL%]+\)?\(RealSetGlobalTimer("[A-Za-z]+Romance","GLOBAL",[0-9A-Z_]+)[ %TAB%%LNL%%MNL%]+\)?\(IncrementGlobal("[A-Za-z]+Lovetalks","GLOBAL",1)[ %TAB%%LNL%%MNL%]+\)?PlaySong([0-9]+)[ %TAB%%LNL%%MNL%]+\(IncrementGlobal("[A-Za-z]+Lovetalks","GLOBAL",1)[ %TAB%%LNL%%MNL%]+\)?\(Interact\|\(Start\)?Dialog\(ue\)?\(NoSet\)?\)(Player1)\)~
+      ~SetInterrupt(FALSE) \1 SetInterrupt(TRUE)~ // no, no I should not have.
+  END
+  BUT_ONLY
 
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
@@ -1538,6 +1576,9 @@ END
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
+    // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
+    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")
@@ -1742,6 +1783,8 @@ COPY ~music/vb.mus~ ~music/vb.mus~
 
 // prevent spell called via op232 from interrupting caster sounds
 INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+
+INCLUDE ~eefixpack/files/tph/free_action.tph~ // free action swap from 126 > 337
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
 INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
