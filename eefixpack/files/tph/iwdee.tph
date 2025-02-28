@@ -116,13 +116,16 @@ COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light cr
      ~eefixpack/files/bam/mdr2~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
      ~eefixpack/files/bam/mdr3~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
      ~eefixpack/files/bam/mwdr~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
-     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/bam/cmnk1inv.bam~     ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
      ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
      ~eefixpack/files/bam/spwi524d.bam~     ~override~ // fix rle-encoding error
+     ~eefixpack/files/bam/mvaf~             ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~             ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~             ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~

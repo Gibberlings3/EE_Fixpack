@@ -72,7 +72,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
      ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
      ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
@@ -80,6 +80,9 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
      ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
+     ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~

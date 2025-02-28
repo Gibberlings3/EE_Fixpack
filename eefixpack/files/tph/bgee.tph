@@ -169,7 +169,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
      ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big
+     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/bam/wphf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
      ~eefixpack/files/bam/wplf2inv.bam~ ~override~ // missing short flaming sword bams (f2)
@@ -189,6 +189,9 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
+     ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
+     ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
+     ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
