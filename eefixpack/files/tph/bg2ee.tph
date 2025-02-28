@@ -527,6 +527,10 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
               ~sw1h63.itm~  ~override~ // foebane +5
   LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 146 opcode = 324 parameter1 = 0 parameter2 = 55 timing = 0 resist_dispel = 0 STR_VAR match_resource = spin104a resource = EVAL ~%SOURCE_RES%~ END
 
+// poison icon shouldn't be dispellable
+COPY_EXISTING ~dart05.itm~ ~override~ // asp's nest
+  LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END 
+
 // tbd, cam (from MiH)
 // flindbar should decrease thac0 of target, not increase it
 COPY_EXISTING ~flind1.itm~ ~override~
