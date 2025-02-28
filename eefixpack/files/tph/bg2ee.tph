@@ -635,6 +635,12 @@ COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun 
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
   BUT_ONLY
 
+// cowl of the stars should cast MMM at player level; run it through an innate so that it picks up non-mage levels
+COPY ~eefixpack/files/spl/innate_intermediary_template.spl~ ~override/cdwi325.spl~
+  //LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR resource = spwi325 END // default spell here is spwi325 since this is the first
+COPY_EXISTING ~ohrclck1.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = spwi325 resource = cdwi325 END
+
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
