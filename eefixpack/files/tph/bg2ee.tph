@@ -266,6 +266,13 @@ COPY_EXISTING ~cut41q.bcs~ ~override~
   END
   BUT_ONLY
 
+// bodari's subcontract takes multiple days, have party rested
+COPY_EXISTING ~cut244b.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~\(ApplySpell(Player1,HEAL_NO_VISUAL)\)~ 
+      ~\1 Rest() ActionOverride(Player2,Rest()) ActionOverride(Player3,Rest()) ActionOverride(Player4,Rest()) ActionOverride(Player5,Rest()) ActionOverride(Player6,Rest())~
+  END  
+
 // tbd, cam
 // variable that tracks if you know Dorn always get set when sorting out journal entries
 COPY_EXISTING ~dorn.bcs~ ~override~
@@ -644,6 +651,11 @@ COPY ~eefixpack/files/spl/innate_intermediary_template.spl~ ~override/cdwi325.sp
   //LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR resource = spwi325 END // default spell here is spwi325 since this is the first
 COPY_EXISTING ~ohrclck1.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR match_resource = spwi325 resource = cdwi325 END
+
+// move planetar dispel-on-hit to after vorpal effect so that death ward can work better (in bgee, bg2ee, iwdee.tph)
+COPY_EXISTING ~planetar.itm~ ~override~
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 58 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 58 multi_match = 1 END
 
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero

@@ -65,3 +65,7 @@ ADD_TRANS_TRIGGER OHBVOGHI 4 ~False()~ DO 1
 
 // With reputation of 15, "sir zarath" don't talk to PC. 
 REPLACE_STATE_TRIGGER HEARTG3 1 ~ReputationGT(LastTalkedToBy,14)~
+
+// trax addresses you by name despite never learning it
+ALTER_TRANS trax BEGIN 13 END BEGIN 1 END BEGIN ~REPLY~ ~#520~ END // Fine, I am <CHARNAME>, an adventurer.
+ALTER_TRANS trax BEGIN 15 END BEGIN 1 END BEGIN ~REPLY~ ~#522~ END // All right, I am <CHARNAME>, an adventurer.
