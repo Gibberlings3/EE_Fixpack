@@ -207,7 +207,12 @@ INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
-ACTION_IF game_includes_sod BEGIN
+ACTION_IF !game_includes_sod BEGIN
+    
+  COPY ~eefixpack/files/bam/mcor~ ~override~ // adding cornugon animation for albert/rufie change
+       ~eefixpack/files/wav/mcor~ ~override~ // adding cornugon animation for albert/rufie change
+     
+ END ELSE BEGIN      
 
   COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
        ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
