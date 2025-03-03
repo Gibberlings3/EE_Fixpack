@@ -22,6 +22,7 @@ BEGIN
   SET droppable      = 0                     
   READ_ASCII 0x00 type (3)
   SET min_size = 0
+  SET fx_delta = 0
   PATCH_IF ("%type%" STRING_COMPARE_CASE "spl" = 0) BEGIN
     READ_LONG  0x64 abil_off ELSE 0
     READ_SHORT 0x68 abil_num ELSE 0
@@ -61,6 +62,7 @@ BEGIN
         SET abil_fx_idx = 0
       END ELSE BEGIN // otherwise normal ability
         SET counter_offset = (abil_off + 0x1e + (abil_length * index))
+        WRITE_SHORT (abil_off + 0x20 + (abil_length * index)) THIS + fx_delta
         READ_SHORT  (abil_off + 0x20 + (abil_length * index)) abil_fx_idx
       END
       READ_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
@@ -79,9 +81,38 @@ BEGIN
               WRITE_SHORT (fx_off + 0x00 + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 337
               WRITE_LONG  (fx_off + 0x04 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "-1"
               WRITE_LONG  (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 126
+              // clone new 337 into 337s for web and entangle
+              READ_ASCII   (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) clone (0x30 + (0xd8 * fx_type))
+              INSERT_BYTES (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (0x30 + (0xd8 * fx_type))
+              WRITE_ASCIIE (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%clone%"
+              WRITE_LONG   (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 154 // entangle
+              INSERT_BYTES (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (0x30 + (0xd8 * fx_type))
+              WRITE_ASCIIE (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%clone%"
+              WRITE_LONG   (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 157 // web
+              INSERT_BYTES (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (0x30 + (0xd8 * fx_type))
+              WRITE_ASCIIE (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%clone%"
+              WRITE_LONG   (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 16 // haste
+              INSERT_BYTES (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (0x30 + (0xd8 * fx_type))
+              WRITE_ASCIIE (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%clone%"
+              WRITE_LONG   (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 40 // slow
+              INSERT_BYTES (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) (0x30 + (0xd8 * fx_type))
+              WRITE_ASCIIE (fx_off + 0x00 + (0x00 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) "%clone%"
+              WRITE_LONG   (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 158 // grease
+              SET index2   += 5
+              SET counter  += 5
+              SET fx_delta += 5
             END   
           END   
         END 
+      END
+      WRITE_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
+    END
+  END
+  PATCH_IF (("%type%" STRING_COMPARE_CASE "cre" = 0) AND (fx_delta > 0)) BEGIN // fix offsets for cre files if fx inserted
+    PATCH_FOR_EACH offset IN 0x2a0 0x2a8 0x2b0 0x2b8 0x2bc BEGIN
+      READ_LONG offset curr_off
+      PATCH_IF (fx_off < curr_off) BEGIN
+        WRITE_LONG offset (THIS + ((0x30 + (0xd8 * fx_type)) * fx_delta))
       END
     END
   END
