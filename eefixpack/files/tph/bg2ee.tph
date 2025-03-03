@@ -362,6 +362,20 @@ COPY_EXISTING ~oh7200.bcs~ ~override~
   END
   BUT_ONLY
 
+// jmerry: several items for BP2 stores weren't being added due to AddStoreItem quirks 
+COPY_EXISTING ~ohbhub.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~TriggerActivation("ohb_messhall2",TRUE)~ ~~ // remove reference to non-existent trigger while we're here
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBSDWM","STAF12",10,1)~ ~AddStoreItem("OHBSDWM","STAF12",1,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBIMIM","RODS03",5,1)~  ~AddStoreItem("OHBIMIM","RODS03",10,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBIMIM","RODS06",5,1)~  ~AddStoreItem("OHBIMIM","RODS06",10,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBIMIM","AMUL17",10,1)~ ~AddStoreItem("OHBIMIM","AMUL17",50,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBHUEGR","HELM30",1,1)~ ~AddStoreItem("OHBHUEGR","HELM30",3,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBHUEGR","CHAN20",1,1)~ ~AddStoreItem("OHBHUEGR","CHAN20",3,1)~
+    REPLACE_TEXTUALLY ~AddStoreItem("OHBIMIM","BOOT12",1,1)~  ~AddStoreItem("OHBIMIM","BOOT12",2,1)~
+  END
+  BUT_ONLY
+
 // tbd, cam (two issues here, see bysohim in main d compile)
 // Yoshimo Should Have Follow-Up Banters with the PC
 EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add script prompt for third banter
