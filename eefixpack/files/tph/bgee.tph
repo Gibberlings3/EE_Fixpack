@@ -324,6 +324,13 @@ COPY_EXISTING ~ar2700.bcs~ ~override~
   END
   BUT_ONLY
 
+// tarom should not purge breakable items when updating his store (don't reset depreciation)
+COPY_EXISTING ~baldur.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~RemoveStoreItem("taerum","[^"]+",0)~ ~~
+  END
+  BUT_ONLY  
+
 // checking wrong var for dead safana
 COPY_EXISTING ~bd0101.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN 
