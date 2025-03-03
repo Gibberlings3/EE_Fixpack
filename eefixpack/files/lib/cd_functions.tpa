@@ -406,3 +406,34 @@ BEGIN
   END
 
 END  
+
+/////                                                  \\\\\
+///// cd_bulk_fix_item_strings_bulk                    \\\\\
+/////                                                  \\\\\
+
+// mini-macro for the bulk item fixes, string updates
+DEFINE_PATCH_MACRO cd_bulk_fix_item_strings_bulk BEGIN
+
+  FOR (index = 0x54 ; index > 0x4f ; index -= 0x04) BEGIN // only if no identified descript to match and update, go after normal descript (blun04)
+    READ_LONG index desc_strref
+    PATCH_IF ((desc_strref >= 0) AND (desc_strref < 999999)) BEGIN
+      READ_STRREF index desc
+      INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+        PATCH_IF (IS_AN_INT params_4) BEGIN 
+          REPLACE_TEXTUALLY ~%itm_speed_text%~ ~\1%params_4%~
+        END 
+        PATCH_IF (IS_AN_INT params_5) BEGIN 
+          REPLACE_TEXTUALLY ~%itm_weight_text%~ ~\1%params_5%~
+        END 
+        PATCH_IF (IS_AN_INT params_6) BEGIN 
+          REPLACE_TEXTUALLY ~%itm_thac0_text%~ ~\1%params_6%~
+        END 
+      END
+      INNER_ACTION BEGIN
+        STRING_SET_EVALUATE desc_strref ~%desc%~
+      END
+      SET index = 0 // kill loop (if identified updated, don't mess with unidentified)
+    END
+  END
+
+END

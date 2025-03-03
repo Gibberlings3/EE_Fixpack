@@ -466,6 +466,11 @@ COPY_EXISTING ~kinetic.itm~ ~override~ // lance of disruption confers immunity t
   LPF DELETE_EFFECT INT_VAR match_opcode = 318 STR_VAR match_resource = spwi328 END
   BUT_ONLY
 
+// move planetar dispel-on-hit to after vorpal effect so that death ward can work better (in bgee, bg2ee, iwdee.tph)
+COPY_EXISTING ~planetar.itm~ ~override~
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 58 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 58 multi_match = 1 END
+
 // tbd, cam
 // multiple permanent effects with durations
 COPY_EXISTING ~potn10.itm~  ~override~ // (itm) Potion of Invisibility - causes invisibility - sound(s) #cas_m01 - animations(s) illush - additional effects

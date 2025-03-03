@@ -696,6 +696,15 @@ COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop onc
   END
   BUT_ONLY
 
+// neera shouldn't initiate dialogue afer initial red wizard ambush if panicked
+COPY_EXISTING ~neera.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~\(Global("RedWizards","AR3300",3)[ %TAB%%LNL%%MNL%]+!ActuallyInCombat()\)~ 
+      ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~
+    REPLACE_TEXTUALLY ~\([ %TAB%]Global("RedWizards","AR3300",4)\)~ 
+      ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~
+  END  
+
 INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
 /////                                                  \\\\\
@@ -937,6 +946,11 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
 // displaying null string instead of 'devour brain'; many other parameters also wrong
 COPY_EXISTING ~mindflay.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 target = 2 timing = 1 duration = 0 parameter1 = RESOLVE_STR_REF(@102) parameter2 = 0 END
+
+// move planetar dispel-on-hit to after vorpal effect so that death ward can work better (in bgee, bg2ee, iwdee.tph)
+COPY_EXISTING ~planetar.itm~ ~override~
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 58 STR_VAR insert = last END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 58 multi_match = 1 END
 
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero

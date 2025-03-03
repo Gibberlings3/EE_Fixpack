@@ -4,6 +4,11 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable, range => file // notes
   aegis, null, null, null, null, null, null, null, null, null, 3, null, null => aegis // tbd, cam: aegis fang has wrong enchantment level
   aegis2, null, null, null, null, null, null, null, null, null, 3, null, null => aegis2 // tbd, cam: aegis fang has wrong enchantment level
+  blun22, null, null, null, 1, null, null, null, null, null, null, null, null => blun22 // speed factor not accounting for enchantment
+  blun23, null, null, null, 2, null, null, null, null, null, null, null, null => blun23 // speed factor not accounting for enchantment
+  blun24, null, null, null, 2, null, null, null, null, null, null, null, null => blun24 // speed factor not accounting for enchantment
+  blun26, null, null, null, 1, null, null, null, null, null, null, null, null => blun26 // speed factor not accounting for enchantment
+  blun27, null, null, null, 0, null, null, null, null, null, null, null, null => blun27 // speed factor not accounting for enchantment
   critical, null, null, null, null, null, null, null, null, null, null, null, 0 => critical // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   eneblade, null, null, 0, null, null, null, null, null, null, null, null, null => eneblade // luke: Energy Blade – should not interact with spell protections
   fblade, null, null, 0, null, null, null, null, null, null, null, null, null => fblade // luke: flame blade should not interact with level-based spell protections
