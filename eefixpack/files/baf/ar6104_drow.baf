@@ -1,0 +1,7 @@
+IF
+  !Global("oh_drow_items_safe","GLOBAL",1)
+  InMyArea(Player1)
+THEN
+  RESPONSE #100
+    SetGlobal("oh_drow_items_safe","GLOBAL",1)
+END

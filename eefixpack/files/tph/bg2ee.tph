@@ -245,6 +245,9 @@ COPY_EXISTING ~ar5203.bcs~ ~override~
   END
   BUT_ONLY
 
+// one area in sendai's enclave lacks the 'drow items safe' bit of scripting
+EXTEND_BOTTOM ~ar6104.bcs~ ~eefixpack/files/baf/ar6104_drow.baf~
+
 // holy symbols for not-the-PC shouldn't rely on the PC's choice of temple
 COPY_EXISTING ~baldur.bcs~   ~override~
               ~baldur25.bcs~ ~override~
