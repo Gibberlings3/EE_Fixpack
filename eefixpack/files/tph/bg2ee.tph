@@ -380,6 +380,13 @@ COPY_EXISTING ~ohbhub.bcs~ ~override~
   END
   BUT_ONLY
 
+// fear via 'Eyes of the Beholder' item should also work to scare viekang in ToB
+COPY_EXISTING ~sarvie01.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~OR(12)~ ~OR(13) SpellCastOnMeRES("OHREYEB3",[ANYONE])~
+  END
+  BUT_ONLY  
+
 // tbd, cam (two issues here, see bysohim in main d compile)
 // Yoshimo Should Have Follow-Up Banters with the PC
 EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add script prompt for third banter
