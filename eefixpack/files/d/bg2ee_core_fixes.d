@@ -73,3 +73,6 @@ ALTER_TRANS trax BEGIN 15 END BEGIN 1 END BEGIN ~REPLY~ ~#522~ END // All right,
 // 'nothing to say to you' bug in hexxat's quest
 ALTER_TRANS OHHSTONE BEGIN 1 END BEGIN 2 END ACTION ~~ END
 ALTER_TRANS OHHSTONE BEGIN 2 END BEGIN 0 END EPILOGUE ~EXIT~ END
+
+// combine bernard's store (see also bernard.bcs, bernard2.sto)
+REPLACE_ACTION_TEXT ~bernard~ ~StartStore("bernard"~ ~StartStore("bernard2"~

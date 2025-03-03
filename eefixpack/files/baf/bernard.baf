@@ -1,0 +1,25 @@
+IF
+  Global("cd_update_store","LOCALS",0)
+  OR(2)
+    Dead("Lehtinan")  // Lehtinan
+    !Global("LehtinanCheap","GLOBAL",0)
+THEN
+  RESPONSE #100
+    ChangeStoreMarkup("bernard2",100,30)  // Copper Coronet
+    AddStoreItem("bernard2","sw1h40",1,1)  // Blade of Roses +3
+    AddStoreItem("bernard2","blun19",1,1)  // Mauler's Arm +2
+    AddStoreItem("bernard2","blun16",1,1)  // The Sleeper +2
+    AddStoreItem("bernard2","slng07",1,1)  // Sling of Seeking +1
+    AddStoreItem("bernard2","ax1h12",1,1)  // Stonefire +3
+    AddStoreItem("bernard2","ax1h10",1,1)  // Azuredge +3
+    AddStoreItem("bernard2","scrl7s",1,1)  // Chain Lightning
+    AddStoreItem("bernard2","scrl8d",1,1)  // Spell Turning
+    AddStoreItem("bernard2","scrl8i",1,1)  // Cacofiend
+    AddStoreItem("bernard2","scrl8l",1,1)  // Spell Sequencer
+    AddStoreItem("bernard2","scrl8p",1,1)  // Prismatic Spray
+    AddStoreItem("bernard2","scrl9e",1,1)  // Incendiary Cloud
+    AddStoreItem("bernard2","scrl9b",1,1)  // Summon Fiend
+    AddStoreItem("bernard2","scrl8z",1,1)  // Simulacrum
+    AddStoreItem("bernard2","scrl8s",1,1)  // Summon Efreeti
+    SetGlobal("cd_update_store","LOCALS",1)
+END

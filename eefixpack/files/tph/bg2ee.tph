@@ -255,6 +255,9 @@ COPY_EXISTING ~baldur.bcs~   ~override~
       ~\1 OR(2)~
   END
 
+// consolidate bernard's store (see also bernard2.sto, bernard.dlg)
+EXTEND_BOTTOM ~bernard.bcs~ ~eefixpack/files/baf/bernard.baf~
+
 // prevent ler from initiating dialogue once chapter is advanced
 COPY_EXISTING ~bystand1.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN 
@@ -1794,6 +1797,9 @@ END
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
+
+// consolidate bernard's store (see also bernard.bcs, bernard.dlg)
+COPY_EXISTING ~bernard.sto~ ~override/bernard2.sto~
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
