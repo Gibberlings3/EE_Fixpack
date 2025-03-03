@@ -59,6 +59,10 @@ END
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
 
+// imoen should only use one cre file, like other NPCs
+COPY_EXISTING ~npclevel.2da~ ~override~
+  REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
+
 // tbd, cam
 // dupe text for wild surges: https://forums.beamdog.com/discussion/comment/1169266/#Comment_1169266
 COPY_EXISTING ~wildmag.2da~ ~override~
