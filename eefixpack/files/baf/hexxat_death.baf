@@ -1,0 +1,49 @@
+IF
+  HasItemEquiped("ohhexam4",Myself)  // Hexxat's Amulet
+  Global("OHH_RESTORE_HEXXAT","GLOBAL",1)
+  InParty(Myself)
+  CombatCounter(0)
+  HasItem("ohhcask2",Player%index%)
+  NextTriggerObject(Player%index%)
+  ActionListEmpty()
+THEN
+  RESPONSE #100
+    ActionOverride(Player%index%,TransformItem("ohhcask2","ohhcask"))  // Hexxat's Coffin
+    TransformItem("ohhexam4","ohhexam1")  // Hexxat's Amulet
+    CreateVisualEffectObject("SPDISPMA",Myself)
+    PlaySound("mstchng")
+    SetGlobal("OHH_RESTORE_HEXXAT","GLOBAL",0)
+    JoinParty()
+END
+
+IF
+  HasItemEquiped("ohhexam4",Myself)  // Hexxat's Amulet
+  !Global("OHH_RESTORE_HEXXAT","GLOBAL",1)
+  Range([PC],3)
+  %trig1%
+  InParty(Myself)
+  CombatCounter(0)
+  HasItem("ohhcask",Player%index%)
+  NextTriggerObject(Player%index%)
+  ActionListEmpty()
+THEN
+  RESPONSE #100
+    ActionOverride(Player%index%,TransformItem("ohhcask","ohhcask2"))  // Empty Casket
+    SetGlobalTimer("OHH_RESTORE","GLOBAL",ONE_HOUR)
+    Kill(Myself)
+END
+
+IF
+  HasItemEquiped("ohhexam4",Myself)  // Hexxat's Amulet
+  %trig2%
+  !InPartyAllowDead(Myself)
+  CombatCounter(0)
+  HasItem("ohhbag",Player%index%)
+  NextTriggerObject(Player%index%)
+  ActionListEmpty()
+THEN
+  RESPONSE #100
+    SetGlobal("OHH_hexxatfightdead","GLOBAL",1)
+    ActionOverride(Player%index%,DestroyItem("ohhbag"))  // Dragomir's Respite
+    EscapeAreaDestroy(3)
+END
