@@ -1,0 +1,11 @@
+// fixes here will run on both bg2 and iwd 
+
+// double 'freedom' strings as subspell also has name
+COPY_EXISTING ~cdwi917a.spl~ ~override~ 
+  WRITE_LONG 0x08 `0
+  BUT_ONLY
+
+// tbd, cam
+// expiry sound is way too early
+COPY_EXISTING ~spwish33.spl~ ~override~ // Intoxication - causes drunkenness - plays sound EFF_E06 - portrait icon 5
+  LPF ALTER_EFFECT INT_VAR match_opcode = 174 match_duration = 60 duration = 1200 END
