@@ -67,7 +67,7 @@ COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
 BUT_ONLY
 
 // tbd, graion: more consistent op5 setup, see header
-INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tpa~
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
 
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
