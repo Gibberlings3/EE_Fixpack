@@ -438,6 +438,10 @@ COPY_EXISTING ~cdxbowbm.itm~ ~override~
   LPF ADD_ITEM_EFFECT INT_VAR opcode = 141 target = 1 parameter2 = 24 timing = 1 END // rgb fade
   BUT_ONLY
 
+// Oil of Second Chances should take a full round to apply, and shouldn't display "gulp"
+COPY_EXISTING ~chance.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 opcode = 165 parameter1 = 0 timing = 0 duration = 6 resist_dispel = 0 END  
+
 // ie-6007, cam - see also strings 8663, 8712, 8911, 40639, 25818, and 27373
 // Weapon damage corrections
 COPY_EXISTING ~clbhand.itm~ ~override~ // composite long bow of the hand
