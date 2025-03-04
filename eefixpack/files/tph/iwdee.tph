@@ -662,16 +662,12 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_iwdee.tph~ // bulk general changes
 
+INCLUDE ~eefixpack/files/tph/bg2_iwd_common_spell_fixes.tph~    // spell fixes in common between bg2, iwd
 INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
 
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
-INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_iwdee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
-INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
-// tbd, cam (from jmerry)
-// prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
-INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
 
 // tbd, davidw
 // circle of bone subspell has illegal character in sig
@@ -682,10 +678,6 @@ INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~
 COPY_EXISTING ~#cofear.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
-
-// resurrection should remove salamander fireballs from polymorph (also for bg, bg2)
-COPY_EXISTING ~#rdremov.spl~ ~override~ 
-  LPF CLONE_EFFECT INT_VAR match_opcode = 172 STR_VAR match_resource = spin974 resource = spin160 END
 
 // feedback with limited timing and/or duration
 COPY_EXISTING ~#sunrund.spl~ ~override~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
@@ -718,12 +710,7 @@ COPY_EXISTING ~backstab.spl~ ~override~
       END
     END
   END
-  BUT_ONLY  
-
-// double 'freedom' strings as subspell also has name (same patch for bg2ee)
-COPY_EXISTING ~cdwi917a.spl~ ~override~ 
-  WRITE_LONG 0x08 `0
-  BUT_ONLY
+  BUT_ONLY 
   
 // ie-5938, cam
 // Lich Touch should paralyze, not hold
@@ -744,13 +731,6 @@ COPY_EXISTING ~ohtmps1.spl~ ~override~ // holy power
 // stuns, but plays spmindat; iwd generally uses glows so change to that instead
 COPY_EXISTING ~spcl118.spl~  ~override~ // the siren's yearning—enthralls creatures - plays spmindat
   LPF ALTER_EFFECT INT_VAR match_opcode = 215 opcode = 8 parameter1 = ((46 << 8) + (56 << 16) + (0 << 24)) parameter2 = 255 STR_VAR match_resource = spmindat END
-  BUT_ONLY
-
-// tbd, cam
-// enrage is using berserk's spell icon
-COPY_EXISTING ~spcl321.spl~ ~override~
-  WRITE_ASCII 0x3a ~enrageb~ #8
-  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
   BUT_ONLY
 
 // ie-6027, cam
@@ -823,12 +803,6 @@ COPY_EXISTING ~spitm99.spl~ ~override~
 // IWDEE bug 321 should be subject to same MR check as AC effect
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 resist_dispel = 1 END
-
-// swapping stacking protection from 206/318/324 for 321
-// see also cwoslim.itm, #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, spwi101/b/c.spl
-COPY_EXISTING ~sppr250.spl~ ~override~
-  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // ie-5947, cam
 // Cloudburst should remove Fireshields
@@ -920,12 +894,6 @@ COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615
 // oiwd fix
 COPY_EXISTING ~%CLERIC_WHIRLWIND%.spl~  ~override~ // sppr617
   LPF ALTER_EFFECT INT_VAR match_resist_dispel = 0 resist_dispel = 1 END
-
-// at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
-COPY_EXISTING ~sppr701.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
-  BUT_ONLY
 
 // death fog's slow icon could be blocked on round 2+
 COPY_EXISTING ~spwi030.spl~ ~override~ // via trap
@@ -1033,12 +1001,6 @@ COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
   BUT_ONLY
 
-// tbd, cam
-// expiry sound is way too early
-COPY_EXISTING ~spwish33.spl~ ~override~ // Intoxication - causes drunkenness - plays sound EFF_E06 - portrait icon 5
-  LPF ALTER_EFFECT INT_VAR match_opcode = 174 match_duration = 60 duration = 1200 END
-
-
 // luke
 // 1) Grease should not interact with spell protections
 // 2) Grease (in particular "spwi101b.spl" and "spwi101c.spl") should apply the GREASE stat.
@@ -1074,59 +1036,6 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 78 "special" = 7 END // Disease
     LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 "match_parameter2" = 7 END // op78 can naturally provide the "Diseased" portrait icon
   BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// Spirit Fire => should not interact with spell protections
-// As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph" // sppr450.spl, sppr450a.spl, sppr450b.spl
-  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
-END
-
-
-// luke
-// Nature's Beauty – permanent blindness (until dispelled)
-// 1) Timing Mode 1 will permanently set the creature's STATE_BLIND flag, leaving no removable effect.
-// 2) Related: the -4 penalty to AC and THAC0 are apparently tied to the effect (op74), not STATE_BLIND.
-// As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
-// Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~ // sppr704.spl
-    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
-    LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // op74 naturally provides the "Blind" portrait icon
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-/*
-luke
-**Sunray**
-- It now properly distinguishes `GENERAL=UNDEAD || RACE=MYCONID` from `!(GENERAL=UNDEAD || RACE=MYCONID)`
-*/
-WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~ // sppr707.spl, sppr707a.spl, sppr707b.spl, sppr707c.spl
-  LAF ~CLERIC_SUNRAY~ END
-END
-
-/*
-luke
-Summon Nishruu / Hakeashar
-- their attack (`nishrusu.itm`) should ignore all `AC` modifiers
-  - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
-    - this is certainly unintended since they don't actually deal piercing damage
-- they should be vulnerable to Dispel/Remove Magic
-- they should be flagged as `GENERAL=MONSTER` / `RACE=MIST` / `CLASS=MIST` on all games
-- make sure the Nishruu has 100% Poison resistance
-- The Hakeashar should have the same passive traits as the Nishruu
-  - i.e., it should be immune to Poison and see invisible creatures
-- the Nishruu should use the `NISHRUU` animation on all games
-- the Hakeashar should use the `HAKEASHAR` animation on all games
-- removed unused spell setup
-*/
-WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
-  LAF ~NISHRUU_HAKEASHAR~ END
 END
 
 /*
@@ -1188,10 +1097,6 @@ WITH_SCOPE BEGIN
     BUT_ONLY_IF_IT_CHANGES
   END
 END
-
-// tbd, cam
-// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
-INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

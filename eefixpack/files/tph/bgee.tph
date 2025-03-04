@@ -1159,10 +1159,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ // bulk general change
 INCLUDE ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~     // spell fixes in common between bg, bg2
 INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
 
-INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
-INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
-INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
 // tbd, cam
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
@@ -1240,13 +1237,6 @@ COPY_EXISTING ~spcl152.spl~ ~override~ // Barbarian rage
   LPF ALTER_EFFECT INT_VAR match_opcode=321 STR_VAR match_resource=SPCL102 resource=SPCL152 END
   BUT_ONLY // Effect removing previous instances of rage needs to be first in stack
 
-// tbd, cam
-// enrage is using berserk's spell icon
-COPY_EXISTING ~spcl321.spl~ ~override~
-  WRITE_ASCII 0x3a ~enrageb~ #8
-  LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
-  BUT_ONLY
-
 // has permanent-timed effect with duration
 COPY_EXISTING ~spin672.spl~              ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
               ~spin878.spl~              ~override~
@@ -1286,11 +1276,6 @@ COPY_EXISTING ~spin938.spl~ ~override~ // mephit flame fan
               ~spin956.spl~ ~override~ // hell hound flame
   LPF ALTER_HEADER INT_VAR projectile = 361 END // burnhand.pro
   BUT_ONLY
-  
-// writhing fog should stack better
-COPY_EXISTING ~sppr250.spl~ ~override~
-  LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
 // tbd, cam
 // shield spell shouldn't stack
@@ -1790,10 +1775,6 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-// tbd, cam
-// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
-INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
-
 // luke
 // **Command**
 // - Creatures with `37` or more Hit Dice (or experience levels) should not be immune to it
@@ -1876,16 +1857,6 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// **Spirit Fire**
-// - should not interact with level-based spell protections
-//// - As a result, do not use "bddoom.spl" (since its effects are coded as `power=1`)
-// - *"Spirits, fey creatures, elementals, and spectral undead take double damage."* => make sure this double damage bypasses Mirror Image (since the parent `SPL` file is an AoE spell)
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/luke/cleric_spirit_fire.tph"
-  LAUNCH_ACTION_FUNCTION "CLERIC_SPIRIT_FIRE" END
-END
-
-// luke
 // **Chaotic Commands**
 // - remove duplicate `op328` effect(s)
 WITH_SCOPE BEGIN
@@ -1949,9 +1920,6 @@ END
 // - remove duplicate `op328` / `op233` effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%CLERIC_SHIELD_OF_THE_ARCHONS%.spl" "override" // sppr701
-    // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
-    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
-    LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
     PATCH_WITH_SCOPE BEGIN
       SET "op328_p2" = IDS_OF_SYMBOL ("SPLSTATE" "BUFF_PRO_SPELLS")
       SET "op233_p2" = IDS_OF_SYMBOL ("STATS" "CLERIC_SHIELD_OF_THE_ARCHONS")
@@ -1964,30 +1932,6 @@ WITH_SCOPE BEGIN
       END
     END
   BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Nature's Beauty**
-// - permanent blindness (until dispelled)
-//   1. Timing Mode 1 will permanently set the creature's STATE_BLIND flag, leaving no removable effect.
-//   2. Related: the -4 penalty to AC and THAC0 are apparently tied to the effect (op74), not STATE_BLIND.
-// - As a result, we suggest to stick with a limited `timing_mode` and set `duration` to a very high random value (max signed value...?).
-// - Additionally, this spell should only affect HUMANOID (there are a lot of unnatural creatures that are immune to it via op206; also, it is intended, right...?)
-WITH_SCOPE BEGIN
-  COPY_EXISTING ~%CLERIC_NATURE_BEAUTY%.spl~ ~override~ // sppr704
-    LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = 6 "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message (GENERAL != HUMANOID)
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 74 "timing" = 0 "duration" = 0x7FFFFFFF END // Blindness
-    LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 142 "match_parameter2" = 8 END // op74 naturally provides the "Blind" portrait icon
-  BUT_ONLY_IF_IT_CHANGES
-END
-
-// luke
-// **Sunray**
-// - recode from scratch so as to use `op326` effects instead of messy `op177` effects
-// - its insta-death effect against `UNDEAD` is now blocked by `"%CLERIC_DEATH_WARD%"` and the like
-WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/sunray.tph~ // sppr707, a-c
-  LAF ~CLERIC_SUNRAY~ END
 END
 
 // luke
@@ -2052,26 +1996,6 @@ WITH_SCOPE BEGIN
       END
     BUT_ONLY_IF_IT_CHANGES
   END
-END
-
-/*
-luke
-Summon Nishruu / Hakeashar
-- their attack (`nishrusu.itm`) should ignore all `AC` modifiers
-  - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
-    - this is certainly unintended since they don't actually deal piercing damage
-- they should be vulnerable to Dispel/Remove Magic
-- they should be flagged as `GENERAL=MONSTER` / `RACE=MIST` / `CLASS=MIST` on all games
-- make sure the Nishruu has 100% Poison resistance
-- The Hakeashar should have the same passive traits as the Nishruu
-  - i.e., it should be immune to Poison and see invisible creatures
-- the Nishruu should use the `NISHRUU` animation on all games
-- the Hakeashar should use the `HAKEASHAR` animation on all games
-- removed unused spell setup
-*/
-WITH_SCOPE BEGIN
-  INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
-  LAF ~NISHRUU_HAKEASHAR~ END
 END
 
 /////                                                  \\\\\
