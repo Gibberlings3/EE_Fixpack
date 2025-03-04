@@ -960,6 +960,12 @@ COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
               ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806
   LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 80 opcode = 142 parameter2 = 112 END // clone deaf into deafness icon
 
+// shroud of flame shouldn't cause 100% fire resistant creatures to burst into flames
+COPY_EXISTING ~spwi524.spl~  ~override~
+              ~spwi524b.spl~ ~override~
+              ~spwi524c.spl~ ~override~
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 318 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END     
+
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities
 // thac0 progression should be capped at -2 (base fighter 0 + 2 bonus)
