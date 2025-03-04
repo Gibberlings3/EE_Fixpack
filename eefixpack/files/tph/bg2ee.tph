@@ -61,6 +61,11 @@ ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi12
   INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
 END
 
+// ensure that ids tables are properly sorted
+COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
+  LPF sort_ids END
+BUT_ONLY
+
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\

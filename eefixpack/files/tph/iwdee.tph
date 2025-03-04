@@ -102,6 +102,11 @@ COPY_EXISTING ~tracking.2da~ ~override~
   REPLACE_TEXTUALLY ~AR7004[ %TAB%]+O_24861~ ~AR7005    O_24861~
   BUT_ONLY
 
+// ensure that ids tables are properly sorted
+COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
+  LPF sort_ids END
+BUT_ONLY
+
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 /////                                                  \\\\\

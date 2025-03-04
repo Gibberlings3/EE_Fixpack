@@ -104,6 +104,163 @@ BEGIN
 	END
 END
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// A patch function that sorts IDS table entries numerically in ascending order.
+// Notation of numeric values (decimal/hexadecimal) is preserved.
+// Applies a stable sort which preserves relative order of duplicate IDS entries.
+// Entries are also cleaned up by removing excessive whitespace.
+///////////////////////////////////////////////////////////////////////////////////////////////////
+DEFINE_PATCH_FUNCTION sort_ids
+BEGIN
+  // detecting newline type (windows or unix)
+  PATCH_IF (INDEX_BUFFER(~%WNL%~) >= 0) BEGIN
+    SPRINT nl ~%WNL%~
+  END ELSE BEGIN
+    SPRINT nl ~%LNL%~
+  END
+
+  // parsing table entries
+  SET headers = 0
+  SET unparsed = 0  // some ids files contain invalid content
+  SPRINT entry_regex ~^\(\(-?[0-9]+\)\|\(-?0x[0-9a-f]+\)\)[ %TAB%]+\(.+\)~ // group 1: value; group 4: symbol
+  FOR (pos1 = 0 pos2 = 0 row = 0; pos1 >= 0 && pos2 >= 0; row += 1) BEGIN
+    SET pos2 = INDEX_BUFFER(~[%WNL%]~ pos1)
+    // needed if last line doesn't end with a newline
+    SET pos2 = (pos2 < 0) ? BUFFER_LENGTH : pos2
+    PATCH_IF (pos2 >= pos1) BEGIN
+      READ_ASCII pos1 line (pos2 - pos1)
+
+      // trimming whitespace
+      INNER_PATCH_SAVE line ~%line%~ BEGIN REPLACE_TEXTUALLY ~^[ %TAB%]+~ ~~ REPLACE_TEXTUALLY ~[ %TAB%]+$~ ~~ END
+
+      SET is_entry = (~%line%~ STRING_MATCHES_REGEXP ~%entry_regex%~ == 0)
+      SET is_header = (row < 2 && NOT is_entry)
+
+      PATCH_IF (is_header) BEGIN
+        // processing table header
+        SPRINT $headers(~%headers%~) ~%line%~
+        SET headers += 1
+      END ELSE PATCH_IF (is_entry) BEGIN
+        // processing table entry
+        INNER_PATCH_SAVE token1 ~%line%~ BEGIN REPLACE_TEXTUALLY ~%entry_regex%~ ~\1~ END
+        INNER_PATCH_SAVE token2 ~%line%~ BEGIN REPLACE_TEXTUALLY ~%entry_regex%~ ~\4~ END
+        SET signed = (~%token1%~ STRING_MATCHES_REGEXP ~^-.*~ == 0)
+        PATCH_IF (IS_AN_INT ~token1~) BEGIN
+          SET value = token1
+          SET is_hex = (~%token1%~ STRING_MATCHES_REGEXP ~-?0x.+~ == 0)
+          SET digits = is_hex ? STRING_LENGTH ~%token1%~ - 2 : 0
+          SET digits = (is_hex && signed) ? digits - 1 : digits
+          SET sym_count = VARIABLE_IS_SET $ids(~%value%~ ~count~) ? $ids(~%value%~ ~count~) : 0
+          SPRINT $ids(~%value%~ ~%sym_count%~) ~%token2%~
+          SET $ids(~%value%~ ~hex~) = is_hex
+          SET $ids(~%value%~ ~digits~) = digits
+          SET $ids(~%value%~ ~count~) = sym_count + 1
+
+          // hex notation is needed to prevent overflow of big integers
+          LPF get_formatted_hex INT_VAR value digits = 8 RET result END
+          PATCH_IF (signed) BEGIN
+            SPRINT result ~-%result%~
+          END
+          // only array index is relevant
+          SET $ref(~%result%~) = 1
+        END
+      END ELSE PATCH_IF (NOT ~%line%~ STR_EQ ~~) BEGIN
+        // preserve unparsed data
+        SPRINT $unparsed(~%unparsed%~) ~%line%~
+        SET unparsed += 1
+      END
+
+      SET pos1 = INDEX_BUFFER(~[^%WNL%]~ pos2)
+    END
+  END
+
+  // discarding old content
+  SET ofs = 0
+  DELETE_BYTES ofs BUFFER_LENGTH
+
+  // writing sorted entries
+  // headers
+  FOR (i = 0; i < headers; ++i) BEGIN
+    SPRINT line $headers(~%i%~)
+    SPRINT line ~%line%%nl%~
+    SET line_len = STRING_LENGTH ~%line%~
+    INSERT_BYTES ofs line_len
+    WRITE_ASCIIE ofs ~%line%~ (line_len)
+    SET ofs += line_len
+  END
+
+  // Sorting indices in hex notation is better done lexicographically to prevent sorting errors because of overflow.
+  SORT_ARRAY_INDICES ~ref~ LEXICOGRAPHICALLY
+
+  // table entries
+  PHP_EACH ref AS index => _ BEGIN
+    // removing sign if needed
+    INNER_PATCH_SAVE index ~%index%~ BEGIN
+      READ_BYTE 0 sign
+      PATCH_IF (sign == 45) BEGIN
+        DELETE_BYTES 0 1
+      END
+    END
+
+    SET value = index
+    SET count = $ids(~%value%~ ~count~)
+    SET is_hex = $ids(~%value%~ ~hex~)
+    SET digits = $ids(~%value%~ ~digits~)
+
+    PATCH_IF (is_hex) BEGIN
+      LPF get_formatted_hex INT_VAR value digits RET first = result END
+    END ELSE BEGIN
+      SET first = value
+    END
+
+    FOR (i = 0; i < count; ++i) BEGIN
+      SPRINT second $ids(~%value%~ ~%i%~)
+      SPRINT line ~%first% %second%%nl%~
+      SET line_len = STRING_LENGTH ~%line%~
+      INSERT_BYTES ofs line_len
+      WRITE_ASCIIE ofs ~%line%~ (line_len)
+      SET ofs += line_len
+    END
+  END
+
+  // unparsed data
+  FOR (i = 0; i < unparsed; ++i) BEGIN
+    SPRINT line $unparsed(~%i%~)
+    SPRINT line ~%line%%nl%~
+    SET line_len = STRING_LENGTH ~%line%~
+    INSERT_BYTES ofs line_len
+    WRITE_ASCIIE ofs ~%line%~ (line_len)
+    SET ofs += line_len
+  END
+END
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Converts a number from decimal notation into hexadecimal notation with "0x" prefix
+// and a minimum number of digits.
+///////////////////////////////////////////////////////////////////////////////////////////////////
+DEFINE_PATCH_FUNCTION get_formatted_hex
+INT_VAR
+  value    = 0  // numeric value to convert into hexadecimal representation
+  digits   = 0  // minimum number of digits
+  to_upper = 1  // whether extended digits (a..f) are printed in capital letters
+RET
+  result        // resulting hexadecimal representation of "value"
+BEGIN
+  SPRINTF result "%x" (value)
+  PATCH_IF (to_upper) BEGIN
+    TO_UPPER ~result~
+  END
+  SET result_len = STRING_LENGTH ~%result%~
+  SET digits = digits + 2 - result_len
+  INNER_PATCH_SAVE result ~%result%~ BEGIN
+    WRITE_ASCII 0 ~0x~ (2)  // prefix in lowercase
+    FOR (i = 0; i < digits; ++i) BEGIN
+      INSERT_BYTES 2 1
+      WRITE_BYTE 2 48 // ASCII "0"
+    END
+  END
+END
+
 //////////////////////////////////////////////////////////
 /////// TO_HEX_NUMBER (borrowed from Argent77)
 //////////////////////////////////////////////////////////
