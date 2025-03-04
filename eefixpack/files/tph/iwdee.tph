@@ -402,7 +402,7 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
-//INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general changes (nothing here yet)
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
