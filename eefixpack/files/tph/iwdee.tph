@@ -49,6 +49,12 @@ APPEND ~object.ids~
 114 TenthFarthestEnemyOf~
 
 // tbd, cam
+// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
+APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
+COPY ~eefixpack/files/spl/spin704.spl~ ~override~
+  SPRINT NYMPH_CONFUSION ~spin704~
+
+// tbd, cam
 // fixing missing starting equipment in HoW games for shaman, others
 COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
 
@@ -794,12 +800,6 @@ COPY_EXISTING ~spin161.spl~ ~override~
 COPY_EXISTING ~%INNATE_BOMBARDIER_BEETLE_CLOUD%.spl~ ~override~ // spin191
   LPF DELETE_EFFECT INT_VAR match_opcode=139 match_parameter1=35568 multi_match=1 END // has two 'stunned' strings
   BUT_ONLY
-
-// tbd, cam
-// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
-APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
-COPY ~eefixpack/files/spl/spin704.spl~ ~override~
-  SPRINT NYMPH_CONFUSION ~spin704~
 
 // ie-6028, cam
 // Charm via Mantle of Hell's Furnace does not work as expected or, really, at all
