@@ -1151,6 +1151,9 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ // bulk general changes
 
+INCLUDE ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~     // spell fixes in common between bg, bg2
+INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
+
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
