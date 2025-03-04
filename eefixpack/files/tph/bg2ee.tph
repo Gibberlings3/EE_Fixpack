@@ -541,6 +541,13 @@ COPY_EXISTING ~basigaze.itm~ ~override~
               ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
 
+// mismatched icons between inventory and item ability
+COPY_EXISTING ~book06.itm~ ~override~ 
+              ~book07.itm~ ~override~ // fine in IWDEE
+              ~book08.itm~ ~override~ 
+  WRITE_ASCIIE 0x3a ~i%SOURCE_RES%~ #8   
+  BUT_ONLY   
+
 // fixing waterdeep books (fix also used for bg2ee)
 INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
 

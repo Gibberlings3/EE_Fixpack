@@ -407,6 +407,12 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 
+// mismatched icons between inventory and item ability
+COPY_EXISTING ~book06.itm~ ~override~ 
+              ~book08.itm~ ~override~ 
+  WRITE_ASCIIE 0x3a ~i%SOURCE_RES%~ #8   
+  BUT_ONLY   
+
 // ie-6019, cam
 // Portrait icon fixes for items
 COPY_EXISTING ~bootfox.itm~ ~override~ // boots of the fox: swap haste icon for movement speed increase
