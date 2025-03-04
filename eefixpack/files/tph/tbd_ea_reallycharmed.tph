@@ -1,0 +1,6 @@
+// tbd, graion
+// REALLYCHARMED was added to BGEE for special interactions with op5
+// ported over to BG2EE and IWDEE for consistency and to ensure this doesn't throw people aside
+// also see https://forums.beamdog.com/discussion/comment/1069085/#Comment_1069085
+
+APPEND ~ea.ids~ ~7 REALLYCHARMED~ UNLESS ~REALLYCHARMED~
