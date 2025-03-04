@@ -49,6 +49,12 @@ APPEND ~object.ids~
 114 TenthFarthestEnemyOf~
 
 // tbd, cam
+// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
+APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
+COPY ~eefixpack/files/spl/spin704.spl~ ~override~
+  SPRINT NYMPH_CONFUSION ~spin704~
+
+// tbd, cam
 // fixing missing starting equipment in HoW games for shaman, others
 COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
 
@@ -301,6 +307,9 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 // spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total.
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_area_dv_fixes.tpa~
 
+COPY_EXISTING ~ar1015.are~ ~override~ // beetle has redundant script
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = ehbeetle script_override = ~~ END // name not unique, but it's ok since all shouldn't have override script
+
 // tbd, cam
 // dupe random treasure, two containers overlay one another
 COPY_EXISTING ~ar6006.are~ ~override~
@@ -337,6 +346,30 @@ COPY_EXISTING ~ar9601.are~ ~override~ // swap back the old extres4 dupe fix
   LPF REPLACE_AREA_ITEM INT_VAR charges1 = 1 charges2 = 1 charges3 = 0 STR_VAR old_item = rndtre78 new_item = rndtre75 END // 1/1/0 charges for beltbon/helmsh/stomper
   BUT_ONLY
 
+// one greater ice troll and one bergclaw don't have move scripts; also add random walk script to bergclaw to match others
+COPY_EXISTING ~ar9600.are~ ~override~ // can't use ALTER_AREA_ACTOR since names not unique, scripts not the same for others
+  READ_LONG  0x54 actor_off
+  READ_SHORT 0x58 actor_num
+  FOR (index = 0 ; index < actor_num ; ++index) BEGIN
+    READ_ASCII (actor_off + 0x80 + (index * 0x110)) cre_file
+    PATCH_IF ("%cre_file%" STRING_COMPARE_CASE "dlicetr" = 0) BEGIN
+      READ_SHORT (actor_off + 0x20 + (index * 0x110)) x_coord
+      READ_SHORT (actor_off + 0x22 + (index * 0x110)) y_coord
+      PATCH_IF ((x_coord = 1402) AND (y_coord = 2005)) BEGIN
+        WRITE_ASCII (actor_off + 0x58 + (index * 0x110)) ~gnt4move~ #8 // update general script
+      END
+    END
+    PATCH_IF ("%cre_file%" STRING_COMPARE_CASE "bergclaw" = 0) BEGIN
+      READ_SHORT (actor_off + 0x20 + (index * 0x110)) x_coord
+      READ_SHORT (actor_off + 0x22 + (index * 0x110)) y_coord
+      PATCH_IF ((x_coord = 401) AND (y_coord = 1442)) BEGIN
+        WRITE_ASCII (actor_off + 0x58 + (index * 0x110)) ~efrndw03~ #8 // update general script
+        WRITE_ASCII (actor_off + 0x68 + (index * 0x110)) ~gnt9move~ #8 // update race script
+      END
+    END
+  END
+  BUT_ONLY  
+
 // ie-6013, cam
 // Harpies should despawn for lower level parties
 COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at CheckPartyAverageLevel(14,LESS_THAN)
@@ -352,6 +385,9 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
   END
   BUT_ONLY
 
+COPY_EXISTING ~ar9714.are~ ~override~ // one boneguard lacks team script
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Boneguard Skeleton 6" script_class = ~gnteam4~ END
+
 // argent77
 // Fixes positioning issues with Brother Harken and Sister Incylia in the Fallen Temple
 WITH_SCOPE BEGIN
@@ -362,7 +398,7 @@ END
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
-//INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_iwdee.tph~ // bulk general changes (nothing actually here yet)
+INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_iwdee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/a7/iwd_blast_skeleton.tph~ // blast skeleton should self-destruct more reliably
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
@@ -377,10 +413,16 @@ COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
-//INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general changes (nothing here yet)
+INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general changes
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
+
+// mismatched icons between inventory and item ability
+COPY_EXISTING ~book06.itm~ ~override~ 
+              ~book08.itm~ ~override~ 
+  WRITE_ASCIIE 0x3a ~i%SOURCE_RES%~ #8   
+  BUT_ONLY   
 
 // ie-6019, cam
 // Portrait icon fixes for items
@@ -400,6 +442,10 @@ COPY_EXISTING ~cdxbowbm.itm~ ~override~
   LPF ADD_ITEM_EFFECT INT_VAR opcode =  61 target = 1 parameter1 = ((0 << 24) + (30 << 16) + (120 << 8)) parameter2 = (25 << 16) timing = 1 END // rgb fade
   LPF ADD_ITEM_EFFECT INT_VAR opcode = 141 target = 1 parameter2 = 24 timing = 1 END // rgb fade
   BUT_ONLY
+
+// Oil of Second Chances should take a full round to apply, and shouldn't display "gulp"
+COPY_EXISTING ~chance.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 opcode = 165 parameter1 = 0 timing = 0 duration = 6 resist_dispel = 0 END  
 
 // ie-6007, cam - see also strings 8663, 8712, 8911, 40639, 25818, and 27373
 // Weapon damage corrections
@@ -616,6 +662,8 @@ END
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_iwdee.tph~ // bulk general changes
 
+INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
+
 INCLUDE ~eefixpack/files/tph/5919_iwdee_spider_spawn.tph~ // ie-5919, cam: spider spawn only summons giant spiders, should also summon phase and sword
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry): simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_iwdee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
@@ -763,12 +811,6 @@ COPY_EXISTING ~spin161.spl~ ~override~
 COPY_EXISTING ~%INNATE_BOMBARDIER_BEETLE_CLOUD%.spl~ ~override~ // spin191
   LPF DELETE_EFFECT INT_VAR match_opcode=139 match_parameter1=35568 multi_match=1 END // has two 'stunned' strings
   BUT_ONLY
-
-// tbd, cam
-// nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
-APPEND ~spell.ids~ ~3704 NYMPH_CONFUSION~
-COPY ~eefixpack/files/spl/spin704.spl~ ~override~
-  SPRINT NYMPH_CONFUSION ~spin704~
 
 // ie-6028, cam
 // Charm via Mantle of Hell's Furnace does not work as expected or, really, at all
@@ -928,6 +970,12 @@ COPY_EXISTING ~%WIZARD_EMOTION_FEAR%.spl~ ~override~ // spwi428
 COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
               ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806
   LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 80 opcode = 142 parameter2 = 112 END // clone deaf into deafness icon
+
+// shroud of flame shouldn't cause 100% fire resistant creatures to burst into flames
+COPY_EXISTING ~spwi524.spl~  ~override~
+              ~spwi524b.spl~ ~override~
+              ~spwi524c.spl~ ~override~
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 318 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END     
 
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities

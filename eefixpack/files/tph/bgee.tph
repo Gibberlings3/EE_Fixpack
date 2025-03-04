@@ -62,6 +62,22 @@ END
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
 
+ACTION_IF !game_includes_sod BEGIN // add missing movie entries for bgee/sod
+  APPEND ~movidesc.2da~ ~LOGO 25295~ // only logo missing w/o SoD
+END ELSE BEGIN
+  APPEND ~movidesc.2da~ // lots of stuff missing with SoD
+~BGENTER 19660
+CAMP 19662
+ELDRCITY 19665
+ENDMOVIE 19666
+FRARMINN 19667
+MINEFLOD 19671
+NASHKELL 19672
+WRECK 31834~
+END
+COPY_EXISTING ~movidesc.2da~ ~override~ // and then make it pretty
+  PRETTY_PRINT_2DA
+
 // imoen should only use one cre file, like other NPCs
 COPY_EXISTING ~npclevel.2da~ ~override~
   REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
@@ -986,6 +1002,10 @@ COPY_EXISTING ~planetar.itm~ ~override~
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
   LPF ALTER_EFFECT INT_VAR match_opcode = 94 opcode = 164 parameter2 = 0 END // flesh out effects below
 
+// potion of perception should provide bonus to move silently
+COPY_EXISTING ~potn39.itm~ ~override~
+  LPF CLONE_EFFECT INT_VAR match_opcode = 275 opcode = 59 STR_VAR insert = below END
+
 // poison resistance blocking con penalty, choking noises
 COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes poison
   LPF CLONE_EFFECT INT_VAR match_opcode = 324 STR_VAR insert = last END
@@ -1135,6 +1155,9 @@ END
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ // bulk general changes
+
+INCLUDE ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~     // spell fixes in common between bg, bg2
+INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
 
 INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - simulacrum/projected images should have thief skills, but no shadow twin
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application

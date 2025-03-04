@@ -1,0 +1,19 @@
+COPY_EXISTING ~spin978.spl~ ~override~ // golem haste [bg2]
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // has a bunch of headers that never get used and don't match
+  LPF CLONE_EFFECT INT_VAR match_opcode = 16 opcode = 142 parameter2 = 38 END                            // clone into portrait icon
+  LPF CLONE_EFFECT INT_VAR match_opcode = 16 opcode = 139 parameter1 = 14023 timing = 1 duration = 0 END // clone into "hasted" string
+
+COPY_EXISTING ~spwi318.spl~ ~override~ // Minor Spell Deflection [sod, bg2]
+  LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
+
+COPY_EXISTING ~spwi399.spl~ ~override~ // Minor Spell Deflection [sod, bg2]
+  LPF ALTER_EFFECT INT_VAR match_target = 4 target = 2 END // mismatching targets between l1 effects and rest of spell
+
+COPY_EXISTING ~spwi606.spl~ ~override~ // Protection From Magic Energy [bg2]
+  LPF ALTER_EFFECT INT_VAR match_opcode = 31 parameter2 = 1 END // should be setting MDR, not incrementing on lev 19+ headers
+
+COPY_EXISTING ~spwi608.spl~ ~override~ // pierce magic [bg2]
+  LPF ALTER_EFFECT INT_VAR match_opcode = 230 match_resist_dispel = 0 resist_dispel = 2 END // level 18 effect
+
+COPY_EXISTING ~spwi621.spl~ ~override~ // Conjure Air Elemental [sod, bg2]
+  LPF ALTER_EFFECT INT_VAR header = 0 match_duration = 840 duration = 660 END // some durations wrong when cast at min level

@@ -22,6 +22,20 @@ The audio file associated should be "[SURGN04]", not "[STORE06]".
 */
 @12434 = ~[THE SURGEON 4]~ [SURGN04]
 
+// copy-paste strref 17872 from bg2ee for this (missing move silently line)
+@17872 = ~This potion heightens the sensory perception of the drinker, which allows delicate tasks to be performed better. The effect is to make certain thieving skills more likely to succeed.
+
+STATISTICS:
+
+Find Traps: +20%
+Pick Pockets: +20%
+Open Locks: +20%
+Move Silently: +20%
+Hide In Shadows: +20%
+Duration: 6 hours
+
+Weight: 1~
+
 // monk AC bonus progression changes at levels 23 and 35
 @24234 = ~MONK: Monks are warriors who pursue perfection through contemplation as well as action. They are versatile fighters, especially skilled in combat without weapons or armor. Though Monks cannot cast spells, they have a unique magic of their own: They channel a subtle energy, called ki, which allows them to perform amazing feats. The Monk's best known feat is their ability to stun an opponent with an unarmed blow.
 

@@ -10,6 +10,14 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   blun26, null, null, null, 1, null, null, null, null, null, null, null, null => blun26 // speed factor not accounting for enchantment
   blun27, null, null, null, 0, null, null, null, null, null, null, null, null => blun27 // speed factor not accounting for enchantment
   critical, null, null, null, null, null, null, null, null, null, null, null, 0 => critical // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
+  elemchan, null, null, null, null, null, null, null, null, null, 4, null, null => elemchan // upping enchantment for elemental princes
+  elemcryo, null, null, null, null, null, null, null, null, null, 4, null, null => elemcryo // upping enchantment for elemental princes
+  elemhydr, null, null, null, null, null, null, null, null, null, 4, null, null => elemhydr // upping enchantment for elemental princes
+  elemimix, null, null, null, null, null, null, null, null, null, 4, null, null => elemimix // upping enchantment for elemental princes
+  elemogre, null, null, null, null, null, null, null, null, null, 4, null, null => elemogre // upping enchantment for elemental princes
+  elemsunn, null, null, null, null, null, null, null, null, null, 4, null, null => elemsunn // upping enchantment for elemental princes
+  elemyanc, null, null, null, null, null, null, null, null, null, 4, null, null => elemyanc // upping enchantment for elemental princes
+  elemzaam, null, null, null, null, null, null, null, null, null, 4, null, null => elemzaam // upping enchantment for elemental princes
   eneblade, null, null, 0, null, null, null, null, null, null, null, null, null => eneblade // luke: Energy Blade – should not interact with spell protections
   fblade, null, null, 0, null, null, null, null, null, null, null, null, null => fblade // luke: flame blade should not interact with level-based spell protections
   fireseed, null, null, 0, null, null, null, null, null, null, null, null, null => fireseed // luke: Fire Seed should not interact with level-based spell protections

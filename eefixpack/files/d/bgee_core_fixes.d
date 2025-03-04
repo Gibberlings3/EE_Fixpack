@@ -192,3 +192,15 @@ END
 EXTEND_BOTTOM taerom 12
   IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
 END   
+
+// adoy should give belt to Player1 if Neera's dead or not present; better check for neera interjection
+ALTER_TRANS NEADOY BEGIN 24 END BEGIN 0 END BEGIN ACTION  ~GiveItem("NEBELT01",Player1)~ END // 0: give to Player1 if neera dead or not present
+ADD_TRANS_TRIGGER NEADOY 24 ~IfValidForPartyDialog("Neera")~ DO 1 // 1: add proper interjection checks
+ADD_TRANS_TRIGGER NEADOY 24 ~!Dead("NEERA")  AreaCheckObject("OH2010","NEERA")~ DO 2 3 // 2,3: only give to neera if she's alive and present
+EXTEND_TOP NEADOY 24 #1 // add alternative to 0/1 where neera is alive and present, not not valid for an interjection (silenced e.g.)
+  IF ~!IfValidForPartyDialog("Neera") !Dead("NEERA") AreaCheckObject("OH2010","NEERA")~ THEN REPLY #27688 DO ~GiveItem("NEBELT01","Neera")~ GOTO 25
+END
+EXTEND_BOTTOM NEADOY 24 // add alternatives for 2/3: if neera dead or not present, give belt to Player1
+  IF ~OR(2) Dead("NEERA") !AreaCheckObject("OH2010","NEERA")~ THEN REPLY #27689 DO ~GiveItem("NEBELT01",Player1)~ GOTO 25
+  IF ~OR(2) Dead("NEERA") !AreaCheckObject("OH2010","NEERA")~ THEN REPLY #27690 DO ~GiveItem("NEBELT01",Player1)~ GOTO 25
+END

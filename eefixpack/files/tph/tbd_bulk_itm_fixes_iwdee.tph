@@ -2,6 +2,9 @@
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
 
   //file, timing, magical, power, speed, weight, thac0, lore, type, prof, enchantment, dispellable => file // notes
+  elemchan, null, null, null, null, null, null, null, null, null, 4, null, null => elemchan // upping enchantment for elemental princes
+  elemsunn, null, null, null, null, null, null, null, null, null, 4, null, null => elemsunn // upping enchantment for elemental princes
+  elemzaam, null, null, null, null, null, null, null, null, null, 4, null, null => elemzaam // upping enchantment for elemental princes
 
 END
 
