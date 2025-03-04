@@ -2,7 +2,9 @@
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
 
   //file, race, class, general, sex, gender, animation, dv, kit => file // notes
-  
+  hobart, null, 155, null, null, null, null, null, null => hobart // should get rep penalty for killing hobart in lonelywood
+  hobart2, null, 4, null, null, null, null, null, null => hobart2 // should not get rep penalty for killing hobart in anauroch castle
+
 END
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_code.tph~
