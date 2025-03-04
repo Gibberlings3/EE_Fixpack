@@ -62,6 +62,22 @@ END
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
 
+ACTION_IF !game_includes_sod BEGIN // add missing movie entries for bgee/sod
+  APPEND ~movidesc.2da~ ~LOGO 25295~ // only logo missing w/o SoD
+END ELSE BEGIN
+  APPEND ~movidesc.2da~ // lots of stuff missing with SoD
+~BGENTER 19660
+CAMP 19662
+ELDRCITY 19665
+ENDMOVIE 19666
+FRARMINN 19667
+MINEFLOD 19671
+NASHKELL 19672
+WRECK 31834~
+END
+COPY_EXISTING ~movidesc.2da~ ~override~ // and then make it pretty
+  PRETTY_PRINT_2DA
+
 // imoen should only use one cre file, like other NPCs
 COPY_EXISTING ~npclevel.2da~ ~override~
   REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
