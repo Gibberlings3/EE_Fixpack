@@ -71,5 +71,14 @@ ALTER_TRANS trax BEGIN 13 END BEGIN 1 END BEGIN ~REPLY~ ~#520~ END // Fine, I am
 ALTER_TRANS trax BEGIN 15 END BEGIN 1 END BEGIN ~REPLY~ ~#522~ END // All right, I am <CHARNAME>, an adventurer.
 
 // 'nothing to say to you' bug in hexxat's quest
-ALTER_TRANS OHHSTONE BEGIN 1 END BEGIN 2 END ACTION ~~ END
-ALTER_TRANS OHHSTONE BEGIN 2 END BEGIN 0 END EPILOGUE ~EXIT~ END
+ALTER_TRANS OHHSTONE BEGIN 1 END BEGIN 2 END BEGIN ACTION ~~ END
+ALTER_TRANS OHHSTONE BEGIN 2 END BEGIN 0 END BEGIN EPILOGUE ~EXIT~ END
+
+// consolidate bernard's store (see also bernard.bcs, bernard2.sto)
+REPLACE_ACTION_TEXT ~bernard~ ~StartStore("bernard"~ ~StartStore("bernard2"~
+
+// keldorn fixes
+REPLACE_ACTION_TEXT_REGEXP ~keldor\(j\|p\)?~ ~EscapeAreaMove("AR0903",[0-9]+,[0-9]+~ ~EscapeAreaMove("AR0903",644,501~ // have keldorn escape to the same place  in NORH
+ALTER_TRANS bkeldor BEGIN 166 END BEGIN 0 END BEGIN ACTION // in keldorn-hexxat fight, if keldorn leaves he was setting hexxat leave vars, not his own [jmerry]
+ ~SetGlobal("KickedOut","LOCALS",1) LeaveParty() SetLeavePartyDialogueFile() ChangeAIScript("",DEFAULT) EscapeAreaMove("AR0903",644,501,0)~
+END 

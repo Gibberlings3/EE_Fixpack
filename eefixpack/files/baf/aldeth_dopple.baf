@@ -1,0 +1,41 @@
+IF // counting tranformed dopplegangers (includes zorl and irlentree)
+  GlobalGT("SPRITE_IS_DEADdopzorl","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    IncrementGlobal("SPRITE_IS_DEADdopzorl","GLOBAL",-1)
+    IncrementGlobal("AldethDopple","GLOBAL",1)
+    SetInterrupt(TRUE)
+END
+
+IF // counting non-tranformed dopplegangers (not zorl and irlentree)
+  GlobalGT("SPRITE_IS_DEADdopald","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    IncrementGlobal("SPRITE_IS_DEADdopald","GLOBAL",-1)
+    IncrementGlobal("AldethDopple","GLOBAL",1)
+    SetInterrupt(TRUE)
+END
+
+IF // non-transformed zorl
+  Global("cd_count_zorl_once","GLOBAL",0)
+  Dead("zorl")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("cd_count_zorl_once","GLOBAL",1)
+    IncrementGlobal("AldethDopple","GLOBAL",1)
+    SetInterrupt(TRUE)
+END
+
+IF // non-transformed irlentree
+  Global("cd_count_irlentree_once","GLOBAL",0)
+  Dead("irlentre")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("cd_count_irlentree_once","GLOBAL",1)
+    IncrementGlobal("AldethDopple","GLOBAL",1)
+    SetInterrupt(TRUE)
+END

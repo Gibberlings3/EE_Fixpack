@@ -87,6 +87,11 @@ ACTION_IF game_is_iwdee BEGIN
     END
     BUT_ONLY  
 
+COPY_EXISTING ~bcplcded.bcs~ ~override~ // didn't end its cutscene at all
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~END~ ~EndCutSceneMode()%LNL%END~
+  END  
+
   COPY_EXISTING ~eepomabs.bcs~ ~override~ // has 2x endcutscene
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(CreateVisualEffectObject\)~ ~\1~

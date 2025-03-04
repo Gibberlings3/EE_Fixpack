@@ -178,3 +178,17 @@ APPEND SHOAL
     IF ~~ THEN DO ~SetNumTimesTalkedTo(0)~ EXIT
   END
 END 
+
+// can't advance iron poisoning plot with taerom since ankheg shells keep interfering
+EXTEND_BOTTOM taerom 0
+  IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
+END   
+EXTEND_BOTTOM taerom 4
+  IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
+END   
+EXTEND_BOTTOM taerom 8
+  IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
+END   
+EXTEND_BOTTOM taerom 12
+  IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
+END   

@@ -1,0 +1,21 @@
+// these dopplegangers just don't like to be counted properly, so we're going overkill. 
+// counting is now handled by the area script, and should account for both pre- and post-
+// transformation dopplegangers. originally included the exterior of the building, but I
+// worried about double-counting since it's a master area script. Since the only places
+// these are meaningfully checked are in the sub-areas, I'm not too concerned. 
+
+// disable counting via local scripts; moving to area scripts instead
+COPY_EXISTING ~dopzorl.bcs~  ~override~
+              ~irlentre.bcs~ ~override~
+              ~zorl.bcs~     ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~StateCheck(Myself,STATE_REALLY_DEAD)~ ~False()~
+  END   
+  
+//EXTEND_BOTTOM ~ar1100.bcs~ ~eefixpack/files/baf/aldeth_dopple.baf~
+EXTEND_BOTTOM ~ar0127.bcs~ ~eefixpack/files/baf/aldeth_dopple.baf~
+EXTEND_BOTTOM ~ar0128.bcs~ ~eefixpack/files/baf/aldeth_dopple.baf~
+EXTEND_BOTTOM ~ar0129.bcs~ ~eefixpack/files/baf/aldeth_dopple.baf~
+
+COPY_EXISTING ~dopzorl.cre~ ~override~
+  WRITE_ASCII 0x280 ~dopzorl~ #32

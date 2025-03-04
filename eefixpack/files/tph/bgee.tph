@@ -27,6 +27,9 @@ COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_includes_sod BEGIN
     REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
     REPLACE_TEXTUALLY ~\({'BDORCF1L',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'SKAN',%TAB%2},~
+    REPLACE_TEXTUALLY // has duplicate blocks of the OH areas in area listing 
+      ~{"OH1000".+[%LNL%%MNL% %TAB%]+{"OH2000".+[%LNL%%MNL% %TAB%]+{"OH2010".+[%LNL%%MNL% %TAB%]+{"OH3000".+[%LNL%%MNL% %TAB%]+{"OH3010".+[%LNL%%MNL% %TAB%]+{"OH3020".+[%LNL%%MNL% %TAB%]+{"OH3100".+[%LNL%%MNL%]+\([ %TAB%]+}\)~
+      ~\1~
 /* comment this section, pending verification for mobile versions
     REPLACE_TEXTUALLY ~\({'BAELOTH',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'NCERND',%TAB%1},%WNL%%TAB%{'NKELDOR',%TAB%1},%WNL%%TAB%{'NANOMEN',%TAB%1},%WNL%%TAB%{'NEDWIN',%TAB%1},%WNL%%TAB%{'NHAER',%TAB%1},%WNL%%TAB%{'NJAN',%TAB%1},%WNL%%TAB%{'NMINSC',%TAB%1},%WNL%%TAB%{'NVALYGA',%TAB%1},%WNL%%TAB%{'NYOSHIM',%TAB%1},%WNL%%TAB%{'NKORGAN',%TAB%1},~
     REPLACE_TEXTUALLY ~\({'NEERA',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'NNALIA', 2},%WNL%%TAB%{'NMAZZY', 2},%WNL%%TAB%{'NAERIE', 2},~
@@ -47,6 +50,10 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
+// syncing damages.ids header between games (cosmetic)
+COPY_EXISTING ~damages.ids~ ~override~
+  REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
+
 ACTION_IF (game_includes_sod) BEGIN
   INCLUDE ~eefixpack/files/tph/a7/sod_fogtype.tph~ // apply workaround for buggy FOG_TYPE implementation
 END
@@ -54,6 +61,10 @@ END
 // tbd, cam (from jmerry)
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
+
+// imoen should only use one cre file, like other NPCs
+COPY_EXISTING ~npclevel.2da~ ~override~
+  REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
 
 // tbd, cam
 // dupe text for wild surges: https://forums.beamdog.com/discussion/comment/1169266/#Comment_1169266
@@ -203,7 +214,12 @@ INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
-ACTION_IF game_includes_sod BEGIN
+ACTION_IF !game_includes_sod BEGIN
+    
+  COPY ~eefixpack/files/bam/mcor~ ~override~ // adding cornugon animation for albert/rufie change
+       ~eefixpack/files/wav/mcor~ ~override~ // adding cornugon animation for albert/rufie change
+     
+ END ELSE BEGIN      
 
   COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
        ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
@@ -290,6 +306,7 @@ COMPILE ~eefixpack/files/d/bgee_tbd_nothing_to_say.d~ // nothing to say fixes fo
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_dopples_fixes.tph~ // tbd, cam (from k4thos/eet): gorion/teth/elminster dopples breaks if one is one-shot; also prevents disguised dopples from trying to shift if already dead
+INCLUDE ~eefixpack/files/tph/aldeth_dopple.tph~     // more dopple fixes, this time for aldeth's quest
 
 // tbd, cam (from k4thos/eet)
 // if you lure aec'letec out of the basement, much of the cultist scripting breaks
@@ -307,6 +324,13 @@ COPY_EXISTING ~ar2700.bcs~ ~override~
     REPLACE_TEXTUALLY ~Exists("\(Xzar\|Imoen\|Montaron\)")~ ~InMyArea("\1")~
   END
   BUT_ONLY
+
+// tarom should not purge breakable items when updating his store (don't reset depreciation)
+COPY_EXISTING ~baldur.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~RemoveStoreItem("taerum","[^"]+",0)~ ~~
+  END
+  BUT_ONLY  
 
 // checking wrong var for dead safana
 COPY_EXISTING ~bd0101.bcs~ ~override~
