@@ -296,6 +296,9 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 // spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total.
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_area_dv_fixes.tpa~
 
+COPY_EXISTING ~ar1015.are~ ~override~ // beetle has redundant script
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = ehbeetle script_override = ~~ END // name not unique, but it's ok since all shouldn't have override script
+
 // tbd, cam
 // dupe random treasure, two containers overlay one another
 COPY_EXISTING ~ar6006.are~ ~override~
@@ -332,6 +335,30 @@ COPY_EXISTING ~ar9601.are~ ~override~ // swap back the old extres4 dupe fix
   LPF REPLACE_AREA_ITEM INT_VAR charges1 = 1 charges2 = 1 charges3 = 0 STR_VAR old_item = rndtre78 new_item = rndtre75 END // 1/1/0 charges for beltbon/helmsh/stomper
   BUT_ONLY
 
+// one greater ice troll and one bergclaw don't have move scripts; also add random walk script to bergclaw to match others
+COPY_EXISTING ~ar9600.are~ ~override~ // can't use ALTER_AREA_ACTOR since names not unique, scripts not the same for others
+  READ_LONG  0x54 actor_off
+  READ_SHORT 0x58 actor_num
+  FOR (index = 0 ; index < actor_num ; ++index) BEGIN
+    READ_ASCII (actor_off + 0x80 + (index * 0x110)) cre_file
+    PATCH_IF ("%cre_file%" STRING_COMPARE_CASE "dlicetr" = 0) BEGIN
+      READ_SHORT (actor_off + 0x20 + (index * 0x110)) x_coord
+      READ_SHORT (actor_off + 0x22 + (index * 0x110)) y_coord
+      PATCH_IF ((x_coord = 1402) AND (y_coord = 2005)) BEGIN
+        WRITE_ASCII (actor_off + 0x58 + (index * 0x110)) ~gnt4move~ #8 // update general script
+      END
+    END
+    PATCH_IF ("%cre_file%" STRING_COMPARE_CASE "bergclaw" = 0) BEGIN
+      READ_SHORT (actor_off + 0x20 + (index * 0x110)) x_coord
+      READ_SHORT (actor_off + 0x22 + (index * 0x110)) y_coord
+      PATCH_IF ((x_coord = 401) AND (y_coord = 1442)) BEGIN
+        WRITE_ASCII (actor_off + 0x58 + (index * 0x110)) ~efrndw03~ #8 // update general script
+        WRITE_ASCII (actor_off + 0x68 + (index * 0x110)) ~gnt9move~ #8 // update race script
+      END
+    END
+  END
+  BUT_ONLY  
+
 // ie-6013, cam
 // Harpies should despawn for lower level parties
 COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at CheckPartyAverageLevel(14,LESS_THAN)
@@ -346,6 +373,9 @@ COPY_EXISTING ~ar9706.are~ ~override~ // only two harpy fiends should go away at
     END
   END
   BUT_ONLY
+
+COPY_EXISTING ~ar9714.are~ ~override~ // one boneguard lacks team script
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Boneguard Skeleton 6" script_class = ~gnteam4~ END
 
 // argent77
 // Fixes positioning issues with Brother Harken and Sister Incylia in the Fallen Temple
