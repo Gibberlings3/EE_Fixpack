@@ -7,8 +7,10 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_fireshields BEGIN
   ~bdshld02~ => 0 // [bg] bdhsld02.itm: The Suncatcher feedback
   ~keldorn~  => 0 // [multi] npswo03.itm: Hallowed Redeemer 
   ~leat23a~  => 0 // [multi] leat23.itm: Studded Leather of Thorns +6 [original power 4] 
+  ~ohbglov1~ => 0 // [multi] the winged's guantlets
   ~spcl237d~ => 0 // [multi] spcl237.spl: Greater Sun [original power 4] 
   ~spimixd~  => 0 // [multi] elemimix/elemzaam.itm: Imix/Zaaman Ruul fireshield [original power 4] 
+  ~spcryod~  => 0 // [multi] elemcryo/elemhydr.itm: Cryonax/Olhydra fireshield
   ~sppr730d~ => 7 // [multi] sppr730.spl: auro o' flaming death [original power 4] 
   ~sppr951d~ => 0 // [multi] unused, fix anyway
   ~sppr952d~ => 0 // [multi] unused, fix anyway [original power 4] 
