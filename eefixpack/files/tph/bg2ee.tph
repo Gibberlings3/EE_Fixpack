@@ -992,6 +992,12 @@ COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait 
 COPY_EXISTING ~spin891.spl~ ~override~ // make moon dog howl only affect enemies
   LPF ALTER_HEADER INT_VAR projectile = 159 END // inarea > inareanp
 
+COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
+  READ_SHORT 0x68 abil_num // op206 vs. spcl521 is always 90 seconds - doesn't scale correctly with other effects
+  FOR (index = abil_num ; index > 1 ; --index) BEGIN // skip header 0 since it's correct
+    LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END 
+  END   
+
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects
 COPY_EXISTING ~spwish12.spl~ ~override~
