@@ -1131,6 +1131,10 @@ END
 // consolidate bernard's store (see also bernard.bcs, bernard.dlg)
 COPY_EXISTING ~bernard.sto~ ~override/bernard2.sto~
 
+COPY_EXISTING ~type2.sto~ ~override~ //Adventurers' Mart (unused)
+  REMOVE_STORE_ITEM ~scrl7a~ //Invalid item
+  BUT_ONLY
+
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
