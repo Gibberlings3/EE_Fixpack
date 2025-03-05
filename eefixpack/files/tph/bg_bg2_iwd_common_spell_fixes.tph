@@ -85,7 +85,7 @@ COPY_EXISTING ~sppr701.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
   BUT_ONLY
 
-COPY_EXISTING ~spwi318.spl~ ~override~ // Minor Spell Deflection [sod, bg2]
+COPY_EXISTING ~spwi318.spl~ ~override~ // Minor Spell Deflection 
   LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
 
 COPY_EXISTING ~spwi399.spl~ ~override~ // Minor Spell Deflection [sod, bg2]

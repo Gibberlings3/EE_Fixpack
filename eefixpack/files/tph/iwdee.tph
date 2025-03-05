@@ -919,6 +919,10 @@ COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
   LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // 1 rd/2 levels
 
+COPY_EXISTING ~spra302.spl~ ~override~ // Minor Spell Deflection [ranger]
+  LPF DELETE_EFFECT INT_VAR header = 6 multi_match = 1 match_opcode = 233 END // dupe 233s ar level 11
+  LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
+
 // death fog's slow icon could be blocked on round 2+
 COPY_EXISTING ~spwi030.spl~ ~override~ // via trap
               ~spwi614.spl~ ~override~ // via trap
