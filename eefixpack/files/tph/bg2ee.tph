@@ -280,6 +280,19 @@ COPY_EXISTING ~bystand1.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(Global("CutScene01","AR0700",5)\)~ ~\1 GlobalLT("Chapter","GLOBAL",2)~
   END
 
+// cowled wizard: stop hitting yourself - CWs can end up targeting allies
+COPY_EXISTING ~cowenf01.bcs~ ~override~ 
+              ~cowenf02.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Nearest(\[ENEMY\])~ ~NearestEnemyOf(Myself)~ // catches SecondNearest, ThirdNearest, &c.
+    REPLACE_TEXTUALLY ~\[0\.0\.0\.MAGE\]~ ~NearestEnemyOfType([0.0.0.MAGE_ALL])~ // could target fellow CWs
+    REPLACE_TEXTUALLY ~StateCheck(\[0\.0\.0\.MAGE\])~ ~StateCheck(LastSeenBy(Myself)~ // could change target to fellwo CWs
+    REPLACE_TEXTUALLY ~\[\(0\|ENEMY\)\.0\.0\.0\.0\.SUMMONED\]~ ~[GOODCUTOFF.0.0.0.0.SUMMONED]~ // don't target friendly summons
+    REPLACE_TEXTUALLY ~\(See(\[ENEMY\])\)~ ~\1 !InMyGroup(LastSeenBy(Myself))~ // if targeting ENEMY, make sure it's not a fellow CW
+    REPLACE_TEXTUALLY ~\(!InMyGroup(LastSeenBy(Myself))\)[ %TAB%%LNL%%MNL%]+!InMyGroup(LastSeenBy(Myself))~ ~\1~ // in case previous R_T doubles this trigger
+  END 
+  BUT_ONLY
+
 // tbd, cam
 // when leaving Brynnlaw with Saemon, the Githyanki catch you "on the fourth morn" but no time actually passes
 COPY_EXISTING ~cut41q.bcs~ ~override~
