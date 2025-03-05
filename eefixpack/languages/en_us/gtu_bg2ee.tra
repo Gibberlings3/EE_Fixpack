@@ -6104,6 +6104,7 @@ Weight: 1~
 @22828 = ~Above me? But I have done your bidding to the letter. Am I not favored?~
 
 // [automatic scan] Issues: 3  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 4 | Surplus trailing whitespace at line 10
+// radius is now actually 10'
 @22832 = ~Protection From Evil, 10' Radius
 (Abjuration)
 
@@ -6112,10 +6113,10 @@ Sphere: Protection
 Range: Touch
 Duration: 1 turn/level
 Casting Time: 7
-Area of Effect: 15-ft. radius
+Area of Effect: 10-ft. radius
 Saving Throw: None
 
-When this spell is cast, all allied creatures within a 15-ft. radius are affected individually by Protection From Evil. It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target protected creatures.~
+When this spell is cast, all allied creatures within a 10-ft. radius are affected individually by Protection From Evil. It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target protected creatures.~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 4 | Surplus trailing whitespace at line 10
 @22834 = ~Champion's Strength

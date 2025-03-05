@@ -150,6 +150,20 @@ Disadvantages:
 – May only become Proficient (one slot) with melee weapons.
 – May not use the Charm Animal ability.~
 
+// make protection from evil 10' actually be 10'
+@22832 = ~Protection From Evil, 10' Radius
+(Abjuration)
+
+Level: 4
+Sphere: Protection
+Range: Touch
+Duration: 1 turn/level
+Casting Time: 7
+Area of Effect: 10-ft. radius
+Saving Throw: None
+
+When this spell is cast, all allied creatures within a 10-ft. radius are affected individually by Protection From Evil. It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target protected creatures.~
+
 /*
 jazira
 According to all online drow dictionary/translator i've found, it should be "a dobluth", not "an obluth".

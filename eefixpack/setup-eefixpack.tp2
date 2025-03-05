@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Nightly 030325~
+VERSION ~Nightly 030425~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
@@ -232,3 +232,4 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
+DEPRECATED ~For internal use only~

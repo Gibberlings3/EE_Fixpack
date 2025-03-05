@@ -1128,6 +1128,16 @@ COPY ~music/bm2.mus~ ~music/bm2.mus~
 COPY_EXISTING ~idpro101.pro~ ~override~
   WRITE_SHORT 0x210 100
   WRITE_BYTE  0x216 10
+  
+// make protection from evil 10' radius actually, uh, have a 10' radius  
+COPY_EXISTING ~idpro258.pro~ ~override~ // adjust to 10' projectile 
+  WRITE_SHORT 0x204 171 
+  WRITE_SHORT 0x206 171
+
+// tbd, cam
+// broken sound reference in lance of disruption projectile
+COPY_EXISTING ~idpro313.pro~ ~override~
+  WRITE_ASCII 0x18 ~#tra_59~ #8
 
 // ie-6008, cam
 // Worldmap travel fixes, https://www.gibberlings3.net/forums/topic/36416-iwd-worldmap/
@@ -1188,12 +1198,6 @@ COPY_EXISTING ~worldmap.wmp~ ~override~ // inconsistent travel times
     END
   END
   BUT_ONLY
-
-
-// tbd, cam
-// broken sound reference in lance of disruption projectile
-COPY_EXISTING ~idpro313.pro~ ~override~
-  WRITE_ASCII 0x18 ~#tra_59~ #8
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\

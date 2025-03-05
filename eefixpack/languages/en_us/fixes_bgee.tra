@@ -97,6 +97,20 @@ Disadvantages:
 – May only become Proficient (one slot) with melee weapons.
 – May not use the Charm Animal ability.~
 
+// radius is actually 10'
+@25825 = ~Protection From Evil, 10' Radius
+(Abjuration)
+
+Level: 4
+Sphere: Protection
+Range: Touch
+Duration: 1 turn/level
+Casting Time: 7
+Area of Effect: 10-ft. radius
+Saving Throw: None
+
+When this spell is cast, all allied creatures within a 10-ft. radius are affected individually by Protection From Evil. It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target protected creatures.~
+
 // shield of the archons cannot be dispelled, but it also doesn't absorb dispel - just use strref 15965 from iwdee
 @26287 = ~Shield of the Archons
 (Abjuration)

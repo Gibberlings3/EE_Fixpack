@@ -3,7 +3,18 @@
 // double 'freedom' strings as subspell also has name
 COPY_EXISTING ~cdwi917a.spl~ ~override~ 
   WRITE_LONG 0x08 `0
-  BUT_ONLY
+  BUT_ONLY 
+
+// celestials lack a lot of headers, jump from level 9 to 14 [iwd]
+COPY_EXISTING ~spcl923.spl~ ~override~ // summon deva
+              ~spcl935.spl~ ~override~ // summon fallen deva
+              ~sppr726.spl~ ~override~ // summon deva
+              ~sppr727.spl~ ~override~ // summon fallen deva
+              ~spwi923.spl~ ~override~ // summon planetar
+              ~spwi924.spl~ ~override~ // summon planetar, but goth 
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // trim down to one header
+  LPF ALTER_EFFECT INT_VAR silent = 1 duration = 78 END // iwdee (unused) has wrong base duration
+  LPF CD_EXTEND-O-MATIC INT_VAR min_lev_alt = 9 step_size = 1 base_dur = 24 step_dur = 6 level_cap = (20 + (10 * game_is_iwdee)) END // 4 rds + 1 rd/level
 
 // tbd, cam
 // expiry sound is way too early

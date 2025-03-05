@@ -618,6 +618,15 @@ COPY_EXISTING ~spcl144.spl~ ~override~
   WRITE_ASCII 0x3a ~spcl144~ #8
   BUT_ONLY
 
+// make protection from evil 10' radius actually, uh, have a 10' radius  
+COPY_EXISTING ~spargrpa.pro~ ~override/spprot10.pro~ // new 10' projectile 
+  WRITE_SHORT 0x204 171 
+  WRITE_SHORT 0x206 171
+ADD_PROJECTILE ~override/spprot10.pro~   
+COPY_EXISTING ~spcl233.spl~ ~override~ // protection from evil 10'
+              ~sppr408.spl~ ~override~ // protection from evil 10'
+  LPF ALTER_HEADER INT_VAR projectile = spprot10 END    
+
 COPY_EXISTING ~spin698.spl~ ~override~ // non_detection_self aka improved invisibility [bg2]
   LPF ALTER_EFFECT INT_VAR header = 0 match_opcode = 69 duration = 60 END // non-detection outlasts invis by five rounds  
 
@@ -648,6 +657,9 @@ COPY_EXISTING ~spin910.spl~ ~override~ // psionic domination
 COPY_EXISTING ~spin956.spl~ ~override~ // hell hound breath [bg2]
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // has a bunch of headers that never get used and don't match
 
+COPY_EXISTING ~sppr110.spl~ ~override~ //shillelagh
+  LPF ALTER_EFFECT INT_VAR header = 19 match_duration = 142 duration = 144 END // duration is two seconds too short at level 20
+
 COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2]
   PATCH_IF game_is_bg2ee BEGIN
     LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 267 match_parameter1 = 16233 END // blocks "gulp" string (bg2 only)
@@ -656,6 +668,10 @@ COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2]
   FOR (index = 1 ; index < abil_num ; ++index) BEGIN // start at 1 to skip first header which doesn't have dupe
     LPF DELETE_EFFECT INT_VAR header = index multi_match = 1 match_opcode = 101 match_parameter2 = 128 END // all headers except first have dupe confusion immunity
   END   
+
+COPY_EXISTING ~sppr509.spl~ ~override~ //magic resistance
+  LPF ALTER_EFFECT INT_VAR header = 10 match_duration = 126 duration = 132 END // duration is one round short at level 19
+  LPF ALTER_EFFECT INT_VAR header = 11 match_duration = 126 duration = 138 END // duration is two rounds short at level 20
 
 COPY_EXISTING ~sppr709.spl~ ~override~ // Confusion [bg2]
   LPF CLONE_EFFECT INT_VAR header = 0 match_opcode = 174 timing = 1 duration = 0 STR_VAR match_resource = eff_e05 resource = eff_m05 END // missing sound at min level
