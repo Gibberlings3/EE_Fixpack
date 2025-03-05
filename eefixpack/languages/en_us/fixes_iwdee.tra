@@ -313,6 +313,11 @@ There are two parts to this spell. First, a small portal opens and summons one o
 
 The character emits a dazzling burst of light that strikes at all other creatures within a 15-ft. radius. Struck creatures suffer 9d6 points of fire damage (9d6+3 if undead), unless they save vs. Spell for half. In addition, all creatures except the character must save vs. Spell or be blinded for 2 hours.~
 
+// dragon disciple breath weapon description doesn't mention tha it scales
+// cna just copy bg2ee strref 100381
+@36135 = ~Breath Weapon
+The character breathes a gout of flame up to 30 ft. long, inflicting 3d8 points of fire damage on all creatures caught within the 140-degree cone. The flames deal an additional 1d8 points of fire damage at level 6 and every three levels thereafter, up to a maximum of 8d8 total damage at 18th level.~
+
 /*
 luke
 "strikes as a +1 weapon" should not be missing
