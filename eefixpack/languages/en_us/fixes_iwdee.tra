@@ -230,6 +230,20 @@ If the user fails a save vs. death at -4, they take 8-48 points of fire damage. 
 
 Weight: 1~
 
+// make protection from evil 10' actually be 10'
+@22832 = ~Protection From Evil, 10' Radius
+(Abjuration)
+
+Level: 4
+Sphere: Protection
+Range: Touch
+Duration: 1 turn/level
+Casting Time: 7
+Area of Effect: 10-ft. radius
+Saving Throw: None
+
+When this spell is cast, all creatures within a 10-ft. radius are affected individually by Protection From Evil. Hence, they receive a +2 bonus to Armor Class and Saving Throws against evil-aligned opponents, summoned fiends will not attack them, and they will be immune to all charm-based spells.~
+
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 27373
 // Weapon damage corrections
 @25818 = ~This weapon is holy to warriors in the service of Talos, god of storms and destruction, and has seen decades of use in their capable hands. A shortbow made of many composite layers of wood, the Storm Bow has been used against the myriad enemies of the church of Talos. Most recently, the bow was in the possession of a Storm Knight named Kalassan Brevered, who was killed after striking down a number of rangers and druids on the Moonshae Isles.

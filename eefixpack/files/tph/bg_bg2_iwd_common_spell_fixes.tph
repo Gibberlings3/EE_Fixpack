@@ -100,6 +100,14 @@ COPY_EXISTING ~spwi608.spl~ ~override~ // pierce magic [bg2]
 COPY_EXISTING ~spwi621.spl~ ~override~ // Conjure Air Elemental [sod, bg2]
   LPF ALTER_EFFECT INT_VAR header = 0 match_duration = 840 duration = 660 END // some durations wrong when cast at min level
 
+COPY_EXISTING ~spwi624.spl~ ~override~ // Summon Nishruu [iwd]
+  LPF ALTER_EFFECT INT_VAR header = 7 match_duration = 116 duration = 114 END // duration is two seconds too long at levels >18
+  LPF ALTER_EFFECT INT_VAR header = 8 match_duration = 122 duration = 120 END
+
+COPY_EXISTING ~spwi717.spl~ ~override~ // Summon Efreeti [iwd]
+  LPF ALTER_EFFECT INT_VAR header = 5 match_duration = 164 duration = 162 END // duration is two seconds too long at levels >18
+  LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 170 duration = 168 END
+
 // tbd, cam
 // don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
 INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
