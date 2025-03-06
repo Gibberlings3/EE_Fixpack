@@ -1002,6 +1002,10 @@ COPY_EXISTING ~spin117.spl~ ~override~ // minsc's berserk
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 duration = 119 END
   BUT_ONLY
 
+// find traps part of moon dog sight doesn't work (projectile doesn't work for op150)
+COPY_EXISTING ~spin696.spl~  ~override~ // moon dog sight
+  LPF ALTER_EFFECT INT_VAR match_opcode = 150 opcode = 146 target = 1 timing = 1 duration = 0 STR_VAR resource = sppr205d END // change to cast find traps subspell
+
 // tbd, cam
 // wrong duration for portrait icon
 COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait icon 36
