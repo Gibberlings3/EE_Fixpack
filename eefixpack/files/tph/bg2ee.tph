@@ -729,6 +729,11 @@ COPY_EXISTING ~planetar.itm~ ~override~
   LPF CLONE_EFFECT  INT_VAR match_opcode = 58 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR match_opcode = 58 multi_match = 1 END
 
+// clone immunity to webtrav (web) projectile into web1p (single-target web) projectile immunity (in bgee, bg2ee, iwdee.tph)
+COPY_EXISTING ~plyspid.itm~  ~override~ // arcane polymorph spider
+              ~plyspid2.itm~ ~override~ // avenger sword spider
+  LPF CLONE_EFFECT INT_VAR match_opcode = 83 match_parameter2 = 319 parameter2 = 259 END // fortunately projectiles are all same value sin bg/bg2/iwd
+
 // tbd, cam
 // elixir of health should cure intoxication, not set it to zero
 COPY_EXISTING ~potn17.itm~ ~override~ // Elixir of Health - set drunkenness to 0, just change to 'cure drunk' instead
