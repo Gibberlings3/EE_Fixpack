@@ -250,6 +250,14 @@ COPY_EXISTING ~ar8011.bcs~ ~override~
   END
   BUT_ONLY
 
+// shaman summon script errors - fix for bgee, bg2ee, iwdee
+COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
+    	~\1~ // should be detect, not !detect (sod only)
+    REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
+  END   
+
 // tbd, cam
 // checking for ambients which don't exist
 COPY_EXISTING ~eepoqct1.bcs~ ~override~
