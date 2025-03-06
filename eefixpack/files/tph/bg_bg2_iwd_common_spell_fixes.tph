@@ -85,17 +85,23 @@ COPY_EXISTING ~sppr701.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
   BUT_ONLY
 
-COPY_EXISTING ~spwi318.spl~ ~override~ // Minor Spell Deflection [sod, bg2]
+COPY_EXISTING ~spwi318.spl~ ~override~ // Minor Spell Deflection 
   LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
 
 COPY_EXISTING ~spwi399.spl~ ~override~ // Minor Spell Deflection [sod, bg2]
   LPF ALTER_EFFECT INT_VAR match_target = 4 target = 2 END // mismatching targets between l1 effects and rest of spell
+
+COPY_EXISTING ~spwi512.spl~ ~override~ // Protection from Electricity
+  LPF ALTER_EFFECT INT_VAR match_resist_dispel = 1 resist_dispel = 3 END  // expiry sound can be blocked by MR when cast at level 20+
 
 COPY_EXISTING ~spwi606.spl~ ~override~ // Protection From Magic Energy [bg2]
   LPF ALTER_EFFECT INT_VAR match_opcode = 31 parameter2 = 1 END // should be setting MDR, not incrementing on lev 19+ headers
 
 COPY_EXISTING ~spwi608.spl~ ~override~ // pierce magic [bg2]
   LPF ALTER_EFFECT INT_VAR match_opcode = 230 match_resist_dispel = 0 resist_dispel = 2 END // level 18 effect
+
+COPY_EXISTING ~spwi617.spl~ ~override~ // Contingency
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 duration = 5 END  // plays the animation spcontin (bam via vvc) for 3 or 4 seconds, but it's a 5-second animation
 
 COPY_EXISTING ~spwi621.spl~ ~override~ // Conjure Air Elemental [sod, bg2]
   LPF ALTER_EFFECT INT_VAR header = 0 match_duration = 840 duration = 660 END // some durations wrong when cast at min level

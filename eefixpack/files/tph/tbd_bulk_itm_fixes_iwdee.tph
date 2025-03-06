@@ -5,6 +5,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   elemchan, null, null, null, null, null, null, null, null, null, 4, null, null => elemchan // upping enchantment for elemental princes
   elemsunn, null, null, null, null, null, null, null, null, null, 4, null, null => elemsunn // upping enchantment for elemental princes
   elemzaam, null, null, null, null, null, null, null, null, null, 4, null, null => elemzaam // upping enchantment for elemental princes
+  shamme1, null, null, null, 3, null, null, null, null, null, null, null, null => shamme1 // spiritual hammer +1 has speed of +2
+  shamme3, null, null, null, 1, null, null, null, null, null, null, null, null => shamme3 // spiritual hammer +3 has speed of +2
 
 END
 

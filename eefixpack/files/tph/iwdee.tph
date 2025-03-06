@@ -19,6 +19,13 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
+// ChangeStoreMarkup has buy/sell markups inverted (all games)
+COPY_EXISTING ~action.ids~   ~override~
+              ~actsleep.ids~ ~override~
+              ~instant.ids~  ~override~
+  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
+  BUT_ONLY 
+
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
@@ -529,6 +536,11 @@ COPY_EXISTING ~planetar.itm~ ~override~
   LPF CLONE_EFFECT  INT_VAR match_opcode = 58 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR match_opcode = 58 multi_match = 1 END
 
+// clone immunity to webtrav (web) projectile into web1p (single-target web) projectile immunity (in bgee, bg2ee, iwdee.tph)
+COPY_EXISTING ~plyspid.itm~  ~override~ // arcane polymorph spider
+              ~plyspid2.itm~ ~override~ // avenger sword spider
+  LPF CLONE_EFFECT INT_VAR match_opcode = 83 match_parameter2 = 319 parameter2 = 259 END // fortunately projectiles are all same value sin bg/bg2/iwd
+
 // tbd, cam
 // multiple permanent effects with durations
 COPY_EXISTING ~potn10.itm~  ~override~ // (itm) Potion of Invisibility - causes invisibility - sound(s) #cas_m01 - animations(s) illush - additional effects
@@ -884,6 +896,12 @@ COPY_EXISTING ~%CLERIC_ANIMAL_RAGE%b.spl~  ~override~ // sppr522b
 COPY_EXISTING ~%CLERIC_MASS_CAUSE_LIGHT_WOUNDS%.spl~ ~override~ // sppr523.spl
   WRITE_LONG 0x1e (THIS BOR BIT31) // adds druid flag
 
+COPY_EXISTING ~sppr606.spl~ ~override~ // fire seeds
+  READ_SHORT 0x68 abil_num // duration calculations are still using oIWD rounds (seven seconds, not the BG2/EE six), so every duration is 7/6 longer than it should be
+  FOR (index = abil_num ; index > 0 ; --index) BEGIN
+    LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (((30 - abil_num) + index) * 70) duration = (((30 - abil_num) + index) * 60) END 
+  END   
+
 // tbd, davidw
 // entropy shield (remove spurious protection from Breach/Spellstrike/Imprisonment; doesn't protect against Flame Strike)
 COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615
@@ -897,6 +915,25 @@ COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615
 // oiwd fix
 COPY_EXISTING ~%CLERIC_WHIRLWIND%.spl~  ~override~ // sppr617
   LPF ALTER_EFFECT INT_VAR match_resist_dispel = 0 resist_dispel = 1 END
+
+// headers added to extend spells to iwd level 30 cap all have incorrect durations
+COPY_EXISTING ~sppr706.spl~ ~override~ // symbol, fear
+              ~sppr718.spl~ ~override~ // symbol, stun
+              ~spwi811.spl~ ~override~ // symbol, fear
+              ~spwi816.spl~ ~override~ // symbol, stun
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 21 END // trim off incorrect headers
+  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 3 step_dur = 6 level_cap = 30 END // 2 rds + 1 rd/3 levels
+
+// headers added to extend spells to iwd level 30 cap all have incorrect durations
+COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
+              ~sppr730.spl~ ~override~ // aura of flaming death
+              ~sppr740.spl~ ~override~ // wither
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
+  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // 1 rd/2 levels
+
+COPY_EXISTING ~spra302.spl~ ~override~ // Minor Spell Deflection [ranger]
+  LPF DELETE_EFFECT INT_VAR header = 6 multi_match = 1 match_opcode = 233 END // dupe 233s ar level 11
+  LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
 
 // death fog's slow icon could be blocked on round 2+
 COPY_EXISTING ~spwi030.spl~ ~override~ // via trap

@@ -22,6 +22,13 @@ COPY_EXISTING ~action.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(466[ %TAB%].+\)$~ ~466 ForceSpellNoFeedback(O:Target,I:Spell*Spell)%WNL%\1~ // add non-res version
   BUT_ONLY
 
+// ChangeStoreMarkup has buy/sell markups inverted (all games)
+COPY_EXISTING ~action.ids~   ~override~
+              ~actsleep.ids~ ~override~
+              ~instant.ids~  ~override~
+  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
+  BUT_ONLY 
+
 COPY_EXISTING ~animate.ids~ ~override~
   REPLACE_TEXTUALLY ~0xf005[ %TAB%]+cl_4_Collector_Thug~ ~0xf006 cl_4_Collector_Thug~
   REPLACE_TEXTUALLY ~0xf042[ %TAB%]+Trelon~ ~0xf043 Trelon~
