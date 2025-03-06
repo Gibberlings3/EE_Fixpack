@@ -50,13 +50,6 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
-// ChangeStoreMarkup has buy/sell markups inverted (all games)
-COPY_EXISTING ~action.ids~   ~override~
-              ~actsleep.ids~ ~override~
-              ~instant.ids~  ~override~
-  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
-  BUT_ONLY 
-
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
