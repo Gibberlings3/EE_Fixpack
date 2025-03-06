@@ -110,6 +110,17 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_pstee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
 
+// Trias is vulnerable to several spell effects that make it impossible to finish the game
+COPY_EXISTING ~trias.cre~  ~override~
+              ~triasa.cre~ ~override~
+              ~triasb.cre~ ~override~
+              ~triasc.cre~ ~override~
+  REMOVE_CRE_ITEM no_curse
+  ADD_CRE_ITEM ~no_curse~ #0 #0 #0 ~NONE~ ~cloak~
+  ADD_CRE_ITEM ~imdeath~ #0 #0 #0 ~NONE~ ~ring~
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END 
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END 
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
