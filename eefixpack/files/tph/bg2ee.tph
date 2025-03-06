@@ -245,6 +245,9 @@ COPY_EXISTING ~ar1401.bcs~ ~override~
   END
   BUT_ONLY
 
+// trying to make the exit statue from spellhold dungeon level 1 more reliable - ppridd.dlg and ar1512.bcs
+EXTEND_BOTTOM ~ar1512.bcs~ ~eefixpack/files/baf/ar1512_opendoor.baf~
+
 // tbd, cam (from MiH)
 // priest spawns inside slime
 COPY_EXISTING ~ar2200.bcs~ ~override~

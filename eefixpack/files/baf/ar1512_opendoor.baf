@@ -1,0 +1,35 @@
+IF
+  Global("cd_openHead_xp","AR1512",0)
+  Global("openHead","AR1512",1)
+  OpenState("HeadDoor",FALSE)
+THEN 
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("cd_openHead_xp","AR1512",1)
+    DisplayString("ppridd",48476)  // A nearby rumbling noise signals a massive door opening.
+    EraseJournalEntry(62156)  // Escaping the asylum I must find the "hand of the builder" to advance. I'm not sure what that means.
+    EraseJournalEntry(62157)  // Escaping the asylum I must also find the "focus of power" to advance. I'm not sure what that means. Perhaps it some sort of magic device or crystal.
+    Unlock("HeadDoor")
+    OpenDoor("HeadDoor")
+    AddXPObject(Player1,29500)
+    AddXPObject(Player2,29500)
+    AddXPObject(Player3,29500)
+    AddXPObject(Player4,29500)
+    AddXPObject(Player5,29500)
+    AddXPObject(Player6,29500)
+    SetInterrupt(TRUE)
+END
+
+IF
+  !Global("cd_openHead_xp","AR1512",0)
+  Global("openHead","AR1512",1)
+  OpenState("HeadDoor",FALSE)
+THEN 
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    EraseJournalEntry(62156)  // Escaping the asylum I must find the "hand of the builder" to advance. I'm not sure what that means.
+    EraseJournalEntry(62157)  // Escaping the asylum I must also find the "focus of power" to advance. I'm not sure what that means. Perhaps it some sort of magic device or crystal.
+    Unlock("HeadDoor")
+    OpenDoor("HeadDoor")
+    SetInterrupt(TRUE)
+END

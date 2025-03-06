@@ -82,3 +82,7 @@ REPLACE_ACTION_TEXT_REGEXP ~keldor\(j\|p\)?~ ~EscapeAreaMove("AR0903",[0-9]+,[0-
 ALTER_TRANS bkeldor BEGIN 166 END BEGIN 0 END BEGIN ACTION // in keldorn-hexxat fight, if keldorn leaves he was setting hexxat leave vars, not his own [jmerry]
  ~SetGlobal("KickedOut","LOCALS",1) LeaveParty() SetLeavePartyDialogueFile() ChangeAIScript("",DEFAULT) EscapeAreaMove("AR0903",644,501,0)~
 END 
+
+// trying to make the exit statue from spellhold dungeon level 1 more reliable - ppridd.dlg and ar1512.bcs
+ADD_STATE_TRIGGER PPRIDD 3 ~Global("openHead","AR1512",0)~
+ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END 
