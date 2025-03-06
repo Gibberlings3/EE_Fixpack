@@ -1,0 +1,12 @@
+IF
+	PartyHasItem("BPRNG1")  // Slave Ring
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("BPRNG1"))  // Slave Ring
+		ActionOverride(Player2,DestroyItem("BPRNG1"))  // Slave Ring
+		ActionOverride(Player3,DestroyItem("BPRNG1"))  // Slave Ring
+		ActionOverride(Player4,DestroyItem("BPRNG1"))  // Slave Ring
+		ActionOverride(Player5,DestroyItem("BPRNG1"))  // Slave Ring
+		ActionOverride(Player6,DestroyItem("BPRNG1"))  // Slave Ring
+		Continue()
+END
