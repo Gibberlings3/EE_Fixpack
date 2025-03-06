@@ -86,3 +86,6 @@ END
 // trying to make the exit statue from spellhold dungeon level 1 more reliable - ppridd.dlg and ar1512.bcs
 ADD_STATE_TRIGGER PPRIDD 3 ~Global("openHead","AR1512",0)~
 ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END 
+
+// neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
+ADD_STATE_TRIGGER neeraj 137 ~Global("SahauginTravel","GLOBAL",0)~
