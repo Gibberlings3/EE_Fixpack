@@ -820,6 +820,14 @@ COPY_EXISTING ~spitm99.spl~ ~override~
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 resist_dispel = 1 END
 
+// evasion fixes - evasion checks should provide feedback
+COPY_EXISTING ~sppr323d.spl~ ~override~ // circle of bones
+              ~sppr603d.spl~ ~override~ // blade barrier
+              ~spwi313.spl~  ~override~ // skull trap
+              ~spwi615.spl~  ~override~ // chain lightning
+              ~spwi615b.spl~ ~override~ // chain lightning
+  LPF ALTER_EFFECT INT_VAR match_opcode = 318 opcode = 324 match_parameter2 = 63 END 
+
 // ie-5947, cam
 // Cloudburst should remove Fireshields
 COPY_EXISTING ~%CLERIC_CLOUDBURST%.spl~ ~override~ // sppr325
@@ -932,6 +940,10 @@ COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
   LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // 1 rd/2 levels
 
+// evasion fixes - missing evasion check
+COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 63 END 
+
 COPY_EXISTING ~spra302.spl~ ~override~ // Minor Spell Deflection [ranger]
   LPF DELETE_EFFECT INT_VAR header = 6 multi_match = 1 match_opcode = 233 END // dupe 233s ar level 11
   LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
@@ -984,7 +996,8 @@ COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
 COPY_EXISTING ~spwi524.spl~  ~override~
               ~spwi524b.spl~ ~override~
               ~spwi524c.spl~ ~override~
-  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 318 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 318 opcode = 324 END // from evasion fixes - update 318s to 324s
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
 
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities
