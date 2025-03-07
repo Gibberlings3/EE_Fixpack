@@ -245,6 +245,7 @@ ACTION_IF !game_includes_sod BEGIN
   COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
        ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
        ~eefixpack/files/bam/pxbow15.bam~  ~override~ // fix item description image
+       ~eefixpack/files/bam/mgo7gu.bam~   ~override~ // m'khiin's missing getting-up animation
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
 
