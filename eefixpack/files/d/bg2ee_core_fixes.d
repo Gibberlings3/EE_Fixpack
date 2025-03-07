@@ -89,3 +89,6 @@ ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1
 
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 ADD_STATE_TRIGGER neeraj 137 ~Global("SahauginTravel","GLOBAL",0)~
+
+// szass tam not settiing final journal entries on all dialogue paths
+ADD_TRANS_ACTION ohnszass BEGIN 40 END BEGIN END ~AddJournalEntry(96075,QUEST_DONE)~
