@@ -1,0 +1,107 @@
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_cre_levels BEGIN 
+
+//~chevil04~  =>  6 // sahuagin - 42 hit points at levels 6/0/0
+  ~elesah01~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
+  ~elesah02~  =>  4 // sahuagin baronial guard - 27 hit points at levels 2/1/1
+  ~obssah01~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
+  ~obssah02~  =>  9 // sahuagin priestess - 64 hit points at levels 8/1/1
+  ~obssah03~  =>  4 // sahuagin baronial guard - 27 hit points at levels 2/1/1
+  ~obssah04~  =>  3 // sahuagin - 19 hit points at levels 2/1/1
+  ~obssah05~  =>  3 // sahuagin - 19 hit points at levels 2/1/1
+//~ohbsah01~  => 17 // sahuagin prince - 129 hit points at levels 22/0/0
+  ~ohbsah02~  =>  9 // sahuagin priestess - 64 hit points at levels 8/1/1
+  ~ohbsah03~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
+  ~ppsaha~    =>  3 // sahuagin - 19 hit points at levels 2/1/1
+  ~ppsahale~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
+  ~sahamb01~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahamb02~  => 11 // rebel - 81 hit points at levels 2/1/1
+//~sahamb03~  =>  5 // rebel - 32 hit points at levels 8/1/1
+  ~sahamb04~  => 11 // sahuagin - 81 hit points at levels 2/1/1
+  ~sahamb05~  => 11 // sahuagin - 81 hit points at levels 2/1/1
+//~sahamb06~  =>  5 // sahuagin - 32 hit points at levels 8/1/1
+  ~sahbar01~  =>  4 // sahuagin baronial guard - 27 hit points at levels 2/1/1
+  ~sahbar02~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
+  ~sahbar03~  =>  6 // baron thelokassyil - 46 hit points at levels 2/1/1
+  ~sahcapt0~  => 11 // captain alyittyl - 81 hit points at levels 2/1/1
+  ~sahcapt1~  => 11 // captain alyittyl - 81 hit points at levels 2/1/1
+//~sahchf01~  =>  5 // sahuagin chieftain - 36 hit points at levels 16/1/1
+//~sahchf02~  =>  5 // sahuagin chieftain - 36 hit points at levels 14/1/1
+//~sahcpt01~  => 11 // captain alyittyl - 81 hit points at levels 18/1/1
+//~sahcpt02~  =>  4 // captain feerlattiys - 27 hit points at levels 18/1/1
+  ~sahextra~  => 11 // sahuagin royal guard - 81 hit points at levels 5/1/1
+  ~sahgrd01~  => 11 // sahuagin royal guard - 81 hit points at levels 2/1/1
+  ~sahgrd02~  => 11 // sahuagin royal guard - 81 hit points at levels 2/1/1
+  ~sahgrd03~  => 11 // sahuagin royal guard - 81 hit points at levels 2/1/1
+//~sahkin01~  => 12 // sahuagin king - 90 hit points at levels 13/13/1
+//~sahkng01~  => 12 // king ixilthetocal - 90 hit points at levels 20/1/1
+  ~sahkng02~  => 12 // king ixilthetocal - 90 hit points at levels 2/1/1
+//~sahpr1~    => 11 // royal high priestess senityili - 81 hit points at levels 20/1/1
+//~sahpr2~    => 10 // prince villynaty - 76 hit points at levels 20/1/1
+//~sahpr3~    => 11 // high priestess tlyysixxous - 81 hit points at levels 20/1/1
+//~sahpr4~    => 1013 // senior priestess sallinithyl - 8100 hit points at levels 20/1/1
+//~sahpr5~    =>  7 // priestess of sekolah - 51 hit points at levels 9/1/1
+  ~sahpri01~  => 10 // sahuagin prince - 72 hit points at levels 2/1/1
+  ~sahpri02~  => 11 // royal high priestess - 81 hit points at levels 2/1/1
+//~sahramb1~  =>  8 // rebel - 57 hit points at levels 8/1/1
+//~sahramb2~  =>  8 // rebel - 57 hit points at levels 8/1/1
+//~sahramb3~  => 11 // priestess - 81 hit points at levels 14/1/1
+  ~sahramb4~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahramb5~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahrar01~  => 11 // rebel - 81 hit points at levels 2/1/1
+//~sahreb02~  => 10 // prince villynaty - 76 hit points at levels 20/1/1
+  ~sahrgr01~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahrgr02~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahrgr03~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahrnt01~  => 11 // rebel - 81 hit points at levels 2/1/1
+  ~sahryl01~  => 11 // royal guard - 81 hit points at levels 2/1/1
+  ~sahsss01~  =>  3 // rebel - 19 hit points at levels 2/1/1
+  ~sahsss02~  =>  3 // rebel - 19 hit points at levels 2/1/1
+  ~sahsss03~  =>  3 // rebel - 19 hit points at levels 2/1/1
+  ~sahuag01~  =>  3 // sahuagin - 19 hit points at levels 2/1/1
+  ~udsaha~    => 10 // sahuagin prince - 72 hit points at levels 2/1/1
+  
+END 
+  
+ACTION_PHP_EACH cd_cre_levels AS file => level BEGIN
+
+  COPY_EXISTING ~%file%.cre~ ~override~
+    WRITE_BYTE 0x234 level
+    BUT_ONLY 
+
+END 
+  
+  
+  
+  
+  
+  
+  
+/*
+
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+  READ_LONG 0x28 anim
+  PATCH_IF ((anim = 0x7f09) OR (anim = 0xe261) OR (anim = 0x7f23) OR (anim = 0xe262)) BEGIN
+    READ_SHORT 0x26 hp
+    READ_BYTE 0x234 lev1
+    READ_BYTE 0x235 lev2
+    READ_BYTE 0x236 lev3
+    READ_LONG 0x0c name
+    PATCH_IF (name > 0) AND (name < 999999) BEGIN
+      READ_STRREF 0x0c name
+    END ELSE BEGIN
+      READ_STRREF 0x08 name
+    END
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                              BEGIN SPRINT spc "        " END
+    SET hd = ((hp / 8) + 1)  
+    PATCH_IF (hd > lev1) BEGIN SPRINT comment ~  ~ END ELSE BEGIN SPRINT comment ~//~ END   
+    PATCH_PRINT "%comment%~%SOURCE_RES%~%spc% => %hd% // %name% - %hp% hit points at levels %lev1%/%lev2%/%lev3%"
+  END
+  BUT_ONLY   
+*/  

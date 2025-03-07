@@ -22,13 +22,6 @@ COPY_EXISTING ~action.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(466[ %TAB%].+\)$~ ~466 ForceSpellNoFeedback(O:Target,I:Spell*Spell)%WNL%\1~ // add non-res version
   BUT_ONLY
 
-// ChangeStoreMarkup has buy/sell markups inverted (all games)
-COPY_EXISTING ~action.ids~   ~override~
-              ~actsleep.ids~ ~override~
-              ~instant.ids~  ~override~
-  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
-  BUT_ONLY 
-
 COPY_EXISTING ~animate.ids~ ~override~
   REPLACE_TEXTUALLY ~0xf005[ %TAB%]+cl_4_Collector_Thug~ ~0xf006 cl_4_Collector_Thug~
   REPLACE_TEXTUALLY ~0xf042[ %TAB%]+Trelon~ ~0xf043 Trelon~
@@ -37,6 +30,9 @@ BUT_ONLY
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(13\)~ ~IDS V1.0%LNL%\1~ // pstee
+
+// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
+APPEND ~splstate.ids~ ~136 DEATH_IMMUNITY~
 
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
@@ -110,11 +106,26 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_pstee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
 
+// Trias is vulnerable to several spell effects that make it impossible to finish the game
+COPY_EXISTING ~trias.cre~  ~override~
+              ~triasa.cre~ ~override~
+              ~triasb.cre~ ~override~
+              ~triasc.cre~ ~override~
+  REMOVE_CRE_ITEM no_curse
+  ADD_CRE_ITEM ~no_curse~ #0 #0 #0 ~NONE~ ~cloak~
+  ADD_CRE_ITEM ~imdeath~ #0 #0 #0 ~NONE~ ~ring~
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END 
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END 
+
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_pstee.tph~ // bulk general changes (nothing here yet)
+
+// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
+COPY_EXISTING ~imdeath.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 328 target = 1 parameter2 = 136 timing = 2 special = 1 END
 
 // The Number of Ku'u Yin should protect from Chaotic creatures
 COPY_EXISTING ~kyname.itm~ ~override~
@@ -149,6 +160,20 @@ BUT_ONLY
 /////                                                  \\\\\
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_pstee.tph~ // bulk general changes (nothing here yet)
+
+// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl  
+COPY_EXISTING ~spwi912.spl~ ~override/spwi912a.spl~ // payload: this is the original spell and effects
+  WRITE_LONG 0x08 `0 // blank name
+  
+COPY_EXISTING ~spwi912.spl~ ~override/spwi912b.spl~ // if target is immune, they get this spell which just floats an immunity message
+  WRITE_LONG 0x08 `0 // blank name
+  LPF ALTER_HEADER INT_VAR projectile = 1 END 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 330 target = 2 parameter1 = RESOLVE_STR_REF(@100) timing = 1 END 
+  
+COPY_EXISTING ~spwi912.spl~ ~override~ // the original spell; applies spwi912a or b depending on whether the target is immune via imdeath.itm
+  LPF ALTER_HEADER INT_VAR projectile = 1 END 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 110 timing = 1 STR_VAR resource = spwi912b END 
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 111 timing = 1 STR_VAR resource = spwi912a END 
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

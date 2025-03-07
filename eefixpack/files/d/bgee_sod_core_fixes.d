@@ -156,6 +156,3 @@ ADD_TRANS_TRIGGER BDCORWIN 53 ~!HappinessLT(Myself,-290)~ DO 0 1
 ADD_TRANS_TRIGGER BDGLINT  57 ~!HappinessLT(Myself,-290)~ DO 0 1
 ADD_TRANS_TRIGGER BDMKHIIN 31 ~!HappinessLT(Myself,-290)~ DO 0 1
 ADD_TRANS_TRIGGER BDVOGHIL 99 ~!HappinessLT(Myself,-290)~ DO 0 1 2
-
-// ChangeStoreMarkup has buy/sell markups inverted
-REPLACE_ACTION_TEXT bdjegg ~ChangeStoreMarkup("\([^"]+\)",\([0-9]+\),\([0-9]+\))~ ~ChangeStoreMarkup("\1",\3,\2)~

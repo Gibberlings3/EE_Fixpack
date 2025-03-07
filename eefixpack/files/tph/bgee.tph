@@ -50,13 +50,6 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
-// ChangeStoreMarkup has buy/sell markups inverted (all games)
-COPY_EXISTING ~action.ids~   ~override~
-              ~actsleep.ids~ ~override~
-              ~instant.ids~  ~override~
-  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
-  BUT_ONLY 
-
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
@@ -252,6 +245,7 @@ ACTION_IF !game_includes_sod BEGIN
   COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
        ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
        ~eefixpack/files/bam/pxbow15.bam~  ~override~ // fix item description image
+       ~eefixpack/files/bam/mgo7gu.bam~   ~override~ // m'khiin's missing getting-up animation
 
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
 
@@ -359,176 +353,187 @@ COPY_EXISTING ~baldur.bcs~ ~override~
     REPLACE_TEXTUALLY ~RemoveStoreItem("taerum","[^"]+",0)~ ~~
   END
   BUT_ONLY  
-
-// checking wrong var for dead safana
-COPY_EXISTING ~bd0101.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
-    REPLACE_TEXTUALLY ~\(InPartyAllowDead("safana")[ %TAB%%LNL%%MNL%%WNL%]+\)Global("BD_SAFANA_DIED_IN_BG","GLOBAL",0)~ ~\1Global("BD_SAFANA_DIED_IN_BG","GLOBAL",1)~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam
-// can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
-COPY_EXISTING ~bd0120.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// syntax: an OR(4) only has two conditions
-COPY_EXISTING ~bd1000.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~OR(4)~ ~OR(2)~ // luckily only one so easy replace
-  END
-  BUT_ONLY IF_EXISTS // sod asset
-
-
-// tbd, cam
-// neera checking the wrong state of the skull
-COPY_EXISTING ~bd2000.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~OpenState("Bhaal_Skull",TRUE)~ ~OpenState("Bhaal_Skull",FALSE)~ // wrong state
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// trying to activate a region via Ambient activate
-COPY_EXISTING ~bd2000.bcs~   ~override~
-              ~bdbarghe.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~AmbientActivate("enlightenment"~ ~TriggerActivation("Enlightment"~ // yes, it's spelled that way
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam
-// dialogues for blind albino cave can fire elsewhere (see also bddynahj.dlg et al)
-COPY_EXISTING ~bd5100aw.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~I[fs]ValidForPartyDialo\(g\|gue\)("\([^"]+\)")~ ~Range("\2",20) IfValidForPartyDialog("\2")~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam
-// referring to wrong DV for Halatathlaer
-// wrong variable scope for timer
-COPY_EXISTING ~bd5300.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~DisplayStringHead("bdhalat")~ ~DisplayStringHead("bdhalata")~ // script has a createcreature bdhalat, so need to extra bit of trigger to match
-    REPLACE_TEXTUALLY ~"bd_sdd350b_ot_timer","bd2000"~ ~"bd_sdd350b_ot_timer","bd5300"~ // wrong variable scope
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// referring to wrong DV for Imoen
-COPY_EXISTING ~bd6200.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~ActionOverride("bdimoen"~ ~ActionOverride("imoen"~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// referring to wrong DV for Corwin
-COPY_EXISTING ~bd7300.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam (from k4thos/eet)
-//Dead NPCs stays in party in chapter 13
-COPY_EXISTING ~bdcut61.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~InParty("\([^"]+\)")~ ~InPartyAllowDead("\1")~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// correctly count monsters where you have to kill a specific number of them (see also bdwe1str.bcs et al)
-COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff). 
-              ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals. 
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)~ ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0)~
-    REPLACE_TEXTUALLY ~\(GiveItemCreate("misc07",Myself,250,0,0)\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdffdop1
-    REPLACE_TEXTUALLY ~\(ActionOverride("BDCUTID",ChangeAIScript("BDSPAWN",OVERRIDE))\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdhelp
-  END
-  BUT_ONLY IF_EXISTS // both are SoD 
-
-// tbd, cam
-// sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
-ACTION_FOR_EACH script IN 1 4 BEGIN
-
-  COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
-    END
-    BUT_ONLY IF_EXISTS
-
-END
-
-// tbd, cam
-// possibly missing Minsc-rasaad banter due to typo
-COPY_EXISTING ~bdminsc.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~"rasaad'"~ ~"rasaad"~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// saying 'go back to the crypt entrance' in korlasz crypt doesn't make NPCs do anything
-COPY_EXISTING ~bdparty.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // dynaheir save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // edwin save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // baeloth save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // khalid save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[870.1710])~ // safana save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // dorn save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // minsc save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // neera save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // jaheira save location
-    REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
-      ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // viconia save location
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move dynaheir
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move edwin
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move baeloth
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move khalid
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",870,1710,NE)~ // move safana
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~     ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move dorn
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move minsc
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move neera
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move jaheira
-    REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move viconia
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-
-// tbd, cam
-// spike trigger is a little too happy to murderize everyone, swap trigger
-COPY_EXISTING ~bdlever2.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~WalkedToTrigger~ ~Clicked~
-  END
-  BUT_ONLY IF_EXISTS // sod
-
-// tbd, cam
-// don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
+  
 ACTION_IF game_includes_sod BEGIN
+
+  // checking wrong var for dead safana
+  COPY_EXISTING ~bd0101.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~\(InPartyAllowDead("safana")[ %TAB%%LNL%%MNL%%WNL%]+\)Global("BD_SAFANA_DIED_IN_BG","GLOBAL",0)~ ~\1Global("BD_SAFANA_DIED_IN_BG","GLOBAL",1)~
+    END
+    BUT_ONLY
+
+  // tbd, cam
+  // can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
+  COPY_EXISTING ~bd0120.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
+    END
+    BUT_ONLY
+    
+  EXTEND_TOP ~bd0120.bcs~ ~eefixpack/files/baf/bd0120_bpring.baf~ // remove slave rings if BP characters are imported directly to SoD
+
+  // tbd, cam
+  // syntax: an OR(4) only has two conditions
+  COPY_EXISTING ~bd1000.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~OR(4)~ ~OR(2)~ // luckily only one so easy replace
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // neera checking the wrong state of the skull
+  COPY_EXISTING ~bd2000.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~OpenState("Bhaal_Skull",TRUE)~ ~OpenState("Bhaal_Skull",FALSE)~ // wrong state
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // trying to activate a region via Ambient activate
+  COPY_EXISTING ~bd2000.bcs~   ~override~
+                ~bdbarghe.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~AmbientActivate("enlightenment"~ ~TriggerActivation("Enlightment"~ // yes, it's spelled that way
+    END
+    BUT_ONLY
+
+  // tbd, cam
+  // dialogues for blind albino cave can fire elsewhere (see also bddynahj.dlg et al)
+  COPY_EXISTING ~bd5100aw.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~I[fs]ValidForPartyDialo\(g\|gue\)("\([^"]+\)")~ ~Range("\2",20) IfValidForPartyDialog("\2")~
+    END
+    BUT_ONLY
+
+  // tbd, cam
+  // referring to wrong DV for Halatathlaer
+  // wrong variable scope for timer
+  COPY_EXISTING ~bd5300.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~DisplayStringHead("bdhalat")~ ~DisplayStringHead("bdhalata")~ // script has a createcreature bdhalat, so need to extra bit of trigger to match
+      REPLACE_TEXTUALLY ~"bd_sdd350b_ot_timer","bd2000"~ ~"bd_sdd350b_ot_timer","bd5300"~ // wrong variable scope
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // referring to wrong DV for Imoen
+  COPY_EXISTING ~bd6200.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~ActionOverride("bdimoen"~ ~ActionOverride("imoen"~
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // referring to wrong DV for Corwin
+  COPY_EXISTING ~bd7300.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
+    END
+    BUT_ONLY
+
+  // tbd, cam (from k4thos/eet)
+  //Dead NPCs stays in party in chapter 13
+  COPY_EXISTING ~bdcut61.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~InParty("\([^"]+\)")~ ~InPartyAllowDead("\1")~
+    END
+    BUT_ONLY
+
+  // correctly count monsters where you have to kill a specific number of them (see also bdwe1str.bcs et al)
+  COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff). 
+                ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals. 
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)~ ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0)~
+      REPLACE_TEXTUALLY ~\(GiveItemCreate("misc07",Myself,250,0,0)\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdffdop1
+      REPLACE_TEXTUALLY ~\(ActionOverride("BDCUTID",ChangeAIScript("BDSPAWN",OVERRIDE))\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdhelp
+    END
+    BUT_ONLY
+
+  // tbd, cam
+  // sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
+  ACTION_FOR_EACH script IN 1 4 BEGIN
+
+    COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
+      END
+      BUT_ONLY
+
+  END
+
+  // tbd, cam
+  // possibly missing Minsc-rasaad banter due to typo
+  COPY_EXISTING ~bdminsc.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~"rasaad'"~ ~"rasaad"~
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // saying 'go back to the crypt entrance' in korlasz crypt doesn't make NPCs do anything
+  COPY_EXISTING ~bdparty.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // dynaheir save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[780.1575])~ // edwin save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // baeloth save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[840.1590])~ // khalid save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[870.1710])~ // safana save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // dorn save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // minsc save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[920.1660])~ // neera save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // jaheira save location
+      REPLACE_TEXTUALLY ~\(TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+Switch("bd_npc_camp_chapter","global")[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~
+        ~\1 RESPONSE #0 SetGlobal("bd_npc_camp","locals",2) SaveLocation("LOCALS","bd_default_loc",[935.1720])~ // viconia save location
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dynaheir"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~ ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move dynaheir
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("edwin"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",780,1575,NE)~ // move edwin
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("baeloth"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move baeloth
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("khalid"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",840,1590,NE)~ // move khalid
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("safana"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~   ~\1 RESPONSE #0 EscapeAreaMove("bd0120",870,1710,NE)~ // move safana
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("dorn"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~     ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move dorn
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("minsc"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move minsc
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("neera"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~    ~\1 RESPONSE #0 EscapeAreaMove("bd0120",920,1660,NE)~ // move neera
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("jaheira"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move jaheira
+      REPLACE_TEXTUALLY ~\(!TriggerOverride("ff_camp",IsOverMe("viconia"))[ %TAB%%LNL%%MNL%%WNL%]+THEN\)~  ~\1 RESPONSE #0 EscapeAreaMove("bd0120",935,1720,NE)~ // move viconia
+    END
+    BUT_ONLY
+
+
+  // tbd, cam
+  // spike trigger is a little too happy to murderize everyone, swap trigger
+  COPY_EXISTING ~bdlever2.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~WalkedToTrigger~ ~Clicked~
+    END
+    BUT_ONLY
+
+  // tbd, cam
+  // don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
   EXTEND_TOP ~bdshadow.bcs~ ~eefixpack/files/baf/bdshadow.baf~
-END
+  
+END 
+
+// shaman summon script errors - fix for bgee, bg2ee, iwdee
+COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
+    	~\1~ // should be detect, not !detect (sod only)
+    REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
+  END   
 
 // tbd, cam (from jmerry)
 // bp: hogarl not using the right potion when he's hurt

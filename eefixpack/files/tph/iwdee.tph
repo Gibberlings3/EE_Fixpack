@@ -19,13 +19,6 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
-// ChangeStoreMarkup has buy/sell markups inverted (all games)
-COPY_EXISTING ~action.ids~   ~override~
-              ~actsleep.ids~ ~override~
-              ~instant.ids~  ~override~
-  REPLACE_TEXTUALLY ~^360[ %TAB%]+ChangeStoreMarkup(S:Store\*,I:SellMarkup\*,I:BuyMarkup\*)~ ~360 ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)~
-  BUT_ONLY 
-
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
@@ -256,6 +249,14 @@ COPY_EXISTING ~ar8011.bcs~ ~override~
     APPEND_FILE ~eefixpack/files/baf/iwd8011.baf~
   END
   BUT_ONLY
+
+// shaman summon script errors - fix for bgee, bg2ee, iwdee
+COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
+    	~\1~ // should be detect, not !detect (sod only)
+    REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
+  END   
 
 // tbd, cam
 // checking for ambients which don't exist
@@ -819,6 +820,14 @@ COPY_EXISTING ~spitm99.spl~ ~override~
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 resist_dispel = 1 END
 
+// evasion fixes - evasion checks should provide feedback
+COPY_EXISTING ~sppr323d.spl~ ~override~ // circle of bones
+              ~sppr603d.spl~ ~override~ // blade barrier
+              ~spwi313.spl~  ~override~ // skull trap
+              ~spwi615.spl~  ~override~ // chain lightning
+              ~spwi615b.spl~ ~override~ // chain lightning
+  LPF ALTER_EFFECT INT_VAR match_opcode = 318 opcode = 324 match_parameter2 = 63 END 
+
 // ie-5947, cam
 // Cloudburst should remove Fireshields
 COPY_EXISTING ~%CLERIC_CLOUDBURST%.spl~ ~override~ // sppr325
@@ -931,6 +940,10 @@ COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
   LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // 1 rd/2 levels
 
+// evasion fixes - missing evasion check
+COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 63 END 
+
 COPY_EXISTING ~spra302.spl~ ~override~ // Minor Spell Deflection [ranger]
   LPF DELETE_EFFECT INT_VAR header = 6 multi_match = 1 match_opcode = 233 END // dupe 233s ar level 11
   LPF ALTER_EFFECT INT_VAR header = 6 match_duration = 180 duration = 198 END // some durations wrong when cast at level 11
@@ -983,7 +996,8 @@ COPY_EXISTING ~%WIZARD_SHOUT%.spl~       ~override~ // spwi431
 COPY_EXISTING ~spwi524.spl~  ~override~
               ~spwi524b.spl~ ~override~
               ~spwi524c.spl~ ~override~
-  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 318 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 318 opcode = 324 END // from evasion fixes - update 318s to 324s
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 3 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
 
 // ie-6032, cam
 // Tenser's Transformation shouldn't block innate abilities

@@ -1,6 +1,8 @@
 // Fixes an incorrect parameter order of the ChangeStoreMarkup() script action
 
-COPY_EXISTING ~action.ids~ ~override~
+COPY_EXISTING ~action.ids~   ~override~
+              ~actsleep.ids~ ~override~
+              ~instant.ids~  ~override~
   REPLACE_TEXTUALLY ~360[ %TAB%]+ChangeStoreMarkup(\(S:[^*]+\*\),\(I:Buy[^*]+\*\),\(I:Sell[^*]+\*\))~
                     ~360 ChangeStoreMarkup(\1,\3,\2)~
 BUT_ONLY
