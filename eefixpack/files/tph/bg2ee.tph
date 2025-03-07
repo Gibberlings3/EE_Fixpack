@@ -515,6 +515,7 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment chan
 
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
 
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
