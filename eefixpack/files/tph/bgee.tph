@@ -311,6 +311,10 @@ WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/a7/improved_troll_regeneration.tph"
 END
 
+ACTION_IF game_includes_sod BEGIN 
+  INCLUDE ~eefixpack/files/tph/sod_mkhiin_animations.tph~
+END 
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
