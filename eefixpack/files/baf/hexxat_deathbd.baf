@@ -8,9 +8,7 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("OHH_RESTORE_HEXXAT","GLOBAL",1)
-    MoveGlobalObject("hexxat",Player1)  // Hexxat
+    MoveGlobalObject("hexxat",Player%index%)  // Hexxat
     ApplySpell("hexxat",CLERIC_RESURRECTION)  // Hexxat
     ApplySpell("hexxat",RESTORE_FULL_HEALTH)  // Hexxat
-    ActionOverride("hexxat",TransformItem("ohhexam4","ohhexam1"))  // Hexxat's Amulet
-    ActionOverride(Player%index%,TransformItem("ohhcask2","ohhcask"))  // Hexxat's Coffin
 END
