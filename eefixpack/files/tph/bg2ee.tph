@@ -428,6 +428,13 @@ COPY_EXISTING ~ohbhub.bcs~ ~override~
   END
   BUT_ONLY
 
+// if renfeld gets rendered incapable, can't init dialogue post-mugging
+COPY_EXISTING ~renfeld.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~\(Dead("rethug01")\)~ ~!StateCheck(Myself,CD_STATE_NOTVALID) \1~
+    APPEND_FILE ~eefixpack/files/baf/renfeld_dispel.baf~
+  END   
+
 // fear via 'Eyes of the Beholder' item should also work to scare viekang in ToB
 COPY_EXISTING ~sarvie01.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
