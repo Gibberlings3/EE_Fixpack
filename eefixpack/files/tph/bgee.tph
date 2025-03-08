@@ -59,6 +59,8 @@ ACTION_IF (game_includes_sod) BEGIN
   INCLUDE ~eefixpack/files/tph/a7/sod_fogtype.tph~ // apply workaround for buggy FOG_TYPE implementation
 END
 
+APPEND ~interdia.2da~ ~BAELOTH BDBAELOB~ // missing banter file assignment for baeloth
+
 // tbd, cam (from jmerry)
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
