@@ -7,3 +7,5 @@
 @103 = ~^\( *Speed Factor:? *\)[0-9]+~
 @104 = ~^\( *Weight:? *\)[0-9]+~
 @105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
+
+@106 = ~This item is only usable by M'Khiin.~

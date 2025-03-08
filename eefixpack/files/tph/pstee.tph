@@ -11,7 +11,7 @@ END
 /////                                                  \\\\\
 
 /////                                                  \\\\\
-///// ids/2da fixes                                    \\\\\
+///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\
 
 // tbd, cam
@@ -39,6 +39,7 @@ INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit che
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
+INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~

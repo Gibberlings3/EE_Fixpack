@@ -1,0 +1,32 @@
+// https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/21/#findComment-341241
+// Several creature animation (INI) files contain incorrect definitions which causes the game engine to use hardcoded defaults. 
+
+ACTION_IF game_is_pstee BEGIN
+
+  COPY_EXISTING ~F00C.ini~ ~override~ // Dabus: Remove bogus ini section "[12]" 
+                ~F04A.ini~ ~override~ // Worm Creature: Remove bogus ini section "[74]" 
+    REPLACE_TEXTUALLY ~\[\(12\|74\)\][ %TAB%]+//~ ~//~
+
+END ELSE BEGIN // bgee, bg2ee, iwdee
+
+/*
+  //Due to an engine bug the dragon animation definitions cannot be fixed without also providing fixed sets of associated BAM files. 
+  COPY_EXISTING ~1200.ini~ ~override~ // DRAGON_RED (found: multi_new, expected: monster_multi)
+                ~1201.ini~ ~override~ // DRAGON_BLACK (found: multi_new, expected: monster_multi)
+                ~1202.ini~ ~override~ // DRAGON_SILVER (found: multi_new, expected: monster_multi)
+                ~1203.ini~ ~override~ // DRAGON_GREEN (found: multi_new, expected: monster_multi)
+                ~1204.ini~ ~override~ // DRAGON_AQUA (found: multi_new, expected: monster_multi)
+                ~1205.ini~ ~override~ // DRAGON_BLUE (found: multi_new, expected: monster_multi)
+                ~1206.ini~ ~override~ // DRAGON_BROWN (found: multi_new, expected: monster_multi)
+                ~1207.ini~ ~override~ // DRAGON_MULTICOLOR (found: multi_new, expected: monster_multi)
+                ~1208.ini~ ~override~ // DRAGON_PURPLE (found: multi_new, expected: monster_multi) 
+    REPLACE_TEXTUALLY ~\[multi_new\]~ ~[monster_multi]~
+*/
+
+  COPY_EXISTING ~2000.ini~ ~override~ // SIRINE (found: monster_layered, expected: monster_layered_spell) 
+                ~2100.ini~ ~override~ // VOLO (found: monster_layered, expected: monster_layered_spell) 
+                ~2200.ini~ ~override~ // OGRE_MAGE (found: monster_layered, expected: monster_layered_spell) 
+                ~2300.ini~ ~override~ // DEATH_KNIGHT (found: monster_layered, expected: monster_layered_spell) 
+    REPLACE_TEXTUALLY ~\[monster_layered\]~ ~[monster_layered_spell]~
+    
+END 

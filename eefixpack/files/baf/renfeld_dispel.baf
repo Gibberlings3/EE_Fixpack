@@ -1,0 +1,11 @@
+IF
+  StateCheck(Myself,CD_STATE_NOTVALID)
+	Dead("rethug01")  // Thug
+	Dead("rethug02")  // Mage
+	Dead("rethug03")  // Thug
+	Dead("rethug04")  // Thug
+THEN
+  RESPONSE #100  
+    ReallyForceSpellRES("bpdispel",Myself)
+END 
+  
