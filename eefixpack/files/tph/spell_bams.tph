@@ -24,7 +24,80 @@ COPY ~eefixpack/files/bam/spl_bams/ohtmps2b.bam~ ~override~ // Chaos of Battle (
      ~eefixpack/files/bam/spl_bams/sppr751b.bam~ ~override~ // Ethereal Retribution
      ~eefixpack/files/bam/spl_bams/spsd02b.bam~  ~override~ // shadowstep (shadowdancer)
 
-ACTION_IF !game_is_iwdee BEGIN // iwdee uses a different color scheme, so some of these end up the wrong color
+ACTION_IF game_is_iwdee BEGIN 
+
+  COPY ~eefixpack/files/bam/spl_bams/spwi107b.bam~ ~override~ // friends
+       ~eefixpack/files/bam/spl_bams/spwi126b.bam~ ~override~ // expeditious retreat
+       ~eefixpack/files/bam/spl_bams/spwi204b.bam~ ~override~ // snilloc's snowball swarm
+       ~eefixpack/files/bam/spl_bams/spwi209b.bam~ ~override~ // luck
+       ~eefixpack/files/bam/spl_bams/spwi211b.bam~ ~override~ // melf's acid arrow
+       ~eefixpack/files/bam/spl_bams/spwi214b.bam~ ~override~ // strength
+       ~eefixpack/files/bam/spl_bams/spwi216b.bam~ ~override~ // decastave
+       ~eefixpack/files/bam/spl_bams/spwi224b.bam~ ~override~ // glitterdust
+       ~eefixpack/files/bam/spl_bams/spwi225b.bam~ ~override~ // cat's grace
+       ~eefixpack/files/bam/spl_bams/spwi305b.bam~ ~override~ // haste
+       ~eefixpack/files/bam/spl_bams/spwi309b.bam~ ~override~ // monster summoning i
+       ~eefixpack/files/bam/spl_bams/spwi327b.bam~ ~override~ // icelance
+       ~eefixpack/files/bam/spl_bams/spwi328b.bam~ ~override~ // lance of disruption
+       ~eefixpack/files/bam/spl_bams/spwi407b.bam~ ~override~ // monster summoning ii
+       ~eefixpack/files/bam/spl_bams/spwi417b.bam~ ~override~ // enchanted weapon
+       ~eefixpack/files/bam/spl_bams/spwi422b.bam~ ~override~ // beltyn's burning blood
+       ~eefixpack/files/bam/spl_bams/spwi426b.bam~ ~override~ // shadow monsters
+       ~eefixpack/files/bam/spl_bams/spwi427b.bam~ ~override~ // emotion, courage
+       ~eefixpack/files/bam/spl_bams/spwi428b.bam~ ~override~ // emotion, fear
+       ~eefixpack/files/bam/spl_bams/spwi429b.bam~ ~override~ // emotion, hope
+       ~eefixpack/files/bam/spl_bams/spwi430b.bam~ ~override~ // mordenkainen's force missiles
+       ~eefixpack/files/bam/spl_bams/spwi431b.bam~ ~override~ // shout
+       ~eefixpack/files/bam/spl_bams/spwi432b.bam~ ~override~ // vitriolic sphere
+       ~eefixpack/files/bam/spl_bams/spwi504b.bam~ ~override~ // monster summoning iii
+       ~eefixpack/files/bam/spl_bams/spwi507b.bam~ ~override~ // hold monster
+       ~eefixpack/files/bam/spl_bams/spwi516b.bam~ ~override~ // conjure lesser fire elemental
+       ~eefixpack/files/bam/spl_bams/spwi520b.bam~ ~override~ // conjure lesser air elemental
+       ~eefixpack/files/bam/spl_bams/spwi521b.bam~ ~override~ // conjure lesser earth elemental
+       ~eefixpack/files/bam/spl_bams/spwi524b.bam~ ~override~ // shroud of flame
+       ~eefixpack/files/bam/spl_bams/spwi525b.bam~ ~override~ // demi-shadow monsters
+       ~eefixpack/files/bam/spl_bams/spwi526b.bam~ ~override~ // summon shadow
+       ~eefixpack/files/bam/spl_bams/spwi528b.bam~ ~override~ // contact other plane
+       ~eefixpack/files/bam/spl_bams/spwi531b.bam~ ~override~ // conjure fire elemental
+       ~eefixpack/files/bam/spl_bams/spwi532b.bam~ ~override~ // conjure earth elemental
+       ~eefixpack/files/bam/spl_bams/spwi533b.bam~ ~override~ // conjure water elemental
+       ~eefixpack/files/bam/spl_bams/spwi534b.bam~ ~override~ // conjure air elemental
+       ~eefixpack/files/bam/spl_bams/spwi603b.bam~ ~override~ // tenser's transformation
+       ~eefixpack/files/bam/spl_bams/spwi610b.bam~ ~override~ // antimagic shell
+       ~eefixpack/files/bam/spl_bams/spwi612b.bam~ ~override~ // power word, silence
+       ~eefixpack/files/bam/spl_bams/spwi613b.bam~ ~override~ // improved haste
+       ~eefixpack/files/bam/spl_bams/spwi614b.bam~ ~override~ // death fog
+       ~eefixpack/files/bam/spl_bams/spwi615b.bam~ ~override~ // chain lightning
+       ~eefixpack/files/bam/spl_bams/spwi620b.bam~ ~override~ // conjure fire elemental
+       ~eefixpack/files/bam/spl_bams/spwi621b.bam~ ~override~ // conjure air elemental
+       ~eefixpack/files/bam/spl_bams/spwi622b.bam~ ~override~ // conjure earth elemental
+       ~eefixpack/files/bam/spl_bams/spwi626b.bam~ ~override~ // lich touch
+       ~eefixpack/files/bam/spl_bams/spwi627b.bam~ ~override~ // monster summoning iv
+       ~eefixpack/files/bam/spl_bams/spwi628b.bam~ ~override~ // otiluke's freezing sphere
+       ~eefixpack/files/bam/spl_bams/spwi629b.bam~ ~override~ // shades
+       ~eefixpack/files/bam/spl_bams/spwi630b.bam~ ~override~ // darts of bone
+       ~eefixpack/files/bam/spl_bams/spwi631b.bam~ ~override~ // soul eater
+       ~eefixpack/files/bam/spl_bams/spwi706b.bam~ ~override~ // monster summoning v
+       ~eefixpack/files/bam/spl_bams/spwi709b.bam~ ~override~ // malavon's rage
+       ~eefixpack/files/bam/spl_bams/spwi715b.bam~ ~override~ // power word, stun
+       ~eefixpack/files/bam/spl_bams/spwi721b.bam~ ~override~ // mass invisibility
+       ~eefixpack/files/bam/spl_bams/spwi724b.bam~ ~override~ // acid storm
+       ~eefixpack/files/bam/spl_bams/spwi725b.bam~ ~override~ // seven eyes
+       ~eefixpack/files/bam/spl_bams/spwi726b.bam~ ~override~ // suffocate
+       ~eefixpack/files/bam/spl_bams/spwi801b.bam~ ~override~ // monster summoning vi
+       ~eefixpack/files/bam/spl_bams/spwi802b.bam~ ~override~ // mind blank
+       ~eefixpack/files/bam/spl_bams/spwi806b.bam~ ~override~ // great shout
+       ~eefixpack/files/bam/spl_bams/spwi814b.bam~ ~override~ // iron body
+       ~eefixpack/files/bam/spl_bams/spwi815b.bam~ ~override~ // power word, blind
+       ~eefixpack/files/bam/spl_bams/spwi819b.bam~ ~override~ // monster summoning vi
+       ~eefixpack/files/bam/spl_bams/spwi901b.bam~ ~override~ // the greatest ninth levle spell of all time
+       ~eefixpack/files/bam/spl_bams/spwi904b.bam~ ~override~ // malavon's corrosive fog
+       ~eefixpack/files/bam/spl_bams/spwi905b.bam~ ~override~ // gate
+       ~eefixpack/files/bam/spl_bams/spwi912b.bam~ ~override~ // power word, kill
+       ~eefixpack/files/bam/spl_bams/spwi923b.bam~ ~override~ // summon planetar
+       ~eefixpack/files/bam/spl_bams/spwi924b.bam~ ~override~ // summon dark planetar
+
+END ELSE BEGIN // iwdee uses a different color scheme, so some of these end up the wrong color
 
   COPY ~eefixpack/files/bam/spl_bams/ohtyr1b.bam~  ~override~ // iwdee uses sppr321b, and is a different color
        ~eefixpack/files/bam/spl_bams/sppr750b.bam~ ~override~ // Ether Gate
