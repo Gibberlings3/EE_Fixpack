@@ -1,0 +1,75 @@
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN // bgee, bg2ee common
+  bdorcf1 => 2
+  bdorcm1 => 1
+  bdshaf1 => 2
+  bdsham1 => 1
+  helm    => 1
+  hvln    => 1
+  manley0 => 1
+  manley1 => 2
+  manley2 => 2
+  manley3 => 1
+  manley4 => 2
+  manley5 => 2
+  manley6 => 1
+  manley7 => 1
+  manley8 => 1
+  manley9 => 1
+  manleyx => 2
+  skan    => 2
+  yanner1 => 2
+  yanner2 => 2
+  yanner3 => 2
+  yanner4 => 1
+  yanner5 => 1
+  yanner6 => 1
+  bdtma   => 1
+  bdtmb   => 2
+  bdtmc   => 1
+  bdtmd   => 1
+  bdtme   => 2
+  bdtmf   => 2
+  bdtmg   => 1
+  bdtmh   => 1
+  bdtmi   => 1
+  bdtmj   => 2
+  bdtmk   => 1
+END
+
+ACTION_IF game_is_bgee AND game_incldues_sod BEGIN
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN 
+    BDVICON => 2
+    DSCLARA => 2
+  END
+  
+END  
+
+ACTION_IF game_is_bg2ee BEGIN
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN 
+    yanner1 => 2
+    yanner2 => 2
+    yanner3 => 2
+    yanner4 => 1
+    yanner5 => 1
+    yanner6 => 1
+  END
+  
+END  
+
+COPY_EXISTING ~portrait.2da~ ~override~
+  SPRINT append ~~
+  PATCH_PHP_EACH cd_eefp_portrait AS portrait => sex BEGIN
+    SET present = 0 
+    PATCH_IF sex = 1 BEGIN SPRINT replace man2 END ELSE BEGIN SPRINT replace woman2 END
+    PATCH_FOR_EACH size IN L M S BEGIN 
+      REPLACE_EVALUATE ~^\(%portrait%%size%[ %TAB%]\)~ BEGIN
+        SET resent = 1
+      END ~%MATCH1%~
+      PATCH_IF !present BEGIN SPRINT append ~%append%%LNL%%portrait%%size% %replace%%size%~ END
+    END
+  END
+  BUT_ONLY
+
+APPEND ~portrait.2da~ ~%append%~
