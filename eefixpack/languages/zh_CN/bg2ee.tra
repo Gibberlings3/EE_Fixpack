@@ -1,3 +1,9 @@
 @100 = ~元素被摧毁~
 @101 = ~陷阱~
 @102 = ~唔，或许我的祝福护腕还能帮到他……~
+
+// @103 - 105 need translation
+
+// strings @322001, 322002 from game.tra in Tweaks Anthology 
+@106 = ~好女孩~
+@107 = ~天使~

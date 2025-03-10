@@ -485,6 +485,11 @@ COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
   LPF ALTER_AREA_ACTOR INT_VAR y_coord=1071 STR_VAR actor_name=Stein END
   BUT_ONLY
 
+// completing the norh flip, pt 1 (see cdhorse1.cre, cdhorse2.cre)
+  COPY_EXISTING ~ar0903.are~ ~override~
+    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
+    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
+
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
 COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
@@ -569,6 +574,15 @@ COPY_EXISTING ~gith03.cre~   ~override~ // anti-paladin - blocks cdhorror
               ~ohgith03.cre~ ~override~ // anti-paladin - blocks cdhorror
   LPF ALTER_EFFECT INT_VAR match_opcode = 101 match_parameter2 = 101 parameter2 = 24 END // yo dawg, we heard you like immunity to effect, so we immunity to efected your immunity to effect
   BUT_ONLY
+
+// completing the norh flip, pt 2 (see ar0903.are)
+  COPY_EXISTING ~horse.cre~ ~override/cdhorse1.cre~
+    SAY 0x08 @106
+    SAY 0x0c @106
+
+  COPY_EXISTING ~horse.cre~ ~override/cdhorse2.cre~
+    SAY 0x08 @107
+    SAY 0x0c @107
 
 // immune to confusion, but missing spconfus immunity
 COPY_EXISTING ~ohhgmum.cre~  ~override~ // greater mummy - immune to fear - immune to confusion
