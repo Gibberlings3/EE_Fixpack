@@ -19,6 +19,7 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -61,6 +62,8 @@ COPY_EXISTING ~25stweap.2da~ ~override~
 ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
   INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
 END
+
+APPEND ~tooltip.2da~ ~ohdsw03 15529 13053 -1~ // add tooltips for brass blade
 
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
@@ -482,6 +485,11 @@ COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
   LPF ALTER_AREA_ACTOR INT_VAR y_coord=1071 STR_VAR actor_name=Stein END
   BUT_ONLY
 
+// completing the norh flip, pt 1 (see cdhorse1.cre, cdhorse2.cre)
+  COPY_EXISTING ~ar0903.are~ ~override~
+    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
+    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
+
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
 COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
@@ -566,6 +574,15 @@ COPY_EXISTING ~gith03.cre~   ~override~ // anti-paladin - blocks cdhorror
               ~ohgith03.cre~ ~override~ // anti-paladin - blocks cdhorror
   LPF ALTER_EFFECT INT_VAR match_opcode = 101 match_parameter2 = 101 parameter2 = 24 END // yo dawg, we heard you like immunity to effect, so we immunity to efected your immunity to effect
   BUT_ONLY
+
+// completing the norh flip, pt 2 (see ar0903.are)
+  COPY_EXISTING ~horse.cre~ ~override/cdhorse1.cre~
+    SAY 0x08 @106
+    SAY 0x0c @106
+
+  COPY_EXISTING ~horse.cre~ ~override/cdhorse2.cre~
+    SAY 0x08 @107
+    SAY 0x0c @107
 
 // immune to confusion, but missing spconfus immunity
 COPY_EXISTING ~ohhgmum.cre~  ~override~ // greater mummy - immune to fear - immune to confusion
@@ -751,6 +768,11 @@ COPY_EXISTING ~npbow.itm~  ~override~
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
   BUT_ONLY
+
+COPY_EXISTING ~ohdsw03.itm~ ~override~ // brass blade
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 savingthrow = 0 END // remove 'bypass MI' flag
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 146 power = 0 parameter2 = 2 timing = 1 duration = 0 END // fixed cast at level 10, remove 2-sec cast delay
+  LPF ALTER_HEADER INT_VAR match_type = 3 primary = 0 secondary = 0 END // remove primary/secondary from header
 
 // cowl of the stars should cast MMM at player level; run it through an innate so that it picks up non-mage levels
 COPY ~eefixpack/files/spl/innate_intermediary_template.spl~ ~override/cdwi325.spl~

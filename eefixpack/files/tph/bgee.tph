@@ -50,6 +50,7 @@ INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -1437,6 +1438,59 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
 
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
+// corrupted wed fixes
+COPY_EXISTING ~ar1000.wed~ ~override~
+              ~oh2010.wed~ ~override~
+  SET overlay_delta = 3 // oh2010
+  PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_CASE "ar1000" = 0) BEGIN SET overlay_delta = 1 END // ar1000
+  READ_LONG  0x08 overlay_num
+  READ_LONG  0x10 overlay_off
+  READ_LONG  0x14 2hdr_off
+  SET del1_length = (overlay_delta * 0x18)
+  SET del1_offset = (2hdr_off - del1_length)
+  READ_LONG (overlay_off + 0x14 + ((overlay_num - 1) * 0x18)) del2_offset
+  SET del2_length = (overlay_delta * 0x0c)
+  DELETE_BYTES del2_offset del2_length // delete unused bytes
+  DELETE_BYTES del1_offset del1_length // delete unused overlay
+  SET overlay_num -= overlay_delta
+  WRITE_LONG  0x08 overlay_num // update overlay count
+  PATCH_FOR_EACH offset IN 0x10 0x14 0x18 0x1c BEGIN
+    SET adj = 0
+    READ_LONG offset val
+    PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
+    PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
+    WRITE_LONG offset (val - adj)
+  END 
+  READ_LONG  0x14 2hdr_off // re-rad since it hss changed
+  PATCH_FOR_EACH offset IN 0x04 0x08 0x0c 0x10 BEGIN // second header offsets  
+    SET adj = 0
+    READ_LONG (offset + 2hdr_off) val
+    PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
+    PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
+    WRITE_LONG (offset + 2hdr_off) (val - adj)
+  END 
+  FOR (index = 0 ; index < overlay_num ; ++index) BEGIN
+    PATCH_FOR_EACH offset IN 0x10 0x14 BEGIN 
+      SET adj = 0
+      READ_LONG (offset + overlay_off + (index * 0x18)) val
+      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
+      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
+      WRITE_LONG (offset + overlay_off + (index * 0x18)) (val - adj)
+    END
+  END   
+  READ_LONG 0x0c door_num
+  READ_LONG 0x18 door_off
+  FOR (index = 0 ; index < door_num ; ++index) BEGIN
+    PATCH_FOR_EACH offset IN 0x12 0x16 BEGIN 
+      SET adj = 0
+      READ_LONG (offset + door_off + (index * 0x1a)) val
+      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
+      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
+      WRITE_LONG (offset + door_off + (index * 0x1a)) (val - adj)
+    END
+  END   
+  BUT_ONLY  
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
