@@ -74,14 +74,14 @@ ACTION_IF game_is_iwdee BEGIN
     END
     BUT_ONLY  
 
-  COPY_EXISTING ~bcluawyl.bcs~ ~override~ // goes straight to another cutscene
-                ~bctoku.bcs~   ~override~
-                ~bcwylsnd.bcs~ ~override~
-                ~binedtvl.bcs~ ~override~
+  COPY_EXISTING //~bcluawyl.bcs~ ~override~ // goes straight to another cutscene
+                ~bctoku.bcs~   ~override~ // goes straight to another cutscene
+                //~bcwylsnd.bcs~ ~override~
+                //~binedtvl.bcs~ ~override~
                 ~bitoku.bcs~   ~override~
-                ~kutobc.bcs~   ~override~
-                ~kutobi.bcs~   ~override~
-                ~lwnedtvl.bcs~ ~override~
+                //~kutobc.bcs~   ~override~
+                //~kutobi.bcs~   ~override~
+                //~lwnedtvl.bcs~ ~override~
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
     END
