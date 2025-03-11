@@ -659,8 +659,13 @@ COPY_EXISTING ~spin956.spl~ ~override~ // hell hound breath [bg2]
 
 COPY_EXISTING ~sppr110.spl~ ~override~ //shillelagh
   LPF ALTER_EFFECT INT_VAR header = 19 match_duration = 142 duration = 144 END // duration is two seconds too short at level 20
+  
+COPY_EXISTING ~%CLERIC_GLYPH_OF_WARDING%.spl~ ~override~ // sppr304, glyph of warding - capping at 18
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = 0 damage_rolls = 1 level_cap = 20 END // damage is 1d4/level, save negates
+  BUT_ONLY
 
-COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2]
+COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2] - capping at 18, other bugs
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = (10 * round) level_cap = 20 END // 1 turn/level
   PATCH_IF game_is_bg2ee BEGIN
     LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 267 match_parameter1 = 16233 END // blocks "gulp" string (bg2 only)
   END  
