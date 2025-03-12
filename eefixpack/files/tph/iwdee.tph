@@ -435,6 +435,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
+INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
