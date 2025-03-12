@@ -99,6 +99,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
      ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
      ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
+     ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
