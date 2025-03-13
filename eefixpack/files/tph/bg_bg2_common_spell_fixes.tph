@@ -659,8 +659,28 @@ COPY_EXISTING ~spin956.spl~ ~override~ // hell hound breath [bg2]
 
 COPY_EXISTING ~sppr110.spl~ ~override~ //shillelagh
   LPF ALTER_EFFECT INT_VAR header = 19 match_duration = 142 duration = 144 END // duration is two seconds too short at level 20
+  
+COPY_EXISTING ~%CLERIC_CALL_LIGHTNING%.spl~ ~override~ // sppr302, call lightning - caps at 18
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = 0 damage_rolls = 1 base_dmg_rolls = 2 save_for_half = 1 RET abil_delta END // damage is 2d8 + 1d8 per level of caster
+  // duration is one round/4 levels in bg2, 1 round/level in iwdee--both are handled by projectile
+  PATCH_IF abil_delta > 0 BEGIN // if we added abilities
+    READ_LONG  0x64 abil_off
+    READ_SHORT 0x68 abil_num
+    FOR (index = (abil_num - abil_delta) ; index < abil_num ; ++index) BEGIN // loop through new abilities only
+      READ_SHORT  (abil_off + 0x10 + (index * 0x28)) level       // just read the level
+      // iwdee scales projectile 1/level so last projectile is level 11; bg2ee does 1/4 levels so cap is 44
+      PATCH_IF level > (43 - (33 * game_is_iwdee)) BEGIN SET proj = 91 END ELSE BEGIN SET proj = (80 + (level / (4 - (3 * game_is_iwdee)))) END // 91 is last call lightning projectile
+      WRITE_SHORT (abil_off + 0x26 + (index * 0x28)) proj // projectile
+    END
+  END  
+  BUT_ONLY
+  
+COPY_EXISTING ~%CLERIC_GLYPH_OF_WARDING%.spl~ ~override~ // sppr304, glyph of warding - capping at 18
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = 0 damage_rolls = 1 END // damage is 1d4/level, save negates
+  BUT_ONLY
 
-COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2]
+COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2] - capping at 18, other bugs
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = (10 * round) END // 1 turn/level
   PATCH_IF game_is_bg2ee BEGIN
     LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 267 match_parameter1 = 16233 END // blocks "gulp" string (bg2 only)
   END  
@@ -692,6 +712,10 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
 COPY_EXISTING ~spwi517.spl~ ~override~ // protection from acid [bg, bg2, iwd]
   LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 141 END                 // shouldn't be here 
   LPF DELETE_EFFECT INT_VAR header = 0 match_opcode =  61 multi_match = 1 END // dupe effect
+
+COPY_EXISTING ~%WIZARD_PHANTOM_BLADE%.spl~ ~override~ // spwi518, phantom blade - caps at 18
+  LPF CD_LEVEL_SELECT-O-MATIC INT_VAR base_dur = (round * 3) END // 3 rounds + 1 round/level
+  BUT_ONLY
 
 //tbd, cam
 // conjure fire elemental pauses the caster five rounds at level 19, correct three rounds at all other levels

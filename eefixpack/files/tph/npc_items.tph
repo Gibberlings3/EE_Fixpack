@@ -1,0 +1,221 @@
+// items already restricted via 319 and/or item_use.2da; removing unnecessary restrictions
+
+// no changes: rsboot, stafn1
+
+COPY_EXISTING ~arow14.itm~ ~override~ // Poisoned Arrow [eldoth0
+  WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29) // normal arrow usability
+  WRITE_BYTE 0x29 0 // remove barbarian
+    
+COPY_EXISTING ~rsbrac.itm~ ~override~ // Glimmering Bands
+  WRITE_BYTE 0x2f BIT1 + BIT2 // add wizard slayer, kensai
+    
+COPY_EXISTING ~sw1h13.itm~ ~override~ // Moonblade +3
+  WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT14 + BIT15) // normal dagger usability
+  WRITE_BYTE 0x2b BIT1 // add beastmaster
+  WRITE_BYTE 0x26 3 // change to 3 STR, the normal dagger requirement
+
+ACTION_IF game_is_bgee BEGIN 
+
+  // no changes: bdamul12, bdrobe03, clck22
+
+  ACTION_IF game_includes_sod BEGIN 
+    
+    APPEND ~item_use.2da~ // recommend for EET
+~bdbow06 CORWIN 9382 2 35625
+bdchan05 CORWIN 9382 2 35625
+bdchanca BDCAELAR 9382 2 35624
+bdhelmca BDCAELAR 9382 2 35624
+bdshldca BDCAELAR 9382 2 35624
+bdsw1hca BDCAELAR 9382 2 35624
+bdhelm17 VOGHILN 9382 2 35626~ 
+    
+    COPY_EXISTING ~item_use.2da~ ~override~
+      PRETTY_PRINT_2DA
+    
+    COPY_EXISTING ~bdax1h02.itm~ ~override~ // Axe of Kruntur +2 
+                  ~bdax1h05.itm~ ~override~ // Grubdoubler's Axe +1
+      WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT19 + BIT22 + BIT29) // normal axe usability
+      WRITE_BYTE 0x2b BIT1 // add beastmaster
+      
+    COPY_EXISTING ~bdbow01.itm~ ~override~ // Blightbringer +1
+      WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29) // normal shortbow usability
+      WRITE_BYTE 0x2f BIT2 + BIT3 // add kensai, cavalier
+      
+    COPY_EXISTING ~bdbow06.itm~ ~override~ // Corwin's Bow +1
+      WRITE_LONG 0x1e (BIT6 + BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // normal composite longbow usability
+      WRITE_BYTE 0x2f BIT2 + BIT3 // add kensai, cavalier
+      
+    COPY_EXISTING ~bdchan01.itm~ ~override~ // Jegg's Leathers +2
+                  ~bdchan02.itm~ ~override~ // Kruntur's Armor +3
+      WRITE_LONG 0x1e (BIT18 + BIT29) // normal studded leather usability
+      WRITE_BYTE 0x29 BIT4 + BIT5 // add avenger, shapeshifter
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdchan05.itm~ ~override~ // Corwin's Armor +2
+      WRITE_LONG 0x1e (BIT18 + BIT29 + BIT30) // using elven chain as a base
+      WRITE_BYTE 0x29 BIT4 + BIT5 // add avenger, shapeshifter
+      WRITE_BYTE 0x2b BIT0 + BIT1 // add stalker, beastmaster
+      //WRITE_BYTE 0x2d BIT7 // add archer
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdchanca.itm~ ~override~ // Mail of the Hallowed Hero +3
+      WRITE_LONG 0x1e (BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // using chain as a base
+      WRITE_BYTE 0x29 BIT4 + BIT5 // add avenger, shapeshifter
+      WRITE_BYTE 0x2b BIT0 + BIT1 // add stalker, beastmaster
+      WRITE_BYTE 0x2d BIT7 // add archer
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdhelm17.itm~ ~override~ // Voghiln's Helmet
+      WRITE_LONG 0x1e (BIT18 + BIT19 + BIT22 + BIT29) // normal helm usability, minus bards
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdhelmca.itm~ ~override~ // Circlet of the Cynosure
+      WRITE_LONG 0x1e (BIT6 + BIT18 + BIT19 + BIT22 + BIT29) // normal helm usability
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdleat02.itm~ ~override~ // Goblin Hide Armor +2
+                  ~bdleat06.itm~ ~override~ // Goblin Leathers +1
+      WRITE_LONG 0x1e (BIT18 + BIT29) // normal hide usability
+      WRITE_BYTE 0x29 BIT4 + BIT5 // add avenger, shapeshifter
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdshld07.itm~ ~override~ // M'Khiin's Buckler +2 
+      WRITE_LONG 0x1e (BIT18 + BIT29) // normal buckler usability
+      WRITE_BYTE 0x2f BIT2 // add kensai
+      
+    COPY_EXISTING ~bdshldca.itm~ ~override~ // Solar Aegis +3
+      WRITE_LONG 0x1e (BIT6 + BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // normal medium shield usability
+      WRITE_BYTE 0x2f BIT2 // add kensai
+
+    COPY_EXISTING ~bdstaf02.itm~ ~override~ // The Soulherder's Staff +2
+      WRITE_LONG 0x1e BIT29 // normal staff usability
+      
+    COPY_EXISTING ~bdsw1hca.itm~ ~override~ // Aster's Edge +3
+      WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT30) // normal long sword usability
+      WRITE_BYTE 0x2b BIT1 // add beastmaster
+   
+  END 
+   
+END ELSE BEGIN // bg2ee
+
+  // no changes: misc5x, ohbglov1
+    
+  APPEND ~item_use.2da~ ~xbow12 JAN 9382 2 8652~ 
+  COPY_EXISTING ~item_use.2da~ ~override~
+    REPLACE_TEXTUALLY ~\(88261[ %TAB%%LNL%%MNL%]+\)NPSW03[ %TAB%].+$~ ~\1npstaf CERND 9382 2 9153~ // swap dupe npsw03 line for npstaf line
+    //REPLACE_TEXTUALLY ~88261[ %TAB%%LNL%%MNL%]+NPSW03[ %TAB%].+$~ ~88261~ // remove dupe npsw03 line if we don't add npstaf
+    PRETTY_PRINT_2DA
+
+  COPY_EXISTING ~beltbw.itm~ ~override~ // Holy Symbol of Baervan Wildwanderer
+    WRITE_LONG 0x1e (BIT1 + BIT6 + BIT11 + BIT12 + BIT13 + BIT16 + BIT17 + BIT18 + BIT19 + BIT20 + BIT21 + BIT22 + BIT29 + BIT30) // normal holy symbol usability & no evil
+
+  COPY_EXISTING ~beltsh.itm~ ~override~ // Holy Symbol of Shar
+    WRITE_LONG 0x1e (BIT6 + BIT11 + BIT12 + BIT13 + BIT16 + BIT17 + BIT18 + BIT19 + BIT20 + BIT21 + BIT22 + BIT29 + BIT30) // normal holy symbol usability, no alignment restrictions
+
+  COPY_EXISTING ~bolt07.itm~ ~override~ // Flasher Master Bruiser Mate
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29 + BIT30) // normal bolt usability
+    WRITE_BYTE 0x29 0 // remove barbarian
+    WRITE_BYTE 0x2a 0 // remove INT req
+
+  COPY_EXISTING ~nparm.itm~ ~override~ // Jansen AdventureWear
+    WRITE_LONG 0x1e (BIT18 + BIT29) // normal leather armor usability
+    WRITE_BYTE 0x29 BIT4 // remove barbarian, keep shapeshifter
+    WRITE_BYTE 0x2f BIT1 + BIT2 // add wizard slayer to kensai
+    WRITE_BYTE 0x26 0 // remove STR req
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    
+  COPY_EXISTING ~npchan.itm~ ~override~ // Corthala Family Armor
+    WRITE_LONG 0x1e (BIT18 + BIT29) // normal studded leather usability
+    WRITE_BYTE 0x29 BIT4 + BIT5 // add avenger, shapeshifter, remove barbarian
+    WRITE_BYTE 0x2b 0 // remove beastmaster
+    WRITE_BYTE 0x2d 0 // remove archer
+    WRITE_BYTE 0x2f BIT2 // add kensai
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    WRITE_BYTE 0x2e 0 // remove WIS req
+
+  COPY_EXISTING ~npclck.itm~ ~override~ // Cloak of the High Forest +1
+    WRITE_LONG 0x1e 0 // normal cloak usability
+    WRITE_BYTE 0x2f BIT1 // add wizard slayer
+    WRITE_BYTE 0x29 0 // remove druid kits
+    WRITE_BYTE 0x26 0 // remove STR req
+    WRITE_BYTE 0x2a 0 // remove INT req
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    WRITE_BYTE 0x2e 0 // remove WIS req
+    WRITE_BYTE 0x30 0 // remove CON req
+    WRITE_BYTE 0x32 0 // remove CHR req
+
+  COPY_EXISTING ~npmisc1.itm~ ~override~ // Jansen Spectroscopes
+                ~npmisc2.itm~ ~override~ // Jansen Techno-Gloves
+    WRITE_LONG 0x1e 0 // no class/race restrictions
+    WRITE_BYTE 0x29 0 // remove barbarian
+    WRITE_BYTE 0x2f BIT1 // add wizard slayer
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    
+  COPY_EXISTING ~npplat.itm~ ~override~ // Firecam Full-Plate Armor
+    WRITE_LONG 0x1e (BIT6 + BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // normal full plate usability
+    WRITE_BYTE 0x29 BIT4 + BIT5 + BIT6 // add avenger to barbarian & shapeshifter
+    WRITE_BYTE 0x2b BIT0 + BIT1 // add stalker, beastmaster
+    WRITE_BYTE 0x2d BIT7 // add archer
+    WRITE_BYTE 0x2f BIT2 // add kensai
+    WRITE_BYTE 0x2a 0 // remove INT req
+    WRITE_BYTE 0x2e 0 // remove WIS req
+    WRITE_BYTE 0x30 0 // remove CON req
+    WRITE_BYTE 0x32 0 // remove CHR req
+    
+  COPY_EXISTING ~npshld.itm~ ~override~ // Delryn Family Shield
+    WRITE_LONG 0x1e (BIT6 + BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // normal medium shield usability
+    WRITE_BYTE 0x29 0 // remove barbarian
+    WRITE_BYTE 0x26 12 // change to 12 STR, the normal medium shield requirement
+
+  COPY_EXISTING ~npstaf.itm~ ~override~ // Staff of the High Forest +2
+    WRITE_LONG 0x1e BIT29 // normal staff usability
+    WRITE_BYTE 0x29 0 // remove druid kits
+    WRITE_BYTE 0x26 5 // change to 5 STR required, the normal staff requirement
+    WRITE_BYTE 0x2a 0 // remove INT req
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    WRITE_BYTE 0x2e 0 // remove WIS req
+    WRITE_BYTE 0x30 0 // remove CON req
+    WRITE_BYTE 0x32 0 // remove CHR req
+    
+  COPY_EXISTING ~npsw02.itm~ ~override~ // Yoshimo's Katana +1
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT30) // normal katana usability
+    WRITE_BYTE 0x29 0 // remove barbs
+    WRITE_BYTE 0x2b BIT1 // add beastmaster, remove thief kits
+    WRITE_BYTE 0x2f 0 // remove fighter kits
+    
+  COPY_EXISTING ~npsw03.itm~ ~override~ // Hallowed Redeemer +2
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT19 + BIT22 + BIT29 + BIT30) // normal 2h sword usability
+    WRITE_BYTE 0x29 0 // remove barbs
+    WRITE_BYTE 0x2b BIT1 // add beastmaster
+    WRITE_BYTE 0x2f 0 // remove paladin kits
+    WRITE_BYTE 0x26 14 // change to 14 STR, the normal 2h sword requirement
+    WRITE_BYTE 0x2a 0 // remove INT req
+    WRITE_BYTE 0x30 0 // remove CON req
+    WRITE_BYTE 0x32 0 // remove CHR req
+    
+  COPY_EXISTING ~npsw04.itm~ ~override~ // Corthala Family Blade
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT30) // normal katana usability
+    WRITE_BYTE 0x29 0 // remove barbs
+    WRITE_BYTE 0x2d 0 // remove archer
+    WRITE_BYTE 0x26 6 // change to 6 STR, the normal katana requirement
+    WRITE_BYTE 0x2c 0 // remove DEX req
+    WRITE_BYTE 0x2e 0 // remove WIS req
+    WRITE_BYTE 0x30 0 // remove CON req
+    
+  COPY_EXISTING ~npsw05.itm~ ~override~ // Entropy +2
+                ~npsw06.itm~ ~override~ // Chaos Blade
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT30) // normal short sword usability
+    WRITE_BYTE 0x29 0 // clear all kits
+    WRITE_BYTE 0x2b BIT1 // clear all kits except beastmaster
+    WRITE_BYTE 0x2d 0 // clear all kits
+    WRITE_BYTE 0x2f 0 // clear all kits
+    WRITE_BYTE 0x26 5 // change to 5 STR, the normal short sword requirement
+    
+  COPY_EXISTING ~npsw05.itm~ ~override~ // Entropy +2
+    LPF DELETE_EFFECT INT_VAR match_opcode = 319 END 
+
+  COPY_EXISTING ~xbow12.itm~ ~override~ // Flasher Launcher
+    WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29 + BIT30) // normal light crossbow usability
+    WRITE_BYTE 0x29 0 // remove barbs
+    
+END 

@@ -128,6 +128,7 @@ END // end of function
 /////                                                  \\\\\
 
 OUTER_SET round = 6
+ACTION_IF game_is_iwdee BEGIN OUTER_SET cap = 30 END ELSE BEGIN OUTER_SET cap = 20 END 
 INCLUDE ~eefixpack/files/lib/cd_level_select-o-matic.tpa~
 
 /////                                                  \\\\\

@@ -99,6 +99,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
      ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
      ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
+     ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
@@ -606,12 +607,17 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
+INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~  ~override~
               ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
+
+COPY_EXISTING ~blun26.itm~ ~override~ // club of detonation +3 (see blun26fb.spl, blun27fb.spl)
+              ~blun27.itm~ ~override~ // club of detonation +5
+  LPF ALTER_EFFECT INT_VAR match_opcode = 146 STR_VAR resource = EVAL ~%SOURCE_RES%fb~ END
 
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
@@ -767,11 +773,11 @@ COPY_EXISTING ~npbow.itm~  ~override~
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
-  BUT_ONLY
+  BUT_ONLY               
 
-COPY_EXISTING ~ohdsw03.itm~ ~override~ // brass blade
+COPY_EXISTING ~ohdsw03.itm~ ~override~ // brass blade (see also ohdsw03f.spl)
   LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 savingthrow = 0 END // remove 'bypass MI' flag
-  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 146 power = 0 parameter2 = 2 timing = 1 duration = 0 END // fixed cast at level 10, remove 2-sec cast delay
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 146 power = 0 timing = 1 duration = 0 STR_VAR resource = ohdsw03f END // fixed cast at level 10, remove 2-sec cast delay
   LPF ALTER_HEADER INT_VAR match_type = 3 primary = 0 secondary = 0 END // remove primary/secondary from header
 
 // cowl of the stars should cast MMM at player level; run it through an innate so that it picks up non-mage levels
@@ -1069,6 +1075,17 @@ COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait 
 
 COPY_EXISTING ~spin891.spl~ ~override~ // make moon dog howl only affect enemies
   LPF ALTER_HEADER INT_VAR projectile = 159 END // inarea > inareanp
+
+// making custom fireballs for clubs of detonation, brass blade  
+COPY_EXISTING ~spwi304.spl~ ~override/ohdsw03f.spl~ // 10d6 fireball (arcane, for brass blade, ohdsw03.itm)
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 10 END   
+  
+COPY_EXISTING ~ohdsw03f.spl~ ~override/blun27fb.spl~ // 10d6 fireball (innate, for club of detonation +5, blun27.itm)
+  WRITE_SHORT 0x1c 4 // innate   
+  
+COPY_EXISTING ~blun27fb.spl~ ~override/blun26fb.spl~ // 5d6 fireball (innate, for club of detonation +3, blun26.itm)
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 5 END   
 
 COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
   READ_SHORT 0x68 abil_num // op206 vs. spcl521 is always 90 seconds - doesn't scale correctly with other effects

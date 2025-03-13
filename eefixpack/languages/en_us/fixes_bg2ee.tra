@@ -310,6 +310,24 @@ It should be "could elicit a response", not "could illicit a response".
 */
 @48747  = ~Not interested in her, or not interested in women? I do so wonder, ranger, if even my charms could elicit a response on behalf of females everywhere...~
 
+// remove 'only usable by tieflings' bit from the flavor tet
+@51947 = ~This +2 abyssal greensteel blade is one of Haer'Dalis's favorite weapons. This short sword is capable of inflicting an additional 3 points of poison damage if the target fails a Saving Throw.
+
+STATISTICS:
+
+Combat abilities:
+– Hit target must save vs. Poison or suffer 3 points of poison damage
+
+THAC0: +2
+Damage: 1d6+2 (piercing)
+Speed Factor: 1
+Proficiency Type: Short Sword
+Type: One-handed
+Requires:
+ 4 Strength
+
+Weight: 2~
+
 // this item's name should state its enchantment level
 @57918 = "Paralytic Bolt +1"
 

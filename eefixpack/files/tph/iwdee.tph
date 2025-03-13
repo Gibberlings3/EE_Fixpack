@@ -435,6 +435,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_iwdee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
+INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
@@ -938,14 +939,14 @@ COPY_EXISTING ~sppr706.spl~ ~override~ // symbol, fear
               ~spwi811.spl~ ~override~ // symbol, fear
               ~spwi816.spl~ ~override~ // symbol, stun
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 21 END // trim off incorrect headers
-  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 3 step_dur = 6 level_cap = 30 END // 2 rds + 1 rd/3 levels
+  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 3 step_dur = 6 END // 2 rds + 1 rd/3 levels
 
 // headers added to extend spells to iwd level 30 cap all have incorrect durations
 COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
               ~sppr730.spl~ ~override~ // aura of flaming death
               ~sppr740.spl~ ~override~ // wither
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
-  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // 1 rd/2 levels
+  LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 END // 1 rd/2 levels
 
 // evasion fixes - missing evasion check
 COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death

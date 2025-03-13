@@ -36,7 +36,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN // bgee, bg2ee common
   bdtmk   => 1
 END
 
-ACTION_IF game_is_bgee AND game_incldues_sod BEGIN
+ACTION_IF game_is_bgee AND game_includes_sod BEGIN
 
   ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN 
     BDVICON => 2
