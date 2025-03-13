@@ -1,0 +1,94 @@
+// https://www.gibberlings3.net/forums/topic/39288-bg-bg2-iwd-boltarrow-usability/
+
+// monks can use arrows and bolts despite being unable to use bows or crossbows
+COPY_EXISTING ~angarow.itm~  ~override~ // arrow of fire
+              ~arhand.itm~   ~override~ // arrow of the hand +2 [iwdee]
+              ~arow01.itm~   ~override~ // arrow
+              ~arow02.itm~   ~override~ // arrow +1
+              ~arow03.itm~   ~override~ // arrow of slaying
+              ~arow04.itm~   ~override~ // acid arrow +1
+              ~arow05.itm~   ~override~ // arrow of biting
+              ~arow06.itm~   ~override~ // arrow of detonation
+              ~arow07.itm~   ~override~ // arrow of dispelling
+              ~arow08.itm~   ~override~ // arrow of fire
+              ~arow09.itm~   ~override~ // arrow of ice
+              ~arow10.itm~   ~override~ // arrow of piercing +1
+              ~arow11.itm~   ~override~ // arrow +2
+              ~arow12.itm~   ~override~ // arrow of biting
+              ~arow14.itm~   ~override~ // poisoned arrow
+              ~arow15.itm~   ~override~ // arrow +3
+              ~arow16.itm~   ~override~ // arrow of ice
+              ~arow1a.itm~   ~override~ // arrow +2
+              ~arowkc.itm~   ~override~ // arrow of fire
+              ~arowtrn.itm~  ~override~ // translocation arrow +1 [iwdee]
+              ~arrophe2.itm~ ~override~ // arrow of fire
+              ~bdarow01.itm~ ~override~ // arrow of antimagic +1 [bgee/sod]
+              ~bolt01.itm~   ~override~ // bolt
+              ~bolt02.itm~   ~override~ // bolt +1
+              ~bolt03.itm~   ~override~ // bolt of lightning
+              ~bolt04.itm~   ~override~ // bolt of biting
+              ~bolt05.itm~   ~override~ // bolt of polymorphing
+              ~bolt06.itm~   ~override~ // bolt +2
+              ~bolt07.itm~   ~override~ // flasher master bruiser mate
+              ~bolt08.itm~   ~override~ // blessed bolt
+              ~bolt09.itm~   ~override~ // bolt +3
+              ~cutarow1.itm~ ~override~ // arrow of ice [bgee/sod]
+              ~dwbolt01.itm~ ~override~ // drow bolt of sleep
+              ~dwbolt02.itm~ ~override~ // drow bolt of stunning
+              ~dwbolt03.itm~ ~override~ // drow bolt +1
+              ~garrow.itm~   ~override~ // goblin arrow +1 [iwdee]
+              ~holdfst.itm~  ~override~ // holdfast arrow +1 [iwdee]
+              ~hqarow.itm~   ~override~ // high quality arrow [iwdee]
+              ~hqbolt.itm~   ~override~ // high quality bolt [iwdee]
+              ~iarow01.itm~  ~override~ // arrow
+              ~kuobolt.itm~  ~override~ // kuo-toan bolt
+              ~kuobolt2.itm~ ~override~ // kuo-toan bolt
+              ~kuobolt3.itm~ ~override~ // kuo-toan bolt
+              ~oharow50.itm~ ~override~ // arrow +4
+              ~ohbolt50.itm~ ~override~ // bolt +4
+              ~quiv01.itm~   ~override~ // arrow
+              ~quiver01.itm~ ~override~ // quiver of plenty +1
+              ~quiver02.itm~ ~override~ // case of plenty +1
+              ~quiver03.itm~ ~override~ // quiver of plenty +2
+              ~quiver04.itm~ ~override~ // case of plenty +2
+              ~sahbolt.itm~  ~override~ // paralytic bolt +1
+              ~sekolah.itm~  ~override~ // bolt of sekolah's fire [iwdee]
+              ~uarow2a.itm~  ~override~ // hammer arrow [iwdee]
+              ~uarow3a.itm~  ~override~ // confusion arrow +3 [iwdee]
+              ~uarow3b.itm~  ~override~ // hammer arrow +1 [iwdee]
+              ~uarow3c.itm~  ~override~ // piercing arrow +1 [iwdee]
+              ~uarow4a.itm~  ~override~ // inferno arrow +2 [iwdee]
+              //~arow1-6.itm~  ~override~ // monster arrow (no trans) [iwdee]
+              //~bdarow02.itm~ ~override~ // void-tipped arrow +3 [bgee/sod]
+              //~bdarow03.itm~ ~override~ // flaming arrow [bgee/sod]
+              //~bdarow04.itm~ ~override~ // arrow +3 [bgee/sod]
+              //~bdbolt01.itm~ ~override~ // bolt of fire +1 [bgee/sod]
+              //~bdbolt02.itm~ ~override~ // bolt of ice +1 [bgee/sod]
+              //~bdbolt03.itm~ ~override~ // bolt +3 [bgee/sod]
+              //~bdtrain1.itm~ ~override~ // no such index [bgee/sod]
+              //~farrow.itm~   ~override~ // no such index [iwdee]
+              //~fbolt.itm~    ~override~ // bolt [iwdee]
+              //~flam01.itm~   ~override~ // flamethrower
+              //~frag01.itm~   ~override~ // frag grenade
+              //~fragsap.itm~  ~override~ // fragmentation skull
+              //~frosty.itm~   ~override~ // dr. freeze death ray
+              //~laser.itm~    ~override~ // laser
+              //~light.itm~    ~override~ // wand of magic missiles
+              //~mdk2bul2.itm~ ~override~ // bullet
+              //~mdk2bull.itm~ ~override~ // bullet
+              //~puls01.itm~   ~override~ // wand of magic missiles
+              //~puls02.itm~   ~override~ // wand of magic missiles
+              //~secret02.itm~ ~override~ // pulse ammunition
+              //~secret03.itm~ ~override~ // frag grenade
+              //~secret04.itm~ ~override~ // scorcher ammunition
+              //~trnbolt.itm~  ~override~ // tranquil bolt +1 [iwdee]
+              //~xarow11.itm~  ~override~ // arrow +2 [iwdee]
+              //~xbolt06.itm~  ~override~ // bolt +2 [iwdee]
+  WRITE_LONG 0x1e (THIS BOR BIT29) // adds monk flag
+  BUT_ONLY IF_EXISTS
+
+// iwdee tranquil bolt lacks any usability restrictions at all
+COPY_EXISTING ~trnbolt.itm~  ~override~ // tranquil bolt +1 [iwdee]
+  WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29 + BIT30) // normal bolt restrictions: clerics, druid, monk, mage
+  BUT_ONLY IF_EXISTS
+  
