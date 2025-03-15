@@ -96,7 +96,7 @@ BEGIN
 		COPY_EXISTING_REGEXP
 			~sgrasp[0-9][0-9]\.itm~ ~override~ // Shocking Grasp (bg)
 			~bclaw\.itm~ ~override~ // Beast Claw
-			~seriuos\.itm~ ~override~ // Cause Serious Wounds
+			~serious\.itm~ ~override~ // Cause Serious Wounds
 			~critical\.itm~ ~override~ // Cause Critical Wounds
 			~slaylive\.itm~ ~override~ // Slay Living
 			~harm\.itm~ ~override~ // Harm
