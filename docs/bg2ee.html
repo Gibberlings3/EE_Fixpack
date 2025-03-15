@@ -26,6 +26,7 @@
 <p> Textual changes were made to correct errors or reflect other changes. Note that this is limited to material or factual errors; spelling, grammar, or other typos are handled by the Game Text Update. </p>
 <ul>
   <li>Corrected some dialogue  that  indicated that Garren Windspear's cabin was in the wrong direction. <span class="bg2fp_modder">(strrefs #6511, #7417, #7421)</span></li>
+  <li>Corrected some dialogue  that  indicated that the Fairy Queen was in the wrong direction. <span class="bg2fp_modder">(strrefs #11195, #11354, #11381, #17759, #17774. #17788)</span></li>
   <li>Corrected an Underdark journal entry that indicated the dragon eggs were going to be sacrificed to the dragon, not the demon. <span class="bg2fp_modder"> (strref #7148)</span></li>
   <li>The Temple Ruins were referred to as north or east of Imnesvale instead of west. <span class="bg2fp_modder">(strrefs #17169, #19723)</span></li>
   <li>The description for Carrion Summons indicated that it would summon &quot;1d2&quot; carrion crawlers, but it's not a 50-50 chance. The spell has a 65% chance to summon two, and as such the language has been generalized. <span class="bg2fp_modder">(strref #29212)</span></li>
@@ -33,6 +34,11 @@
   <li>The Sun Soulbeam ability did not roll for an attack, it just hits, contrary to its description.<span class="bg2fp_modder"> (strrefs #74310, #100352)</span></li>
   <li>The ranger Charm Animal ability does not mention its duration. <span class="bg2fp_modder">(strref #100356)</span></li>
   <li>Several of the  shapeshifting abilities and spells did not list all of their abilities; generally it was missing the weapon enchantment of their natural weapons. <span class="bg2fp_modder">(strrefs #103011, #103237, #100374, #100375, #100390, #100391, #100392, #100393, #100394, #100395)</span></li>
+  <li>Corrected some drow language references <span class="bg2fp_modder">(strref #25308)</span></li>
+  <li>Corrected  family names for Jan and  <span class="bg2fp_modder">(strref #48516)</span></li>
+  <li>A soldier was named as a plural, Tombelthen Soldiers <span class="bg2fp_modder">(strrefs #11488, #11489)</span></li>
+  <li>Corrected a racial reference to Ilyich <span class="bg2fp_modder">(strref #34092)</span></li>
+  <li class="bg2fp_modder">A leftover Surgeon line had the wrong sould file attached. (strrefs #12433, #12434)</li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -41,7 +47,8 @@
   <li>Items with poison effects  block their own effects on a poison-immune target. However, in some cases, they were also blocking other, non-poison-related effects which should still apply.<span class="bg2fp_modder"> (potn48.itm)</span></li>
   <li>Similar to the above, sleep and charms could also block unrelated effects when stopped by (half-)elven immunity.<span class="bg2fp_modder"> (gorwom1.itm)</span></li>
   <li>The slow caused by an otyugh hit was a disease effect, but was not being alleviated by various disease cures. <span class="bg2fp_modder">(iotyugh.itm, ohrslng1.itm, otyugh.itm)</span></li>
-  <li>Three spells from SoD are added to the game even though they're not made available. This helps properly preserve BGEE/SoD spellbooks for characters being transferred into BG2EE games. <span class="bg2fp_modder">(bddanc01.bcs, bddanc01.cre, bddanc02.cre, bddanc01.eff, bddanc02.eff, bddark15.pro, bddarka.bam, bddarka.vvc, bddarkx.bam, hidespl.2da, spell.ids, sppr116.spl, <span data-code-marker="+">spprismt.vvc</span>, spschgi.vvc, spwi126.spl, spwi228.spl</span></li>
+  <li>Three spells from SoD are added to the game even though they're not made available. This helps properly preserve BGEE/SoD spellbooks for characters being transferred into BG2EE games. <span class="bg2fp_modder">(bddanc01.bcs, bddanc01.cre, bddanc02.cre, bddanc01.eff, bddanc02.eff, bddark15.pro, bddarka.bam, bddarka.vvc, bddarkx.bam, hidespl.2da, spell.ids, sppr116.spl, <span data-code-marker="+">spprismt.vvc</span>, spschgi.vvc, spwi126.spl, spwi228.spl)</span></li>
+  <li>The revive sequence of trolls has been made more reliable. <span class="bg2fp_modder">(#cdhgtrl.spl, #cdtorga.spl, #cdtrlbl.spl, #trollre.itm, #trollre.spl, cdhgtrl.itm, cdtorgal.itm, cdtrlblz.itm)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -49,7 +56,7 @@
   <li>The area script in one of Hexxat's quest areas can loop. <span class="bg2fp_modder">(oh7200.bcs)</span></li>
   <li>Several creatures were placed on impassable terrain, making them unable to move, or outside the bounds of the area. <span class="bg2fp_modder">(ar0305.are, ar0800.are, ar1000.are, ar2000.are, ar5202.are, ar6005.are, oh5500.are)</span></li>
   <li>Floor or container traps could potentially crash the game if the trap effects were channeled through an unnamed spell and blocked by a target who is immune.<span class="bg2fp_modder"> (spcl415.spl, spin627.spl, spin642.spl, spin707.spl, spwi008.spl, spwi016.spl, spwi023.spl)</span></li>
-  <li>Several doors would <a href="https://www.gibberlings3.net/gallery/image/833-bg2-door-fixes/"> disappear when opened</a>, leaving no way to close them. <span class="bg2fp_modder">(ar0406.are, ar0711.are, ar1302.are, ar1307.are, ar1307.are, ar5007.are)</span></li>
+  <li>Several doors would <a href="https://www.gibberlings3.net/gallery/image/833-bg2-door-fixes/"> disappear when opened</a>, leaving no way to close them. <span class="bg2fp_modder">(ar0406.are, ar0711.are, ar1302.are, ar1307.are, ar1307.are, ar3019.are, ar5007.are)</span></li>
   <li>Several doors had the wrong <a href="https://www.gibberlings3.net/gallery/image/833-bg2-door-fixes/">clickable area</a> when opened. <span class="bg2fp_modder">(ar1202, ar1514.are)</span></li>
 </ul>
 <h3> <a name="dialogue_fixes" id="dialogue_fixes"></a>Dialogue Fixes <a href="#dialogue_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
@@ -92,6 +99,7 @@
   <li>The flindbar weapon of flinds is supposed to penalize the target's THAC0 on hit, but was instead improving it. <span class="bg2fp_modder">(flind1.itm)</span></li>
   <li>The Quiver and Case of Plenty had custom ground icons that were not being used. <span class="bg2fp_modder">(quiver01.itm, quiver02.itm, quiver03.itm, quiver04.itm)</span></li>
   <li>Dorn's various, upgraded Abyssal Blades were not very good at targeting demons and devils for bonus damage. <span class="bg2fp_modder">(<span data-code-marker="+">ohdsw2hb.eff</span>, <span data-code-marker="+">ohdsw2hc.eff</span>)</span></li>
+  <li>Potions of Perception should provide bonuses to Hide in Shadows <span class="bg2fp_modder">(potn39.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, goodberries, ghoul touch, Melf's Minute Meteors). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, gberry.itm, ghoult.itm, melfmet.itm)</span></li>
@@ -209,7 +217,7 @@
   <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mdr2*.bam, mdr3*.bam, mwyv*.bam)</span></li>
   <li>Similar to the above, large animations in areas could also be split and show the same seams where merged. <span class="bg2fp_modder">(1400t001.bam, 1400t002.bam,  1400t003.bam,  1400t004.bam,  1400t005.bam,  am0602c.bam,  am0602d.bam,  am0602k1.bam,  am0602k2.bam,  am0602l1.bam,  am0602l2.bam, 
     am0801b1.bam,  am0801b2.bam,  am0902l.bam,  am0902l1.bam,  am0902l2.bam,  am0902l3.bam,  am0902l4.bam,  am2000a.bam,  am2000a1.bam,  am2000a2.bam,  am2000a3.bam, 
-    am2000a4.bam,  am2000b.bam,  am2000b1.bam,  am2000b2.bam,  am2000b3.bam,  am2000b4.bam,  am2805b.bam,  am2805c.bam,  am414e11.bam,  am414e12.bam )</span></li>
+    am2000a4.bam,  am2000b.bam,  am2000b1.bam,  am2000b2.bam,  am2000b3.bam,  am2000b4.bam,  am2805b.bam,  am2805c.bam,  am414e11.bam,  am414e12.bam)</span></li>
   <li>The paperdoll for monks (the tutorial ones in Candlekeep, not the player class) were corrupted. <span class="bg2fp_modder">(cmnk1inv.bam)</span></li>
   <li>Several animations were <a href="https://www.gibberlings3.net/gallery/image/826-animation-fixes/">not properly blended</a>, resulting in black auras around the effects. <span class="bg2fp_modder">(spsetsh.vvc, spnpoisi.vvc, spccmdsi.vvc)</span></li>
   <li>The animation for <a href="https://www.gibberlings3.net/gallery/image/828-creature-animation-updates/">Death Tyrant beholders</a> had different spacing than regular beholders (despite being the same size) and was not being used by Death Tyrants.<span class="bg2fp_modder"> (7f02.ini, 7f46.ini, behund01.cre, melsum03.cre, rngbeh01.cre)</span></li>
