@@ -116,6 +116,8 @@
   <li>Planetar weapons dispel magic on hit and also have a chance for a vorpal hit, in that order. That means a single hit can dispel Death Ward and then kill the target. The vorpal is now checked first before Death Ward can be dispelled. <span class="bg2fp_modder">(planetar.itm)</span></li>
   <li>The Tomes of Clear Thought and Understanding had mismatching icons between the inventory and ability bar. <span class="bg2fp_modder">(book06.itm, book08.itm)</span></li>
   <li>The Oil of Second Chances should take one round to apply per its descript <span class="bg2fp_modder">(chance.itm)</span></li>
+  <li>Monks could use arrows and bolts despite not being able to use bows or crossbows <span class="bg2fp_modder">(angarow.itm, arhand.itm, arow01.itm, arow02.itm, arow03.itm, arow04.itm, arow05.itm, arow06.itm, arow07.itm, arow08.itm, arow09.itm, arow10.itm, arow11.itm, arow12.itm, arow14.itm, arow15.itm, arow16.itm, arow1a.itm, arowkc.itm, arowtrn.itm, arrophe2.itm, bdarow01.itm, bolt01.itm, bolt02.itm, bolt03.itm, bolt04.itm, bolt05.itm, bolt06.itm, bolt07.itm, bolt08.itm, bolt09.itm, cutarow1.itm, dwbolt01.itm, dwbolt02.itm, dwbolt03.itm, garrow.itm, holdfst.itm, hqarow.itm, hqbolt.itm, iarow01.itm, kuobolt.itm, kuobolt2.itm, kuobolt3.itm, oharow50.itm, ohbolt50.itm, quiv01.itm, quiver01.itm, quiver02.itm, quiver03.itm, quiver04.itm, sahbolt.itm, sekolah.itm, uarow2a.itm, uarow3a.itm, uarow3b.itm, uarow3c.itm, uarow4a.itm)</span></li>
+  <li>The Tranquil Bolt had no usability restrictions at all <span class="bg2fp_modder">(trnbolt.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): The enchantment levels of melee attacks from elemental princes were worse then their respective elementals. <span class="bg2fp_modder">(aegis.itm, aegis2.itm, elemchan.itm, elemcryo.itm, elemhydr.itm, elemimix.itm, elemogre.itm, elemsunn.itm, elemyanc.itm, elemzaam.itm)</span></li>
@@ -234,6 +236,7 @@
   <li>Grisella is not supposed to give out quest rewards unless you had asked for it as part of doing the quest. <span class="bg2fp_modder">(dgrisell.dlg)</span></li>
   <li>The upgrade for Bren Muller's crossbow didn't work as the action was running on the wrong creature. <span class="bg2fp_modder">(dplanar.dlg)</span></li>
   <li>The party can skip the frost giant caves on their way to Lower Dorn's Deep, but the chapter narration always mentions the caves. There is now an alternative chapter narration that doesn't mention the caves for these circumstances. <span class="bg2fp_modder">(ar8001.bcs, cd_ch6a.wav, chptxt6a.2da)</span></li>
+  <li>The end of Heart of Winter was checking the wrong variable to see if Belhifet had already been defeated <span class="bg2fp_modder">(ar9603.bcs)</span></li>
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -313,6 +316,7 @@
     <li>Several actor names, set by the area files in IWDEE, were too long to be used in Dead() checks and have been trimmed down. These do not appear to have any actual effect in game. (ar1000.are, ar2006.are, ar3502.are, ar4001.are, ar4005.are, ar8004.are, ar8010.are, ar8011.are, ar8012.are, ar8013.are, ar9300.are, ar9711.are, ar9714.are)</li>
     <li>damages.ids lacked a consistent IDS header across games (damages.ids)</li>
     <li>Added REALLYCHARMED to ea.ids (ea.ids)</li>
+    <li>Multiple animations had incorrect section names, causing their animations to revert to default values (2000.ini, 2100.ini, 2200.ini, 2300.ini)</li>
   </ul>
 </div>
 <!-- documentation ends here -->
