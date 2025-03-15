@@ -34,6 +34,10 @@
   <li>The 'Book of Tome and Ash' should be the 'Tome of Bone and Ash'. <span class="bg2fp_modder">(strref #64294)</span></li>
   <li>The Notched Dagger did not list its speed or weight. <span class="bg2fp_modder">(strref #66178)</span></li>
 </ul>
+<h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
+<ul>
+  <li>There is a very small window between the end of a cutscene and the initiation of dialogue where actors could disrupt the scripted actions. <span class="bg2fp_modder">(1201csa2.bcs, 1204a1.bcs, 1204d1.bcs, 1204g1.bcs, 1204i1.bcs, 1204m1.bcs, 1204n1.bcs, 1204v1.bcs, 1501cut4.bcs)</span></li>
+</ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Corrected some flags in the Smoldering Corpse Bar; specifically that the party can reform, no resting is allowed, and that TNO can die. <span class="bg2fp_modder">(ar0402.are)</span></li>
@@ -41,6 +45,7 @@
   <li>One anarachist was on impassable terrain and moved. <span class="bg2fp_modder">(ar0902.are)</span></li>
   <li>One of the spawn points in the Warrens of Thought had broken coordinates. <span class="bg2fp_modder">(ar1600.ini)</span></li>
   <li>Due to a difference in how the engine processes scripts, the Baator map should be populated with <a href="https://www.gibberlings3.net/gallery/image/831-baator-map-fix/">more enemies</a>. <span class="bg2fp_modder">(1000fnd.bcs)</span></li>
+  <li>Multiple areas had area scripts assigned or corrected <span class="bg2fp_modder">(ar0103.are, ar0103c.are, ar0104a.are, ar0104c.are, ar0106.are, ar0107.are, ar0207.are, ar0303.are, ar0306b.are, ar0306c.are, ar0505.are, ar0506.are, ar0507.are, ar0509.are, ar0512.are, ar0513.are, ar0607.are, ar0613.are, ar0706b.are, ar1402.are, ar1403.are, ar1405.are, ar3001.are, ar3004a.are, ar3004c.are, ar3005a.are, ar3005c.are, ar3006c.are, ar3007a.are, ar3007b.are, ar3007c.are, ar3008a.are, ar3008b.are, ar3008c.are, ar3008d.are, ar3008e.are, ar3008f.are, ar3009.are, ar3010a.are, ar3010b.are, ar3011a.are, ar3011b.are, ar3011c.are, ar3012.are, ar3013a.are, ar3013b.are, ar3013c.are, ar3013d.are, ar3014.are)</span></li>
 </ul>
 <h3> <a name="dialogue_fixes" id="dialogue_fixes"></a>Dialogue Fixes <a href="#dialogue_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -58,6 +63,7 @@
 <h3> <a name="creature_fixes" id="creature_fixes"></a>Creature Fixes <a href="#creature_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Corrected races for several creatures. <span class="bg2fp_modder">(bsohmien.cre, hbdygrd.cre, lady.cre, trias.cre, triasa.cre, triasb.cre, triasc.cre, worm.cre)</span></li>
+  <!--<li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(gronk.itm, mshbite.itm, shadow1.itm, shadow2.itm, shadow3.itm, trigit.itm, troco.itm, vargbite.itm, zfist.itm, zfistw.itm)</span></li>-->
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -97,6 +103,7 @@
     <li>The duplicate, unused, and misspelled EigthNearestEnemyOfType and EigthNearestMyGroupOfType objects are removed. (object.ids)</li>
     <li>Added <span data-code-marker="+">ForceSpellNoFeedback</span> as an action (a RES version was already present). (action.ids)</li>
     <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
+    <li>Script action `ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)`was defined with a wrong parameter order (action.ids, actsleep.ids, instant.ids)</li>
   </ul>
 </div>
 <!-- documentation ends here -->
