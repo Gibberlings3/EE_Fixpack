@@ -65,6 +65,7 @@
 <h3> <a name="creature_fixes" id="creature_fixes"></a>Creature Fixes <a href="#creature_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Corrected races for several creatures. <span class="bg2fp_modder">(bsohmien.cre, hbdygrd.cre, lady.cre, trias.cre, triasa.cre, triasb.cre, triasc.cre, worm.cre)</span></li>
+  <li>Trias is vulnerable to several spell effects that make it impossible to finish the game such as Abyssal Fury<span class="bg2fp_modder"> (imdeath.itm, trias.cre, triasa.cre, triasb.cre, triasc.cre, splstate.ids, spwi912.spl, spwi912a.spl, spwi912b.spl)</span></li>
   <!--<li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(gronk.itm, mshbite.itm, shadow1.itm, shadow2.itm, shadow3.itm, trigit.itm, troco.itm, vargbite.itm, zfist.itm, zfistw.itm)</span></li>-->
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
@@ -94,6 +95,7 @@
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
   <p>This is a roundup of fixes that primarily impact modders and are not visible to players. </p>
   <ul>
+    <li>IDS tables get sorted (all ids files)</li>
     <li>Corrected two animate.ids entries for the cl_4_Collector_Thug and Trelon (animate.ids)</li>
     <li>One script had some old debugging calls, which are removed (1204trig.bcs)</li>
     <li>Several areas and weds had misordered or incorrect offsets and are fixed (ar0501.are, ar0609.wed, ar0612.wed, ar1001.are, ar13wz.are, ar3017.are, )</li>
@@ -105,6 +107,7 @@
     <li>Added <span data-code-marker="+">ForceSpellNoFeedback</span> as an action (a RES version was already present). (action.ids)</li>
     <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
     <li>Script action `ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)`was defined with a wrong parameter order (action.ids, actsleep.ids, instant.ids)</li>
+    <li>damages.ids lacked a consistent IDS header across games (damages.ids)</li>
   </ul>
 </div>
 <!-- documentation ends here -->

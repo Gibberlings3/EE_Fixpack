@@ -53,7 +53,7 @@
   <li>Fireshield-type spells&mdash;Fireshields or similar effects that would retaliate or perform other actions when the target was struck&mdash;would interrupt the casting sounds and other audio of the creature they were protecting, even if the fireshield and its effects were silent. <span class="bg2fp_modder">(1tarss.spl, aurstaf.itm, balshld.spl, bdclck03.itm, bddispb2.spl, bdhamat2.itm, bdleat02.itm, bdleat07.itm, bdsalf01.itm, bdsha12a.itm, bdsha18a.itm, bdshld02.itm, bdshld08.itm, bdsw1h01.itm, bdsw1h08.itm, bdsw1h14.itm, bdtroll1.itm, bdwolfd1.itm, cdhgtrl.itm, cdtorgal.itm, cdtrlblz.itm, cireve.itm, elemchan.itm, elemcryo.itm, elemhydr.itm, elemimix.itm, elemyanc.itm, elemzaam.itm, leat23.itm, melis02.spl, npsw03.itm, ohbglov1.itm, ohdarmor.itm, ohrbelt2.itm, plysala.itm, reg1hp2.itm, salgrfir.itm, salgrice.itm, shld08p.itm, sklblst.itm, spbgbfs2.eff, spcl118.spl, spcl237d.eff, spcl941.spl, spin644.spl, sppr515d.eff, sppr603d.eff, sppr698d.eff, sppr725.spl, sppr725d.eff, sppr730d.eff, spwi403d.eff, spwi418d.eff, spwi818a.eff, spwi918a.eff, spwm101d.eff, sw1p01.itm, sw2hd1.itm, trollreg.itm)</span></li>
   <li>Since invisibility is usually broken before its (exceptionally long) duration, the expiry sound is often played even though the invisibility is long  gone. Also added better stacking protection. <span class="bg2fp_modder">(bdnighte.spl, cdinvexp.spl, ohbwi405.spl, spin544.spl, spin687.spl, spwi206.spl, spwi307.spl, spwi405.spl, spwi505.spl, spwi721.spl)</span></li>
   <li>Resuurrection was not completely cleaning out old abilities from polymorphing <span class="bg2fp_modder">(#rdremov.spl)</span></li>
-  <li>Free Action has an effect to reset movement rate to 100%, but the way it was implemented could interfere with natural speed increases like the movement bonuses for monks or barbarians. <span class="bg2fp_modder">(bdfistcx.cre, bdring09.itm, bearspir.itm, beholder.itm, bootdriz.itm, bpbort.cre, freering.itm, jwsuper.itm, lionspir.itm, movrat10.itm, planwish.cre, potn45.itm, reghp1.itm, ring09.itm, slaysh01.cre, snakspir.itm, spbatt1.itm, spbatt2.itm, spbatt3.itm, spbatt4.itm, spbatt5.itm, splatt1.itm, splatt2.itm, splatt3.itm, splatt4.itm, splatt5.itm, sppr403.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spsatt1.itm, spsatt2.itm, spsatt3.itm, spsatt4.itm, spsatt5.itm, spwatt1.itm, spwatt2.itm, spwatt3.itm, spwatt4.itm, spwatt5.itm, sw2h06.itm, test.cre, trollboo.itm, waterele.itm, wolfspir.itm)</span></li>
+  <li>Free Action has an effect to reset movement rate to 100%, but the way it was implemented could interfere with natural speed increases like the movement bonuses for monks or barbarians. Free Action should also better remove active grease, slow, web, entangle, and haste effects. <span class="bg2fp_modder">(bdfistcx.cre, bdring09.itm, bearspir.itm, beholder.itm, bootdriz.itm, bpbort.cre, freering.itm, jwsuper.itm, lionspir.itm, movrat10.itm, planwish.cre, potn45.itm, reghp1.itm, ring09.itm, slaysh01.cre, snakspir.itm, spbatt1.itm, spbatt2.itm, spbatt3.itm, spbatt4.itm, spbatt5.itm, splatt1.itm, splatt2.itm, splatt3.itm, splatt4.itm, splatt5.itm, sppr403.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spsatt1.itm, spsatt2.itm, spsatt3.itm, spsatt4.itm, spsatt5.itm, spwatt1.itm, spwatt2.itm, spwatt3.itm, spwatt4.itm, spwatt5.itm, sw2h06.itm, test.cre, trollboo.itm, waterele.itm, wolfspir.itm)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -98,6 +98,7 @@
   <li>You could ask Voghiln about being hungry even if he never mentions it <span class="bg2fp_modder">(ohbvoghi.dlg)</span></li>
   <li>Safana's interjection in Elandro's dialog may fail because of insufficient daytime checks <span class="bg2fp_modder">(bddornj.dlg, bdrasaaj.dlg, bdsafanj.dlg)</span></li>
   <li>Due to an action misordering, some things that should happen when an NPC joins weren't happening, e.g. M'Khiin could be adding 3000 XP on joining but was not <span class="bg2fp_modder">(bdrasaad.dlg, bdmkhiin.dlg, dorn.dlg, dornp.dlg)</span></li>
+  <li>Adoy's dialogue wasn't checking for Neera's presence well, either for her interjection or to give his belt to her <span class="bg2fp_modder">(neadoy.dlg)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -123,10 +124,12 @@
   <li>Corinth had undroppable items which could be transferred to the player; the undropable flag has been removed <span class="bg2fp_modder">(bdcorint.cre)</span></li>
   <li>The Burning Earth's bonuses didn't work cleanly when used against an opponent that qualifies under multiple categories, e.g. undead trolls. <span class="bg2fp_modder">(sw1h24.itm)</span></li>
   <li>Planetar weapons dispel magic on hit and also have a chance for a vorpal hit, in that order. That means a single hit can dispel Death Ward and then kill the target. The vorpal is now checked first before Death Ward can be dispelled. <span class="bg2fp_modder">(planetar.itm)</span></li>
+  <li>Potions of Perception should provide bonuses to Hide in Shadows <span class="bg2fp_modder">(potn39.itm, strref #17872)</span></li>
+  <li>The Protection From Evil 10' Radius scroll had the wrong string assignments <span class="bg2fp_modder">(scrl5d.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, ghoul touch, Melf's Minute Meteors); several wands are changed to power 1 to better match thier effects (Wands of Fear, Magic Missiles, Sleep). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, ghoult.itm, melfmet.itm, wand02.itm, wand03.itm, wand08.itm, wand12.itm)</span></li>
-      <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): Sword of Balduran is a 0-enchantment weapon. <span class="bg2fp_modder">(comps18.itm, sw1h18.itm)</span></li>
+      <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): Sword of Balduran is a 0-enchantment weapon. The enchantment levels of melee attacks from elemental princes were worse then their respective elementals. <span class="bg2fp_modder">(comps18.itm, elemchan.itm, elemsunn.itm, elemzaam.itm, </span><span class="bg2fp_modder">sw1h18.itm)</span></li>
       <li>Type: Two keys were not set as item type: key <span class="bg2fp_modder">(misc83.itm, misc93.itm)</span></li>
     </ul>
   </li>
@@ -140,7 +143,7 @@
   <li>Black Blade of Disaster could be blocked by spell protections, and the weapon grandmastery that should accompany the weapon could sometimes get blocked. <span class="bg2fp_modder">(blakblad.eff, blakblad.itm, cdbblade.spl)</span></li>
   <li>Sol's Searing Orb  could be blocked by spell protections, and the spell was rebuilt in a substantially cleaner fashion. <span class="bg2fp_modder">(sorb.itm, sppr614a.spl, sppr614b.spl)</span></li>
   <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. <span class="bg2fp_modder">(projimag.spl, simulacr.spl)</span></li>
-  <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdbarbde.spl, bdsha12a.spl, bdshld02.spl, keldorn.spl, leat23a.spl, spcl237d.spl, spimixd.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
+  <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdbarbde.spl, bdsha12a.spl, bdshld02.spl, keldorn.spl, leat23a.spl, ohbglov1.spl, spcl237d.spl, spimixd.spl, spcryod.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
   <li>The various Cure Wounds, Restoration, and Lay on Hands spells should be touch range and not dispellable. <span class="bg2fp_modder">(bdcaela3.spl, spcl211.spl, spcl815.spl, spin109.spl, spin679.spl, spin711.spl, spin773.spl, spin827.spl, spin958.spl, sppr103.spl, sppr315.spl, sppr401.spl, sppr502.spl, sppr514.spl, sppr607.spl, spwm168.spl)</span></li>
   <li>The various Cause Wounds spells should be touch range and not bypass magic resistance. <span class="bg2fp_modder">(critical.itm, harm.itm, serious.itm, slaylive.itm, sppr599.spl, sppr699.spl)</span></li>
   <li>The fear effect attached to some ogres has a fear portrait icon that expires before the fear itself. <span class="bg2fp_modder">(bdfear.spl)</span></li>
@@ -177,6 +180,24 @@
   <li>Grease should behave like Web, where it checks for a save every round instead of once for the entire spell duration <span class="bg2fp_modder">(spwi101.spl, grease1.pro through grease20.pro)</span></li>
   <li> The psychic struggle for control of wizard elemental summons breaks when elemental is issued order <span class="bg2fp_modder">(spin906.spl)</span></li>
   <li>Shield of the Archons was blocking too many level 3 spells when cast at level 14 or 15. Also clarified its interaction against Dispel Magic in the description. <span class="bg2fp_modder">(sppr701.spl, strref #26287) </span></li>
+  <li>A couple of abilities were copied and adapted from spells but only their lowest level header was updated. The outdated headers have been removed. <span class="bg2fp_modder">(spin956.spl, spin978.spl)</span></li>
+  <li>The golem haste ability now provides combat feedback. <span class="bg2fp_modder">(spin978.spl)</span></li>
+  <li>The improved invisibility/non-detection combo spell used by Cerberus had mismatchign durations between the two effects. <span class="bg2fp_modder">(spin698.spl)</span></li>
+  <li>Chaotic Commands has redundant confusion protections <span class="bg2fp_modder">(sppr508.spl)</span></li>
+  <li>The Confusion spell doesn't play a sound on its target when cast at the lowest level. <span class="bg2fp_modder">(sppr709.spl)</span></li>
+  <li>Protection from Acid is missing visuals when cast at its lowest level. <span class="bg2fp_modder">(spwi517.spl)</span></li>
+  <li>Conjure Air and Earth Elemental has the wrong duration when cast at the lowest level, <span class="bg2fp_modder">(spwi621.spl, spwi622.spl)</span></li>
+  <li>The duration of Minor Spell Deflection was incorrect whenc ast at level 11 <span class="bg2fp_modder">(spwi318.spl)</span></li>
+  <li class="bg2fp_modder">The targeting of the unused Lightning Bolt spell is incorrect. (spwi399.spl)</li>
+  <li>When cast at level 19 or 20, Protection from Magic Energy is incrementing magic demage reduction, not setting it <span class="bg2fp_modder">(spwi606.spl)</span></li>
+  <li>One  effect of Pierce Magic at level 18 has the wrong dispellability <span class="bg2fp_modder">(spwi608.spl)</span></li>
+  <li>Protection From Evil, 10' Radius had a radius of 15 feet <span class="bg2fp_modder">(spcl233.spl, sppr408.spl, spprot10.pro, strref #25825)</span></li>
+  <li>Shillelagh's duration is short two seconds at maximum level <span class="bg2fp_modder">(sppr110.spl)</span></li>
+  <li>The duration of Magic Resistance is short one round at level 19 and two rounds at level 20 <span class="bg2fp_modder">(sppr509.spl)</span></li>
+  <li>The duration of Summon Nishruu and Summon Efreeti are two seconds two long when cast at levels 19 or 20 <span class="bg2fp_modder">(spwi624.spl, spwi717.spl)</span></li>
+  <li>Protection From Electricity's expiration sound could be dispelled when cast at level 20 <span class="bg2fp_modder">(spwi512.spl)</span></li>
+  <li>Contingency's animation gets cut off since the duration for the effect is too short <span class="bg2fp_modder">(spwi617.spl)</span></li>
+  <li>The spider polymorphs should be immune to all web attacks <span class="bg2fp_modder">(plyspid.itm, plyspid2.itm)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spin828.spl)</span></li>
@@ -203,7 +224,7 @@
   <li>Nishruu and hakeashar should be destroyed by dispel magic, their attack used the wrong type, they had some basic creature errors (general, race, class, animation, resistances), and some other minor errors. <span class="bg2fp_modder">(haksu.cre, nishruu.itm, nishru01.bcs, nishrusu.cre, spcl231.spl, specific.ids, spin112.spl, sppr303.spl, spwi302.spl, spwi326.spl, strref #26588) </span></li>
   <li>The breath attack of hell hounds was using an invisible, single-target projectile instead of a small area-of-effect projectile. The flame fan attack from mephits had the same issue, though it's unused.<span class="bg2fp_modder"> (<span data-code-marker="+">spin938.spl</span>, spin956.spl)</span></li>
   <li>Shambling Mounds had inconsistent race and class values instead of their own custom values. <span class="bg2fp_modder">(<span data-code-marker="+">bdshamb.cre, bpshamb.cre, globsham</span>.cre,<span data-code-marker="+"> smoundsu</span>.cre)</span></li>
-  <li>Several joinable NPCs in SoD had four additional 'action' lines in their soundsets which were not assigned. <span class="bg2fp_modder">(baelot7.cre, bdcaelar.cre, bdcaela3.cre, bdmkhi7.cre, corwin7.cre, dorn7.cre, dynahe7.cre, edwin7.cre, glint7.cre, khalid7.cre, minsc7.cre, neera7.cre, rasaad7.cre, safana7.cre, viconi7.cre, voghil7.cre)</span></li>
+  <li>Several joinable NPCs in SoD had four additional 'action' lines in their soundsets which were not assigned. <span class="bg2fp_modder">(baelot7.cre, bdbaelot.bcs, bdcaelar.cre, bdcaela3.cre, bddorn.bcs, bddynahe.bcs, bdedwin.bcs, bdkhalid.bcs, bdminsc.bcs, bdmkhi7.cre, bdneera.bcs, bdrasaad.bcs, bdsafana.bcs, bdviconi.bcs, corwin7.cre, dorn7.cre, dynahe7.cre, edwin7.cre, glint7.cre, khalid7.cre, minsc7.cre, neera7.cre, rasaad7.cre, safana7.cre, viconi7.cre, voghil7.cre)</span></li>
   <li> A few creatures had unique dialogues available, but not assigned. <span class="bg2fp_modder">(ftobe7.cre, mtob4.cre, mtob5.cre, read4.cre) </span></li>
   <li>The Mind Flayer attack was missing its 'Devour brain' combat feedback <span class="bg2fp_modder">(mindflay.itm)</span></li>
   <li>Depending on the difficulty, Belhifet has two different melee attacks. His weapon for higher difficulties was doing less poison damage than the lower difficulty one, and has been adjusted. Belhifet was immune to regular, arcane lightning bolts but not the copies used by Avengers or Stormlords. <span class="bg2fp_modder">(bdbelhi1.itm, bdbelhi2.itm, bdbelhia.itm)</span></li>
@@ -229,6 +250,9 @@
   <li>There was a loop where you can't inform Corwin that the Bridgeforters are ready to attack due to bad variables <span class="bg2fp_modder">(bdkhalid.dlg)</span></li>
   <li>Several 'Den of Thieves' journal entries were not being cleared upon quest completion <span class="bg2fp_modder">(bdrhynwi.dlg, bdstoneh.dlg)</span></li>
   <li>Fixed multiple issues with Shoal's kiss: the player could avoid the death/damage by initiating dialogue with a non-party member like a familiar; if the player used Death Ward or similar to block the death effects Shoal would still behave as if she killed the character; and finally her damage is changed from acid to magic as it's more appropriate <span class="bg2fp_modder">(shoal.dlg, shoal.spl, shoal1.spl)</span></li>
+  <li>Taerom's ankheg shell processing blocks advancement of the Vial of Mysterious Liquid quest. Also his store update at then conlusion of this quest resets a lot of depreciation rates. <span class="bg2fp_modder">(baldur.bcs, taerom.dlg)</span></li>
+  <li>Killing the dopplegangers at the Merchant League frequently results in one of the principals insisting that not all of them have been defeated even when they have been. We've made the counting more robust. <span class="bg2fp_modder">(ar0127.bcs, ar0128.bcs, ar0129.bcs, dopzorl.bcs, dopzorl.cre, irlentre.bcs, zorl.bcs)</span></li>
+  <li>If the player imports characters from Black Pits into an SoD game, their slave rings never get removed <span class="bg2fp_modder">(bd0120.bcs)</span></li>
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -243,7 +267,7 @@
   <li>After Skie's death in SoD, all party members are supposed to leave, but some could remain if they were dead at the time. <span class="bg2fp_modder">(bdcut61.bcs)</span></li>
   <li>In the Black Pits, Hogarl is scripted to use a healing potion if hurt, but was drinking the wrong potion. <span class="bg2fp_modder">(bpgiafir.bcs)</span></li>
   <li>If Black Pits characters were imported to the main BGEE/SoD campaign, they would retain their BP-specific scripting. <span class="bg2fp_modder">(bpplot.bcs)</span></li>
-  <li>SoD removed some of Imoen's BG scripting, including the bit to match the PC's XP when joining outside of Candlekeep. <span class="bg2fp_modder">(imoen.bcs)</span></li>
+  <li>SoD removed some of Imoen's BG scripting, including the bit to match the PC's XP when joining outside of Candlekeep. <span class="bg2fp_modder">(imoen.bcs, npclevel.2da)</span></li>
   <li>Gretek and co. are changed so that they more consistently go hostile together when threatened. Same treatment is given to Cydermac's crew. <span class="bg2fp_modder">(arlin.cre, 
     banditcy.bcs, catura.cre, cyderm.dlg, gretek.bcs, gretek.cre,  gretek.dlg, nader.cre, pargus.cre, wilf.cre)</span></li>
   <li>Several AI scripts  were using old BG2 string references for drinking a potion or using a wand.<span class="bg2fp_modder"> (bddefai.bcs, bddynac.bcs, bdedwinc.bcs, bdeldotc.bcs, bdgarrcc.bcs, bdgarric.bcs, bdimoenc.bcs, bdkivanc.bcs, bdxzarc.bcs)</span></li>
@@ -254,6 +278,7 @@
   <li>A sound wasn't playing in one SoD ambush due to a typo <span class="bg2fp_modder">(bd6100.bcs)</span></li>
   <li>At the beginning of SoD, which NPCs spawn--and how and where--depends on several factors, like whether you met them in BG, travelled with them, &amp;c. A check to see if Safana was alive was inverted. <span class="bg2fp_modder">(bd0101.bcs)</span></li>
   <li>If Neera has been panicked or otherwise rendered incapable of speech in her initial fight with the Red Wizards in Beregost, she will not wait until the effects are gone to initiate dialogue. <span class="bg2fp_modder">(neera.bcs)</span></li>
+  <li>Shaman summons weren't getting their item bonuses if the shaman was wearing special gear due to some bad script ordering. One other trigger was also incorrect. <span class="bg2fp_modder">(bdshunsu.bcs)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -263,7 +288,7 @@
   <li>The animation for flaming short swords was missing some files. <span class="bg2fp_modder">(wphf2*.bam)</span></li>
   <li>The animation for <a href="https://www.gibberlings3.net/gallery/image/828-creature-animation-updates/">Death Tyrant beholders</a> had different spacing than regular beholders (despite being the same size) and was not being used by Death Tyrants.<span class="bg2fp_modder"> (7f02.ini, 7f46.ini)</span></li>
   <li>The animation for <a href="https://www.gibberlings3.net/gallery/image/828-creature-animation-updates/">revenants</a> needed some attack animation corrections and was not being used by revenants.<span class="bg2fp_modder"> (7701.ini, bpreve01.cre, revent.cre)</span></li>
-  <li>Albert states they are from the Nine Hells, but uses a tanar'ri animation. It now uses a cornugon animation, which (unlike tanar'ri)  actually hail from the Nine Hells. <span class="bg2fp_modder">(albert.bcs, rufcut01.bcs, rufcut02.bcs)</span></li>
+  <li>Albert states they are from the Nine Hells, but uses a tanar'ri animation. It now uses a cornugon animation, which (unlike tanar'ri)  actually hail from the Nine Hells. <span class="bg2fp_modder">(albert.bcs, cornu*.wav, mcor*.bam, rufcut01.bcs, rufcut02.bcs)</span></li>
   <li>Troll animations were inconsistently used, and have been <a href="https://www.gibberlings3.net/gallery/image/824-troll-animations/">standardized</a>. <span class="bg2fp_modder">(trollgi.cre)</span></li>
   <li><a href="https://www.gibberlings3.net/gallery/image/828-creature-animation-updates/">Bugbear shamans</a> have a special animation, but they were using generic bugbear animations instead. <span class="bg2fp_modder">(bdbugb20.cre)</span></li>
   <li>One of the Stinking Cloud projectiles was not blended properly. <span class="bg2fp_modder">(bdstink.pro)</span></li>
@@ -274,6 +299,7 @@
   <li>The Kai ability was using the Dispel Magic icon <span class="bg2fp_modder">(spcl144.spl)</span></li>
   <li>Multiple spell and ability icons have been touched up to fix small graphical errors and to make them more clear <span class="bg2fp_modder">(ohtmps2b.bam, ohtyr1b.bam, spcl236b.bam, spcl237b.bam, spcl238b.bam, spcl239b.bam, spcl940b.bam, spcl941b.bam, spdd03b.bam, spdwd02b.bam, spin205b.bam, spin205b.bam, sppr150b.bam, sppr150c.bam, sppr250b.bam, sppr350b.bam, sppr350c.bam, sppr450b.bam, sppr550b.bam, sppr550c.bam, sppr650b.bam, sppr719c.bam, sppr750b.bam, sppr750c.bam, sppr751b.bam, spsd02b.bam)</span></li>
   <li>Removed the shadows from vampire creature animations, and added shadows to wyvern animations. <span class="bg2fp_modder">(mvaf*.bam, mvam*.bam. mwyv*.bam, nboh*.bam)</span></li>
+  <li>M'Khiin's custom gobline animation was missing a specific getting up animation <span class="bg2fp_modder">(mgo7gu.bam)</span></li>
 </ul>
 <ul>
 </ul>
@@ -291,11 +317,14 @@
   <li>BGEE included a handful of portraits as part of &quot;The Road to v2.0 Reward&quot;, but they were not made available on SoD.<span class="bg2fp_modder"> (bgee.lua)</span></li>
   <li>Frair Tajik was the only vendor who bought helmets but not hats<span class="bg2fp_modder"> (bdfrair.sto)</span></li>
   <li>Subtitles have been enabled for the SoD &quot;Murder&quot; and &quot;Ambush&quot; cinematics <span class="bg2fp_modder">(bgee.lua, movidesc.2da, strref #67456)</span></li>
+  <li>With SoD installed, the OHxxxx areas are listed twice in the debug menu. <span class="bg2fp_modder">(bgee.lua)</span></li>
+  <li>Multiple movies are missing from the replay menu <span class="bg2fp_modder">(movidesc.2da)</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
   <p>This is a roundup of fixes that primarily impact modders and are not visible to players. </p>
   <ul>
+    <li>IDS tables get sorted (all ids files)</li>
     <li>The Neothelid lacked an ini file and correct animate/anisnd.ids entries. (3001.ini, animate.ids, anisnd.ids)</li>
     <li>Several of the splprot.2da entries (specifically, alignment checks) were mislabeled. (splprot.2da)</li>
     <li>Several entries were added to spell.ids to enable easier scripting. (spell.ids)</li>
@@ -317,6 +346,7 @@
     <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
     <li>Script action `ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)`was defined with a wrong parameter order (action.ids, actsleep.ids, instant.ids)</li>
     <li>One spell was  misindexed (spin558.spl)</li>
+    <li>damages.ids lacked a consistent IDS header across games (damages.ids)</li>
   </ul>
 </div>
 <!-- documentation ends here -->

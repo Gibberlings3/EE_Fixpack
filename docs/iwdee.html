@@ -33,6 +33,7 @@
   <li>The ranger Charm Animal ability does not mention its duration. <span class="bg2fp_modder">(strref #40299)</span></li>
   <li>Tenser's Transformation does not mention that it also provides a +2 to-hit bonus above and beyond the fighter THAC0 <span class="bg2fp_modder">(strref #7808)</span></li>
   <li>Clarified several skill progressions in the descriptions for monks and archers <span class="bg2fp_modder">(strrefs #37111, #37256)</span></li>
+  <li>The breath attack of Dragon Disciples scales with level, but the ability description omitted this information <span class="bg2fp_modder">(strref #36315)</span></li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -113,6 +114,13 @@
   <li>Three White Doves had errors in its destruction percentages for undead <span class="bg2fp_modder">(doves.itm)</span></li>
   <li>Acid Storm via the Wand of Corrosion and Snilloc's Snowball Storm via the Wand of Freezing Death were being cast at the wrong level <span class="bg2fp_modder">(wandcor.itm, wandfre.itm)</span></li>
   <li>Planetar weapons dispel magic on hit and also have a chance for a vorpal hit, in that order. That means a single hit can dispel Death Ward and then kill the target. The vorpal is now checked first before Death Ward can be dispelled. <span class="bg2fp_modder">(planetar.itm)</span></li>
+  <li>The Tomes of Clear Thought and Understanding had mismatching icons between the inventory and ability bar. <span class="bg2fp_modder">(book06.itm, book08.itm)</span></li>
+  <li>The Oil of Second Chances should take one round to apply per its descript <span class="bg2fp_modder">(chance.itm)</span></li>
+  <li>Bulk fixes:
+    <ul>
+      <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): The enchantment levels of melee attacks from elemental princes were worse then their respective elementals. <span class="bg2fp_modder">(aegis.itm, aegis2.itm, elemchan.itm, elemcryo.itm, elemhydr.itm, elemimix.itm, elemogre.itm, elemsunn.itm, elemyanc.itm, elemzaam.itm)</span></li>
+    </ul>
+  </li>
 </ul>
 <h3> <a name="spell_fixes" id="spell_fixes"></a>Spell Fixes <a href="#spell_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -127,7 +135,7 @@
   <li>Iron Body split its effects between the spell and its equipped weapon, which could cause complications (particularly with other polymorphs). <span class="bg2fp_modder">(ibody.itm, spwi814.spl)</span></li>
   <li>Spider Spawn was only summoning Giant Spiders but should  be summoning Phase and Sword Spiders at higher levels. <span class="bg2fp_modder">(smtables.2da, spidphsu.2da, spidswsu.2da, spwi423.spl)</span></li>
   <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. <span class="bg2fp_modder">(projimag.spl, simulacr.spl)</span></li>
-  <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdsha12a.spl, leat23a.spl, spcl237d.spl, spimixd.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
+  <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdsha12a.spl, leat23a.spl, ohbglov1.spl, spcl237d.spl, spimixd.spl, spcryod.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
   <li>Lich Touch should paralyze on hit, not hold. <span class="bg2fp_modder">(ltouch.spl)</span></li>
   <li>Enrage was using Berserk's spell icon instead of its own unique one. <span class="bg2fp_modder">(spcl321.spl)</span></li>
   <li>Spells which cure and/or drain HP should not work on extraplanars and undead. <span class="bg2fp_modder">(spcl815.spl, spwi119.spl, spwi314.spl)</span></li>
@@ -173,6 +181,23 @@
   <li>Grease was forcing a save against its effects twice per round inctead of once <span class="bg2fp_modder">(idpro101.pro)</span></li>
   <li>Spells that provide &quot;fighter THAC0' were using the BG2 THAC0 cap of 1 instead of IWD's THAC0 cap of 0. <span class="bg2fp_modder">(ohtmps1.spl, sppr412.spl, spwi603.spl)</span></li>
   <li>Shield of the Archons was blocking too many level 3 spells when cast at level 14 or 15 <span class="bg2fp_modder">(sppr701.spl) </span></li>
+  <li>Shroud of Flame should not affect, or be spread from, creatures that are 100% resistant to fire. <span class="bg2fp_modder">(spwi524.spl, spwi524b.spl, spwi524c.spl)</span></li>
+  <li>The golem haste ability now provides combat feedback.  <span class="bg2fp_modder">(spin978.spl)</span></li>
+  <li>Conjure Air  Elemental has the wrong duration when cast at the lowest level, <span class="bg2fp_modder">(spwi621.spl)</span></li>
+  <li>The duration of Minor Spell Deflection was incorrect whenc ast at level 11 <span class="bg2fp_modder">(spra302.spl, spwi318.spl)</span></li>
+  <li class="bg2fp_modder">The targeting of the unused Lightning Bolt spell is incorrect. (spwi399.spl)</li>
+  <li>When cast at level 19 or 20, Protection from Magic Energy is incrementing magic demage reduction, not setting it <span class="bg2fp_modder">(spwi606.spl)</span></li>
+  <li>One  effect of Pierce Magic at level 18 has the wrong dispellability<span class="bg2fp_modder"> (spwi608.spl)</span></li>
+  <li>Spells and abilities to summon devas and planetars have incorrect durations at multiple levels due to missing headers in the spell files <span class="bg2fp_modder">(spcl923.spl, spcl935.spl, sppr726.spl, sppr727.spl, spwi923.spl, spwi924.spl)</span></li>
+  <li>The duration of Summon Nishruu and Summon Efreeti are two seconds two long when cast at levels 19 or 20 <span class="bg2fp_modder">(spwi624.spl, spwi717.spl)</span></li>
+  <li>Protection From Evil, 10' Radius had a radius of 15 feet <span class="bg2fp_modder">(idpro258.pro, strref #22832)</span></li>
+  <li>Protection From Electricity's expiration sound could be dispelled when cast at level 20 <span class="bg2fp_modder">(spwi512.spl)</span></li>
+  <li>Contingency's animation gets cut off since the duration for the effect is too short <span class="bg2fp_modder">(spwi617.spl)</span></li>
+  <li>The duration of Fire Seeds hadn't been converted from oIWD's 7-second rounds correctly, and was incorrect at all levels <span class="bg2fp_modder">(sppr606.spl)</span></li>
+  <li>Some BG2 spells that were extended to IWD's level 30 cap had miscalculated durations for their new level 21-30 abilities <span class="bg2fp_modder">(sppr706.spl, sppr711.spl, sppr718.spl, sppr730.spl, sppr740.spl, spwi811.spl, spwi816.spl)</span></li>
+  <li>The +1 and +3 versions of Spiritual Hammer had the wrong weapon speed <span class="bg2fp_modder">(shamme1.itm, shamme3.itm)</span></li>
+  <li>The spider polymorphs should be immune to all web attacks <span class="bg2fp_modder">(plyspid.itm, plyspid2.itm)</span></li>
+  <li>Some spells were not providing feedback if their effects were avoided due to evasion<span class="bg2fp_modder"> (sppr324d.spl, sppr603d.spl, sppr725d.spl, spwi313.spl, spwi524.spl, spwi524b.spl, spwi524c.spl, spwi615.spl, spwi615b.spl)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>School: Several innate creature abilities were assigned as 'generalist' school spells instead of schoolless, which gave generalist mages an unwarranted +2 saving throw against them. Corrections were also made for Blade Barrier and special versions of Confusion, Flame Strike, and Call Lightning. <span class="bg2fp_modder">(spin176.spl, spin177.spl, spin180.spl, spin181.spl, spin182.spl, spin183.spl, spin184.spl, spin186.spl, spin187.spl, spin188.spl, spin189.spl, spin190.spl, spin192.spl, spin193.spl, spin194.spl, sppr603d.spl, sppr983.spl, 
@@ -197,6 +222,11 @@
   <li>Nymphs summoned via Call Woodland Beings lacked their Confusion ability. <span class="bg2fp_modder">(spin704.spl)</span></li>
   <li>Nishruu and hakeashar should be destroyed by dispel magic, their attack used the wrong type, they had some basic creature errors (general, race, class, animation, resistances), and some other minor errors. <span class="bg2fp_modder">(haksu.cre, nishru01.bcs, nishrusu.cre, nishruu.itm, spcl231.spl, specific.ids, sppr303.spl, spwi302.spl, spwi323.spl) </span></li>
   <li>Ghast attacks cause nausea and paralysis on their targets. Two of the sound effects for the nausea were being grouped with the paralysis, meaning they could play (or get blocked) when they shouldn't. <span class="bg2fp_modder">(ghast1.spl)</span></li>
+  <li>Bulk fixes:
+    <ul>
+      <li>Class (note that monsters can use special, non-player classes for identification): Hobart's incarnations had their classes swapped meaning you didn't get a rep penalty if you killed jim in the middle of the Whistling Gallows <span class="bg2fp_modder">(hobart.cre, hobart2.cre)</span></li>
+    </ul>
+  </li>
   <!--<li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(basill2.itm, cdfampsd.itm, crpdoom.itm, etterc1.itm, etterc2.itm, flind1.itm, m2d4slas.itm, m2d6slas.itm, m3d6crsh.itm, m5d4slas.itm, m6d6fist.itm, msword.itm, shamme1.itm, shamme2.itm, shamme3.itm, spidgi1.itm, spidhu1.itm, spidsw1.itm, spidwr1.itm, squirp.itm)</span></li>-->
 </ul>
 <h3> <a name="quest_fixes" id="quest_fixes"></a>Quest Fixes <a href="#quest_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
@@ -214,6 +244,9 @@
   <li>Brother Harken and Sister Incylia are initially positioned after   a delay and reset their positions after a certain amount of time in the   Fallen Temple area <span class="bg2fp_modder">(ar8012.are, ar8012.bcs, ar8012.ini)</span></li>
   <li>Cutscene after the Luremaster is defeated terminates too quickly <span class="bg2fp_modder">(dlure.dlg, dulurbye.bcs) </span></li>
   <li>Maiden Ilmadia could go hostile long before you even spoke with her. <span class="bg2fp_modder">(ar8011.are, ar8011.bcs)</span></li>
+  <li>One of the cutscenes after Wylfdene's defeat at the Barbarian Camp doesn't properly close, preventing the player from using zoom or other map features <span class="bg2fp_modder">(bcplcded.bcs)</span></li>
+  <li>Some of the bergclaws and greater ice trolls in the Sea of Moving Ice lacked their full AI scripts, so some didn't move around or respond to calls for help properly. A similar issue was fixed for a boneguard in the Watchknight Tomb. <span class="bg2fp_modder">While it had no effect in gameplay, a redundant script is purged for one of Grisella's beetles. (ar1015.are, ar9600.are, ar9714.are)</span></li>
+  <li>Shaman summons weren't getting their item bonuses if the shaman was wearing special gear due to some bad script ordering <span class="bg2fp_modder">(bdshunsu.bcs)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -256,6 +289,7 @@
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
   <p>This is a roundup of fixes that primarily impact modders and are not visible to players. </p>
   <ul>
+    <li>IDS tables get sorted (all ids files)</li>
     <li>The Neothelid lacked an ini file and correct animate/anisnd.ids entries. (3001.ini, animate.ids, anisnd.ids)</li>
     <li>Several of the splprot.2da entries (specifically, alignment checks) were mislabeled. (splprot.2da)</li>
     <li>Kit ability tables for the dark moon monk and sun soul monk had missing entries for some columns. (clabmo02.2da, clabmo03.2da)</li>
@@ -277,6 +311,8 @@
     <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
     <li>Script action `ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)`was defined with a wrong parameter order (action.ids, actsleep.ids, instant.ids)</li>
     <li>Several actor names, set by the area files in IWDEE, were too long to be used in Dead() checks and have been trimmed down. These do not appear to have any actual effect in game. (ar1000.are, ar2006.are, ar3502.are, ar4001.are, ar4005.are, ar8004.are, ar8010.are, ar8011.are, ar8012.are, ar8013.are, ar9300.are, ar9711.are, ar9714.are)</li>
+    <li>damages.ids lacked a consistent IDS header across games (damages.ids)</li>
+    <li>Added REALLYCHARMED to ea.ids (ea.ids)</li>
   </ul>
 </div>
 <!-- documentation ends here -->
