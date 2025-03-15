@@ -33,10 +33,12 @@
   <li>The Rod of Modron Might should mention that it's only usable by TNO. <span class="bg2fp_modder">(strref #52070)</span></li>
   <li>The 'Book of Tome and Ash' should be the 'Tome of Bone and Ash'. <span class="bg2fp_modder">(strref #64294)</span></li>
   <li>The Notched Dagger did not list its speed or weight. <span class="bg2fp_modder">(strref #66178)</span></li>
+  <li>Multiple items were missing their 'Enchantment' line <span class="bg2fp_modder">(strrefs #46627, #49044, #50886, #50891, #63075)</span></li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>There is a very small window between the end of a cutscene and the initiation of dialogue where actors could disrupt the scripted actions. <span class="bg2fp_modder">(1201csa2.bcs, 1204a1.bcs, 1204d1.bcs, 1204g1.bcs, 1204i1.bcs, 1204m1.bcs, 1204n1.bcs, 1204v1.bcs, 1501cut4.bcs)</span></li>
+  <li>Fireshield-type spells&mdash;Fireshields or similar effects that would retaliate or perform other actions when the target was struck&mdash;would interrupt the casting sounds and other audio of the creature they were protecting, even if the fireshield and its effects were silent. <span class="bg2fp_modder">(spwi108.spl)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -100,7 +102,6 @@
     <li>Blank-named scripts are removed from the key (chitin.key)</li>
     <li>The non-proficiency penalty for Shadowdancers and Mage-Thieves were incorrect. (clswpbon.2da)</li>
     <li>The names of the parameters for ExploreMapChunk() were mislabeled. (action.ids)</li>
-    <li>The duplicate, unused, and misspelled EigthNearestEnemyOfType and EigthNearestMyGroupOfType objects are removed. (object.ids)</li>
     <li>Added <span data-code-marker="+">ForceSpellNoFeedback</span> as an action (a RES version was already present). (action.ids)</li>
     <li> Kit check in splprot.2da is useless since it's a bitwise check, which only works for kits (e.g. mages) which happen to be  powers-of-two. It's changed to be a straight numerical check. (splprot.2da) </li>
     <li>Script action `ChangeStoreMarkup(S:Store*,I:BuyMarkup*,I:SellMarkup*)`was defined with a wrong parameter order (action.ids, actsleep.ids, instant.ids)</li>
