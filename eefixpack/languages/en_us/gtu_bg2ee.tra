@@ -5153,12 +5153,6 @@ This spell allows the caster to summon forth and control 1 or 2 massive mountain
 @16438 = ~Why have you not left without me? Perhaps you value my company more than others?~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16466 = ~Turn Undead Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16468 = ~Find Trap Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @16575 = ~Press the Gender button to begin creating your character, or press Back to return to the previous page.
 
 If you wish to import a premade character, then use the Import option to select one of the different characters which have already been created for you.~
@@ -17418,15 +17412,6 @@ Gaëtan "Headbomb" Landry
 K. "elminster" Marshall
 Kay-Viktor Stegemann
 Anders "hook71" Svensson~
-
-// [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
-@99387 = ~Evades effects from <RESOURCE>~
-
-// [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
-@99388 = ~Evades effects~
-
-// [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
-@99389 = ~Unaffected by effects from <RESOURCE>~
 
 // [automatic scan] Issues: 2  | Surplus leading whitespace at line 1 | Surplus trailing whitespace at line 1
 @99390 = ~~

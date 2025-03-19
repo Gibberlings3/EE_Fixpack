@@ -270,8 +270,6 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   16298 @16298
   16300 @16300
   16301 @16301
-  16466 @16466
-  16468 @16468
   16575 @16575
   16976 @16976
   17169 @17169
@@ -323,7 +321,6 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   20095 @20095
   20631 @20631
   20636 @20636
-  20715 @20715
   20885 @20885
   20901 @20901
   20908 @20908

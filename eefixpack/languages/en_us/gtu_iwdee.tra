@@ -2630,12 +2630,6 @@ Proficiency Type:
 Weight: 0~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16466 = ~Turn Undead Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16468 = ~Find Trap Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @16575 = ~Press the Gender button to begin creating your character, or press Cancel to return to the previous page.
 
 If you wish to import a premade character, then use the Import option to select one of the different characters which have already been created for you.~
@@ -3169,9 +3163,6 @@ Pomab,
 Seeing as you have seen fit to "volunteer" to outfit our expedition to Kuldahar, I have written down a list of items we will be needing. I trust the equipment you will provide will be of quality, unlike the shoddy junk you foisted off on my last expedition.
 
 – Hrothgar~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@20715 = ~Please insert the Icewind Dale CD~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @20885 = ~Silver Dagger: Werebane:
