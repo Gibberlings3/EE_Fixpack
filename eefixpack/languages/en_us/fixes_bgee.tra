@@ -171,6 +171,19 @@ By casting Summon Nishruu, a wizard calls into existence a magical being of cons
 
 The nishruu has no physical attacks at all, although physical attacks can hurt it. Each time a nishruu touches a target wizard and wraps its tendrils around <PRO_HIMHER>, two things happen: First, all magical items with charges in the possession of the target will be drained by 1 charge, destroying them if only 1 charge was left; second, the wizard loses 1 random spell of the highest level currently memorized. The nishruu is completely immune to energy damage, and magic will actually heal it. The creature will remain under the wizard's control until slain or until the spell's duration expires.~
 
+// remove the line about the save penalty for water/plants since it's not implemented
+@26646 = ~Abi-Dalzim's Horrid Wilting
+(Necromancy) 
+
+Level: 8
+Range: Visual range of the caster 
+Duration: Instant
+Casting Time: 8
+Area of Effect: 15-ft. radius
+Saving Throw: 1/2
+
+This spell evaporates moisture from the bodies of every living creature within the area of effect, inflicting 1d8 damage per level of the caster. Affected creatures are allowed a Saving Throw vs. Spell for half damage. This spell will not harm party members.~
+
 // sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 32224)
 @31984 = ~SUN SOUL MONK: Sun Soul Monks were once worshippers of Amaunator in the time of the Netheril, but today their worship is divided between Lathander, Selûne, and Sune. Sun Soul Monks adhere strictly to the law, using their martial arts and magical abilities to drive out darkness and corruption wherever they find it.
 

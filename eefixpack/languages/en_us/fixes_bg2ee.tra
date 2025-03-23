@@ -32,6 +32,19 @@ It should be "south of the battlefield", not "north of the battlefield".
 */
 @7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
 
+// remove the line about the save penalty for water/plants since it's not implemented
+@7680 = ~Abi-Dalzim's Horrid Wilting
+(Necromancy) 
+
+Level: 8
+Range: Visual range of the caster 
+Duration: Instant
+Casting Time: 8
+Area of Effect: 15-ft. radius
+Saving Throw: 1/2
+
+This spell evaporates moisture from the bodies of every living creature within the area of effect, inflicting 1d8 damage per level of the caster. Affected creatures are allowed a Saving Throw vs. Spell for half damage. This spell will not harm party members.~
+
 // no change to the text, just added the REPUP sound reference
 @10468 = ~Your donation to the church was greatly appreciated, and your reputation has gone up by one point.~ [REPUP]
 
