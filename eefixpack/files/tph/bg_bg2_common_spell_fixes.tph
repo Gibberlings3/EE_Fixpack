@@ -693,6 +693,9 @@ COPY_EXISTING ~sppr509.spl~ ~override~ //magic resistance
   LPF ALTER_EFFECT INT_VAR header = 10 match_duration = 126 duration = 132 END // duration is one round short at level 19
   LPF ALTER_EFFECT INT_VAR header = 11 match_duration = 126 duration = 138 END // duration is two rounds short at level 20
 
+COPY_EXISTING ~sppr608.spl~ ~override~ // harm
+  LPF ALTER_EFFECT INT_VAR match_duration = 15 duration = 12 END // duration is three seconds long
+
 COPY_EXISTING ~sppr709.spl~ ~override~ // Confusion [bg2]
   LPF CLONE_EFFECT INT_VAR header = 0 match_opcode = 174 timing = 1 duration = 0 STR_VAR match_resource = eff_e05 resource = eff_m05 END // missing sound at min level
 
