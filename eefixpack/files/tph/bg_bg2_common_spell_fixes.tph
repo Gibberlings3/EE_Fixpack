@@ -594,7 +594,7 @@ WITH_SCOPE BEGIN
       WRITE_BYTE 0x25 7 // Primary type: NECROMANCER
       WRITE_BYTE 0x27 10 // Secondary type: OFFENSIVEDAMAGE
       /* Feature blocks */
-      LPF "CD_EXTEND-O-MATIC" INT_VAR "level_cap" = 40 END
+      LPF "CD_EXTEND-O-MATIC" INT_VAR "level_cap" = 50 END
       PATCH_WITH_SCOPE BEGIN
         GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
         PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN

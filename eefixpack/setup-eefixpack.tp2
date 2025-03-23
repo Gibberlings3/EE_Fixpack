@@ -232,4 +232,9 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
-DEPRECATED ~For internal use only~
+//DEPRECATED ~For internal use only~
+
+
+
+COPY_EXISTING ~sppr608.spl~ ~override~ // harm
+  LPF ALTER_EFFECT INT_VAR match_duration = 15 duration = 12 END // duration is three seconds long
