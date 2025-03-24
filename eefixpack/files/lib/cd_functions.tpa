@@ -272,7 +272,7 @@ BEGIN
     READ_LONG  0x7c vert_off
     READ_SHORT 0x80 vert_num
     FOR (index = 0 ; index < struct_num ; ++index) BEGIN
-      READ_ASCII (struct_off + 0x00 + (index * struct_length)) name_check
+      READ_ASCII (struct_off + 0x00 + (index * struct_length)) name_check (32) NULL
       PATCH_IF ("%name_check%" STRING_COMPARE_CASE "%struct_name%") BEGIN // NOT the matched door/region/container
         PATCH_IF vert_delta != 0 BEGIN // don't bother if number of vertices hasn't changed (yet)
           PATCH_IF door_internal = 0 BEGIN // update container/region

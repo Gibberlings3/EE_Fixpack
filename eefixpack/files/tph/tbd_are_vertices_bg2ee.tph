@@ -17,6 +17,17 @@ COPY_EXISTING ~ar0406.are~ ~override~
   END
   LPF cd_define_area_vertices INT_VAR bounding_left = 796 bounding_top = 837 bounding_right = 841 bounding_bottom = 905 
                               STR_VAR struct_name = Door25 struct_type = door_open END
+  BUT_ONLY  
+
+COPY_EXISTING ~ar0502.are~ ~override~ // fixes wonky container overlay for lightning trap
+  CLEAR_ARRAY cd_define_area_vertices_array
+  DEFINE_ASSOCIATIVE_ARRAY cd_define_area_vertices_array BEGIN
+    469, 374 => 0
+    599, 477 => 0
+    583, 495 => 0
+    450, 389 => 0
+  END
+  LPF cd_define_area_vertices STR_VAR struct_name = "Lightining Trap" struct_type = region END
   BUT_ONLY
 
 COPY_EXISTING ~ar0711.are~ ~override~
