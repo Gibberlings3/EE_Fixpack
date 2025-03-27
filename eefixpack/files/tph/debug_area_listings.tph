@@ -1,3 +1,5 @@
+// note: keep this file in utf-8 so that "SelÃ»ne" works for oh4010
+
 // correcting area names/styles in console menu
 // https://www.gibberlings3.net/forums/topic/39357-bg-bg2-iwd-pst-debug-area-menu-list-corrections/
 COPY_EXISTING ~bgee.lua~ ~override~
@@ -19,7 +21,7 @@ COPY_EXISTING ~bgee.lua~ ~override~
     REPLACE_TEXTUALLY ~Keep --Cambion~ ~Keep -- Cambion~ // ar3007
     REPLACE_TEXTUALLY ~Manman~ ~Madman~ // ar3011
     REPLACE_TEXTUALLY ~breath under~ ~breathe under~ // ar6012
-    //REPLACE_TEXTUALLY ~Selune~ ~Selûne~ // oh4010 - û not supported in menu
+    REPLACE_TEXTUALLY ~Selune~ ~SelÃ»ne~ // oh4010
   END ELSE BEGIN // iwdee
     REPLACE_TEXTUALLY ~Gherg~ ~Ghereg~ // ar2003
     REPLACE_TEXTUALLY ~Orrick the Grey~ ~Orrick the Gray~ // ar2101, ar2102
