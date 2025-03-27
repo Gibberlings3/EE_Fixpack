@@ -1028,8 +1028,25 @@ COPY_EXISTING ~ohbwi302.spl~ ~override~
   
 //tbd, cam
 // inconsistent targeting (unused, fixed anyway)
+// also extend to level 50
 COPY_EXISTING ~bhaal1a.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR target = 2 END // some op164s are target party (3)
+  LPF CD_EXTEND-O-MATIC INT_VAR step_dur = 0 level_cap = 50 RET abil_delta END // no duration change, just need addt'l headers
+  SET multiply = 2 // mass cure cures 1d8 + 1/level HP; bhaal1a heals 2d8 + 2/level
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = (abil_num - abil_delta) ; index < abil_num ; ++index) BEGIN // loop through new abilities only
+    READ_SHORT  (abil_off + 0x10 + (index * 0x28)) level       // just read the level
+    READ_SHORT  (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+    READ_SHORT  (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+      READ_SHORT (fx_off +        ((index2 + abil_fx_idx) * 0x30)) op
+      PATCH_IF op = 17 BEGIN // cur hp bonus
+        WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (level * multiply)
+      END
+    END     
+  END
   BUT_ONLY
 
 COPY_EXISTING ~bhaal1b.spl~ ~override~ // Regeneration (unused, fixed anyway)
@@ -1043,12 +1060,14 @@ END
 
 // tbd, cam
 // Hexxat's ability is supposed to summon 1d4 creatures, does something wacky intstead
+// also extend duration out to l50
 COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
   LPF DELETE_EFFECT INT_VAR multi_match = 1                                             STR_VAR match_resource = ohhrat END // change 1d4+1 rats to 1d4
   LPF ALTER_EFFECT  INT_VAR                                          probability1 = 100 STR_VAR match_resource = ohhrat END // uncorrect rat probs so I can run the next three unimpeded
   LPF ALTER_EFFECT  INT_VAR multi_match = 1                          probability1 = 24                                  END // change summon #1 to 25%
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 49                                  END // change summon #2 to 50%
   LPF ALTER_EFFECT  INT_VAR multi_match = 1 match_probability1 = 100 probability1 = 74                                  END // change summon #3 to 75%
+  LPF CD_EXTEND-O-MATIC INT_VAR step_dur = 6 level_cap = 50 END // 1 round/level
   BUT_ONLY
 
 // tbd, cam
