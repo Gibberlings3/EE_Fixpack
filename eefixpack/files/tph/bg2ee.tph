@@ -22,6 +22,7 @@ INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of hea
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
+INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -551,6 +552,17 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment chan
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
+
+// disguised vampires shouldn't show up on infravision (see also animation changes in infravision.tph)
+COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)
+              ~sarprovf.cre~ ~override~ // saradush courtesan (vampire in disguise)
+              ~sarprovm.cre~ ~override~ // saradush courtesan (vampire in disguise)
+              ~vampaer.cre~  ~override~ // aerie (vampified by bodhi)
+              ~vampano.cre~  ~override~ // anomen (vampified by bodhi)
+              ~vampjah.cre~  ~override~ // jaheira (vampified by bodhi)
+              ~vampvic.cre~  ~override~ // viconia (vampified by bodhi)
+  LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END
+  BUT_ONLY
 
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
