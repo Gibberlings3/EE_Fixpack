@@ -977,7 +977,7 @@ ACTION_IF game_includes_sod BEGIN
   // apply new description image for Helmet of Dumathoin
   COPY_EXISTING ~bdhelm09.itm~ ~override~
     WRITE_ASCII 0x58 ~cbdhel09~ (8)
-  BUT_ONLY
+    BUT_ONLY
 
 END
 
@@ -1043,6 +1043,13 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
+
+COPY_EXISTING ~potn99.itm~ ~override~ // blinding powder lacks description, minor fixes
+  SAY 0x50 @107 
+  SAY 0x54 @107 
+  LPF ALTER_EFFECT INT_VAR power = 0 END // flesh out effects below
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 resist_dispel = 1 END // flesh out effects below
+  IF_EXISTS // sod item
 
 // immune to confusion, but missing spconfus immunity
 COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror

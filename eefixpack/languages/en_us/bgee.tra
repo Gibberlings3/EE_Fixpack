@@ -9,3 +9,9 @@
 @105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
 
 @106 = ~This item is only usable by M'Khiin.~
+@107 = ~Blinding powder is typically a mixture of finely ground glass, sand, or metal shavings and other reactive compounds sealed within a small and easy to break container. Once exposed to air, this substance will temporarily blind its target.
+
+STATISTICS:
+Special: Target is blinded for 10 seconds (Save vs. Poison negates)
+
+Weight: 1~
