@@ -22,6 +22,7 @@ COPY_EXISTING ~bgee.lua~ ~override~
     REPLACE_TEXTUALLY ~Manman~ ~Madman~ // ar3011
     REPLACE_TEXTUALLY ~breath under~ ~breathe under~ // ar6012
     REPLACE_TEXTUALLY ~Selune~ ~Selûne~ // oh4010
+    REPLACE_TEXTUALLY ~{"AR2906", "[^"]+"},[ %TAB%%LNL%%MNL%]+{~ ~{~ // ar2906 doesn't exist in BG2EE
   END ELSE BEGIN // iwdee
     REPLACE_TEXTUALLY ~Gherg~ ~Ghereg~ // ar2003
     REPLACE_TEXTUALLY ~Orrick the Grey~ ~Orrick the Gray~ // ar2101, ar2102
