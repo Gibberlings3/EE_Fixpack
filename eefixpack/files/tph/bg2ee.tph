@@ -323,6 +323,21 @@ COPY_EXISTING ~cut41q.bcs~ ~override~
   END
   BUT_ONLY
 
+// after defeating Jon for good, Ellesime should initiate dialogue even if player invisible
+COPY_EXISTING ~cut59a.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~Wait(2) ActionOverride("suelle2",StartDialogueNoSet([PC]))~
+  END
+  BUT_ONLY  
+
+// ToB bonus equipment spilling out of inventory should also be copied to the expansion
+COPY_EXISTING ~cut100a.bcs~ ~override~
+              ~cut100b.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(MoveToExpansion()\)~ ~\1 CopyGroundPilesTo("ar4000",[1116.1805])~
+  END
+  BUT_ONLY
+
 // bodari's subcontract takes multiple days, have party rested
 COPY_EXISTING ~cut244b.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
