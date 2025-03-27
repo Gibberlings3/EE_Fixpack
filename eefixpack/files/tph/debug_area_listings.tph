@@ -1,0 +1,31 @@
+// correcting area names/styles in console menu
+// https://www.gibberlings3.net/forums/topic/39357-bg-bg2-iwd-pst-debug-area-menu-list-corrections/
+COPY_EXISTING ~bgee.lua~ ~override~
+  PATCH_IF game_is_bgee BEGIN
+    REPLACE_TEXTUALLY ~Duchal~ ~Ducal~ // ar0108 - ar0111, ar0200
+    REPLACE_TEXTUALLY ~cariron~ ~carrion~ // ar5103
+  END ELSE  
+  PATCH_IF game_is_bg2ee BEGIN
+    REPLACE_TEXTUALLY ~Favour for Edwin~ ~Favor for Edwin~ // ar0315 - ar0317
+    REPLACE_TEXTUALLY ~Enginge~ ~Engine~ // ar0413
+    REPLACE_TEXTUALLY ~Armourer~ ~Armorer~ // ar0706
+    REPLACE_TEXTUALLY ~Councel~ ~Council~ // ar1002
+    REPLACE_TEXTUALLY ~Elven Table while Spellhold Test~ ~Elven Table (Spellhold Test)~ // ar1511
+    //REPLACE_TEXTUALLY ~Irenicus' Living Room~ ~Irenicus's Living Room~ // ar1515 - already fixed
+    REPLACE_TEXTUALLY ~Tiri's~ ~Tiris's~ // ar2006
+    REPLACE_TEXTUALLY ~Natha; 2nd~ ~Natha 2nd~ // ar2203
+    REPLACE_TEXTUALLY ~Kuo Toa~ ~Kuo-Toa~ // ar2402
+    REPLACE_TEXTUALLY ~Thetyr Wood~ ~Forest of Tethir~ // ar2600
+    REPLACE_TEXTUALLY ~Keep --Cambion~ ~Keep -- Cambion~ // ar3007
+    REPLACE_TEXTUALLY ~Manman~ ~Madman~ // ar3011
+    REPLACE_TEXTUALLY ~breath under~ ~breathe under~ // ar6012
+    //REPLACE_TEXTUALLY ~Selune~ ~Selûne~ // oh4010 - û not supported in menu
+  END ELSE BEGIN // iwdee
+    REPLACE_TEXTUALLY ~Gherg~ ~Ghereg~ // ar2003
+    REPLACE_TEXTUALLY ~Orrick the Grey~ ~Orrick the Gray~ // ar2101, ar2102
+    REPLACE_TEXTUALLY ~Kraken garde~ ~Kraken garden~ // ar8005
+    REPLACE_TEXTUALLY ~Mekrath~ ~Marketh~ // ar8007
+    REPLACE_TEXTUALLY ~\(south\|north\|east\|west\) Tower~ ~\1 tower~ // ar9701-ar9708
+  END
+  BUT_ONLY 
+    

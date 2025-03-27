@@ -41,6 +41,8 @@ COPY_EXISTING ~bgee.lua~ ~override~
   END
   BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
+
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\
