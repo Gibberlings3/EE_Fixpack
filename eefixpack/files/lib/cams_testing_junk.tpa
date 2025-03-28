@@ -600,3 +600,55 @@ COPY_EXISTING ~spsdbur.bam~ ~override~
     END  
   END
   BUT_ONLY
+  
+  
+  
+// used to find leftover copy-paste spellbooks such as
+// https://github.com/CamDawg/EE_Fixpack/commit/b19f8a311b7b7b7dff8c9702a1aeabe53197e697
+
+COPY_EXISTING ~shadowsu.cre~ ~override~
+  READ_LONG 0x2a0 known_off_base
+  READ_LONG 0x2a4 known_num_base
+  READ_LONG 0x2a8 minfo_off_base
+  READ_LONG 0x2ac minfo_num_base
+  READ_LONG 0x2b0 mem_off_base
+  READ_LONG 0x2b4 mem_num_base
+  READ_ASCII (known_off_base) known_orig (known_num_base * 0x0c)  
+  READ_ASCII (minfo_off_base) minfo_orig (minfo_num_base * 0x10)
+  READ_ASCII (mem_off_base)   mem_orig   (mem_num_base * 0x0c)
+  BUT_ONLY 
+  
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~  
+  READ_LONG 0x2a4 known_num
+  READ_LONG 0x2ac minfo_num
+  READ_LONG 0x2b4 mem_num
+  PATCH_IF ((known_num = known_num_base) AND (minfo_num = minfo_num_base) AND (mem_num = mem_num_base)) BEGIN 
+    READ_LONG 0x2a0 known_off
+    READ_LONG 0x2a8 minfo_off
+    READ_LONG 0x2b0 mem_off
+    READ_ASCII (known_off) known (known_num_base * 0x0c)  
+    READ_ASCII (minfo_off) minfo (minfo_num_base * 0x10)
+    READ_ASCII (mem_off)   mem   (mem_num_base * 0x0c)
+    PATCH_IF (("%known%" STRING_COMPARE_CASE "%known_orig%" = 0) AND 
+              ("%minfo%" STRING_COMPARE_CASE "%minfo_orig%" = 0) AND 
+              ("%mem%"   STRING_COMPARE_CASE "%mem_orig%"   = 0)) BEGIN
+      SPRINT file "%SOURCE_RES%"
+      TO_LOWER file
+      READ_LONG 0x0c name
+      PATCH_IF (name > 0) AND (name < 999999) BEGIN
+        READ_STRREF 0x0c name
+      END ELSE BEGIN
+        READ_STRREF 0x08 name
+      END
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                          BEGIN SPRINT spc "        " END
+      PATCH_PRINT "    ~%SOURCE_FILE%~%spc%~override~ // %name%"
+    END 
+  END
+  BUT_ONLY 
