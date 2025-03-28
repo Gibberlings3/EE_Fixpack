@@ -556,6 +556,7 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment chan
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
+INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 
 // disguised vampires shouldn't show up on infravision (see also animation changes in infravision.tph)
 COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)

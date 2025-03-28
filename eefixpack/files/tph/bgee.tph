@@ -841,6 +841,7 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bgee.tph~ // bulk alignment chang
 
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 
 // tbd, cam (from scs)
 // make gretek and friends go hostile more reliably (see also gretek.baf, gretek.dlg)

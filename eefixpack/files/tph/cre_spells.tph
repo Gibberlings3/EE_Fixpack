@@ -1,0 +1,70 @@
+ACTION_IF game_is_bgee BEGIN
+
+  COPY_EXISTING ~bdwrai01.cre~ ~override~ // wraith
+                ~bdwrait1.cre~ ~override~ // wraith
+                ~bpshadow.cre~ ~override~ // shadow
+                ~bpwrai01.cre~ ~override~ // wraith
+                ~daitel.cre~   ~override~ // ghost
+                ~mistpo01.cre~ ~override~ // poison mist
+                ~mistposu.cre~ ~override~ // poison mist
+                ~shadfi02.cre~ ~override~ // devil shade
+                ~shadowsu.cre~ ~override~ // shadow
+                ~slaysh01.cre~ ~override~ // slayer shadow
+    REMOVE_MEMORIZED_SPELL ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
+    REMOVE_KNOWN_SPELL     ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
+    BUT_ONLY IF_EXISTS
+
+END ELSE BEGIN // bg2ee
+
+  COPY_EXISTING ~chwraith.cre~ ~override~ // child spirit
+                ~firwra01.cre~ ~override~ // greater wraith
+                ~fsghos.cre~   ~override~ // ghost
+                ~fsghos2.cre~  ~override~ // ghost
+                ~gormisti.cre~ ~override~ // ice mist
+                ~gormistp.cre~ ~override~ // poison mist
+                ~hgmis01.cre~  ~override~ // vampiric wraith
+                ~hgmis02.cre~  ~override~ // swamp horror
+                ~hgwra01.cre~  ~override~ // gorion (casts all spells via forcespell)
+                ~hgwra02.cre~  ~override~ // devil shade
+                ~hgwra03.cre~  ~override~ // devil shade
+                ~kshadow.cre~  ~override~ // shadow
+                ~mistcd01.cre~ ~override~ // crimson death
+                ~mistho01.cre~ ~override~ // mist horror
+                ~mistpo01.cre~ ~override~ // poison mist
+                ~mistposu.cre~ ~override~ // poison mist
+                ~mistva01.cre~ ~override~ // vampiric mist
+                ~mistwa01.cre~ ~override~ // wandering horror
+                ~ohhburic.cre~ ~override~ // burich
+                ~ohhshad.cre~  ~override~ // shadow
+                ~ohhshfi1.cre~ ~override~ // shadow fiend
+                ~ohhshfi2.cre~ ~override~ // devil shade
+                ~rngsha.cre~   ~override~ // shadow
+                ~rngsha01.cre~ ~override~ // shadow
+                ~rngsha02.cre~ ~override~ // shadow patrick - knows cure medium wounds and has generic priest script to use it, but doesn't have it memorized
+                ~rngsha03.cre~ ~override~ // shadow
+                ~rngsha04.cre~ ~override~ // shadow jailor
+                ~rngsha2d.cre~ ~override~ // shadow patrick
+                ~sarspir.cre~  ~override~ // prison spirit
+                ~sdshadfi.cre~ ~override~ // shadow fiend
+                ~sdshadow.cre~ ~override~ // shadow
+                ~sewsha01.cre~ ~override~ // shadow fiend
+                ~sewsha02.cre~ ~override~ // shadow fiend
+                ~sewsha03.cre~ ~override~ // shadow
+                ~shadfi01.cre~ ~override~ // shadow fiend
+                ~shadfi02.cre~ ~override~ // devil shade
+                ~shadow01.cre~ ~override~ // shadow
+                ~shadowsu.cre~ ~override~ // shadow
+                ~slaysh01.cre~ ~override~ // slayer shadow
+                ~spectr01.cre~ ~override~ // specter
+                ~spellh01.cre~ ~override~ // spellhaunt
+                //~tanwiz1.cre~  ~override~ // vellin dahn
+                ~telslav.cre~  ~override~ // slave wraith
+                ~telwrai.cre~  ~override~ // demon wraith
+                ~uhcreat.cre~  ~override~ // shadow
+                ~wraith01.cre~ ~override~ // wraith
+                ~wrashi01.cre~ ~override~ // shimmering wraith
+    REMOVE_MEMORIZED_SPELL ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
+    REMOVE_KNOWN_SPELL     ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
+    BUT_ONLY IF_EXISTS
+    
+END 
