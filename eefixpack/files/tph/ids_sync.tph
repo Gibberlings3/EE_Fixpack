@@ -15,28 +15,31 @@ ACTION_IF !game_is_iwdee BEGIN
   APPEND ~class.ids~
 ~214 REMORHAZ
 215 GOLEM_ICE
+216 SALAMANDER_FROST
 217 BEETLE_RHINO
-218 SALAMANDER_FIRE
-219 SALAMANDER_FROST~ 
+218 SALAMANDER_FIRE~ 
     
   APPEND ~race.ids~
 ~163 SVIRFNEBLIN~     
                 
   COPY_EXISTING ~golice01.cre~ ~override~ // ice golem
                 ~gorgoli.cre~  ~override~ // ice golem
-    WRITE_BYTE 0x273 215 // class:GOLEM_ICE              
+    WRITE_BYTE 0x273 215 // class:GOLEM_ICE
+    IF_EXISTS
                 
   COPY_EXISTING ~hgsal01.cre~  ~override~ // fire salamander
                 ~icsalfir.cre~ ~override~ // salamander
                 ~plysala.cre~  ~override~ // fire salamander
                 ~salgrfir.cre~ ~override~ // salamander noble
                 ~wrmons01.cre~ ~override~ // salamander
-    WRITE_BYTE 0x273 218 // class:SALAMANDER_FIRE              
+    WRITE_BYTE 0x273 218 // class:SALAMANDER_FIRE 
+    IF_EXISTS             
     
   COPY_EXISTING ~icsalcol.cre~ ~override~ // ice salamander
                 ~salgrice.cre~ ~override~ // frost salamander
                 ~telicesa.cre~ ~override~ // ice salamander
-    WRITE_BYTE 0x273 224 // class:salamander_frost              
+    WRITE_BYTE 0x273 216 // class:salamander_frost  
+    IF_EXISTS            
 
   COPY_EXISTING ~udsvdead.cre~ ~override~ // svirfneblin
                 ~udsvir01.cre~ ~override~ // Odendal Breachgnome
@@ -53,14 +56,14 @@ ACTION_IF !game_is_iwdee BEGIN
 END ELSE BEGIN
 
   COPY_EXISTING ~class.ids~ ~override~
-    REPLACE_TEXTUALLY ~221 SOD_TMP~ ~221 NEOTHELID~
-    REPLACE_TEXTUALLY ~213 SALAMANDER_FROST~ ~219 SALAMANDER_FROST~
+    REPLACE_TEXTUALLY ~213 SALAMANDER_FROST~ ~216 SALAMANDER_FROST~
     
   APPEND ~class.ids~ 
 ~211 CANDLEKEEP_WATCHER
 212 AMNISH_SOLDIER
 213 TOWN_GUARD
 220 GREEN_DRAGON
+221 NEOTHELID
 223 WIGHT~ 
 
   COPY_EXISTING ~race.ids~ ~override~
@@ -118,6 +121,6 @@ END ELSE BEGIN
                 ~wtsalf2.cre~  ~override~ // frost salamander
                 ~wtsalf3.cre~  ~override~ // frost salamander
                 ~wtsalfd.cre~  ~override~ // dead salamander
-    WRITE_BYTE 0x273 224 // class:salamander_frost              
+    WRITE_BYTE 0x273 216 // class:salamander_frost              
 
 END

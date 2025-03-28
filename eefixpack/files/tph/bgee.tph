@@ -54,6 +54,7 @@ INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation def
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
+INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -128,7 +129,9 @@ WITH_SCOPE BEGIN
     "1718" => "CLERIC_SYMBOL_STUN"
     "1719" => "CLERIC_SYMBOL_DEATH"
     // Arcane
+    "2124" => "WIZARD_NAHALS_RECKLESS_DWEOMER" // alternate symbolic name
     "2222" => "WIZARD_CHAOS_SHIELD"
+    "2302" => "WIZARD_REMOVE_MAGIC" // alternate symbolic name
     "2723" => "WIZARD_IMPROVED_CHAOS_SHIELD"
     "2490" => "WIZARD_POLYMORPH_NATURAL_FORM"
     "2493" => "WIZARD_POLYMORPH_FLIND"
@@ -138,9 +141,12 @@ WITH_SCOPE BEGIN
     "2497" => "WIZARD_POLYMORPH_BROWN_BEAR"
     "2498" => "WIZARD_POLYMORPH_BLACK_BEAR"
     "2499" => "WIZARD_POLYMORPH_WOLF"
+    "2705" => "WIZARD_KHELBENS_WARDING_WHIP" // alternate symbolic name
+    "2921" => "WIZARD_IMPROVED_ALACRITY" // alternate symbolic name
     "2931" => "SUCCUBUS_TELEPORT"
     "2985" => "RED_HOLY_MIGHT"
-    // Innate
+    
+    // Innate   
     "3101" => "INNATE_CURE_LIGHT_WOUNDS"
     "3102" => "INNATE_SLOW_POISON"
     "3103" => "INNATE_DRAW_UPON_HOLY_MIGHT"
@@ -166,14 +172,20 @@ WITH_SCOPE BEGIN
     "3998" => "TANARI_SILENCE"
     "3999" => "TANARI_PARALYZE"
     // Class
+    "4101" => "DARK_GIFT" // exists in bgee but is unused
     "4212" => "PALADIN_DETECT_EVIL"
     "4213" => "PALADIN_PROTECTION_FROM_EVIL"
+    "4321" => "BERSERKER_ENRAGE"
+    "4412" => "THIEF_SET_SNARE" // alternate symbolic name
+    "4414" => "THIEF_SET_SPECIAL_SNARE" // alternate symbolic name
     "4611" => "DRUID_SHAPESHIFT_BROWNBEAR"
     "4612" => "DRUID_SHAPESHIFT_WOLF"
     "4613" => "DRUID_SHAPESHIFT_BLACKBEAR"
     "4632" => "AVENGER_SHAPESHIFT_SWORDSPIDER"
     "4633" => "AVENGER_SHAPESHIFT_BABYWYVERN"
     "4634" => "AVENGER_SHAPESHIFT_FIRESALAMANDER"
+    "4643" => "SHAPESHIFTER_SHAPESHIFT_WEREWOLF"
+    "4644" => "SHAPESHIFTER_SHAPESHIFT_GREATERWEREWOLF"
     "4721" => "TALOS_STORMSHIELD"
     "4722" => "TALOS_LIGHTNING_BOLT"
     "4732" => "HELM_TRUE_SIGHT"

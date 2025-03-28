@@ -22,6 +22,7 @@ INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of hea
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
+INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -99,9 +100,7 @@ COPY_EXISTING ~7eyes.2da~ ~override~
   REPLACE_TEXTUALLY EXACT_MATCH "12*0x400000" "*"
   PRETTY_PRINT_2DA
 
-
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
-
 
 // tbd, cam
 // regression: add full oiwd soundsets for iwdee now that engine fully supports them
@@ -112,13 +111,13 @@ COPY_EXISTING ~tracking.2da~ ~override~
   REPLACE_TEXTUALLY ~AR7004[ %TAB%]+O_24861~ ~AR7005    O_24861~
   BUT_ONLY
 
+ // tbd, graion: more consistent op5 setup, see header
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
+
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
 BUT_ONLY
-
- // tbd, graion: more consistent op5 setup, see header
-INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
 
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 

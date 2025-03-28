@@ -23,10 +23,13 @@ INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation def
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
+INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
+  
+APPEND ~spell.ids~ ~3119 SAFANA_CHARM~ UNLESS ~^3119[ %TAB%]+SAFANA_CHARM[ %TAB%%MNL%%LNL%]+~ // syncing spell.ids
 
 /*
 luke
@@ -68,13 +71,13 @@ END
 
 APPEND ~tooltip.2da~ ~ohdsw03 15529 13053 -1~ // add tooltips for brass blade
 
+// tbd, graion: more consistent op5 setup, see header
+INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
+
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
 BUT_ONLY
-
-// tbd, graion: more consistent op5 setup, see header
-INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
 
 CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
