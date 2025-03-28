@@ -1,0 +1,21 @@
+// https://www.gibberlings3.net/forums/topic/39308-infravision-tackling-the-real-issues/
+
+// stuff detected by infravision but shouldn't be
+COPY_EXISTING ~7203.ini~ ~override~ // polar bears
+              ~7f46.ini~ ~override~ // death tyrant
+              ~e040.ini~ ~override~ // histachii
+              ~e500.ini~ ~override~ // lizard man elite
+              ~e510.ini~ ~override~ // lizard man
+              ~e520.ini~ ~override~ // lizard king
+              ~ed00.ini~ ~override~ // yuan-ti
+              ~ed10.ini~ ~override~ // yuan-ti elite
+              ~ed20.ini~ ~override~ // yuan-ti priest
+  REPLACE_TEXTUALLY ~detected_by_infravision=1~ ~detected_by_infravision=0~    
+  BUT_ONLY IF_EXISTS
+
+// stuff not detected by infravision but should be
+COPY_EXISTING ~3001.ini~ ~override~ // neothelid
+              ~7601.ini~ ~override~ // maurezhi
+              ~7f43.ini~ ~override~ // yochlol
+  REPLACE_TEXTUALLY ~detected_by_infravision=0~ ~detected_by_infravision=1~    
+  BUT_ONLY IF_EXISTS

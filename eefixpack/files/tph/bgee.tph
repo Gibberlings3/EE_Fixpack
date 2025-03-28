@@ -41,6 +41,8 @@ COPY_EXISTING ~bgee.lua~ ~override~
   END
   BUT_ONLY
 
+INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
+
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\
@@ -51,6 +53,8 @@ INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of hea
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
+INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
+INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -125,7 +129,9 @@ WITH_SCOPE BEGIN
     "1718" => "CLERIC_SYMBOL_STUN"
     "1719" => "CLERIC_SYMBOL_DEATH"
     // Arcane
+    "2124" => "WIZARD_NAHALS_RECKLESS_DWEOMER" // alternate symbolic name
     "2222" => "WIZARD_CHAOS_SHIELD"
+    "2302" => "WIZARD_REMOVE_MAGIC" // alternate symbolic name
     "2723" => "WIZARD_IMPROVED_CHAOS_SHIELD"
     "2490" => "WIZARD_POLYMORPH_NATURAL_FORM"
     "2493" => "WIZARD_POLYMORPH_FLIND"
@@ -135,9 +141,12 @@ WITH_SCOPE BEGIN
     "2497" => "WIZARD_POLYMORPH_BROWN_BEAR"
     "2498" => "WIZARD_POLYMORPH_BLACK_BEAR"
     "2499" => "WIZARD_POLYMORPH_WOLF"
+    "2705" => "WIZARD_KHELBENS_WARDING_WHIP" // alternate symbolic name
+    "2921" => "WIZARD_IMPROVED_ALACRITY" // alternate symbolic name
     "2931" => "SUCCUBUS_TELEPORT"
     "2985" => "RED_HOLY_MIGHT"
-    // Innate
+    
+    // Innate   
     "3101" => "INNATE_CURE_LIGHT_WOUNDS"
     "3102" => "INNATE_SLOW_POISON"
     "3103" => "INNATE_DRAW_UPON_HOLY_MIGHT"
@@ -163,14 +172,20 @@ WITH_SCOPE BEGIN
     "3998" => "TANARI_SILENCE"
     "3999" => "TANARI_PARALYZE"
     // Class
+    "4101" => "DARK_GIFT" // exists in bgee but is unused
     "4212" => "PALADIN_DETECT_EVIL"
     "4213" => "PALADIN_PROTECTION_FROM_EVIL"
+    "4321" => "BERSERKER_ENRAGE"
+    "4412" => "THIEF_SET_SNARE" // alternate symbolic name
+    "4414" => "THIEF_SET_SPECIAL_SNARE" // alternate symbolic name
     "4611" => "DRUID_SHAPESHIFT_BROWNBEAR"
     "4612" => "DRUID_SHAPESHIFT_WOLF"
     "4613" => "DRUID_SHAPESHIFT_BLACKBEAR"
     "4632" => "AVENGER_SHAPESHIFT_SWORDSPIDER"
     "4633" => "AVENGER_SHAPESHIFT_BABYWYVERN"
     "4634" => "AVENGER_SHAPESHIFT_FIRESALAMANDER"
+    "4643" => "SHAPESHIFTER_SHAPESHIFT_WEREWOLF"
+    "4644" => "SHAPESHIFTER_SHAPESHIFT_GREATERWEREWOLF"
     "4721" => "TALOS_STORMSHIELD"
     "4722" => "TALOS_LIGHTNING_BOLT"
     "4732" => "HELM_TRUE_SIGHT"
@@ -975,7 +990,7 @@ ACTION_IF game_includes_sod BEGIN
   // apply new description image for Helmet of Dumathoin
   COPY_EXISTING ~bdhelm09.itm~ ~override~
     WRITE_ASCII 0x58 ~cbdhel09~ (8)
-  BUT_ONLY
+    BUT_ONLY
 
 END
 
@@ -1041,6 +1056,13 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF CLONE_EFFECT INT_VAR match_opcode = 25 STR_VAR insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 324 END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
+
+COPY_EXISTING ~potn99.itm~ ~override~ // blinding powder lacks description, minor fixes
+  SAY 0x50 @107 
+  SAY 0x54 @107 
+  LPF ALTER_EFFECT INT_VAR power = 0 END // flesh out effects below
+  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 resist_dispel = 1 END // flesh out effects below
+  IF_EXISTS // sod item
 
 // immune to confusion, but missing spconfus immunity
 COPY_EXISTING ~princess.itm~ ~override~ // (placeholder) story ring - immune to fear - immune to stun - immune to feeblemind - immune to confusion - immune to hold - blocks spmindat - blocks cdhorror
@@ -1496,6 +1518,8 @@ COPY_EXISTING ~ar1000.wed~ ~override~
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/tph/scripting_states.tph~ // cleans up scripting states
 
 // prevent spell called via op232 from interrupting caster sounds
 INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~

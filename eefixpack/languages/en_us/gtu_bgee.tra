@@ -4632,12 +4632,6 @@ Proficiency Type:~
 @16417 = ~'Ere there. You're Gorion's little whelp, aren't ya? Yeah, you match the description. You don't look so dangerous to me.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16466 = ~Turn Undead Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
-@16468 = ~Find Trap Mode~
-
-// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @16539 = ~It appears that one of the girdles in that ogre's fetish collection was, how can I phrase it... one of gender transformation? Unshey was not unsympathetic to this, ahem, rather unfortunate turn of events, however. In an effort to make amends she has offered us a copy of her book, entitled "High Cleric Unshey's Practical Guide to Bodily Health."~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
@@ -5690,9 +5684,6 @@ Requires:
  5 Strength
 
 Weight: 4~
-
-// [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
-@24172 = ~has nothing to say to you.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 16
 @24234 = ~MONK: Monks are warriors who pursue perfection through contemplation as well as action. They are versatile fighters, especially skilled in combat without weapons or armor. Though Monks cannot cast spells, they have a unique magic of their own: They channel a subtle energy, called ki, which allows them to perform amazing feats. The Monk's best known feat is their ability to stun an opponent with an unarmed blow.
