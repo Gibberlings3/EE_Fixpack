@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Nightly 031225~
+VERSION ~Nightly 032725~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
@@ -232,9 +232,4 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
-//DEPRECATED ~For internal use only~
-
-
-
-COPY_EXISTING ~sppr608.spl~ ~override~ // harm
-  LPF ALTER_EFFECT INT_VAR match_duration = 15 duration = 12 END // duration is three seconds long
+DEPRECATED ~For internal use only~
