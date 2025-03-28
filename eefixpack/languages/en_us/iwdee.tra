@@ -7,3 +7,12 @@
 @103 = ~^\( *Speed Factor:? *\)[0-9]+~
 @104 = ~^\( *Weight:? *\)[0-9]+~
 @105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
+
+// @106, @107 available
+
+// @108-@110 are identical in bgee.tra, bg2ee.tra, and iwdee.tra
+// these lines are for changing "Damage: +1" to "Damage: +1 (missile)" on bows and 
+// crossbows where it may be missing. 
+@108 = ~(missile)~
+@109 = ~\(Damage: \+[0-9]+\)~
+@110 = ~Damage type: Missile~

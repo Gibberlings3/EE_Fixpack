@@ -824,12 +824,13 @@ Requires:
 Weight: 3~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 6
+// adding (missile) to damage line
 @7350 = ~This bow is enchanted to enhance its damage and boost the user's aim.
 
 STATISTICS:
 
 THAC0: +3
-Damage: +2
+Damage: +2 (missile)
 Speed Factor: 5
 Proficiency Type: Longbow
 Type: Two-handed

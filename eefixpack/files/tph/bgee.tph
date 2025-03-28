@@ -13,6 +13,8 @@ ACTION_IF game_includes_sod BEGIN
   END
 END
 
+INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack damage type in their description
+
 /////                                                  \\\\\
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\

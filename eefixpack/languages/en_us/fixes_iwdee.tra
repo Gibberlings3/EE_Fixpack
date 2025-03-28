@@ -47,6 +47,7 @@ Weight: 3~
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8911, 40639, 25818, 27373
 // Weapon damage corrections
+// adding (missile) to damage line
 @8712 = ~This bow belonged to Kaylessa, weapons master of the Seldarine's Hand. Her prowess in archery only bested by her beauty, Kaylessa was devoted to honing the battle skills of any elf under her. If there were any heroes at the Battle of Seldarine's Hand, Kaylessa was one of them. She was a shining example of courage in the face of impending doom as she fearlessly led her people against orc and goblin hordes. Even after the fall of the Hand, her commitment to battle and her people remained strong. Her last wish was to die in glorious battle.
 
 STATISTICS:
@@ -55,7 +56,7 @@ Equipped abilities:
 – Dexterity: +1
 
 THAC0: +3
-Damage: +4
+Damage: +4 (missile)
 Speed Factor: 7
 Proficiency Type: Longbow
 Type: Two-handed
@@ -66,12 +67,13 @@ Weight: 3~
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 40639, 25818, 27373
 // Weapon damage corrections
+// adding (missile) to damage line
 @8911 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
 
 STATISTICS:
 
 THAC0: +5
-Damage: +3
+Damage: +3 (missile)
 Speed Factor: 4
 Proficiency Type: Crossbow
 Type: Two-handed
@@ -246,6 +248,7 @@ When this spell is cast, all creatures within a 10-ft. radius are affected indiv
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 27373
 // Weapon damage corrections
+// adding (missile) to damage line
 @25818 = ~This weapon is holy to warriors in the service of Talos, god of storms and destruction, and has seen decades of use in their capable hands. A shortbow made of many composite layers of wood, the Storm Bow has been used against the myriad enemies of the church of Talos. Most recently, the bow was in the possession of a Storm Knight named Kalassan Brevered, who was killed after striking down a number of rangers and druids on the Moonshae Isles.
 
 STATISTICS:
@@ -257,7 +260,7 @@ Charge abilities:
   Area of Effect: The wielder
 
 THAC0: +2
-Damage: +2
+Damage: +2 (missile)
 Speed Factor: 3
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -815,6 +818,7 @@ The Druid is healed 12 Hit Points after using this ability.~
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 25818, 27373
 // Weapon damage corrections
+// adding (missile) to damage line
 @40639 = ~Not much is known about the owner of this weapon, save that sages believe it is from another world called "Eibrancha." Plane-traveling wizards who have investigated life on "Eibrancha" report that it is dull, commonplace, and ordinary in the extreme, a place where heroes are rare and the populace is, by and large, incredibly average. This might explain the virtually nonexistent body of recorded information about the place. The only thing known about the weapon's owner is that he was an educated man. The purple wood that the crossbow is constructed from is believed to be from a unique type of tree in Eibrancha.
 
 After contacting another plane and learning about Bren Muller, you have learned a new ability of the weapon. Once per day, it can dramatically increase accuracy for two rounds.
@@ -826,7 +830,7 @@ Charge abilities:
   Wielder gains an additional +5 to-hit for two rounds
 
 THAC0: +5
-Damage: +3
+Damage: +3 (missile)
 Speed Factor: 4
 Proficiency Type: Crossbow
 Type: Two-handed

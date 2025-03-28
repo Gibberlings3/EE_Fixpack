@@ -11,3 +11,11 @@
 // strings @322001, 322002 from game.tra in Tweaks Anthology 
 @106 = ~Atta Girl~
 @107 = ~Angel~
+
+// @108-@110 are identical in bgee.tra, bg2ee.tra, and iwdee.tra
+// these lines are for changing "Damage: +1" to "Damage: +1 (missile)" on bows and 
+// crossbows where it may be missing. 
+@108 = ~(missile)~
+@109 = ~\(Damage: \+[0-9]+\)~
+@110 = ~Damage type: Missile~
+

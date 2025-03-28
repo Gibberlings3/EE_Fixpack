@@ -2150,13 +2150,14 @@ Requires:
 Weight: 3~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
+// adding (missile) to damage line
 @7351 = ~Eagle Bow: Protector of the Dryads
 In order to protect their community from an encroaching orc logging encampment, the hero Hannable the White was given this magnificent bow by the dryads of Gulthmere Forest. A deadly confrontation followed when the loggers dared to try to cut down a great oak tree, nearly killing the dryad linked to it. With the help of powerful forest animals, Hannable slew entire bands of orcs before any more damage was inflicted upon the wood. The orcs were forced to abandon their plans, lest they suffer the continued wrath of Hannable and the forest. Needless to say, the hero who aided the grateful dryads lived happily... nay, VERY happily ever after!
 
 STATISTICS:
 
 THAC0: +2
-Damage: +2
+Damage: +2 (missile)
 Speed Factor: 4
 Proficiency Type: Shortbow
 Type: Two-handed
