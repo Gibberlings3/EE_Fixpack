@@ -9,12 +9,12 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   alora6, null, null, null, null, null, null, null, 0x40000000 => alora6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   andris, null, null, 1, null, null, null, null, null => andris // tbd, cam (from scs): Andris MONSTER > HUMANOID
   bdbugb20, null, null, null, null, null, 58001, null, null => bdbugb20 // BGCS-3442, cam: bugbear shaman should use bugbear shaman animation
+  bdcrus21, null, null, null, null, null, null, bdcrus21, null => bdcrus21 // tbd, cam: crusaders with the wrong DV
+  bdcrus22, null, null, null, null, null, null, bdcrus22, null => bdcrus22 // tbd, cam: crusaders with the wrong DV
   bdcrus6d, null, null, null, null, null, null, bdcrus6d, null => bdcrus6d // tbd, cam: crusaders with the wrong DV
   bdcrus7d, null, null, null, null, null, null, bdcrus7d, null => bdcrus7d // tbd, cam: crusaders with the wrong DV
   bdcrus8d, null, null, null, null, null, null, bdcrus8d, null => bdcrus8d // tbd, cam: crusaders with the wrong DV
   bdcrus9d, null, null, null, null, null, null, bdcrus9d, null => bdcrus9d // tbd, cam: crusaders with the wrong DV
-  bdcrus21, null, null, null, null, null, null, bdcrus21, null => bdcrus21 // tbd, cam: crusaders with the wrong DV
-  bdcrus22, null, null, null, null, null, null, bdcrus22, null => bdcrus22 // tbd, cam: crusaders with the wrong DV
   bddyingm, 164, null, 7, null, null, null, null, null => bddyingm // luke: Make sure plants are properly flagged as such
   bdshamb, null, 255, null, null, 0, null, null, null => bdshamb // tbd, cam: shambling mound consistency
   bpshamb, 176, 255, null, null, null, null, null, null => bpshamb // tbd, cam: shambling mound consistency
@@ -36,8 +36,10 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   kivan4, null, null, null, null, null, null, null, 0x40000000 => kivan4 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   kivan6, null, null, null, null, null, null, null, 0x40000000 => kivan6 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   krysti , null, 1, null, null, null, null, null, null => krysti  // tbd, cam (from scs): Krystin THIEF > MAGE
+  plysala, null, 218, null, null, null, null, null, null => plysala // from IDS sync
   sharte, null, null, null, null, null, null, null, 0x40000000 => sharte // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   smoundsu, 176, 255, 7, null, null, null, null, null => smoundsu // tbd, cam: shambling mound consistency
+  telicesa, null, 216, null, null, null, null, null, null => telicesa // from IDS sync
   tellan, null, 1, null, null, null, null, null, null => tellan // tbd, cam (from scs): Tellan THIEF > MAGE
   trollgi, null, null, null, null, null, 32512, null, null => trollgi // tbd, cam: make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
 

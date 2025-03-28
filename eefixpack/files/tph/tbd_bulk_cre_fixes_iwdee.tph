@@ -2,8 +2,40 @@
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
 
   //file, race, class, general, sex, gender, animation, dv, kit => file // notes
+  dlyeti, 179, null, null, null, null, null, null, null => dlyeti // from the IDS sync
+  frostsal, null, 216, null, null, null, null, null, null => frostsal // from the IDS sync
   hobart, null, 155, null, null, null, null, null, null => hobart // should get rep penalty for killing hobart in lonelywood
   hobart2, null, 4, null, null, null, null, null, null => hobart2 // should not get rep penalty for killing hobart in anauroch castle
+  invissal, null, 216, null, null, null, null, null, null => invissal // from the IDS sync
+  kerish, null, 216, null, null, null, null, null, null => kerish // from the IDS sync
+  ktwgt1, null, 223, null, null, null, null, null, null => ktwgt1 // from the IDS sync
+  ktwgti1, null, 223, null, null, null, null, null, null => ktwgti1 // from the IDS sync
+  kuyeti, 179, null, null, null, null, null, null, null => kuyeti // from the IDS sync
+  lwight, null, 223, null, null, null, null, null, null => lwight // from the IDS sync
+  ms6salc, null, 216, null, null, null, null, null, null => ms6salc // from the IDS sync
+  msmsalc, null, 216, null, null, null, null, null, null => msmsalc // from the IDS sync
+  rbibarr, null, 223, null, null, null, null, null, null => rbibarr // from the IDS sync
+  rdecwig, null, 223, null, null, null, null, null, null => rdecwig // from the IDS sync
+  rndfsal, null, 216, null, null, null, null, null, null => rndfsal // from the IDS sync
+  rvsyeti, 179, null, null, null, null, null, null, null => rvsyeti // from the IDS sync
+  sal8013, null, 216, null, null, null, null, null, null => sal8013 // from the IDS sync
+  salamanf, null, 216, null, null, null, null, null, null => salamanf // from the IDS sync
+  udwight, null, 223, null, null, null, null, null, null => udwight // from the IDS sync
+  vscyeti, 179, null, null, null, null, null, null, null => vscyeti // from the IDS sync
+  vsyeti, 179, null, null, null, null, null, null, null => vsyeti // from the IDS sync
+  vsyetii, 179, null, null, null, null, null, null, null => vsyetii // from the IDS sync
+  vsyetii2, 179, null, null, null, null, null, null, null => vsyetii2 // from the IDS sync
+  wight, null, 223, null, null, null, null, null, null => wight // from the IDS sync
+  wight2, null, 223, null, null, null, null, null, null => wight2 // from the IDS sync
+  wight3, null, 223, null, null, null, null, null, null => wight3 // from the IDS sync
+  wightba, null, 223, null, null, null, null, null, null => wightba // from the IDS sync
+  wightcld, null, 223, null, null, null, null, null, null => wightcld // from the IDS sync
+  wtcyeti, 179, null, null, null, null, null, null, null => wtcyeti // from the IDS sync
+  wtsalf1, null, 216, null, null, null, null, null, null => wtsalf1 // from the IDS sync
+  wtsalf2, null, 216, null, null, null, null, null, null => wtsalf2 // from the IDS sync
+  wtsalf3, null, 216, null, null, null, null, null, null => wtsalf3 // from the IDS sync
+  wtsalfd, null, 216, null, null, null, null, null, null => wtsalfd // from the IDS sync
+  wtyeti, 179, null, null, null, null, null, null, null => wtyeti // from the IDS sync
 
 END
 
