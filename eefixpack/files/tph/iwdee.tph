@@ -147,6 +147,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light cr
      ~eefixpack/files/bam/mvaf~             ~override~ // sam.: removing shadows from vampires, female
      ~eefixpack/files/bam/mvam~             ~override~ // sam.: removing shadows from vampires, male
      ~eefixpack/files/bam/nboh~             ~override~ // sam.: removing shadows from vampires, bodhi
+     ~eefixpack/files/bam/spsdbur.bam~      ~override~ // fixed silver dragon breath
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
@@ -1163,6 +1164,32 @@ WITH_SCOPE BEGIN
 END
 
 /////                                                  \\\\\
+///// projectile fixes                                 \\\\\
+/////                                                  \\\\\
+
+// fixed dragon breath projectiles
+COPY_EXISTING ~dragblck.pro~ ~override~
+              ~draggree.pro~ ~override~
+              ~dragred.pro~  ~override~
+              ~dragsilv.pro~ ~override~
+  WRITE_SHORT 0x210 8
+
+// fixing grease projectile to fire once/round instead of twice/round
+COPY_EXISTING ~idpro101.pro~ ~override~
+  WRITE_SHORT 0x210 100
+  WRITE_BYTE  0x216 10
+  
+// make protection from evil 10' radius actually, uh, have a 10' radius  
+COPY_EXISTING ~idpro258.pro~ ~override~ // adjust to 10' projectile 
+  WRITE_SHORT 0x204 171 
+  WRITE_SHORT 0x206 171
+
+// tbd, cam
+// broken sound reference in lance of disruption projectile
+COPY_EXISTING ~idpro313.pro~ ~override~
+  WRITE_ASCII 0x18 ~#tra_59~ #8
+
+/////                                                  \\\\\
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
 
@@ -1184,21 +1211,6 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 // Fix reference to non-existing ACM sound resource
 COPY ~music/bm2.mus~ ~music/bm2.mus~
   REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~
-
-// fixing grease projectile to fire once/round instead of twice/round
-COPY_EXISTING ~idpro101.pro~ ~override~
-  WRITE_SHORT 0x210 100
-  WRITE_BYTE  0x216 10
-  
-// make protection from evil 10' radius actually, uh, have a 10' radius  
-COPY_EXISTING ~idpro258.pro~ ~override~ // adjust to 10' projectile 
-  WRITE_SHORT 0x204 171 
-  WRITE_SHORT 0x206 171
-
-// tbd, cam
-// broken sound reference in lance of disruption projectile
-COPY_EXISTING ~idpro313.pro~ ~override~
-  WRITE_ASCII 0x18 ~#tra_59~ #8
 
 // ie-6008, cam
 // Worldmap travel fixes, https://www.gibberlings3.net/forums/topic/36416-iwd-worldmap/

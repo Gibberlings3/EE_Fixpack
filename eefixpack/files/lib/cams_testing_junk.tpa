@@ -564,3 +564,39 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   END
   BUT_ONLY  
   
+  
+// fixing silver dragon breath - I used this to adjust the x/y coordinates to match
+// up with the silver dragon creature animation. After these adjustments I used NI's
+// bam editor to pad out each sequence with blank frames so that it won't repeat
+  
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY pro_offs BEGIN
+// move left: increase x
+// move up:   increase y
+
+   0, "-52", "-109" =>  0
+   8,  "-5", "-119" =>  8
+  16,  "40", "-104" => 16
+  24,  "83", "-110" => 24
+  32, "116",  "-88" => 32
+  40, "142",  "-67" => 40
+  48, "127",  "-35" => 48
+  56,  "61",  "-65" => 56
+  64,  "53",  "-58" => 64
+END  
+
+COPY_EXISTING ~spsdbur.bam~ ~override~
+  READ_ASCII 0x0 sg (4) //Signature
+  PATCH_IF NOT (~%sg%~ STRING_EQUAL_CASE ~BAMC~ = 1) BEGIN
+    PATCH_PRINT ~%SOURCE_FILE% is not a compressed BAM.~
+  END ELSE BEGIN
+    READ_LONG 0x8 dl //Uncompressed data length
+    DECOMPRESS_REPLACE_FILE 0xc (SOURCE_SIZE - 0xc) dl
+    READ_LONG  0x0c frame_offset
+    PATCH_PHP_EACH pro_offs AS var => idx BEGIN 
+      FOR (index = idx ; index <= (idx + 7) ; ++index) BEGIN 
+        WRITE_SHORT (frame_offset + 0x04 + (index * 0x0c)) THIS + var_1
+        WRITE_SHORT (frame_offset + 0x06 + (index * 0x0c)) THIS + var_2
+      END  
+    END  
+  END
+  BUT_ONLY

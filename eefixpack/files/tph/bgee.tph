@@ -243,6 +243,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
      ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
      ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
+     ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
@@ -1407,6 +1408,13 @@ END
 COPY_EXISTING ~bdstink.pro~ ~override~
   WRITE_LONG 0x240 (THIS BOR BIT13) // add blend flag
   IF_EXISTS // sod asset
+
+// fixed dragon breath projectiles
+COPY_EXISTING ~dragblck.pro~ ~override~
+              ~draggree.pro~ ~override~
+              ~dragred.pro~  ~override~
+              ~dragsilv.pro~ ~override~
+  WRITE_SHORT 0x210 8
 
 // grease projectiles created in spell section since vars needed 
 

@@ -107,6 +107,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
      ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
      ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
+     ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
@@ -1249,6 +1250,13 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
+
+// fixed dragon breath projectiles
+COPY_EXISTING ~dragblck.pro~ ~override~
+              ~draggree.pro~ ~override~
+              ~dragred.pro~  ~override~
+              ~dragsilv.pro~ ~override~
+  WRITE_SHORT 0x210 8
 
 // grease projectiles created in spell section since vars needed
 
