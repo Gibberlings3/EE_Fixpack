@@ -1293,6 +1293,8 @@ COPY ~music/vb.mus~ ~music/vb.mus~
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/scripting_states.tph~ // cleans up scripting states
+
 // prevent spell called via op232 from interrupting caster sounds
 INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
 

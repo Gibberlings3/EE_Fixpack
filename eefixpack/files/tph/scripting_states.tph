@@ -1,0 +1,198 @@
+ACTION_IF game_is_bgee BEGIN 
+  
+  // shield via shield amulet should set same scripting state as the spell
+  COPY_EXISTING ~amul15.itm~   ~override~ // amulet of power -> effect 11, attribute: effect=level drain (216)
+    LPF CLONE_EFFECT INT_VAR match_opcode = 328 opcode = 282 parameter1 = 2 parameter2 = 4 special = 0 END 
+    BUT_ONLY
+
+  // stuff that provides NPP should set scripting state 3 (aka LEVEL_DRAIN_IMMUNITY) = 1
+  COPY_EXISTING ~abazring.itm~ ~override~ // Ring -> Effect 35, Attribute: Effect=Level drain (216)
+                ~amul21.itm~   ~override~ // amulet of power -> effect 11, attribute: effect=level drain (216)
+                ~bazpatrg.itm~ ~override~ // ring -> effect 59, attribute: effect=level drain (216)
+                ~bdmisc1b.itm~ ~override~ // invulnerable -> effect 50, attribute: effect=level drain (216)
+                ~bdmisc1c.itm~ ~override~ // invulnerable -> effect 50, attribute: effect=level drain (216)
+                ~bdringge.itm~ ~override~ // ring -> effect 30, attribute: effect=level drain (216)
+                ~bdringgh.itm~ ~override~ // ring -> effect 35, attribute: effect=level drain (216)
+                ~bhaalhp1.itm~ ~override~ // no such index -> effect 48, attribute: effect=level drain (216)
+                ~bhaalimm.itm~ ~override~ // no such index -> effect 47, attribute: effect=level drain (216)
+                ~chalslay.itm~ ~override~ // ring -> effect 46, attribute: effect=level drain (216)
+                ~demogorg.itm~ ~override~ // no such index -> effect 71, attribute: effect=level drain (216)
+                ~deva.itm~     ~override~ // mace -> effect 9, attribute: effect=level drain (216)
+                ~finmel01.itm~ ~override~ // no such index -> effect 68, attribute: effect=level drain (216)
+                ~fsspir.itm~   ~override~ // ring -> effect 58, attribute: effect=level drain (216)
+                ~gorchr.itm~   ~override~ // ring -> effect 32, attribute: effect=level drain (216)
+                ~gorfirg.itm~  ~override~ // ring -> effect 48, attribute: effect=level drain (216)
+                ~gorjelfu.itm~ ~override~ // ring -> effect 48, attribute: effect=level drain (216)
+                ~gorjelgr.itm~ ~override~ // ring -> effect 48, attribute: effect=level drain (216)
+                ~gormisti.itm~ ~override~ // ring -> effect 48, attribute: effect=level drain (216)
+                ~holdring.itm~ ~override~ // ring -> effect 54, attribute: effect=level drain (216)
+                ~immcloud.itm~ ~override~ // no such index -> effect 13, attribute: effect=level drain (216)
+                ~imoenhp1.itm~ ~override~ // imoen's belt -> effect 53, attribute: effect=level drain (216)
+                ~innoc.itm~    ~override~ // ring -> effect 53, attribute: effect=level drain (216)
+                ~invulner.itm~ ~override~ // ring -> effect 64, attribute: effect=level drain (216)
+                ~jwsuper.itm~  ~override~ // edventar's gift -> effect 54, attribute: effect=level drain (216)
+                ~minhp1.itm~   ~override~ // no such index -> effect 63, attribute: effect=level drain (216)
+                ~plyjelly.itm~ ~override~ // attack -> effect 42, attribute: effect=level drain (216)
+                ~plywyvrn.itm~ ~override~ // attack -> effect 32, attribute: effect=level drain (216)
+                ~princess.itm~ ~override~ // (placeholder) story ring -> effect 45, attribute: effect=level drain (216)
+                ~ravag03.itm~  ~override~ // no such index -> effect 69, attribute: effect=level drain (216)
+                ~ref1.itm~     ~override~ // no such index -> effect 57, attribute: effect=level drain (216)
+                ~ring94.itm~   ~override~ // ring -> effect 16, attribute: effect=level drain (216)
+                ~ring95.itm~   ~override~ // ring -> effect 24, attribute: effect=level drain (216)
+                ~ring99.itm~   ~override~ // ring -> effect 21, attribute: effect=level drain (216)
+                ~sengua04.itm~ ~override~ // no such index -> effect 54, attribute: effect=level drain (216)
+                ~sprngw03.itm~ ~override~ // ring -> effect 18, attribute: effect=level drain (216)
+                ~sprngw04.itm~ ~override~ // ring -> effect 22, attribute: effect=level drain (216)
+                ~sprngz05.itm~ ~override~ // ring -> effect 87, attribute: effect=level drain (216)
+                ~surehp1.itm~  ~override~ // ring -> effect 45, attribute: effect=level drain (216)
+                ~telslav2.itm~ ~override~ // no such index -> effect 48, attribute: effect=level drain (216)
+                ~vampreg.itm~  ~override~ // ring -> effect 41, attribute: effect=level drain (216)
+                ~ohnmode1.spl~ ~override~ // no such index -> spell ability 0 -> effect 18, attribute: effect=level drain (216)
+                ~ohsmode4.spl~ ~override~ // no such index -> spell ability 0 -> effect 113, attribute: effect=level drain (216)
+                ~spcl242.spl~  ~override~ // no such index -> spell ability 0 -> effect 15, attribute: effect=level drain (216)
+                ~spcl321.spl~  ~override~ // enrage -> spell ability 0 -> effect 80, attribute: effect=level drain (216)
+                ~spcl917.spl~  ~override~ // avoid death -> spell ability 0 -> effect 23, attribute: effect=level drain (216)
+                ~spin117.spl~  ~override~ // berserk -> spell ability 0 -> effect 69, attribute: effect=level drain (216)
+                ~spin853.spl~  ~override~ // otiluke's resilient sphere -> spell ability 0 -> effect 45, attribute: effect=level drain (216)
+                ~spwi853.spl~  ~override~ // otiluke's resilient sphere -> spell ability 0 -> effect 45, attribute: effect=level drain (216)
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 216 opcode = 282 parameter1 = 1 parameter2 = 2 END 
+    BUT_ONLY IF_EXISTS
+
+  COPY_EXISTING ~bdogre03.bcs~ ~override~ // should be checking for rage specifically, not just any OFFENSIVE_MODIFIER
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~CheckStat(LastSeenBy(Myself),0,OFFENSIVE_MODIFIER)~ ~!CheckStat(LastSeenBy(Myself),1,OFFENSIVE_MODIFIER)~
+    END
+    BUT_ONLY IF_EXISTS // sod
+    
+END ELSE BEGIN // bg2ee    
+
+  COPY_EXISTING ~abazring.itm~ ~override~ // ring -> effect 29, attribute: effect=level drain (216)
+                ~amul21.itm~   ~override~ // amulet of power -> effect 6, attribute: effect=level drain (216)
+                ~bazpatrg.itm~ ~override~ // ring -> effect 53, attribute: effect=level drain (216)
+                ~bhaalhp1.itm~ ~override~ // no such index -> effect 46, attribute: effect=level drain (216)
+                ~bhaalimm.itm~ ~override~ // no such index -> effect 44, attribute: effect=level drain (216)
+                ~blun25.itm~   ~override~ // mace of disruption +2 -> effect 10, attribute: effect=level drain (216)
+                ~chalslay.itm~ ~override~ // ring -> effect 44, attribute: effect=level drain (216)
+                ~chwraith.itm~ ~override~ // no such index -> effect 47, attribute: effect=level drain (216)
+                ~demogorg.itm~ ~override~ // no such index -> effect 68, attribute: effect=level drain (216)
+                ~deva.itm~     ~override~ // mace of disruption +2 -> effect 8, attribute: effect=level drain (216)
+                ~finmel01.itm~ ~override~ // no such index -> effect 63, attribute: effect=level drain (216)
+                ~fsspir.itm~   ~override~ // ring -> effect 52, attribute: effect=level drain (216)
+                ~gorchr.itm~   ~override~ // ring -> effect 27, attribute: effect=level drain (216)
+                ~gorfirg.itm~  ~override~ // ring -> effect 42, attribute: effect=level drain (216)
+                ~gorjelfu.itm~ ~override~ // ring -> effect 44, attribute: effect=level drain (216)
+                ~gorjelgr.itm~ ~override~ // ring -> effect 42, attribute: effect=level drain (216)
+                ~gormisti.itm~ ~override~ // ring -> effect 42, attribute: effect=level drain (216)
+                ~holdring.itm~ ~override~ // ring -> effect 54, attribute: effect=level drain (216)
+                ~hslaywpn.itm~ ~override~ // no such index -> effect 16, attribute: effect=level drain (216)
+                ~immcloud.itm~ ~override~ // no such index -> effect 13, attribute: effect=level drain (216)
+                ~imoenhp1.itm~ ~override~ // imoen's belt -> effect 50, attribute: effect=level drain (216)
+                ~innoc.itm~    ~override~ // ring -> effect 51, attribute: effect=level drain (216)
+                ~invulner.itm~ ~override~ // ring -> effect 58, attribute: effect=level drain (216)
+                ~jonhp1.itm~   ~override~ // no such index -> effect 37, attribute: effect=level drain (216)
+                ~jwsuper.itm~  ~override~ // edventar's gift -> effect 44, attribute: effect=level drain (216)
+                ~killsw01.itm~ ~override~ // varscona +2 -> effect 70, attribute: effect=level drain (216)
+                ~mel01.itm~    ~override~ // imoen's belt -> effect 46, attribute: effect=level drain (216)
+                ~minhp1.itm~   ~override~ // no such index -> effect 59, attribute: effect=level drain (216)
+                ~objring.itm~  ~override~ // ring -> effect 47, attribute: effect=level drain (216)
+                ~ohbbslay.itm~ ~override~ // no such index -> effect 13, attribute: effect=level drain (216)
+                ~ohbdeva.itm~  ~override~ // mace of disruption +2 -> effect 6, attribute: effect=level drain (216)
+                ~ohbwing2.itm~ ~override~ // dark justice +5 -> effect 69, attribute: effect=level drain (216)
+                ~ohdmhp1.itm~  ~override~ // no such index -> effect 59, attribute: effect=level drain (216)
+                ~ohhexam1.itm~ ~override~ // hexxat's amulet -> effect 65, attribute: effect=level drain (216)
+                ~ohhexam2.itm~ ~override~ // hexxat's amulet -> effect 65, attribute: effect=level drain (216)
+                ~ohhexam3.itm~ ~override~ // hexxat's amulet -> effect 67, attribute: effect=level drain (216)
+                ~ohhexam4.itm~ ~override~ // hexxat's amulet -> effect 96, attribute: effect=level drain (216)
+                ~ohhexam5.itm~ ~override~ // hexxat's amulet -> effect 65, attribute: effect=level drain (216)
+                ~palring.itm~  ~override~ // ring -> effect 41, attribute: effect=level drain (216)
+                ~plyjelly.itm~ ~override~ // attack -> effect 42, attribute: effect=level drain (216)
+                ~plywyvrn.itm~ ~override~ // attack -> effect 30, attribute: effect=level drain (216)
+                ~polyjell.itm~ ~override~ // attack -> effect 34, attribute: effect=level drain (216)
+                ~ravag03.itm~  ~override~ // no such index -> effect 65, attribute: effect=level drain (216)
+                ~ring94.itm~   ~override~ // ring -> effect 36, attribute: effect=level drain (216)
+                ~ring95.itm~   ~override~ // ring -> effect 42, attribute: effect=level drain (216)
+                ~ring97.itm~   ~override~ // ring -> effect 16, attribute: effect=level drain (216)
+                ~ring98.itm~   ~override~ // ring -> effect 48, attribute: effect=level drain (216)
+                ~ring99.itm~   ~override~ // ring -> effect 39, attribute: effect=level drain (216)
+                ~rossring.itm~ ~override~ // edventar's gift -> effect 44, attribute: effect=level drain (216)
+                ~sengua04.itm~ ~override~ // no such index -> effect 51, attribute: effect=level drain (216)
+                ~shalt01.itm~  ~override~ // ring -> effect 49, attribute: effect=level drain (216)
+                ~slayerw1.itm~ ~override~ // no such index -> effect 21, attribute: effect=level drain (216)
+                ~slayerw2.itm~ ~override~ // attack -> effect 44, attribute: effect=level drain (216)
+                ~slayerw3.itm~ ~override~ // attack -> effect 92, attribute: effect=level drain (216)
+                ~slayerw4.itm~ ~override~ // attack -> effect 45, attribute: effect=level drain (216)
+                ~slayerwp.itm~ ~override~ // no such index -> effect 20, attribute: effect=level drain (216)
+                ~sprngw03.itm~ ~override~ // <blah> -> effect 18, attribute: effect=level drain (216)
+                ~sprngw04.itm~ ~override~ // <blah> -> effect 22, attribute: effect=level drain (216)
+                ~sprngz05.itm~ ~override~ // <blah> -> effect 86, attribute: effect=level drain (216)
+                ~stalker.itm~  ~override~ // ring -> effect 46, attribute: effect=level drain (216)
+                ~surehp1.itm~  ~override~ // ring -> effect 43, attribute: effect=level drain (216)
+                ~telslav2.itm~ ~override~ // no such index -> effect 46, attribute: effect=level drain (216)
+                ~tstatue.itm~  ~override~ // no such index -> effect 48, attribute: effect=level drain (216)
+                ~vampreg.itm~  ~override~ // ring -> effect 31, attribute: effect=level drain (216)
+                ~vampreg1.itm~ ~override~ // ring -> effect 36, attribute: effect=level drain (216)
+                ~vampreg2.itm~ ~override~ // ring -> effect 36, attribute: effect=level drain (216)
+                ~balth02.spl~  ~override~ // lunar stance! -> spell ability 0 -> effect 17, attribute: effect=level drain (216)
+                ~ohsmode1.spl~ ~override~ // no such index -> spell ability 0 -> effect 108, attribute: effect=level drain (216)
+                ~ohsmode4.spl~ ~override~ // no such index -> spell ability 0 -> effect 108, attribute: effect=level drain (216)
+                ~spbp001a.spl~ ~override~ // no such index -> spell ability 0 -> effect 15, attribute: effect=level drain (216)
+                ~spcl242.spl~  ~override~ // no such index -> spell ability 0 -> effect 7, attribute: effect=level drain (216)
+                ~spcl321.spl~  ~override~ // enrage -> spell ability 0 -> effect 68, attribute: effect=level drain (216)
+                ~spin117.spl~  ~override~ // berserk -> spell ability 0 -> effect 56, attribute: effect=level drain (216)
+                ~spin853.spl~  ~override~ // otiluke's resilient sphere -> spell ability 0 -> effect 45, attribute: effect=level drain (216)
+                ~spwi853.spl~  ~override~ // otiluke's resilient sphere -> spell ability 0 -> effect 45, attribute: effect=level drain (216)
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 216 opcode = 282 parameter1 = 1 parameter2 = 2 END 
+    BUT_ONLY IF_EXISTS
+
+  // change potion of clarity usage check from no offensive modifier to just no rage & no current clarity potion
+  // change power attack to check for previous offensive HLAs such as... power attack
+  COPY_EXISTING ~ohbarc01.bcs~ ~override~
+                ~ohbbclt3.bcs~ ~override~
+                ~ohbfig01.bcs~ ~override~
+                ~ohbfig02.bcs~ ~override~
+                ~ohbfig03.bcs~ ~override~
+                ~ohbmerc2.bcs~ ~override~
+                ~ohbmonk.bcs~  ~override~
+                ~ohbpal01.bcs~ ~override~
+                ~ohbthie2.bcs~ ~override~
+                ~ohnvg01.bcs~  ~override~
+                ~ohrjassa.bcs~ ~override~
+                ~ohrsepho.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~\(HasItem("POTN21",Myself)\)[ %TAB%%MNL%%LNL%]+CheckStat(Myself,0,OFFENSIVE_MODIFIER)~ 
+        ~\1 !CheckStat(Myself,1,OFFENSIVE_MODIFIER) !CheckSpellState(Myself,POTION_OF_CLARITY)~
+      REPLACE_TEXTUALLY ~!CheckStat(Myself,5,DEFENSIVE_MODIFIER)~ ~!CheckStat(Myself,2,OFFENSIVE_MODIFIER)~
+    END
+    BUT_ONLY    
+
+  COPY_EXISTING ~ohbdemi.bcs~ ~override~ // should be checking for rage specifically, not just any OFFENSIVE_MODIFIER
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~CheckStat(LastSeenBy(Myself),0,OFFENSIVE_MODIFIER)~ ~!CheckStat(LastSeenBy(Myself),1,OFFENSIVE_MODIFIER)~
+    END
+    BUT_ONLY  
+
+  COPY_EXISTING ~ohralor.bcs~  ~override~ // don't check for rage to cast blindness, as it doesn't protect against it
+                ~ohryxtra.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~!CheckStat(FourthNearestEnemyOf(Myself),1,OFFENSIVE_MODIFIER)~ ~~
+    END
+    BUT_ONLY
+    
+END
+
+COPY_EXISTING ~spcl741.spl~ ~override~ // boon of lathander
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 282 match_parameter1 = 1 match_parameter2 = 2 END // delete dupe
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 282 match_parameter1 = 1 match_parameter2 = 3 END // delete dupe
+  
+COPY_EXISTING ~spcl152.spl~ ~override~ // barbarian rage
+              ~spin117.spl~ ~override~ // berserk
+  LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 282 match_parameter2 = 3 END // has a dupe effect
+  
+COPY_EXISTING ~spcl321.spl~ ~override~ // enrage
+  LPF DELETE_EFFECT INT_VAR multi_match = 2 match_opcode = 282 match_parameter2 = 3 END // has two dupe effects 
+
+// move non-rage OFFENSIVE_MODIFIER script states to new value
+COPY_EXISTING ~spcl741.spl~ ~override~ // boon of lathander
+              ~sppr507.spl~ ~override~ // champion's strength
+              ~spwi603.spl~ ~override~ // tenser's transformation
+  LPF ALTER_EFFECT INT_VAR match_opcode = 282 match_parameter1 = 1 match_parameter2 = 3 parameter1 = 6 END 
