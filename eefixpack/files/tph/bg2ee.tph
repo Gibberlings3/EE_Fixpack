@@ -571,6 +571,17 @@ COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)
   LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END
   BUT_ONLY
 
+// applying duergar skin tone to duergar dwarves
+COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
+              ~duergar3.cre~ ~override~ // duergar
+              ~gorje.cre~    ~override~ // gorje hilldark
+              ~scdur.cre~    ~override~ // unger hilldark
+              ~sewdue01.cre~ ~override~ // duergar sapper
+              ~sewdue02.cre~ ~override~ // duergar sapper
+              ~sewyag01.cre~ ~override~ // duergar sapper
+  WRITE_BYTE 0x2f 83 // "dark blusih gray", used by other duergar
+  BUT_ONLY 
+
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
 COPY_EXISTING ~c6drizz.cre~  ~override~
