@@ -110,6 +110,7 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
      ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
      ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
+     ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
