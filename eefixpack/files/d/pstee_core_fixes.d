@@ -25,3 +25,6 @@ ALTER_TRANS IPTEETH BEGIN 5 END BEGIN 1 END BEGIN ~ACTION~ ~TransformPartyItem("
 REPLACE_TRANS_ACTION DMACH1 BEGIN 2 4 6 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~
 REPLACE_TRANS_ACTION DMACH3 BEGIN 2 3 5 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~
 REPLACE_TRANS_ACTION DMACH4 BEGIN 2 3 5 END BEGIN 0 END ~StartCutSceneMode()~ ~ClearAllActions() StartCutSceneMode()~ UNLESS ~ClearAllActions()~
+
+// Vhailor's ForceAttack() actions should use the correct script name
+REPLACE_TRANS_ACTION DTRIAS BEGIN 70 END BEGIN 0 1 2 END ~"Vhailor"~ ~"Vhail"~
