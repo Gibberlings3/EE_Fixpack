@@ -28,3 +28,6 @@ REPLACE_TRANS_ACTION DMACH4 BEGIN 2 3 5 END BEGIN 0 END ~StartCutSceneMode()~ ~C
 
 // Vhailor's ForceAttack() actions should use the correct script name
 REPLACE_TRANS_ACTION DTRIAS BEGIN 70 END BEGIN 0 1 2 END ~"Vhailor"~ ~"Vhail"~
+
+// Removing a use action with a non-existing item in Marissa's dialog
+REPLACE_TRANS_ACTION DMARISSA BEGIN 49 END BEGIN 0 END ~UseItem("M_Gaze",Protagonist)~ ~~
