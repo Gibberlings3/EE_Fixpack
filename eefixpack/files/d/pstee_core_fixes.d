@@ -31,3 +31,7 @@ REPLACE_TRANS_ACTION DTRIAS BEGIN 70 END BEGIN 0 1 2 END ~"Vhailor"~ ~"Vhail"~
 
 // Removing a use action with a non-existing item in Marissa's dialog
 REPLACE_TRANS_ACTION DMARISSA BEGIN 49 END BEGIN 0 END ~UseItem("M_Gaze",Protagonist)~ ~~
+
+// Nihl Xander should give you an existing 'Pacify' scroll when following the Dreambuilder conversation branch
+REPLACE_TRANS_ACTION DXANDER BEGIN 22 END BEGIN 1 END ~GiveItemCreate("PacScrll",Protagonist,[0-9]+,[0-9]+,[0-9]+)~ ~GiveItemCreate("SPWI108",Protagonist,1,1,0)~
+REPLACE_TRANS_ACTION DXANDER BEGIN 25 END BEGIN 0 1 END ~GiveItemCreate("PacScrll",Protagonist,[0-9]+,[0-9]+,[0-9]+)~ ~GiveItemCreate("SPWI108",Protagonist,1,1,0)~
