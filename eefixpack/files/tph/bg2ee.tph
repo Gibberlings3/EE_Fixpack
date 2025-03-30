@@ -561,17 +561,6 @@ INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bear
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
 INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 
-// disguised vampires shouldn't show up on infravision (see also animation changes in infravision.tph)
-COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)
-              ~sarprovf.cre~ ~override~ // saradush courtesan (vampire in disguise)
-              ~sarprovm.cre~ ~override~ // saradush courtesan (vampire in disguise)
-              ~vampaer.cre~  ~override~ // aerie (vampified by bodhi)
-              ~vampano.cre~  ~override~ // anomen (vampified by bodhi)
-              ~vampjah.cre~  ~override~ // jaheira (vampified by bodhi)
-              ~vampvic.cre~  ~override~ // viconia (vampified by bodhi)
-  LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END
-  BUT_ONLY
-
 // applying duergar skin tone to duergar dwarves
 COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
               ~duergar3.cre~ ~override~ // duergar
