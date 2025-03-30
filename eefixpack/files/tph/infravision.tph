@@ -1,9 +1,10 @@
 // https://www.gibberlings3.net/forums/topic/39308-infravision-tackling-the-real-issues/
 
 // stuff detected by infravision but shouldn't be
-COPY_EXISTING ~7203.ini~ ~override~ // polar bears
+COPY_EXISTING ~7b06.ini~ ~override~ // shade wolf
               ~7f46.ini~ ~override~ // death tyrant
               ~e040.ini~ ~override~ // histachii
+              ~e294.ini~ ~override~ // bonebat
               ~e500.ini~ ~override~ // lizard man elite
               ~e510.ini~ ~override~ // lizard man
               ~e520.ini~ ~override~ // lizard king
@@ -19,3 +20,265 @@ COPY_EXISTING ~3001.ini~ ~override~ // neothelid
               ~7f43.ini~ ~override~ // yochlol
   REPLACE_TEXTUALLY ~detected_by_infravision=0~ ~detected_by_infravision=1~    
   BUT_ONLY IF_EXISTS
+  
+// individual exceptions
+ACTION_IF game_is_bgee BEGIN
+
+  COPY_EXISTING ~ashiru.cre~   ~override~ // Ashirukuru: undead using non-undead animation
+                ~bdashiru.cre~ ~override~ // Shadow Aspect: undead using non-undead animation
+                ~bdcarlin.cre~ ~override~ // Carline: undead using non-undead animation
+                ~bdcoldh.cre~  ~override~ // Coldhearth Lich: undead using non-undead animation
+                ~bdcrommu.cre~ ~override~ // Crommus: undead using non-undead animation
+                ~bddaeros.cre~ ~override~ // Daeros: undead using non-undead animation
+                ~bddmakgr.cre~ ~override~ // D'mak Greatgas: undead using non-undead animation
+                ~bdgarfou.cre~ ~override~ // Gar Fouleye: undead using non-undead animation
+                ~bdghostf.cre~ ~override~ // Ghost: undead using non-undead animation
+                ~bdghostm.cre~ ~override~ // Ghost: undead using non-undead animation
+                ~bdlitla.cre~  ~override~ // Litla: undead using non-undead animation
+                ~bdnuber1.cre~ ~override~ // Nüber: undead using non-undead animation
+                ~bdnuber2.cre~ ~override~ // Nüber: undead using non-undead animation
+                ~bdrgosz.cre~  ~override~ // R'gosz the Puke: undead using non-undead animation
+                ~bdsotdar.cre~ ~override~ // Sot Darkoozing: undead using non-undead animation
+                ~bdsotuk.cre~  ~override~ // Sotuk: undead using non-undead animation
+                ~bdworis.cre~  ~override~ // Woris: undead using non-undead animation
+                ~bpambt1.cre~  ~override~ // Night Knives Thief: undead using non-undead animation
+                ~bpambt2.cre~  ~override~ // Night Knives Thief: undead using non-undead animation
+                ~kiel.cre~     ~override~ // Kiel the Legion Killer: undead using non-undead animation
+                ~kiel2.cre~    ~override~ // Kiel the Legion Killer: undead using non-undead animation
+                ~trolsp01.cre~ ~override~ // Spectral Troll: undead using non-undead animation
+                ~vampbat.cre~  ~override~ // Vampire Bat: undead using non-undead animation
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
+    BUT_ONLY IF_EXISTS
+    
+  // creatures who don't give body heat from their animation but should
+  COPY_EXISTING ~deathk.cre~   ~override~ // demon knight: using death knight animation
+                ~deathk1.cre~  ~override~ // demon knight: using death knight animation
+                ~deck615.cre~  ~override~ // demon knight: using death knight animation
+                ~demosum4.cre~ ~override~ // cambion: using death knight animation
+                ~ghorak.cre~   ~override~ // Ghorak: non-undead using undead animation
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter1 = 1 parameter2 = 1 timing = 1 END // override: has body heat
+    BUT_ONLY
+
+END ELSE 
+
+ACTION_IF game_is_bg2ee BEGIN
+
+  // creatures who give body heat from their animation but shouldn't
+  COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)
+                ~bhcrypt.cre~  ~override~ // Crypt King: undead using human animation
+                ~chwraith.cre~ ~override~ // Child Spirit: using kobold animation
+                ~d1ghost.cre~  ~override~ // Alianna: ghost
+                ~d1gori.cre~   ~override~ // Gorion: ghost
+                ~d1mothdw.cre~ ~override~ // Alianna: ghost
+                ~d1mothel.cre~ ~override~ // Alianna: ghost
+                ~d1mothha.cre~ ~override~ // Alianna: ghost
+                ~d1mothhu.cre~ ~override~ // Alianna: ghost
+                ~elearb01.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb02.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb03.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb04.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb05.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb06.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb07.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb08.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb09.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb10.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elearb11.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elepuz01.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elepuz02.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elepuz03.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~elepuz04.cre~ ~override~ // Apparition: has mismatching undead vs. animation
+                ~fsghos.cre~   ~override~ // Ghost: has mismatching undead vs. animation
+                ~fsghos2.cre~  ~override~ // Ghost: has mismatching undead vs. animation
+                ~firmon01.cre~ ~override~ // Banshee: has mismatching undead vs. animation
+                ~gorgua03.cre~ ~override~ // Guardian Spirit: has mismatching undead vs. animation
+                ~gorgua04.cre~ ~override~ // Guardian Spirit: has mismatching undead vs. animation
+                ~gorgua05.cre~ ~override~ // Guardian Spirit: has mismatching undead vs. animation
+                ~hgwra01.cre~  ~override~ // Gorion: has mismatching undead vs. animation
+                ~hlskull.cre~  ~override~ // Golden Skull: has mismatching undead vs. animation
+                ~hspectr1.cre~ ~override~ // Spectral Harpist: has mismatching undead vs. animation
+                ~hspectr2.cre~ ~override~ // Spectral Harpist: has mismatching undead vs. animation
+                ~hspectr3.cre~ ~override~ // Spectral Harpist: has mismatching undead vs. animation
+                ~m05spir1.cre~ ~override~ // Elven Spirit: has mismatching undead vs. animation
+                ~m05spir2.cre~ ~override~ // Elven Spirit: has mismatching undead vs. animation
+                ~melsum06.cre~ ~override~ // Alhoon: has mismatching undead vs. animation
+                ~mindal01.cre~ ~override~ // Alhoon: has mismatching undead vs. animation
+                ~mindva01.cre~ ~override~ // Vampiric Illithid: has mismatching undead vs. animation
+                ~mindvam.cre~  ~override~ // Vampiric Illithid: has mismatching undead vs. animation
+                ~ohbimim.cre~  ~override~ // Magical Item Merchant: has mismatching undead vs. animation
+                ~ohbszass.cre~ ~override~ // Mysterious Figure: has mismatching undead vs. animation
+                ~ohbvmp02.cre~ ~override~ // Vampire: has mismatching undead vs. animation
+                ~ohhalhoo.cre~ ~override~ // Alhoon: has mismatching undead vs. animation
+                ~ohhburic.cre~ ~override~ // Burich: has mismatching undead vs. animation
+                ~ohhdrago.cre~ ~override~ // Dragomir: has mismatching undead vs. animation
+                ~ohhgoxxa.cre~ ~override~ // Alhoon: has mismatching undead vs. animation
+                ~ohhgprst.cre~ ~override~ // Ghostly Priest: has mismatching undead vs. animation
+                ~ohnimim.cre~  ~override~ // Magical Item Merchant: has mismatching undead vs. animation
+                ~ohnszass.cre~ ~override~ // Szass Tam: has mismatching undead vs. animation
+                ~pptroll1.cre~ ~override~ // Spirit Troll: undead using non-undead animation
+                ~pptroll1.cre~ ~override~ // Spirit Troll: undead using non-undead animation
+                ~rngsha2d.cre~ ~override~ // Shadow Patrick: has mismatching undead vs. animation
+                ~rspirit1.cre~ ~override~ // Mairyn: has mismatching undead vs. animation
+                ~sahbeh02.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
+                ~sahbeh03.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
+                ~sahbeh04.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
+                ~sahspc01.cre~ ~override~ // Specter: has mismatching undead vs. animation                
+                ~sarprovf.cre~ ~override~ // saradush courtesan (vampire in disguise)
+                ~sarprovm.cre~ ~override~ // saradush courtesan (vampire in disguise)
+                ~sarspir.cre~  ~override~ // Prison Spirit: has mismatching undead vs. animation
+                ~shagho01.cre~ ~override~ // Badon's Ghost: has mismatching undead vs. animation
+                ~shagho02.cre~ ~override~ // Dettseh's Ghost: has mismatching undead vs. animation
+                ~spectr01.cre~ ~override~ // Specter: has mismatching undead vs. animation
+                ~telwrai.cre~  ~override~ // Demon Wraith: has mismatching undead vs. animation
+                ~thraxi.cre~   ~override~ // Thraxis Gall: has mismatching undead vs. animation
+                ~trolsi01.cre~ ~override~ // Spirit Troll: undead using non-undead animation
+                ~trolsi02.cre~ ~override~ // Spirit Troll: undead using non-undead animation
+                ~trolsp01.cre~ ~override~ // Spectral Troll: undead using non-undead animation
+                ~trolsp02.cre~ ~override~ // Spectral Troll: undead using non-undead animation
+                ~udvamp.cre~   ~override~ // Vampiric Illithid: has mismatching undead vs. animation                
+                ~vampaer.cre~  ~override~ // aerie (vampified by bodhi)
+                ~vampano.cre~  ~override~ // anomen (vampified by bodhi)
+                ~vampbat.cre~  ~override~ // Vampire Bat: has mismatching undead vs. animation
+                ~vampjah.cre~  ~override~ // jaheira (vampified by bodhi)
+                ~vampvic.cre~  ~override~ // viconia (vampified by bodhi)
+                ~wellyn.cre~   ~override~ // Wellyn: has mismatching undead vs. animation
+                ~wrashi01.cre~ ~override~ // Shimmering Wraith: has mismatching undead vs. animation
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
+    BUT_ONLY
+    
+  // creatures who don't give body heat from their animation but should
+  COPY_EXISTING ~cambion1.cre~ ~override~ // cambion: using death knight animation
+                ~cambion2.cre~ ~override~ // cambion: using death knight animation
+                ~deathkni.cre~ ~override~ // demon knight: using death knight animation
+                ~deck615.cre~  ~override~ // demon knight: using death knight animation
+                ~demmau01.cre~ ~override~ // Maurezhi: has mismatching undead vs. animation
+                ~demosum4.cre~ ~override~ // cambion: using death knight animation
+                ~gorcamb.cre~  ~override~ // aesgareth: using death knight animation
+                ~gorsku01.cre~ ~override~ // flaming skull
+                ~gortan6.cre~  ~override~ // Maurezhi: has mismatching undead vs. animation
+                ~hgsku01.cre~  ~override~ // flaming skull
+                ~idemon01.cre~ ~override~ // cambion: using death knight animation
+                ~idemon02.cre~ ~override~ // cambion: using death knight animation
+                ~illcamb.cre~  ~override~ // cambion: using death knight animation
+                ~illcamb2.cre~ ~override~ // cambion: using death knight animation
+                ~kdemon01.cre~ ~override~ // cambion: using death knight animation
+                ~obsdem02.cre~ ~override~ // Mane: has mismatching undead vs. animation
+                ~obsdem04.cre~ ~override~ // Maurezhi: has mismatching undead vs. animation
+                ~pwarden.cre~  ~override~ // Warden: using death knight animation
+                ~telcam1.cre~  ~override~ // cambion: using death knight animation
+                ~trskind1.cre~ ~override~ // Rejiek Hidesman: has mismatching undead vs. animation
+                ~trskind2.cre~ ~override~ // Darsidian Moor: has mismatching undead vs. animation
+                ~uddeath.cre~  ~override~ // demon knight: using death knight animation
+                ~uddeath2.cre~ ~override~ // demon knight: using death knight animation
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter1 = 1 parameter2 = 1 timing = 1 END // override: has body heat
+    BUT_ONLY
+
+END ELSE BEGIN // iwdee
+
+  // creatures who give body heat from their animation but shouldn't
+  COPY_EXISTING ~bbspir.cre~   ~override~ // Black Bear Spirit: undead using non-undead animation 29184
+                ~bbspir2.cre~  ~override~ // Black Bear Spirit: undead using non-undead animation 29184
+                ~cddaen.cre~   ~override~ // Spirit of Daen Winterbrush: undead using non-undead animation 25345
+                ~ckspgrd.cre~  ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd2.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd3.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd4.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd5.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd6.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrd7.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~ckspgrdh.cre~ ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~custos.cre~   ~override~ // Custhantos: undead using non-undead animation 25089
+                ~denaini.cre~  ~override~ // Denaini: undead using non-undead animation 24593
+                ~erris.cre~    ~override~ // Shade of Sir Erris: undead using non-undead animation 24832
+                ~gbard.cre~    ~override~ // Luremaster: undead using non-undead animation 25602
+                ~geddian.cre~  ~override~ // Shade of Sir Geddian: undead using non-undead animation 24832
+                ~gelarith.cre~ ~override~ // Gelarith: undead using non-undead animation 25089
+                ~giles.cre~    ~override~ // Shade of Sir Giles: undead using non-undead animation 24832
+                ~kaylessa.cre~ ~override~ // Kaylessa: undead using non-undead animation 24849
+                ~kress.cre~    ~override~ // Kresselack: undead using non-undead animation 8960
+                ~lehland.cre~  ~override~ // Lehland: undead using non-undead animation 25089
+                ~lethias.cre~  ~override~ // Lethias: undead using non-undead animation 57920
+                ~pbspir.cre~   ~override~ // Polar Bear Spirit: undead using non-undead animation 29187
+                ~rndspg.cre~   ~override~ // Spectral Guard: undead using non-undead animation 24832
+                ~rsheac.cre~   ~override~ // Shadowed Elven Acolyte: undead using non-undead animation 24577
+                ~rshelfb.cre~  ~override~ // Shadowed Elven Archer: undead using non-undead animation 24849
+                ~rshelfs.cre~  ~override~ // Shadowed Elven Swordsman: undead using non-undead animation 24833
+                ~rshorca.cre~  ~override~ // Shadowed Orc Grunt: undead using non-undead animation 59392
+                ~rshorcb.cre~  ~override~ // Shadowed Orc Archer: undead using non-undead animation 59408
+                ~sdelfac.cre~  ~override~ // Shadowed Elven Acolyte: undead using non-undead animation 24577
+                ~sdelfah1.cre~ ~override~ // Shadowed Elven Acolyte: undead using non-undead animation 24577
+                ~sdelfah2.cre~ ~override~ // Shadowed Elven Acolyte: undead using non-undead animation 24577
+                ~sdelfbw1.cre~ ~override~ // Shadowed Elven Archer: undead using non-undead animation 24849
+                ~sdelfbw2.cre~ ~override~ // Shadowed Elven Archer: undead using non-undead animation 24849
+                ~sdelfbwh.cre~ ~override~ // Shadowed Elven Archer: undead using non-undead animation 24849
+                ~sdelfch1.cre~ ~override~ // Shadowed Elven Cleric: undead using non-undead animation 24593
+                ~sdelfch2.cre~ ~override~ // Shadowed Elven Cleric: undead using non-undead animation 24593
+                ~sdelfcl.cre~  ~override~ // Shadowed Elven Cleric: undead using non-undead animation 24593
+                ~sdelfcl2.cre~ ~override~ // Shadowed Elven Cleric: undead using non-undead animation 24593
+                ~sdelfclh.cre~ ~override~ // Shadowed Elven Cleric: undead using non-undead animation 24593
+                ~sdelfof1.cre~ ~override~ // Shadowed Elven Officer: undead using non-undead animation 24833
+                ~sdelfof2.cre~ ~override~ // Shadowed Elven Officer: undead using non-undead animation 24833
+                ~sdelfof3.cre~ ~override~ // Shadowed Elven Officer: undead using non-undead animation 24833
+                ~sdelfpr.cre~  ~override~ // Shadowed Elven Priest: undead using non-undead animation 24593
+                ~sdelfsw2.cre~ ~override~ // Shadowed Elven Swordsman: undead using non-undead animation 24833
+                ~sdelfsw3.cre~ ~override~ // Shadowed Elven Swordsman: undead using non-undead animation 24833
+                ~sdelfsw4.cre~ ~override~ // Shadowed Elven Swordsman: undead using non-undead animation 24833
+                ~sdelfsw5.cre~ ~override~ // Shadowed Elven Swordsman: undead using non-undead animation 24833
+                ~sdelfwz1.cre~ ~override~ // Shadowed Elven Wizard: undead using non-undead animation 25089
+                ~sdelfwzh.cre~ ~override~ // Shadowed Elven Wizard: undead using non-undead animation 25089
+                ~sdgobax1.cre~ ~override~ // Shadowed Goblin Grunt: undead using non-undead animation 58368
+                ~sdgobax2.cre~ ~override~ // Shadowed Goblin Warrior: undead using non-undead animation 58400
+                ~sdgobaxh.cre~ ~override~ // Shadowed Goblin Warrior: undead using non-undead animation 58400
+                ~sdgobbw1.cre~ ~override~ // Shadowed Goblin Archer: undead using non-undead animation 58384
+                ~sdgobbw2.cre~ ~override~ // Shadowed Goblin Marksman: undead using non-undead animation 58416
+                ~sdgobbwh.cre~ ~override~ // Shadowed Goblin Marksman: undead using non-undead animation 58416
+                ~sdgobtrn.cre~ ~override~ // Shadowed Goblin Trainer: undead using non-undead animation 58400
+                ~sdogre.cre~   ~override~ // Shadowed Ogre: undead using non-undead animation 36864
+                ~sdogreh1.cre~ ~override~ // Shadowed Ogre: undead using non-undead animation 36864
+                ~sdogreh2.cre~ ~override~ // Shadowed Ogre: undead using non-undead animation 36864
+                ~sdoraxh1.cre~ ~override~ // Shadowed Orc Grunt: undead using non-undead animation 59392
+                ~sdoraxh2.cre~ ~override~ // Shadowed Orc Grunt: undead using non-undead animation 59392
+                ~sdorcax1.cre~ ~override~ // Shadowed Orc Grunt: undead using non-undead animation 59392
+                ~sdorcax3.cre~ ~override~ // Shadowed Orc Chieftain: undead using non-undead animation 59424
+                ~sdorcbw1.cre~ ~override~ // Shadowed Orc Archer: undead using non-undead animation 59408
+                ~sdorcbw2.cre~ ~override~ // Shadowed Orc Marksman: undead using non-undead animation 59440
+                ~sdorcbwh.cre~ ~override~ // Shadowed Orc Archer: undead using non-undead animation 59408
+                ~sdorcshm.cre~ ~override~ // Shadowed Orc Shaman: undead using non-undead animation 59456
+                ~sdorshh1.cre~ ~override~ // Shadowed Orc Shaman: undead using non-undead animation 59456
+                ~sdorshh2.cre~ ~override~ // Shadowed Orc Shaman: undead using non-undead animation 59456
+                ~sdorshh3.cre~ ~override~ // Shadowed Orc Shaman: undead using non-undead animation 59456
+                ~sdorshh4.cre~ ~override~ // Shadowed Orc Shaman: undead using non-undead animation 59456
+                ~sdworg.cre~   ~override~ // Shadowed Worg: undead using non-undead animation 31489
+                ~serrhya.cre~  ~override~ // Sehriya: undead using non-undead animation 50960
+                ~shamgho.cre~  ~override~ // Ghost Shaman: undead using non-undead animation 57928
+                ~shamgn.cre~   ~override~ // Ghost Shaman: undead using non-undead animation 57928
+                ~shdelfpt.cre~ ~override~ // Shadowed Elf: undead using non-undead animation 16640
+                ~skaldar.cre~  ~override~ // Skaldar: undead using non-undead animation 57929
+                ~spcook.cre~   ~override~ // Spectral Cook: undead using non-undead animation 51200
+                ~spcourtf.cre~ ~override~ // Spectral Courtier: undead using non-undead animation 51728
+                ~spcourtm.cre~ ~override~ // Spectral Courtier: undead using non-undead animation 51712
+                ~spguard.cre~  ~override~ // Spectral Guard: undead using non-undead animation 25605
+                ~spknight.cre~ ~override~ // Spectral Knight: undead using non-undead animation 57920
+                ~telanis.cre~  ~override~ // Telanis: undead using non-undead animation 25345
+                ~tradran.cre~  ~override~ // Spectral Hero: undead using non-undead animation 25104
+                ~trcriek.cre~  ~override~ // Spectral Hero: undead using non-undead animation 24576
+                ~trgbard.cre~  ~override~ // Luremaster: undead using non-undead animation 25602
+                ~trharld.cre~  ~override~ // Spectral Hero: undead using non-undead animation 24832
+                ~trhobrt.cre~  ~override~ // Spectral Hero: undead using non-undead animation 25347
+                ~trshelh.cre~  ~override~ // Spectral Hero: undead using non-undead animation 24832
+                ~trsph1.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24834
+                ~trsph2.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24833
+                ~trsph3.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24592
+                ~trsph4.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24849
+                ~trsph5.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24576
+                ~trsph6.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24848
+                ~trsph7.cre~   ~override~ // Spectral Hero: undead using non-undead animation 25344
+                ~trsph8.cre~   ~override~ // Spectral Hero: undead using non-undead animation 25090
+                ~trsph9.cre~   ~override~ // Spectral Hero: undead using non-undead animation 24849
+                ~valestis.cre~ ~override~ // Valestis: undead using non-undead animation 25089
+                ~wspir.cre~    ~override~ // Wolf Spirit: undead using non-undead animation 31491
+                ~zierkki.cre~  ~override~ // Shade of Sir Zierkki: undead using non-undead animation 24832
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
+    BUT_ONLY
+                
+END 

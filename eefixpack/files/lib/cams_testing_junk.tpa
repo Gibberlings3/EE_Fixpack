@@ -652,3 +652,48 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
     END 
   END
   BUT_ONLY 
+  
+  
+  
+  
+
+
+// infravision: checking creatures for being undead v. using an undead animation
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+  SET undead = 0
+  SET undead_anim = 0
+  READ_BYTE 0x271 general
+  PATCH_IF general = 4 BEGIN SET undead = 1 END 
+  READ_LONG 0x28 anim
+  PATCH_IF ((anim = 0x2300) OR (anim = 0x6403) OR (anim = 0x7700) OR (anim = 0x7701) OR (anim = 0x7702) OR (anim = 0x7703) OR (anim = 0x7b04) OR (anim = 0x7b05) OR 
+            (anim = 0x7b06) OR (anim = 0x7d00) OR (anim = 0x7f0d) OR (anim = 0x7f0e) OR (anim = 0x7f12) OR (anim = 0x7f22) OR (anim = 0x7f30) OR (anim = 0x7f46) OR 
+            (anim = 0xe050) OR (anim = 0xe060) OR (anim = 0xe080) OR (anim = 0xe0f2) OR (anim = 0xe25e) OR (anim = 0xe25f) OR (anim = 0xe28f) OR (anim = 0xe292) OR 
+            (anim = 0xe294) OR (anim = 0xe300) OR (anim = 0xe310) OR (anim = 0xe320) OR (anim = 0xea10) OR (anim = 0xea20) OR (anim = 0xeb00) OR (anim = 0xeb10) OR 
+            (anim = 0xeb20) OR (anim = 0xec00) OR (anim = 0xec10) OR (anim = 0xec20) OR (anim = 0xee00) OR (anim = 0xee10)) BEGIN
+    SET undead_anim = 1
+  END
+  PATCH_IF ((!undead AND undead_anim) OR (undead AND !undead_anim)) BEGIN
+    READ_LONG 0x0c name
+    PATCH_IF (name > 0) AND (name < 999999) BEGIN
+      READ_STRREF 0x0c name
+    END ELSE BEGIN
+      READ_STRREF 0x08 name
+    END
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                        BEGIN SPRINT spc "        " END
+    TO_LOWER SOURCE_FILE
+    PATCH_IF undead BEGIN
+      SPRINT debug "%debug%%LNL%                ~%SOURCE_FILE%~%spc%~override~ // %name%: undead using non-undead animation %anim%" 
+    END ELSE BEGIN
+      SPRINT debug "%debug%%LNL%                ~%SOURCE_FILE%~%spc%~override~ // %name%: non-undead using undead animation %anim%" 
+    END
+  END
+  BUT_ONLY 
+PRINT ~%debug%~

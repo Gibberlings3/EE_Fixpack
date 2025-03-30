@@ -17,6 +17,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   bdcrus9d, null, null, null, null, null, null, bdcrus9d, null => bdcrus9d // tbd, cam: crusaders with the wrong DV
   bddyingm, 164, null, 7, null, null, null, null, null => bddyingm // luke: Make sure plants are properly flagged as such
   bdshamb, null, 255, null, null, 0, null, null, null => bdshamb // tbd, cam: shambling mound consistency
+  bdwolfdr, null, null, 4, null, null, null, null, null => bdwolfdr // dread wolves are undead
   bpshamb, 176, 255, null, null, null, null, null, null => bpshamb // tbd, cam: shambling mound consistency
   coran, null, null, null, null, null, null, null, 0x40000000 => coran // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   coran5, null, null, null, null, null, null, null, 0x40000000 => coran5 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
