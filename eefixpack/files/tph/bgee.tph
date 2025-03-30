@@ -1016,6 +1016,13 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
 // fixing waterdeep books (fix also used for bg2ee)
 INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
 
+COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron crisis in black pits
+  LPF ALTER_EFFECT INT_VAR match_opcode = 206 target = 4 END // fix one target
+  PATCH_FOR_EACH spell IN ax1h01 blun02 blun04 blun06 blun08 dagg01 dagg06 dagg07 halb01 sper01 BEGIN
+    LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 206 STR_VAR match_resource = sw1h01 resource = EVAL ~%spell%~ insert = below END
+  END
+  BUT_ONLY   
+
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
