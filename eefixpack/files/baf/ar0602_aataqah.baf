@@ -1,0 +1,44 @@
+IF
+  Global("cd_AataqahFight","AR0602",1) 
+THEN
+  RESPONSE #100
+    SetGlobal("cd_AataqahFight","AR0602",99) 
+    AddexperienceParty(3500)
+    ActionOverride("aataqah",ReallyForceSpell([PC],GENIE_LIMITED_WISH_HEAL_ALL))
+    PlaySound("EFF_M23C")
+    CreateVisualEffect("SPROTECT",[1899.2627])
+    SmallWait(10)
+    CreateVisualEffect("SPDISPMA",[1899.2627])
+    CreateCreature("IOGREMAG",[1899.2627],S)  // Ogre Mage
+    SetGlobal("AataqahFight","AR0602",1)  // Irenicus's Dungeon 1st Floor
+    CreateVisualEffectObject("SPCLOUD2","aataqah")
+    CreateVisualEffectObject("SPFLESHS","aataqah")
+    PlaySound("EFF_M38")
+    SmallWait(10)
+    ActionOverride("aataqah",DestroySelf())
+END 
+
+IF
+  Global("cd_AataqahFight","AR0602",2) 
+THEN
+  RESPONSE #100
+    SetGlobal("cd_AataqahFight","AR0602",99) 
+    AddexperienceParty(3500)
+    ActionOverride("aataqah",ReallyForceSpell([PC],GENIE_LIMITED_WISH_HEAL_ALL))
+    PlaySound("EFF_M21")
+    CreateVisualEffect("SPFIREPI",[1762.2749])
+    CreateVisualEffect("SPFIREPI",[1814.2655])
+    CreateVisualEffect("SPFIREPI",[1954.2613])
+    CreateVisualEffect("SPFIREPI",[2068.2644])
+    SmallWait(7)
+    CreateCreature("IGIBBER",[1762.2749],S)  // Gibberling
+    CreateCreature("IGIBBER",[1814.2655],S)  // Gibberling
+    CreateCreature("IGIBBER",[1954.2613],S)  // Gibberling
+    CreateCreature("IGIBBER",[2068.2644],S)  // Gibberling
+    SetGlobal("AataqahFight","AR0602",1)  // Irenicus's Dungeon 1st Floor
+    CreateVisualEffectObject("SPCLOUD2","aataqah")
+    CreateVisualEffectObject("SPFLESHS","aataqah")
+    PlaySound("EFF_M38")
+    SmallWait(10)
+    ActionOverride("aataqah",DestroySelf())
+END 
