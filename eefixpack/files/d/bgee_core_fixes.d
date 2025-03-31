@@ -366,7 +366,7 @@ MoveToPoint([1005.2247])
 StartDialogueNoSet([PC])~
 END
 
-ALTER_TRANS NEERA BEGIN 7 END BEGIN END BEGIN ACTION
+ALTER_TRANS NEERA BEGIN 7 END BEGIN END BEGIN ACTION // covers all transitions
 ~SetGlobal("RedWizards","AR3300",5)
 SetGlobal("NEERA_START","GLOBAL",1)
 ApplySpellRES("OHNMODE2",Myself)~
@@ -377,6 +377,14 @@ ALTER_TRANS NEERA BEGIN 13 END BEGIN 0 END BEGIN ACTION
 SetGlobal("NEERAPARTY","GLOBAL",0)
 SetDialog("NEERAP")
 EscapeAreaMove("AR2301",750,400,SW)~
+END
+
+ALTER_TRANS NEERAP BEGIN 2 END BEGIN 0 END BEGIN ACTION // SetDialog can't be moved after joinparty, so we AO it
+~SetGlobal("KickedOut","LOCALS",0)
+SetGlobal("NEERAPARTY","GLOBAL",1)
+ActionOverride("NEERA",ChangeAIScript("NEERA",OVERRIDE))
+ActionOverride("NEERA",SetDialog("NEERAJ"))
+JoinParty()~
 END
 
 ALTER_TRANS NEERAP BEGIN 2 END BEGIN 1 END BEGIN ACTION // SetDialog can't be moved after joinparty, so we AO it

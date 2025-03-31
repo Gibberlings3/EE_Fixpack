@@ -462,6 +462,8 @@ ACTION_IF game_includes_sod BEGIN
       REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
     END
     BUT_ONLY
+    
+  EXTEND_BOTTOM ~bdbartle.bcs~ ~eefixpack/files/baf/bdbartle.baf~  
 
   // tbd, cam (from k4thos/eet)
   //Dead NPCs stays in party in chapter 13
