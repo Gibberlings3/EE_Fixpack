@@ -1039,6 +1039,61 @@ COPY_EXISTING ~ttpot.itm~ ~override~
   WRITE_LONG 0x50 16264
   WRITE_LONG 0x54 18896
 
+/*
++--------------------------------------------------------------------+
+| [Luke]                                                             |
++--------------------------------------------------------------------+
+| - Rancor +1 (Dorn)                                                 |
+|   - in this case, we need a two-stage subspell (so as to make sure |
+|     the wielder is indeed Dorn)                                    |
+| - Crimson Dawn +2                                                  |
+| - Dervish Crescent +2                                              |
++--------------------------------------------------------------------+
+| It is the *sword* that should make the kill, not something else    |
++--------------------------------------------------------------------+
+*/
+
+WITH_SCOPE BEGIN
+  ACTION_CLEAR_ARRAY "gt_fixpack_array"
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY "gt_fixpack_array" BEGIN
+    "sw2hd1" => "ohdsw1" // Rancor +1 (Dorn)
+    "bdsw1h01" => "bdcrimsn" // Crimson Dawn +2 (sod)
+    "bdsw1h08" => "bdsw1h08" // Dervish Crescent +2 (sod)
+  END
+  ACTION_PHP_EACH "gt_fixpack_array" AS "itm" => "spl" BEGIN
+    COPY_EXISTING "%itm%.itm" "override"
+      PATCH_MATCH "%itm%" WITH
+        "sw2hd1" BEGIN
+          INNER_ACTION BEGIN
+            CREATE ~spl~ ~ohdsw4~
+              /* Header */
+              WRITE_LONG NAME1 "-1"
+              WRITE_LONG NAME2 ~-1~
+              WRITE_LONG UNIDENTIFIED_DESC "-1"
+              WRITE_LONG DESC ~-1~
+              WRITE_LONG 0x18 (BIT14 BOR BIT25)
+              WRITE_LONG 0x34 1 // Level
+              WRITE_LONG 0x64 0x72 // Extended Header offset
+              WRITE_SHORT 0x68 1 // Extended Header count
+              WRITE_LONG 0x6a 0x9a // Feature Block Table offset
+              INSERT_BYTES 0x72 0x28
+              /* Extended Header */
+              WRITE_SHORT 0x80 32767 // Ability range
+              WRITE_SHORT 0x82 1 // Minimum level
+              WRITE_SHORT 0x98 IDS_OF_SYMBOL ("MISSILE" "None") // Projectile
+              /* Feature blocks */
+              LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 9 "parameter2" = 1 STR_VAR "resource" = "%spl%" END // cast spell
+          END
+          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 138 "parameter1" = IDS_OF_SYMBOL ("state" "STATE_DEAD") STR_VAR "resource" = "ohdsw4" END // apply effects list
+        END
+        DEFAULT
+          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 138 "parameter1" = IDS_OF_SYMBOL ("state" "STATE_DEAD") STR_VAR "resource" = "%spl%" END // apply effects list
+      END
+      LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 232 STR_VAR "match_resource" = "%spl%" END // no longer needed
+    BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+  END
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
@@ -1235,6 +1290,100 @@ WITH_SCOPE BEGIN
     BUT_ONLY_IF_IT_CHANGES
   END
 END
+
+// luke
+// **Creeping Doom** (Black Dragon)
+// - use same projectile as `"%CLERIC_CREEPING_DOOM%"`
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%BLACK_DRAGON_INSECT%.spl" "override" // spin689
+    LPF "ALTER_SPELL_HEADER" INT_VAR "projectile" = IDS_OF_SYMBOL ("MISSILE" "Chain_Insect") END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+// luke
+// **Absorb Health** (Blackguard)
+// - should not bypass Magic Resistance
+// - subspell should scale up to level `40` (`BG2` level cap)
+// - subspell's Primary/Secondary type should match parent `SPL` file
+// - subspell should not play a casting sound
+WITH_SCOPE BEGIN
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "%BLACKGUARD_ABSORB_HEALTH%.spl" "override" // spcl102
+      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "resist_dispel" = BIT0 END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+  WITH_SCOPE BEGIN
+    COPY_EXISTING "spdn01a.spl" "override"
+      WRITE_ASCII 0x10 "" #8 // Casting sound
+      WRITE_BYTE 0x25 7 // Primary type: NECROMANCER
+      WRITE_BYTE 0x27 10 // Secondary type: OFFENSIVEDAMAGE
+      /* Feature blocks */
+      LPF "CD_EXTEND-O-MATIC" INT_VAR "level_cap" = 40 END
+      PATCH_WITH_SCOPE BEGIN
+        GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+        PHP_EACH "ab_array" AS "_" => "ab_off" BEGIN
+          GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+          PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
+            PATCH_MATCH (SHORT_AT "%fx_off%") WITH
+              "12" BEGIN
+                WRITE_LONG ("%fx_off%" + 0x4) (SHORT_AT ("%ab_off%" + 0x10) * 2) // 2 points of damage per level
+              END
+              DEFAULT
+            END
+          END
+        END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
+END
+
+/*
++-----------------------------------------------------------------+
+| [Luke]                                                          |
++-----------------------------------------------------------------+
+| - Crimson Dawn +2                                               |
+| - Dervish Crescent +2                                           |
++-----------------------------------------------------------------+
+| It is the *sword* that should make the kill, not something else |
++-----------------------------------------------------------------+
+*/
+
+WITH_SCOPE BEGIN
+  ACTION_CLEAR_ARRAY "gt_fixpack_array"
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY "gt_fixpack_array" BEGIN
+    "bdsw1h01" => "bdcrimsn" // Crimson Dawn +2 (sod)
+    "bdsw1h08" => "bdsw1h08" // Dervish Crescent +2 (sod)
+  END
+  ACTION_PHP_EACH "gt_fixpack_array" AS "itm" => "spl" BEGIN
+    COPY_EXISTING "%spl%.spl" "override"
+      LPF "ALTER_EFFECT" INT_VAR ~check_globals~ = 0 ~match_target~ = 1 "target" = 9 END // self => original caster
+    BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+  END
+END
+
+/*
+luke
+Summon Nishruu / Hakeashar
+- their attack (`nishrusu.itm`) should ignore all `AC` modifiers
+  - previously, since it was using `damage_type=piercing`, the Nishruu (`THAC0=11`) would need to roll a Critical Hit in order to hit `AC -9 vs. piercing` attacks targets. A similar argument holds for the Hakeashar
+    - this is certainly unintended since they don't actually deal piercing damage
+- they should be vulnerable to Dispel/Remove Magic
+- they should be flagged as `GENERAL=MONSTER` / `RACE=MIST` / `CLASS=MIST` on all games
+- make sure the Nishruu has 100% Poison resistance
+- The Hakeashar should have the same passive traits as the Nishruu
+  - i.e., it should be immune to Poison and see invisible creatures
+- the Nishruu should use the `NISHRUU` animation on all games
+- the Hakeashar should use the `HAKEASHAR` animation on all games
+- removed unused spell setup
+*/
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/tph/luke/nishruu_hakeashar.tph~
+  LAF ~NISHRUU_HAKEASHAR~ END
+END
+
+// tbd, cam
+// don't play berserk damage warnings on non-party memebers; see also spin117[ab].eff
+INCLUDE ~eefixpack/files/tph/tbd_angry_noises.tph~
 
 // tbd, cam
 // dragon breath fixes: generalist mages shouldn't get +2 to saves; also blank secondary type (see bulk fixes); other fixes for blue dragon breath
