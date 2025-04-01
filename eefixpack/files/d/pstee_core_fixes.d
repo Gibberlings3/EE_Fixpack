@@ -689,11 +689,6 @@ Attack(Protagonist)
 ForceAttack(Protagonist,Myself)~
 END
 
-ALTER_TRANS DMARISSA BEGIN 49 END BEGIN 0 END BEGIN ACTION
-~SetGlobal("Game_Over","GLOBAL",4)
-UseItem("M_Gaze",Protagonist)~
-END
-
 ALTER_TRANS DMORTE BEGIN 94 END BEGIN 0 END BEGIN ACTION
 ~SetGlobal("Vaxis_Zombie_XP","GLOBAL",1)
 FadeToColor([20.0],0)
