@@ -564,3 +564,136 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   END
   BUT_ONLY  
   
+  
+// fixing silver dragon breath - I used this to adjust the x/y coordinates to match
+// up with the silver dragon creature animation. After these adjustments I used NI's
+// bam editor to pad out each sequence with blank frames so that it won't repeat
+  
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY pro_offs BEGIN
+// move left: increase x
+// move up:   increase y
+
+   0, "-52", "-109" =>  0
+   8,  "-5", "-119" =>  8
+  16,  "40", "-104" => 16
+  24,  "83", "-110" => 24
+  32, "116",  "-88" => 32
+  40, "142",  "-67" => 40
+  48, "127",  "-35" => 48
+  56,  "61",  "-65" => 56
+  64,  "53",  "-58" => 64
+END  
+
+COPY_EXISTING ~spsdbur.bam~ ~override~
+  READ_ASCII 0x0 sg (4) //Signature
+  PATCH_IF NOT (~%sg%~ STRING_EQUAL_CASE ~BAMC~ = 1) BEGIN
+    PATCH_PRINT ~%SOURCE_FILE% is not a compressed BAM.~
+  END ELSE BEGIN
+    READ_LONG 0x8 dl //Uncompressed data length
+    DECOMPRESS_REPLACE_FILE 0xc (SOURCE_SIZE - 0xc) dl
+    READ_LONG  0x0c frame_offset
+    PATCH_PHP_EACH pro_offs AS var => idx BEGIN 
+      FOR (index = idx ; index <= (idx + 7) ; ++index) BEGIN 
+        WRITE_SHORT (frame_offset + 0x04 + (index * 0x0c)) THIS + var_1
+        WRITE_SHORT (frame_offset + 0x06 + (index * 0x0c)) THIS + var_2
+      END  
+    END  
+  END
+  BUT_ONLY
+  
+  
+  
+// used to find leftover copy-paste spellbooks such as
+// https://github.com/CamDawg/EE_Fixpack/commit/b19f8a311b7b7b7dff8c9702a1aeabe53197e697
+
+COPY_EXISTING ~shadowsu.cre~ ~override~
+  READ_LONG 0x2a0 known_off_base
+  READ_LONG 0x2a4 known_num_base
+  READ_LONG 0x2a8 minfo_off_base
+  READ_LONG 0x2ac minfo_num_base
+  READ_LONG 0x2b0 mem_off_base
+  READ_LONG 0x2b4 mem_num_base
+  READ_ASCII (known_off_base) known_orig (known_num_base * 0x0c)  
+  READ_ASCII (minfo_off_base) minfo_orig (minfo_num_base * 0x10)
+  READ_ASCII (mem_off_base)   mem_orig   (mem_num_base * 0x0c)
+  BUT_ONLY 
+  
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~  
+  READ_LONG 0x2a4 known_num
+  READ_LONG 0x2ac minfo_num
+  READ_LONG 0x2b4 mem_num
+  PATCH_IF ((known_num = known_num_base) AND (minfo_num = minfo_num_base) AND (mem_num = mem_num_base)) BEGIN 
+    READ_LONG 0x2a0 known_off
+    READ_LONG 0x2a8 minfo_off
+    READ_LONG 0x2b0 mem_off
+    READ_ASCII (known_off) known (known_num_base * 0x0c)  
+    READ_ASCII (minfo_off) minfo (minfo_num_base * 0x10)
+    READ_ASCII (mem_off)   mem   (mem_num_base * 0x0c)
+    PATCH_IF (("%known%" STRING_COMPARE_CASE "%known_orig%" = 0) AND 
+              ("%minfo%" STRING_COMPARE_CASE "%minfo_orig%" = 0) AND 
+              ("%mem%"   STRING_COMPARE_CASE "%mem_orig%"   = 0)) BEGIN
+      SPRINT file "%SOURCE_RES%"
+      TO_LOWER file
+      READ_LONG 0x0c name
+      PATCH_IF (name > 0) AND (name < 999999) BEGIN
+        READ_STRREF 0x0c name
+      END ELSE BEGIN
+        READ_STRREF 0x08 name
+      END
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+      PATCH_IF ("%file%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                          BEGIN SPRINT spc "        " END
+      PATCH_PRINT "    ~%SOURCE_FILE%~%spc%~override~ // %name%"
+    END 
+  END
+  BUT_ONLY 
+  
+  
+  
+  
+
+
+// infravision: checking creatures for being undead v. using an undead animation
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+  SET undead = 0
+  SET undead_anim = 0
+  READ_BYTE 0x271 general
+  PATCH_IF general = 4 BEGIN SET undead = 1 END 
+  READ_LONG 0x28 anim
+  PATCH_IF ((anim = 0x2300) OR (anim = 0x6403) OR (anim = 0x7700) OR (anim = 0x7701) OR (anim = 0x7702) OR (anim = 0x7703) OR (anim = 0x7b04) OR (anim = 0x7b05) OR 
+            (anim = 0x7b06) OR (anim = 0x7d00) OR (anim = 0x7f0d) OR (anim = 0x7f0e) OR (anim = 0x7f12) OR (anim = 0x7f22) OR (anim = 0x7f30) OR (anim = 0x7f46) OR 
+            (anim = 0xe050) OR (anim = 0xe060) OR (anim = 0xe080) OR (anim = 0xe0f2) OR (anim = 0xe25e) OR (anim = 0xe25f) OR (anim = 0xe28f) OR (anim = 0xe292) OR 
+            (anim = 0xe294) OR (anim = 0xe300) OR (anim = 0xe310) OR (anim = 0xe320) OR (anim = 0xea10) OR (anim = 0xea20) OR (anim = 0xeb00) OR (anim = 0xeb10) OR 
+            (anim = 0xeb20) OR (anim = 0xec00) OR (anim = 0xec10) OR (anim = 0xec20) OR (anim = 0xee00) OR (anim = 0xee10)) BEGIN
+    SET undead_anim = 1
+  END
+  PATCH_IF ((!undead AND undead_anim) OR (undead AND !undead_anim)) BEGIN
+    READ_LONG 0x0c name
+    PATCH_IF (name > 0) AND (name < 999999) BEGIN
+      READ_STRREF 0x0c name
+    END ELSE BEGIN
+      READ_STRREF 0x08 name
+    END
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                        BEGIN SPRINT spc "        " END
+    TO_LOWER SOURCE_FILE
+    PATCH_IF undead BEGIN
+      SPRINT debug "%debug%%LNL%                ~%SOURCE_FILE%~%spc%~override~ // %name%: undead using non-undead animation %anim%" 
+    END ELSE BEGIN
+      SPRINT debug "%debug%%LNL%                ~%SOURCE_FILE%~%spc%~override~ // %name%: non-undead using undead animation %anim%" 
+    END
+  END
+  BUT_ONLY 
+PRINT ~%debug%~

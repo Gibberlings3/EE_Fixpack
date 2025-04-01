@@ -6,6 +6,8 @@ ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
   INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
 END
 
+INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack damage type in their description
+
 /////                                                  \\\\\
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
@@ -107,6 +109,8 @@ COPY ~eefixpack/files/bam/ixbow04.bam~  ~override~ // tbd, cam: fix light crossb
      ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
      ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
      ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
+     ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
+     ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
@@ -233,6 +237,8 @@ COPY_EXISTING ~aeri25.bcs~   ~override~
       ~SetInterrupt(FALSE) \1 SetInterrupt(TRUE)~ // no, no I should not have.
   END
   BUT_ONLY
+  
+EXTEND_BOTTOM ~ar0602.bcs~ ~eefixpack/files/baf/ar0602_aataqah.baf~ // offloading dlg actions (see d core fixes)
 
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
@@ -555,17 +561,18 @@ INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment chan
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
+INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 
-// disguised vampires shouldn't show up on infravision (see also animation changes in infravision.tph)
-COPY_EXISTING ~anast.cre~    ~override~ // valen (vamp disguised as thief)
-              ~sarprovf.cre~ ~override~ // saradush courtesan (vampire in disguise)
-              ~sarprovm.cre~ ~override~ // saradush courtesan (vampire in disguise)
-              ~vampaer.cre~  ~override~ // aerie (vampified by bodhi)
-              ~vampano.cre~  ~override~ // anomen (vampified by bodhi)
-              ~vampjah.cre~  ~override~ // jaheira (vampified by bodhi)
-              ~vampvic.cre~  ~override~ // viconia (vampified by bodhi)
-  LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END
-  BUT_ONLY
+// applying duergar skin tone to duergar dwarves
+COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
+              ~duergar3.cre~ ~override~ // duergar
+              ~gorje.cre~    ~override~ // gorje hilldark
+              ~scdur.cre~    ~override~ // unger hilldark
+              ~sewdue01.cre~ ~override~ // duergar sapper
+              ~sewdue02.cre~ ~override~ // duergar sapper
+              ~sewyag01.cre~ ~override~ // duergar sapper
+  WRITE_BYTE 0x2f 83 // "dark blusih gray", used by other duergar
+  BUT_ONLY 
 
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
@@ -1249,6 +1256,13 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\
 /////                                                  \\\\\
+
+// fixed dragon breath projectiles
+COPY_EXISTING ~dragblck.pro~ ~override~
+              ~draggree.pro~ ~override~
+              ~dragred.pro~  ~override~
+              ~dragsilv.pro~ ~override~
+  WRITE_SHORT 0x210 8
 
 // grease projectiles created in spell section since vars needed
 

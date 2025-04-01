@@ -76,3 +76,155 @@ ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 
 // should only be able to ask Flozem about Marketh if you know him
 ADD_TRANS_TRIGGER DFLOZEM 2 ~Global("Know_Marketh","GLOBAL",1)~ DO 0
+
+/////                                                  \\\\\
+///// mixing instants and non-instants                 \\\\\
+/////                                                  \\\\\
+
+// https://www.gibberlings3.net/forums/topic/39370-pstee-respawned-bariaur-should-not-talk-like-you-parted-on-friendly-terms/
+
+ALTER_TRANS DCONLAN BEGIN 34 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("stout")
+TakePartyItem("cdmitham")
+TakePartyGold(1000)
+SetGlobal("CDStoutUpgrade","MYAREA",2)
+SetGlobalTimer("CDStoutUpgradeTimer","MYAREA",ONE_DAY)
+DestroyItem("stout")
+DestroyItem("cdmitham")~
+END
+
+ALTER_TRANS DCONLAN BEGIN 35 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("stout")
+TakePartyItem("cdmitham")
+TakePartyGold(4500)
+SetGlobal("CDStoutUpgrade","MYAREA",2)
+SetGlobalTimer("CDStoutUpgradeTimer","MYAREA",ONE_DAY)
+DestroyItem("stout")
+DestroyItem("cdmitham")~
+END
+
+ALTER_TRANS DCONLAN BEGIN 42 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("cdscales")  // White Dragon Scales
+TakePartyGold(5000)
+SetGlobal("CDScales","MYAREA",2)
+SetGlobalTimer("CDScalesTimer","MYAREA",THREE_DAYS)
+DestroyItem("cdscales")~
+END
+
+ALTER_TRANS DDIRTYLL BEGIN 25 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(8000)
+TakePartyItem("cdrem")
+SetGlobal("CDRem","MYAREA",1)
+SetGlobalTimer("CDRemTimer","MYAREA",THREE_DAYS)
+DestroyItem("cdrem")~
+END
+
+ALTER_TRANS DDIRTYLL BEGIN 26 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(7000)
+TakePartyItem("cdrem")
+SetGlobal("CDRem","MYAREA",1)
+SetGlobalTimer("CDRemTimer","MYAREA",THREE_DAYS)
+DestroyItem("cdrem")~
+END
+
+ALTER_TRANS DDIRTYLL BEGIN 27 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(5000)
+TakePartyItem("cdrem")
+SetGlobal("CDRem","MYAREA",1)
+SetGlobalTimer("CDRemTimer","MYAREA",THREE_DAYS)
+DestroyItem("cdrem")~
+END
+
+ALTER_TRANS DEDION BEGIN 16 END BEGIN 4 END BEGIN ACTION
+~TakePartyItem("misc58")
+TakePartyItem("misc58")
+TakePartyItem("misc58")
+TakePartyItem("mystery")
+SetGlobalTimer("CDMysteryTimer","MYAREA",1200)
+SetGlobal("CDMystery","MYAREA",2)
+DestroyItem("mystery")~
+END
+
+ALTER_TRANS DEDION BEGIN 22 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(300)
+TakePartyItem("young")
+GiveItemCreate("cdyoung",LastTalkedToBy,0,0,0)
+SetGlobal("CDYoung","GLOBAL",8)
+DestroyItem("young")~
+END
+
+ALTER_TRANS DEDION BEGIN 23 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(300)
+TakePartyItem("young")
+GiveItemCreate("cdyoung",LastTalkedToBy,0,0,0)
+SetGlobal("CDYoung","GLOBAL",8)
+DestroyItem("young")~
+END
+
+ALTER_TRANS DEDION BEGIN 27 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("misc58")
+TakePartyItem("misc58")
+TakePartyItem("misc58")
+TakePartyItem("mystery")
+SetGlobalTimer("CDMysteryTimer","MYAREA",1200)
+SetGlobal("CDMystery","MYAREA",2)
+DestroyItem("mystery")~
+END
+
+ALTER_TRANS DMURDAUG BEGIN 54 END BEGIN 0 END BEGIN ACTION
+~GiveItemCreate("cddaen",LastTalkedToBy,1000,0,0)
+SetGlobal("CDMurduaghDaen","MYAREA",3)
+DestroyItem("cddaen")~
+END
+
+ALTER_TRANS DORRICK BEGIN 26 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(15000)
+TakePartyItem("beetshld")
+SetGlobal("CDOrrickShield","MYAREA",2)
+SetGlobalTimer("CDOrrickShieldTimer","MYAREA",THREE_DAYS)
+DestroyItem("beetshld")~
+END
+
+ALTER_TRANS DORRICK BEGIN 27 END BEGIN 0 END BEGIN ACTION
+~TakePartyGold(30000)
+TakePartyItem("beetshld")
+SetGlobal("CDOrrickShield","MYAREA",2)
+SetGlobalTimer("CDOrrickShieldTimer","MYAREA",THREE_DAYS)
+DestroyItem("beetshld")~
+END
+
+ALTER_TRANS DOSWALD BEGIN 35 36 37 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("beltgon")
+SetGlobalTimer("CDOswaldTimer","MYAREA",ONE_DAY)
+SetGlobal("CDOswaldItem","MYAREA",5)
+DestroyItem("beltgon")~
+END
+
+ALTER_TRANS DOSWALD BEGIN 37 END BEGIN 1 END BEGIN ACTION
+~TakePartyItem("beltgon")
+SetGlobalTimer("CDOswaldTimer","MYAREA",ONE_DAY)
+GiveGoldForce(50)
+SetGlobal("CDOswaldItem","MYAREA",4)
+DestroyItem("beltgon")~
+END
+
+ALTER_TRANS DTEALNIS BEGIN 16 END BEGIN 0 END BEGIN ACTION
+~GiveItemCreate("cddaen",LastTalkedToBy,1000,0,0)
+SetGlobal("CDTelanisDaen","MYAREA",3)
+DestroyItem("cddaen")~
+END
+
+ALTER_TRANS DTIERNON BEGIN 68 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("young")
+GiveItemCreate("cdyoung",LastTalkedToBy,0,0,0)
+SetGlobal("CDYoung","GLOBAL",8)
+DestroyItem("young")~
+END
+
+ALTER_TRANS DWYLF BEGIN 58 END BEGIN 0 1 END BEGIN ACTION
+~TakePartyItem("Mirror")
+TakePartyItem("Mirror2")
+SetGlobal("Looked_Mirror","GLOBAL",1)
+DestroyItem("Mirror")
+DestroyItem("Mirror2")~
+END

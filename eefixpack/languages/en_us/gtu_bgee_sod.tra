@@ -9678,6 +9678,7 @@ A most interesting fellow has insinuated himself in the Flaming Fist caravan, ap
 @61783 = ~He's a business acquaintance who owes me a great deal of gold. Gold you stole from him. Gold I would like returned.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 8
+// adding (missile) to damage line
 @61809 = ~Though obviously well-used, someone has taken excellent care of this finely crafted bow. A small golden seal on one side appears to be a family crest.
 
 STATISTICS:
@@ -9689,7 +9690,7 @@ Combat abilities:
 – After scoring a critical hit, the wielder is affected by the Luck spell
 
 THAC0: +3
-Damage: +4
+Damage: +4 (missile)
 Speed Factor: 5
 Proficiency Type: Longbow
 Type: Two-handed
@@ -9713,6 +9714,7 @@ Weight: 1~
 @61835 = ~Martyr's Morning Star +2~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 8
+// adding (missile) to damage line
 @61838 = ~Despite this short bow's intimidating name, it carries no gruesome history. Kitsana, an elven ranger, designed this bow for her own use and could fire it with astonishing rapidity. One night at camp Kitsana's party each took a turn trying to master the unusually thin bowstring and uniquely curved grip of the weapon. None shot as poorly as the fighter, a braggart named Tirrel, who not only missed his target by a foot but who snapped the bowstring down the length of his forearm and tore off a strip of skin. Kitsana and her party faded into obscurity decades ago but her bow still circulates.
 
 STATISTICS:
@@ -9724,7 +9726,7 @@ Equipped abilities:
 – Movement Speed: +2
 
 THAC0: +2
-Damage: +2
+Damage: +2 (missile)
 Speed Factor: 4
 Proficiency Type: Shortbow
 Type: Two-handed
@@ -10873,6 +10875,7 @@ Requires:
 Weight: 30~
 
 // [automatic scan] Issues: 2  | Surplus trailing whitespace at line 3 | Surplus trailing whitespace at line 6
+// adding (missile) to damage line
 @69239 = ~This enchanted bow enhances the wielder's dexterity, allowing them to fire more accurately. Every so often, a shot will explode into a shower of wooden splinters that sprout and grasp the target firmly, preventing any escape.
 
 Equipped abilities:
@@ -10884,7 +10887,7 @@ Combat abilities:
 STATISTICS:
 
 THAC0: +2
-Damage: +3
+Damage: +3 (missile)
 Speed Factor: 6
 Proficiency Type: Longbow
 Type: Two-handed

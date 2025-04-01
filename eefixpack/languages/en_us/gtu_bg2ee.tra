@@ -14213,6 +14213,7 @@ Requires:
 Weight: 1~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 2
+// adding 'Damage type: Missile' line
 @66390 = ~One of the most powerful crossbows in the realms, Firetooth has no need for ammunition, as it automatically launches magical bolts of fire.
 
 STATISTICS:
@@ -14222,6 +14223,7 @@ Combat abilities:
 
 THAC0: +6 bonus (+4 crossbow, +2 Fire Bolt)
 Damage: 1d8+4, +2 fire damage
+Damage type: Missile
 Speed Factor: 1
 Proficiency Type: Crossbow
 Type: Two-handed

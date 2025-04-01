@@ -58,6 +58,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   udsvir06, 163, null, null, null, null, null, null, null => udsvir06 // IDS sync
   udsvir07, 163, null, null, null, null, null, null, null => udsvir07 // IDS sync
   udsvir08, 163, null, null, null, null, null, null, null => udsvir08 // IDS sync
+  wolfdr01, null, null, 4, null, null, null, null, null => wolfdr01 // dread wolves are undead
   wrmons01, null, 218, null, null, null, null, null, null => wrmons01 // IDS sync
 
 END

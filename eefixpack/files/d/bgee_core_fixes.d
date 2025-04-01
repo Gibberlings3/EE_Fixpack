@@ -204,3 +204,254 @@ EXTEND_BOTTOM NEADOY 24 // add alternatives for 2/3: if neera dead or not presen
   IF ~OR(2) Dead("NEERA") !AreaCheckObject("OH2010","NEERA")~ THEN REPLY #27689 DO ~GiveItem("NEBELT01",Player1)~ GOTO 25
   IF ~OR(2) Dead("NEERA") !AreaCheckObject("OH2010","NEERA")~ THEN REPLY #27690 DO ~GiveItem("NEBELT01",Player1)~ GOTO 25
 END
+
+/////                                                  \\\\\
+///// mixing instants and non-instants                 \\\\\
+/////                                                  \\\\\
+
+// https://www.gibberlings3.net/forums/topic/39370-pstee-respawned-bariaur-should-not-talk-like-you-parted-on-friendly-terms/
+
+ALTER_TRANS DORN BEGIN 15 END BEGIN 0 END BEGIN ACTION
+~AddJournalEntry(30816,INFO)
+ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))
+SetGlobal("BACKFROMAMBUSH","GLOBAL",1)
+ChangeEnemyAlly("DORN",NEUTRAL)
+SetGlobal("DORNPARTY","GLOBAL",0)
+SetDialog("DORNP")
+EscapeAreaMove("AR2301",1132,727,S)~
+END
+
+ALTER_TRANS DORN BEGIN 15 END BEGIN 1 END BEGIN ACTION
+~AddJournalEntry(30816,INFO)
+ActionOverride("DORN",ChangeAIScript("DORN",OVERRIDE))
+SetGlobal("BACKFROMAMBUSH","GLOBAL",1)
+ChangeEnemyAlly("DORN",NEUTRAL)
+SetGlobal("DORNPARTY","GLOBAL",0)
+SetDialog("DORNP")
+EscapeAreaMove("AR2301",1132,727,S)~
+END
+
+ALTER_TRANS EDWINJ BEGIN 11 END BEGIN 0 END BEGIN ACTION
+~ActionOverride("Dynaheir",DialogInterrupt(FALSE))
+EraseJournalEntry(27171)
+EraseJournalEntry(27274)
+EraseJournalEntry(27275)
+EraseJournalEntry(27031)
+LeaveParty()
+ChangeAIScript("",DEFAULT)
+ActionOverride("dynaheir",SetDialog("dynahe"))
+SetGlobal("Handle_it_yourselves","GLOBAL",1)
+SetGlobal("Edwinfight2","GLOBAL",1)
+SetDialog("edwin")~
+END
+
+ALTER_TRANS EDWINJ BEGIN 11 END BEGIN 1 END BEGIN ACTION
+~ActionOverride("Dynaheir",DialogInterrupt(FALSE))
+EraseJournalEntry(27171)
+EraseJournalEntry(27274)
+EraseJournalEntry(27275)
+EraseJournalEntry(27031)
+ActionOverride("Minsc",LeaveParty())
+ActionOverride("Minsc",ChangeAIScript("",DEFAULT))
+ActionOverride("Minsc",SetDialog("minsc"))
+LeaveParty()
+ActionOverride("dynaheir",SetDialog("dynahe"))
+SetGlobal("Handle_it_yourselves","GLOBAL",1)
+SetGlobal("minsc_with_dynaheir","GLOBAL",1)
+SetGlobal("Edwinfight2","GLOBAL",1)
+SetDialog("edwin")~
+END
+
+ALTER_TRANS FLAMAL BEGIN 1 END BEGIN 0 END BEGIN ACTION // if EA doesn't work after starting a cutscene, see capcut01.bcs edit in bgee.tph
+~ActionOverride("Aldeth",EscapeArea())
+ActionOverride("Brandi",EscapeArea())
+ActionOverride("ffhunt1",EscapeArea())
+ActionOverride("ffhunt2",EscapeArea())
+ActionOverride("ffhunt3",EscapeArea())
+SetGlobal("Captured","GLOBAL",1)
+ClearAllActions()
+StartCutSceneMode()
+StartCutScene("Capcut01")
+EscapeArea()~
+END
+
+ALTER_TRANS HULL BEGIN 1 END BEGIN 0 END BEGIN ACTION
+~AddexperienceParty(50)
+TakePartyItem("SW1H12")
+GivePartyGold(20)
+SetGlobal("HelpHull","GLOBAL",1)
+EraseJournalEntry(27149)
+AddJournalEntry(27150,QUEST_DONE)
+FillSlot(SLOT_WEAPON1)
+EquipMostDamagingMelee()~
+END
+
+ALTER_TRANS HULL BEGIN 3 END BEGIN 0 END BEGIN ACTION
+~AddexperienceParty(50)
+TakePartyItem("SW1H12")
+GivePartyGold(10)
+SetGlobal("HelpHull","GLOBAL",1)
+EraseJournalEntry(27149)
+AddJournalEntry(27151,QUEST_DONE)
+FillSlot(SLOT_WEAPON1)
+EquipMostDamagingMelee()~
+END
+
+ALTER_TRANS IMOENP BEGIN 1 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("KickedOut","LOCALS",1)
+ChangeAIScript("",DEFAULT)
+EscapeArea()~
+END
+
+ALTER_TRANS KIELPC BEGIN 0 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("KielPC","AR0512",2)
+MoveToPoint([1830.904])
+OpenDoor("Door09")
+MoveToPoint([2052.974])
+MoveToPoint([2092.924])
+Deactivate("Lever1")
+Deactivate("Lever2")
+Deactivate("Lever3")
+Deactivate("Lever6")
+Deactivate("Lever7")
+Activate("Lever 8")
+MoveToPoint([2135.890])
+StartDialogueNoSet([PC])~
+END
+
+ALTER_TRANS KIELPC BEGIN 1 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("KielPC","AR0512",3)
+Deactivate("Lever4")
+Deactivate("Lever5")
+Activate("Lever9")
+Activate("Lever10")
+Activate("Lever11")
+MoveToPoint([2357.930])
+MoveToPoint([2488.839])
+MoveToPoint([2631.966])
+MoveToPoint([2350.1215])
+MoveToPoint([2294.1341])
+MoveToPoint([2047.1371])
+StartDialogueNoSet([PC])~
+END
+
+ALTER_TRANS KIELPC BEGIN 2 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("KielPC","AR0512",4)
+MoveToPoint([2169.1371])
+MoveToPoint([2252.1452])
+MoveToPoint([2218.1517])
+OpenDoor("Door13")
+MoveToPoint([2115.1652])
+StartDialogueNoSet([PC])~
+END
+
+ALTER_TRANS KIELPC BEGIN 3 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("KielPC","AR0512",5)
+MoveToPoint([1816.1815])
+MoveToPoint([1623.1679])
+MoveToPoint([1520.1601])
+MoveToPoint([1410.1644])
+MoveToPoint([1424.1841])
+MoveToPoint([1560.1877])
+MoveToPoint([1716.2025])
+MoveToPoint([1698.2129])
+MoveToPoint([1563.2212])
+MoveToPoint([1410.2159])
+MoveToPoint([1306.2063])
+MoveToPoint([1217.1969])
+MoveToPoint([1130.1929])
+MoveToPoint([1040.1933])
+OpenDoor("Door15")
+MoveToPoint([1005.2247])
+StartDialogueNoSet([PC])~
+END
+
+ALTER_TRANS NEERA BEGIN 7 END BEGIN END BEGIN ACTION // covers all transitions
+~SetGlobal("RedWizards","AR3300",5)
+SetGlobal("NEERA_START","GLOBAL",1)
+ApplySpellRES("OHNMODE2",Myself)~
+END
+
+ALTER_TRANS NEERA BEGIN 13 END BEGIN 0 END BEGIN ACTION
+~AddJournalEntry(31608,INFO)
+SetGlobal("NEERAPARTY","GLOBAL",0)
+SetDialog("NEERAP")
+EscapeAreaMove("AR2301",750,400,SW)~
+END
+
+ALTER_TRANS NEERAP BEGIN 2 END BEGIN 0 END BEGIN ACTION // SetDialog can't be moved after joinparty, so we AO it
+~SetGlobal("KickedOut","LOCALS",0)
+SetGlobal("NEERAPARTY","GLOBAL",1)
+ActionOverride("NEERA",ChangeAIScript("NEERA",OVERRIDE))
+ActionOverride("NEERA",SetDialog("NEERAJ"))
+JoinParty()~
+END
+
+ALTER_TRANS NEERAP BEGIN 2 END BEGIN 1 END BEGIN ACTION // SetDialog can't be moved after joinparty, so we AO it
+~SetGlobal("KickedOut","LOCALS",0)
+SetGlobal("NEERAPARTY","GLOBAL",1)
+ActionOverride("NEERA",ChangeAIScript("NEERA",OVERRIDE))
+SetGlobalTimer("NEERATIMER","GLOBAL",ONE_DAY)
+ActionOverride("NEERA",SetDialog("NEERAJ"))
+JoinParty()~
+END
+
+ALTER_TRANS PERDUE BEGIN 14 END BEGIN 0 END BEGIN ACTION
+~TakePartyItem("SW1H17")
+GivePartyGold(50)
+AddexperienceParty(500)
+SetGlobal("HelpPerdue","GLOBAL",2)
+EraseJournalEntry(27354)
+EraseJournalEntry(27355)
+AddJournalEntry(27356,QUEST_DONE)
+FillSlot(SLOT_WEAPON0)
+EquipMostDamagingMelee()~
+END
+
+ALTER_TRANS RASAADP BEGIN 1 2 END BEGIN 1 END BEGIN ACTION
+~SetGlobal("KickedOut","LOCALS",1)
+SetGlobal("RASAAD_IN_PARTY","GLOBAL",0)
+SetGlobal("RASAADKicked","AR4800",1)
+SetDialog("RASAADP")
+EscapeAreaMove("AR4800",1100,782,S)~
+END
+
+ALTER_TRANS RSBASSAN BEGIN 20 END BEGIN 0 END BEGIN ACTION
+~ApplySpell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+SetGlobal("ohprisoner","oh3020",5)
+SmallWait(15)
+JumpToPoint([1596.1906])~
+END
+
+ALTER_TRANS SILKE BEGIN 10 END BEGIN 0 END BEGIN ACTION
+~ReputationInc(-2)
+GivePartyGoldGlobal("SilkePayment","GLOBAL")
+SetGlobal("SilkePay","GLOBAL",1)
+SetPlayerSound(Myself,4697,SELECT_COMMON1)~
+END
+
+ALTER_TRANS TENYA BEGIN 10 END BEGIN 0 END BEGIN ACTION
+~SetGlobal("HelpTenya","GLOBAL",2)
+TakePartyItem("MISC53")
+AddexperienceParty(1000)
+SetGlobal("TalkedToTenya","GLOBAL",1)
+SetGlobal("HelpJebadoh","GLOBAL",3)
+EraseJournalEntry(27440)
+EraseJournalEntry(27439)
+EraseJournalEntry(27441)
+EraseJournalEntry(27442)
+EraseJournalEntry(27443)
+EraseJournalEntry(27444)
+EraseJournalEntry(27445)
+EraseJournalEntry(27446)
+ForceSpell(Myself,DRYAD_TELEPORT)~
+END
+
+ALTER_TRANS ZHURLO BEGIN 4 END BEGIN 0 END BEGIN ACTION
+~AddexperienceParty(300)
+TakePartyItem("boot02zh")
+GivePartyGold(1000000)
+SetGlobal("HelpZhurlong","GLOBAL",1)
+EraseJournalEntry(27519)
+FillSlot(SLOT_BOOTS)~
+END
