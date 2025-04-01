@@ -78,7 +78,7 @@ ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 ADD_TRANS_TRIGGER DFLOZEM 2 ~Global("Know_Marketh","GLOBAL",1)~ DO 0
 
 /////                                                  \\\\\
-///// mixing instans and non-instants                  \\\\\
+///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
 
 // https://www.gibberlings3.net/forums/topic/39370-pstee-respawned-bariaur-should-not-talk-like-you-parted-on-friendly-terms/
