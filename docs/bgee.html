@@ -16,7 +16,7 @@
 <body>
 <p><strong>Developer note:</strong> this is essentially copy-pasted (minus this paragraph, natch) into the documentation pages on the G3 project page. Feel free to add/adjust the documentation as needed. The class <span class="bg2fp_beta">bg2fp_beta (red)</span> should be used to mark fixes that are in the Beta Core Fixes (nothing yet) and the <span class="bg2fp_modder">bg2fp_modder (magenta)</span> class should be used for modder notes. In the live pages, these are normally colored, but hidden, unless the user enables them. </p>
 <!-- documentation begins here -->
-<p>This documentation is complete as of March 15, 2025. </p>
+<p>This documentation is complete as of Alpha 1 - April 1, 2025. </p>
 <p>
   <input id="cd_modder_show" name="cd_modder_show" onclick="$('.bg2fp_modder').css({'display':'block'}); $('span.bg2fp_modder').css({'display':'inline'}); $('#cd_modder_show').attr('disabled', 'disabled'); $('#cd_modder_hide').removeAttr('disabled');" type="button" value="Show Modder Notes" />
   <input disabled="disabled" id="cd_modder_hide" name="cd_modder_hide" onclick="$('.bg2fp_modder').css({'display':'none'}); $('span.bg2fp_modder').css({'display':'none'}); $('#cd_modder_hide').attr('disabled', 'disabled'); $('#cd_modder_show').removeAttr('disabled');" type="button" value="Hide Modder Notes" />
@@ -37,6 +37,8 @@
   <li>Darts of Acid referred to themselves as 'arrows' in the flavor text <span class="bg2fp_modder">(strref #29060)</span></li>
   <li>Cone of Cold's cone length is 18 feet, not 17 <span class="bg2fp_modder">(strref #26943)</span></li>
   <li>Clarified several skill progressions in the descriptions for monks and archers <span class="bg2fp_modder">(strrefs #24234, #24298)</span></li>
+  <li>Updated description of Abi-Dalzim's Horrid Wilting to clarify that there is no save penalty implemented for water/plant-based creatures<span class="bg2fp_modder"> (strref #26646)</span></li>
+  <li>Some  bows and crossbows didn't specify the damage type if they provided bonus damage <span class="bg2fp_modder">(strrefs #6858, #7350, #7351, #7352, #7353, #16287, #16288, #17643, #17668, #18095, #19046, #30709, #30713, #30715, #56501, #61809, #61838, #62112, #69233, #69239)</span></li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -55,6 +57,8 @@
   <li>Resurrection was not completely cleaning out old abilities from polymorphing <span class="bg2fp_modder">(#rdremov.spl)</span></li>
   <li>Free Action has an effect to reset movement rate to 100%, but the way it was implemented could interfere with natural speed increases like the movement bonuses for monks or barbarians. Free Action should also better remove active grease, slow, web, entangle, and haste effects. <span class="bg2fp_modder">(bdfistcx.cre, bdring09.itm, bearspir.itm, beholder.itm, bootdriz.itm, bpbort.cre, freering.itm, jwsuper.itm, lionspir.itm, movrat10.itm, planwish.cre, potn45.itm, reghp1.itm, ring09.itm, slaysh01.cre, snakspir.itm, spbatt1.itm, spbatt2.itm, spbatt3.itm, spbatt4.itm, spbatt5.itm, splatt1.itm, splatt2.itm, splatt3.itm, splatt4.itm, splatt5.itm, sppr403.spl, sprngb03.itm, sprngb04.itm, sprngl03.itm, sprngl04.itm, sprngs01.itm, sprngs02.itm, sprngs03.itm, sprngs04.itm, sprngz05.itm, spsatt1.itm, spsatt2.itm, spsatt3.itm, spsatt4.itm, spsatt5.itm, spwatt1.itm, spwatt2.itm, spwatt3.itm, spwatt4.itm, spwatt5.itm, sw2h06.itm, test.cre, trollboo.itm, waterele.itm, wolfspir.itm)</span></li>
   <li>When selecting characters with the same portrait in Black Pits, all duplicates would be forced onto a lower-res male portrait. They will now choose something slightly more appropriate and at the appropriate resolution. <span class="bg2fp_modder">(portrait.2da)</span></li>
+  <li>Shaman were not getting their level 20 dance perks until level 29 <span class="bg2fp_modder">(spsh004.spl)</span></li>
+  <li>Various creatures that should be visible to infravision but were not (and vice versa) have been corrected.<span class="bg2fp_modder"> (7b06.ini, 7f46.ini, e040.ini, e294.ini, e500.ini, e510.ini, e520.ini, ed00.ini, ed10.ini, ed20.ini, 3001.ini, 7601.ini, 7f43.ini, ashiru.cre, bdashiru.cre, bdcarlin.cre, bdcoldh.cre, bdcrommu.cre, bddaeros.cre, bddmakgr.cre, bdgarfou.cre, bdghostf.cre, bdghostm.cre, bdlitla.cre, bdnuber1.cre, bdnuber2.cre, bdrgosz.cre, bdsotdar.cre, bdsotuk.cre, bdworis.cre, bpambt1.cre, bpambt2.cre, deathk.cre, deathk1.cre, deck615.cre, demosum4.cre, ghorak.cre, kiel.cre, kiel2.cre, trolsp01.cre, vampbat.cre)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -101,6 +105,7 @@
   <li>Due to an action misordering, some things that should happen when an NPC joins weren't happening, e.g. M'Khiin could be adding 3000 XP on joining but was not <span class="bg2fp_modder">(bdrasaad.dlg, bdmkhiin.dlg, dorn.dlg, dornp.dlg)</span></li>
   <li>Adoy's dialogue wasn't checking for Neera's presence well, either for her interjection or to give his belt to her <span class="bg2fp_modder">(neadoy.dlg)</span></li>
   <li>Baeloth doesn't have a banter file assigned <span class="bg2fp_modder">(interdia.dlg)</span></li>
+  <li>If actions in dialogues were misordered in a very specific and technical way, some of the actions (such as updating variables for quests) may not get executed. These action queues have been re-ordered to be more robust.<span class="bg2fp_modder"> (bdammon.dlg, bdbanno.dlg, bdbartle.bcs, bdbartle.dlg, bdclovis.dlg, bdcrubbm.dlg, bddanine.dlg, bddorn.dlg, bdfloss.dlg, bdgarrol.dlg, bdgurgle.dlg, bdjunia.dlg, bdminsc.dlg, bdmorlis.dlg, bdtaield.dlg, bdvoghil.dlg, dorn.dlg, edwinj.dlg, flamal.dlg, hull.dlg, imoenp.dlg, kielpc.dlg, neera.dlg, neerap.dlg, perdue.dlg, rasaadp.dlg, rsbassan.dlg, silke.dlg, tenya.dlg, zhurlo.dlg)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -130,6 +135,8 @@
   <li>The Protection From Evil 10' Radius scroll had the wrong string assignments <span class="bg2fp_modder">(scrl5d.itm)</span></li>
   <li>While not visible to the player, Kiel's helmet would leave a permanent effect on its wearer every time it was equipped or the character was loaded <span class="bg2fp_modder">(helm14.itm)</span></li>
   <li>Monks could use arrows and bolts despite not being able to use bows or crossbows <span class="bg2fp_modder">(angarow.itm, arhand.itm, arow01.itm, arow02.itm, arow03.itm, arow04.itm, arow05.itm, arow06.itm, arow07.itm, arow08.itm, arow09.itm, arow10.itm, arow11.itm, arow12.itm, arow14.itm, arow15.itm, arow16.itm, arow1a.itm, arowkc.itm, arowtrn.itm, arrophe2.itm, bdarow01.itm, bolt01.itm, bolt02.itm, bolt03.itm, bolt04.itm, bolt05.itm, bolt06.itm, bolt07.itm, bolt08.itm, bolt09.itm, cutarow1.itm, dwbolt01.itm, dwbolt02.itm, dwbolt03.itm, garrow.itm, holdfst.itm, hqarow.itm, hqbolt.itm, iarow01.itm, kuobolt.itm, kuobolt2.itm, kuobolt3.itm, oharow50.itm, ohbolt50.itm, quiv01.itm, quiver01.itm, quiver02.itm, quiver03.itm, quiver04.itm, sahbolt.itm, sekolah.itm, uarow2a.itm, uarow3a.itm, uarow3b.itm, uarow3c.itm, uarow4a.itm)</span></li>
+  <li>Theoretically the enemy-only Blinding Powder item  could be viewed by the party, so a description has been added<span class="bg2fp_modder"> (potn99.itm)</span></li>
+  <li>Rancor and other swords that provide bonuses upon the death of an opponent now more tightly control whether it was due to the sword itself<span class="bg2fp_modder"> (bdcrimsn.spl, bdsw1h01.itm, bdsw1h08.itm, bdsw1h08.spl, ohdsw4.spl, sw2hd1.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, ghoul touch, Melf's Minute Meteors); several wands are changed to power 1 to better match their effects (Wands of Fear, Magic Missiles, Sleep). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, ghoult.itm, melfmet.itm, wand02.itm, wand03.itm, wand08.itm, wand12.itm)</span></li>
@@ -203,6 +210,8 @@
   <li>Protection From Electricity's expiration sound could be dispelled when cast at level 20 <span class="bg2fp_modder">(spwi512.spl)</span></li>
   <li>Contingency's animation gets cut off since the duration for the effect is too short <span class="bg2fp_modder">(spwi617.spl)</span></li>
   <li>The spider polymorphs should be immune to all web attacks <span class="bg2fp_modder">(plyspid.itm, plyspid2.itm)</span></li>
+  <li>Harm's duration was three seconds too long<span class="bg2fp_modder"> (sppr608.spl)</span></li>
+  <li>Some class/kit abilities scaled with their characters but still were not extended out to the maximum level cap<span class="bg2fp_modder"> (ohdn01a.spl, spcl211.spl)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spin828.spl)</span></li>
@@ -233,10 +242,11 @@
   <li> A few creatures had unique dialogues available, but not assigned. <span class="bg2fp_modder">(ftobe7.cre, mtob4.cre, mtob5.cre, read4.cre) </span></li>
   <li>The Mind Flayer attack was missing its 'Devour brain' combat feedback <span class="bg2fp_modder">(mindflay.itm)</span></li>
   <li>Depending on the difficulty, Belhifet has two different melee attacks. His weapon for higher difficulties was doing less poison damage than the lower difficulty one, and has been adjusted. Belhifet was immune to regular, arcane lightning bolts but not the copies used by Avengers or Stormlords. <span class="bg2fp_modder">(bdbelhi1.itm, bdbelhi2.itm, bdbelhia.itm)</span></li>
+  <li>Many wraiths and mist creatures had leftover memorized spells from their source creature<span class="bg2fp_modder"> (bdwrai01.cre, bdwrait1.cre, bpshadow.cre, bpwrai01.cre, daitel.cre, mistpo01.cre, mistposu.cre, shadfi02.cre, shadowsu.cre, slaysh01.cre)</span></li>
   <!--  <li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(ankheg2.itm, basilg2.itm, basill2.itm, cdfampsd.itm, etterc1.itm, etterc2.itm, finsol02.itm, flind1.itm, ghoul1.itm, hgnymph.itm, impclaw.itm, lichel01.itm, magispwr.itm, mistice.itm, mistva2.itm, paraghas.itm, paraghou.itm, poisa.itm, poisspid.itm, psdclaw.itm, revent2.itm, slaysh01.itm, spidgi1.itm, spidhu1.itm, spidsw1.itm, spidwr1.itm, spspid3.itm, squirp.itm, sw1h14.itm, sw1h98.itm, bddraggh.itm, bdneo1.itm, bdneo2.itm, bdneo3.itm, bdspidgi.itm, bdspidhu.itm, figspid.itm, ghast1.itm, lich02.itm)</span></li>-->
   <li>Bulk fixes:
     <ul>
-      <li>Class (note that monsters can use special, non-player classes for identification): Krystin and Tellan are mages; Fahrington is a druid; Kiel the Legion Killer is a doppleganger; Kaishas Gan is a werewolf. <span class="bg2fp_modder">(dopkie.cre, fahrin.cre, kaish2.cre, kaisha.cre, krysti.cre, tellan.cre)</span></li>
+      <li>Class (note that monsters can use special, non-player classes for identification): Krystin and Tellan are mages; Fahrington is a druid; Kiel the Legion Killer is a doppleganger; Kaishas Gan is a werewolf, some salamanders were incorrect. <span class="bg2fp_modder">(dopkie.cre, fahrin.cre, kaish2.cre, kaisha.cre, krysti.cre, plysala.cre, telicesa.cre, tellan.cre)</span></li>
       <li>General: Andris is a humanoid. <span class="bg2fp_modder">(andris.cre)</span></li>
       <li>Alignment: some gnolls were chaotic neutral instead of chaotic evil <span class="bg2fp_modder">(gnoll02.cre, gnoll03.cre, gnoll04.cre, gnoll05.cre, gnoll2.cre, gnoll3.cre)</span></li>
       <li>Script name:  A few creatures needed script names assigned to facilitate other fixes. <span class="bg2fp_modder">(farm4.cre, housg1.cre, housg2.cre) </span></li>
@@ -284,6 +294,7 @@
   <li>At the beginning of SoD, which NPCs spawn&mdash;and how and where&mdash;depends on several factors, like whether you met them in BG, traveled with them, &amp;c. A check to see if Safana was alive was inverted. <span class="bg2fp_modder">(bd0101.bcs)</span></li>
   <li>If Neera has been panicked or otherwise rendered incapable of speech in her initial fight with the Red Wizards in Beregost, she will not wait until the effects are gone to initiate dialogue. <span class="bg2fp_modder">(neera.bcs)</span></li>
   <li>Shaman summons weren't getting their item bonuses if the shaman was wearing special gear due to some bad script ordering. One other trigger was also incorrect. <span class="bg2fp_modder">(bdshunsu.bcs)</span></li>
+  <li>Various spells and items weren't setting &quot;scripting states&quot; values correctly, meaning AI scripts may not react to them correctly.<span class="bg2fp_modder"> (abazring.itm, amul15.itm, amul21.itm, bazpatrg.itm, bdmisc1b.itm, bdmisc1c.itm, bdogre03.bcs, bdringge.itm, bdringgh.itm, bhaalhp1.itm, bhaalimm.itm, chalslay.itm, demogorg.itm, deva.itm, finmel01.itm, fsspir.itm, gorchr.itm, gorfirg.itm, gorjelfu.itm, gorjelgr.itm, gormisti.itm, holdring.itm, immcloud.itm, imoenhp1.itm, innoc.itm, invulner.itm, jwsuper.itm, minhp1.itm, ohnmode1.spl, ohsmode4.spl, plyjelly.itm, plywyvrn.itm, princess.itm, ravag03.itm, ref1.itm, ring94.itm, ring95.itm, ring99.itm, sengua04.itm, spcl152.spl, spcl242.spl, spcl321.spl, spcl321.spl, spcl741.spl, spcl741.spl, spcl917.spl, spin117.spl, spin117.spl, spin853.spl, sppr507.spl, sprngw03.itm, sprngw04.itm, sprngz05.itm, spwi603.spl, spwi853.spl, surehp1.itm, telslav2.itm, vampreg.itm)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -304,6 +315,8 @@
   <li>The Kai ability was using the Dispel Magic icon <span class="bg2fp_modder">(spcl144.spl)</span></li>
   <li>Multiple spell and ability icons have been touched up to fix small graphical errors and to make them more clear <span class="bg2fp_modder">(ohtmps2b.bam, ohtyr1b.bam, spcl236b.bam, spcl237b.bam, spcl238b.bam, spcl239b.bam, spcl940b.bam, spcl941b.bam, spdd03b.bam, spdwd02b.bam, spin205b.bam, spin205b.bam, sppr150b.bam, sppr150c.bam, sppr250b.bam, sppr350b.bam, sppr350c.bam, sppr450b.bam, sppr550b.bam, sppr550c.bam, sppr650b.bam, sppr719c.bam, sppr750b.bam, sppr750c.bam, sppr751b.bam, spsd02b.bam)</span></li>
   <li>Removed the shadows from vampire creature animations, and added shadows to wyvern animations. <span class="bg2fp_modder">(mvaf*.bam, mvam*.bam. mwyv*.bam, nboh*.bam)</span></li>
+  <li>Most dragon breath attacks cut their animation short; the silver dragon breath attack was also not aligned with the dragon's mouth. <span class="bg2fp_modder">(dragblck.pro, draggree.pro, dragred.pro, dragsilv.pro, spsdbur.bam)</span></li>
+  <li>The Chant icon was the wrong color<span class="bg2fp_modder"> (sppr203c.bam)</span></li>
 </ul>
 <h3> <a name="polymorph_overhaul" id="polymorph_overhaul"></a>Polymorph Overhaul <a href="#polymorph_overhaul"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <p>There were several ways that polymorphing&mdash;whether via a spell like Shapechange, a druid's natural abilities, or from an item like Cloak of the Wolf&mdash;could introduce numerous issues, especially when shifting directly between forms. A creature could retain stats or abilities from a previous form, or forced/voluntary/timed shapheshifts could overrun one another. As such, these abilities went through a complete overhaul designed to streamline the process, cover edge cases, and minimize issues. <span class="bg2fp_modder">(bdsw1h26.spl, bolt05.itm, brblp.itm, brbrp.itm, brbrp1.itm, brbrp2.itm, cdgoliro.itm, cdmindfl.itm, cdwolfm.itm, clck04.itm, clck04.spl, earthrn.itm, firern.itm, plybear1.itm, plybear2.itm, plyflind.itm, plyjelly.itm, plymstar.itm, plysala.itm, plyspid.itm, plyspid2.itm, plywolf1.itm, plywyvrn.itm, spcl611.spl, spcl612.spl, spcl613.spl, spcl632.spl, spcl633.spl, spcl634.spl, spcl643.spl, spcl644.spl, spcl731.spl, spdm103.spl,  spin107.spl, spin110.spl, spin111.spl, spin113.spl, spin122.spl, spin123.spl, spin124.spl, spin125.spl, spin126.spl, spin127.spl, spin150.spl, spin150r.eff, spin151.spl, spin152.spl, spin153.spl, spin154.spl, spin155.spl, spin156.spl, spin157.spl, spin160.spl, spin663.spl, spin717.spl, spin717a.spl, spin783.spl, spin783a.spl, spin822.spl, spin823.spl, spin823a.spl, spin852.spl, spin852a.spl, spin868.spl, spin869.spl, spin974.spl, spinhum.spl, spinhumr.spl, spinhums.eff, spinhums.spl, spinhumw.eff, spinhumw.spl, splprot.2da, splstate.ids, sppr110.spl, sppr206.spl, sppr213.spl, sppr414.spl, sppr510.spl, sppr511.spl, sppr608.spl, sppr614.spl, sppr721.spl, spwi115.spl, spwi117.spl, spwi218.spl, spwi325.spl, spwi415.spl, spwi416.spl, spwi489.spl, spwi489r.eff, spwi490.spl, spwi491.spl, spwi493.spl, spwi494.spl, spwi495.spl, spwi496.spl, spwi497.spl, spwi498.spl, spwi499.spl, spwi518.spl, spwi711.spl, spwi711a.spl, spwi915.spl, spwi916.spl, spwi920.spl, spwi952.spl, spwm113.spl, spwm113a.spl, spwm183.spl, squirp.itm, trollall.itm, wand09.itm, wolfchar.cre, wolfgr.itm, wolfm.itm, wswolf.itm)</span></p>
@@ -323,12 +336,14 @@
   <li>Subtitles have been enabled for the SoD &quot;Murder&quot; and &quot;Ambush&quot; cinematics <span class="bg2fp_modder">(bgee.lua, movidesc.2da, strref #67456)</span></li>
   <li>With SoD installed, the OHxxxx areas are listed twice in the debug menu. <span class="bg2fp_modder">(bgee.lua)</span></li>
   <li>Multiple movies are missing from the replay menu <span class="bg2fp_modder">(movidesc.2da)</span></li>
+  <li>Corrected numerous typos and other errors in the debug console's area list<span class="bg2fp_modder"> (bgee.lua)</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
   <p>This is a roundup of fixes that primarily impact modders and are not visible to players. </p>
   <ul>
     <li>IDS tables get sorted (all ids files)</li>
+    <li>class.ids, kit.ids, race.ids, and spell.ids <a href="https://www.gibberlings3.net/forums/topic/39225-discussion-syncing-raceclassids-across-bg-bg2-iwd/">have been synced</a> between BGEE, BG2EE, and IWDEE as best as we are able</li>
     <li>The Neothelid lacked an ini file and correct animate/anisnd.ids entries. (3001.ini, animate.ids, anisnd.ids)</li>
     <li>Several of the splprot.2da entries (specifically, alignment checks) were mislabeled. (splprot.2da)</li>
     <li>Several entries were added to spell.ids to enable easier scripting. (spell.ids)</li>
@@ -353,6 +368,7 @@
     <li>damages.ids lacked a consistent IDS header across games (damages.ids)</li>
     <li>Multiple animations had incorrect section names, causing their animations to revert to default values (2000.ini, 2100.ini, 2200.ini, 2300.ini)</li>
     <li>Two corrupted WED files are fixed (ar1000.wed, oh2010.wed)</li>
+    <li>Although they're already prevented from breaking from chapter checks. the BP Slave Rings now block all weapon breakage spells explicitly (bprng1.itm)</li>
   </ul>
 </div>
 <!-- documentation ends here -->
