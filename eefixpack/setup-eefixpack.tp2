@@ -1,7 +1,7 @@
 BACKUP ~weidu_external/backup/eefixpack~ // location to store files for uninstall
 SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
 AUTO_EVAL_STRINGS
-MODDER fun_args fail missing_eval none setup_tra none
+//MODDER fun_args fail missing_eval none setup_tra none
 
 ALWAYS
 
@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Nightly 032725~
+VERSION ~Alpha 1~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
