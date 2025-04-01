@@ -1514,6 +1514,7 @@ COPY_EXISTING ~dragblck.pro~ ~override~
               ~dragred.pro~  ~override~
               ~dragsilv.pro~ ~override~
   WRITE_SHORT 0x210 8
+  IF_EXISTS // draggree is a sod file, but rest are there
 
 // grease projectiles created in spell section since vars needed 
 
