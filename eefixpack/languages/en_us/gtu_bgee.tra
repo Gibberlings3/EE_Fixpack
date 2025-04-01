@@ -28,8 +28,17 @@
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @2437 = ~'Tis a great service you have done the people of this area, but it merely makes up for your previous acts of violence within these walls. You will get but 2,000 gold, and then you will leave my sight! Be thankful the guard does not place you in chains, let alone reward you!~
 
+// "I'll none" > "I'll have none"
+@2608 = ~I'll have none of this, sir! Be thankful I don't turn you over to the guard!~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @2610 = ~Oh dear! I couldn't hear a word you said, though if I had, I would have answered "more."~
+
+// "I'll none" > "I'll have none"
+@2612 = ~I'll have none of this, sir! Be thankful I don't turn you over to the guard!~
+
+// "I'll none" > "I'll have none"
+@2616 = ~I'll have none of this, sir! Be thankful I don't turn you over to the guard!~
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @2684 = ~'Tis flattering, but you are blinded by your passion. Truly see what is become of me. I should not age, but my spirit fades in this ugly place. Yours does as well, but from obsession over me.~
