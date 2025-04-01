@@ -1214,11 +1214,6 @@ COPY_EXISTING ~spwish12.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 target = 3 END
   BUT_ONLY // Now removes hardiness effects from the same targets it adds them to
 
-// tbd, cam
-// expiry sound is way too early
-COPY_EXISTING ~spwish33.spl~ ~override~ // Intoxication - causes drunkenness - plays sound EFF_E06 - portrait icon 5
-  LPF ALTER_EFFECT INT_VAR match_opcode = 174 match_duration = 60 duration = 1200 END
-
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN

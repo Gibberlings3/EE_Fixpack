@@ -1,7 +1,7 @@
 BACKUP ~weidu_external/backup/eefixpack~ // location to store files for uninstall
 SUPPORT ~https://www.gibberlings3.net/forums/forum/232-ee-fixpack/~ // URL displayed if install fails
 AUTO_EVAL_STRINGS
-MODDER fun_args fail missing_eval none setup_tra none
+//MODDER fun_args fail missing_eval none setup_tra none
 
 ALWAYS
 
@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Nightly 032725~
+VERSION ~Alpha 1~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
@@ -74,6 +74,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee.tph~))) @4
+LABEL ~cd_eefp_core_fixes~
 
 WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
   INCLUDE ~eefixpack/files/tph/%game%.tph~
@@ -92,6 +93,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee_beta.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee_beta.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee_beta.tph~))) @4
+LABEL ~cd_eefp_beta_core_fixes~
 
 // none of these files have been created yet, as the initial releases will be betass
 WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
@@ -112,6 +114,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LA
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tph~)) OR
                    ((!GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~))) @5
+LABEL ~cd_eefp_game_text_update~
 
 ACTION_IF !game_is_pstee AND FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~ BEGIN // for updating l_%lang%.lua (UI and help strings across the non-pstee games)
   INCLUDE ~eefixpack/files/lib/cd_infinity_processing.tph~
@@ -150,6 +153,7 @@ REQUIRE_PREDICATE ((!GAME_IS ~pstee~) AND
                    (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~2~)) ~Do not run with EEFP installed in case you're using the game tlk~
 NO_LOG_RECORD
 DEPRECATED ~For internal use only~
+LABEL ~cd_eefp_internal_infinity_strings~
 
 // cam's very sketchy tool for generating Infinity Strings (aka the l_en_us.lua files) updates based
 // off of a CSV downloaded from the Beamdog translation tool
@@ -173,6 +177,7 @@ REQUIRE_PREDICATE ((!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~0~) AND
                    (!MOD_IS_INSTALLED ~eefixpack/setup-eefixpack.tp2~ ~2~)) ~Do not run with EEFP installed in case you're using the game tlk~
 NO_LOG_RECORD
 DEPRECATED ~For internal use only~
+LABEL ~cd_eefp_internal_tlk_comparator~
 
 // cam's very sketchy tool for generating GTUs by comparing 2.6 tlk files with the tlk files downlaoded from the BD translation tool
 // more info in the cd_tlk.tph library
@@ -201,6 +206,7 @@ END
 BEGIN ~Automatic TPH generation from tra files~ DESIGNATED 999
 NO_LOG_RECORD
 DEPRECATED ~For internal use only~
+LABEL ~cd_eefp_internal_tph_from_tra~
 
 // generating the STRING_SET tph from the tra files is neat, but can be a bit slow.
 // run this function to generate these files automatically before shipping.
@@ -233,3 +239,4 @@ END
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
 DEPRECATED ~For internal use only~
+LABEL ~cd_eefp_internal_test_space~

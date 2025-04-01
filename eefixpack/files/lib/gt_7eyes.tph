@@ -410,7 +410,7 @@ BEGIN
 				PATCH_FAIL "Should not happen (~%DEST_FILE%~)"
 		END
 	END ELSE BEGIN
-		PATCH_WARN "SPL file ~%subspell_resref%~ already exists as a game resource! Intended?"
+		//PATCH_WARN "SPL file ~%subspell_resref%~ already exists as a game resource! Intended?"
 	END
 END
 

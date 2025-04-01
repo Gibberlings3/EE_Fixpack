@@ -79,12 +79,6 @@ COPY_EXISTING ~sppr250.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 215 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END 
 
-// at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
-COPY_EXISTING ~sppr701.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
-  BUT_ONLY
-
 COPY_EXISTING ~spsh004.spl~ ~override~ // shaman dance: level 29 header is actually the level 20 header
   LPF ALTER_HEADER INT_VAR match_level = 29 level = 20 END 
 

@@ -5,8 +5,8 @@ REM /* this initializes the values for the different variables referenced in com
 call "%~dp0..\ModPackaging\utilities\ie_games.bat"
 
 REM /* MODIFY: set the values of the 3 variables below to reflect the current mod version */
-set "mod_name=EE Fixpack"
-set mod_version=Beta_1
+set "mod_name=Enhanced Edition Fixpack"
+set mod_version=Alpha_1
 set mod_folder=eefixpack
 
 REM /* MODIFY: list here which IE games the mod is compatible with, from this list of possibilities: */
@@ -23,7 +23,7 @@ set ico_folder=%mod_folder%\style
 set audio_folder=%mod_folder%\audio
 set tispack_folder=%mod_folder%\tiz
 set iconv_folder=%mod_folder%\languages\iconv
-set mod_readme=http://htmlpreview.github.io/?https://github.com/Gibberlings3/Documentation/blob/master/readmes/readme-eefixpack.html
+set mod_readme=https://gibberlings3.github.io/Documentation/readmes/readme-eefixpack.html
 
 REM /* MODIFY: if you don't need to build a specific package, you can disable it by setting the appropriate variable below to 0 */
 set build_windows=1
