@@ -19,6 +19,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   bdshamb, null, 255, null, null, 0, null, null, null => bdshamb // tbd, cam: shambling mound consistency
   bdwolfdr, null, null, 4, null, null, null, null, null => bdwolfdr // dread wolves are undead
   bpshamb, 176, 255, null, null, null, null, null, null => bpshamb // tbd, cam: shambling mound consistency
+  bpskel, null, null, 4, null, null, null, null, null => bpskel // skeletons are undead
   coran, null, null, null, null, null, null, null, 0x40000000 => coran // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   coran5, null, null, null, null, null, null, null, 0x40000000 => coran5 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
   dopkie, null, 111, null, null, null, null, null, null => dopkie // tbd, cam (from scs): Kiel the Legion Killer CLERIC > DOPPLEGANGER
