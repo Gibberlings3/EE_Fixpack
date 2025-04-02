@@ -7,23 +7,23 @@ ACTION_PHP_EACH cd_bulk_changes_spl AS params => file BEGIN
       PATCH_IF (!IS_AN_INT params_1) BEGIN SET params_1 = "-1" END // if no changes to power, leave it alone
       PATCH_IF (!IS_AN_INT params_2) BEGIN SET params_2 = "-1" END // if no changes to resitance, leave it alone
       LPF ALTER_EFFECT INT_VAR silent = 1 check_globals = 0 power = params_1 resist_dispel = params_2 END
-    END 
-//    PATCH_IF (IS_AN_INT params_3) BEGIN // spell stacking 
+    END
+//    PATCH_IF (IS_AN_INT params_3) BEGIN // spell stacking
 //      LPF CLONE_EFFECT INT_VAR silent = 1 check_globals = 0 multi_match = 1 match_opcode = params_3 opcode = 206 parameter1 = 0 parameter2 = 0 STR_VAR resource = EVAL ~%file%~ insert = ~last~ END
-//    END 
+//    END
     PATCH_IF (IS_AN_INT params_5) BEGIN // add/remove 'ignore wild/dead magic' flag
       PATCH_IF (params_5 = 0)   BEGIN WRITE_LONG 0x18 THIS & `BIT14 END // remove 'ignore wild/dead magic' flag
       PATCH_IF (params_5 = 1)   BEGIN WRITE_LONG 0x18 THIS | BIT14  END // add 'ignore wild/dead magic' flag
-    END  
+    END
     PATCH_IF ((IS_AN_INT params_6) OR (IS_AN_INT params_7)) BEGIN // speed, range fixes
       PATCH_IF (!IS_AN_INT params_6) BEGIN SET params_6 = "-1" END // if no changes to speed, leave it alone
       PATCH_IF (!IS_AN_INT params_7) BEGIN SET params_7 = "-1" END // if no changes to range, leave it alone
       LPF ALTER_HEADER INT_VAR silent = 1 speed = params_6 range = params_7 END // speed, range on all headers
-    END 
+    END
     PATCH_IF (IS_AN_INT params_4)  BEGIN WRITE_LONG  0x34 params_4  END // level fixes (basically, scriptable spells)
     PATCH_IF (IS_AN_INT params_8)  BEGIN WRITE_BYTE  0x22 params_8  END // casting animation
-    PATCH_IF (IS_AN_INT params_9)  BEGIN WRITE_BYTE  0x25 params_9  END // primary/school    
-    PATCH_IF (IS_AN_INT params_10) BEGIN WRITE_BYTE  0x27 params_10 END // secondary 
+    PATCH_IF (IS_AN_INT params_9)  BEGIN WRITE_BYTE  0x25 params_9  END // primary/school
+    PATCH_IF (IS_AN_INT params_10) BEGIN WRITE_BYTE  0x27 params_10 END // secondary
     PATCH_IF (IS_AN_INT params_11) BEGIN WRITE_SHORT 0x1c params_11 END // spell type
     BUT_ONLY IF_EXISTS
 

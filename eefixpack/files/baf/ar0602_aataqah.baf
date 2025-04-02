@@ -1,8 +1,8 @@
 IF
-  Global("cd_AataqahFight","AR0602",1) 
+  Global("cd_AataqahFight","AR0602",1)
 THEN
   RESPONSE #100
-    SetGlobal("cd_AataqahFight","AR0602",99) 
+    SetGlobal("cd_AataqahFight","AR0602",99)
     AddexperienceParty(3500)
     ActionOverride("aataqah",ReallyForceSpell([PC],GENIE_LIMITED_WISH_HEAL_ALL))
     PlaySound("EFF_M23C")
@@ -16,13 +16,13 @@ THEN
     PlaySound("EFF_M38")
     SmallWait(10)
     ActionOverride("aataqah",DestroySelf())
-END 
+END
 
 IF
-  Global("cd_AataqahFight","AR0602",2) 
+  Global("cd_AataqahFight","AR0602",2)
 THEN
   RESPONSE #100
-    SetGlobal("cd_AataqahFight","AR0602",99) 
+    SetGlobal("cd_AataqahFight","AR0602",99)
     AddexperienceParty(3500)
     ActionOverride("aataqah",ReallyForceSpell([PC],GENIE_LIMITED_WISH_HEAL_ALL))
     PlaySound("EFF_M21")
@@ -41,4 +41,4 @@ THEN
     PlaySound("EFF_M38")
     SmallWait(10)
     ActionOverride("aataqah",DestroySelf())
-END 
+END

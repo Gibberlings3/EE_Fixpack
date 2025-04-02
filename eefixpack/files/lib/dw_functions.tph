@@ -9,7 +9,7 @@ list of nonnegative integers specifying which effects are to be extracted.
 Effects extracted should all have the same probability, the same saving throw (if any)
 and should not include damage with save-for-half.
 
-On an item, the integer 'ability' indicates which ability is patched (0 by default). On a 
+On an item, the integer 'ability' indicates which ability is patched (0 by default). On a
 spell the default assumption is that the effect block is the same at every level, but if
 you set keep_spell_levels=1, the effect blocks are extracted on a per-level basis.
 
@@ -18,8 +18,8 @@ make sure effects really are identical.)
 
 */
 //////////////////////////////////////////////////////////////////
-	
-DEFINE_ACTION_FUNCTION extract_effects_as_subspell 
+
+DEFINE_ACTION_FUNCTION extract_effects_as_subspell
 	INT_VAR ability=0
 			keep_spell_levels=0
 	STR_VAR resource=""
@@ -91,7 +91,7 @@ BEGIN
 							WRITE_SHORT offset 999
 						END
 					END
-				END			
+				END
 			END
 			DEFAULT
 				PATCH_WARN "extract_effects_as_subspell: attempted to extract effects from %resource%, but it is not an itm or spl file"
@@ -99,7 +99,7 @@ BEGIN
 			// make the edits
 			LPF DELETE_EFFECT INT_VAR match_opcode=999 END
 			LPF ALTER_EFFECT INT_VAR match_opcode=998 opcode=146 power=0 timing=1 duration=0 parameter1=0 parameter2=1 dicenumber=0 dicesize=0 STR_VAR resource="%subspell%" END
-	
+
 		// now build the new spell
 		ACTION_IF !FILE_EXISTS_IN_GAME "%subspell%.spl" BEGIN
 			CREATE spl "%subspell%"
@@ -111,7 +111,7 @@ BEGIN
 				INSERT_BYTES BUFFER_LENGTH 0x30*header_count*count
 				// fill in the abilities
 				INNER_PATCH_SAVE abil_base "" BEGIN
-					INSERT_BYTES 0x0 0x28						
+					INSERT_BYTES 0x0 0x28
 					WRITE_SHORT 0x0 1
 					WRITE_SHORT 0x2 4
 					WRITE_BYTE 0xc 1
@@ -138,8 +138,8 @@ BEGIN
 						WRITE_BYTE 0x13+fx_off 0
 					END
 				END
-		END	
-			
+		END
+
 	END
 END
 
@@ -196,7 +196,7 @@ BEGIN
 			GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 		END
 		spl BEGIN
-			GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS		
+			GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
 		END
 		DEFAULT
 			PATCH_WARN "permute_effects: trying to permute effects on %SOURCE_FILE%, but it is not a spl or itm file. Aborting patch."
@@ -222,9 +222,9 @@ BEGIN
 				END
 			END
 		END
-	
+
 	END
-	
+
 
 END
 
@@ -249,7 +249,7 @@ BEGIN
 	ACTION_IF repeat BEGIN
 		APPEND_OUTER "%path%/%file%" "%input%"
 	END ELSE BEGIN
-		APPEND_OUTER "%path%/%file%" "%input%" UNLESS "%input%"	
+		APPEND_OUTER "%path%/%file%" "%input%" UNLESS "%input%"
 	END
 
 

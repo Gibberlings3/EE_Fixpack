@@ -1,4 +1,4 @@
-IF 
+IF
   Global("AR1006_visited","GLOBAL",0)
   Global("CD_how_starting_equip","LOCALS",0)
 THEN
@@ -17,8 +17,8 @@ THEN
     ApplySpellRES("cdhp3000",Myself)  // full heal, otherwise 10HP short because of bwtalis
     SetGlobal("CD_how_starting_equip","LOCALS",1)
 END
-      
-IF 
+
+IF
   OR(2)
     !Global("AR1006_visited","GLOBAL",0)
     !Global("CD_how_starting_equip","LOCALS",0)

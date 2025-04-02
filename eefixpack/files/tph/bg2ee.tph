@@ -30,7 +30,7 @@ INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
-  
+
 APPEND ~spell.ids~ ~3119 SAFANA_CHARM~ UNLESS ~^3119[ %TAB%]+SAFANA_CHARM[ %TAB%%MNL%%LNL%]+~ // syncing spell.ids
 
 /*
@@ -237,7 +237,7 @@ COPY_EXISTING ~aeri25.bcs~   ~override~
       ~SetInterrupt(FALSE) \1 SetInterrupt(TRUE)~ // no, no I should not have.
   END
   BUT_ONLY
-  
+
 EXTEND_BOTTOM ~ar0602.bcs~ ~eefixpack/files/baf/ar0602_aataqah.baf~ // offloading dlg actions (see d core fixes)
 
 // tbd, cam
@@ -298,7 +298,7 @@ COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
     REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
     	~\1~ // should be detect, not !detect (sod only)
     REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
-  END   
+  END
 
 // consolidate bernard's store (see also bernard2.sto, bernard.dlg)
 EXTEND_BOTTOM ~bernard.bcs~ ~eefixpack/files/baf/bernard.baf~
@@ -310,7 +310,7 @@ COPY_EXISTING ~bystand1.bcs~ ~override~
   END
 
 // cowled wizard: stop hitting yourself - CWs can end up targeting allies
-COPY_EXISTING ~cowenf01.bcs~ ~override~ 
+COPY_EXISTING ~cowenf01.bcs~ ~override~
               ~cowenf02.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~Nearest(\[ENEMY\])~ ~NearestEnemyOf(Myself)~ // catches SecondNearest, ThirdNearest, &c.
@@ -319,7 +319,7 @@ COPY_EXISTING ~cowenf01.bcs~ ~override~
     REPLACE_TEXTUALLY ~\[\(0\|ENEMY\)\.0\.0\.0\.0\.SUMMONED\]~ ~[GOODCUTOFF.0.0.0.0.SUMMONED]~ // don't target friendly summons
     REPLACE_TEXTUALLY ~\(See(\[ENEMY\])\)~ ~\1 !InMyGroup(LastSeenBy(Myself))~ // if targeting ENEMY, make sure it's not a fellow CW
     REPLACE_TEXTUALLY ~\(!InMyGroup(LastSeenBy(Myself))\)[ %TAB%%LNL%%MNL%]+!InMyGroup(LastSeenBy(Myself))~ ~\1~ // in case previous R_T doubles this trigger
-  END 
+  END
   BUT_ONLY
 
 // tbd, cam
@@ -338,7 +338,7 @@ COPY_EXISTING ~cut59a.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~Wait(2) ActionOverride("suelle2",StartDialogueNoSet([PC]))~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // ToB bonus equipment spilling out of inventory should also be copied to the expansion
 COPY_EXISTING ~cut100a.bcs~ ~override~
@@ -376,14 +376,14 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
     REPLACE_TEXTUALLY ~\(MoveToPoint(\[[0-9]+\.[0-9]+\])\)~ ~\1 SetGlobal("f4imoved","LOCALS",1)~
   END
   BUT_ONLY
-  
+
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~hexxat.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
-    REPLACE_TEXTUALLY 
-    ~\(Global("OH_UnderdarkComments","GLOBAL",1)[ %TAB%%LNL%%MNL%]+I[fs]ValidForPartyDialog\(ue\)?(Myself)[ %TAB%%LNL%%MNL%]+Delay(2)[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("dorn")[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("rasaad")[ %TAB%%LNL%%MNL%]+\)!I[fs]ValidForPartyDialog\(ue\)?("neera")~ 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY
+    ~\(Global("OH_UnderdarkComments","GLOBAL",1)[ %TAB%%LNL%%MNL%]+I[fs]ValidForPartyDialog\(ue\)?(Myself)[ %TAB%%LNL%%MNL%]+Delay(2)[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("dorn")[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("rasaad")[ %TAB%%LNL%%MNL%]+\)!I[fs]ValidForPartyDialog\(ue\)?("neera")~
     ~\1 OR(2) !IfValidForPartyDialog("neera") !Global("SahauginTravel","GLOBAL",0)~
-  END  
+  END
 
 // kangaxx-as-lich should always talk when he appears
 EXTEND_BOTTOM ~hlkang.bcs~ ~eefixpack/files/baf/hlkang.baf~
@@ -398,9 +398,9 @@ COPY_EXISTING ~jaheira.bcs~ ~override~
 
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~neera.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("OH_UnderdarkComments","GLOBAL",1)\)~ ~\1 Global("SahauginTravel","GLOBAL",0)~
-  END  
+  END
 
 // tbd, cam
 // container script doesn't work since it uses LOCALS; in this case the block should be disabled (reward given via dialogue, item given here is placeholder)
@@ -462,10 +462,10 @@ COPY_EXISTING ~ohbhub.bcs~ ~override~
 
 // if renfeld gets rendered incapable, can't init dialogue post-mugging
 COPY_EXISTING ~renfeld.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Dead("rethug01")\)~ ~!StateCheck(Myself,CD_STATE_NOTVALID) \1~
     APPEND_FILE ~eefixpack/files/baf/renfeld_dispel.baf~
-  END   
+  END
 
 // fear via 'Eyes of the Beholder' item should also work to scare viekang in ToB
 COPY_EXISTING ~sarvie01.bcs~ ~override~
@@ -572,7 +572,7 @@ COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
               ~sewdue02.cre~ ~override~ // duergar sapper
               ~sewyag01.cre~ ~override~ // duergar sapper
   WRITE_BYTE 0x2f 83 // "dark blusih gray", used by other duergar
-  BUT_ONLY 
+  BUT_ONLY
 
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
@@ -813,7 +813,7 @@ COPY_EXISTING ~npbow.itm~  ~override~
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
-  BUT_ONLY               
+  BUT_ONLY
 
 COPY_EXISTING ~ohdsw03.itm~ ~override~ // brass blade (see also ohdsw03f.spl)
   LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 savingthrow = 0 END // remove 'bypass MI' flag
@@ -1121,7 +1121,7 @@ COPY_EXISTING ~ohbwi302.spl~ ~override~
   LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
   //LPF cd_fx_unmisindex END
   BUT_ONLY
-  
+
 //tbd, cam
 // inconsistent targeting (unused, fixed anyway)
 // also extend to level 50
@@ -1141,7 +1141,7 @@ COPY_EXISTING ~bhaal1a.spl~ ~override~
       PATCH_IF op = 17 BEGIN // cur hp bonus
         WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (level * multiply)
       END
-    END     
+    END
   END
   BUT_ONLY
 
@@ -1151,7 +1151,7 @@ COPY_EXISTING ~bhaal1b.spl~ ~override~ // Regeneration (unused, fixed anyway)
 
 OUTER_FOR (index = 1 ; index < 6 ; ++index) BEGIN // for bhaal3b (unused, fixed anyway)
   COPY_EXISTING ~bdpweapn.eff~ ~override/bh3b%index%.eff~
-    WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8  
+    WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8
 END
 
 // tbd, cam
@@ -1191,22 +1191,22 @@ COPY_EXISTING ~spin807.spl~  ~override~ // Slayer Fear - causes fear - portrait 
 COPY_EXISTING ~spin891.spl~ ~override~ // make moon dog howl only affect enemies
   LPF ALTER_HEADER INT_VAR projectile = 159 END // inarea > inareanp
 
-// making custom fireballs for clubs of detonation, brass blade  
+// making custom fireballs for clubs of detonation, brass blade
 COPY_EXISTING ~spwi304.spl~ ~override/ohdsw03f.spl~ // 10d6 fireball (arcane, for brass blade, ohdsw03.itm)
-  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 10 END   
-  
+  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 10 END
+
 COPY_EXISTING ~ohdsw03f.spl~ ~override/blun27fb.spl~ // 10d6 fireball (innate, for club of detonation +5, blun27.itm)
-  WRITE_SHORT 0x1c 4 // innate   
-  
+  WRITE_SHORT 0x1c 4 // innate
+
 COPY_EXISTING ~blun27fb.spl~ ~override/blun26fb.spl~ // 5d6 fireball (innate, for club of detonation +3, blun26.itm)
-  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 5 END   
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 dicenumber = 5 END
 
 COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
   READ_SHORT 0x68 abil_num // op206 vs. spcl521 is always 90 seconds - doesn't scale correctly with other effects
   FOR (index = abil_num ; index > 1 ; --index) BEGIN // skip header 0 since it's correct
-    LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END 
-  END   
+    LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END
+  END
 
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects

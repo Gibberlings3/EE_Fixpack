@@ -7,7 +7,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
   ~bdtr01~   => ~%trap%~ // no_name_set, used by: bdgtsnar - uses 324 vs. slow_immunity
   ~spin707~  => ~%trap%~ // no_name_set > dart, used by: gdarts - uses 318 for poison immunity
   ~spwi008~  => ~%trap%~ // no_name_set > arrow, used by: bptrap02, ctar5, gtar5 - uses 318 for poison immunity
-// everything else either has a name or doesn't use 318/324  
+// everything else either has a name or doesn't use 318/324
 //  ~bdalldie~ => ~%trap%~ // no_name_set, used by: bdboarb2
 //  ~bdarrow1~ => ~%trap%~ // no_name_set, used by: bdtarget
 //  ~bdarrow2~ => ~%trap%~ // no_name_set, used by: bdtarget
@@ -90,4 +90,3 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
 END
 
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_code.tph~
-              

@@ -37,7 +37,7 @@ DEFINE_ACTION_FUNCTION speculative_109_175 BEGIN
 
 	// here's the code for the mechanical change, anyway
 
-	COPY_EXISTING spcl242.spl override 
+	COPY_EXISTING spcl242.spl override
 		LPF DELETE_EFFECT INT_VAR match_opcode=175 END
 
 	///////////////////////////////////////////////////////////

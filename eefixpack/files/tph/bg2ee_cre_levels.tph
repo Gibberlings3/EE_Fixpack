@@ -1,4 +1,4 @@
-ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_cre_levels BEGIN 
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_cre_levels BEGIN
 
 //~chevil04~  =>  6 // sahuagin - 42 hit points at levels 6/0/0
   ~elesah01~  =>  6 // sahuagin baron - 46 hit points at levels 2/1/1
@@ -59,23 +59,23 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_cre_levels BEGIN
   ~sahsss03~  =>  3 // rebel - 19 hit points at levels 2/1/1
   ~sahuag01~  =>  3 // sahuagin - 19 hit points at levels 2/1/1
   ~udsaha~    => 10 // sahuagin prince - 72 hit points at levels 2/1/1
-  
-END 
-  
+
+END
+
 ACTION_PHP_EACH cd_cre_levels AS file => level BEGIN
 
   COPY_EXISTING ~%file%.cre~ ~override~
     WRITE_BYTE 0x234 level
-    BUT_ONLY 
+    BUT_ONLY
 
-END 
-  
-  
-  
-  
-  
-  
-  
+END
+
+
+
+
+
+
+
 /*
 
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
@@ -99,9 +99,9 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
     PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
     PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
                                                               BEGIN SPRINT spc "        " END
-    SET hd = ((hp / 8) + 1)  
-    PATCH_IF (hd > lev1) BEGIN SPRINT comment ~  ~ END ELSE BEGIN SPRINT comment ~//~ END   
+    SET hd = ((hp / 8) + 1)
+    PATCH_IF (hd > lev1) BEGIN SPRINT comment ~  ~ END ELSE BEGIN SPRINT comment ~//~ END
     PATCH_PRINT "%comment%~%SOURCE_RES%~%spc% => %hd% // %name% - %hp% hit points at levels %lev1%/%lev2%/%lev3%"
   END
-  BUT_ONLY   
-*/  
+  BUT_ONLY
+*/

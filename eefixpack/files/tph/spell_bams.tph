@@ -24,7 +24,7 @@ COPY ~eefixpack/files/bam/spl_bams/ohtmps2b.bam~ ~override~ // Chaos of Battle (
      ~eefixpack/files/bam/spl_bams/sppr751b.bam~ ~override~ // Ethereal Retribution
      ~eefixpack/files/bam/spl_bams/spsd02b.bam~  ~override~ // shadowstep (shadowdancer)
 
-ACTION_IF game_is_iwdee BEGIN 
+ACTION_IF game_is_iwdee BEGIN
 
   COPY ~eefixpack/files/bam/spl_bams/spwi107b.bam~ ~override~ // friends
        ~eefixpack/files/bam/spl_bams/spwi126b.bam~ ~override~ // expeditious retreat
@@ -102,29 +102,29 @@ END ELSE BEGIN // iwdee uses a different color scheme, so some of these end up t
   COPY ~eefixpack/files/bam/spl_bams/ohtyr1b.bam~  ~override~ // iwdee uses sppr321b, and is a different color
        ~eefixpack/files/bam/spl_bams/sppr750b.bam~ ~override~ // Ether Gate
        ~eefixpack/files/bam/spl_bams/sppr750c.bam~ ~override~
-  
-END 
 
-ACTION_IF game_is_bg2ee BEGIN  
+END
+
+ACTION_IF game_is_bg2ee BEGIN
 
   COPY ~eefixpack/files/bam/spl_bams/ohhdraib.bam~ ~override~ // blood drain (hexxat)
        ~eefixpack/files/bam/spl_bams/ohhdraic.bam~ ~override~
        ~eefixpack/files/bam/spl_bams/ohhsummb.bam~ ~override~ // children of the night (hexxat)
-       ~eefixpack/files/bam/spl_bams/ohhsummc.bam~ ~override~ 
+       ~eefixpack/files/bam/spl_bams/ohhsummc.bam~ ~override~
 
-END 
+END
 
-ACTION_IF !game_is_bgee BEGIN  
+ACTION_IF !game_is_bgee BEGIN
 
   COPY ~eefixpack/files/bam/spl_bams/spcl937b.bam~ ~override~ // shadow maze
        ~eefixpack/files/bam/spl_bams/spcl938b.bam~ ~override~ // shadow form
 
-END ELSE BEGIN 
+END ELSE BEGIN
 
-  ACTION_IF game_includes_sod BEGIN 
+  ACTION_IF game_includes_sod BEGIN
 
     COPY ~eefixpack/files/bam/spl_bams/spin205b.bam~ ~override~ // Summon Ghostly Defender (k'khiin)
 
-  END 
-  
-END 
+  END
+
+END

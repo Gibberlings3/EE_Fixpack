@@ -38,16 +38,16 @@ END
 
 ACTION_IF game_is_bgee AND game_includes_sod BEGIN
 
-  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN 
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN
     BDVICON => 2
     DSCLARA => 2
   END
-  
-END  
+
+END
 
 ACTION_IF game_is_bg2ee BEGIN
 
-  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN 
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_eefp_portrait BEGIN
     yanner1 => 2
     yanner2 => 2
     yanner3 => 2
@@ -55,15 +55,15 @@ ACTION_IF game_is_bg2ee BEGIN
     yanner5 => 1
     yanner6 => 1
   END
-  
-END  
+
+END
 
 COPY_EXISTING ~portrait.2da~ ~override~
   SPRINT append ~~
   PATCH_PHP_EACH cd_eefp_portrait AS portrait => sex BEGIN
-    SET present = 0 
+    SET present = 0
     PATCH_IF sex = 1 BEGIN SPRINT replace man2 END ELSE BEGIN SPRINT replace woman2 END
-    PATCH_FOR_EACH size IN L M S BEGIN 
+    PATCH_FOR_EACH size IN L M S BEGIN
       REPLACE_EVALUATE ~^\(%portrait%%size%[ %TAB%]\)~ BEGIN
         SET resent = 1
       END ~%MATCH1%~

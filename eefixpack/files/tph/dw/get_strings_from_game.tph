@@ -11,13 +11,13 @@ DEFINE_ACTION_FUNCTION get_strings_from_game
 			strings="strings"
 BEGIN
 
-	ACTION_IF game_includes_sod BEGIN 
+	ACTION_IF game_includes_sod BEGIN
 		OUTER_SPRINT root "sod"
 	END ELSE BEGIN
 		OUTER_SPRINT root "%game%"
 	END
 
-	ACTION_CLEAR_ARRAY new_strings 
+	ACTION_CLEAR_ARRAY new_strings
 	GET_DIRECTORY_ARRAY ee_lang_dirs "lang" "[A-Za-z].*"
 	ACTION_PHP_EACH ee_lang_dirs AS discard=>current_lang_dir BEGIN
 		OUTER_PATCH_SAVE current_lang "%current_lang_dir%" BEGIN
@@ -42,7 +42,7 @@ BEGIN
 				insert_point=BUFFER_LENGTH
 				SPRINT newline "@%strref% = ~%string%~%WNL%"
 				INSERT_BYTES insert_point STRING_LENGTH "%newline%"
-				WRITE_ASCII insert_point "%newline%"			
+				WRITE_ASCII insert_point "%newline%"
 			END
 	END
 

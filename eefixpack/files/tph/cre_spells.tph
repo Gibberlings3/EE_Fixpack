@@ -66,5 +66,5 @@ END ELSE BEGIN // bg2ee
     REMOVE_MEMORIZED_SPELL ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
     REMOVE_KNOWN_SPELL     ~spwi112~ ~spwi212~ ~spwi304~ ~spwi306~ ~spwi308~ ~spwi402~ ~spwi415~ ~spwi501~ ~spwi502~ ~spwi504~ ~spwi505~ ~spwi508~ ~spwi601~ ~spwi602~ ~spwi604~
     BUT_ONLY IF_EXISTS
-    
-END 
+
+END

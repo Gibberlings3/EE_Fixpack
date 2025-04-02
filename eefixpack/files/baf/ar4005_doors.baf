@@ -2,7 +2,7 @@ IF
 	!Global("YXUN_ATTACK","MYAREA",0)
 	Global("CDOpenDoorsOnce","MYAREA",0)
 THEN
-	RESPONSE #100 
+	RESPONSE #100
 		OpenDoor("AR4005Door1")
 		OpenDoor("AR4005Door2")
 		OpenDoor("AR4005Door3")

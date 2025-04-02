@@ -4,7 +4,7 @@ THEN
   RESPONSE #100
     MoveToPointNoInterrupt([681.588])
     SetGlobal("cd_do_dlg_stuff","LOCALS",2)
-END    
+END
 
 IF
   Global("cd_do_dlg_stuff","LOCALS",2)
@@ -14,4 +14,4 @@ THEN
     ActionOverride("bddelend",FaceObject("bdbartle"))
     SetGlobalTimer("bd_bartleby_timer","BD0108",ONE_MINUTE)
     SetGlobal("cd_do_dlg_stuff","LOCALS",3)
-END  
+END

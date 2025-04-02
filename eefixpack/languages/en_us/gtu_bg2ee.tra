@@ -1,6 +1,6 @@
-// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @5 = ~Oh, my dark ravens, let us stop our squawking. I shall remove this foul demeanor like a mask because, if you will still have me, I think I would quite enjoy the company of your troupe.~
@@ -7420,7 +7420,7 @@ When this spell is cast, the recipient receives a resistance to all magic. The r
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @30150 = ~'Tis a fine job working for the government. The overseer doesn't bother us... sleeps and drinks, mostly.~
 
-// do you help -> do to help 
+// do you help -> do to help
 @30156 = ~Is there anything I can do to help you?~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
@@ -13032,7 +13032,7 @@ Requires:
 
 Weight: 3~
 
-// +4, to hit -> +4 to hit 
+// +4, to hit -> +4 to hit
 @60867 = ~The finest bow crafted by Gesen Khan, this weapon draws energy from another plane, firing spears of lightning instead of arrows... and therefore never requiring ammunition of any kind. It is said that Gesen prepared to retire from his craft after selling the invaluable weapon, only to have the bow wrested from his grasp by a thief who used it to end Gesen's own life. A side effect of the bow bestows protection from electricity upon the user.
 
 STATISTICS:
@@ -15083,10 +15083,10 @@ Rob Boyd—Programmer
 Don Moar—Lead Programmer, Tools
 Chris Christou—Programmer, Tools
 Aaryn Flynn—Programmer, Tools
- 
+
 AUDIO (BIOWARE)
 David Chan—Audio Producer/Sound Designer
- 
+
 QUALITY ASSURANCE (BIOWARE)
 Scott Langevin—Lead QA
 Jonathan Epp—QA
@@ -15235,7 +15235,7 @@ Vanessa Marshall
 
 VO Recorded at Screenmusic Studios
 Ernie Sheesley—VO Engineer
-Eric Lewis—VO Assistant             
+Eric Lewis—VO Assistant
 
 VO Editing by:
 Stephen Miller

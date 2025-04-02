@@ -115,8 +115,8 @@ COPY_EXISTING ~trias.cre~  ~override~
   REMOVE_CRE_ITEM no_curse
   ADD_CRE_ITEM ~no_curse~ #0 #0 #0 ~NONE~ ~cloak~
   ADD_CRE_ITEM ~imdeath~ #0 #0 #0 ~NONE~ ~ring~
-  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END 
-  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END 
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
@@ -162,19 +162,19 @@ BUT_ONLY
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_pstee.tph~ // bulk general changes (nothing here yet)
 
-// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl  
+// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
 COPY_EXISTING ~spwi912.spl~ ~override/spwi912a.spl~ // payload: this is the original spell and effects
   WRITE_LONG 0x08 `0 // blank name
-  
+
 COPY_EXISTING ~spwi912.spl~ ~override/spwi912b.spl~ // if target is immune, they get this spell which just floats an immunity message
   WRITE_LONG 0x08 `0 // blank name
-  LPF ALTER_HEADER INT_VAR projectile = 1 END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 330 target = 2 parameter1 = RESOLVE_STR_REF(@100) timing = 1 END 
-  
+  LPF ALTER_HEADER INT_VAR projectile = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 330 target = 2 parameter1 = RESOLVE_STR_REF(@100) timing = 1 END
+
 COPY_EXISTING ~spwi912.spl~ ~override~ // the original spell; applies spwi912a or b depending on whether the target is immune via imdeath.itm
-  LPF ALTER_HEADER INT_VAR projectile = 1 END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 110 timing = 1 STR_VAR resource = spwi912b END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 111 timing = 1 STR_VAR resource = spwi912a END 
+  LPF ALTER_HEADER INT_VAR projectile = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 110 timing = 1 STR_VAR resource = spwi912b END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 111 timing = 1 STR_VAR resource = spwi912a END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\

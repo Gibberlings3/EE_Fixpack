@@ -5,7 +5,7 @@
 DEFINE_ACTION_FUNCTION make_generic_items BEGIN
 
 	// work out game type
-	
+
 	ACTION_IF game_includes_sod BEGIN
 		OUTER_SPRINT root "sod"
 	END ELSE BEGIN
@@ -23,17 +23,17 @@ DEFINE_ACTION_FUNCTION make_generic_items BEGIN
 		END
 		// get rows
 		READ_2DA_ENTRIES_NOW generic_item_data colcount
-		FOR (row=0;row<generic_item_data;++row) BEGIN 
+		FOR (row=0;row<generic_item_data;++row) BEGIN
 			READ_2DA_ENTRY_FORMER generic_item_data row 0 resref
 			SPRINT $generic_item_list("%resref%") ""
 			PHP_EACH header_num AS var=>val BEGIN
 				READ_2DA_ENTRY_FORMER generic_item_data row val entry
 				SPRINT $generic_items("%resref%" "%var%") "%entry%"
-			END 
-		END	
-	
+			END
+		END
+
 	// get strref data
-	
+
 	COPY - "%MOD_FOLDER%/data/item_duplication/generic_item_strrefs.txt" nowhere
 		READ_2DA_ENTRIES_NOW generic_item_strref_data 3
 		FOR (row=0;row<generic_item_strref_data;++row) BEGIN
@@ -45,7 +45,7 @@ DEFINE_ACTION_FUNCTION make_generic_items BEGIN
 		END
 
 	// make the items
-	
+
 	ACTION_PHP_EACH generic_item_list AS resref=>discard BEGIN
 		OUTER_SPRINT needed $generic_items("%resref%" needed)
 		ACTION_IF INDEX ( "%root%" "%needed%" )>=0 BEGIN
@@ -74,7 +74,7 @@ END
 DEFINE_ACTION_FUNCTION collect_generic_item_data BEGIN
 
 	// work out game type
-	
+
 	ACTION_IF game_includes_sod BEGIN
 		OUTER_SPRINT root "sod"
 	END ELSE BEGIN
@@ -92,20 +92,20 @@ DEFINE_ACTION_FUNCTION collect_generic_item_data BEGIN
 		END
 		// get rows
 		READ_2DA_ENTRIES_NOW generic_item_data colcount
-		FOR (row=0;row<generic_item_data;++row) BEGIN 
+		FOR (row=0;row<generic_item_data;++row) BEGIN
 			READ_2DA_ENTRY_FORMER generic_item_data row 0 resref
 			SPRINT $generic_item_list("%resref%") ""
 			PHP_EACH header_num AS var=>val BEGIN
 				READ_2DA_ENTRY_FORMER generic_item_data row val entry
 				SPRINT $generic_items("%resref%" "%var%") "%entry%"
-			END 
+			END
 		END
-		
+
 	// get the strref lookups
-	
+
 	OUTER_SPRINT data ""
 	ACTION_PHP_EACH generic_item_list AS resref=>discard BEGIN
-		OUTER_SPRINT root_required $generic_items("%resref%" game) 
+		OUTER_SPRINT root_required $generic_items("%resref%" game)
 		ACTION_IF "%root_required%" STR_EQ "%root%" BEGIN
 			COPY_EXISTING - "%resref%.itm" nowhere
 				READ_LONG 0xc name_strref
@@ -115,9 +115,9 @@ DEFINE_ACTION_FUNCTION collect_generic_item_data BEGIN
 				SPRINT $strings("%desc_strref%") ""
 		END
 	END
-	
+
 	// write the strref lookups to file
-	
+
 	COPY + ".../fp-inline/blank" "%MOD_FOLDER%/data/item_duplication/generic_item_strrefs.txt"
 		INSERT_BYTES 0x0 STRING_LENGTH "%data%"
 		WRITE_ASCII 0x0 "%data%"

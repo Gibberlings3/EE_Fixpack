@@ -18,7 +18,7 @@ ACTION_IF game_is_bg2ee BEGIN
   COPY_EXISTING ~behund01.cre~ ~override~ // death tyrant
                 ~melsum03.cre~ ~override~ // death tyrant
                 ~rngbeh01.cre~ ~override~ // death tyrant
-    WRITE_LONG 0x28 0x00007f46 // death tyrant animation  
+    WRITE_LONG 0x28 0x00007f46 // death tyrant animation
     BUT_ONLY
 
 END

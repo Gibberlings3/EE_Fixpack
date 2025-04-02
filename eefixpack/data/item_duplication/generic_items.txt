@@ -1,6 +1,6 @@
 2DA V1.0
 *
-		copy_from	game		needed		
+		copy_from	game		needed
 bdamul24	amul14		sod		bgee,bg2ee
 bdbelt13	belt03		sod		bgee,bg2ee
 bdboot05	boot01		sod		bgee,bg2ee

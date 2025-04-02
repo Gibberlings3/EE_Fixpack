@@ -28,7 +28,7 @@ LAF declutter INT_VAR write END
 INCLUDE "%library_path%/rearrange_itm_spl.tph"
 LAF rearrange_itm_spl END
 
-// Sort out the various issues with 109/175/185 (this is the conservative bit) 
+// Sort out the various issues with 109/175/185 (this is the conservative bit)
 
 INCLUDE "%library_path%/paralyzation_fixes.tph"
 LAF paralyzation_fixes END
@@ -50,7 +50,7 @@ END
 
 // DEBATABLE - include elven immunity to ghoul paralysis
 // I have done only elven immunity since half-elf 70% immunity
-// isn't in BG/BG2. 
+// isn't in BG/BG2.
 
 ACTION_IF GAME_IS "bgee bg2ee" BEGIN
 	INCLUDE "%library_path%/ghoul_touch_elven_immunity.tph"

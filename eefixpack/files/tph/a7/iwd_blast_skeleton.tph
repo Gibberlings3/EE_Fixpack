@@ -38,7 +38,7 @@ WITH_SCOPE BEGIN
 
 /*
     // [*** OPTIONAL ***] Prevent self-destruction when creature is helpless (e.g. under effect of Hold Undead)
-    // 
+    //
     LPF ADD_SPELL_EFFECT
       INT_VAR
         opcode = 318      // Protection from Resource

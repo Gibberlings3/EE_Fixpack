@@ -1,8 +1,8 @@
-// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
-// any strings < 34000 are non-sod strings and should go into the gtu_bgee.tra file instead. 
+// any strings < 34000 are non-sod strings and should go into the gtu_bgee.tra file instead.
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @34003 = ~This glittering golden crown looks impressive, but its substance is base fool's gold and the "gems" set around it are bits of colored glass. Placing the crown on one's head allows the wearer to prepare extra spells but fills the head with false knowledge.
@@ -11002,7 +11002,7 @@ One night, a goblin scouting party came across a deer caught in a thicket of bra
 
 She's been on her own ever since and has found herself persecuted by humans at every turn. She joined Baeloth Barrityl with the understanding that she would be presented as an "exhibit" but not made to actually fight—a promise Baeloth broke the minute the opportunity presented itself.~
 
-// dejemma -> dajemma; also surplus spaces after "undergo." and "direction." 
+// dejemma -> dajemma; also surplus spaces after "undergo." and "direction."
 @69605 = ~MINSC proudly proclaims himself a berserker warrior from the nation of Rashemen. He is currently undertaking his dajemma, a ritual journey all young Rashemi men undergo.
 
 His companion Dynaheir, whom he protects as part of his mission, is never far from his side. Dynaheir apparently has some interest in seeing the crusade stopped, and Minsc will follow wherever she leads. Indeed, "his witch," as Minsc calls her, is one of the few people from whom he will take direction.

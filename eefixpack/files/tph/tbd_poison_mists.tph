@@ -4,6 +4,6 @@ COPY_EXISTING ~mistpo01.cre~ ~override/mistposu.cre~ // create summoned version 
 
 COPY_EXISTING ~mistpo01.cre~ ~override~ // make normal ones gender: neither
   WRITE_BYTE 0x275 4 // gender: neither
-  
+
 COPY_EXISTING ~sppois.eff~ ~override~ // change summoning sell to use new, gender: summoned version
-  WRITE_ASCII 0x30 ~mistposu~  
+  WRITE_ASCII 0x30 ~mistposu~

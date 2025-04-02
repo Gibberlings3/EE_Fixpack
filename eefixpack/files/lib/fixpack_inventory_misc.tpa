@@ -8,7 +8,7 @@ Due to the umpteen thousand inventory errors on creature files, I wrote
 a series of macros to fix them for BG2 Fixpack, and then later adapted
 them to the v9 cre format for the IWD Fixpack. They've been recombined
 since the nly functional difference are the offsets, which is now handled
-by a version check. 
+by a version check.
 
 used:
   bg2 fixpack, as bg2fixpack/lib/fixpack_inventory_misc.tpa [symbolic link]
@@ -17,8 +17,8 @@ used:
 
 platform:
   used on ee, bg2, and oiwd; should work on everything except iwd2 and pst
- 
-version history: 
+
+version history:
   * inception: unknown
   * 5/31/24: added version checks so that iwd/bg2 fixpack macros could be combined
   * 1/18/25: cd_equip_weapon_specific was not reading in itm_off

@@ -14,7 +14,7 @@ BEGIN
 					"basilg1" , "-1" , "0,1,2" => "basilg1" // Attack (Greater Basilisk)
 					"basill1" , "-1" , "0,1,2" => "basill1" // Attack (Lesser Basilisk)
 					"bdstsnak" , "-1" , "0,1" => "bdstsnak" // Attack (Stone Snake)
-					"parabasi" , "-1" , "0,1,2,3" => "parabasi" // 
+					"parabasi" , "-1" , "0,1,2,3" => "parabasi" //
 					"scrl16" , "-1" , "0,3,4,5" => "scrl16" // Cursed Scroll of Petrification
 					//"sw1p01" "override" // Viper's Edge +2
 				END

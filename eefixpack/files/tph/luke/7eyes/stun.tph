@@ -43,7 +43,7 @@ BEGIN
 					"deva" , "-1" , "14,15,16" => "deva" // Mace of Disruption +2
 					"icegolem" , "-1" , "1,0,2,3" => "icegolem" // Skull
 					"icetrl" , "-1" , "1,2,3" => "icetrlst" // Attack
-					"poq2-16" , "-1" , "0,1,2,3" => "poq2-16" // 
+					"poq2-16" , "-1" , "0,1,2,3" => "poq2-16" //
 					"sflail" , "-1" , "22,23,24,25,26,27,28,29,30" => "sflail1" // Flail (Stun: 6 seconds)
 					"sflail" , "-1" , "23,24,25,26,27,28,29,30,31" => "sflail2" // Flail (Stun: 12 seconds)
 					"sflail" , "-1" , "24,25,26,27,28,29,30,31,32" => "sflail3" // Flail (Stun: 18 seconds)
@@ -112,7 +112,7 @@ BEGIN
 					//"bdhelm17" , "-1" => "override" // used by Voghiln's Helmet
 					"bdsha06a" , "-1" , "2=>1" => "" // used by Bear Spirit
 					"bdshriek" , "-1" , "2,3,4,5" => "bdshrie0" // Piercing Shriek
-					"spcl123" , 3 , "4=>3" => "" // 
+					"spcl123" , 3 , "4=>3" => "" //
 					//"spdr101" , 4 , "1,2,3,4,5,6,7" => "spdr101a" // Chromatic Orb (AVENGER)
 					//"spdr101" , 6 , "1,2,3,4,5,6,7" => "spdr101b" // Chromatic Orb (AVENGER)
 					"%BOMBARDIER_BEETLE_CLOUD%" , "-1" , "2,3,4" => "%BOMBARDIER_BEETLE_CLOUD%A"
@@ -143,7 +143,7 @@ BEGIN
 					"bdsha06a" , "-1" , "2=>1" => "" // used by Bear Spirit
 					"sareveff" , "-1" , "2=>1" => "" // Sarevok special attack
 					"%BARD_SONG_SIREN%" , "-1" , "7=>6" => "" // The Siren's Yearning—Enthralls Creatures
-					"spcl123" , 3 , "5=>3" => "" // 
+					"spcl123" , 3 , "5=>3" => "" //
 					"%INNATE_MOURNFUL_WAIL%" , "-1" , "3=>7" => ""
 					"%INNATE_DRAGON_WING_BUFFET%" , "-1" , "6,7,8" => "%INNATE_DRAGON_WING_BUFFET%B"
 					"%INNATE_HARPY_WAIL_INTERNAL%" , "-1" , "6,7" => "%INNATE_HARPY_WAIL_INTERNAL%B"

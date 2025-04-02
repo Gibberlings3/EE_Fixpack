@@ -14,7 +14,7 @@ SPPR512.spl	39	39
 SPWI116.spl	39	39
 BASILL1.spl	134	134	Basilisk
 DAYS.itm	40	40	Sword of Days
-GASP.itm	154	154	
+GASP.itm	154	154
 SHMBLR.itm	154	154
 SPPR405.spl	5	5	Mental Domination
 SPPR511.spl	13	13	Slay Living

@@ -2,7 +2,7 @@
 ignore-dependencies{anon_define sfo_path}
 describe-library{Functions to patch the Enhanced-Edition user interface.</p>
 
-<p>These functions mostly work like this. An object in the current file (normally ui.menu, but sometimes a ui object extracted from ui.menu) is located by (i) the object type (e.g., 'menu'), a field in the object used to identify it (e.g., 'name' - this is the default value), and a value of that field (e.g., 'CHARGEN_CLASS'). 
+<p>These functions mostly work like this. An object in the current file (normally ui.menu, but sometimes a ui object extracted from ui.menu) is located by (i) the object type (e.g., 'menu'), a field in the object used to identify it (e.g., 'name' - this is the default value), and a value of that field (e.g., 'CHARGEN_CLASS').
 The function then goes through the UI until it finds the (hopefully unique) object matching that description. The object is pulled out of ui.menu and patched; then it's substituted back in.<p>
 
 <p>Technically this library depends on lib_anon (since it permits anonymous functions) and lib_sfo (since it uses sfo_path) but if you don't use either feature, it's self-contained.}
@@ -15,7 +15,7 @@ document{UI_alter_object}
 */
 
 DEFINE_PATCH_FUNCTION UI_alter_object
-    STR_VAR object="" 
+    STR_VAR object=""
             object_type=""
             object_name_field="name"
             patch=""//function
@@ -162,7 +162,7 @@ BEGIN
                    END
                    DEFAULT
                       PATCH_FAIL "internal error in UI_patch_object_master: undefined type %type%"
-                   END 
+                   END
                 END
              END
              PATCH_IF change BEGIN
@@ -347,7 +347,7 @@ Add the contents of the file at 'new_function' (legacy synonym: new_function_pat
 }
 */
 
-DEFINE_ACTION_FUNCTION UI_install_function 
+DEFINE_ACTION_FUNCTION UI_install_function
 	INT_VAR inline=0//boolean
 	STR_VAR lua_file=""
 			new_function=""
@@ -381,7 +381,7 @@ BEGIN
 			COPY_EXISTING "%lua_file%.lua" override
 				APPEND_FILE TEXT "%new_function%" EVALUATE_BUFFER
 		END
-	
+
 	END
 END
 
@@ -404,8 +404,8 @@ BEGIN
            SET next_right = INDEX_BUFFER ("%right%" loc)
            PATCH_IF next_right<0 BEGIN
               SET indent=0
-              PATCH_WARN "Failed to properly extract next %left%---%right% section from file %SOURCE_RES%, starting at %index%" 
-           END ELSE 
+              PATCH_WARN "Failed to properly extract next %left%---%right% section from file %SOURCE_RES%, starting at %index%"
+           END ELSE
            PATCH_IF next_left<0 BEGIN
               SET indent -=1
               SET loc=next_right + 1

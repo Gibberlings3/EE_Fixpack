@@ -1,4 +1,4 @@
-IF 
+IF
   Global("AR1006_visited","GLOBAL",0)
   Global("CD_how_starting_equip","LOCALS",0)
 THEN
@@ -11,8 +11,8 @@ THEN
     XEquipItem("zz05we",Myself,SLOT_WEAPON0,EQUIP)
     SetGlobal("CD_how_starting_equip","LOCALS",1)
 END
-      
-IF 
+
+IF
   OR(2)
     !Global("AR1006_visited","GLOBAL",0)
     !Global("CD_how_starting_equip","LOCALS",0)

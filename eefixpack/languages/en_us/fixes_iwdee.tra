@@ -1,6 +1,6 @@
-// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
 // tenser's provides a +2 bonus to hit and damage, not just damage
 @7808 = ~Tenser's Transformation
@@ -100,7 +100,7 @@ Weight: 14~
 
 // ie-6026, cam - see also string updates to 21627 and thrym.itm, u1ham5b.itm
 // Revert changes to Thrym Extract and War Hammer +4: Defender (had wrong effects which were documented as if intended)
-@14913 = ~Like others of its type, this war hammer is made entirely of steel, with a bone-crushing hammer mounted upon an eighteen-inch shaft. It has also been bestowed with a small number of magical properties, however, making it more effective in combat. 
+@14913 = ~Like others of its type, this war hammer is made entirely of steel, with a bone-crushing hammer mounted upon an eighteen-inch shaft. It has also been bestowed with a small number of magical properties, however, making it more effective in combat.
 
 STATISTICS:
 
@@ -576,7 +576,7 @@ CLASS FEATURES:
   Level 6-8: 1d10
   Level 9-14: 1d12
   Level 15+: 1d20
-– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25. 
+– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25.
 – Receives a +2 bonus to Saving Throws vs. Spell.
 – Deflect Missiles: +1 bonus to AC vs. missile attacks every 3 levels.
 – Starts with an Armor Class of 9 at 1st level and gains an additional +1 bonus every 2 levels through level 18.

@@ -1,7 +1,7 @@
 DEFINE_ACTION_FUNCTION dw_misc BEGIN
 
 	// fix stupid problem on (unused!) #bonecir
-	
+
 	ACTION_IF GAME_IS IWDEE BEGIN
 		COPY_EXISTING "#BONECIR.SPL" override
 			WRITE_ASCII 0x0 "SPL " (4)

@@ -136,7 +136,7 @@ CECHY KLASOWE:
 – Może używać każdego typu broni i zbroi.
 – Nie może osiągnąć poziomu wyższego niż Specjalizacja (dwa punkty biegłości) w żadnym rodzaju broni.
 – Może osiągnąć Specjalizację (dwa punkty biegłości) w każdym stylu walki oraz Mistrzostwo (trzy punkty biegłości) w walce dwoma broniami.
-– Może używać zdolności Nakładanie Rąk raz dziennie, przywracając wybranej istocie 2 punkty życia na poziom w klasie paladyna. 
+– Może używać zdolności Nakładanie Rąk raz dziennie, przywracając wybranej istocie 2 punkty życia na poziom w klasie paladyna.
 – Może rzucić Leczenie chorób, raz dziennie.
 – Może rzucić Wykrycie zła, raz dziennie na poziom (zaczynając od czterech użyć na 1. poziomie).
 – Może rzucić Ochronę przed złem, raz dziennie na poziom (zaczynając od jednego użycia na 1. poziomie).
@@ -153,7 +153,7 @@ CECHY KLASOWE:
 – Może używać każdego typu broni i zbroi.
 – Nie może osiągnąć poziomu wyższego niż Specjalizacja (dwa punkty biegłości) w żadnym rodzaju broni.
 – Może osiągnąć Specjalizację (dwa punkty biegłości) w każdym stylu walki oraz Mistrzostwo (trzy punkty biegłości) w walce dwoma broniami.
-– Może używać zdolności Nakładanie Rąk raz dziennie, przywracając wybranej istocie 2 punkty życia na poziom w klasie paladyna. 
+– Może używać zdolności Nakładanie Rąk raz dziennie, przywracając wybranej istocie 2 punkty życia na poziom w klasie paladyna.
 – Może rzucić Leczenie chorób, raz dziennie.
 – Może rzucić Wykrycie zła, raz dziennie na poziom (zaczynając od czterech użyć na 1. poziomie).
 – Może rzucić Ochronę przed złem, raz dziennie na poziom (zaczynając od jednego użycia na 1. poziomie).
@@ -168,13 +168,13 @@ CECHY KLASOWE:
 
 CECHY KLASOWE:
 
-– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję). 
-– Nie może używać tarczy większej niż puklerz. 
+– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję).
+– Nie może używać tarczy większej niż puklerz.
 – Może osiągnąć Wyszkolenie (jeden punkt biegłości) w dowolnym rodzaju broni.
-– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki. 
-– Umiejętności złodziejskie: Kradzież kieszonkowa 
+– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki.
+– Umiejętności złodziejskie: Kradzież kieszonkowa
 – Posiada zwiększony współczynnik Wiedzy.
-– Może rzucać zaklęcia maga, począwszy od 2. poziomu. 
+– Może rzucać zaklęcia maga, począwszy od 2. poziomu.
 – Może używać zdolności Pieśń barda. Kiedy jest aktywna, wywołuje następujące efekty:
 Przywraca morale do normalnego poziomu
 Działa jak zaklęcie Przełamanie strachu
@@ -185,13 +185,13 @@ Zapewnia niewrażliwość na efekty związane ze strachem
 
 CECHY KLASOWE:
 
-– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję). 
-– Nie może używać tarczy większej niż puklerz. 
+– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję).
+– Nie może używać tarczy większej niż puklerz.
 – Może osiągnąć Wyszkolenie (jeden punkt biegłości) w dowolnym rodzaju broni.
-– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki. 
-– Umiejętności złodziejskie: Kradzież kieszonkowa 
+– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki.
+– Umiejętności złodziejskie: Kradzież kieszonkowa
 – Posiada zwiększony współczynnik Wiedzy.
-– Może rzucać zaklęcia maga, począwszy od 2. poziomu. 
+– Może rzucać zaklęcia maga, począwszy od 2. poziomu.
 – Może używać zdolności Pieśń barda. Kiedy jest aktywna, wywołuje następujące efekty:
 Przywraca morale do normalnego poziomu
 Działa jak zaklęcie Przełamanie strachu
@@ -532,7 +532,7 @@ Wymagania:
 Waga: 8~
 []
 // main tlk contents mismatch; female tlk contents mismatch;
-@22615 = ~Dominacja 
+@22615 = ~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -543,7 +543,7 @@ Obszar działania: 1 istota
 Rzut obronny: neguje
 
 Czar ten umożliwia rzucającemu kontrolowanie wszystkich działań istoty, będącej pod jego wpływem. Kontrola ta jest sprawowana poprzez telepatyczną więź pomiędzy rzucającym a ofiarą. W odróżnieniu od efektów 4. poziomowego zaklęcia kapłańskiego o nazwie Dominacja umysłowa, czar ten powoduje, że jego ofiara nie ma możliwości uwolnienia się, nawet jeśli zostanie zmuszona do zrobienia czegoś głęboko przeciwnego jej naturze. Oczywiście czar może zostać zdjęty przez Rozproszenie magii. Ofiara ma prawo do wykonania rzutu obronnego przeciw czarom z modyfikatorem -2, w celu uniknięcia efektów działania tego zaklęcia.~
-~Dominacja 
+~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -590,7 +590,7 @@ Wady:
 – Podczas tworzenia postaci jego Siła i Kondycja zostają zmniejszone o 2.~
 []
 // main tlk contents mismatch; female tlk contents mismatch;
-@25954 = ~Sfera chaosu 
+@25954 = ~Sfera chaosu
 (Przemiany)
 
 Poziom: 7
@@ -611,7 +611,7 @@ Każdy, kto znajdzie się w obszarze działania tego zaklęcia, musi wykonać rz
 – cel zostaje losowo teleportowany
 – cel traci przytomność
 – cel zostanie przyspieszony~
-~Sfera chaosu 
+~Sfera chaosu
 (Przemiany)
 
 Poziom: 7
@@ -685,7 +685,7 @@ Opóźnienie: 2
 Rodzaj biegłości: młot bojowy
 Typ broni: 1-ręczna
 
-Wymagania: 
+Wymagania:
 – Siła: 9
 
 Waga: 5~
@@ -700,7 +700,7 @@ Opóźnienie: 2
 Rodzaj biegłości: młot bojowy
 Typ broni: 1-ręczna
 
-Wymagania: 
+Wymagania:
 – Siła: 9
 
 Waga: 5~
@@ -1015,7 +1015,7 @@ Specjalne:
 
 Klasa Pancerza: 9 (4 przeciw pociskom)
 
-Wymagania: 
+Wymagania:
 – Siła: 4
 – Zręczność: 17
 
@@ -1033,7 +1033,7 @@ Specjalne:
 
 Klasa Pancerza: 9 (4 przeciw pociskom)
 
-Wymagania: 
+Wymagania:
 – Siła: 4
 – Zręczność: 17
 
@@ -1410,7 +1410,7 @@ Używając tej zdolności, pomiot Bhaala musi wyobrazić sobie dokładnie oblicz
 
 Zasięg: pole widzenia wampira
 Czas działania: 8 round
-Czas rzucania: 5 
+Czas rzucania: 5
 Obszar działania: 1 istota
 Rzut obronny: neguje
 
@@ -1419,7 +1419,7 @@ Zdolności mentalne wampira to zaiste potężne narzędzie. Dominacja pozwala wa
 
 Zasięg: pole widzenia wampira
 Czas działania: 8 round
-Czas rzucania: 5 
+Czas rzucania: 5
 Obszar działania: 1 istota
 Rzut obronny: neguje
 

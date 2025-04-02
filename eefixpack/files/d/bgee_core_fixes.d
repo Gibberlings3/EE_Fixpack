@@ -1,28 +1,28 @@
 // tbd, cam
 // broken DV check for bassilus
-REPLACE_TRIGGER_TEXT ~ftowbe~  ~Dead("bassil")~ ~Dead("bassilus")~ 
-REPLACE_TRIGGER_TEXT ~mtowbe~  ~Dead("bassil")~ ~Dead("bassilus")~ 
-REPLACE_TRIGGER_TEXT ~mtowbez~ ~Dead("bassil")~ ~Dead("bassilus")~ 
+REPLACE_TRIGGER_TEXT ~ftowbe~  ~Dead("bassil")~ ~Dead("bassilus")~
+REPLACE_TRIGGER_TEXT ~mtowbe~  ~Dead("bassil")~ ~Dead("bassilus")~
+REPLACE_TRIGGER_TEXT ~mtowbez~ ~Dead("bassil")~ ~Dead("bassilus")~
 
 // tbd, cam
 // broken DV check for bassilus
-REPLACE_TRIGGER_TEXT ~ftowbe~  ~Dead("FLAMHUSB")~ ~Dead("FlamingE")~ 
+REPLACE_TRIGGER_TEXT ~ftowbe~  ~Dead("FLAMHUSB")~ ~Dead("FlamingE")~
 
 // tbd, cam
 // mulahey stutter fix (see also mulahey.bcs) https://www.gibberlings3.net/forums/topic/35178-scripting-bugs/#comment-308786
-ADD_STATE_TRIGGER mulahe 3 ~Global("TalkedToMulahey","GLOBAL",0)~  
-SET_WEIGHT mulahe 7 #0 
-SET_WEIGHT mulahe 3 #1 
-SET_WEIGHT mulahe 0 #2 
-SET_WEIGHT mulahe 1 #3 
-SET_WEIGHT mulahe 5 #4 
-SET_WEIGHT mulahe 6 #5 
+ADD_STATE_TRIGGER mulahe 3 ~Global("TalkedToMulahey","GLOBAL",0)~
+SET_WEIGHT mulahe 7 #0
+SET_WEIGHT mulahe 3 #1
+SET_WEIGHT mulahe 0 #2
+SET_WEIGHT mulahe 1 #3
+SET_WEIGHT mulahe 5 #4
+SET_WEIGHT mulahe 6 #5
 SET_WEIGHT mulahe 8 #6
 
 //tbd, cam
 // tiax's broken charm dialogue, NVLOR for x2 talk
 ALTER_TRANS tiax BEGIN 8 END BEGIN 0 END BEGIN ~REPLY~ ~~ END // blank dialogue text prevents exiting
-APPEND tiax 
+APPEND tiax
   IF ~RandomNum(3,1)~ THEN BEGIN tiax_common1 SAY #4216 // use his common selects as one-and-dones for repeat dialogue
     IF ~~ THEN EXIT
   END
@@ -37,13 +37,13 @@ END
 
 // tbd, cam
 // glanmarie and oberan have nothing to say to you on repeat visits
-APPEND glanma 
+APPEND glanma
   IF ~!ReactionLT(LastTalkedToBy,FRIENDLY_LOWER)~ THEN BEGIN glanma_common1 SAY #4803 // use her common select as one-and-done for repeat dialogue
     IF ~~ THEN EXIT
   END
 END
 
-APPEND oberan 
+APPEND oberan
   IF ~True()~ THEN BEGIN oberan_common1 SAY #4875 // use his common select as one-and-done for repeat dialogue
     IF ~~ THEN EXIT
   END
@@ -177,21 +177,21 @@ APPEND SHOAL
   IF WEIGHT #-1 ~!IsGabber(Player1) !IsGabber(Player2) !IsGabber(Player3) !IsGabber(Player4) !IsGabber(Player5) !IsGabber(Player6) NumberOfTimesTalkedTo(0)~ THEN BEGIN famtalk SAY #4830
     IF ~~ THEN DO ~SetNumTimesTalkedTo(0)~ EXIT
   END
-END 
+END
 
 // can't advance iron poisoning plot with taerom since ankheg shells keep interfering
 EXTEND_BOTTOM taerom 0
   IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
-END   
+END
 EXTEND_BOTTOM taerom 4
   IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
-END   
+END
 EXTEND_BOTTOM taerom 8
   IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
-END   
+END
 EXTEND_BOTTOM taerom 12
   IF ~PartyHasItem("potn48") Global("bd_show_once","LOCALS",0)~ THEN REPLY #32804 DO ~SetGlobal("bd_show_once","LOCALS",1)~ GOTO 16
-END   
+END
 
 // adoy should give belt to Player1 if Neera's dead or not present; better check for neera interjection
 ALTER_TRANS NEADOY BEGIN 24 END BEGIN 0 END BEGIN ACTION  ~GiveItem("NEBELT01",Player1)~ END // 0: give to Player1 if neera dead or not present

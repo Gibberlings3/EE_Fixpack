@@ -28,7 +28,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DEFINE_ACTION_FUNCTION detectable_spells 
+DEFINE_ACTION_FUNCTION detectable_spells
    INT_VAR fix_khelben=1
 BEGIN
 	// make sure stats.ids is properly set
@@ -593,7 +593,7 @@ BEGIN
 	  END
 
    END
-   
+
    // see if it's forced
    SET enforce_splstate=0
 
@@ -948,12 +948,12 @@ COPY_EXISTING ~spwi705.spl~ override
         READ_SHORT ef_off+ef_ind*0x30 opcode
         READ_LONG ef_off+ef_ind*0x30+4 par1
         READ_LONG ef_off+ef_ind*0x30+8 par2
-        PATCH_IF (opcode!=233 || par1!=1 || par2!=132) // 
-              && (opcode!=233 || par1!=0 || par2!=116) // 
-              && (opcode!=233 || par1!=0 || par2!=129) // 
-              && (opcode!=282 || par1!=0 || par2!=5)   // 
-              && (opcode!=282 || par1!=0 || par2!=7)   // 
-              && (opcode!=282 || par1!=0 || par2!=21)  // 
+        PATCH_IF (opcode!=233 || par1!=1 || par2!=132) //
+              && (opcode!=233 || par1!=0 || par2!=116) //
+              && (opcode!=233 || par1!=0 || par2!=129) //
+              && (opcode!=282 || par1!=0 || par2!=5)   //
+              && (opcode!=282 || par1!=0 || par2!=7)   //
+              && (opcode!=282 || par1!=0 || par2!=21)  //
         BEGIN
           fubar=1
           PATCH_PRINT ~Detectable Spells: SPWI705.SPL is broken in unknown manner, restoring from a backup~
@@ -989,12 +989,12 @@ COPY_EXISTING ~spwi705.spl~ override
           READ_SHORT ef_off+(k+ef_ind+local_delta)*0x30 opcode
           READ_LONG ef_off+(k+ef_ind+local_delta)*0x30+4 par1
           READ_LONG ef_off+(k+ef_ind+local_delta)*0x30+8 par2
-          PATCH_IF (opcode=233 && par1=1 && par2=132) // 
-                || (opcode=233 && par1=0 && par2=116) // 
-                || (opcode=233 && par1=0 && par2=129) // 
-                || (opcode=282 && par1=0 && par2=5)   // 
-                || (opcode=282 && par1=0 && par2=7)   // 
-                || (opcode=282 && par1=0 && par2=21)  // 
+          PATCH_IF (opcode=233 && par1=1 && par2=132) //
+                || (opcode=233 && par1=0 && par2=116) //
+                || (opcode=233 && par1=0 && par2=129) //
+                || (opcode=282 && par1=0 && par2=5)   //
+                || (opcode=282 && par1=0 && par2=7)   //
+                || (opcode=282 && par1=0 && par2=21)  //
           BEGIN
             DELETE_BYTES ef_off+(k+ef_ind+local_delta)*0x30 0x30
             delta -=1
@@ -1013,7 +1013,7 @@ ACTION_IF fubar BEGIN
   COPY_EXISTING ~spwi705.spl~ override
     READ_ASCII 0x0 data (0x64)
   BUT_ONLY
-  
+
   CREATE SPL "spwi705"
     WRITE_ASCIIE 0x0 "%data%"
     WRITE_SHORT 0x68 1
@@ -1033,7 +1033,7 @@ ACTION_IF fubar BEGIN
                            STR_VAR resource=~spattck1~ END
     LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=139 parameter1=40690 parameter2=0 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
     LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=240 parameter1=0 parameter2=28 timing=1 duration=0 target=2 power=7 resist_dispel=2 END
-    
+
     LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=230 parameter1=8 parameter2=1 timing=4 duration=7 target=2 power=7 resist_dispel=2 END
     LPF ~ADD_SPELL_EFFECT~ INT_VAR opcode=177 parameter1=0 parameter2=2 timing=3 duration=7 target=2 power=7 resist_dispel=2
                            STR_VAR resource=~spattck1~ END
@@ -1061,12 +1061,12 @@ DEFINE_ACTION_FUNCTION ds_detectable_weapon_enchantment BEGIN
 
 LAF ds_resolve_stat STR_VAR id=~WEAPON_ENCHANTMENT~ END
 
-COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override 
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
 PATCH_TRY
-PATCH_IF SOURCE_SIZE>0x71 BEGIN 
+PATCH_IF SOURCE_SIZE>0x71 BEGIN
  LPF ~FJ_SPL_ITM_REINDEX~ END
 
-  
+
   READ_LONG  0x64 ab_off
   READ_SHORT 0x68 ab_num
 
@@ -1127,7 +1127,7 @@ END // end of function
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-// Tightly based on Nythrun's ~fj_spl_itm_reindex~ patch 
+// Tightly based on Nythrun's ~fj_spl_itm_reindex~ patch
 
 DEFINE_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ BEGIN
 

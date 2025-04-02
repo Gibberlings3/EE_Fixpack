@@ -9,6 +9,6 @@
 @104 = ~^\( *Weight:? *\)[0-9]+~
 @105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
 
-// strings @322001, 322002 from game.tra in Tweaks Anthology 
+// strings @322001, 322002 from game.tra in Tweaks Anthology
 @106 = ~好女孩~
 @107 = ~天使~

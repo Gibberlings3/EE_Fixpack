@@ -1,7 +1,7 @@
 /*
 
-Automated fix for school/sectype errors, according to this algorithm: 
-- if a spell 
+Automated fix for school/sectype errors, according to this algorithm:
+- if a spell
 (i) shares a name with a standard player-castable spell; and
 (ii) does not bypass magic resistance; and
 (iii) is used in core play and not just in cutscenes or dialogs; and
@@ -16,14 +16,14 @@ NB, for consistency only use write=1 on English-language runs.
 
 */
 
-DEFINE_ACTION_FUNCTION fix_school_sectype_errors 
+DEFINE_ACTION_FUNCTION fix_school_sectype_errors
 	INT_VAR write=0
 	STR_VAR path="%MOD_FOLDER%/data/school_sectype"
 BEGIN
 
 	// determine name of fix file
-	
-	ACTION_IF game_includes_sod BEGIN 
+
+	ACTION_IF game_includes_sod BEGIN
 		OUTER_SPRINT file "sod"
 	END ELSE BEGIN
 		OUTER_SPRINT file "%game%"
@@ -31,21 +31,21 @@ BEGIN
 	OUTER_SPRINT path "%path%/%file%.2da"
 
 	// generate the file if needed
-	
+
 	ACTION_IF !write && !FILE_EXISTS "%path%" BEGIN
 		WARN "fix_school_sectype_errors is operating in write=0 mode but there is no datatable; generating one anyway"
 		OUTER_SET write=1
 	END
-	
-	ACTION_IF write BEGIN	
-		LAF find_school_sectype_errors END		
+
+	ACTION_IF write BEGIN
+		LAF find_school_sectype_errors END
 	END
 
 	// load the data; implement the fixes
-	
+
 	COPY - "%path%" nowhere
 		COUNT_2DA_COLS colcount
-		READ_2DA_ENTRIES_NOW s_s_data colcount 
+		READ_2DA_ENTRIES_NOW s_s_data colcount
 		FOR (row=0;row<s_s_data;++row) BEGIN
 			READ_2DA_ENTRY_FORMER s_s_data row 0 resref
 			READ_2DA_ENTRY_FORMER s_s_data row 1 school
@@ -63,7 +63,7 @@ END
 DEFINE_ACTION_FUNCTION find_school_sectype_errors BEGIN
 
 	// get the data on schools/sectypes for player-castable spells
-	COPY_EXISTING_REGEXP - 
+	COPY_EXISTING_REGEXP -
 	"SPPR[1-7][0-4][0-9].spl" nowhere
 	"SPWI[1-9][0-4][0-9].spl" nowhere
 		PATCH_IF !RESOURCE_CONTAINS "hidespl.2da" "%SOURCE_RES%" BEGIN
@@ -78,7 +78,7 @@ DEFINE_ACTION_FUNCTION find_school_sectype_errors BEGIN
 	LAF school_sectype_exceptions RET_ARRAY to_skip END
 
 	// go through the files
-	OUTER_SPRINT data ""	
+	OUTER_SPRINT data ""
 	COPY_EXISTING_REGEXP -
 	".*\.spl" nowhere
 		SPRINT resref "%SOURCE_RES%"
@@ -106,7 +106,7 @@ DEFINE_ACTION_FUNCTION find_school_sectype_errors BEGIN
 				END
 				PATCH_IF correct_school>=0 || correct_sectype>=0 BEGIN
 					PATCH_MATCH "%resref%" WITH
-					
+
 					"sp\(IN\|CL\|PR\|WI\)[0-9][0-9][0-9]" BEGIN
 						INNER_PATCH_SAVE spell_num "%resref%" BEGIN
 							REPLACE_TEXTUALLY "SP" ""
@@ -119,17 +119,17 @@ DEFINE_ACTION_FUNCTION find_school_sectype_errors BEGIN
 					END
 					DEFAULT
 						SPRINT ids "-1"
-					END	
+					END
 					INNER_PATCH_SAVE name "%name%" BEGIN
 						REPLACE_TEXTUALLY " " "_"
 					END
 					SPRINT data "%data%%SOURCE_RES%%TAB%%correct_school%%TAB%%correct_sectype%%TAB%%ids%%TAB%%name%%WNL%"
 				END
-			END		
+			END
 		END
-	
+
 	// write the data to file
-	
+
 <<<<<<<< .../fp-inline/file.2da
 2DA_V1.0
 *

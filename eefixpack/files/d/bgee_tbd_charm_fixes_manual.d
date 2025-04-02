@@ -2,7 +2,7 @@
 ///// re-weight to put charm dialogue at top of stack  \\\\\
 /////                                                  \\\\\
 
-SET_WEIGHT alyth     6 #-1 
+SET_WEIGHT alyth     6 #-1
 SET_WEIGHT amnis2    4 #-1
 SET_WEIGHT amnis4    1 #-1
 SET_WEIGHT bandct    8 #-1
@@ -178,7 +178,7 @@ EXTEND_BOTTOM mtbe6 0
 END
 
 // has nothing to say if 6/13 random number and OublekBounty1 < 1
-APPEND mtowna 
+APPEND mtowna
   IF ~RandomNum(13,6) !GlobalLT("OublekBounty1","GLOBAL",1)~ THEN BEGIN common1 SAY #324 // dupe the 13,5 line
     IF ~~ THEN EXIT
   END

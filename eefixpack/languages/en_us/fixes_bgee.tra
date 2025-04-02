@@ -1,8 +1,8 @@
-// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
-// any strings >= 34000 are sod strings and should go into the fixes_bgee_sod.tra file instead. 
+// any strings >= 34000 are sod strings and should go into the fixes_bgee_sod.tra file instead.
 
 /*
 jazira
@@ -52,7 +52,7 @@ CLASS FEATURES:
   Level 6-8: 1d10
   Level 9-14: 1d12
   Level 15+: 1d20
-– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25. 
+– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25.
 – Receives a +2 bonus to Saving Throws vs. Spell.
 – Deflect Missiles: +1 bonus to AC vs. missile attacks every 3 levels.
 – Starts with an Armor Class of 9 at 1st level and gains an additional +1 bonus every 2 levels through level 18.
@@ -173,10 +173,10 @@ The nishruu has no physical attacks at all, although physical attacks can hurt i
 
 // remove the line about the save penalty for water/plants since it's not implemented
 @26646 = ~Abi-Dalzim's Horrid Wilting
-(Necromancy) 
+(Necromancy)
 
 Level: 8
-Range: Visual range of the caster 
+Range: Visual range of the caster
 Duration: Instant
 Casting Time: 8
 Area of Effect: 15-ft. radius

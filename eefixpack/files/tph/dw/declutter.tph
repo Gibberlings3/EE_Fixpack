@@ -53,7 +53,7 @@ DEFINE_ACTION_FUNCTION declutter INT_VAR write=0 BEGIN
 			FAIL "declutter is running in read mode (write=0) but files.txt was not found at %path%"
 		END
 	END
- 
+
 END
 
 // this function assumes we've got the array of fx indices in fx_array
@@ -72,7 +72,7 @@ DEFINE_PATCH_FUNCTION remove_redundant_fx_patch INT_VAR telemetry=0 RET altered 
 			END
 			267 BEGIN
 				READ_SHORT fx_off+0x4 parameter
-			END 
+			END
 			206 172 296 BEGIN
 				READ_ASCII fx_off+0x14 parameter
 			END
@@ -88,7 +88,7 @@ DEFINE_PATCH_FUNCTION remove_redundant_fx_patch INT_VAR telemetry=0 RET altered 
 					WRITE_ASCII 0x14 "" (8)
 				END
 			END ELSE
-			
+
 			PATCH_IF master_opcode=296 BEGIN
 				INNER_PATCH_SAVE data "%data%" BEGIN
 					WRITE_LONG 0x4 0
@@ -101,7 +101,7 @@ DEFINE_PATCH_FUNCTION remove_redundant_fx_patch INT_VAR telemetry=0 RET altered 
 				altered=1
 				PATCH_IF telemetry BEGIN
 					PATCH_PRINT "Removing redundant %master_opcode% immunity to %parameter% from %SOURCE_FILE%"
-				END	
+				END
 			END ELSE BEGIN
 				SPRINT $"%master_opcode%_data"("%parameter%") "%data%"
 			END
@@ -109,7 +109,7 @@ DEFINE_PATCH_FUNCTION remove_redundant_fx_patch INT_VAR telemetry=0 RET altered 
 		DEFAULT
 		END
 	END
-	
+
 END
 
 
@@ -121,7 +121,7 @@ BEGIN
 	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
 		GET_OFFSET_ARRAY fx_arr ITM_V10_GEN_EFFECTS
 		LPF remove_redundant_fx_patch INT_VAR telemetry RET altered END
-	END		
+	END
 	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
 		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 	END ELSE BEGIN

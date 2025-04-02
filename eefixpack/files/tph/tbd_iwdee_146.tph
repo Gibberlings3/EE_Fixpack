@@ -18,12 +18,12 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
     END
   END
   BUT_ONLY
-  
+
 COPY_EXISTING ~cittern.itm~ ~override~ // The Cittern of War: shouldn't require creature target for AoE spell
   LPF ALTER_HEADER INT_VAR target = 4 range = 50 STR_VAR match_icon = icittern END // Emotion, Courage header
   BUT_ONLY
 */
-  
+
 COPY_EXISTING ~scrlpet.itm~  ~override~ // stone to flesh scroll
               ~scrlpet2.itm~ ~override~ // stone to flesh scroll
   LPF ALTER_HEADER INT_VAR range = 40 STR_VAR match_icon = iscrl3p END // to match scstf

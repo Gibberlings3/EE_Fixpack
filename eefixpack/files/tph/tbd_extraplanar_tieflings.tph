@@ -25,7 +25,7 @@ COPY_EXISTING ~devaheal.spl~ ~override~ // heal (deva)
               ~sppr510.spl~  ~override~ // cause critical wounds
               ~sppr514.spl~  ~override~ // mass cure light wounds
               ~sppr523.spl~  ~override~ // mass cause light wounds
-              ~sppr607.spl~  ~override~ // heal 
+              ~sppr607.spl~  ~override~ // heal
               ~sppr608.spl~  ~override~ // harm
               ~sppr699.spl~  ~override~ // harm (enemy)
               ~sppr711.spl~  ~override~ // regeneration
@@ -39,13 +39,13 @@ COPY_EXISTING ~devaheal.spl~ ~override~ // heal (deva)
               ~spwish39.spl~ ~override~ // heal (via wish)
               ~spwish46.spl~ ~override~ // greater restoration (via wish)
               ~spwm168.spl~  ~override~ // heal (via wild surge)
-  LPF ALTER_EFFECT INT_VAR match_opcode = 324 match_parameter1 = 153 match_parameter2 = 104 parameter1 = 128 END // race: tiefling > rakshasa 
-  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 324 match_parameter1 = 153 match_parameter2 = 104 parameter1 = 128 END // race: tiefling > rakshasa
+
 // bolt of glory should treat tieflings as prime material beings
 COPY_EXISTING ~sppr612.spl~ ~override~ // bolt of glory
-  LPF ALTER_EFFECT INT_VAR match_opcode = 318 match_parameter1 = 153 match_parameter2 = 104 parameter1 = 128 END // race: tiefling > rakshasa 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 153 match_parameter2 = 4 parameter1 = 128 END // race: tiefling > rakshasa 
-  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 318 match_parameter1 = 153 match_parameter2 = 104 parameter1 = 128 END // race: tiefling > rakshasa
+  LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 153 match_parameter2 = 4 parameter1 = 128 END // race: tiefling > rakshasa
+
 // deleting item effs that target tieflings for the wrong reasons
 COPY_EXISTING ~debian.itm~  ~override~ // Debian's Rod of Smiting +3: does extra damage to outer-planars
               ~doves.itm~   ~override~ // Three White Doves +3: double damage, chance to be destroyed for outer-planars
@@ -54,6 +54,6 @@ COPY_EXISTING ~debian.itm~  ~override~ // Debian's Rod of Smiting +3: does extra
 
 COPY_EXISTING ~sw1h51.itm~  ~override~ // solemn duty: bonus damage, thac0, enchantment vs. outer-planar
   LPF ALTER_EFFECT INT_VAR match_parameter1 = 153 match_parameter2 = 4 parameter1 = 128 END // bonus enchantment (op344), damage (op177)
-  
+
 COPY_EXISTING ~sw1h51k.eff~ ~override~
   WRITE_LONG 0x1c 128 // swap bonus form tiefling to rakshasa

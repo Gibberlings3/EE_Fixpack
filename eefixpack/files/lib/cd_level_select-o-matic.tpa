@@ -6,7 +6,7 @@
 
 The CD_LEVEL_SELECT-O-MATIC invokes the CD_EXTEND-O-MATIC or
 CD_TRIM-O-MATIC function as necessary to extend or trim the selected spell
-to the desired level cap. Both TRIM and EXTEND can be invoked directly. 
+to the desired level cap. Both TRIM and EXTEND can be invoked directly.
 
 * Define round and cap variables before INCLUDEing these *
 
@@ -18,8 +18,8 @@ used:
   The Divine Remix, as divine_remix/lib/cd_level_select-o-matic.tpa [symbolic link]
   Sword and Fist, as sword_and_fist/lib/cd_level_select-o-matic.tpa [symbolic link]
   SP Collection, as spstuff/lib/cd_level_select-o-matic.tpa [symbolic link]
- 
-version history: 
+
+version history:
   unk: creation of the original CD_EXTEND-O-MATIC
   12/30/23: Added level select and trim macros; expended extend; bundled together for Spell-50
   2/6/25: fixed bug where TRIM-O-MATIC never initialized the abil_delta variable
@@ -58,19 +58,19 @@ BEGIN
     READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) last_level // read level of last ability
     PATCH_IF last_level > level_cap BEGIN
       LPF CD_TRIM-O-MATIC INT_VAR level_cap RET abil_delta END
-    END ELSE  
+    END ELSE
     PATCH_IF last_level < level_cap BEGIN
-      LPF CD_EXTEND-O-MATIC INT_VAR base_dur step_dur step_size level_cap min_dur dur_special min_lev_alt base_dmg_rolls 
+      LPF CD_EXTEND-O-MATIC INT_VAR base_dur step_dur step_size level_cap min_dur dur_special min_lev_alt base_dmg_rolls
                                     base_dmg_fixed damage_rolls damage_fixed save_for_half damage_special RET abil_delta END
-    END ELSE 
+    END ELSE
     PATCH_IF last_level = level_cap BEGIN
       SET abil_delta = 0
-    END  
+    END
   END ELSE BEGIN
     SET abil_delta = 0
-  END  
+  END
 
-END  
+END
 
 /////                                                  \\\\\
 ///// CD_EXTEND-O-MATIC, patent pending                \\\\\
@@ -102,14 +102,14 @@ BEGIN
   READ_SHORT (abil_off + 0x10 + (0x28 * (abil_num - 1))) min_lev // read level of last ability
   // fudge factor is to determine which half of damage gets the full die when adding 1 per level
   SET save_fudge_fixed = 0 SET save_fudge_rolls = 0 SET nonsave_fudge_fixed = 0 SET nonsave_fudge_rolls = 0
-  PATCH_IF save_for_half BEGIN  
+  PATCH_IF save_for_half BEGIN
     PATCH_MATCH save_for_half WITH
       2 BEGIN SET save_fudge_fixed = 1 SET save_fudge_rolls = 1 END
       3 BEGIN SET save_fudge_rolls = 1 SET nonsave_fudge_fixed = 1 END
       4 BEGIN SET save_fudge_fixed = 1 SET nonsave_fudge_rolls = 1  END
       DEFAULT SET nonsave_fudge_fixed = 1 SET nonsave_fudge_rolls = 1 // 1, or non-valid
     END
-  END    
+  END
   PATCH_IF ((min_lev = 1) AND (min_lev_alt != 0)) BEGIN SET min_lev = min_lev_alt END
   FOR (index = min_lev + step_size ; index < (level_cap + 1) ; index = index + step_size) BEGIN
     READ_ASCII (abil_off +        (0x28 * (abil_num - 1))) abil (0x28) // read entire ability
@@ -120,9 +120,9 @@ BEGIN
     WRITE_ASCIIE (fx_off +        (0x30 * (abil_fx_idx + abil_fx_num))) "%effects%"          // write in effects block
     // if damage_special & save_for_half, we use the first loop only to gather total damage between the split damage opcodes, then use it in a second loop
     PATCH_IF damage_special BEGIN
-      SET special_fixed = 0  
-      SET special_rolls = 0 
-    END  
+      SET special_fixed = 0
+      SET special_rolls = 0
+    END
     FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
       READ_BYTE (fx_off + 0x0c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) timing
       READ_LONG (fx_off + 0x0e + (0x30 * (abil_fx_idx + abil_fx_num + index2))) duration
@@ -144,27 +144,27 @@ BEGIN
             PATCH_IF damage_special BEGIN
               SET special_fixed = special_fixed + LONG_AT (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2)))
               SET special_rolls = special_rolls + LONG_AT (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2)))
-            END ELSE BEGIN  
+            END ELSE BEGIN
               READ_LONG (fx_off + 0x24 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) save // have to account for non-EE damage split
-              PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens 
+              PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens
                 WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + nonsave_fudge_fixed) / 2)
                 WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + nonsave_fudge_rolls) / 2)
               END ELSE BEGIN
                 WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + save_fudge_fixed) / 2)
                 WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + save_fudge_rolls) / 2)
-              END  
+              END
             END
           END ELSE BEGIN // either no save-for-half or on EE with its save-for-half flag
             PATCH_IF damage_special BEGIN
               WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) (THIS + damage_fixed)
-              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) (THIS + damage_rolls)   
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) (THIS + damage_rolls)
             END ELSE BEGIN
               WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_fixed
-              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_rolls      
-            END  
+              WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) new_rolls
+            END
           END
-        END   
-      END    
+        END
+      END
     END // closes effects loop
     PATCH_IF (damage_special AND (special_fixed OR special_rolls)) BEGIN
       SET new_fixed = (special_fixed + damage_fixed)
@@ -175,15 +175,15 @@ BEGIN
           READ_LONG (fx_off + 0x2c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) special
           PATCH_IF (save_for_half AND ((special & BIT8) = 0)) BEGIN // if we're saving for half and there's no EE save-for-half flag, split damage
             READ_LONG (fx_off + 0x24 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) save // have to account for non-EE damage split
-            PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens 
+            PATCH_IF ((save & (BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) = 0) BEGIN // 1/2 damage that always happens
               WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + nonsave_fudge_fixed) / 2)
               WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + nonsave_fudge_rolls) / 2)
             END ELSE BEGIN
               WRITE_LONG (fx_off + 0x04 + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_fixed + save_fudge_fixed) / 2)
               WRITE_LONG (fx_off + 0x1c + (0x30 * (abil_fx_idx + abil_fx_num + index2))) ((new_rolls + save_fudge_rolls) / 2)
-            END  
+            END
           END
-        END   
+        END
       END // closes second effects loop for damage_special
     END // end patch_if for damage_special
     INSERT_BYTES (abil_off +        (0x28 * abil_num)) 0x28 // insert new ability
@@ -220,7 +220,7 @@ BEGIN
       READ_SHORT (abil_off + 0x20 + (0x28 * (abil_num - 1))) last_abil_fx_idx
       FOR (index = 1 ; index < abil_num ; ++index) BEGIN // now find the first ability over the cap; start at one to preserve at least one header
         READ_SHORT (abil_off + 0x10 + (0x28 * index)) level // read level of ability
-        PATCH_IF level > level_cap BEGIN 
+        PATCH_IF level > level_cap BEGIN
           READ_SHORT (abil_off + 0x20 + (0x28 * index)) first_abil_fx_idx
           SET abil_first = index
           SET index = abil_num // kill loop
@@ -234,6 +234,6 @@ BEGIN
       WRITE_LONG 0x6a fx_off - abil_length // update effects offset to acocunt for deleted abilities
       WRITE_SHORT 0x68 abil_first // update ability count
     END
-  END  
+  END
 
 END

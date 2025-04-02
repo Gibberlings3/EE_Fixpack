@@ -8,7 +8,7 @@ APPEND ~smtables.2da~ ~50_SPIDER_SPAWN_PHASE SPIDPHSU
 COPY_EXISTING ~spwi423.spl~ ~override~
   FOR (index = 2 ; index < 5 ; ++index) BEGIN
     LPF ALTER_EFFECT INT_VAR header = index match_opcode = 331 parameter2 = 50 END // swap to pahse spiders for levels 9-11
-  END  
+  END
   FOR (index = 5 ; index < 24 ; ++index) BEGIN
     LPF ALTER_EFFECT INT_VAR header = index match_opcode = 331 parameter2 = 51 END // sword spiders at level 12+
-  END 
+  END

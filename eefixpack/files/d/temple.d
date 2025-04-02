@@ -39,7 +39,7 @@ REPLACE BORINALL
 
     // slightly different response for someone who's only working for lathander
     IF ~OR(2)
-          !Global("Stripped","GLOBAL",0) 
+          !Global("Stripped","GLOBAL",0)
           !Kit(PLAYER1,GODLATHANDER)~ THEN REPLY #103036 GOTO 11
   END
 
