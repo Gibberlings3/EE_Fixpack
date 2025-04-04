@@ -451,6 +451,9 @@ BEGIN
 								PATCH_IF !("%effectID%" == 142 AND ("%icon_type%" == 86 OR "%icon_type%" == 91)) OR ("%fx_parameter1%" < 0) BEGIN
 									TEXT_SPRINT $"7eyes-o-matic#ancillary"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
 									WRITE_SHORT "%fx_off%" 999
+								END ELSE PATCH_IF !("%effectID%" == 78) OR ("%fx_parameter2%" == 6) BEGIN
+									TEXT_SPRINT $"7eyes-o-matic#ancillary"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
+									WRITE_SHORT "%fx_off%" 999
 								END ELSE BEGIN
 									SET "found_other" = 1
 									TEXT_SPRINT $"7eyes-o-matic#other"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resource%" "%fx_dicenumber%" "%fx_dicesize%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%" "%projectile_type%") ""
@@ -506,7 +509,7 @@ BEGIN
 												INSERT_2DA_ROW "%rows%" 0 "%count% %outer_destFile% %subspell_resref%"
 												// prettify
 												PRETTY_PRINT_2DA
-											BUT_ONLY UNLESS "%outer_destFile%"
+											BUT_ONLY UNLESS "%outer_destFile%[ %TAB%]+%subspell_resref%"
 										END
 									END
 								END
@@ -557,7 +560,7 @@ BEGIN
 											INSERT_2DA_ROW "%rows%" 0 "%count% %outer_destFile% %subspell_resref%"
 											// prettify
 											PRETTY_PRINT_2DA
-										BUT_ONLY UNLESS "%outer_destFile%"
+										BUT_ONLY UNLESS "%outer_destFile%[ %TAB%]+%subspell_resref%"
 									END
 								END
 							END

@@ -1220,11 +1220,11 @@ luke
 WITH_SCOPE BEGIN
   WITH_SCOPE BEGIN
     COPY_EXISTING "spcl751a.spl" "override"
-      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "spcl751b" END // Cast spell
+      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "cd0072" END // Cast spell
     BUT_ONLY_IF_IT_CHANGES
   END
   WITH_SCOPE BEGIN
-    COPY_EXISTING "spcl751b.spl" "override"
+    COPY_EXISTING "cd0072.spl" "override"
       LPF "ALTER_EFFECT" INT_VAR "savingthrow" = BIT0 "savebonus" = 2 END // all effects: Save vs. Spell
       LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 2 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
     BUT_ONLY_IF_IT_CHANGES
@@ -1233,11 +1233,12 @@ END
 
 /*
 luke
-**Wand of Cursing**
+**Wand of Cursing** (no longer needed!)
 - Move all cosmetic effects into the 3 subspells
   - this is a "eefixpack/files/tph/luke/7eyes/silence/blindness/deafness.tph" follow-up
 */
 
+/*
 WITH_SCOPE BEGIN
   COPY_EXISTING "wand19.itm" "override"
     LPF "GET_V10_HEAD_EFFECTS" RET_ARRAY "v10_head_effects" END
@@ -1254,6 +1255,7 @@ WITH_SCOPE BEGIN
     BUT_ONLY_IF_IT_CHANGES
   END
 END
+*/
 
 /*
 luke

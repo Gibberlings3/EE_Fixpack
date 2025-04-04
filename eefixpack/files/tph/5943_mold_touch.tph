@@ -5,18 +5,20 @@ COPY_EXISTING ~idmold.pro~ ~override~
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override~ // sppr326
               ~%CLERIC_MOLD_TOUCH%b.spl~ ~override~ // sppr326b
-  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete portrait icons because...
-  LPF ALTER_EFFECT  INT_VAR match_opcode =  78 special = 7 END  // we're attaching them directly to the disease effect
-  LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_parameter2 = 12 timing = 3 duration = 0 END  // we're attaching them directly to the disease effect
+  // LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete portrait icons because...
+  // LPF ALTER_EFFECT  INT_VAR match_opcode =  78 special = 7 END  // we're attaching them directly to the disease effect
+  // LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_parameter2 = 12 timing = 3 duration = 0 END  // we're attaching them directly to the disease effect
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override~ // sppr326
-  LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_duration = 18 opcode = 146 parameter1 = 0 parameter2 = 2 duration = 7
-    special = 0 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%a~ END // change final (saved) mold touch burst to another subspell
   LPF CLONE_EFFECT  INT_VAR match_opcode = 324 match_parameter2 = 55 parameter2 = 68 END // prevent spread to someone who already has mold
+
+COPY_EXISTING "cd006c.spl" "override"
+  LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_duration = 18 opcode = 146 parameter1 = 0 parameter2 = 1 duration = 7
+    special = 0 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%a~ END // change final (saved) mold touch burst to another subspell
   LPF CLONE_EFFECT  INT_VAR match_opcode =  78 match_parameter1 = 2 opcode = 206 parameter1 = 0 parameter2 = 0 
-    timing = 0 duration = 1 savingthrow = BIT0 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%~ END
-  LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 3 END  // always play audio/visual
-  LPF ALTER_EFFECT INT_VAR match_opcode = 215 resist_dispel = 3 END  // always play audio/visual
+    timing = 0 duration = 1 savingthrow = BIT0 STR_VAR resource = EVAL ~%DEST_RES%~ END
+  // LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 3 END  // always play audio/visual
+  // LPF ALTER_EFFECT INT_VAR match_opcode = 215 resist_dispel = 3 END  // always play audio/visual
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%b.spl~ ~override~ // sppr326b
   WRITE_BYTE 0x1c 2 // spell type
