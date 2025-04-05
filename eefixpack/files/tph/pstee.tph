@@ -10,6 +10,14 @@ END
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
 
+// Adding Lua functions needed by subsequent patches
+COPY_EXISTING ~util.lua~ ~override~
+  APPEND_FILE TEXT ~eefixpack/files/lua/pstee_util.lua~
+BUT_ONLY
+
+// Strength description text on the Statistics screen should work for all potential strength values
+INCLUDE ~eefixpack/files/tph/a7/pst_ui_fix_str_help.tph~
+
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\

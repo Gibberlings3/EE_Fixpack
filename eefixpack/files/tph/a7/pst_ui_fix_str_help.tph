@@ -1,0 +1,20 @@
+// Strength description text on the Statistics screen should work for all potential strength values
+COPY_EXISTING ~ui.menu~ ~override~
+  // removing original code block
+  SET pos_start = INDEX_BUFFER(CASE_SENSITIVE ~function getStrengthHelpText(roll)~)
+  PATCH_IF (pos_start > 0) BEGIN
+    SET pos_start = INDEX_BUFFER(CASE_SENSITIVE ~^[ %TAB%]*if roll == "18/30" then~ pos_start)
+    PATCH_IF (pos_start > 0) BEGIN
+      SET pos_end = INDEX_BUFFER(CASE_SENSITIVE ~^[ %TAB%]*end~ pos_start)
+      PATCH_IF (pos_end > pos_start) BEGIN
+        SET pos_end = INDEX_BUFFER(~[%WNL%]~ pos_end)
+        DELETE_BYTES pos_start (pos_end - pos_start)
+      END
+    END
+  END
+
+  // adding patched code block
+  PATCH_IF (pos_start > 0) BEGIN
+    INSERT_FILE pos_start ~eefixpack/files/menu/pstee_str_help_text.menu~
+  END
+BUT_ONLY

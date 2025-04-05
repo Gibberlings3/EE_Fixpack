@@ -1,0 +1,8 @@
+	local fields = split(roll, '/')
+	statValue = tonumber(fields[1])
+	if #fields > 1 then
+		statExtraValue = tonumber(fields[2])
+		if statExtraValue == 0 then
+			statExtraValue = 100
+		end
+	end
