@@ -1,8 +1,8 @@
-// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
-// proficency Clubs -> Hammers 
+// proficency Clubs -> Hammers
 @4845 = ~POOR QUALITY SLEDGEHAMMER
 Damage: 2-7 Crushing
 Speed: 8
@@ -37,9 +37,9 @@ Speed: 10
 Weight: 0
 Proficiency: Missiles
 
-The putty-like globes on the heads of these crossbow bolts are actually dried-up aquatic sponges found in many of the great lakes of Bytopia. Seemingly unremarkable to most scholars, these tiny sponges were accidentally discovered to have the property of being able to absorb acids and store them in their bodies with no harm to themselves. 
+The putty-like globes on the heads of these crossbow bolts are actually dried-up aquatic sponges found in many of the great lakes of Bytopia. Seemingly unremarkable to most scholars, these tiny sponges were accidentally discovered to have the property of being able to absorb acids and store them in their bodies with no harm to themselves.
 
-As a result, great masses of these creatures were gathered and bred for use as weapons against fiends in the Blood War. After being fed a steady diet of acid for a few days, the sponges are harvested, dried, and covered with a resin that keeps a soft bubble around the sponge. The sponge is then mounted on the head of an arrow or crossbow bolt and is ready for use. 
+As a result, great masses of these creatures were gathered and bred for use as weapons against fiends in the Blood War. After being fed a steady diet of acid for a few days, the sponges are harvested, dried, and covered with a resin that keeps a soft bubble around the sponge. The sponge is then mounted on the head of an arrow or crossbow bolt and is ready for use.
 
 When the tip of the bolt strikes a creature with sufficient force, the resin bubble bursts, the sponge flattens, and the target is doused with acid.~
 
@@ -50,7 +50,7 @@ Weight: 0
 
 This tattoo symbolizes your efforts to win Trist's freedom. When worn, it protects the wearer from chains, paralyzation, or any other attacks that chain or hold an individual.~
 
-// Bless -> Blessing 
+// Bless -> Blessing
 @48846 = ~SCROLL OF BLESSING
 Allows user to cast "Blessing"
 Level: 1 / Priest
@@ -66,7 +66,7 @@ A boon to one's companions, granting them strength when they are in need.
 
 Blessing grants +1 to hit and +1 to saves to all friendly creatures that are in a 70 feet radius from the casting point.~
 
-// Bless -> Blessing  
+// Bless -> Blessing
 @48848 = ~SCROLL OF CURSE
 Allows user to cast "Curse"
 Level: 1 / Priest
@@ -82,7 +82,7 @@ A bane to one's enemies, weakening them.
 
 The opposite of Blessing, Curse grants all enemy targets in a 50-ft. radius, -1 to attacks and -1 to their saving throws for 30 seconds.~
 
-// This spell surrounds the caster -> This spell surrounds the target (There is also a surplus space after "intent.") 
+// This spell surrounds the caster -> This spell surrounds the target (There is also a surplus space after "intent.")
 @48851 = ~SCROLL OF PROTECTION FROM EVIL
 Allows user to cast "Protection from Evil"
 Level: 1 / Priest
@@ -104,7 +104,7 @@ This spell bestows protection from evil creatures through a magical barrier that
 Damage: 3-9 Crushing
 Enchanted: +1
 THAC0: +1
-Speed: 6 
+Speed: 6
 Weight: 10
 Proficiency: Clubs
 Usable only by Fighters
@@ -184,7 +184,7 @@ Thief          1d6+4 (max 23)
 Fighter         1d8+4 (max 25)
 Mage            1d4+4 (max 21)~
 
-// Bless -> Blessing 
+// Bless -> Blessing
 @51299 = ~BLESSING
 Range: 180 feet
 Duration: 30 seconds
@@ -196,7 +196,7 @@ A boon to one's companions, granting them strength when they are in need.
 
 Blessing grants +1 to hit and +1 to saves to all friendly creatures that are in a 70 feet radius from the casting point.~
 
-// Bless -> Blessing 
+// Bless -> Blessing
 @51301 = ~CURSE
 Range: 180 feet
 Duration: 30 seconds
@@ -231,7 +231,7 @@ Usable only by Nameless One
 
 This magical rod allows the user to summon Modron constructs to do battle with his enemies. From one to three constructs are summoned. The constructs will fight fearlessly to the death.~
 
-// Bless -> Blessing 
+// Bless -> Blessing
 @52837 = ~BLESSED CANDY
 Invokes: "Blessing"
 Weight: 0
@@ -265,7 +265,7 @@ Enchanted: +2
 Special: +2 Piercing Damage
 THAC0: +2
 Speed: 2
-Weight: 1 
+Weight: 1
 Proficiency: Edged
 Not usable by Priests
 

@@ -1,7 +1,7 @@
 // generated from docs/eefixpack_arrays.ods > [game] item tab
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_spl BEGIN
 
-  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes  
+  //file, power, resist_dispel, stack, level, wild_magic, speed, range, animation, school, secondary, type => file // notes
   ~%CLERIC_CURE_CRITICAL_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_CRITICAL_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%CLERIC_CURE_LIGHT_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_LIGHT_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)
   ~%CLERIC_CURE_MEDIUM_WOUNDS%~, null, 2, null, null, null, null, 0, null, null, null, null => ~%CLERIC_CURE_MEDIUM_WOUNDS%~ // luke: healing spells should be 0 range, not dispellable (from files/tph/luke/cure_wounds.tph)

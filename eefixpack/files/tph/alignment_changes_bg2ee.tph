@@ -21,8 +21,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_cre_changes_align BEGIN
   dagnoll  => 51 // gnoll, from chaotic_neutral
   gnollhp1 => 51 // gnoll, from chaotic_neutral
   ohdugcut => 51 // ur-gothoz, le > ce [multipart fix, see eefixpack/files/tph/tbd_bg2ee_urgothoz.tph]
-  ohdugoth => 51 // ur-gothoz, le > ce [multipart fix, see eefixpack/files/tph/tbd_bg2ee_urgothoz.tph] 
-  
+  ohdugoth => 51 // ur-gothoz, le > ce [multipart fix, see eefixpack/files/tph/tbd_bg2ee_urgothoz.tph]
+
 END
 
 // the actual code to update alignments (don't mess with anything below this)
@@ -31,5 +31,5 @@ ACTION_PHP_EACH cd_bulk_cre_changes_align AS cre => align BEGIN
   COPY_EXISTING ~%cre%.cre~ ~override~
     WRITE_BYTE 0x27b align
     BUT_ONLY IF_EXISTS
-    
-END    
+
+END

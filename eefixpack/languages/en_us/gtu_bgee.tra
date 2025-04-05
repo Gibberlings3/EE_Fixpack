@@ -1,8 +1,8 @@
-// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
-// any strings >= 34000 are sod strings and should go into the gtu_bgee_sod.tra file instead. 
+// any strings >= 34000 are sod strings and should go into the gtu_bgee_sod.tra file instead.
 
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @400 = ~'Twas some three hundred years hence, but folk still cringe at the mention of the destruction at Ulcaster School. I've not met a soul who claims to know why it occurred, and none that were there are alive to say.~

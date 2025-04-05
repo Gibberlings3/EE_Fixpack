@@ -18,7 +18,7 @@ COPY_EXISTING ~ar1001.are~ ~override~
               ~ar3017.are~ ~override~
   READ_LONG 0xb0 anim_off
   SET bytes = (LONG_AT 0xac) * 76 // # bytes of animation block
-  
+
     // offsets: tiled objects, songs, rest encounters, automap notes, projectile traps
   PATCH_FOR_EACH off IN 0xb8 0xbc 0xc0 0xc4 0xcc BEGIN
     PATCH_IF (LONG_AT off >= anim_off) BEGIN

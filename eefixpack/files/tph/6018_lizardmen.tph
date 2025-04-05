@@ -8,7 +8,7 @@ COPY_EXISTING ~ms2lizm.cre~ ~override~ // Lizard Man (monster summoning)
 
 COPY_EXISTING ~s1-12.itm~ ~override/ms2lizm.itm~ // create new lizardman weapon
   WRITE_ASCII 0x22 HB #2 // halberd animation
-  
+
 COPY_EXISTING ~ms3tliz.cre~ ~override~ // Tough Lizard Man (monster summoning)
               ~ss2liz5.cre~ ~override~ // Tough Lizard Man (summon shadow monsters)
               ~ss2liz6.cre~ ~override~ // Tough Lizard Man (summon shadow monsters)

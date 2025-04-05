@@ -25,13 +25,13 @@ COPY_EXISTING ~bdnighte.spl~ ~override~ // invis via the night's gift bdleat07.i
     READ_SHORT  (abil_off + 0x1e + (index * 0x28)) abil_fx_num
     READ_SHORT  (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
     SET add321 = 0
-    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN 
+    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
       READ_SHORT (fx_off + 0x00 + (0x30 * (index2 + abil_fx_idx))) opcode
       READ_BYTE  (fx_off + 0x0c + (0x30 * (index2 + abil_fx_idx))) timing
       READ_ASCII (fx_off + 0x14 + (0x30 * (index2 + abil_fx_idx))) resref
       PATCH_IF ((opcode = 20) AND (add321 = 0)) BEGIN
         READ_ASCII   (fx_off + 0x00 + (0x30 * (index2 + abil_fx_idx))) effect (48)
-        PATCH_IF add326 BEGIN 
+        PATCH_IF add326 BEGIN
           INSERT_BYTES (fx_off + 0x00 + (0x30 * abil_fx_idx)) 0x30
           WRITE_ASCIIE (fx_off + 0x00 + (0x30 * abil_fx_idx)) ~%effect%~ #48
           WRITE_SHORT  (fx_off + 0x00 + (0x30 * abil_fx_idx)) 326 // opcode
@@ -39,7 +39,7 @@ COPY_EXISTING ~bdnighte.spl~ ~override~ // invis via the night's gift bdleat07.i
           WRITE_BYTE   (fx_off + 0x0c + (0x30 * abil_fx_idx)) 4 // timing
           WRITE_LONG   (fx_off + 0x0e + (0x30 * abil_fx_idx)) (THIS - 3) // duration
           WRITE_ASCIIE (fx_off + 0x14 + (0x30 * abil_fx_idx)) ~cdinvexp~ #8
-        END   
+        END
         INSERT_BYTES (fx_off + 0x00 + (0x30 * abil_fx_idx)) 0x30 // 321 to remove self
         WRITE_ASCIIE (fx_off + 0x00 + (0x30 * abil_fx_idx)) ~%effect%~ #48
         WRITE_SHORT  (fx_off + 0x00 + (0x30 * abil_fx_idx)) 321 // opcode
@@ -48,10 +48,10 @@ COPY_EXISTING ~bdnighte.spl~ ~override~ // invis via the night's gift bdleat07.i
         WRITE_LONG   (fx_off + 0x0e + (0x30 * abil_fx_idx)) 0 // duration
         WRITE_ASCIIE (fx_off + 0x14 + (0x30 * abil_fx_idx)) ~%SOURCE_RES%~ #8
         SET add321 += (1 + add326)
-        SET abil_fx_num += (1 + add326) 
-        SET index2 += (1 + add326) 
-        SET fx_delta += (1 + add326) 
-      END ELSE   
+        SET abil_fx_num += (1 + add326)
+        SET index2 += (1 + add326)
+        SET fx_delta += (1 + add326)
+      END ELSE
       PATCH_IF ((opcode = 174) AND (timing = 4) AND
                 ("%resref%" STRING_COMPARE_CASE "eff_m10" = 0)) BEGIN // expiry sound
         WRITE_SHORT (fx_off + 0x00 + (0x30 * (index2 + abil_fx_idx))) 326        // apply effect list
@@ -60,6 +60,6 @@ COPY_EXISTING ~bdnighte.spl~ ~override~ // invis via the night's gift bdleat07.i
         WRITE_ASCII (fx_off + 0x14 + (0x30 * (index2 + abil_fx_idx))) cdinvexp   // expiry sound spell
       END
     END
-    WRITE_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num 
+    WRITE_SHORT (abil_off + 0x1e + (index * 0x28)) abil_fx_num
   END
-  BUT_ONLY IF_EXISTS 
+  BUT_ONLY IF_EXISTS

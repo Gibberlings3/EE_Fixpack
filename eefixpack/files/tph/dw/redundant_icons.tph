@@ -24,19 +24,19 @@ BEGIN
 		OUTER_SPRINT path "bg2"
 	END
 	OUTER_SPRINT path "%data_location%/%path%"
-	
+
 // main
 
 	ACTION_IF write BEGIN
-	
+
 		COPY_EXISTING_REGEXP ".*\.\(\itm\|spl\)$" override
 			LPF redundant_icon_patch END
 		BUT_ONLY
 		COPY + "weidu_external/data/%MOD_FOLDER%/redundant_icons.txt" "%path%.txt"
-	
-	
+
+
 	END ELSE BEGIN
-	
+
 		COPY - "%path%.txt" nowhere
 			READ_2DA_ENTRIES_NOW itemlist 1
 			FOR (row=0;row<itemlist;++row) BEGIN
@@ -46,16 +46,16 @@ BEGIN
 						LPF redundant_icon_patch END
 				END
 			END
-	
+
 	END
-	
+
 END
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_PATCH_FUNCTION redundant_icon_patch BEGIN
 	found=0
-	// get the array	
+	// get the array
 	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
 		GET_OFFSET_ARRAY fx_arr ITM_V10_GEN_EFFECTS
 	END ELSE BEGIN
@@ -69,14 +69,14 @@ DEFINE_PATCH_FUNCTION redundant_icon_patch BEGIN
 		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 	END ELSE BEGIN
 		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
-	END	
+	END
 	PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
 		GET_OFFSET_ARRAY2 fx_arr ab_off SPL_V10_HEAD_EFFECTS
 		LPF redundant_icon_helper RET found_here END
 		found=found OR found_here
 	END
 	/// do the actual deletion
-	PATCH_IF found BEGIN 
+	PATCH_IF found BEGIN
 		LPF DELETE_EFFECT INT_VAR match_opcode=999 END
 		PATCH_IF write BEGIN
 			LPF fp_log_this STR_VAR file=redundant_icons.txt input="%SOURCE_FILE%" END
@@ -141,7 +141,7 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 				READ_LONG fx_off+0x8 parameter2
 				PATCH_IF IS_AN_INT $to_check("%parameter2%") BEGIN
 					WRITE_SHORT fx_off 999
-					PATCH_MATCH "%parameter2%" WITH 
+					PATCH_MATCH "%parameter2%" WITH
 					6 BEGIN
 						poison=1
 					END
@@ -154,7 +154,7 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 					END
 					DEFAULT
 					END
-				END		
+				END
 			END
 		END
 		// update poison/disease/regeneration if needed
@@ -165,10 +165,10 @@ DEFINE_PATCH_FUNCTION redundant_icon_helper RET found_here BEGIN
 				END ELSE
 				PATCH_IF (disease && SHORT_AT fx_off=78) BEGIN
 					WRITE_LONG fx_off+0x2c 7
-				END	ELSE			
+				END	ELSE
 				PATCH_IF (regenerate && SHORT_AT fx_off=98) BEGIN
 					WRITE_LONG fx_off+0x2c regen_icon
-				END				
+				END
 			END
 		END
 	END

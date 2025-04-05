@@ -1,6 +1,6 @@
-// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 6
 @25 = ~LOWER PLANES VERMIN ARMOR
@@ -2942,13 +2942,13 @@ WE HAVE SEEN YOUR FACE AS YOU SHED OUR BLOOD. SPEAK YOUR PURPOSE HERE, MURDERER.
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @38932 = ~"You know what I mean. I have skills you can use. You have powers that can help me."~
 
-//  tell a tell -> tell a tale 
+//  tell a tell -> tell a tale
 @39300 = ~Yves leans forward as you tell the tale of your wakening in the Dustmen's Mortuary... she seems to devour your every word. As you finish, she smiles at you. "I shall remember this tale. I, too, will tell a tale of the Dustmen - 'Chapters of Dust.'"~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @39315 = ~"Once upon a time, there existed a modron. It was newly-created, its logic fresh and untested, and it had come to Sigil, following the commands of its modron superiors."~
 
-//  I'll the tale -> I'll hear the tale 
+//  I'll the tale -> I'll hear the tale
 @39343 = ~"I'll hear the tale another time, Yves. Farewell."~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
@@ -2984,7 +2984,7 @@ WE HAVE SEEN YOUR FACE AS YOU SHED OUR BLOOD. SPEAK YOUR PURPOSE HERE, MURDERER.
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @39502 = ~I'm on my way to becoming a Godsman. I am to find a smith in the Great Foundry and he'll tell me how to work the forge so that I can create an item. I am to do this to prove that I can see potential even in a cold lump of rock. Shouldn't be hard. I am to return to him when I'm done.~
 
-// wits end -> wit's end 
+// wits end -> wit's end
 @39505 = ~I told Mar I had opened the box after coming to my wit's end about who to deliver it to. He now refuses to pay me for my troubles. My morality is in turmoil, for I believe I should have been compensated in some small way. After all, I did try to deliver the box... it was just that no one would accept it from me. Then again, I did open the box despite Mar's warnings not to. Confused, I left Mar without payment or comment, I am just glad to be finally done with this business of the box and the fiend contained therein.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
@@ -5627,7 +5627,7 @@ Usable only by Fighters and living creatures
 
 Legend has it that this bracelet was created by Nacek the Sadistic. Tiny razor sharp spikes cover the entire surface of this item injecting small amounts of rare reagents into the blood stream of the user. The effect of these chemicals causes the user to feel a constant adrenaline rush of strength.~
 
-// Area of Effect is 10 feet Radius -> Area of Effect is a 10 feet radius 
+// Area of Effect is 10 feet Radius -> Area of Effect is a 10 feet radius
 @51329 = ~CALL LIGHTNING
 Range: 180 feet
 Duration: Instant
@@ -5814,7 +5814,7 @@ When cast, the caster chooses any target within 150 ft. and the Adder's Kiss wil
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @52576 = ~"'Be quiet?!'" Morte clacks his teeth. "Like the hells I will! I think we've listened to this crone rattle her bone-box enough, and now she's got some pair of stones, saying I haven't got any skin! So WHAT if I don't?! Obviously the fact SHE has skin has done wonders for HER looks! Does she think I *like* being NAKED all the time? And *another* thing-"~
 
-//  APERATURES -> APERTURES 
+//  APERATURES -> APERTURES
 @52623 = ~The voice continues. "HELP ME TO DIVIDE. BRANCH OUT. EXPAND. NEW APERTURES WILL OPEN. YOU MAY USE THEM TO TRAVEL TO THE LOWER WARD."~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
@@ -7189,7 +7189,7 @@ In activating the tattoo, some of the memories of living on Sigil's streets will
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @64584 = ~I tore up the Dead Contract that was causing Angyar so much misery. He seemed to shed a few years as the bits of paper fell to the floor.~
 
-//  belongs -> belonged 
+//  belongs -> belonged
 @64678 = ~ARKIN'S RING
 Weight: 0
 

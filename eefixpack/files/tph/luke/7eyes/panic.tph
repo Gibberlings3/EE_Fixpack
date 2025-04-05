@@ -80,13 +80,13 @@ BEGIN
 					//"bdfear" "override" // Panic
 					"bdgfear" , "-1" , "0,5,6,7,8" => "bdgfear0" // Ghost Fear
 					//"bdhafear" "override" // Unnamed
-					//"bdneoawe" "override" // 
+					//"bdneoawe" "override" //
 					//"bdpanic" "override" // Panic
 					//"bdsha01c" "override" // Hound Spirit
 					//"bdtgaze" "override" // Terrifying Gaze
 					"%AURA_OF_DESPAIR%" , 2 , "4=>8" => ""
 					"%AURA_OF_DESPAIR%" , 3 , "4=>8" => ""
-					//"%INNATE_HORROR%" "override" // 
+					//"%INNATE_HORROR%" "override" //
 					//"%MIST_HORROR%" "override"
 					//"%HARPER_DEATH_SONG%" "override"
 					"%HELL_FEAR%" , "-1" , "2=>-1,1=>-1" => ""

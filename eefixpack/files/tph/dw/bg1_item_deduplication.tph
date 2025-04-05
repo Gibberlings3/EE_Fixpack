@@ -1,13 +1,13 @@
 DEFINE_ACTION_FUNCTION bg1_item_deduplication BEGIN
 
 	// make the generic items
-	
+
 	INCLUDE "%MOD_FOLDER%/files/tph/dw/generic_items.tph"
 	LAF make_generic_items END
 
 /*
 
-Unfixable: 
+Unfixable:
 - Necklace of Missiles (amul01)
 - Ring of Folly (ring23)
 
@@ -38,7 +38,7 @@ END
 
 Amulet of protection +1, 'The Protector'
 
-Carried by Nadine (questgiver), who actively gives it to you to hand to her son, and Ragefast (questgiver), who just has it as 
+Carried by Nadine (questgiver), who actively gives it to you to hand to her son, and Ragefast (questgiver), who just has it as
 protective bling. Found loose in ar0169 (a generic home). Sold in Feldepost's Inn, the Elfsong Tavern, and Zordral's tent.
 
 Proposal: Nadine is easily the most significant/evocative.
@@ -50,7 +50,7 @@ ACTION_FOR_EACH object IN ragefa.cre ar0169.are inn3351.sto sto0706.sto sto4906.
 		REPLACE_TEXTUALLY "amul14" "bdamul24" (8)
 END
 
-/* 
+/*
 Boots of speed, 'the paws of the cheetah' (boot01)
 
 
@@ -62,9 +62,9 @@ Proposal: Drasus is the iconic possessor; in oBG1 Lothander doesn't even have th
 
 COPY_EXISTING "lothan.cre" override
 	REPLACE_TEXTUALLY "boot01" "bdboot05" (8)
-	
 
-/* 
+
+/*
 Girdle of bluntness, 'Destroyer of the Hills' (belt03)
 
 Krumm the thug has it, but so do two stores: STO1117 (generic potion store) and STO4907 (Zordral's store)
@@ -76,7 +76,7 @@ Proposal: Krumm is the iconic case
 ACTION_FOR_EACH store IN sto1117 sto4907 BEGIN
 	COPY_EXISTING "%store%.sto" override
 		REPLACE_TEXTUALLY "belt03" "bdbelt13" (8)
-END	
+END
 
 /* Helm of Glory
 
@@ -90,9 +90,9 @@ COPY_EXISTING "pride.cre" override
 	GET_OFFSET_ARRAY itm_arr CRE_V10_ITEMS
 		PHP_EACH itm_arr AS itm_ind=>itm_off BEGIN
 			WRITE_BYTE (0x10+itm_off) (BIT0 || BIT3)
-		END	
+		END
 
-/* 
+/*
 
 Ring of Fire Resistance, 'Batalista's Passport'
 
@@ -104,8 +104,8 @@ Proposal: the mountain location is iconic, the catacombs version was added late.
 
 COPY_EXISTING "ar2615.are" override
 	REPLACE_TEXTUALLY ring02 bdring12 (8)
-	
-	
+
+
 /* Ring of Free Action 'Edventar's Gift'
 
 Alai has it; so does Dushai, a gnomish questgiver
@@ -116,8 +116,8 @@ Proposal: Obviously Alai is more significant
 
 COPY_EXISTING "dushai.cre" override
 	REPLACE_TEXTUALLY ring09 bdring09 (8)
-	
-	
+
+
 /* Plate mail +1, 'Fallorian's Plate'
 
 
@@ -167,8 +167,7 @@ Proposal: BL's is the primary one. Replace the other with ordinary sling +1.
 
 COPY_EXISTING "ar0104.are" override
 	REPLACE_TEXTUALLY "slng11" "slng02" //+1 sling
-	
-	
-	
-END	
-	
+
+
+
+END

@@ -14,11 +14,11 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_troll_anims BEGIN
   trolic01 => 0xe0a0 // ice troll (TROLL_SMALL > TROLL_ICE)
   trolic02 => 0xe0a0 // ice troll (TROLL_SMALL > TROLL_ICE)
   trolic03 => 0xe0a0 // blizzard troll (TROLL_BLUE > TROLL_ICE)
-  trolic04 => 0xe0a0 // blizzard troll (TROLL_BLUE > TROLL_ICE)  
+  trolic04 => 0xe0a0 // blizzard troll (TROLL_BLUE > TROLL_ICE)
   obsice01 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
   obsice11 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
   trolsn01 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
-  trolsn02 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)  
+  trolsn02 => 0xe0c0 // snow troll (TROLL > TROLL_SNOW)
   daspitro => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
   pptroll1 => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
   pptroll2 => 0xe28a // spirit troll (TROLL > TROLL_SPECTRAL)
@@ -35,7 +35,7 @@ ACTION_PHP_EACH cd_troll_anims AS cre => anim BEGIN
     WRITE_SHORT 0x28 anim
     PATCH_IF (anim = 0xe0c0) BEGIN // for the snow trolls, add an effect to keep them at speed 8
       LPF ADD_CRE_EFFECT INT_VAR opcode = 176 parameter1 = 8 parameter2 = 1 timing = 9 END
-    END  
+    END
     BUT_ONLY
-    
-END   
+
+END

@@ -1,13 +1,13 @@
 /*
 Right, free action. FA contains an effect to use opcode 126 to set movement rate to 100%. The
 problem is that this interferes with natural movement speed increases, including those applied
-via op 176 like the monk and barbarian bonuses. So we swap it over to use op337 to remove all 
-applications of 126. 
+via op 176 like the monk and barbarian bonuses. So we swap it over to use op337 to remove all
+applications of 126.
 
 The complication is that many creatures use 126 for inherent movement rate changes, e.g.
 free action (before and after this change) allows mimics to move around. (The only reason they
-don't is that their AI tells them not to move.) However, many other creatures can be affected by 
-this, e.g. Balthazar's monk cadre in Amketheran. 
+don't is that their AI tells them not to move.) However, many other creatures can be affected by
+this, e.g. Balthazar's monk cadre in Amketheran.
 
 So this change from 126 > 337 must be accompanied by swapping many existing 126 effects for 176
 effects instead. This only affects BGEE and BG2EE.
@@ -16,10 +16,10 @@ effects instead. This only affects BGEE and BG2EE.
 DEFINE_PATCH_FUNCTION cd_free_action_checks
   INT_VAR cd_fa_debug = 0 // when cd_fa_debug = 1, it generates a file list to be patched instead of actually patching
           cd_fa_mode  = 0 // mode=0 is checking for free action; mode=1 is checking for any other 126 usage
-BEGIN 
-  
-  SET match = 0     
-  SET droppable      = 0                     
+BEGIN
+
+  SET match = 0
+  SET droppable      = 0
   READ_ASCII 0x00 type (3)
   SET min_size = 0
   SET fx_delta = 0
@@ -42,8 +42,8 @@ BEGIN
     SET global_loop    = 1
     SET fx_type        = 0
     SET min_size       = 0x72
-    READ_LONG 0x18 flags 
-    PATCH_IF ((flags & BIT2) = BIT2) BEGIN SET droppable = 1 END 
+    READ_LONG 0x18 flags
+    PATCH_IF ((flags & BIT2) = BIT2) BEGIN SET droppable = 1 END
   END ELSE
   PATCH_IF ("%type%" STRING_COMPARE_CASE "cre" = 0) BEGIN
     READ_LONG  0x2c4 fx_off ELSE 0
@@ -54,7 +54,7 @@ BEGIN
     SET abil_length    = 0
     SET global_loop    = 1
     SET min_size       = 0x2d4
-    SET cosmetic       = 0 
+    SET cosmetic       = 0
   END
   PATCH_IF ((SOURCE_SIZE >= min_size) AND (min_size != 0)) BEGIN // min_size must get set by file type detection
     FOR (index = (0 - global_loop) ; index < abil_num ; ++index) BEGIN
@@ -72,10 +72,10 @@ BEGIN
         READ_LONG  (fx_off + 0x08 + (0x10 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) p2
         PATCH_IF (((cd_fa_mode = 0) AND (opcode = 126) AND  (p1 = 100) AND ((p2 = 2)  OR  (p2 = 5))) OR // free action match
                   ((cd_fa_mode = 1) AND (opcode = 126) AND ((p1 != 100) OR ((p2 != 2) AND (p2 != 5))))) BEGIN // other 126 match
-          PATCH_IF cd_fa_debug BEGIN 
-            SET match = 1                          
-          END ELSE BEGIN   
-            PATCH_IF cd_fa_mode BEGIN 
+          PATCH_IF cd_fa_debug BEGIN
+            SET match = 1
+          END ELSE BEGIN
+            PATCH_IF cd_fa_mode BEGIN
               WRITE_SHORT (fx_off + 0x00 + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 176
             END ELSE BEGIN
               WRITE_SHORT (fx_off + 0x00 + (0x08 * fx_type) + ((abil_fx_idx + index2) * (0x30 + (0xd8 * fx_type)))) 337
@@ -101,9 +101,9 @@ BEGIN
               SET index2   += 5
               SET counter  += 5
               SET fx_delta += 5
-            END   
-          END   
-        END 
+            END
+          END
+        END
       END
       WRITE_SHORT counter_offset counter // fx_num on global loop, otherwise abil_fx_num
     END
@@ -116,7 +116,7 @@ BEGIN
       END
     END
   END
-  PATCH_IF match BEGIN 
+  PATCH_IF match BEGIN
     READ_LONG 0x0c name
     PATCH_IF (name > 0) AND (name < 999999) BEGIN
       READ_STRREF 0x0c name
@@ -135,29 +135,29 @@ BEGIN
     TO_LOWER name
     SPRINT warningpost ~~
     SPRINT warningpre ~  ~
-    PATCH_IF droppable AND abil_length = 0x38 AND cd_fa_mode BEGIN SPRINT warningpost ~ - item is droppable~ SPRINT warningpre ~//~ END  
-    PATCH_IF abil_length = 0x28 AND cd_fa_mode BEGIN SPRINT warningpost ~ - spell effects~ SPRINT warningpre ~//~ END  
+    PATCH_IF droppable AND abil_length = 0x38 AND cd_fa_mode BEGIN SPRINT warningpost ~ - item is droppable~ SPRINT warningpre ~//~ END
+    PATCH_IF abil_length = 0x28 AND cd_fa_mode BEGIN SPRINT warningpost ~ - spell effects~ SPRINT warningpre ~//~ END
     PATCH_PRINT "%warningpre%              ~%SOURCE_FILE%~%spc%~override~ // %name%%warningpost%"
-  END 
-  
-END   
+  END
+
+END
 
 /*
 // use this to generate file patch list
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
                           ~^.+\.itm$~ ~override~
                           ~^.+\.spl$~ ~override~
-  LPF cd_free_action_checks INT_VAR cd_fa_debug = 1 END 
-  BUT_ONLY  
-   
+  LPF cd_free_action_checks INT_VAR cd_fa_debug = 1 END
+  BUT_ONLY
+
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
                           ~^.+\.itm$~ ~override~
                           ~^.+\.spl$~ ~override~
-  LPF cd_free_action_checks INT_VAR cd_fa_debug = 1 cd_fa_mode = 1 END  
-  BUT_ONLY 
+  LPF cd_free_action_checks INT_VAR cd_fa_debug = 1 cd_fa_mode = 1 END
+  BUT_ONLY
 */
 
-ACTION_IF game_is_bgee BEGIN 
+ACTION_IF game_is_bgee BEGIN
 
   COPY_EXISTING ~bdring09.itm~ ~override~ // ring of free action
                 ~beholder.itm~ ~override~ // ring
@@ -176,9 +176,9 @@ ACTION_IF game_is_bgee BEGIN
                 ~sprngs04.itm~ ~override~ // ring
                 ~sprngz05.itm~ ~override~ // ring
                 ~sw2h06.itm~   ~override~ // spider's bane +2
-    LPF cd_free_action_checks END       
-    BUT_ONLY IF_EXISTS 
-    
+    LPF cd_free_action_checks END
+    BUT_ONLY IF_EXISTS
+
   COPY_EXISTING ~bdfistcx.cre~ ~override~ // flaming fist mercenary
                 ~bearspir.itm~ ~override~ // attack
                 ~bootdriz.itm~ ~override~ // the paws of the cheetah
@@ -228,11 +228,11 @@ ACTION_IF game_is_bgee BEGIN
 //              ~spwi101.spl~  ~override~ // grease - spell effects
 //              ~spwm111.spl~  ~override~ // entangle - spell effects
 //              ~spwm120.spl~  ~override~ // repulsion, caster - spell effects
-    LPF cd_free_action_checks INT_VAR cd_fa_mode = 1 END       
-    BUT_ONLY IF_EXISTS 
-    
+    LPF cd_free_action_checks INT_VAR cd_fa_mode = 1 END
+    BUT_ONLY IF_EXISTS
+
 END ELSE BEGIN // bg2ee
-  
+
   COPY_EXISTING ~blun30.itm~   ~override~ // flail of ages +5
                 ~npplat.itm~   ~override~ // firecam full-plate armor
                 ~potn45.itm~   ~override~ // potion of freedom
@@ -250,9 +250,9 @@ END ELSE BEGIN // bg2ee
                 ~sprngz05.itm~ ~override~ // perhaps you should have been more careful about wearing such a thing to this part of the city. have you tried retracing your steps?
                 ~sw2h06.itm~   ~override~ // spider's bane +2
                 ~sw2h13.itm~   ~override~ // spider's bane +2
-    LPF cd_free_action_checks END     
-    BUT_ONLY  
-  
+    LPF cd_free_action_checks END
+    BUT_ONLY
+
   COPY_EXISTING ~amcst02.cre~  ~override~ // mercenary
                 ~amcst03.cre~  ~override~ // mercenary
                 ~ammgrd01.cre~ ~override~ // monk
@@ -385,7 +385,7 @@ END ELSE BEGIN // bg2ee
 //              ~spwm120.spl~  ~override~ // repulsion, caster
 //              ~sw1h58.itm~   ~override~ // short sword of mask +4 - item is droppable
 //              ~sw1h59.itm~   ~override~ // short sword of mask +5 - item is droppable
-    LPF cd_free_action_checks INT_VAR cd_fa_mode = 1 END       
-    BUT_ONLY  
+    LPF cd_free_action_checks INT_VAR cd_fa_mode = 1 END
+    BUT_ONLY
 
 END

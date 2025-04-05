@@ -17,5 +17,5 @@ COPY_EXISTING ~bpreve01.cre~ ~override~ // revenant (bgee)
               ~grreven.cre~  ~override~ // revenant (bg2ee)
               ~reven01.cre~  ~override~ // revenant (bg2ee)
               ~revent.cre~   ~override~ // revenant (sod)
-  WRITE_LONG 0x28 0x00007701 // revenant animation  
+  WRITE_LONG 0x28 0x00007701 // revenant animation
   BUT_ONLY IF_EXISTS

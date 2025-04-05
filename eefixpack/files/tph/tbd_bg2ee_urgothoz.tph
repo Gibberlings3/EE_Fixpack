@@ -9,15 +9,15 @@ COPY_EXISTING ~ohdugoth.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~Polymorph(CORNUGON)~ ~Polymorph(GLABREZU)~
   END
-  BUT_ONLY  
-  
+  BUT_ONLY
+
 // corrections for Dorn's Abyssal Blade
 COPY_EXISTING ~ohdsw2hb.eff~ ~override~ // bonus damage vs. devils (originally for class: imp) [already filtered via race: demonic]
   WRITE_LONG 0x1c 19 // lawful evil
   WRITE_LONG 0x20  8 // from alignmen.ids
-  BUT_ONLY  
-  
+  BUT_ONLY
+
 COPY_EXISTING ~ohdsw2hc.eff~ ~override~ // bonus damage vs. demons (originally for class: tanarri) [already filtered via race: demonic]
   WRITE_LONG 0x1c 51 // chaotic evil
   WRITE_LONG 0x20  8 // from alignmen.ids
-  BUT_ONLY  
+  BUT_ONLY

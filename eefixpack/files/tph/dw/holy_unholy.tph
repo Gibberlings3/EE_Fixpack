@@ -7,9 +7,9 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
 
   // add portrait icons (copied in mass copy)
   LAF ADD_STATDESC_ENTRY INT_VAR description = 4346 STR_VAR bam_file = sppr314d RET unholy = index END // unholy blight icon
-  
+
   ACTION_IF GAME_IS "bgee bg2ee" BEGIN // rebuild to use 324s instead of horrific pile of EFFs
-  
+
     COPY_EXISTING "SPPR313.spl" override
       LPF DELETE_EFFECT END
       // level-independent effects
@@ -29,7 +29,7 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
         LPF ALTER_EFFECT INT_VAR header=ab_ind match_opcode=12 dicenumber=level END
       END
     BUT_ONLY
-  
+
     COPY_EXISTING "SPPR314.spl" override
       LPF DELETE_EFFECT END
       // level-independent effects
@@ -51,16 +51,16 @@ DEFINE_ACTION_FUNCTION holy_unholy BEGIN
         LPF ALTER_EFFECT INT_VAR header=ab_ind match_opcode=12 dicenumber=level END
       END
     BUT_ONLY
-    
+
 	END ELSE BEGIN // iwdee
-   
+
     COPY_EXISTING ~sppr314.spl~ ~override~
       LPF CLONE_EFFECT INT_VAR match_opcode = 0 opcode = 142 parameter1 = 0 parameter2 = unholy END // add icon for unholy blight
       LPF CLONE_EFFECT INT_VAR match_opcode = 0 opcode = 286 END
       LPF ALTER_EFFECT INT_VAR match_opcode = 0 opcode = 285 END
 
-  END    
-	
-	
+  END
+
+
 
 END

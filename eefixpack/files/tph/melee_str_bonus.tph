@@ -1,4 +1,4 @@
-ACTION_IF game_is_iwdee BEGIN 
+ACTION_IF game_is_iwdee BEGIN
 
   COPY_EXISTING ~basill2.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - lesser basilisk melee attack, unused
                 ~cdfampsd.itm~ ~override~ // (iwdee) has a melee ability without strength bonus - psuedodragon familiar claw
@@ -20,12 +20,12 @@ ACTION_IF game_is_iwdee BEGIN
                 ~spidsw1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - sword spider
                 ~spidwr1.itm~  ~override~ // (iwdee) has a melee ability without strength bonus - wraith spider
                 ~squirp.itm~   ~override~ // (iwdee) has a melee ability without strength bonus - polymorphed squirrel paw
-    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END
     BUT_ONLY IF_EXISTS
 
 END ELSE
 
-ACTION_IF game_is_bgee BEGIN 
+ACTION_IF game_is_bgee BEGIN
 
   COPY_EXISTING ~ankheg2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - ankheg melee
                 ~basilg2.itm~  ~override~ // (bgee) has a melee ability without strength bonus - greaer basilisk melee attack
@@ -66,12 +66,12 @@ ACTION_IF game_is_bgee BEGIN
                 ~figspid.itm~  ~override~ // (sod) has a melee ability without strength bonus - kitthix
                 ~ghast1.itm~   ~override~ // (sod) has a melee ability without strength bonus - ghast
                 ~lich02.itm~   ~override~ // (sod) has a melee ability without strength bonus - lich (general)
-    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END
     BUT_ONLY IF_EXISTS
 
 END ELSE
 
-ACTION_IF game_is_bg2ee BEGIN 
+ACTION_IF game_is_bg2ee BEGIN
 
   COPY_EXISTING ~ankheg2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - ankheg melee
                 ~basilg2.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - greaer basilisk melee attack
@@ -116,7 +116,7 @@ ACTION_IF game_is_bg2ee BEGIN
                 ~sw1h14.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - unused short sword +1
                 ~sw1h68a.itm~  ~override~ // (bg2ee) has a melee ability without strength bonus - spectral brand's spectral blade
                 ~sw1h98.itm~   ~override~ // (bg2ee) has a melee ability without strength bonus - unused
-    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END
     BUT_ONLY IF_EXISTS
 
 END ELSE BEGIN // pstee
@@ -131,7 +131,7 @@ END ELSE BEGIN // pstee
                 ~vargbite.itm~ ~override~ // (pstee) has a melee ability without strength bonus - Vargouille Bite
                 ~zfist.itm~    ~override~ // (pstee) has a melee ability without strength bonus - Zombie Fist (Lunge)
                 ~zfistw.itm~   ~override~ // (pstee) has a melee ability without strength bonus - Zombie Fist, Weak (Lunge)
-    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END 
+    LPF alter_header INT_VAR match_type = 1 flag_strength = 1 END
     BUT_ONLY IF_EXISTS
 
 END

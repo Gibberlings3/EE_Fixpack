@@ -6,27 +6,27 @@ AUTO_EVAL_STRINGS
 ALWAYS
 
   ACTION_IF NOT VARIABLE_IS_SET cd_always_eefixpack THEN BEGIN // just do this once per install
-  
+
     OUTER_SET cd_always_eefixpack = 1
 
     ACTION_FOR_EACH var IN game_includes_sod game_is_bgee game_is_bg2ee game_is_iwdee game_is_pstee BEGIN
       OUTER_SET ~%var%~ = 0
-    END  
-    
-    ACTION_IF GAME_IS bgee BEGIN 
-      ACTION_IF GAME_INCLUDES sod BEGIN 
+    END
+
+    ACTION_IF GAME_IS bgee BEGIN
+      ACTION_IF GAME_INCLUDES sod BEGIN
         ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @3 END // DLC Merger check
-        OUTER_SET game_includes_sod = 1  
-        PRINT @7      
+        OUTER_SET game_includes_sod = 1
+        PRINT @7
       END ELSE BEGIN
         PRINT @6
       END
       OUTER_SPRINT game ~bgee~
-    END ELSE  
+    END ELSE
     ACTION_IF GAME_IS bg2ee BEGIN OUTER_SPRINT game ~bg2ee~ PRINT @8 END ELSE
     ACTION_IF GAME_IS iwdee BEGIN OUTER_SPRINT game ~iwdee~ PRINT @9 END ELSE
     ACTION_IF GAME_IS pstee BEGIN OUTER_SPRINT game ~pstee~ PRINT @10 END
-    
+
     OUTER_SET ~game_is_%game%~ = 1
     LOAD_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~
     INCLUDE ~eefixpack/files/lib/cd_spell_ids.tpa~ // sets variables such as WIZARD_MAGIC_MISSILE based on spell.ids
@@ -58,8 +58,8 @@ LANGUAGE
 LANGUAGE
   ~Simplified Chinese~
   ~zh_CN~
-  ~eefixpack/languages/zh_CN/weidu.tra~  
-  
+  ~eefixpack/languages/zh_CN/weidu.tra~
+
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -76,9 +76,9 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee.tph~))) @4
 LABEL ~cd_eefp_core_fixes~
 
-WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
   INCLUDE ~eefixpack/files/tph/%game%.tph~
-END  
+END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -88,7 +88,7 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
-BEGIN @1 DESIGNATED 1  
+BEGIN @1 DESIGNATED 1
 REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee_beta.tph~)) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee_beta.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee_beta.tph~)) OR
@@ -96,9 +96,9 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
 LABEL ~cd_eefp_beta_core_fixes~
 
 // none of these files have been created yet, as the initial releases will be betass
-WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
   INCLUDE ~eefixpack/files/tph/%game%_beta.tph~
-END  
+END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -215,18 +215,18 @@ ACTION_FOR_EACH lang IN cs_cz de_de en_us es_es fr_fr hu_hu it_it ja_jp ko_kr nb
 
   ACTION_FOR_EACH prefix IN gtu fixes bd_tool BEGIN
 
-    ACTION_FOR_EACH tra_file IN bgee bgee_sod bg2ee iwdee pstee BEGIN 
-  
+    ACTION_FOR_EACH tra_file IN bgee bgee_sod bg2ee iwdee pstee BEGIN
+
       LAUNCH_ACTION_FUNCTION cd_string_set_from_tra
-        INT_VAR cd_mode = 0 
+        INT_VAR cd_mode = 0
         STR_VAR input_tra  = EVAL ~eefixpack/languages/%lang%/%prefix%_%tra_file%.tra~ // function includes file_exists check, so we don't bother with it here
                 output_tph = EVAL ~eefixpack/languages/%lang%/%prefix%_%tra_file%.tph~ // tph being built
       END
-      
+
     END
-  
+
   END
-  
+
 END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\

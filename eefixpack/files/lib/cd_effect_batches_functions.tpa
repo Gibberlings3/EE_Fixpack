@@ -8,14 +8,14 @@ three arrays for the function:
 
 * cd_immunity_batches_key
 If any effect in this array is present on the item/creature/spell being patches, it will proceed with
-adding extra effects and deleting effects, as defined by the next two arrays. If you have mutiple 
+adding extra effects and deleting effects, as defined by the next two arrays. If you have mutiple
 effects defined here, it will match any of them and add any missing.
 
 * cd_immunity_batches_extras
 This array contains all of the subsiduary effects that should accompany the effects in the key area.
 
 * cd_immunity_batches_deletes
-If a key is found, any effect matching this array will be deleted. 
+If a key is found, any effect matching this array will be deleted.
 
 If a key is found, the function will then proceed back through the file being patched and add--if they
 are not present--all of the effects not found in the _key and _extras arrays. It will also, only with
@@ -30,8 +30,8 @@ found, the function will delete a variety of old item removal opcodes defined in
 and add (if not already present) the series of effects that cure feeblemind and deafness.
 
 In general, try to avoid explicit spell blockages with 206 opcodes. If you can block the relevant
-effects with other immunities, do so, as it's a more robust and extensible solution. In some cases 
-they are needed --e.g. the slow immunity batch blocks slow spells outright, as most come paired 
+effects with other immunities, do so, as it's a more robust and extensible solution. In some cases
+they are needed --e.g. the slow immunity batch blocks slow spells outright, as most come paired
 with AC and THAC0 penalties which can't be blocked via opcode without serious collateral damage.
 
 * Format of all arrays are opcode, parameter1, parameter2, resref, timing, duration
@@ -39,7 +39,7 @@ with AC and THAC0 penalties which can't be blocked via opcode without serious co
 * Use -1 in a field (or "same" in string fields) if the match value for that field doesn't matter.
 * Always map the effect to one.
 
-arrays separated out in separate files to allow for per-game adjustments. 
+arrays separated out in separate files to allow for per-game adjustments.
 
 */
 
@@ -48,7 +48,7 @@ arrays separated out in separate files to allow for per-game adjustments.
 /////                                                  \\\\\
 
 // batch effects
-DEFINE_PATCH_FUNCTION ~cd_apply_batch~ 
+DEFINE_PATCH_FUNCTION ~cd_apply_batch~
   INT_VAR debug          = 0 // 1 - spit out C_E list, 2 same w/ additional info, 3 lists effects as they're added
           force_cosmetic = "-1"
           bonus_var_1    = "-1" // bonus vars for use in setting arrays
@@ -103,11 +103,11 @@ DEFINE_PATCH_FUNCTION ~cd_apply_batch~
     PATCH_PRINT ~Warning: %macro_name% macro halting; file type not recognized (%type%)~
   END
   // if user overrides normal cosmetic stuff with function var
-  PATCH_IF force_cosmetic = 1 BEGIN 
-    SET cosmetic = 1 
+  PATCH_IF force_cosmetic = 1 BEGIN
+    SET cosmetic = 1
   END ELSE
-  PATCH_IF force_cosmetic = 0 BEGIN 
-    SET cosmetic = 0 
+  PATCH_IF force_cosmetic = 0 BEGIN
+    SET cosmetic = 0
   END
   PATCH_IF ((SOURCE_SIZE >= min_size) AND (min_size != 0)) BEGIN // min_size must get set by file type detection
     SET new_fx = 0
@@ -230,7 +230,7 @@ DEFINE_PATCH_FUNCTION ~cd_apply_batch~
         END
       END
     END
-    
+
     // debug message
     PATCH_IF debug > 0 BEGIN
       READ_LONG 0x0c name
@@ -254,7 +254,7 @@ DEFINE_PATCH_FUNCTION ~cd_apply_batch~
           PATCH_PRINT " // %SOURCE_FILE% had no new effects from %array_name%"
         END
       END
-    END 
+    END
 
   END // end file size check
 

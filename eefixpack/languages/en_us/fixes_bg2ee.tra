@@ -1,6 +1,6 @@
-// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
 /*
 jazira
@@ -34,10 +34,10 @@ It should be "south of the battlefield", not "north of the battlefield".
 
 // remove the line about the save penalty for water/plants since it's not implemented
 @7680 = ~Abi-Dalzim's Horrid Wilting
-(Necromancy) 
+(Necromancy)
 
 Level: 8
-Range: Visual range of the caster 
+Range: Visual range of the caster
 Duration: Instant
 Casting Time: 8
 Area of Effect: 15-ft. radius
@@ -109,7 +109,7 @@ The audio file associated should be "[SURGN04]", not "[STORE06]".
 
 // last line: the ruins are west of imnesvale, not north
 @17169 = ~Wallag,
-We travel this day to search out the wolf lair. My own scouting of the region has confirmed Merella's suspicions that there is a large pack of wolves acting in this area. On the map included, I have indicated where I believe the wolf den to be located. Follow us if you can, but be cautious. We can ill-afford another mysterious disappearance. Until we meet again. 
+We travel this day to search out the wolf lair. My own scouting of the region has confirmed Merella's suspicions that there is a large pack of wolves acting in this area. On the map included, I have indicated where I believe the wolf den to be located. Follow us if you can, but be cautious. We can ill-afford another mysterious disappearance. Until we meet again.
 
 Mazzy
 
@@ -227,7 +227,7 @@ It should be "duergar", not "dwarf".
 I have agreed to help a trio of dryads return their acorns to the Fairy Queen. Somewhere in the dungeon is a duergar by the name of Ilyich who has the acorns.~
 
 // book of infinite spells casts true sight, not true seeing
-// copy-paste true sight descript from strref 25936 
+// copy-paste true sight descript from strref 25936
 @39430 = ~This ancient tome creaks as you open it. Each page of the Book of Infinite Spells contains a spell described in layman's terms, easy enough for a thief, a cleric, or even a fighter to understand and cast it. Each spell on a page can be cast once per day.
 
 A second function of the book is to turn to a different page of the book. This allows for the possibility of getting a better spell. However, once the page has been turned, the previous spell is lost forever unless it happens to appear again.
@@ -244,7 +244,7 @@ Range: 0
 Duration: 1 turn
 Casting Time: 8
 Area of Effect: 120-ft. radius
-Saving Throw: None 
+Saving Throw: None
 
 When this spell is cast, an area roughly 120 ft. in radius around the caster will be affected. Instantly and once per round for 1 turn after this spell is cast, all hostile Illusion/Phantasm spells in the area of effect will be dispelled. The spells that are affected by this are Reflected Image, Invisibility, Mirror Image, Non-Detection, Improved Invisibility, Shadow Door, Mislead, Project Image, and Simulacrum. The area of effect is roughly a 120-ft. radius around the caster. The target's Magic Resistance, if any, does not come into effect with this spell. This spell only affects enemies, thus it is unable to dispel invisibility from a party member.~
 
@@ -259,12 +259,12 @@ Be warned: Once you turn to the last page of the book, you are stuck with that s
 The spell on this page is:
 
 Lightning Bolt
-(Evocation) 
+(Evocation)
 
 Level: 3
 Range: 70 ft.
-Duration: Instant 
-Casting Time: 3 
+Duration: Instant
+Casting Time: 3
 Area of Effect: Path of bolt
 Saving Throw: 1/2
 
@@ -286,7 +286,7 @@ CLASS FEATURES:
   Level 6-8: 1d10
   Level 9-14: 1d12
   Level 15+: 1d20
-– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25. 
+– At level 9, unarmed attacks are treated as a +1 magical weapon and gain a +1 bonus to hit and damage rolls. This enchantment improves to +2 at level 12, +3 at level 15, and +4 at level 25.
 – Receives a +2 bonus to Saving Throws vs. Spell.
 – Deflect Missiles: +1 bonus to AC vs. missile attacks every 3 levels.
 – Starts with an Armor Class of 9 at 1st level and gains an additional +1 bonus every 2 levels through level 18.
@@ -377,7 +377,7 @@ Disadvantages:
 @100356 = ~Charm Animal
 This spell affects any single animal it is cast upon. The animal is allowed a Saving Throw vs. Spell to negate the effect. The charm lasts for two turns.
 
-If the spell's recipient fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible. 
+If the spell's recipient fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible.
 
 If the caster harms—or attempts to harm—the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the Charm spell is broken. If two or more Charms simultaneously affect a creature, the most recent Charm takes precedence. Note that the subject will be hostile when the Charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
 

@@ -1,15 +1,15 @@
-// the party can skip the frost giant caves on their way to lower dorn's deep, but the 
-// chapter narration always mentioned the caves. this provides an alternative chapter 
+// the party can skip the frost giant caves on their way to lower dorn's deep, but the
+// chapter narration always mentioned the caves. this provides an alternative chapter
 // narration that doesn't mention the caves.
 
 COPY ~eefixpack/languages/%LANGUAGE%/sounds/cd_ch6a.wav~ ~override~
 
 COPY_EXISTING ~chptxt6.2da~ ~override/chptxt6a.2da~
   REPLACE 14448 @101
-  
+
 COPY_EXISTING ~ar8001.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN   
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("CHAPTER","GLOBAL",5)\)~ ~Global("AR7004_visited","GLOBAL",1) \1~
     APPEND_FILE ~eefixpack/files/baf/ar8001_ch6.baf~
   END
-  BUT_ONLY   
+  BUT_ONLY

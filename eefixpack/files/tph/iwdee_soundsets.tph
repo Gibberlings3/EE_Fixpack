@@ -1,12 +1,12 @@
 ACTION_IF (FILE_EXISTS ~lang/%LANGUAGE%/sounds/FFIGHT1#.wav~) BEGIN
 
   OUTER_SPRINT langpath ~%LANGUAGE%~ // languages that have native soundsets
-  
+
 END ELSE BEGIN
 
   OUTER_SPRINT langpath ~en_us~ // languages without native soundsets default to english, so do the english fixes for them as well
 
-END    
+END
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/charstr.2da~ BEGIN // check that this is available
 
@@ -14,37 +14,37 @@ ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/charstr.2da~ BEGIN 
 
     // string sound asignments fixed in tra file
     MOVE ~lang/en_us/sounds/fthief1l.wav~  ~lang/en_us/sounds/fthief1m_.wav~ // female thief 1 has damage and dying sounds reversed
-         ~lang/en_us/sounds/fthief1m.wav~  ~lang/en_us/sounds/fthief1l.wav~ 
+         ~lang/en_us/sounds/fthief1m.wav~  ~lang/en_us/sounds/fthief1l.wav~
          ~lang/en_us/sounds/fthief1m_.wav~ ~lang/en_us/sounds/fthief1m.wav~
-         
-    COPY ~eefixpack/languages/en_us/sounds/male3m.wav~ ~lang/en_us/sounds~ // correct Male3 sound      
+
+    COPY ~eefixpack/languages/en_us/sounds/male3m.wav~ ~lang/en_us/sounds~ // correct Male3 sound
 
     COPY_EXISTING ~charsnd.2da~ ~override~
       REPLACE_TEXTUALLY ~[ %TAB%]20007[ %TAB%]~ ~ temp20011 ~
       REPLACE_TEXTUALLY ~[ %TAB%]20011[ %TAB%]~ ~ 20007 ~
       REPLACE_TEXTUALLY ~[ %TAB%]temp20011[ %TAB%]~ ~ 20011 ~
-      REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying; 
+      REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying;
       PRETTY_PRINT_2DA
       BUT_ONLY
-    
-  END    
-       
+
+  END
+
 END
 
 COPY_EXISTING ~charsnd.2da~ ~override~ // get column numbers in advance
-  COUNT_2DA_COLS charsnd_cols   
+  COUNT_2DA_COLS charsnd_cols
   SET cols = charsnd_cols - 1 // header row has one less entry, and that's the only row we're interested in
-  FOR (index = 0 ; index < cols ; ++index) BEGIN 
+  FOR (index = 0 ; index < cols ; ++index) BEGIN
     READ_2DA_ENTRY 0 index cols header
     TO_LOWER header
     SET value = index + 1
     SPRINT ~%header%~ ~%value%~
-  END  
+  END
   PRETTY_PRINT_2DA
   BUT_ONLY
 
 COPY ~eefixpack/languages/%langpath%/sounds/charstr.2da~ ~eefixpack/languages/%langpath%/sounds/charstr.2da~ // read table into variables
-  COUNT_2DA_ROWS 41 rows   
+  COUNT_2DA_ROWS 41 rows
   FOR (row = 0 ; row < rows ; ++row) BEGIN
     READ_2DA_ENTRY row 0 41 rowname
     TO_LOWER rowname
@@ -53,7 +53,7 @@ COPY ~eefixpack/languages/%langpath%/sounds/charstr.2da~ ~eefixpack/languages/%l
       SPRINT ~%rowname%_%col%~ ~%entry%~
     END
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_iwdee_soundset_map BEGIN
   DFF_,   female_fighter_1 => ~%ffight1%~
@@ -87,141 +87,141 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_iwdee_soundset_map BEGIN
   EMT_,   male_thief_1     => ~%mthief1%~
   HEMT_,  male_thief_2     => ~%mthief2%~
 END
- 
+
 ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
 
   ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/%params_0%01.wav~ BEGIN // language check, basically
- 
-    ACTION_BASH_FOR ~eefixpack/languages/%langpath%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
-    
-      COPY ~eefixpack/languages/%langpath%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
+
+    ACTION_BASH_FOR ~eefixpack/languages/%langpath%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN
+
+      COPY ~eefixpack/languages/%langpath%/sounds/%BASH_FOR_RES%.wav~ ~override~
         INNER_PATCH ~%BASH_FOR_RES%~ BEGIN // grab number from file name
           REPLACE_EVALUATE ~%params_0%\([0-9]+\)~ BEGIN
             SET number = MATCH1
-          END ~%params_0%%MATCH1%~  
+          END ~%params_0%%MATCH1%~
         END
-      
+
       OUTER_SET strref = ~%params_1%_%number%~ // from charstr lookups, earlier
       ACTION_GET_STRREF strref string
       STRING_SET_EVALUATE strref ~%string%~ [%BASH_FOR_RES%] // add sound file to existing string
-      
+
       OUTER_FOR (index = 0 ; index < 7 ; ++index) BEGIN // reset row0-row6 variables
         OUTER_SET ~row_%index%~ = "-1"
-      END  
-      
+      END
+
       ACTION_IF ((number > 0) AND (number < 3)) BEGIN // morale (should have two)
-        OUTER_SET row_0 = 83 
-        OUTER_SET row_1 =  1 
-      END  
-      
+        OUTER_SET row_0 = 83
+        OUTER_SET row_1 =  1
+      END
+
       ACTION_IF ((number > 2) AND (number < 8)) BEGIN // battle cries (should have two)
-        OUTER_SET row_0 = 13 
-        OUTER_SET row_1 = 12 
-        OUTER_SET row_2 = 11 
-        OUTER_SET row_3 = 10 
-        OUTER_SET row_4 =  9 
-      END  
-      
+        OUTER_SET row_0 = 13
+        OUTER_SET row_1 = 12
+        OUTER_SET row_2 = 11
+        OUTER_SET row_3 = 10
+        OUTER_SET row_4 =  9
+      END
+
       ACTION_IF ((number > 7) AND (number < 10)) BEGIN // leader (should have one)
-        OUTER_SET row_0 = 84 
-        OUTER_SET row_1 =  6 
-      END  
-      
+        OUTER_SET row_0 = 84
+        OUTER_SET row_1 =  6
+      END
+
       ACTION_IF ((number > 9) AND (number < 12)) BEGIN // tired (should have one)
-        OUTER_SET row_0 = 85 
-        OUTER_SET row_1 =  7 
-      END  
-      
+        OUTER_SET row_0 = 85
+        OUTER_SET row_1 =  7
+      END
+
       ACTION_IF ((number > 11) AND (number < 14)) BEGIN // bored (should have one)
-        OUTER_SET row_0 = 86 
-        OUTER_SET row_1 =  8 
-      END  
-      
+        OUTER_SET row_0 = 86
+        OUTER_SET row_1 =  8
+      END
+
       ACTION_IF ((number > 13) AND (number < 16)) BEGIN // hurt (should have one)
-        OUTER_SET row_0 = 87 
-        OUTER_SET row_1 = 20 
-      END  
-      
+        OUTER_SET row_0 = 87
+        OUTER_SET row_1 = 20
+      END
+
       ACTION_IF ((number > 15) AND (number < 23)) BEGIN // common select (should have three)
-        OUTER_SET row_0 = 88 
-        OUTER_SET row_1 = 31 
-        OUTER_SET row_2 = 30 
-        OUTER_SET row_3 = 29 
-        OUTER_SET row_4 = 28 
-        OUTER_SET row_5 = 27 
-        OUTER_SET row_6 = 26 
-      END  
-      
+        OUTER_SET row_0 = 88
+        OUTER_SET row_1 = 31
+        OUTER_SET row_2 = 30
+        OUTER_SET row_3 = 29
+        OUTER_SET row_4 = 28
+        OUTER_SET row_5 = 27
+        OUTER_SET row_6 = 26
+      END
+
       ACTION_IF ((number > 33) AND (number < 37)) BEGIN // damage (should have two)
-//        OUTER_SET row_0 = 90 
-//        OUTER_SET row_1 = 89 
-//        OUTER_SET row_2 = 18 
-      END  
-      
+//        OUTER_SET row_0 = 90
+//        OUTER_SET row_1 = 89
+//        OUTER_SET row_2 = 18
+      END
+
       ACTION_IF ((number > 36) AND (number < 39)) BEGIN // dying (should have one)
-        OUTER_SET row_0 = 91 
-        OUTER_SET row_1 = 19 
-      END  
-      
+        OUTER_SET row_0 = 91
+        OUTER_SET row_1 = 19
+      END
+
       ACTION_IF ((number > 38) AND (number < 41)) BEGIN // party member dying (should have one)
-        OUTER_SET row_0 = 92 
-        OUTER_SET row_1 = 53 
-      END  
-      
+        OUTER_SET row_0 = 92
+        OUTER_SET row_1 = 53
+      END
+
       // now find a home in charsnd
       COPY_EXISTING ~charsnd.2da~ ~override~
         FOR (index = 0 ; index < 7 ; ++index) BEGIN
           SPRINT rowtemp ~%row_%index%%~
           SET row = (~%rowtemp%~ - 1)
-          PATCH_IF row >= 0 BEGIN 
+          PATCH_IF row >= 0 BEGIN
             READ_2DA_ENTRY row soundset charsnd_cols check
-            PATCH_IF check < 0 BEGIN // empty entry          
+            PATCH_IF check < 0 BEGIN // empty entry
               SET_2DA_ENTRY row soundset charsnd_cols ~%strref%~
               SET index = 7 // kill loop
               SET added = 1
-            END  
-          END  
-        END  
+            END
+          END
+        END
         BUT_ONLY
-        
+
     END // closing a_b_f
 
   END // closing file check
 
-END // closing php_each 
-  
+END // closing php_each
+
 // default party uses soundsets, so update their creature files as well
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_iwdee_party_soundset_map BEGIN
-  party01 => ~%male1%~   // gorris 
-  party02 => ~%male2%~   // baern 
-  party03 => ~%mmage4%~  // cadriel 
-  party04 => ~%fthief2%~ // kirika 
-  party05 => ~%fmage2%~  // ilauna 
-  party06 => ~%female3%~ // felicia 
+  party01 => ~%male1%~   // gorris
+  party02 => ~%male2%~   // baern
+  party03 => ~%mmage4%~  // cadriel
+  party04 => ~%fthief2%~ // kirika
+  party05 => ~%fmage2%~  // ilauna
+  party06 => ~%female3%~ // felicia
 END
 
-COPY_EXISTING ~charsnd.2da~ ~override~ 
+COPY_EXISTING ~charsnd.2da~ ~override~
   COUNT_2DA_ROWS charsnd_cols rows
   FOR (row = 0 ; row < rows ; ++row) BEGIN // male1 and female1 double as default male/female, so update them while we're here
     READ_2DA_ENTRY row   male1 charsnd_cols md // read male1 entry
     SET_2DA_ENTRY  row       1 charsnd_cols md // set to default male column
     READ_2DA_ENTRY row female1 charsnd_cols fd // read female1 entry
     SET_2DA_ENTRY  row       2 charsnd_cols fd // set to default female column
-  END   
+  END
   PATCH_PHP_EACH cd_iwdee_party_soundset_map AS creature => column BEGIN
-    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN 
+    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN
       READ_2DA_ENTRY (row - 1) column charsnd_cols entry
       SPRINT ~%creature%_%row%~ ~%entry%~
     END
-  END      
+  END
   PRETTY_PRINT_2DA
-  BUT_ONLY 
-  
+  BUT_ONLY
+
 ACTION_PHP_EACH cd_iwdee_party_soundset_map AS creature => column BEGIN
 
   COPY_EXISTING ~b%creature%.cre~ ~override~
-                ~h%creature%.cre~ ~override~ 
-    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN 
+                ~h%creature%.cre~ ~override~
+    PATCH_FOR_EACH row IN 1 12 13 30 31 83 84 85 86 87 88 89 90 91 92 BEGIN
       WRITE_LONG (0xa4 + (row * 0x04)) ~%%creature%_%row%%~
     END
     BUT_ONLY

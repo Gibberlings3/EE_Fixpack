@@ -1,4 +1,4 @@
-IF 
+IF
   GlobalGT("DomainPaladinBattle","GLOBAL",0)
 THEN
   RESPONSE #100

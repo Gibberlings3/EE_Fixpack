@@ -2,7 +2,7 @@ IF
   Global("cd_openHead_xp","AR1512",0)
   Global("openHead","AR1512",1)
   OpenState("HeadDoor",FALSE)
-THEN 
+THEN
   RESPONSE #100
     SetInterrupt(FALSE)
     SetGlobal("cd_openHead_xp","AR1512",1)
@@ -24,7 +24,7 @@ IF
   !Global("cd_openHead_xp","AR1512",0)
   Global("openHead","AR1512",1)
   OpenState("HeadDoor",FALSE)
-THEN 
+THEN
   RESPONSE #100
     SetInterrupt(FALSE)
     EraseJournalEntry(62156)  // Escaping the asylum I must find the "hand of the builder" to advance. I'm not sure what that means.
