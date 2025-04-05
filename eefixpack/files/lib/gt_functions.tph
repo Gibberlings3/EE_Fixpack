@@ -1,107 +1,107 @@
 DEFINE_PATCH_FUNCTION "COUNT_V10_HEAD_EFFECTS"
 STR_VAR
-	"opcode" = "-1" // regexp allowed (if needed)
-	"parameter2" = "same" // regexp allowed (if needed)
-	"timing_exclude" = "none" // regexp allowed (if needed)
-	"resource" = "same" // regexp allowed (if needed)
+  "opcode" = "-1" // regexp allowed (if needed)
+  "parameter2" = "same" // regexp allowed (if needed)
+  "timing_exclude" = "none" // regexp allowed (if needed)
+  "resource" = "same" // regexp allowed (if needed)
 RET
-	"count"
+  "count"
 BEGIN
-	// Initialize
-	SET "count" = 0
-	// Main
-	GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" 0x6a 4 0x1e 2 0x20 2 0x30
-	PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
-		PATCH_MATCH (SHORT_AT "%fx_off%") WITH
-			"%opcode%" BEGIN
-				READ_SLONG ("%fx_off%" + 0x8) "p2"
-				READ_BYTE ("%fx_off%" + 0xC) "tmg"
-				PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
-					PATCH_IF ("%timing_exclude%" STRING_EQUAL_CASE "none") OR (IS_AN_INT "timing_exclude" AND "%tmg%" != "%timing_exclude%") OR ("%tmg%" STRING_MATCHES_REGEXP "%timing_exclude%") BEGIN
-						READ_ASCII ("%fx_off%" + 0x14) "resref"
-						PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
-							SET "count" += 1
-						END
-					END
-				END
-			END
-			DEFAULT
-		END
-	END
+  // Initialize
+  SET "count" = 0
+  // Main
+  GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" 0x6a 4 0x1e 2 0x20 2 0x30
+  PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
+    PATCH_MATCH (SHORT_AT "%fx_off%") WITH
+      "%opcode%" BEGIN
+        READ_SLONG ("%fx_off%" + 0x8) "p2"
+        READ_BYTE ("%fx_off%" + 0xC) "tmg"
+        PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
+          PATCH_IF ("%timing_exclude%" STRING_EQUAL_CASE "none") OR (IS_AN_INT "timing_exclude" AND "%tmg%" != "%timing_exclude%") OR ("%tmg%" STRING_MATCHES_REGEXP "%timing_exclude%") BEGIN
+            READ_ASCII ("%fx_off%" + 0x14) "resref"
+            PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
+              SET "count" += 1
+            END
+          END
+        END
+      END
+      DEFAULT
+    END
+  END
 END
 
 DEFINE_PATCH_FUNCTION "GET_V10_HEAD_EFFECTS"
 RET_ARRAY
-	"v10_head_effects"
+  "v10_head_effects"
 BEGIN
-	// Initialize
-	PATCH_CLEAR_ARRAY "v10_head_effects"
-	PATCH_MATCH "%DEST_EXT%" WITH
-		"ITM" BEGIN
-			GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
-		END
-		"SPL" BEGIN
-			GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
-		END
-		DEFAULT
-			PATCH_FAIL "GET_V10_HEAD_EFFECTS: should not happen => ~%DEST_FILE%~"
-	END
-	// Main
-	PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
-		GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS // NB, same for spl and itm
-		PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
-			// Save current values
-			READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
-			READ_BYTE ("%fx_off%" + 0x2) "fx_target"
-			READ_BYTE ("%fx_off%" + 0x3) "fx_power"
-			READ_SLONG ("%fx_off%" + 0x4) "fx_parameter1"
-			READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
-			READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
-			READ_BYTE ("%fx_off%" + 0xD) "fx_resist_dispel"
-			READ_LONG ("%fx_off%" + 0xE) "fx_duration"
-			READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
-			READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
-			READ_ASCII ("%fx_off%" + 0x14) "fx_resref"
-			READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
-			READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
-			READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
-			READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
-			READ_SLONG ("%fx_off%" + 0x2C) "fx_special"
-			TEXT_SPRINT $"v10_head_effects"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resref%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%") "irrelevant"
-		END
-	END
+  // Initialize
+  PATCH_CLEAR_ARRAY "v10_head_effects"
+  PATCH_MATCH "%DEST_EXT%" WITH
+    "ITM" BEGIN
+        GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    END
+    "SPL" BEGIN
+        GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+    END
+    DEFAULT
+        PATCH_FAIL "GET_V10_HEAD_EFFECTS: should not happen => ~%DEST_FILE%~"
+  END
+  // Main
+  PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+    GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS // NB, same for spl and itm
+    PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+      // Save current values
+      READ_SHORT ("%fx_off%" + 0x0) "fx_opcode"
+      READ_BYTE ("%fx_off%" + 0x2) "fx_target"
+      READ_BYTE ("%fx_off%" + 0x3) "fx_power"
+      READ_SLONG ("%fx_off%" + 0x4) "fx_parameter1"
+      READ_SLONG ("%fx_off%" + 0x8) "fx_parameter2"
+      READ_BYTE ("%fx_off%" + 0xC) "fx_timing"
+      READ_BYTE ("%fx_off%" + 0xD) "fx_resist_dispel"
+      READ_LONG ("%fx_off%" + 0xE) "fx_duration"
+      READ_BYTE ("%fx_off%" + 0x12) "fx_probability1"
+      READ_BYTE ("%fx_off%" + 0x13) "fx_probability2"
+      READ_ASCII ("%fx_off%" + 0x14) "fx_resref"
+      READ_LONG ("%fx_off%" + 0x1C) "fx_max_level"
+      READ_LONG ("%fx_off%" + 0x20) "fx_min_level"
+      READ_LONG ("%fx_off%" + 0x24) "fx_savetype"
+      READ_SLONG ("%fx_off%" + 0x28) "fx_savebonus"
+      READ_SLONG ("%fx_off%" + 0x2C) "fx_special"
+      TEXT_SPRINT $"v10_head_effects"("%fx_opcode%" "%fx_target%" "%fx_power%" "%fx_parameter1%" "%fx_parameter2%" "%fx_timing%" "%fx_resist_dispel%" "%fx_duration%" "%fx_probability1%" "%fx_probability2%" "%fx_resref%" "%fx_max_level%" "%fx_min_level%" "%fx_savetype%" "%fx_savebonus%" "%fx_special%" "%fx_ind%" "%ab_ind%") "irrelevant"
+    END
+  END
 END
 
 DEFINE_PATCH_FUNCTION "COUNT_V10_GEN_EFFECTS"
 STR_VAR
-	"opcode" = "-1" // regexp allowed (if needed)
-	"parameter2" = "same" // regexp allowed (if needed)
-	"timing" = "same" // regexp allowed (if needed)
-	"resource" = "same" // regexp allowed (if needed)
+  "opcode" = "-1" // regexp allowed (if needed)
+  "parameter2" = "same" // regexp allowed (if needed)
+  "timing" = "same" // regexp allowed (if needed)
+  "resource" = "same" // regexp allowed (if needed)
 RET
-	"count"
+  "count"
 BEGIN
-	// Initialize
-	SET "count" = 0
-	// Main
-	GET_OFFSET_ARRAY "fx_array" 0x6a 4 0x70 2 0x6e 2 0x30
-	PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
-		PATCH_MATCH (SHORT_AT "%fx_off%") WITH
-			"%opcode%" BEGIN
-				READ_SLONG ("%fx_off%" + 0x8) "p2"
-				READ_BYTE ("%fx_off%" + 0xC) "tmg"
-				PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
-					PATCH_IF ("%timing%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "timing" AND "%tmg%" == "%timing%") OR (("%tmg%" STRING_MATCHES_REGEXP "%timing%") == 0) BEGIN
-						READ_ASCII ("%fx_off%" + 0x14) "resref"
-						PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
-							SET "count" += 1
-						END
-					END
-				END
-			END
-			DEFAULT
-		END
-	END
+  // Initialize
+  SET "count" = 0
+  // Main
+  GET_OFFSET_ARRAY "fx_array" 0x6a 4 0x70 2 0x6e 2 0x30
+  PHP_EACH "fx_array" AS "_" => "fx_off" BEGIN
+    PATCH_MATCH (SHORT_AT "%fx_off%") WITH
+      "%opcode%" BEGIN
+        READ_SLONG ("%fx_off%" + 0x8) "p2"
+        READ_BYTE ("%fx_off%" + 0xC) "tmg"
+        PATCH_IF ("%parameter2%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "parameter2" AND "%p2%" == "%parameter2%") OR (("%p2%" STRING_MATCHES_REGEXP "%parameter2%") == 0) BEGIN
+          PATCH_IF ("%timing%" STRING_EQUAL_CASE "same") OR (IS_AN_INT "timing" AND "%tmg%" == "%timing%") OR (("%tmg%" STRING_MATCHES_REGEXP "%timing%") == 0) BEGIN
+            READ_ASCII ("%fx_off%" + 0x14) "resref"
+            PATCH_IF ("%resource%" STRING_EQUAL_CASE "same") OR (("%resref%" STRING_MATCHES_REGEXP "%resource%") == 0) BEGIN
+              SET "count" += 1
+            END
+          END
+        END
+      END
+      DEFAULT
+    END
+  END
 END
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,64 +262,6 @@ BEGIN
 END
 
 //////////////////////////////////////////////////////////
-/////// TO_HEX_NUMBER (borrowed from Argent77)
-//////////////////////////////////////////////////////////
-
-/*
-** Converts any decimal number into a hexadecimal number
-*/
-
-DEFINE_DIMORPHIC_FUNCTION ~TO_HEX_NUMBER~
-INT_VAR
-	~value~     = 0   // the decimal number
-	~minDigits~ = 1   // min. number of digits in return value (not counting sign)
-	~prefix~    = 0   // whether to return number with "0x" prefix
-	~signed~    = 1   // whether number is treated as a signed number
-	~upperCase~ = 0   // whether to represent alphabetic digits in upper case
-RET
-	~hexNumber~       // returned as string without prefix
-BEGIN
-	ACTION_IF (~%minDigits%~ < 1) BEGIN
-		OUTER_SET ~minDigits~ = 1
-	END
-	ACTION_IF ("%minDigits%" > 8) BEGIN
-		OUTER_SET ~minDigits~ = 8
-	END
-	OUTER_TEXT_SPRINT ~hexNumber~ ~~
-	ACTION_DEFINE_ARRAY ~digit~ BEGIN ~0~ ~1~ ~2~ ~3~ ~4~ ~5~ ~6~ ~7~ ~8~ ~9~ ~a~ ~b~ ~c~ ~d~ ~e~ ~f~ END
-
-	ACTION_IF ("%signed%" && "%value%" < 0) BEGIN
-		OUTER_SET ~isSigned~ = 1
-		OUTER_SET ~value~ = 0 - "%value%"
-	END ELSE BEGIN
-		OUTER_SET ~isSigned~ = 0
-	END
-
-	OUTER_WHILE ("%value%" != 0) BEGIN
-		OUTER_SET ~curDigit~ = "%value%" BAND 0xf
-		OUTER_SET ~value~ = "%value%" BLSR 4
-		OUTER_TEXT_SPRINT ~hexDigit~ $~digit~(~%curDigit%~)
-		OUTER_TEXT_SPRINT ~hexNumber~ ~%hexDigit%%hexNumber%~
-	END
-
-	OUTER_WHILE (STRING_LENGTH ~%hexNumber%~ < "%minDigits%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~0%hexNumber%~
-	END
-
-	ACTION_IF ("%upperCase%") BEGIN
-		ACTION_TO_UPPER ~hexNumber~
-	END
-
-	ACTION_IF ("%prefix%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~0x%hexNumber%~
-	END
-
-	ACTION_IF ("%isSigned%") BEGIN
-		OUTER_TEXT_SPRINT ~hexNumber~ ~-%hexNumber%~
-	END
-END
-
-//////////////////////////////////////////////////////////
 /////// ADD_SPLPROT_ENTRY (borrowed from Argent77)
 //////////////////////////////////////////////////////////
 
@@ -336,72 +278,69 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION "ADD_SPLPROT_ENTRY"
 INT_VAR
-	"stat"      = "-1"
+  "stat"      = "-1"
 STR_VAR
-	"value"     = "*"
-	"relation"  = "*"
-	"label"     = ""
+  "value"     = "*"
+  "relation"  = "*"
+  "label"     = ""
 RET
-	"index"
+  "index"
 BEGIN
-	// Initialize
-	OUTER_SET "index" = "-1"
-	// Main
-	ACTION_IF ("%stat%" >= 0) BEGIN
-		LAF "TO_HEX_NUMBER"
-		INT_VAR
-			"value" = "%stat%"
-			"prefix" = 1
-		RET
-			"valueHex" = "hexNumber"
-		END
-		ACTION_IF (~%value%~ STRING_EQUAL ~~) BEGIN
-			OUTER_TEXT_SPRINT "value" ~*~
-		END
-		ACTION_IF (~%relation%~ STRING_EQUAL ~~) BEGIN
-			OUTER_TEXT_SPRINT "relation" ~*~
-		END
-		// Add the specified entry or return its index if already present
-		COPY_EXISTING ~splprot.2da~ ~override~
-			READ_2DA_ENTRIES_NOW "read_splprot" 4
-			// Search for identical entries
-			FOR ("idx" = 0; "%idx%" < "%read_splprot%"; "idx" += 1) BEGIN
-				READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 1 "curStat"
-				PATCH_IF (~%stat%~ STRING_EQUAL ~%curStat%~ OR ~%valueHex%~ STRING_EQUAL_CASE ~%curStat%~) BEGIN
-					READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 2 "curValue"
-					PATCH_IF (~%value%~ STRING_EQUAL ~%curValue%~) BEGIN
-						READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 3 "curRelation"
-						PATCH_IF (~%relation%~ STRING_EQUAL ~%curRelation%~) BEGIN
-							SET "index" = "%idx%" // If already present, return its index
-							SET "idx" = "%read_splprot%" // Kill FOR-loop
-						END
-					END
-				END
-			END
-			// If not already present, add it...
-			PATCH_IF ("%index%" < 0) BEGIN
-				// Make sure we provided an identifier!
-				PATCH_IF ("%label%" STRING_COMPARE_CASE "") BEGIN
-					// Sanity check
-					INNER_PATCH_SAVE "label" "%label%" BEGIN
-						REPLACE_TEXTUALLY CASE_INSENSITIVE EVALUATE_REGEXP "[ %TAB%%WNL%%MNL%%LNL%]" ""
-					END
-					// Add new entry
-					PATCH_IF ("%stat%" >= 0x100) BEGIN
-						TEXT_SPRINT "line" ~%read_splprot%_%label% %valueHex% %value% %relation%~
-					END ELSE BEGIN
-						TEXT_SPRINT "line" ~%read_splprot%_%label% %stat% %value% %relation%~
-					END
-					INSERT_2DA_ROW "%read_splprot%" 4 ~%line%~
-					// Prettify
-					PRETTY_PRINT_2DA
-					SET "index" = "%read_splprot%"
-				END ELSE BEGIN
-					PATCH_FAIL "ADD_SPLPROT_ENTRY: ~label~ cannot be empty. Please specify a human-friendly identifier (f.i. ~ALIGNMENTBITS!=MASK_LCNEUTRAL~)"
-				END
-			END
-		BUT_ONLY_IF_IT_CHANGES
-	END
+  // Initialize
+  OUTER_SET "index" = "-1"
+  // Main
+  ACTION_IF ("%stat%" >= 0) BEGIN
+    OUTER_PATCH "" BEGIN
+      SPRINTF "valueHex" "%x" ("%stat%")
+    END
+    //
+    ACTION_IF (~%value%~ STRING_EQUAL ~~) BEGIN
+      OUTER_TEXT_SPRINT "value" ~*~
+    END
+    ACTION_IF (~%relation%~ STRING_EQUAL ~~) BEGIN
+      OUTER_TEXT_SPRINT "relation" ~*~
+    END
+    // Add the specified entry or return its index if already present
+    COPY_EXISTING ~splprot.2da~ ~override~
+      READ_2DA_ENTRIES_NOW "read_splprot" 4
+      // Search for identical entries
+      FOR ("idx" = 0; "%idx%" < "%read_splprot%"; "idx" += 1) BEGIN
+        READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 1 "curStat"
+        PATCH_IF (~%stat%~ STRING_EQUAL ~%curStat%~ OR ~%valueHex%~ STRING_EQUAL_CASE ~%curStat%~) BEGIN
+          READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 2 "curValue"
+          PATCH_IF (~%value%~ STRING_EQUAL ~%curValue%~) BEGIN
+            READ_2DA_ENTRY_FORMER "read_splprot" "%idx%" 3 "curRelation"
+            PATCH_IF (~%relation%~ STRING_EQUAL ~%curRelation%~) BEGIN
+              SET "index" = "%idx%" // If already present, return its index
+              SET "idx" = "%read_splprot%" // Kill FOR-loop
+            END
+          END
+        END
+      END
+      // If not already present, add it...
+      PATCH_IF ("%index%" < 0) BEGIN
+        // Make sure we provided an identifier!
+        PATCH_IF ("%label%" STRING_COMPARE_CASE "") BEGIN
+          // Sanity check
+          INNER_PATCH_SAVE "label" "%label%" BEGIN
+            REPLACE_TEXTUALLY CASE_INSENSITIVE EVALUATE_REGEXP "[ %TAB%%WNL%%MNL%%LNL%]" ""
+          END
+          // Add new entry
+          PATCH_IF ("%stat%" >= 0x100) BEGIN
+            TEXT_SPRINT "line" ~%read_splprot%_%label% %valueHex% %value% %relation%~
+          END ELSE BEGIN
+            TEXT_SPRINT "line" ~%read_splprot%_%label% %stat% %value% %relation%~
+          END
+          INSERT_2DA_ROW "%read_splprot%" 4 ~%line%~
+          // Prettify
+          PRETTY_PRINT_2DA
+          SET "index" = "%read_splprot%"
+        END ELSE BEGIN
+          PATCH_FAIL "ADD_SPLPROT_ENTRY: ~label~ cannot be empty. Please specify a human-friendly identifier (f.i. ~ALIGNMENTBITS!=MASK_LCNEUTRAL~)"
+        END
+      END
+    BUT_ONLY_IF_IT_CHANGES
+  END
 END
 
 ////////////////////////////////////////////////////////////////////////
@@ -422,81 +361,79 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION "ADD_IDS_ENTRY"
 INT_VAR
-	"minValue"        = 0
-	"maxValue"        = 255
-	"preferredValue"  = "-1"
-	"hexadecimal"     = 0
+  "minValue"        = 0
+  "maxValue"        = 255
+  "preferredValue"  = "-1"
+  "hexadecimal"     = 0
 STR_VAR
-	"idsFile"         = ""
-	"identifier"      = ""
+  "idsFile"         = ""
+  "identifier"      = ""
 RET
-	"value"
+  "value"
 BEGIN
-	// Strip ".ids" (or ".IDS") from "%idsFile%"
-	ACTION_IF ((~%idsFile%~ STRING_MATCHES_REGEXP ~.+\..+~) == 0) BEGIN
-		OUTER_PATCH_SAVE "idsFile" ~%idsFile%~ BEGIN
-			REPLACE_TEXTUALLY ~\(.+\)\.[^.]+~ ~\1~
-		END
-	END
-	// Main
-	ACTION_IF (FILE_EXISTS_IN_GAME ~%idsFile%.ids~) BEGIN
-		// If ~%identifier%~ is already present, return the corresponding value and exit
-		OUTER_SET "value" = IDS_OF_SYMBOL ("%idsFile%" "%identifier%")
-		ACTION_IF ("%value%" == "-1") BEGIN
-			// Fix invalid "%minValue%" and/or "%maxValue%"
-			ACTION_IF ("%minValue%" < 0) BEGIN
-				OUTER_SET "minValue" = 0
-			END
-			ACTION_IF ("%maxValue%" < "%minValue%") BEGIN
-				OUTER_SET "maxValue" = "%minValue%"
-			END
-			// Try preferred value first
-			OUTER_PATCH ~~ BEGIN
-				PATCH_IF ("%preferredValue%" >= "%minValue%" AND "%preferredValue%" <= "%maxValue%") BEGIN
-					LOOKUP_IDS_SYMBOL_OF_INT "retVal" ~%idsFile%~ "%preferredValue%"
-					PATCH_IF (~%retVal%~ STRING_EQUAL ~%preferredValue%~) BEGIN
-						SET "value" = "%preferredValue%"
-					END
-				END
-			END
-			// Looking for available IDS slot
-			ACTION_IF ("%value%" == "-1") BEGIN
-				OUTER_PATCH ~~ BEGIN
-					FOR ("v" = "%minValue%"; "%v%" <= "%maxValue%"; "v" += 1) BEGIN
-						LOOKUP_IDS_SYMBOL_OF_INT "retVal" ~%idsFile%~ "%v%"
-						PATCH_IF (~%retVal%~ STRING_EQUAL ~%v%~) BEGIN
-							SET "value" = "%v%"
-							SET "v" = "%maxValue%" + 1	// Kill FOR-loop
-						END
-					END
-				END
-			END
-			// Adding new entry
-			ACTION_IF ("%value%" != "-1") BEGIN
-				ACTION_IF ("%hexadecimal%") BEGIN
-					LAF "TO_HEX_NUMBER"
-					INT_VAR
-						"value"
-					RET
-						"hexNumber"
-					END
-					OUTER_TEXT_SPRINT ~idsValue~ ~0x%hexNumber%~
-				END ELSE BEGIN
-					OUTER_TEXT_SPRINT ~idsValue~ ~%value%~
-				END
-				// APPENDing to ~%idsFile%.ids~
-				APPEND ~%idsFile%.ids~ ~%idsValue% %identifier%~
-				// Sanity check
-				ACTION_IF ("%value%" < "%minValue%" OR "%value%" > "%maxValue%") BEGIN
-					FAIL ~ADD_IDS_ENTRY: the IDS value corresponding to "%identifier%" is out of bounds~
-				END
-			END ELSE BEGIN
-				FAIL "ADD_IDS_ENTRY, ~%idsFile%.ids~: there's no room for appending ~%identifier%~"
-			END
-		END
-	END ELSE BEGIN
-		FAIL "ADD_IDS_ENTRY: the specified IDS file ~%idsFile%~ does not exist as a game resource"
-	END
+  // Strip ".ids" (or ".IDS") from "%idsFile%"
+  ACTION_IF ((~%idsFile%~ STRING_MATCHES_REGEXP ~.+\..+~) == 0) BEGIN
+    OUTER_PATCH_SAVE "idsFile" ~%idsFile%~ BEGIN
+      REPLACE_TEXTUALLY ~\(.+\)\.[^.]+~ ~\1~
+    END
+  END
+  // Main
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%idsFile%.ids~) BEGIN
+    // If ~%identifier%~ is already present, return the corresponding value and exit
+    OUTER_SET "value" = IDS_OF_SYMBOL ("%idsFile%" "%identifier%")
+    ACTION_IF ("%value%" == "-1") BEGIN
+      // Fix invalid "%minValue%" and/or "%maxValue%"
+      ACTION_IF ("%minValue%" < 0) BEGIN
+        OUTER_SET "minValue" = 0
+      END
+      ACTION_IF ("%maxValue%" < "%minValue%") BEGIN
+        OUTER_SET "maxValue" = "%minValue%"
+      END
+      // Try preferred value first
+      OUTER_PATCH ~~ BEGIN
+        PATCH_IF ("%preferredValue%" >= "%minValue%" AND "%preferredValue%" <= "%maxValue%") BEGIN
+          LOOKUP_IDS_SYMBOL_OF_INT "retVal" ~%idsFile%~ "%preferredValue%"
+          PATCH_IF (~%retVal%~ STRING_EQUAL ~%preferredValue%~) BEGIN
+            SET "value" = "%preferredValue%"
+          END
+        END
+      END
+      // Looking for available IDS slot
+      ACTION_IF ("%value%" == "-1") BEGIN
+        OUTER_PATCH ~~ BEGIN
+          FOR ("v" = "%minValue%"; "%v%" <= "%maxValue%"; "v" += 1) BEGIN
+            LOOKUP_IDS_SYMBOL_OF_INT "retVal" ~%idsFile%~ "%v%"
+            PATCH_IF (~%retVal%~ STRING_EQUAL ~%v%~) BEGIN
+              SET "value" = "%v%"
+              SET "v" = "%maxValue%" + 1	// Kill FOR-loop
+            END
+          END
+        END
+      END
+      // Adding new entry
+      ACTION_IF ("%value%" != "-1") BEGIN
+        ACTION_IF ("%hexadecimal%") BEGIN
+          OUTER_PATCH "" BEGIN
+            SPRINTF "idsValue" "%x" ("%value%")
+            TO_UPPER "idsValue"
+          END
+          OUTER_TEXT_SPRINT ~idsValue~ ~0x%hexNumber%~
+        END ELSE BEGIN
+          OUTER_TEXT_SPRINT ~idsValue~ ~%value%~
+        END
+        // APPENDing to ~%idsFile%.ids~
+        APPEND ~%idsFile%.ids~ ~%idsValue% %identifier%~
+        // Sanity check
+        ACTION_IF ("%value%" < "%minValue%" OR "%value%" > "%maxValue%") BEGIN
+          FAIL ~ADD_IDS_ENTRY: the IDS value corresponding to "%identifier%" is out of bounds~
+        END
+      END ELSE BEGIN
+        FAIL "ADD_IDS_ENTRY, ~%idsFile%.ids~: there's no room for appending ~%identifier%~"
+      END
+    END
+  END ELSE BEGIN
+    FAIL "ADD_IDS_ENTRY: the specified IDS file ~%idsFile%~ does not exist as a game resource"
+  END
 END
 
 ////////////////////////////////////////////////////////////////////////
@@ -508,20 +445,20 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION ~ARRAY_CONTAINS~
 STR_VAR
-	"array" = "" // array name
-	"key" = ""
-	"value" = ""
+  "array" = "" // array name
+  "key" = ""
+  "value" = ""
 RET
-	~found~
+  ~found~
 BEGIN
-	// Initialize
-	OUTER_SET ~found~ = 0 // Suppose "%key%" => "%value%" is not present
-	// Main
-	ACTION_PHP_EACH "%array%" AS "k" => "v" BEGIN
-		ACTION_IF ("%key%" STRING_EQUAL "%k%" || "%key%" STR_EQ "") && ("%value%" STRING_EQUAL "%v%" || "%value%" STR_EQ "") BEGIN
-			OUTER_SET ~found~ = 1
-		END
-	END
+  // Initialize
+  OUTER_SET ~found~ = 0 // Suppose "%key%" => "%value%" is not present
+  // Main
+  ACTION_PHP_EACH "%array%" AS "k" => "v" BEGIN
+    ACTION_IF ("%key%" STRING_EQUAL "%k%" || "%key%" STR_EQ "") && ("%value%" STRING_EQUAL "%v%" || "%value%" STR_EQ "") BEGIN
+      OUTER_SET ~found~ = 1
+    END
+  END
 END
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -532,32 +469,32 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION "ADD_STATDESC_ENTRY"
 INT_VAR
-	"description" = "-1"
+  "description" = "-1"
 STR_VAR
-	"bam_file" = "****"
+  "bam_file" = "****"
 RET
-	"index"
+  "index"
 BEGIN
-	// Initialize
-	OUTER_SET "index" = "-1"
-	// Check if "%description%" and "%bam_file%" are already present
-	COPY_EXISTING "statdesc.2da" "override"
-		COUNT_2DA_COLS "cols"
-		READ_2DA_ENTRIES_NOW "read_statdesc" "%cols%"
-		FOR ("i" = 0 ; "%i%" < "%read_statdesc%" ; "i" += 1) BEGIN
-			READ_2DA_ENTRY_FORMER "read_statdesc" "%i%" 0 "idx" // current index
-			PATCH_IF ("%description%" == "%read_statdesc_%i%_1%") AND ("%bam_file%" STRING_EQUAL_CASE "%read_statdesc_%i%_2%") BEGIN
-				SET "index" = "%read_statdesc_%i%_0%"
-				SET "i" = "%read_statdesc%" + 1 // kill FOR-loop
-			END
-		END
-		PATCH_IF ("%index%" == "-1") BEGIN
-			SET "index" = "%idx%" + 1
-			INSERT_2DA_ROW "%read_statdesc%" "%cols%" "%index% %description% %bam_file%"
-			// Formatting
-			PRETTY_PRINT_2DA
-		END
-	BUT_ONLY_IF_IT_CHANGES
+  // Initialize
+  OUTER_SET "index" = "-1"
+  // Check if "%description%" and "%bam_file%" are already present
+  COPY_EXISTING "statdesc.2da" "override"
+    COUNT_2DA_COLS "cols"
+    READ_2DA_ENTRIES_NOW "read_statdesc" "%cols%"
+    FOR ("i" = 0 ; "%i%" < "%read_statdesc%" ; "i" += 1) BEGIN
+      READ_2DA_ENTRY_FORMER "read_statdesc" "%i%" 0 "idx" // current index
+      PATCH_IF ("%description%" == "%read_statdesc_%i%_1%") AND ("%bam_file%" STRING_EQUAL_CASE "%read_statdesc_%i%_2%") BEGIN
+        SET "index" = "%read_statdesc_%i%_0%"
+        SET "i" = "%read_statdesc%" + 1 // kill FOR-loop
+      END
+    END
+    PATCH_IF ("%index%" == "-1") BEGIN
+      SET "index" = "%idx%" + 1
+      INSERT_2DA_ROW "%read_statdesc%" "%cols%" "%index% %description% %bam_file%"
+      // Formatting
+      PRETTY_PRINT_2DA
+    END
+  BUT_ONLY_IF_IT_CHANGES
 END
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -568,43 +505,43 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION "RETURN_FIRST_ENTRY"
 STR_VAR
-	"list_in" = ""
-	"separator" = " "
+  "list_in" = ""
+  "separator" = " "
 RET
-	"entry"
-	"list_out"
+  "entry"
+  "list_out"
 BEGIN
-	// Initialize
-	OUTER_TEXT_SPRINT "list_out" "%list_in%"
-	// Find the first instance of "%separator%"
-	OUTER_SET "x" = INDEX (CASE_INSENSITIVE EXACT_MATCH "%separator%" "%list_in%")
-	ACTION_IF ("%x%" == "-1") BEGIN
-		// If it can't find "%separator%", then this is the last entry => Find end of string
-		OUTER_SET "x" = INDEX (CASE_INSENSITIVE EVALUATE_REGEXP "$" "%list_in%")
-		OUTER_TEXT_SPRINT "list_out" ""
-	END
-	OUTER_SET "y" = STRING_LENGTH "%list_in%"
-	// Return the first entry
-	LAF "SUBSTRING"
-	INT_VAR
-		"length" = "%x%"
-	STR_VAR
-		"string" = "%list_in%"
-	RET
-		"entry" = "substring"
-	END
-	// Strip "%entry%" from "%list_in%" and save the resulting list as "list_out"
-	ACTION_IF ("%list_out%" STRING_COMPARE_CASE "") BEGIN
-		LAF "SUBSTRING"
-		INT_VAR
-			"start" = "%x%" + STRING_LENGTH "%separator%" // we need to take into account the length of "%separator%"
-			"length" = "%y%" - ("%x%" + STRING_LENGTH "%separator%") // we need to take into account the length of "%separator%"
-		STR_VAR
-			"string" = "%list_in%"
-		RET
-			"list_out" = "substring"
-		END
-	END
+  // Initialize
+  OUTER_TEXT_SPRINT "list_out" "%list_in%"
+  // Find the first instance of "%separator%"
+  OUTER_SET "found" = INDEX (CASE_INSENSITIVE EXACT_MATCH "%separator%" "%list_in%")
+  ACTION_IF ("%found%" == "-1") BEGIN
+    // If it can't find "%separator%", then this is the last entry => Find end of string
+    OUTER_SET "found" = INDEX (CASE_INSENSITIVE EVALUATE_REGEXP "$" "%list_in%")
+    OUTER_TEXT_SPRINT "list_out" ""
+  END
+  OUTER_SET "string_length" = STRING_LENGTH "%list_in%"
+  // Return the first entry
+  LAF "SUBSTRING"
+  INT_VAR
+    "length" = "%found%"
+  STR_VAR
+    "string" = "%list_in%"
+  RET
+    "entry" = "substring"
+  END
+  // Strip "%entry%" from "%list_in%" and save the resulting list as "list_out"
+  ACTION_IF ("%list_out%" STRING_COMPARE_CASE "") BEGIN
+    LAF "SUBSTRING"
+    INT_VAR
+      "start" = "%found%" + STRING_LENGTH "%separator%" // we need to take into account the length of "%separator%"
+      "length" = "%string_length%" - ("%found%" + STRING_LENGTH "%separator%") // we need to take into account the length of "%separator%"
+    STR_VAR
+      "string" = "%list_in%"
+    RET
+      "list_out" = "substring"
+    END
+  END
 END
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,27 +552,164 @@ END
 
 DEFINE_DIMORPHIC_FUNCTION "ARRAY_OF_LIST"
 STR_VAR
-	"list" = ""
-	"separator" = " "
+  "list" = ""
+  "separator" = " "
 RET_ARRAY
-	"array"
+  "array"
 BEGIN
-	// Initialize
-	ACTION_CLEAR_ARRAY "array"
-	OUTER_SET "count" = 0
-	// Main
-	OUTER_WHILE ("%list%" STRING_COMPARE_CASE "") BEGIN
-		LAF "RETURN_FIRST_ENTRY"
-		STR_VAR
-			"list_in" = "%list%"
-			"separator"
-		RET
-			"entry"
-			"list" = "list_out"
-		END
-		ACTION_DEFINE_ASSOCIATIVE_ARRAY "array" BEGIN
-			"%count%" => "%entry%"
-		END
-		OUTER_SET "count" += 1
-	END
+  // Initialize
+  ACTION_CLEAR_ARRAY "array"
+  OUTER_SET "count" = 0
+  // Main
+  OUTER_WHILE ("%list%" STRING_COMPARE_CASE "") BEGIN
+    LAF "RETURN_FIRST_ENTRY"
+    STR_VAR
+      "list_in" = "%list%"
+      "separator"
+    RET
+      "entry"
+      "list" = "list_out"
+    END
+    ACTION_DEFINE_ASSOCIATIVE_ARRAY "array" BEGIN
+      "%count%" => "%entry%"
+    END
+    OUTER_SET "count" += 1
+  END
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////// Return the number of times ~%element%~ appears in ~%list%~ (matching is case-insensitive)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_DIMORPHIC_FUNCTION "COUNT_ELEMENT_INSTANCES"
+STR_VAR
+  "list_in" = ""
+  "element" = ""
+  "separator" = " "
+RET
+  "count"
+  "list_out"
+BEGIN
+  // Initialize
+  OUTER_SET "count" = 0
+  OUTER_TEXT_SPRINT "list_out" ""
+  // Main
+  OUTER_WHILE ("%list_in%" STRING_COMPARE_CASE "") BEGIN
+    LAF "RETURN_FIRST_ENTRY"
+    STR_VAR
+      "list_in"
+      "separator"
+    RET
+      "list_in" = "list_out"
+      "entry"
+    END
+    ACTION_IF ("%entry%" STRING_EQUAL_CASE "%element%") BEGIN
+      OUTER_SET "count" += 1
+    END ELSE BEGIN
+      OUTER_TEXT_SPRINT "list_out" "%list_out%%separator%%entry%"
+    END
+  END
+  // Remove leading ~%separator%~
+  OUTER_PATCH_SAVE "list_out" "%list_out%" BEGIN
+    REPLACE_TEXTUALLY CASE_SENSITIVE EVALUATE_REGEXP "^%separator%" ""
+  END
+END
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+De-localized (i.e., not language dependant) function to get the string corresponding to index #"%strref%"
+
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_DIMORPHIC_FUNCTION "GT_GET_STRING"
+INT_VAR
+  "strref" = 0
+RET
+  "string"
+BEGIN
+  OUTER_TEXT_SPRINT "string" ""
+  COPY - "lang\en_us\dialog.tlk" "override"
+    READ_LONG 0xE "base_off" // Offset to base data
+    READ_LONG (0x12 + 0x12 + ("%strref%" * 0x1A)) "off" // Relative offset of this string
+    READ_LONG (0x12 + 0x16 + ("%strref%" * 0x1A)) "length" // Length of this string
+    READ_ASCII ("%base_off%" + "%off%") "string" ("%length%")
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ~ADD_SPELL_ABILITY~
+INT_VAR
+  ~type~ = 1 // Melee (should be irrelevant for `spl` files...)
+  ~location~ = 4 // Ability (F13 button)
+  ~target~ = 1 // Living actor
+  ~#_targets~ = 0
+  ~range~ = 30 // Default visual range
+  ~minimum_level~ = 1
+  ~casting_speed~ = 0
+  ~projectile~ = IDS_OF_SYMBOL ("MISSILE" "None")
+  //
+  ~copy_header~ = 0
+  ~insert_point~ = ~-1~ // insert last
+STR_VAR
+  ~icon~ = ~~
+RET
+  ~insert_point~
+BEGIN
+  //LPF ~FJ_SPL_ITM_REINDEX~ END
+  ~hs~ = 0x28
+
+  READ_LONG 0x64 ~ho~
+  READ_SHORT 0x68 ~hc~
+  READ_LONG 0x6a ~eo~
+  ~insert_point~ = ("%insert_point%" > "%hc%" || "%insert_point%" < 0) ? "%hc%" : "%insert_point%"
+  ~copy_header~ = ("%copy_header%" < 0) ? 0 : "%copy_header%"
+
+  PATCH_IF "%copy_header%" > "%hc%" BEGIN
+    PATCH_WARN ~Unable to copy %copy_header%th header, "%DEST_FILE%" contains only %hc% headers!~
+  END ELSE BEGIN
+    INSERT_BYTES ("%ho%" + "%insert_point%" * "%hs%") "%hs%"
+    "hc" += 1
+    "eo" += "%hs%"
+    PATCH_IF "%copy_header%" BEGIN
+      READ_SHORT ("%ho%" + ("%copy_header%" - 1) * "%hs%" + 0x1e) "ec"
+      READ_SHORT ("%ho%" + ("%copy_header%" - 1) * "%hs%" + 0x20) "ei"
+      READ_ASCII ("%eo%" + "%ei%" * 0x30) "effs" ("%ec%" * 0x30)
+      READ_ASCII ("%ho%" + ("%copy_header%" - 1) * "%hs%") "copy" ("%hs%")
+      WRITE_ASCII ("%ho%" + "%insert_point%" * "%hs%") ~%copy%~ ("%hs%")
+    END
+    WRITE_SHORT 0x68 "%hc%"
+    WRITE_LONG 0x6a "%eo%"
+
+    READ_SHORT 0x70 "ei" // technically, it is a counter
+    FOR ("i" = "%ho%" ; "%i%" < "%ho%" + "%hc%" * "%hs%" ; "i" += "%hs%") BEGIN
+      READ_SHORT "%i%" + 0x1e "ec"
+      WRITE_SHORT "%i%" + 0x20 "%ei%"
+      "ei" += "%ec%"
+    END
+
+    PATCH_IF "%copy_header%" BEGIN
+      READ_SHORT ("%ho%" + "%insert_point%" * "%hs%" + 0x1e) "ec"
+      READ_SHORT ("%ho%" + "%insert_point%" * "%hs%" + 0x20) "ei"
+      INSERT_BYTES ("%eo%" + "%ei%" * 0x30) ("%ec%" * 0x30)
+      WRITE_ASCII ("%eo%" + "%ei%" * 0x30) ~%effs%~ ("%ec%" * 0x30)
+    END ELSE BEGIN
+      "off" = "%ho%" + "%insert_point%" * "%hs%"
+      WRITE_BYTE "%off%" "%type%"
+      WRITE_SHORT ("%off%" + 0x2) "%location%"
+      WRITE_ASCII ("%off%" + 0x4) ~%icon%~ #8
+      WRITE_BYTE ("%off%" + 0xc) "%target%"
+      WRITE_BYTE ("%off%" + 0xd) "%#_targets%"
+      WRITE_SHORT ("%off%" + 0xe) "%range%"
+      WRITE_SHORT ("%off%" + 0x10) "%minimum_level%"
+      WRITE_SHORT ("%off%" + 0x12) "%casting_speed%"
+      WRITE_SHORT ("%off%" + 0x26) "%projectile%"
+    END
+  END
 END

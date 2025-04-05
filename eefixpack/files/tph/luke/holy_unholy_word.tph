@@ -1,15 +1,12 @@
 // This function moves Holy / Unholy Word so as to use 324 magic rather than those messy 177s.
-// The new implementation takes into account the "7eyes.2da" thing... More on that on a future pull request...
+// This is a "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up...
 
 DEFINE_ACTION_FUNCTION "CLERIC_HOLY_UNHOLY_WORD"
 BEGIN
 	WITH_SCOPE BEGIN
 		COPY_EXISTING "%CLERIC_HOLY_WORD%.spl" "override" "%CLERIC_UNHOLY_WORD%.spl" "override"
-			LPF "DELETE_EFFECT"
-			INT_VAR
-				"check_globals" = 0
-				"match_opcode" = 177 // Use EFF file
-			END
+			LPF "DELETE_EFFECT" INT_VAR "check_globals" = 0 "match_opcode" = 177 END // Use EFF file
+			//
 			PATCH_WITH_SCOPE BEGIN
 				PATCH_MATCH "%DEST_RES%" WITH
 					"%CLERIC_HOLY_WORD%" BEGIN
@@ -29,147 +26,72 @@ BEGIN
 					END
 					DEFAULT
 				END
-				LPF "ADD_SPELL_EFFECT"
-				INT_VAR
-					"opcode" = 324 // Immunity to resource and message
-					"target" = 2 // Preset target
-					"power" = 7
-					"parameter2" = "%index%"
-					"resist_dispel" = BIT1
-				STR_VAR
-					"resource" = "%DEST_RES%"
-				END
+				LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "power" = 7 "parameter2" = "%index%" "resist_dispel" = BIT1 STR_VAR "resource" = "%DEST_RES%" END // Immunity to resource and message
 			END
 			// Less than 4 Hit Dice / Levels => Death
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 13 // Kill target
-				"target" = 2 // Preset target
-				"power" = 7
-				"timing" = 1
-				"parameter2" = BIT2 // Normal death
-				"resist_dispel" = BIT0
-				"dicenumber" = 3
-			END
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 13 "target" = 2 "power" = 7 "timing" = 1 "parameter2" = BIT2 "resist_dispel" = BIT0 "dicenumber" = 3 END // Kill target (Normal death)
 			// 4 to 7 Hit Dice / Levels => Stunned for 1 turn
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 45 // Stun
-				"target" = 2 // Preset target
-				"power" = 7
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicenumber" = 7
-				"dicesize" = 4
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 139 // Display string
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter1" = "%game_is_bgee%" ? 26050 : 1280
-				"timing" = 1
-				"resist_dispel" = BIT0
-				"dicenumber" = 7
-				"dicesize" = 4
+			PATCH_WITH_SCOPE BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+					GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+					PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+						PATCH_MATCH SHORT_AT "%fx_off%" WITH
+							326 WHEN (SLONG_AT ("%fx_off%" + 0x4) == IDS_OF_SYMBOL ("splstate" "STUN_IMMUNITY")) AND (LONG_AT ("%fx_off%" + 0x8) == 111) BEGIN
+								READ_ASCII ("%fx_off%" + 0x14) "subspell"
+							END
+							DEFAULT
+						END
+					END
+				END
+				INNER_ACTION BEGIN
+					COPY_EXISTING "%subspell%.spl" "override"
+						LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = "-1" END
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 45 "target" = 2 "duration" = 60 "resist_dispel" = BIT0 | BIT1 END // Stun
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "parameter1" = ("%game_is_bgee%" ? 26050 : 1280) "timing" = 1 "resist_dispel" = BIT0 | BIT1 END // Display string
+					BUT_ONLY
+				END
 			END
 			// 8 to 11 Hit Dice / Levels => Slowed for 1 turn with a 75% chance of spell failure
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 40 // Slow
-				"target" = 2 // Preset target
-				"power" = 7
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicenumber" = 11
-				"dicesize" = 8
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 139 // Display string
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter1" = 14668
-				"timing" = 1
-				"resist_dispel" = BIT0
-				"dicenumber" = 11
-				"dicesize" = 8
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 60 // Casting failure
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter1" = 75
-				"parameter2" = 0 // Arcane spells
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicenumber" = 11
-				"dicesize" = 8
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 60 // Casting failure
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter1" = 75
-				"parameter2" = 1 // Divine spells
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicenumber" = 11
-				"dicesize" = 8
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 142 // Display portrait icon
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter2" = 105 // Miscast Magic
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicenumber" = 11
-				"dicesize" = 8
-			END
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 40 "target" = 2 "power" = 7 "duration" = 60 "resist_dispel" = BIT0 "dicenumber" = 11 "dicesize" = 8 END // Slow
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 139 "target" = 2 "power" = 7 "parameter1" = 14668 "timing" = 1 "resist_dispel" = BIT0 "dicenumber" = 11 "dicesize" = 8 END // Display string
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 60 "target" = 2 "power" = 7 "parameter1" = 75 "parameter2" = 0 "duration" = 60 "resist_dispel" = BIT0 "dicenumber" = 11 "dicesize" = 8 END // Casting failure (Arcane spells)
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 60 "target" = 2 "power" = 7 "parameter1" = 75 "parameter2" = 1 "duration" = 60 "resist_dispel" = BIT0 "dicenumber" = 11 "dicesize" = 8 END // Casting failure (Divine spells)
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 142 "target" = 2 "power" = 7 "parameter2" = 105 "duration" = 60 "resist_dispel" = BIT0 "dicenumber" = 11 "dicesize" = 8 END // Display portrait icon (Miscast Magic)
 			// 12+ Hit Dice / Levels => Deafened for 1 turn with a 50% chance of spell failure
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 80 // Deafness
-				"target" = 2 // Preset target
-				"power" = 7
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicesize" = 12
-			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 142 // Display portrait icon
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter2" = 112 // Deaf
-				"duration" = 60 // 1 turn
-				"resist_dispel" = BIT0
-				"dicesize" = 12
+			PATCH_WITH_SCOPE BEGIN
+				GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
+				PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+					GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" SPL_V10_HEAD_EFFECTS
+					PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+						PATCH_MATCH SHORT_AT "%fx_off%" WITH
+							326 WHEN (SLONG_AT ("%fx_off%" + 0x4) == IDS_OF_SYMBOL ("splstate" "DEAF_IMMUNITY")) AND (LONG_AT ("%fx_off%" + 0x8) == 111) BEGIN
+								READ_ASCII ("%fx_off%" + 0x14) "subspell"
+							END
+							DEFAULT
+						END
+					END
+				END
+				INNER_ACTION BEGIN
+					COPY_EXISTING "%subspell%.spl" "override"
+						LPF "DELETE_SPELL_EFFECT" INT_VAR "opcode_to_delete" = "-1" END
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 80 "target" = 2 "duration" = 60 "resist_dispel" = BIT0 | BIT1 END // Deafness
+						LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 142 "target" = 2 "parameter1" = 112 "duration" = 60 "resist_dispel" = BIT0 | BIT1 END // Display portrait icon
+					BUT_ONLY
+				END
 			END
 			// Visual / Cosmetic effects
 			LPF "ADD_SPELL_EFFECT"
 			INT_VAR
 				"opcode" = 61 // Creature RGB color fade
-				"target" = 2 // Preset target
+				"target" = 2
 				"power" = 7
 				"parameter1" = ("%DEST_RES%" STR_EQ "%CLERIC_HOLY_WORD%") ? (128 << 8) + (128 << 16) + (128 << 24) : (160 << 8) + (32 << 16) + (0 << 24)
 				"parameter2" = 0 + (25 << 16)
 				"timing" = 1
 				"resist_dispel" = BIT0
 			END
-			LPF "ADD_SPELL_EFFECT"
-			INT_VAR
-				"opcode" = 141 // Lighting effects
-				"target" = 2 // Preset target
-				"power" = 7
-				"parameter2" = 22 // Conjure water
-				"timing" = 1
-				"resist_dispel" = BIT0
-			END
+			LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 141 "target" = 2 "power" = 7 "parameter2" = 22 "timing" = 1 "resist_dispel" = BIT0 END // Lighting effects (Conjure water)
 		BUT_ONLY_IF_IT_CHANGES
 	END
 END
