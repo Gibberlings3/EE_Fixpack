@@ -30,7 +30,7 @@ BEGIN
 		12 , "piercing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_piercing.2da"
 		13 , "null" , "DEATH_IMMUNITY" , "" , "Death, Vorpal Hit" , "51" , "" => "kill.2da"
 		16 , "null" , "HASTE_IMMUNITY" , "93 126 206 318" , "Haste, Hasted" , "38 110" , "" => "haste.2da"
-		24 , "null" , "PANIC_IMMUNITY" , "23 54 106" , "Panic, Morale Failure: Panic, *flees in terror*" , "36" , "cdhorror spmindat ohrmind" => "panic.2da"
+		24 , "null" , "PANIC_IMMUNITY" , "23 54 106 10 44" , "Panic, Morale Failure: Panic, *flees in terror*" , "36" , "cdhorror spmindat ohrmind" => "panic.2da" // NB.: CON/STR penalties seem tied to fear
 		38 , "null" , "SILENCE_IMMUNITY" , "" , "Silence, Silenced, Bard Song Silenced" , "34" , "" => "silence.2da"
 		//39 , "null" , "" , "" , "Sleep, Unconscious" , "" , "" => "sleep.2da"
 		40 , "null" , "SLOW_IMMUNITY" , "0 54 240" , "Slow, Slowed" , "41" , "" => "slow.2da"
