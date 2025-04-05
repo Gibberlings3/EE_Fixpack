@@ -35,9 +35,9 @@ COPY_EXISTING ~potn23.itm~   ~override~ // Oil of Speed - causes feeblemind - po
   LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 139 END // correct opcode
   
 // needs stun immunity, but can't block bonus damage
-COPY_EXISTING ~uarow3b.spl~  ~override~  // (itm) Hammer Arrow +1 - causes stun - portrait icon(s) 55 - additional effects [color glow]
-  //LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 324 parameter1 = stun_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
-BUT_ONLY_IF_IT_CHANGES
+// COPY_EXISTING ~uarow3b.spl~  ~override~  // (itm) Hammer Arrow +1 - causes stun - portrait icon(s) 55 - additional effects [color glow]
+//   //LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 324 parameter1 = stun_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+// BUT_ONLY_IF_IT_CHANGES
 
 // needs stun immunity, but do special to avoid triple 324s
 COPY_EXISTING ~spin115.spl~  ~override~ // (spl) Mournful Wail - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound]

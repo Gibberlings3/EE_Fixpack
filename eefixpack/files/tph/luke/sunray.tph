@@ -39,6 +39,7 @@ BEGIN
 							READ_ASCII ("%fx_off%" + 0x14) "subspell"
 							WRITE_LONG ("%fx_off%" + 0x24) BIT0 // save vs. spell
 						END
+						DEFAULT
 					END
 				END
 			END

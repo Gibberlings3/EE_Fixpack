@@ -522,7 +522,7 @@ COPY_EXISTING ~ghoult.itm~ ~override~ // ghoul touch should last six rounds
 
 // tbd, cam
 // sword of days doesn't block all haste/slow spells
-COPY_EXISTING ~days.itm~ ~override~ // round out slow/haste immunity; david's stuff will add the immunity spellstates
+COPY_EXISTING ~cd003i.spl~ ~override~ // round out slow/haste immunity; david's stuff will add the immunity spellstates
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi305 resource = spra301 insert = below END // clone haste to ranger haste
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin146 insert = below END // clone to beholder slow
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin977 insert = below END // clone to golem slow
@@ -582,7 +582,7 @@ COPY_EXISTING ~u1ham5b.itm~  ~override~ // war hammer +4: defender: 20% heal
 
 // tbd, cam
 // disease icon duration doesn't match disease effect; just delete and attach icon to disease effect
-COPY_EXISTING ~udagg4a.itm~  ~override~ // (itm) Chaos Dagger +3 - causes disease - portrait icon(s) 7
+COPY_EXISTING ~cd006h.spl~  ~override~ // (itm) Chaos Dagger +3 - causes disease - portrait icon(s) 7
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // deletes icon
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 special = 7 END // attach icon to disease effect
 
@@ -730,10 +730,13 @@ INCLUDE ~eefixpack/files/tph/tbd_324_traps_iwdee.tph~ // tbd, cam - game can cra
 // see also cwoslim.itm, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101/b/c.spl
 COPY_EXISTING ~#cofear.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+  //LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+COPY_EXISTING "cd0030.spl" "override"
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 321 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+
 
 // feedback with limited timing and/or duration
-COPY_EXISTING ~#sunrund.spl~ ~override~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
+COPY_EXISTING ~cd005i.spl~ ~override~ // (spl) <Invalid Strref -1> - causes blind - portrait icon(s) 8 - additional effects
               ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects
               ~sppr102.spl~  ~override~ // (spl) Command - causes sleep - additional effects
               ~spwi004.spl~  ~override~ // (spl) Stinking Cloud - causes sleep - portrait icon(s) 126 - additional effects
@@ -767,7 +770,7 @@ COPY_EXISTING ~backstab.spl~ ~override~
 
 // ie-5938, cam
 // Lich Touch should paralyze, not hold
-COPY_EXISTING ~ltouch.spl~ ~override~
+COPY_EXISTING ~cd007u.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 175 opcode = 109 END
   BUT_ONLY
 
@@ -782,7 +785,7 @@ COPY_EXISTING ~ohtmps1.spl~ ~override~ // holy power
 
 // tbd, cam
 // stuns, but plays spmindat; iwd generally uses glows so change to that instead
-COPY_EXISTING ~spcl118.spl~  ~override~ // the siren's yearning—enthralls creatures - plays spmindat
+COPY_EXISTING ~cd0049.spl~  ~override~ // the siren's yearning—enthralls creatures - plays spmindat
   LPF ALTER_EFFECT INT_VAR match_opcode = 215 opcode = 8 parameter1 = ((46 << 8) + (56 << 16) + (0 << 24)) parameter2 = 255 STR_VAR match_resource = spmindat END
   BUT_ONLY
 
@@ -836,11 +839,19 @@ COPY_EXISTING ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - ad
 COPY_EXISTING ~spin132.spl~ ~override~
               ~sppr617.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 13 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+  //LPF CLONE_EFFECT INT_VAR match_opcode = 13 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+
+COPY_EXISTING "cd004c.spl" "override"
+              "cd004h.spl" "override"
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 insert_point = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ END 
 
 COPY_EXISTING ~spin139.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 0 END
-  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 146 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+//   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 146 opcode = 321 parameter2 = 0 timing = 0 duration = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ insert = above END
+
+COPY_EXISTING "cd0039.spl" "override"
+              "cd004d.spl" "override"
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 insert_point = 0 STR_VAR resource = EVAL ~%SOURCE_RES%~ END 
 
 COPY_EXISTING ~spin161.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 0 END
@@ -1075,7 +1086,8 @@ COPY_EXISTING ~%WIZARD_TENSERS_TRANSFORMATION%.spl~ ~override~ // spwi603
 
 // tbd, cam
 // feeblemind and petrification are permanent, but icons are not
-COPY_EXISTING ~spwi714.spl~  ~override~ // (spl) Prismatic Spray - causes blind feeblemind - portrait icon(s) 8 48 171
+COPY_EXISTING ~cd0066.spl~ ~override~ // (spl) Prismatic Spray - causes blind feeblemind - portrait icon(s) 8 48 171
+              ~cd007b.spl~  ~override~ // (spl) Prismatic Spray - causes blind feeblemind - portrait icon(s) 8 48 171
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_duration = 308571 timing = 1 duration = 0 END // make permanent
 
 // tbd, cam
@@ -1222,7 +1234,7 @@ luke
 WITH_SCOPE BEGIN
   WITH_SCOPE BEGIN
     COPY_EXISTING "spcl751a.spl" "override"
-      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 146 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "cd0072" END // Cast spell
+      LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 326 "savingthrow" = 0 "savebonus" = 0 STR_VAR "match_resource" = "cd0072" END // Cast spell
     BUT_ONLY_IF_IT_CHANGES
   END
   WITH_SCOPE BEGIN
