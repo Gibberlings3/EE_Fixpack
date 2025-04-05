@@ -28,7 +28,7 @@ BEGIN
 		12 , "crushing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_crushing.2da"
 		12 , "slashing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_slashing.2da"
 		12 , "piercing" , "" , "" , "Bleeding, Suffers Bleeding Wound, Bleeding Wound, Deathbringer Assault" , "102 137" , "" => "damage_piercing.2da"
-		13 , "null" , "DEATH_IMMUNITY" , "" , "Death, Vorpal Hit" , "51" , "" => "kill.2da"
+		13 , "null" , "DEATH_IMMUNITY" , "66 287 165" , "Death, Vorpal Hit" , "51" , "" => "kill.2da"
 		16 , "null" , "HASTE_IMMUNITY" , "93 126 206 318" , "Haste, Hasted" , "38 110" , "" => "haste.2da"
 		24 , "null" , "PANIC_IMMUNITY" , "23 54 106 10 44" , "Panic, Morale Failure: Panic, *flees in terror*" , "36 91" , "cdhorror spmindat ohrmind" => "panic.2da" // NB.: CON/STR penalties seem tied to fear
 		38 , "null" , "SILENCE_IMMUNITY" , "" , "Silence, Silenced, Bard Song Silenced" , "34" , "" => "silence.2da"

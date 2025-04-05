@@ -522,7 +522,7 @@ COPY_EXISTING ~ghoult.itm~ ~override~ // ghoul touch should last six rounds
 
 // tbd, cam
 // sword of days doesn't block all haste/slow spells
-COPY_EXISTING ~cd003i.spl~ ~override~ // round out slow/haste immunity; david's stuff will add the immunity spellstates
+COPY_EXISTING ~days.itm~ ~override~ // round out slow/haste immunity; david's stuff will add the immunity spellstates
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi305 resource = spra301 insert = below END // clone haste to ranger haste
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin146 insert = below END // clone to beholder slow
   LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 318 STR_VAR match_resource = spwi312 resource = spin977 insert = below END // clone to golem slow
@@ -827,6 +827,7 @@ COPY_EXISTING ~%CLERIC_SYMBOL_OF_HOPELESSNESS%.spl~ ~override~ // sppr716 Symbol
 // Great Roar has inconsistent durations
 COPY_EXISTING ~%INNATE_GREAT_ROAR%.spl~ ~override~ // spin119 great roar
   LPF ALTER_EFFECT INT_VAR match_duration = 120 duration = 30 END
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = IDS_OF_SYMBOL ("splstate" "panic_immunity") parameter2 = 110 STR_VAR resource = "%DEST_RES%" END
   BUT_ONLY
 
 // tbd, cam
@@ -1632,10 +1633,10 @@ INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity,
 // fixes the hot mess of three white doves
 // death moved back below death messages; fixing HD targeting for undead destruction
 COPY_EXISTING ~doves.itm~   ~override~ // three white doves
-  LPF CLONE_EFFECT INT_VAR                   match_opcode = 177 STR_VAR match_resource = cddovdie insert = last END // copy die to last effects after messages
+  LPF CLONE_EFFECT INT_VAR                   match_opcode = 177 silent = 1 STR_VAR match_resource = cddovdie insert = last END // copy die to last effects after messages
   LPF DELETE_EFFECT INT_VAR multi_match = 18 match_opcode = 177 STR_VAR match_resource = cddovdie               END // yes, 18
   PATCH_FOR_EACH lev IN 5 6 7 8 10 11 BEGIN
-    LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 4 match_parameter2 = 3 match_dicesize = lev dicesize = 0 END
+    LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 177 match_parameter1 = 4 match_parameter2 = 3 match_dicesize = lev dicesize = 0 END
   END
 
 WITH_SCOPE BEGIN
