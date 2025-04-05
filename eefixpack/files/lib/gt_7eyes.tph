@@ -359,7 +359,7 @@ BEGIN
 								WRITE_SHORT "%fx_off%" 998
 							END
 						END
-						41 61 140 141 165 170 265 269 BEGIN END
+						41 61 140 141 165 170 265 269 327 BEGIN END
 						206 318 324 BEGIN
 							PATCH_IF ("%fx_ind%" == SHORT_AT ("%ab_off%" + 0x1E) - 1) AND ("%fx_resource%" STR_EQ "%DEST_RES%") BEGIN // if last in the effect stack...
 								SET "found_other" = 1

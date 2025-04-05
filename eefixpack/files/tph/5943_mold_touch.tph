@@ -5,9 +5,9 @@ COPY_EXISTING ~idmold.pro~ ~override~
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override~ // sppr326
               ~%CLERIC_MOLD_TOUCH%b.spl~ ~override~ // sppr326b
-  // LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete portrait icons because...
-  // LPF ALTER_EFFECT  INT_VAR match_opcode =  78 special = 7 END  // we're attaching them directly to the disease effect
-  // LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_parameter2 = 12 timing = 3 duration = 0 END  // we're attaching them directly to the disease effect
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete portrait icons because...
+  LPF ALTER_EFFECT  INT_VAR silent = 1 match_opcode =  78 special = 7 END  // we're attaching them directly to the disease effect
+  LPF ALTER_EFFECT  INT_VAR silent = 1 match_opcode =  78 match_parameter2 = 12 timing = 3 duration = 0 END  // we're attaching them directly to the disease effect
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override~ // sppr326
   LPF CLONE_EFFECT  INT_VAR match_opcode = 324 match_parameter2 = 55 parameter2 = 68 END // prevent spread to someone who already has mold
