@@ -431,13 +431,13 @@ BEGIN
 		ACTION_MATCH 1 WITH
 			GAME_IS "bgee" BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY "magically_created_weapon" BEGIN
-					"figure01.itm" => "" // Shakti Figurine
+					//"figure01.itm" => "" // Shakti Figurine
 					//
-					"ohbpr608.spl" => "" // Harm
+					//"ohbpr608.spl" => "" // Harm
 					"%HELM_SEEKING_SWORD%.spl" => ""
 					"spdm103.spl" => "" // Ghoul Touch
 					"spin113.spl" => "" // Spiritual Hammer
-					"spin202.spl" => "" // Cause Serious Wounds
+					//"spin202.spl" => "" // Cause Serious Wounds
 					"%CREATE_YOSHIMO_BLADE%.spl" => ""
 					"%CLERIC_SHILLELAGH%.spl" => ""
 					"%CLERIC_FLAME_BLADE%.spl" => ""

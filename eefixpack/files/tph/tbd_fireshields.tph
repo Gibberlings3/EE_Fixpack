@@ -21,8 +21,19 @@ END
 ACTION_PHP_EACH cd_fireshields AS spell => pow BEGIN
 
   COPY_EXISTING ~%spell%.spl~ ~override~
-    LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = pow END
-    LPF CLONE_EFFECT INT_VAR match_opcode = 12 opcode = 206 parameter1 = 0 parameter2 = 0 timing = 10 duration = 2 dicenumber = 0 dicesize = 0 STR_VAR insert = last resource = EVAL ~%SOURCE_RES%~ END // clone damage into 2 ticks of immunity
+    PATCH_MATCH "%DEST_RES%" WITH
+      "bdshld02" BEGIN
+        INNER_ACTION BEGIN
+          COPY_EXISTING "cd000e.spl" "override"
+            LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = pow END
+            LPF CLONE_EFFECT INT_VAR match_opcode = 12 opcode = 206 parameter1 = 0 parameter2 = 0 timing = 10 duration = 2 dicenumber = 0 dicesize = 0 STR_VAR insert = last resource = EVAL ~%SOURCE_RES%~ END // clone damage into 2 ticks of immunity
+          BUT_ONLY
+        END
+      END
+      DEFAULT
+        LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = pow END
+        LPF CLONE_EFFECT INT_VAR match_opcode = 12 opcode = 206 parameter1 = 0 parameter2 = 0 timing = 10 duration = 2 dicenumber = 0 dicesize = 0 STR_VAR insert = last resource = EVAL ~%SOURCE_RES%~ END // clone damage into 2 ticks of immunity
+    END
     BUT_ONLY IF_EXISTS
 
 END

@@ -1259,7 +1259,7 @@ COPY_EXISTING ~amul22.itm~   ~override~ // Periapt of Proof Against Poison - cur
               ~potn47.itm~   ~override~ // Marek's Potion of Antidote - cures poison
               ~potnmare.itm~ ~override~ // Marek's Potion of Antidote - cures poison
               ~scrl08.itm~   ~override~ // Protection From Poison - cures poison - unknown long effect - portrait icon 30 - unknown long effect - plays sound EFF_E04
-              ~spin102.spl~  ~override~ // Slow Poison - cures drunkenness poison
+              //~spin102.spl~  ~override~ // Slow Poison - cures drunkenness poison [Luke: changed from cure poison to slow poison]
               ~spin679.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
               ~spin699.spl~  ~override~ // Healing Lick - cures blind deafness disease poison
               ~spin711.spl~  ~override~ // Heal - cures blind deafness disease drunkenness feeblemind poison
