@@ -392,7 +392,7 @@ ACTION_IF GAME_IS "bg2ee iwdee" BEGIN //bgee already uses 185
 END
 
 ACTION_IF GAME_IS BG2EE BEGIN
-	COPY_EXISTING "sppr728.spl" override
+	COPY_EXISTING "cd00bs.spl" override
 		LPF ALTER_EFFECT INT_VAR match_opcode=175 opcode=185 END
 END
 

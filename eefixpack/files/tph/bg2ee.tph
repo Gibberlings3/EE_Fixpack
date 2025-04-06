@@ -722,14 +722,18 @@ COPY_EXISTING ~flind1.itm~ ~override~
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
   PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+    LPF CLONE_EFFECT  INT_VAR silent = 1 match_opcode = op match_probability1 = 50 STR_VAR insert = last END
     LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
   END
 //  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+
+COPY_EXISTING ~cd0004.spl~  ~override~ // Nalmissra's attack
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 318 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 318 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
 // tbd, cam
 // blackmist plays two sounds when it blinds targets; one of them is the expirty sound and should be delayed
@@ -759,12 +763,12 @@ COPY_EXISTING ~helm33.itm~ ~override~ // Gold Horned Helm
 // tbd, cam
 // combat feedback used with instant/limited timing and durations
 COPY_EXISTING ~helm32.itm~   ~override~ // Helm of the Rock - causes fear - portrait icon 36 - unknown long effect
-              ~spin595.spl~  ~override~ // Yellow Dragon Scorching Sand - causes blind - unknown long effect
+              ~cd008n.spl~  ~override~ // Yellow Dragon Scorching Sand - causes blind - unknown long effect
               ~spin878.spl~  ~override~ // Level Drain - causes blind - causes level drain - unknown long effect
               ~spin893.spl~  ~override~ // Shadow Dragon Breath - causes blind - causes level drain - unknown long effect
-              ~spin929.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
-              ~spin931.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
-              ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
+              ~cd008q.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
+              ~cd008r.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
+              ~cd008x.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
               ~spwi815.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
               ~spwi958.spl~  ~override~ // Power Word, Blind - causes blind - unknown long effect - plays sound EFF_E06
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
@@ -785,8 +789,8 @@ COPY_EXISTING //~dragring.itm~ ~override~ // ring - immune to stun - immune to h
   BUT_ONLY
 
 // tie slow icon to slow-via-disease effect so it gets cleared by disease cures
-COPY_EXISTING ~iotyugh.itm~  ~override~ // (itm) Attack - causes disease - portrait icon 41
-              ~ohrslng1.itm~ ~override~ // (itm) Lupine Sling +2 - causes disease - portrait icon 41 [uses slow icon with its disease]
+COPY_EXISTING ~cd0098.spl~  ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~cd009e.spl~ ~override~ // (itm) Lupine Sling +2 - causes disease - portrait icon 41 [uses slow icon with its disease]
               ~otyugh.itm~   ~override~ // (itm) Attack - causes disease - portrait icon 41
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete slow effect
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
@@ -872,7 +876,7 @@ COPY_EXISTING ~quiver01.itm~ ~override~ // quiver of plenty +1
   BUT_ONLY
 
 // rod of terror's fear affect lasts 5 rounds instead of the stated 4
-COPY_EXISTING ~rods05.itm~ ~override~
+COPY_EXISTING ~cd004m.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_duration = 30 duration = 24 END
 
 // tbd, cam
@@ -893,9 +897,9 @@ COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unkn
 // tbd, cam
 // elemental staves' sound effect should only target the specified creature
 OUTER_SET elemental_destroyed = RESOLVE_STR_REF (@100)
-COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
-              ~staf16.itm~ ~override~ // staff of earth +2
-              ~staf17.itm~ ~override~ // staff of fire +2
+COPY_EXISTING ~cd0088.spl~ ~override~ // staff of air +2
+              ~cd0089.spl~ ~override~ // staff of earth +2
+              ~cd008a.spl~ ~override~ // staff of fire +2
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 318 power = 0 parameter2 = 115 timing = 0 savingthrow = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
   LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
@@ -1360,6 +1364,7 @@ luke
 **Wand of Glitterdust**
 - Make sure all effects are dispellable/do not bypass Magic Resistance (so as to match the corresponding spell)
 */
+/*
 WITH_SCOPE BEGIN
   COPY_EXISTING - "ohdwand1.itm" "override"
     GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
@@ -1377,8 +1382,9 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
   COPY_EXISTING "%subspell%.spl" "override"
     LPF "ALTER_EFFECT" INT_VAR "check_globals" = 0 "resist_dispel" = BIT0 BOR BIT1 END // MR already checked on the parent file
-  END
+  BUT_ONLY_IF_IT_CHANGES
 END
+*/
 
 /*
 luke
@@ -1528,7 +1534,7 @@ luke
 - "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
 */
 WITH_SCOPE BEGIN
-  COPY_EXISTING "spin891a.spl" "override" // panic subspell
+  COPY_EXISTING "cd004u.spl" "override" // panic subspell
     LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 177 "opcode" = 24 "parameter1" = 0 "parameter2" = 0 STR_VAR "match_resource" = "moondog" "resource" = "" END
     LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 177 "opcode" = 142 "parameter1" = 0 "parameter2" = 36 STR_VAR "match_resource" = "moond2" "resource" = "" END
     LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 177 "opcode" = 139 "parameter1" = 14007 "parameter2" = 0 STR_VAR "match_resource" = "moond1" "resource" = "" END
@@ -1614,10 +1620,11 @@ COPY_EXISTING ~ax1h10.itm~   ~override~ // azuredge
               ~dwfpohdv.spl~ ~override~ // used by ohbdeva.itm for, you guessed it, disruption
               ~hamm10.itm~   ~override~ // runehammer +4
               ~hamm11.itm~   ~override~ // runehammer +5
-  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = mesdie insert = last END // copy mesdie, die to last effects
-  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 STR_VAR match_resource = die    insert = last END
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 silent = 1 STR_VAR match_resource = mesdie insert = last END // copy mesdie, die to last effects
+  LPF CLONE_EFFECT INT_VAR                  match_opcode = 177 silent = 1 STR_VAR match_resource = die    insert = last END
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = mesdie               END // then delete the source of the copied effects
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 177 STR_VAR match_resource = die                  END
+BUT_ONLY IF_EXISTS
 
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"

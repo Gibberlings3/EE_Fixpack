@@ -38,7 +38,7 @@ BEGIN
 		55 , "null" , "DEATH_IMMUNITY" , "" , "Death, Vorpal Hit" , "51" , "" => "slay.2da"
 		74 , "null" , "BLIND_IMMUNITY" , "54" , "Blind, Blinded, Blindness" , "8" , "" => "blind.2da"
 		76 , "null" , "FEEBLEMIND_IMMUNITY" , "" , "Feeblemind, Feebleminded, Feeblemindedness, Mind Locked Away" , "48" , "cdfeeble spmindat" => "feeblemind.2da"
-		78 , "null" , "DISEASE_IMMUNITY" , "328" , "Gibberslug Infection, Diseased, Stricken by a foul disease" , "7" , "" => "disease.2da"
+		78 , "null" , "DISEASE_IMMUNITY" , "328" , "Gibberslug Infection, Diseased, Stricken by a foul disease" , "7 41" , "" => "disease.2da"
 		80 , "null" , "DEAF_IMMUNITY" , "" , "Deaf, Deafened, Deafness" , "112" , "" => "deaf.2da"
 		109 , "null" , "PARALYZE_IMMUNITY" , "157" , "Paralyzed, Paralysed, Held" , "13" , "" => "paralyze.2da"
 		128 , "null" , "CONFUSION_IMMUNITY" , "" , "Confused, Rigid Thinking, Chaos" , "2 3 47" , "spconfus" => "confusion.2da"

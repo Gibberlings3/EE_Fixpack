@@ -52,6 +52,9 @@ BEGIN
 						"spin119\.spl" "doves\.itm" WHEN GAME_IS "iwdee" BEGIN
 							// these will be fixed manually later ...
 						END
+						"ohdwand1\.itm" WHEN GAME_IS "bg2ee" BEGIN
+							// these will be fixed manually later ...
+						END
 						DEFAULT
 							COPY_EXISTING "%file_to_patch%" "override"
 								LPF "7EYES-O-MATIC#CORE" END
