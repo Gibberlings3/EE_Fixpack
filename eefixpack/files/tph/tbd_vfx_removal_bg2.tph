@@ -1455,7 +1455,7 @@ COPY_EXISTING ~amsoul01.itm~ ~override~ // Malla's Soul Stone - cures blind - cu
               ~potnmare.itm~ ~override~ // Marek's Potion of Antidote - cures poison
               ~scrl08.itm~   ~override~ // Protection From Poison - cures poison
               ~senspihe.spl~ ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison
-              ~spin102.spl~  ~override~ // Slow Poison - cures drunkenness - cures poison
+              //~spin102.spl~  ~override~ // Slow Poison - cures drunkenness - cures poison [Luke: changed from cure poison to slow poison]
               ~spin201.spl~  ~override~ // Neutralize Poison - cures blind - cures deafness - cures disease - cures poison
               ~spin599.spl~  ~override~ // <Invalid Strref -1> - cures disease - cures poison
               ~spin679.spl~  ~override~ // Heal - cures blind - cures deafness - cures disease - cures drunkenness - cures feeblemind - cures poison

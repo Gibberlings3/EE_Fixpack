@@ -23,11 +23,13 @@ END
 
 // luke
 // Mimic Glue should not set the GREASE stat
+/*
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue spin914
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
   BUT_ONLY_IF_IT_CHANGES
 END
+*/
 
 // luke
 // Lesser Fire Spirit - Suppress misleading "One of the spell has failed" message
