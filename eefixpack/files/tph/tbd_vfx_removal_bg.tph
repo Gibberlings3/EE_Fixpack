@@ -317,12 +317,12 @@ END
 COPY_EXISTING "cd003g.spl" "override"
   LPF DELETE_EFFECT END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 24 target = 2 duration = 18 END // add panic [moondog]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 142 parameter2 = 36 END // add 'panic' icon [moond2]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 215 parameter2 = 1 STR_VAR resource = cdhorror END // play animation [moond4]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 50 duration = 1 parameter1 = ((255 >> 32) + (195 >> 16) + 123) parameter2 = 1 END // color pulse [moond5]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 106 duration = 1 parameter1 = 20 parameter2 = 1 END // set morale break [moond7]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 139 timing = 1 duration = 0 parameter1 = 14007 END // add 'panic' string [moond1]
-  LPF CLONE_EFFECT INT_VAR match_opcode = 139 opcode = 174 parameter2 = 0 STR_VAR resource = eff_m07 END // play sound [moond3]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 142 parameter2 = 36 STR_VAR insert = below END // add 'panic' icon [moond2]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 215 parameter2 = 1 STR_VAR resource = cdhorror insert = below END // play animation [moond4]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 50 duration = 1 parameter1 = ((255 >> 32) + (195 >> 16) + 123) parameter2 = 1 STR_VAR insert = below END // color pulse [moond5]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 106 duration = 1 parameter1 = 20 parameter2 = 1 STR_VAR insert = below END // set morale break [moond7]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 139 timing = 1 duration = 0 parameter1 = 14007 STR_VAR insert = below END // add 'panic' string [moond1]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 139 opcode = 174 parameter2 = 0 STR_VAR resource = eff_m07 insert = below END // play sound [moond3]
   LPF CLONE_EFFECT INT_VAR match_opcode = 24 opcode = 318 parameter1 = panic_immunity parameter2 = 110 timing = 0 duration = 0 resist_dispel = 0 STR_VAR insert = first resource = EVAL ~%DEST_RES%~ END
   LPF CLONE_EFFECT INT_VAR match_opcode = 139 opcode =  12 parameter1 = 5 STR_VAR insert = first END // damage [moond8]
   LPF CLONE_EFFECT INT_VAR match_opcode = 12 match_timing = 1 timing = 4 duration =  6 END // delayed damage 1 [moond8]
@@ -330,7 +330,7 @@ COPY_EXISTING "cd003g.spl" "override"
 
 // replace effs aimed at mask_evil to a single 326 that calls spin891a instead
 COPY_EXISTING ~spin891.spl~  ~override~ // Moon Dog Howl - cures fear - causes fear
-  LPF ALTER_EFFECT INT_VAR multi_match = 1 match_opcode = 326 match_parameter1 = panic_immunity match_parameter2 = 111 opcode = 326 parameter1 = 0 parameter2 = 37 timing = 1 duration = 0 STR_VAR resource = spin891a END
+  LPF ALTER_EFFECT INT_VAR multi_match = 1 match_opcode = 326 match_parameter1 = panic_immunity match_parameter2 = 111 opcode = 326 parameter1 = 0 parameter2 = 37 timing = 1 duration = 0 STR_VAR resource = cd003g END
   LPF DELETE_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 3 match_parameter2 = 8 END
   LPF DELETE_EFFECT INT_VAR match_opcode = 321 STR_VAR match_resource = spin891 END                                                      // delete out of stack
   LPF CLONE_EFFECT  INT_VAR multi_match = 1 match_opcode = 161 opcode = 321 parameter2 = 0 STR_VAR insert = first resource = spin891 END // insert back at top of stack
