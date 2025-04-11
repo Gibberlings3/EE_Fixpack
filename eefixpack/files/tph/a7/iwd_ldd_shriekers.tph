@@ -1,0 +1,14 @@
+// Restores shriekers in Lower Dorn's Deep main building summoning help when detecting intruders
+
+// Because of an engine bug only a single defined ini spawn event works properly
+COPY_EXISTING ~ar8005.ini~ ~override~
+  // completely removing [8_HOURS] event
+  REPLACE_TEXTUALLY ~^\(events=.*\),8_HOURS~ ~\1~
+  REPLACE_TEXTUALLY ~^\[8_HOURS\].*[%WNL%]+[^%WNL%]+[%WNL%]+[^%WNL%]+[%WNL%]+~ ~~
+  // adding spawn definitions of the deleted event to the remaining event
+  REPLACE_TEXTUALLY ~^\(critters=.*,Salamander\)~ ~\1,MYCO1,MYCO2,MYCO3,MYCO4~
+  // updating trigger variables of myconid spawns: needed for manual control through the area script
+  REPLACE_TEXTUALLY ~\b8005_SPAWN\b~ ~8005_SPAWN_MYCO~
+BUT_ONLY
+
+EXTEND_BOTTOM ~ar8005.bcs~ ~eefixpack/files/baf/iwd/ar8005_bottom.baf~

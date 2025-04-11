@@ -1,0 +1,68 @@
+IF
+  Global("8005_SPAWN","GLOBAL",1)
+  Global("SHRIEKER_SPAWN_TIMER","MYAREA",0)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("SHRIEKER_SPAWN_TIMER","MYAREA",2400)
+    Continue()
+END
+
+IF
+  Global("8005_SPAWN","GLOBAL",1)
+  GlobalTimerExpired("SHRIEKER_SPAWN_TIMER","MYAREA")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("SHRIEKER_SPAWN_TIMER","MYAREA",2400)
+    SetGlobal("8005_SPAWN_MYCO","GLOBAL",1)
+    Continue()
+END
+
+IF
+  !Global("8005_SPAWN_MYCO","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("8005_SPAWN_MYCO","GLOBAL",0)
+    Continue()
+END
+
+IF
+  Global("8005_SUMMON","GLOBAL",1)
+  Global("8005_LAST_SUMMON","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",1)
+    SetGlobal("8005_SUMMON_2","GLOBAL",1)
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",2)
+    SetGlobal("8005_SUMMON_3","GLOBAL",1)
+END
+
+IF
+  Global("8005_SUMMON","GLOBAL",1)
+  Global("8005_LAST_SUMMON","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",0)
+    SetGlobal("8005_SUMMON_1","GLOBAL",1)
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",2)
+    SetGlobal("8005_SUMMON_3","GLOBAL",1)
+END
+
+IF
+  Global("8005_SUMMON","GLOBAL",1)
+  Global("8005_LAST_SUMMON","GLOBAL",2)
+THEN
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",0)
+    SetGlobal("8005_SUMMON_1","GLOBAL",1)
+  RESPONSE #100
+    SetGlobal("8005_SUMMON","GLOBAL",0)
+    SetGlobal("8005_LAST_SUMMON","GLOBAL",1)
+    SetGlobal("8005_SUMMON_2","GLOBAL",1)
+END
