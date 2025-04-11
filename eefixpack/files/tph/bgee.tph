@@ -322,6 +322,15 @@ END
 
 /*
 luke
+"7eyes.2da" vs. SPL/ITM files
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/luke/7eyes/7eyes.tph"
+  LAUNCH_ACTION_FUNCTION "7EYESification" END
+END
+
+/*
+luke
 **Wing Buffet vs. MR**
 */
 WITH_SCOPE BEGIN
@@ -1008,15 +1017,15 @@ ACTION_IF game_includes_sod BEGIN
 END
 
 // tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
-COPY_EXISTING ~bddraggh.itm~ ~override~ // (itm) Attack - causes disease level drain
-              ~pudden01.itm~ ~override~ // (itm) <Invalid Strref -1> - causes disease
+COPY_EXISTING ~cd006h.spl~ ~override~ // (itm) Attack - causes disease level drain
+              ~cd006s.spl~ ~override~ // (itm) <Invalid Strref -1> - causes disease
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
 
 // tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
-COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
-              ~bdotyg02.itm~ ~override~ // (itm) Attack - causes disease - portrait icon 41
-              ~otyugh.itm~   ~override~ // (itm) Attack - causes disease - portrait icon 41
+COPY_EXISTING ~cd006k.spl~ ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~cd006l.spl~ ~override~ // (itm) Attack - causes disease - portrait icon 41
+              ~cd006r.spl~   ~override~ // (itm) Attack - causes disease - portrait icon 41
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 41 END // delete separate slow icon (not present on bddraggh and pudden01)
   LPF ALTER_EFFECT INT_VAR match_opcode = 78 match_parameter2 = 10 special = 41 END // change slow-via-disease to use slow icon instead of disease (other disease effect already uses disease icon)
   IF_EXISTS // sod asset(s)
@@ -1035,14 +1044,18 @@ COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron 
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
 COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
   PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+    LPF CLONE_EFFECT  INT_VAR silent = 1 match_opcode = op match_probability1 = 50 STR_VAR insert = last END
     LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
   END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR silent = 1 match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+
+COPY_EXISTING ~cd0006.spl~  ~override~ // Nalmissra's attack
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 318 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 318 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
 COPY_EXISTING ~helm14.itm~ ~override~ // don't leave a bunch of op23's laying around on the creature
   LPF ALTER_EFFECT INT_VAR match_opcode = 23 special = 0 END 
@@ -1081,7 +1094,7 @@ COPY_EXISTING ~potn99.itm~ ~override~ // blinding powder lacks description, mino
   SAY 0x50 @107 
   SAY 0x54 @107 
   LPF ALTER_EFFECT INT_VAR power = 0 END // flesh out effects below
-  LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 resist_dispel = 1 END // flesh out effects below
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 139 timing = 1 resist_dispel = 1 END // flesh out effects below
   IF_EXISTS // sod item
 
 // immune to confusion, but missing spconfus immunity
@@ -1144,8 +1157,14 @@ WITH_SCOPE BEGIN
     /* Header */
     WRITE_LONG 0x4C 0
     /* Feature blocks */
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 45 ~duration~ = 30 END
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR "silent" = 1 ~check_globals~ = 0 ~match_opcode~ = 45 ~duration~ = 30 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~savingthrow~ = BIT2 ~resist_dispel~ = 0 END
+  BUT_ONLY IF_EXISTS // sod
+  //
+  COPY_EXISTING "cd004p.spl" "override"
+    /* Feature blocks */
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_duration~ = 36 ~duration~ = 30 END
+    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~resist_dispel~ = 0 END
   BUT_ONLY IF_EXISTS // sod
 END
 
@@ -1225,6 +1244,29 @@ WITH_SCOPE BEGIN
     INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
     LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
   END
+END
+
+/*
+luke
+**Wand of Cursing**
+- add missing Deafness effect (as per item description)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "wand19.itm" "override"
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 326 "multi_match" = 1 "match_parameter2" = 111 "parameter1" = IDS_OF_SYMBOL ("splstate" "DEAFNESS_IMMUNITY") STR_VAR "resource" = "wand19df" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**MAGIWEB**
+- Should cause Web, not Paralysis
+  - "eefixpack\files\tph\luke\7eyes\7eyes.tph" follow-up
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "magiweb.itm" "override"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 326 "match_parameter1" = IDS_OF_SYMBOL ("splstate" "PARALYZE_IMMUNITY") "match_parameter2" = 111 "parameter1" = IDS_OF_SYMBOL ("splstate" "WEB_IMMUNITY") END
+  BUT_ONLY_IF_IT_CHANGES
 END
 
 /*
@@ -1313,12 +1355,12 @@ COPY_EXISTING ~bdfear.spl~  ~override~ // Panic - causes fear - unknown long eff
 
 // tbd, cam
 // combat feedback used with instant/limited timing and durations
-COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion deafness stun
+COPY_EXISTING ~cd006v.spl~ ~override~ // Piercing Shriek - causes confusion deafness stun
               ~spin878.spl~  ~override~ // Level Drain - causes blind - causes level drain - unknown long effect
               ~spin893.spl~  ~override~ // Shadow Dragon Breath - causes blind - causes level drain - unknown long effect
-              ~spin929.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
-              ~spin931.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
-              ~spwi714.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
+              ~cd0062.spl~  ~override~ // Mist Ball - causes blind - unknown long effect
+              ~cd0063.spl~  ~override~ // Sooty Ball - causes blind - unknown long effect
+              ~cd006a.spl~  ~override~ // Prismatic Spray - causes blind - causes feeblemind - unknown long effect
               ~spwm178.spl~  ~override~ // Blindness - causes blind - unknown long effect - plays sound EFF_E07 [expiry sound]
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
   IF_EXISTS // bdshriek is sod asset
@@ -1329,7 +1371,7 @@ COPY_EXISTING ~shoal.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 324 parameter1 = 3 parameter2 = 113 STR_VAR resource = shoal insert = below END
 
 // change survivable shoal kiss to use magic damage, not acid
-COPY_EXISTING ~shoal1.spl~ ~override~
+COPY_EXISTING ~cd000v.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
 
 // tbd, cam (from jmerry)
@@ -1475,6 +1517,81 @@ WITH_SCOPE BEGIN
 END
 
 /*
+luke
+**Wand of Cursing**
+- add missing Deafness effect (as per item description)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING - "wand19.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "SILENCE_IMMUNITY") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+  BUT_ONLY_IF_IT_CHANGES
+  COPY_EXISTING "%subspell%.spl" "override\wand19df.spl"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 38 "opcode" = 80 "parameter1" = 0 "parameter2" = 0 "special" = 0 STR_VAR "resource" = "" END // deafness
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 142 "parameter1" = 0 "parameter2" = 112 "special" = 0 STR_VAR "resource" = "" END // portrait icon
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 139 "parameter1" = 31791 "parameter2" = 0 "special" = 0 STR_VAR "resource" = "" END // feedback string
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**Tail Constriction**
+- Should display the Webbed icon (instead of the Entangled icon)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "bdwyrmt.spl" "override"
+    LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 142 END // portrait icon -- move to subspell
+  BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+END
+
+/*
+luke
+**MAGIWEB, Tail Constriction**
+- Should display the Webbed icon (instead of the Held/Entangled icon)
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "magiweb.spl" "override"
+                "bdwyrmtw.spl" "override"
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 157 "opcode" = 142 "parameter1" = 0 "parameter2" = 129 "special" = 0 STR_VAR "resource" = "" "insert" = "below" END // portrait icon
+  BUT_ONLY_IF_IT_CHANGES IF_EXISTS
+END
+
+/*
+luke
+**Power Word, Stun - Power Word, Kill**
+- fix incorrect op318/op324 resource field
+*/
+WITH_SCOPE BEGIN
+  COPY_EXISTING "%CUTSCENE_POWERWORD_STUN%.spl" "override"
+                "%POWERWORD_STUN%.spl" "override"
+                "%POWERWORD_KILL%.spl" "override"
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 324 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+    LPF "ALTER_EFFECT" INT_VAR "silent" = 1 "match_opcode" = 318 "special" = 0 STR_VAR "resource" = "%DEST_RES%" END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+/*
+luke
+**False Dawn**
+- make sure it affects undead (undead are normally immune to confusion, so this spell is not working as expected...)
+  - if EEex is not installed, abuse op182 to bypass/ignore op101 ("https://www.gibberlings3.net/forums/topic/35616-effect-immunities-on-the-ee-engine-aka-taking-full-advantage-of-the-ee-fixpack/page/2/#comment-313805")
+*/
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack\files\tph\luke\false_dawn.tph"
+  //LAF "CLERIC_FALSE_DAWN" END
+END
+
+/*
 +-----------------------------------------------------------------+
 | [Luke]                                                          |
 +-----------------------------------------------------------------+
@@ -1497,6 +1614,37 @@ WITH_SCOPE BEGIN
     BUT_ONLY_IF_IT_CHANGES IF_EXISTS
   END
 END
+
+/*
++-----------------------------------------------------------------+
+| [Luke] The Vampire's Revenge +1                                 |
++-----------------------------------------------------------------+
+| - Add missing feedback string                                   |
+| - Add missing portrait icon                                     |
++-----------------------------------------------------------------+
+*/
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING - "sw1h19.itm" "override"
+    GET_OFFSET_ARRAY "ab_array" ITM_V10_HEADERS
+    PHP_EACH "ab_array" AS "ab_ind" => "ab_off" BEGIN
+      GET_OFFSET_ARRAY2 "fx_array" "%ab_off%" ITM_V10_HEAD_EFFECTS
+      PHP_EACH "fx_array" AS "fx_ind" => "fx_off" BEGIN
+        PATCH_MATCH SHORT_AT "%fx_off%" WITH
+          326 WHEN SLONG_AT (0x4 + "%fx_off%") == IDS_OF_SYMBOL ("splstate" "BERSERK_IMMUNITY") AND LONG_AT (0x8 + "%fx_off%") == 111 BEGIN
+            READ_ASCII (0x14 + "%fx_off%") "subspell"
+          END
+          DEFAULT
+        END
+      END
+    END
+  BUT_ONLY_IF_IT_CHANGES
+  COPY_EXISTING "%subspell%.spl" "override"
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 3 "opcode" = 142 "parameter1" = 0 "parameter2" = 4 "special" = 0 STR_VAR "resource" = "" "insert" = "below" END // portrait icon
+    LPF "CLONE_EFFECT" INT_VAR "match_opcode" = 3 "opcode" = 139 "parameter1" = 10381 "parameter2" = 0 "special" = 0 "duration" = 0 STR_VAR "resource" = "" "insert" = "below" END // feedback string
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\

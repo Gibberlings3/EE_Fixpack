@@ -386,12 +386,13 @@ ACTION_IF GAME_IS "bg2ee iwdee" BEGIN //bgee already uses 185
 	BEGIN
 		COPY_EXISTING "%hand_spell%.spl" override
 			LPF ALTER_EFFECT INT_VAR match_opcode=39 opcode=185 parameter2=2 parameter1=0 END
-			LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=337 match_parameter1=39 parameter1=185 END
+			//LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=337 match_parameter1=39 parameter1=185 END
+			LPF DELETE_EFFECT INT_VAR silent=1 match_opcode=337 match_parameter1=39 match_parameter2=101 END // [luke] -- delete pathological op337
 	END
 END
 
 ACTION_IF GAME_IS BG2EE BEGIN
-	COPY_EXISTING "sppr728.spl" override
+	COPY_EXISTING "cd00bs.spl" override
 		LPF ALTER_EFFECT INT_VAR match_opcode=175 opcode=185 END
 END
 

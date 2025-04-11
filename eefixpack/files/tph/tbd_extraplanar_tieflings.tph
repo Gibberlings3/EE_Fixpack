@@ -48,7 +48,7 @@ COPY_EXISTING ~sppr612.spl~ ~override~ // bolt of glory
   
 // deleting item effs that target tieflings for the wrong reasons
 COPY_EXISTING ~debian.itm~  ~override~ // Debian's Rod of Smiting +3: does extra damage to outer-planars
-              ~doves.itm~   ~override~ // Three White Doves +3: double damage, chance to be destroyed for outer-planars
+              //~doves.itm~   ~override~ // Three White Doves +3: double damage, chance to be destroyed for outer-planars
               ~smcudge.itm~ ~override~ // Star Metal Cudgel: bonus damage vs. outer-planar
   LPF ALTER_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 153 match_parameter2 = 4 parameter1 = 128 END // race: tiefling > rakshasa
 

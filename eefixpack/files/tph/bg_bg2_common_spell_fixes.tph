@@ -23,14 +23,16 @@ END
 
 // luke
 // Mimic Glue should not set the GREASE stat
+/*
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%MIMIC_GLUE%.spl~ ~override~ // Mimic Glue spin914
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 158 "opcode" = 215 "parameter2" = 1 STR_VAR "resource" = "GREASED" END // Grease overlay => Play visual effect, Mode: Over target (attached)
   BUT_ONLY_IF_IT_CHANGES
 END
+*/
 
 // luke
-// Lesser Fire Spirit – Suppress misleading "One of the spell has failed" message
+// Lesser Fire Spirit - Suppress misleading "One of the spell has failed" message
 // 1) Set subspell's range to a very high value (max signed value)
 // 2) Set subspell's projectile to either "RANGE05", "RANGE07" or "RANGE10". The second one is the most appropriate IMHO (given ELEMENTAL_FIRE_SMALL selection circle)...
 WITH_SCOPE BEGIN
@@ -52,7 +54,7 @@ OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
 END
 
 // luke
-// Grease – Remove duplicate op321 effect
+// Grease - Remove duplicate op321 effect
 // grease should work like web and check for grease once/round
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
@@ -72,7 +74,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Magic Missile – better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
+// Magic Missile - better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~   ~override~ // spwi112
                 ~%TRAP_MAGIC_MISSILE%.spl~     ~override~ // spwi003
@@ -101,7 +103,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Detect Evil – should not interact with spell protections
+// Detect Evil - should not interact with spell protections
 // 1) there's no need for the subspell
 //// 1a) its effects have incorrect power levels
 //// 1b) more importantly, as of v2.6, you should no longer be able to bypass other's Magic Resistance by targeting yourself with an area-effect ability => see `https://gibberlings3.github.io/iesdp/file_formats/ie_formats/eff_v2.htm#effv2_Body_0x5C` (BIT3) for further details...
@@ -122,6 +124,7 @@ END
 // 1) op39 can automatically display a portrait icon, there's no need to apply a separate op142 effect
 // 2) remove the "Bypass Mirror Image" flag (it's only relevant for opcode #12 and opcode #25)
 // 3) provide better feedback for the player when attacking Golems or Undead
+// 4) op324 resource field should not be empty (bgee only)
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_STINKING_CLOUD%.spl" "override" // spwi213
     PATCH_WITH_SCOPE BEGIN
@@ -138,6 +141,7 @@ WITH_SCOPE BEGIN
     END  
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 126 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 324 ~match_parameter2~ = 55 STR_VAR ~resource~ = "%DEST_RES%" END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -166,7 +170,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Lightning Bolt – remove duplicate op318 effect
+// Lightning Bolt - remove duplicate op318 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override" // spwi308
                 "%TALOS_LIGHTNING_BOLT%.spl" "override" // spcl722
@@ -185,7 +189,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Protection From Normal Missiles – remove duplicate op328 effect
+// Protection From Normal Missiles - remove duplicate op328 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override" // spwi311
                 "spra303.spl" "override" // Stalker
@@ -232,7 +236,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Minor Spell Deflection – remove duplicate op328 / op233 effects
+// Minor Spell Deflection - remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override" // spwi318
                 "spra302.spl" "override" // Stalker
@@ -285,7 +289,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Feeblemind – make sure it is truly permanent (until dispelled or character death)
+// Feeblemind - make sure it is truly permanent (until dispelled or character death)
 //// Unlike other effects that alter a creature's stat, this one does leave behind a removable effect when applied with `timing=1`
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override" // spwi509
@@ -295,7 +299,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Protection From Normal Weapons – remove duplicate op328 effect
+// Protection From Normal Weapons - remove duplicate op328 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override" // spwi511
     PATCH_WITH_SCOPE BEGIN
@@ -310,7 +314,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Minor Spell Turning – remove duplicate op328 / op233 effects
+// Minor Spell Turning - remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override" // spwi522
                 "%BEHOLDER_SPELL_TURNING%.spl" "override" // spin920
@@ -329,7 +333,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Deflection – remove duplicate op328 / op233 effects
+// Spell Deflection - remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override" // spwi618
                 "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override" // spin710
@@ -349,7 +353,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Turning – remove duplicate op328 / op233 effects
+// Spell Turning - remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override" // spwi701
     PATCH_WITH_SCOPE BEGIN
@@ -383,7 +387,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Trap – remove duplicate op328 / op282 effects
+// Spell Trap - remove duplicate op328 / op282 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TRAP%.spl" "override" // spwi902
     PATCH_WITH_SCOPE BEGIN
@@ -438,6 +442,7 @@ END
 // - Make sure it truly slows poison (so as to match `IWDEE` and spell description/name)
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%CLERIC_SLOW_POISON%.spl~ ~override~ // sppr212
+                "spin102.spl" "override" // innate variant
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 11 "opcode" = 329 "parameter1" = 10 "parameter2" = 0 END // Cure poison => Slow poison
   BUT_ONLY_IF_IT_CHANGES
 END
