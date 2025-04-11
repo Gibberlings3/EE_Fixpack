@@ -58,7 +58,11 @@ LANGUAGE
 LANGUAGE
   ~Simplified Chinese~
   ~zh_CN~
-  ~eefixpack/languages/zh_CN/weidu.tra~  
+  ~eefixpack/languages/zh_CN/weidu.tra~
+LANGUAGE
+  ~French~
+  ~fr_FR~
+  ~eefixpack/languages/fr_FR/weidu.tra~
   
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
