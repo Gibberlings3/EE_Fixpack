@@ -33,14 +33,14 @@ match the intent of the level designers!
 
 This is what the opcodes should do qua opcode:
 
-109 (paralysis): impose 109, display the 'held' icon. (Sometimes there is a 'paralyzed' string, but not often; in any case, that string is bespoke to 109. 
+109 (paralysis): impose 109, display the 'held' icon. (Sometimes there is a 'paralyzed' string, but not often; in any case, that string is bespoke to 109.
 The string 'held' is basically never used.)
 157 (web effect): imppose 157, display the 'webbed' icon, show a 'held' string.
 175 (hold): impose 175. The engine then automatically displays the 'held' string and icon.
 185 (hold 2): impose 185. The engine then automatically displays the 'held' string and icon.
 
 This leads to two problems:
-(i) Immunity to 109 really needs immunity to the 'held' icon, but that would then erroneously hide it if the creature was targeted by a 175 or 185 effect, 
+(i) Immunity to 109 really needs immunity to the 'held' icon, but that would then erroneously hide it if the creature was targeted by a 175 or 185 effect,
 which is bad. Options:
 (A) suck it up.
 (B) clone the 'held' icon. But the problem is that a creature could then have 'held' displayed twice (in admittedly edge-case circumstances).
@@ -70,8 +70,8 @@ COPY_EXISTING - statdesc.2da nowhere
 		held_string="%MATCH1%"
 	END
 	""
-	
-// add the actual line	
+
+// add the actual line
 APPEND statdesc.2da "214 %held_string% cdhldicn"
 COPY_EXISTING statdesc.2da override PRETTY_PRINT_2DA
 
@@ -100,26 +100,26 @@ COPY "%MOD_FOLDER%/resource/cdhldicn.bam" override
 
 OUTER_SET new_held_strref=RESOLVE_STR_REF ("GUARANTEED_UNIQUE_STRING_USED_TO_REROUTE_HELD_STRING_FOR_WEB_USE_WURBLE_BLODGET")
 ACTION_GET_STRREF 14102 old_held_string
-STRING_SET_EVALUATE new_held_strref "%old_held_string%" 
+STRING_SET_EVALUATE new_held_strref "%old_held_string%"
 
 COPY_EXISTING "enginest.2da" override
 	REPLACE_TEXTUALLY 14102 "%new_held_strref%"
-	
-	
+
+
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //// Adjust actual allocation of immunity opcodes
 //////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
-	
-	
+
+
 //////////////////////////////////////////////////////////////////
 /////////////// Systematic rollback of extension of 109 to 175 /////////////
 //////////////////////////////////////////////////////////////////
 
 /*
 These are 109-granting items that got given 175 in an overenthusiastic
-bit of FP code. 
+bit of FP code.
 
 For convenience, the full list of items boosted by FP is listed, and I comment out
 the ones where I think the extension is justified.
@@ -133,14 +133,14 @@ ACTION_IF GAME_IS BGEE BEGIN
 		// freering // protects against stun, fairly clearly intended as broad protection
 		mage05
 		// potn45 // Potion of Free Action, fairly obviously should protect from Hold
-		ring94 
+		ring94
 		ring95
 		ring97
 		ring98
 		ring99
 		ringkora
 	END
-END ELSE 
+END ELSE
 ACTION_IF GAME_IS BG2EE BEGIN
 	ACTION_DEFINE_ARRAY items BEGIN
 		// aldeth // plot armor
@@ -155,7 +155,7 @@ ACTION_IF GAME_IS BG2EE BEGIN
 		objring // unused afaict
 		// palring // broad-spectrum protection
 		// potn45 // Potion of Free Action, fairly obviously should protect from Hold
-		ring94 
+		ring94
 		ring95
 		ring97
 		ring98
@@ -173,7 +173,7 @@ ACTION_IF GAME_IS IWDEE BEGIN
 
 END ELSE BEGIN
 	FAIL "paralyzation_fixes does not support this game version"
-END	
+END
 
 ACTION_PHP_EACH items AS ind=>item BEGIN
 	COPY_EXISTING "%item%.itm" override
@@ -199,7 +199,7 @@ don't naturally need to grant paralysis immunity. In most cases that's obvious:
 
 ACTION_FOR_EACH item IN
 	ring97 // wyvern immunity item
-	mage05 // lets mages move through AoE 
+	mage05 // lets mages move through AoE
 BEGIN
 	COPY_EXISTING "%item%.itm" override
 		LPF DELETE_EFFECT INT_VAR match_opcode=101 match_parameter2=109 END //opcode
@@ -221,7 +221,7 @@ ACTION_CLEAR_ARRAY items
 ACTION_IF GAME_IS BGEE BEGIN
 	ACTION_DEFINE_ARRAY items BEGIN
 	END
-END ELSE 
+END ELSE
 ACTION_IF GAME_IS BG2EE BEGIN
 	ACTION_DEFINE_ARRAY items BEGIN
 		mel01
@@ -236,7 +236,7 @@ ACTION_IF GAME_IS IWDEE BEGIN
 	END
 END ELSE BEGIN
 	FAIL "paralyzation_fixes does not support this game version"
-END	
+END
 
 ACTION_PHP_EACH items AS ind=>item BEGIN
 	COPY_EXISTING "%item%.itm" override
@@ -249,8 +249,8 @@ END
 //////////////////////////////////////////////////////////////////
 
 /*
-this is supposed to protect spiders from webs, but runs into 109/157 
-problems and has been differently built in different versions. Here we'll 
+this is supposed to protect spiders from webs, but runs into 109/157
+problems and has been differently built in different versions. Here we'll
 just rebuild it.
 */
 
@@ -264,9 +264,9 @@ COPY_EXISTING "antiweb.itm" override
 /////////////// REMOVAL of erroneous 185 protection
 //////////////////////////////////////////////////////////////////
 
-/* 
+/*
 Remember, the basic principle is: 185 *isn't hold*. It's generic
-physical blocks to movement, and it's supposed to be rare. There are 
+physical blocks to movement, and it's supposed to be rare. There are
 a few cases that look like just mistakes.
 
 After this, only plot-armored creatures and dragons will have 185. That sounds
@@ -278,7 +278,7 @@ ACTION_FOR_EACH resref IN
 	"immchs.itm" // clearly is supposed to be 'immunity to charm hold sleep'!
 	"spcl152.spl" // barbarian rage
 	"spcl242.spl" // undead hunter hold immunity
-	"ohsmode1.spl" // story mode 
+	"ohsmode1.spl" // story mode
 	"ohsmode4.spl" // (all the problems with story mode and 185 are edge-case but it's worse to block than not to block)
 BEGIN
 	COPY_EXISTING "%resref%" override
@@ -322,7 +322,7 @@ BEGIN
 		END
 	IF_EXISTS
 END
-	
+
 ///////////////////////////////////////////////////////////////////
 /// The same goes for the story mode spells, which lost 185 but still
 /// should block Otiluke. (We'll clone off 175 immunity instead.)
@@ -335,7 +335,7 @@ ACTION_FOR_EACH spell IN OHSMODE1 OHSMODE4 BEGIN
 		END
 	IF_EXISTS
 END
-	
+
 ///////////////////////////////////////////////////////////////////
 /// Since 14102 ('Held') is actually only associated with Web (109
 /// doesn't display that string; 175 displays it automatically and
@@ -426,7 +426,7 @@ BEGIN
 END
 
 //////////////////////////////////////////////////////////////////
-//// Effects that impose 175 should not manually display the icon or string, 
+//// Effects that impose 175 should not manually display the icon or string,
 //// since they're built in.
 ////
 //// we'll delay doing the 177s till we handle creature-type-specific
@@ -454,7 +454,7 @@ END
 //// The various creature-type-specific Hold spells need gating with 324
 //// to stop their various sound effects from playing on immune creatures.
 ////
-//// While we're at it, remove their surplus 177s 
+//// While we're at it, remove their surplus 177s
 //////////////////////////////////////////////////////////////////
 
 ACTION_FOR_EACH spell IN
@@ -473,7 +473,7 @@ BEGIN
 		LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=215 parameter1=0 parameter2=1 STR_VAR resource=SPMINDAT END
 		LPF CLONE_EFFECT INT_VAR match_opcode=175 opcode=324 parameter2=113 timing=0 duration=0 STR_VAR insert="first" resource="%SOURCE_RES%" END
 	IF_EXISTS
-END	
+END
 
 //////////////////////////////////////////////////////////////////
 //// Shift (BG/BG2) Hold Undead to 324-based method
@@ -481,7 +481,7 @@ END
 
 ACTION_IF GAME_IS ~bg2ee~ BEGIN
 
-	ACTION_FOR_EACH spell IN 
+	ACTION_FOR_EACH spell IN
 		spwi324
 		spcl742
 	BEGIN

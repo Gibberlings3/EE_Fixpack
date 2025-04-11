@@ -125,7 +125,7 @@ BEGIN
 		SET "found" = "%found%" OR "%found_here%"
 	END
 	/// do the actual deletion
-	PATCH_IF "%found%" BEGIN 
+	PATCH_IF "%found%" BEGIN
 		LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 999 END
 		PATCH_IF "%write%" BEGIN
 			TO_UPPER "SOURCE_FILE"

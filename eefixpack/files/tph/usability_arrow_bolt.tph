@@ -91,4 +91,3 @@ COPY_EXISTING ~angarow.itm~  ~override~ // arrow of fire
 COPY_EXISTING ~trnbolt.itm~  ~override~ // tranquil bolt +1 [iwdee]
   WRITE_LONG 0x1e (BIT7 + BIT8 + BIT9 + BIT10 + BIT12 + BIT14 + BIT15 + BIT18 + BIT29 + BIT30) // normal bolt restrictions: clerics, druid, monk, mage
   BUT_ONLY IF_EXISTS
-  

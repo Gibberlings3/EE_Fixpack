@@ -1,5 +1,5 @@
 // ie-6021, cam: Weapon probability fixes
-// ie-6037, cam: Systematic probability fixes 
+// ie-6037, cam: Systematic probability fixes
 
 // delete leftover effects (these ones technically have 1% chance)
 COPY_EXISTING ~spcl132.spl~  ~override~ // leftover spell failure icon (already has miscast icon)
@@ -20,9 +20,9 @@ COPY_EXISTING ~spcl132.spl~  ~override~ // leftover spell failure icon (already 
               ~sprngw03.itm~ ~override~ // old polymorph immunity
               ~sprngw04.itm~ ~override~ // old polymorph immunity
               ~sprngz05.itm~ ~override~ // old polymorph immunity
-  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END 
-  BUT_ONLY 
-  
+  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END
+  BUT_ONLY
+
 // 1% chance for bonus 1d4 cold damage
 COPY_EXISTING ~ctouch.itm~ ~override~
   LPF DELETE_EFFECT INT_VAR check_globals = 0 match_opcode = 12 END // damage applied in spwi117b; still has 1% chance to fire
@@ -33,23 +33,23 @@ COPY_EXISTING ~dazer.itm~ ~override~
               ~xclub.itm~ ~override~ // undroppable version used by spectral hero
   LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 1 probability1 = 5 END // one effect has prob=6, others all prob=5
   BUT_ONLY
- 
+
 // blindness is correct 25%, other effects (string, icon, cosmetics) are at 10%
 COPY_EXISTING ~udart3b.itm~  ~override~ // blinding darts +2: 25% blind
   LPF ALTER_EFFECT INT_VAR check_globals = 0 header_type = 2 probability1 = 25 END
   BUT_ONLY
-  
-// supposed to be electric damage 50%, stun 25%, but was actually 40% and 20%  
+
+// supposed to be electric damage 50%, stun 25%, but was actually 40% and 20%
 COPY_EXISTING ~utswd5a.itm~  ~override~ // static two handed sword +4: 50% electric damage, 25% stun, fixed elsewhere
   LPF ALTER_EFFECT INT_VAR header_type = 1                   probability1 = 51 probability2 = 75 END // stun effects
   LPF ALTER_EFFECT INT_VAR header_type = 1 match_opcode = 12 probability1 =  0 probability2 = 50 END // reset electrical damage
   BUT_ONLY
-  
+
 COPY_EXISTING ~ohbrac01.eff~ ~override~
   WRITE_SHORT 0x2c 24 // The Flaming Fists of Lin Mei: 25% fire damage
 
 COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burning blood
-              ~axemino.itm~  ~override~ // axe of the minotaur lord: 25% stun 
+              ~axemino.itm~  ~override~ // axe of the minotaur lord: 25% stun
 //            ~bardic.itm~   ~override~ // Bardic Horn of Valhalla, unused: 2-4 summons, but fine as is
 //            ~behwep.itm~   ~override~ // belhifet's weapon: 50% disease, 50% poison, already correct
               ~bess.itm~     ~override~ // the love of black bess: 10% bad luck
@@ -69,7 +69,7 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~diver.itm~    ~override~ // spell diver: 50% to block spellcasting
               ~doves.itm~    ~override~ // Three White Doves +3: undead/extraplanr destruction
               ~firekis.itm~  ~override~ // fire kiss: 5% shroud of flame
-              ~fistgf.itm~   ~override~ // fist of the gloomfrost: 5% chance for extra crush damage 
+              ~fistgf.itm~   ~override~ // fist of the gloomfrost: 5% chance for extra crush damage
               ~fkiller.itm~  ~override~ // faith killer: 5% dispel magic
               ~flailsk.itm~  ~override~ // skullflail: 10% piercing damage
 //            ~gasp.itm~     ~override~ // stalker weapon: seems correct already
@@ -85,8 +85,8 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~kinetic.itm~  ~override~ // kinetic spear: 5% lance of disruption
               ~kissgf.itm~   ~override~ // kiss of the gloomfrost: 5% cold damage
               ~kris.itm~     ~override~ // bone kris of black ichor: 20% poison
-              ~lizspear.itm~ ~override~ // no such index: 10% extra piercing damage 
-              ~mae.itm~      ~override~ // flail of mae: 5% petrification 
+              ~lizspear.itm~ ~override~ // no such index: 10% extra piercing damage
+              ~mae.itm~      ~override~ // flail of mae: 5% petrification
               ~pest.itm~     ~override~ // pestilent dawn: 25% cause disease
               ~planetar.itm~ ~override~ // planetar weapon: 25% dispel magic on hit, 25% vorpal hit
 //            ~poq2-16.itm~  ~override~ // no such index: 33% stun chance, existing is fine
@@ -95,23 +95,23 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~ring03.itm~   ~override~ // ring of animal friendship: (helf)elven resistance
               ~sbowebu.itm~  ~override~ // short bow of ebullience: 25% fire damage
               ~serrate.itm~  ~override~ // serrated bone blade: 20% cold damage
-              ~sflail.itm~   ~override~ // conrnugon: 50% bleed, 25% stun 
+              ~sflail.itm~   ~override~ // conrnugon: 50% bleed, 25% stun
               ~shax4d4c.itm~ ~override~ // shadowed orc weapon: 40% cold damage
               ~shaxe2c.itm~  ~override~ // shadowed orc weapon: 40% cold damage
               ~shmblr.itm~   ~override~ // shambler weapon: 5% entangle
               ~sorb.itm~     ~override~ // sol's searing orb, unused: simulates 1d6 poorly
               ~sw1h51.itm~   ~override~ // solemn duty: 3% decapitation
               ~talongf.itm~  ~override~ // talon of the gloomfrost: 15% entangle
-              ~tonggf.itm~   ~override~ // tongue of the gloomfrost: 3% cone of cold 
+              ~tonggf.itm~   ~override~ // tongue of the gloomfrost: 3% cone of cold
               ~tongue.itm~   ~override~ // the salamander's tongue: 20% fire damage
               ~u1ham3a.itm~  ~override~ // corrosive hammer: 30% acid damage
-              ~u1ham3b.itm~  ~override~ // war hammer of sparks +2: 50% electrical damage, 10% stun 
+              ~u1ham3b.itm~  ~override~ // war hammer of sparks +2: 50% electrical damage, 10% stun
               ~u1ham4a.itm~  ~override~ // war hammer +3: life giver: 20% heal
               ~u1ham5a.itm~  ~override~ // war hammer of phasing +3: 15% phase, 25% cold damage
 //            ~u1ham5b.itm~  ~override~ // War Hammer +4: Defender: 20% heal, but should be deleted instead in ie-6026
               ~u1hax2a.itm~  ~override~ // charged battle axe +2: 50% electrical damage, 15% stun
               ~u1hax3a.itm~  ~override~ // poisonous battle axe +2: 25% poison
-              ~u1hax4a.itm~  ~override~ // battle axe +3: fatigue: 20% slow 
+              ~u1hax4a.itm~  ~override~ // battle axe +3: fatigue: 20% slow
               ~u1hax4b.itm~  ~override~ // benorg's truth: 10% stun
               ~u2ham4b.itm~  ~override~ // war hammer of phasing +2: 10% disease, 15% cold damage
               ~u2ham5a.itm~  ~override~ // demon's breath +3: 50% fire damage, 20% fireball
@@ -126,10 +126,10 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~ubswd2a.itm~  ~override~ // phasing bastard sword +1: 15% phased
               ~ubswd2b.itm~  ~override~ // flaming bastard sword +1: 25% fire damage
               ~ubswd3a.itm~  ~override~ // bastard sword +2: life giver: 5% heal
-              ~ubswd4b.itm~  ~override~ // bastard sword of greater phasing: 15% phased 
+              ~ubswd4b.itm~  ~override~ // bastard sword of greater phasing: 15% phased
               ~ubswd4c.itm~  ~override~ // bastard sword +2: conflagration: 10% fireball
-              ~ubswd5a.itm~  ~override~ // cancerous bastard sword +4: 15% disease 
-              ~ubswd5b.itm~  ~override~ // bastard sword +3: incinerator: 50% fire damage, 10% stun              
+              ~ubswd5a.itm~  ~override~ // cancerous bastard sword +4: 15% disease
+              ~ubswd5b.itm~  ~override~ // bastard sword +3: incinerator: 50% fire damage, 10% stun
               ~ubull4a.itm~  ~override~ // bullets of fire +2: 50% fire damage
               ~udagg1a.itm~  ~override~ // fire dagger: 15% fire damage
               ~udagg1b.itm~  ~override~ // phase dagger: 15% phased
@@ -144,7 +144,7 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~uflal2a.itm~  ~override~ // crooked flail: 50% pierce damage
               ~uflal2b.itm~  ~override~ // hammer flail +2: 15% stun
               ~uflal4a.itm~  ~override~ // fire flail +3: 50% fire damage
-              ~uflal5a.itm~  ~override~ // shocking flail +4: 50% electric damage, 10% stun 
+              ~uflal5a.itm~  ~override~ // shocking flail +4: 50% electric damage, 10% stun
               ~uhalb1a.itm~  ~override~ // halberd of sparks +1: 15% electric damage
               ~uhalb2a.itm~  ~override~ // diseased halberd +1: 10% disease
               ~uhalb3b.itm~  ~override~ // darig's rest: 10% sleep
@@ -168,7 +168,7 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~usswd3a.itm~  ~override~ // sloth: 10% slow
               ~usswd3b.itm~  ~override~ // some god's lesser promise: 5% heal
               ~usswd5a.itm~  ~override~ // short sword of health +4: 15% heal
-              ~usswd5b.itm~  ~override~ // short sword +4: hammer: 20% stun 
+              ~usswd5b.itm~  ~override~ // short sword +4: hammer: 20% stun
               ~utswd2b.itm~  ~override~ // two handed sword +1: hammering: 20% stun
               ~utswd3a.itm~  ~override~ // two handed sword +2: hammering: 20% stun
               ~utswd4a.itm~  ~override~ // two handed sword +4: backbiter: 25% user takes piercing
@@ -204,15 +204,15 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
 //            ~spcl919.spl~  ~override~ // scribe scrolls: equal chances at 1-in-9 scrolls; probabilities fine as-is
 //            ~spdm108b.spl~ ~override~ // vampiric touch: 1d10
               ~spin106a.spl~ ~override~ // innate vampiric touch: 1d10
-              ~spin106b.spl~ ~override~ // innate vampiric touch: 1d10              
+              ~spin106b.spl~ ~override~ // innate vampiric touch: 1d10
 //            ~spin115.spl~  ~override~ // mournful wail: percntages already OK
-              ~spin139.spl~  ~override~ // harpy wail: (helf)elven resistance              
+              ~spin139.spl~  ~override~ // harpy wail: (helf)elven resistance
               ~spin141.spl~  ~override~ // charm person: (helf)elven resistance
               ~spin142.spl~  ~override~ // sleep: (helf)elven resistance
               ~spin161.spl~  ~override~ // jackalwere gaze: (helf)elven resistance
 //            ~spin188.spl~  ~override~ // INNATE_MYCONID_SPORES: percentages already OK
               ~spin190.spl~  ~override~ // INNATE_ZOMBIE_LORD_AURA, 1-in-5 chances
-              ~spin191.spl~  ~override~ // INNATE_BOMBARDIER_BEETLE_CLOUD: 20% stun, 20% deaf       
+              ~spin191.spl~  ~override~ // INNATE_BOMBARDIER_BEETLE_CLOUD: 20% stun, 20% deaf
               ~spitm99.spl~  ~override~ // charm fire elemental kin: (helf)elven resistance
               ~sppr102.spl~  ~override~ // command: (helf)elven resistance
               ~sppr204.spl~  ~override~ // charm person or mammal: (helf)elven resistance
@@ -239,7 +239,7 @@ COPY_EXISTING ~amaunat.itm~  ~override~ // amaunator's legacy: 5% beltyn's burni
               ~spwi506.spl~  ~override~ // domination: (helf)elven resistance
               ~spwi621.spl~  ~override~ // conjure air elemental (unused): sliding chances to summon x hd elemental
               ~spwi623.spl~  ~override~ // carrion summons: 35% for two
-              ~spwi711.spl~  ~override~ // sphere of chaos: multiple effects 
+              ~spwi711.spl~  ~override~ // sphere of chaos: multiple effects
               ~spwi714.spl~  ~override~ // prismatic spray: 1/6 chances for effects, 17/17/17/17/17/15 > 16/17/17/17/17/16
               ~spwish13.spl~ ~override~ // alchemy, wish: items
               ~spwish14.spl~ ~override~ // create wand, wish: items

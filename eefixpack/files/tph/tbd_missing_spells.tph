@@ -4,58 +4,58 @@
 WITH_TRA ~eefixpack/languages/en_us/copy_from_sod.tra~ ~eefixpack/languages/%LANGUAGE%/copy_from_sod.tra~ BEGIN
 
   ACTION_IF !FILE_EXISTS_IN_GAME ~sppr116.spl~ BEGIN // faerie fire
-  
+
     COPY ~eefixpack/files/vvc/spschgi.vvc~ ~override~
     COPY ~eefixpack/files/spl/sppr116.spl~ ~override~
       SAY 0x08 @52368
       SAY 0x50 @52369
-      
+
     APPEND ~spell.ids~   ~1116 CLERIC_FAERIE_FIRE~
     APPEND ~hidespl.2da~ ~SPPR116 1 0 0~ UNLESS ~^SPPR116[ %TAB%]~
-      
-  END    
+
+  END
 
   ACTION_IF !FILE_EXISTS_IN_GAME ~spwi126.spl~ BEGIN // dancing lights
-  
-    COMPILE ~eefixpack/files/baf/bddanc01.baf~ 
-    COPY ~eefixpack/files/eff/bddanc01.eff~ ~override~ 
-         ~eefixpack/files/eff/bddanc02.eff~ ~override~ 
+
+    COMPILE ~eefixpack/files/baf/bddanc01.baf~
+    COPY ~eefixpack/files/eff/bddanc01.eff~ ~override~
+         ~eefixpack/files/eff/bddanc02.eff~ ~override~
          ~eefixpack/files/vvc/spprismt.vvc~ ~override~
-         
-    COPY ~eefixpack/files/cre/bddanc01.cre~ ~override~ 
-         ~eefixpack/files/cre/bddanc02.cre~ ~override~ 
+
+    COPY ~eefixpack/files/cre/bddanc01.cre~ ~override~
+         ~eefixpack/files/cre/bddanc02.cre~ ~override~
       SAY 0x08 @56587
       SAY 0x0c @56587
-      
+
     COPY ~eefixpack/files/spl/spwi126.spl~ ~override~
       SAY 0x08 @52370
       SAY 0x50 @52371
-      
+
     APPEND ~spell.ids~   ~2126 WIZARD_DANCING_LIGHTS~
     APPEND ~hidespl.2da~ ~SPWI126 1 0 0~ UNLESS ~^SPWI126[ %TAB%]~
-      
-  END    
+
+  END
 
   ACTION_IF !FILE_EXISTS_IN_GAME ~spwi228.spl~ BEGIN // darkness 15'
-  
-    COPY ~eefixpack/files/bam/bddarka.bam~ ~override~ 
-         ~eefixpack/files/bam/bddarkx.bam~ ~override~ 
-         ~eefixpack/files/vvc/bddarkx.vvc~ ~override~ 
-         
+
+    COPY ~eefixpack/files/bam/bddarka.bam~ ~override~
+         ~eefixpack/files/bam/bddarkx.bam~ ~override~
+         ~eefixpack/files/vvc/bddarkx.vvc~ ~override~
+
     ADD_PROJECTILE ~eefixpack/files/pro/bddark15.pro~ // already present in bgee, but do anyway to set var
-      
+
     COPY ~eefixpack/files/spl/spwi228.spl~ ~override~
       SAY 0x08 @52366
       SAY 0x50 @52367
       LPF ALTER_HEADER INT_VAR projectile = bddark15 END
-      
-    APPEND ~spell.ids~   ~2228 WIZARD_DARKNESS_15_FOOT~  
+
+    APPEND ~spell.ids~   ~2228 WIZARD_DARKNESS_15_FOOT~
     APPEND ~hidespl.2da~ ~SPWI228 1 0 0~ UNLESS ~^SPWI228[ %TAB%]~
-      
+
   END
-  
+
   COPY_EXISTING ~hidespl.2da~ ~override~
     PRETTY_PRINT_2DA
     BUT_ONLY
 
-END  
+END

@@ -10,7 +10,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
   ~spwi008~  => ~%trap%~ // no_name_set, used by: ctar5, gtar5 - uses 318 vs. poison
   ~spwi016~  => ~%trap%~ // no_name_set, used by: ctck, gtck - uses 318 vs. poison
   ~spwi023~  => ~%trap%~ // no_name_set, used by: spshadom, spshadow - uses 324 vs. death_immunity
-// everything else either has a name or doesn't use 318/324  
+// everything else either has a name or doesn't use 318/324
 //  ~bdoffscr~ => ~%trap%~ // no_name_set, used by: c6spwn3
 //  ~jwacid~   => ~%trap%~ // no_name_set, used by: trtablee
 //  ~jwchnlgt~ => ~%trap%~ // no_name_set, used by: trtablen
@@ -136,4 +136,3 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
 END
 
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_code.tph~
-              

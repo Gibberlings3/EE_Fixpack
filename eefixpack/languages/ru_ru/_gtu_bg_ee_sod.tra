@@ -1,6 +1,6 @@
-// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the GTU for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
 // strref #12345, updating because "X is misspelled"
 @12345 = ~This is a test replacement string.~

@@ -13,7 +13,7 @@ ADD_TRANS_ACTION delon BEGIN 21 END BEGIN END ~SetGlobal("CDDelonSpoke","GLOBAL"
 
 // tbd, cam (from jmerry)
 // rasaad can duplicate crit items; re-ordering actions fixes the issue
-REPLACE_ACTION_TEXT ~rasaadj~ ~LeaveParty()[ %TAB%%WNL%]*GivePartyAllEquipment()~ ~GivePartyAllEquipment() LeaveParty()~ 
+REPLACE_ACTION_TEXT ~rasaadj~ ~LeaveParty()[ %TAB%%WNL%]*GivePartyAllEquipment()~ ~GivePartyAllEquipment() LeaveParty()~
 
 //tbd, cam
 // missing journal entries; make outro flow better by adding player reply about cloak
@@ -21,7 +21,7 @@ ADD_TRANS_ACTION udsola01 BEGIN 121 END BEGIN 1 END ~EraseJournalEntry(97332)Add
 ALTER_TRANS udsola01 BEGIN 138 144 END BEGIN 0 END // filename, state, trans
 BEGIN // list of changes, see below for flags
   ~REPLY~ ~#51710~
-END 
+END
 
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also ar0800.are, ar1000.are)
@@ -35,7 +35,7 @@ EXTEND_TOP "hgkar01" 8 #1 IF ~~ REPLY #73162 GOTO 14 END
 // tbd, cam (from MiH)
 // blessed bracers should be an option to resurrect dad in saradush
 EXTEND_TOP "orphan1" 3 #3
-  IF ~HasItemEquiped("brac23",LastTalkedToBy(Myself))~ REPLY @102 DO 
+  IF ~HasItemEquiped("brac23",LastTalkedToBy(Myself))~ REPLY @102 DO
 ~ClearAllActions()
 StartCutSceneMode()
 FadeToColor([20.0], 0)
@@ -47,7 +47,7 @@ FadeFromColor([20.0], 0)
 Wait(1)
 ActionOverride(LastTalkedToBy(Myself), ForceSpellRES("jworphan","orphan2"))
 Wait(5)
-EndCutSceneMode()~ 
+EndCutSceneMode()~
   EXIT
 END
 
@@ -59,11 +59,11 @@ REPLACE_TRANS_ACTION ~sarmel01~
   BEGIN 0 END
   ~RevealAreaOnMap("AR5500")~ ~\0 RemoveWorldmapAreaFlag("AR5500",ENABLED)~
   UNLESS ~RemoveWorldmapAreaFlag("AR5500",ENABLED)~
-  
+
 // can ask about voghilin's hunger without him mentioning he's hungry
 ADD_TRANS_TRIGGER OHBVOGHI 4 ~False()~ DO 1
 
-// With reputation of 15, "sir zarath" don't talk to PC. 
+// With reputation of 15, "sir zarath" don't talk to PC.
 REPLACE_STATE_TRIGGER HEARTG3 1 ~ReputationGT(LastTalkedToBy,14)~
 
 // trax addresses you by name despite never learning it
@@ -81,11 +81,11 @@ REPLACE_ACTION_TEXT ~bernard~ ~StartStore("bernard"~ ~StartStore("bernard2"~
 REPLACE_ACTION_TEXT_REGEXP ~keldor\(j\|p\)?~ ~EscapeAreaMove("AR0903",[0-9]+,[0-9]+~ ~EscapeAreaMove("AR0903",644,501~ // have keldorn escape to the same place  in NORH
 ALTER_TRANS bkeldor BEGIN 166 END BEGIN 0 END BEGIN ACTION // in keldorn-hexxat fight, if keldorn leaves he was setting hexxat leave vars, not his own [jmerry]
  ~SetGlobal("KickedOut","LOCALS",1) LeaveParty() SetLeavePartyDialogueFile() ChangeAIScript("",DEFAULT) EscapeAreaMove("AR0903",644,501,0)~
-END 
+END
 
 // trying to make the exit statue from spellhold dungeon level 1 more reliable - ppridd.dlg and ar1512.bcs
 ADD_STATE_TRIGGER PPRIDD 3 ~Global("openHead","AR1512",0)~
-ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END 
+ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END
 
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 ADD_STATE_TRIGGER neeraj 137 ~Global("SahauginTravel","GLOBAL",0)~
@@ -512,7 +512,7 @@ Face(SW)~
 END
 
 ALTER_TRANS OHBGC01 BEGIN 20 END BEGIN 0 END BEGIN ACTION
-~SetGlobal("OHB_GCENTRY","OH8100",5) 
+~SetGlobal("OHB_GCENTRY","OH8100",5)
 AddJournalEntry(101251,QUEST_DONE)
 EraseJournalEntry(101238)
 EraseJournalEntry(101239)

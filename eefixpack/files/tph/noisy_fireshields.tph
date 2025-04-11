@@ -1,18 +1,18 @@
-// Galctygon: This has been my pet peeve since the early days of BGo. Even if the casting graphics and sound of the 
-// child spell is blank, the launched spell still disrupts other ongoing sounds i.e. spellcasting. It turns out the EE 
-// engine does have a fix for this! There's a flag in the special field that removes this disruption completely, even 
-// if the child spell has casting graphics and sound enabled so it should be an easy fix to go through those external 
-// .effects, preferrably with a REGEXP GLOB.  
+// Galctygon: This has been my pet peeve since the early days of BGo. Even if the casting graphics and sound of the
+// child spell is blank, the launched spell still disrupts other ongoing sounds i.e. spellcasting. It turns out the EE
+// engine does have a fix for this! There's a flag in the special field that removes this disruption completely, even
+// if the child spell has casting graphics and sound enabled so it should be an easy fix to go through those external
+// .effects, preferrably with a REGEXP GLOB.
 // https://www.gibberlings3.net/forums/topic/37011-fireshield-type-spells-shouldnt-play-sounds-or-disrupt-ongoing-sounds/
 
 
 ACTION_IF game_is_pstee BEGIN
-    
+
   COPY_EXISTING ~spwi108.spl~   ~override~ // pacify
     LPF ALTER_EFFECT INT_VAR match_opcode = 232 match_special = 0 special = BIT2 END
-    BUT_ONLY IF_EXISTS  
+    BUT_ONLY IF_EXISTS
 
-END ELSE BEGIN 
+END ELSE BEGIN
 
   COPY_EXISTING ~spbgbfs2.eff~ ~override~ // bigby's clenched fist, crushing hand
                 ~spcl237d.eff~ ~override~ // greater sun
@@ -26,9 +26,9 @@ END ELSE BEGIN
                 ~spwi818a.eff~ ~override~ // bigby's clenched fist
                 ~spwi918a.eff~ ~override~ // bigby's crushing hand
                 ~spwm101d.eff~ ~override~ // repulse (wild surge)
-    WRITE_LONG  0x48 (THIS BOR BIT2) 
-    BUT_ONLY IF_EXISTS  
-    
+    WRITE_LONG  0x48 (THIS BOR BIT2)
+    BUT_ONLY IF_EXISTS
+
   COPY_EXISTING // spells
                 //~spin128.spl~  ~override~ // salamander aura (iwd) - uses special for distance
                 //~spin138.spl~  ~override~ // harpy wail (iwd) - uses special for distance
@@ -89,6 +89,6 @@ END ELSE BEGIN
                 ~sw2hd1.itm~   ~override~ // rancor +1 -> bonus on kill (bg, bg2)
                 ~trollreg.itm~ ~override~ // ring -> troll revive
     LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 232 match_special = 0 special = BIT2 END
-    BUT_ONLY IF_EXISTS  
-  
+    BUT_ONLY IF_EXISTS
+
 END

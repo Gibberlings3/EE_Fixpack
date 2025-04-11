@@ -13,16 +13,16 @@ COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override~ // sppr326
   LPF ALTER_EFFECT  INT_VAR match_opcode =  78 match_duration = 18 opcode = 146 parameter1 = 0 parameter2 = 2 duration = 7
     special = 0 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%a~ END // change final (saved) mold touch burst to another subspell
   LPF CLONE_EFFECT  INT_VAR match_opcode = 324 match_parameter2 = 55 parameter2 = 68 END // prevent spread to someone who already has mold
-  LPF CLONE_EFFECT  INT_VAR match_opcode =  78 match_parameter1 = 2 opcode = 206 parameter1 = 0 parameter2 = 0 
+  LPF CLONE_EFFECT  INT_VAR match_opcode =  78 match_parameter1 = 2 opcode = 206 parameter1 = 0 parameter2 = 0
     timing = 0 duration = 1 savingthrow = BIT0 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%~ END
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 resist_dispel = 3 END  // always play audio/visual
   LPF ALTER_EFFECT INT_VAR match_opcode = 215 resist_dispel = 3 END  // always play audio/visual
 
 COPY_EXISTING ~%CLERIC_MOLD_TOUCH%b.spl~ ~override~ // sppr326b
   WRITE_BYTE 0x1c 2 // spell type
-  WRITE_BYTE 0x25 8 // subspell should have proper school set 
-  
-COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override/%CLERIC_MOLD_TOUCH%a.spl~ // create new subspell sppr326a for final 1d6 of mold touch damage when saved against  
+  WRITE_BYTE 0x25 8 // subspell should have proper school set
+
+COPY_EXISTING ~%CLERIC_MOLD_TOUCH%.spl~  ~override/%CLERIC_MOLD_TOUCH%a.spl~ // create new subspell sppr326a for final 1d6 of mold touch damage when saved against
   WRITE_LONG 0x08 "-1" // blank name
   LPF DELETE_EFFECT END // delete eveything
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 78 target = 2 parameter1 = 1 parameter2 = 12 timing = 3 special = 7 STR_VAR resource = EVAL ~%CLERIC_MOLD_TOUCH%b~ END

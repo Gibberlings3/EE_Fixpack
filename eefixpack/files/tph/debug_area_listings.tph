@@ -6,7 +6,7 @@ COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_is_bgee BEGIN
     REPLACE_TEXTUALLY ~Duchal~ ~Ducal~ // ar0108 - ar0111, ar0200
     REPLACE_TEXTUALLY ~cariron~ ~carrion~ // ar5103
-  END ELSE  
+  END ELSE
   PATCH_IF game_is_bg2ee BEGIN
     REPLACE_TEXTUALLY ~Favour for Edwin~ ~Favor for Edwin~ // ar0315 - ar0317
     REPLACE_TEXTUALLY ~Enginge~ ~Engine~ // ar0413
@@ -30,5 +30,4 @@ COPY_EXISTING ~bgee.lua~ ~override~
     REPLACE_TEXTUALLY ~Mekrath~ ~Marketh~ // ar8007
     REPLACE_TEXTUALLY ~\(south\|north\|east\|west\) Tower~ ~\1 tower~ // ar9701-ar9708
   END
-  BUT_ONLY 
-    
+  BUT_ONLY

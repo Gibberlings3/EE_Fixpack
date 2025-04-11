@@ -19,8 +19,8 @@ APPEND %dialog% // %comment%
 END
 >>>>>>>>
 
-ACTION_FOR_EACH cre IN 
-  boyba2 boybe1 boybe2 brilla dillar farm3 fcook2 fcook3 flam10 flam2 flam7 flam8 flam9 flam13 flamgg ftobe7 ftowb4 ftowb6 ftowb7 
+ACTION_FOR_EACH cre IN
+  boyba2 boybe1 boybe2 brilla dillar farm3 fcook2 fcook3 flam10 flam2 flam7 flam8 flam9 flam13 flamgg ftobe7 ftowb4 ftowb6 ftowb7
   girba1 haffg2 halfg5 housg1 housg2 housg3 housg4 hunter iron3 ironm3 ironm4 jhasso mtbe10 mtbe11 mtbe2 // mtbe2 also used by mtbe12 and mrcolson, but soundset is the same
   mtbe3 mtbe4 mtbe8 mtob3 mtob4 mtob5 mtob7 mtob8 mtob9 mtown2 nobl12 nobw3 nobw5 nobw9 poe prost7 prost8 rededg serva2 serwen trave2 volose
 BEGIN
@@ -34,20 +34,20 @@ BEGIN
       READ_LONG (0x108 + (index * 0x04)) ~strref~
       PATCH_IF strref < 0 BEGIN
         SET sounds = index - 1
-        SET index = 7 
-      END ELSE BEGIN  
+        SET index = 7
+      END ELSE BEGIN
         SET ~sound%index%~ = strref
       END
     END
-    BUT_ONLY    
-    
+    BUT_ONLY
+
   COPY ~eefixpack/files/d/bgee_nothing_to_say_working.d~ ~eefixpack/files/d/bgee_nothing_to_say_working.d~
-    APPEND_FILE_EVALUATE ~./inline/common_d_top.d~ 
+    APPEND_FILE_EVALUATE ~./inline/common_d_top.d~
     FOR (index = 1 ; index < (sounds + 1) ; ++index) BEGIN
       SET say = ~%sound%index%%~
-      APPEND_FILE_EVALUATE ~./inline/common_d_middle.d~ 
-    END  
-    APPEND_FILE_EVALUATE ~./inline/common_d_bottom.d~ 
+      APPEND_FILE_EVALUATE ~./inline/common_d_middle.d~
+    END
+    APPEND_FILE_EVALUATE ~./inline/common_d_bottom.d~
 END
 
 COPY + ~eefixpack/files/d/bgee_nothing_to_say_working.d~ ~eefixpack/files/d/bgee_nothing_to_say_working.d~

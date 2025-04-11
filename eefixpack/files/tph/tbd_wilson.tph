@@ -1,13 +1,13 @@
 // tbd, cam
-// wilson fixes  
+// wilson fixes
 COPY ~eefixpack/files/2da/clabbear.2da~ ~override~ // added ohrbear6 at level 1, extended to level 50
      ~eefixpack/files/spl/ohrbear6.spl~ ~override~ // now purely handles regen
-     
+
 COPY_EXISTING ~wilson9.cre~  ~override~ // make attached regen exclusively sourced from ohrbear6, so it'll progress correctly
               ~wilson13.cre~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 98 END
   LPF ADD_CRE_EFFECT INT_VAR opcode = 98 target = 2 parameter1 = 30 parameter2 = 3 timing = 9 casterlvl = 8 restype = 1 STR_VAR effsource = ohrbear6 END
-     
+
 COPY_EXISTING ~ohrbear2.spl~ ~override~ // paw upgrade, level 13
               ~ohrbear3.spl~ ~override~ // paw upgrade, level 19
               ~ohrbear4.spl~ ~override~ // paw upgrade, level 25
@@ -15,7 +15,7 @@ COPY_EXISTING ~ohrbear2.spl~ ~override~ // paw upgrade, level 13
   LPF DELETE_EFFECT INT_VAR match_opcode = 0 END // ac progression already handled by ohrbear7
   LPF DELETE_EFFECT INT_VAR match_opcode = 1 END // apr progression already handled by effects attached to ohrwilt1-5
   BUT_ONLY
-  
+
 COPY_EXISTING ~ohrbear1.spl~ ~override~ // first upgrade, applies weapon disallow opcodes
   LPF DELETE_EFFECT INT_VAR match_opcode = 98 END // regen will be handled exclusively by ohrbear6
 

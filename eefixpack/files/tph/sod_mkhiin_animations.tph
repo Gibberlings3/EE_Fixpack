@@ -9,16 +9,16 @@ complicating enough, she only has a handful of animations:
   bow - used with bow
   bow, armored - use when wearing armor (any) with a bow
   staff - used with a staff equipped
-  
+
 So we facilitate these changes by having weapons apply animation changes via eff. These effs are
-targeted to class:shamans, and non-goblin race creatures are made immune. Bows apply both the armored 
-and unarmored animation effs; armor blocks the unarmored animation change when worn. 
+targeted to class:shamans, and non-goblin race creatures are made immune. Bows apply both the armored
+and unarmored animation effs; armor blocks the unarmored animation change when worn.
 
-known issue: Because the bow/axe animations rely on armor being equipped first, it means the player 
-can get the wrong iteration of the bow animation by e.g. removing/equipping armor after a bow. 
+known issue: Because the bow/axe animations rely on armor being equipped first, it means the player
+can get the wrong iteration of the bow animation by e.g. removing/equipping armor after a bow.
 
-other big issue: for this to fully work, other mods also need to apply these effects to anything that 
-goes in the armor slot, or to any axe/staff/bow that m'khiin can equip. 
+other big issue: for this to fully work, other mods also need to apply these effects to anything that
+goes in the armor slot, or to any axe/staff/bow that m'khiin can equip.
 */
 
 
@@ -27,32 +27,32 @@ COPY_EXISTING ~bdax1h02.itm~ ~override~
               ~bdax1h05.itm~ ~override~
               ~bdbow01.itm~  ~override~
               ~bdstaf02.itm~ ~override~
-  LPF DELETE_EFFECT INT_VAR match_opcode = 53 END  
+  LPF DELETE_EFFECT INT_VAR match_opcode = 53 END
   LPF DELETE_EFFECT INT_VAR match_opcode = 318 match_parameter1 = 75 match_parameter2 = 76 END
-  
+
 // first remove existing anim changes from items
 COPY_EXISTING ~bdchan01.itm~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 328 match_parameter2 = 75 END
-  
+
 // add effs that will effect animation changes
 COPY ~eefixpack/files/eff/cdmk15.eff~  ~override~ // bow
      ~eefixpack/files/eff/cdmk15a.eff~ ~override~ // bow, armored
      ~eefixpack/files/eff/cdmk25.eff~  ~override~ // axe
      ~eefixpack/files/eff/cdmk25a.eff~ ~override~ // axe, armored
-     ~eefixpack/files/eff/cdmk26.eff~  ~override~ // staff 
+     ~eefixpack/files/eff/cdmk26.eff~  ~override~ // staff
 
 // mode 4 mkhiin items are pointless; retan only those items which are actually mkhiin-only and update mode
 OUTER_SET mkhiin_use = RESOLVE_STR_REF(@106)
-APPEND ~item_use.2da~ ~bdleat02 MKHIIN %mkhiin_use% 2 44149~   
-COPY_EXISTING ~item_use.2da~ ~override~ // remove arbitrary restrictions 
+APPEND ~item_use.2da~ ~bdleat02 MKHIIN %mkhiin_use% 2 44149~
+COPY_EXISTING ~item_use.2da~ ~override~ // remove arbitrary restrictions
   REPLACE_TEXTUALLY CASE_INSENSITIVE
-    ~^\(bdax1h02\|bdax1h05\|bdbow01\|bdchan01\|bdchan02\|bdleat02\|bdleat06\|bdrobe03\|bdshld07\|bdstaf02\)\([ %TAB%]+MKHIIN[ %TAB%]+\)[0-9]+\([ %TAB%]+\)4\([ %TAB%]+[0-9]+\)~ 
+    ~^\(bdax1h02\|bdax1h05\|bdbow01\|bdchan01\|bdchan02\|bdleat02\|bdleat06\|bdrobe03\|bdshld07\|bdstaf02\)\([ %TAB%]+MKHIIN[ %TAB%]+\)[0-9]+\([ %TAB%]+\)4\([ %TAB%]+[0-9]+\)~
     ~\1\2%mkhiin_use%\32\4~ // update lines for actual mkhiin-only equipment
   REPLACE_TEXTUALLY ~^[^ %TAB%]+[ %TAB%]+MKHIIN[ %TAB%]+[0-9]+[ %TAB%]+4[ %TAB%]+[0-9]+[ %TAB%%LNL%%MNL%]+~ ~~ // delete other, existing mkhiin lines
   PRETTY_PRINT_2DA
 
-ACTION_FOR_EACH item IN 
-  
+ACTION_FOR_EACH item IN
+
   ~ax1h01~    // battle axe
   ~ax1h01q~   // quality battle axe
   ~ax1h02~    // battle axe +1
@@ -130,7 +130,7 @@ ACTION_FOR_EACH item IN
   ~stafn1~    // neera's staff +1
   ~ttaxe1~    // battle axe
   ~ttleat~    // leather armor +1
-BEGIN 
+BEGIN
 
   COPY_EXISTING ~%item%.itm~ ~override~
     READ_LONG  0x18 flags
@@ -139,26 +139,26 @@ BEGIN
     PATCH_IF (((use & BIT30) = 0) AND ((flags & BIT2) = BIT2)) BEGIN // usable by druids and droppable
       READ_SHORT 0x1c type
       READ_BYTE  0x31 prof
-      PATCH_IF ((type = 26) AND (prof = 102)) BEGIN // staff  
+      PATCH_IF ((type = 26) AND (prof = 102)) BEGIN // staff
         //SET alter = 1
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~ END // block non-goblins
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~ END // apply effs to only shamans
-      END ELSE    
+      END ELSE
       PATCH_IF (((type = 25) AND (prof =  92)) OR     // axe
-                ((type = 15) AND (prof = 105))) BEGIN // shortbow  
+                ((type = 15) AND (prof = 105))) BEGIN // shortbow
         //SET alter = 1
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // block non-goblins
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~  END // block non-goblins
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // apply effs to only shamans
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~  END // apply effs to only shamans
-      END ELSE    
+      END ELSE
       PATCH_IF (type = 2) BEGIN // armor
         //SET alter = 1
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk25~ END // block non-armored axe animation
         LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk15~ END // block non-armored bow animation
       END
-    END    
-  //  PATCH_IF alter AND debug BEGIN 
+    END
+  //  PATCH_IF alter AND debug BEGIN
   //    READ_LONG 0x0c name
   //    PATCH_IF (name > 0) AND (name < 999999) BEGIN
   //      READ_STRREF 0x0c name
@@ -174,7 +174,7 @@ BEGIN
   //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
   //                                                              BEGIN SPRINT spc "        " END
   //    PATCH_PRINT "              ~%SOURCE_FILE%~%spc%~override~ // %name%"
-  //  END  
-    BUT_ONLY 
+  //  END
+    BUT_ONLY
 
 END

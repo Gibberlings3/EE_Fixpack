@@ -2,7 +2,7 @@
 // essentially, ending a cutscene allows a 2-tick window before the next action occurs, leaving a small window between the end of a cutscene
 // and e.g. a dialogue action. Manually reviewed all scripted EndCutceneMode()s across all games.
 
-ACTION_IF game_is_iwdee BEGIN 
+ACTION_IF game_is_iwdee BEGIN
 
   COPY_EXISTING ~2004chef.bcs~ ~override~
                 ~bamebd.bcs~   ~override~
@@ -72,7 +72,7 @@ ACTION_IF game_is_iwdee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(Start\)?Dialog\)~ ~\1~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING //~bcluawyl.bcs~ ~override~ // goes straight to another cutscene
                 ~bctoku.bcs~   ~override~ // goes straight to another cutscene
@@ -85,32 +85,32 @@ ACTION_IF game_is_iwdee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
 COPY_EXISTING ~bcplcded.bcs~ ~override~ // didn't end its cutscene at all
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~END~ ~EndCutSceneMode()%LNL%END~
-  END  
+  END
 
   COPY_EXISTING ~eepomabs.bcs~ ~override~ // has 2x endcutscene
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(CreateVisualEffectObject\)~ ~\1~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~ilgemeff.bcs~ ~override~ // has premature endcutscene
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
       REPLACE_TEXTUALLY ~\(DisplayString(Myself,26824)[ %TAB%%LNL%%MNL%%WNL%]+MultiPlayerSync()[ %TAB%%LNL%%MNL%%WNL%]+Wait(1)\)~ ~\1 EndCutSceneMode()~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~ilwngbuf.bcs~ ~override~ // has premature endcutscene
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
       REPLACE_TEXTUALLY ~\(Wait(1)\)\([ %TAB%%LNL%%MNL%%WNL%]+END\)~ ~\1 EndCutSceneMode() \2~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~shlarkul.bcs~ ~override~ // has 2x endcutscene
                 ~shlarwrp.bcs~ ~override~
@@ -118,11 +118,11 @@ COPY_EXISTING ~bcplcded.bcs~ ~override~ // didn't end its cutscene at all
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(SmallWait(5)\)~ ~\1~
     END
-    BUT_ONLY  
-  
+    BUT_ONLY
+
 END ELSE
 
-ACTION_IF game_is_bgee BEGIN 
+ACTION_IF game_is_bgee BEGIN
 
   COPY_EXISTING ~ar1101.bcs~   ~override~
                 ~bd0102.bcs~   ~override~
@@ -155,7 +155,7 @@ ACTION_IF game_is_bgee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
     END
-    BUT_ONLY IF_EXISTS 
+    BUT_ONLY IF_EXISTS
 
   COPY_EXISTING ~bdcut09.bcs~  ~override~ // has premature endcutscene, goes directly into another one anyway
                 ~bdcut222.bcs~ ~override~ // has premature endcutscene, goes directly into dialogue anyway
@@ -166,11 +166,11 @@ ACTION_IF game_is_bgee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~~
     END
-    BUT_ONLY IF_EXISTS  
-  
+    BUT_ONLY IF_EXISTS
+
 END ELSE
 
-ACTION_IF game_is_bg2ee BEGIN 
+ACTION_IF game_is_bg2ee BEGIN
 
   COPY_EXISTING ~ar0411.bcs~   ~override~
                 ~cut15a.bcs~   ~override~
@@ -227,14 +227,14 @@ ACTION_IF game_is_bg2ee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~cut12c.bcs~ ~override~ // has premature endcutscene
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~ActionOverride("Ployer",EndCutSceneMode())~ ~~
       REPLACE_TEXTUALLY ~\(DestroySelf()\)~ ~EndCutSceneMode() \1~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~cut232g.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
                 ~cut232i.bcs~  ~override~
@@ -251,20 +251,20 @@ ACTION_IF game_is_bg2ee BEGIN
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(ActionOverride("[^"]+",\)?EndCutSceneMode())?~ ~~
     END
-    BUT_ONLY   
+    BUT_ONLY
 
   COPY_EXISTING ~oh4010.bcs~ ~override~ // same as above, but do separate since it has multiple endcutscene and not all need fixing
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(SetCutSceneLite(TRUE)\)[ %TAB%%LNL%%MNL%%WNL%]+EndCutSceneMode()~ ~\1~
     END
-    BUT_ONLY     
+    BUT_ONLY
 
   COPY_EXISTING ~oh4101.bcs~ ~override~ // same as above, but do separate since it has multiple endcutscene and not all need fixing
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(SetInterrupt(TRUE)[ %TAB%%LNL%%MNL%%WNL%]+ActionOverride("[^"]+",StartDialog\)~ ~\1~
     END
-    BUT_ONLY  
-  
+    BUT_ONLY
+
 END ELSE BEGIN // pstee
 
   COPY_EXISTING ~1201csa2.bcs~ ~override~
@@ -278,12 +278,12 @@ END ELSE BEGIN // pstee
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~EndCutSceneMode()[ %TAB%%LNL%%MNL%%WNL%]+\(\(ActionOverride("[^"]+",\)?\(Start\)?Dialog\)~ ~\1~
     END
-    BUT_ONLY  
+    BUT_ONLY
 
   COPY_EXISTING ~1501cut4.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(ActionOverride("[^"]+",\)?EndCutSceneMode())?~ ~~
     END
-    BUT_ONLY   
+    BUT_ONLY
 
-END 
+END

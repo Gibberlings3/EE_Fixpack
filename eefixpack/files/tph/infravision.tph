@@ -11,16 +11,16 @@ COPY_EXISTING ~7b06.ini~ ~override~ // shade wolf
               ~ed00.ini~ ~override~ // yuan-ti
               ~ed10.ini~ ~override~ // yuan-ti elite
               ~ed20.ini~ ~override~ // yuan-ti priest
-  REPLACE_TEXTUALLY ~detected_by_infravision=1~ ~detected_by_infravision=0~    
+  REPLACE_TEXTUALLY ~detected_by_infravision=1~ ~detected_by_infravision=0~
   BUT_ONLY IF_EXISTS
 
 // stuff not detected by infravision but should be
 COPY_EXISTING ~3001.ini~ ~override~ // neothelid
               ~7601.ini~ ~override~ // maurezhi
               ~7f43.ini~ ~override~ // yochlol
-  REPLACE_TEXTUALLY ~detected_by_infravision=0~ ~detected_by_infravision=1~    
+  REPLACE_TEXTUALLY ~detected_by_infravision=0~ ~detected_by_infravision=1~
   BUT_ONLY IF_EXISTS
-  
+
 // individual exceptions
 ACTION_IF game_is_bgee BEGIN
 
@@ -35,8 +35,8 @@ ACTION_IF game_is_bgee BEGIN
                 ~bdghostf.cre~ ~override~ // Ghost: undead using non-undead animation
                 ~bdghostm.cre~ ~override~ // Ghost: undead using non-undead animation
                 ~bdlitla.cre~  ~override~ // Litla: undead using non-undead animation
-                ~bdnuber1.cre~ ~override~ // Nüber: undead using non-undead animation
-                ~bdnuber2.cre~ ~override~ // Nüber: undead using non-undead animation
+                ~bdnuber1.cre~ ~override~ // Nï¿½ber: undead using non-undead animation
+                ~bdnuber2.cre~ ~override~ // Nï¿½ber: undead using non-undead animation
                 ~bdrgosz.cre~  ~override~ // R'gosz the Puke: undead using non-undead animation
                 ~bdsotdar.cre~ ~override~ // Sot Darkoozing: undead using non-undead animation
                 ~bdsotuk.cre~  ~override~ // Sotuk: undead using non-undead animation
@@ -49,7 +49,7 @@ ACTION_IF game_is_bgee BEGIN
                 ~vampbat.cre~  ~override~ // Vampire Bat: undead using non-undead animation
     LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
     BUT_ONLY IF_EXISTS
-    
+
   // creatures who don't give body heat from their animation but should
   COPY_EXISTING ~deathk.cre~   ~override~ // demon knight: using death knight animation
                 ~deathk1.cre~  ~override~ // demon knight: using death knight animation
@@ -59,7 +59,7 @@ ACTION_IF game_is_bgee BEGIN
     LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter1 = 1 parameter2 = 1 timing = 1 END // override: has body heat
     BUT_ONLY
 
-END ELSE 
+END ELSE
 
 ACTION_IF game_is_bg2ee BEGIN
 
@@ -122,7 +122,7 @@ ACTION_IF game_is_bg2ee BEGIN
                 ~sahbeh02.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
                 ~sahbeh03.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
                 ~sahbeh04.cre~ ~override~ // Sziltar's Apparition: has mismatching undead vs. animation
-                ~sahspc01.cre~ ~override~ // Specter: has mismatching undead vs. animation                
+                ~sahspc01.cre~ ~override~ // Specter: has mismatching undead vs. animation
                 ~sarprovf.cre~ ~override~ // saradush courtesan (vampire in disguise)
                 ~sarprovm.cre~ ~override~ // saradush courtesan (vampire in disguise)
                 ~sarspir.cre~  ~override~ // Prison Spirit: has mismatching undead vs. animation
@@ -135,7 +135,7 @@ ACTION_IF game_is_bg2ee BEGIN
                 ~trolsi02.cre~ ~override~ // Spirit Troll: undead using non-undead animation
                 ~trolsp01.cre~ ~override~ // Spectral Troll: undead using non-undead animation
                 ~trolsp02.cre~ ~override~ // Spectral Troll: undead using non-undead animation
-                ~udvamp.cre~   ~override~ // Vampiric Illithid: has mismatching undead vs. animation                
+                ~udvamp.cre~   ~override~ // Vampiric Illithid: has mismatching undead vs. animation
                 ~vampaer.cre~  ~override~ // aerie (vampified by bodhi)
                 ~vampano.cre~  ~override~ // anomen (vampified by bodhi)
                 ~vampbat.cre~  ~override~ // Vampire Bat: has mismatching undead vs. animation
@@ -145,7 +145,7 @@ ACTION_IF game_is_bg2ee BEGIN
                 ~wrashi01.cre~ ~override~ // Shimmering Wraith: has mismatching undead vs. animation
     LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
     BUT_ONLY
-    
+
   // creatures who don't give body heat from their animation but should
   COPY_EXISTING ~cambion1.cre~ ~override~ // cambion: using death knight animation
                 ~cambion2.cre~ ~override~ // cambion: using death knight animation
@@ -280,5 +280,5 @@ END ELSE BEGIN // iwdee
                 ~zierkki.cre~  ~override~ // Shade of Sir Zierkki: undead using non-undead animation 24832
     LPF ADD_CRE_EFFECT INT_VAR opcode = 342 target = 1 parameter2 = 1 timing = 1 END // override: no body heat
     BUT_ONLY
-                
-END 
+
+END

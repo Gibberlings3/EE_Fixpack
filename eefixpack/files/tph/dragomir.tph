@@ -5,7 +5,7 @@ EXTEND_BOTTOM ~hexxa25.bcs~ ~eefixpack/files/baf/hexxat.baf~
 COPY_EXISTING ~oh7000.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~StateCheck("ohhdrago",STATE_STONE_DEATH)~ ~False()~
-  END  
+  END
 
 COPY_EXISTING ~ohhcloak.itm~ ~override~
   WRITE_LONG 0x18 (THIS | BIT0)  // add critical flag

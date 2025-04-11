@@ -105,7 +105,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bgee_charm BEGIN
   marl,   17, 1, ~AddJournalEntry(27255,INFO)~        => ~Marl~
   mcook2,  2, 0, ~~                                   => ~Cook~
   mcook3,  2, 0, ~~                                   => ~Cook~
-  mcook5,  3, 1, ~~                                   => ~Cook~   
+  mcook5,  3, 1, ~~                                   => ~Cook~
   minec5,  2, 0, ~~                                   => ~Miner~
   monken,  1, 0, ~~                                   => ~Monk or Watcher at CK (when guards called)~
   mtbe10,  0, 1, ~~                                   => ~Butler~
@@ -127,15 +127,15 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bgee_charm BEGIN
   nila,    9, 0, ~~                                   => ~Nila~
   nobl10,  6, 0, ~GiveItem("ring10",LastTalkedToBy)~  => ~Gerard Travenhurst~
   nobl11,  2, 0, ~GivePartyGold(10)~                  => ~Nobleman~
-  nobl12,  2, 1, ~AddJournalEntry(27327,QUEST)~       => ~Nobleman (quest entry never clears)~   
-  nobl14,  3, 1, ~~                                   => ~Nobleman~   
+  nobl12,  2, 1, ~AddJournalEntry(27327,QUEST)~       => ~Nobleman (quest entry never clears)~
+  nobl14,  3, 1, ~~                                   => ~Nobleman~
   nobl4,   7, 0, ~GivePartyGold(20)~                  => ~Nobleman~
   nobl5,   8, 1, ~~                                   => ~Nobleman~
   nobl6,   8, 0, ~~                                   => ~Nobleman~
   nobl7,   6, 0, ~~                                   => ~Nobleman~
   nobl8,   6, 0, ~GiveItem("RING17",LastTalkedToBy)~  => ~Nobleman~
-  nobw5,   2, 1, ~AddJournalEntry(27327,QUEST)~       => ~Noblewoman (quest entry never clears)~  
-  nobw9,   6, 0, ~~                                   => ~Noblewoman (quest entry never clears)~   
+  nobw5,   2, 1, ~AddJournalEntry(27327,QUEST)~       => ~Noblewoman (quest entry never clears)~
+  nobw9,   6, 0, ~~                                   => ~Noblewoman (quest entry never clears)~
   oberan,  4, 0, ~~                                   => ~Oberan~
   oublek, 24, 0, ~~                                   => ~Oublek~
   perdue, 10, 0, ~~                                   => ~Perdue~
@@ -148,37 +148,37 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bgee_charm BEGIN
   ragefa, 16, 0, ~~                                   => ~Ragefast~
   raiken, 17, 0, ~RevealAreaOnMap("AR1900")
 AddJournalEntry(27383,INFO)~                           => ~Raiken~
-  ramazi, 21, 0, ~~                                   => ~Raiken~   
+  ramazi, 21, 0, ~~                                   => ~Raiken~
   read4,   2, 0, ~~                                   => ~unused, but assigned to Reader (read4)~
   rielta,  3, 0, ~AddJournalEntry(26972,QUEST)~       => ~Rieltar - journal entry gets cleared at end of ch6, so no worries setting it here~
-  safana, 11, 0, ~~                                   => ~Safana (charmed, male in party)~   
-  safana, 14, 0, ~~                                   => ~Safana (charmed, no male in party)~   
-  seniya,  3, 0, ~~                                   => ~Seniyad~   
-  serva2, 11, 0, ~~                                   => ~Servant~   
-  servan,  5, 0, ~~                                   => ~Servant~   
-  serwen,  3, 0, ~~                                   => ~Serving Wench~   
-  sewerc,  2, 0, ~~                                   => ~Sewer Cleaner~   
-  sil,    10, 1, ~~                                   => ~Sewer Cleaner~   
+  safana, 11, 0, ~~                                   => ~Safana (charmed, male in party)~
+  safana, 14, 0, ~~                                   => ~Safana (charmed, no male in party)~
+  seniya,  3, 0, ~~                                   => ~Seniyad~
+  serva2, 11, 0, ~~                                   => ~Servant~
+  servan,  5, 0, ~~                                   => ~Servant~
+  serwen,  3, 0, ~~                                   => ~Serving Wench~
+  sewerc,  2, 0, ~~                                   => ~Sewer Cleaner~
+  sil,    10, 1, ~~                                   => ~Sewer Cleaner~
   silenc,  0, 0, ~SetGlobal("SeenSanctuary","GLOBAL",1)
 StartStore("stosilen",LastTalkedToBy(Myself))~         => ~Silence - has special 'hit the bricks' for NTTT>5, but only worried about =0~
   skie,    9, 0, ~~                                   => ~Skie~
   smith,   1, 0, ~GiveItem("CHAN01",LastTalkedToBy)~  => ~Smith~
-  smuggl, 12, 0, ~AddJournalEntry(7166,INFO)~         => ~Smuggler~   
-  sonner, 21, 0, ~~                                   => ~Sonner~   
+  smuggl, 12, 0, ~AddJournalEntry(7166,INFO)~         => ~Smuggler~
+  sonner, 21, 0, ~~                                   => ~Sonner~
   telman,  8, 0, ~~                                   => ~Telman~
   tenya,  29, 0, ~~                                   => ~Tenya~
-  teven,  18, 0, ~AddJournalEntry(27476,INFO)~        => ~Teven~   
+  teven,  18, 0, ~AddJournalEntry(27476,INFO)~        => ~Teven~
   thalan, 33, 0, ~~                                   => ~Thalantyr~
-  thaldo,  5, 0, ~AddJournalEntry(27480,INFO)~        => ~Thaldorn~   
-  tiax,    8, 0, ~~                                   => ~Tiax~   
-  torlob,  2, 0, ~~                                   => ~Tor Lobo~   
-  trave2,  2, 1, ~~                                   => ~Traveler~   
-  travel,  9, 0, ~~                                   => ~Traveler~   
-  viconi, 10, 0, ~~                                   => ~Viconia~   
-  volose,  5, 0, ~~                                   => ~Waitress~  
-  wilton,  2, 0, ~~                                   => ~Wilton~ 
-  xzar,   20, 0, ~~                                   => ~Xzar~ 
-  yago,    7, 0, ~AddJournalEntry(26899,INFO)~        => ~Yago~    
+  thaldo,  5, 0, ~AddJournalEntry(27480,INFO)~        => ~Thaldorn~
+  tiax,    8, 0, ~~                                   => ~Tiax~
+  torlob,  2, 0, ~~                                   => ~Tor Lobo~
+  trave2,  2, 1, ~~                                   => ~Traveler~
+  travel,  9, 0, ~~                                   => ~Traveler~
+  viconi, 10, 0, ~~                                   => ~Viconia~
+  volose,  5, 0, ~~                                   => ~Waitress~
+  wilton,  2, 0, ~~                                   => ~Wilton~
+  xzar,   20, 0, ~~                                   => ~Xzar~
+  yago,    7, 0, ~AddJournalEntry(26899,INFO)~        => ~Yago~
   yeslic,  6, 0, ~~                                   => ~Yeslick~
 
 //bassil, 14, 0, ~~                                   => ~Basillus - goes hostile after charmed dialogue regardless~
@@ -215,12 +215,12 @@ END
 
 ACTION_PHP_EACH cd_bgee_charm AS params => comment BEGIN
   COPY ~eefixpack/files/d/bgee_charm_fixes_working.d~ ~eefixpack/files/d/bgee_charm_fixes_working.d~
-    //APPEND_FILE_EVALUATE ~./inline/charm_base.d~ 
-    APPEND_FILE_EVALUATE ~./inline/charm_base_extend_top.d~ 
+    //APPEND_FILE_EVALUATE ~./inline/charm_base.d~
+    APPEND_FILE_EVALUATE ~./inline/charm_base_extend_top.d~
     FOR (index = 0 ; index <= params_2 ; ++index) BEGIN
-      APPEND_FILE_EVALUATE ~./inline/charm_base_extend.d~ 
-    END  
-    APPEND_FILE_EVALUATE ~./inline/charm_base_extend_bottom.d~ 
+      APPEND_FILE_EVALUATE ~./inline/charm_base_extend.d~
+    END
+    APPEND_FILE_EVALUATE ~./inline/charm_base_extend_bottom.d~
 END
 
 COPY ~eefixpack/files/d/bgee_charm_fixes_working.d~ ~eefixpack/files/d/bgee_charm_fixes_working.d~

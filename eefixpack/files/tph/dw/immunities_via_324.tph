@@ -11,11 +11,11 @@ When 'in_fixpack' is set to 0, the code runs idempotently and doesn't record its
 Dependencies: needs detectable spells to be loaded.
 */
 
-DEFINE_ACTION_FUNCTION immunities_via_324 
-	INT_VAR write=0 
-		in_fixpack=1 
+DEFINE_ACTION_FUNCTION immunities_via_324
+	INT_VAR write=0
+		in_fixpack=1
 	STR_VAR data_location="%MOD_FOLDER%/data/immunity"
-BEGIN	
+BEGIN
 
 	ACTION_IF !in_fixpack BEGIN
 		OUTER_SET write=1 // a little confusing to be sure: we don't actually want to write, but we want to autogenerate a list of files rather than using the pregen
@@ -50,24 +50,24 @@ BEGIN
 
 	<<<<<<<< .../fp-inline/immunities.2da
 	2DA V1.0
-			opcode		id				
-	1		5			CHARM_IMMUNITY		
-	2		39			SLEEP_IMMUNITY		
-	3		45			STUN_IMMUNITY		
-	4		24			PANIC_IMMUNITY		
-	5		128			CONFUSION_IMMUNITY	
-	6		175			HOLD_IMMUNITY		
-	7		157			WEB_IMMUNITY		
-	8		154			ENTANGLE_IMMUNITY	
-	9		134			PETRIFY_IMMUNITY	
-	10		238			DISINTEGRATE_IMMUNITY	
-	11		38			SILENCE_IMMUNITY	
-	12		76			FEEBLEMIND_IMMUNITY	
-	13		16			HASTE_IMMUNITY		
-	14		40			SLOW_IMMUNITY		
-	15		13			DEATH_IMMUNITY		
-	16		minorglobe	MINOR_GLOBE			
-	17		majorglobe	MAJOR_GLOBE						
+			opcode		id
+	1		5			CHARM_IMMUNITY
+	2		39			SLEEP_IMMUNITY
+	3		45			STUN_IMMUNITY
+	4		24			PANIC_IMMUNITY
+	5		128			CONFUSION_IMMUNITY
+	6		175			HOLD_IMMUNITY
+	7		157			WEB_IMMUNITY
+	8		154			ENTANGLE_IMMUNITY
+	9		134			PETRIFY_IMMUNITY
+	10		238			DISINTEGRATE_IMMUNITY
+	11		38			SILENCE_IMMUNITY
+	12		76			FEEBLEMIND_IMMUNITY
+	13		16			HASTE_IMMUNITY
+	14		40			SLOW_IMMUNITY
+	15		13			DEATH_IMMUNITY
+	16		minorglobe	MINOR_GLOBE
+	17		majorglobe	MAJOR_GLOBE
 	>>>>>>>>
 
 	COPY - ".../fp-inline/immunities.2da" nowhere
@@ -84,7 +84,7 @@ BEGIN
 ////////////////////////////////////////////////////////////////////////
 // load an opcode map for EFF files
 ////////////////////////////////////////////////////////////////////////
-		
+
 	COPY_EXISTING_REGEXP - ".*\.eff" nowhere
 		SPRINT resref "%SOURCE_RES%"
 		TO_UPPER resref
@@ -111,7 +111,7 @@ BEGIN
 				PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
 					SPRINT $output_array_itm("%SOURCE_FILE%") ""
 				END ELSE BEGIN
-					SPRINT $output_array_spl("%SOURCE_FILE%") ""			
+					SPRINT $output_array_spl("%SOURCE_FILE%") ""
 				END
 			END
 		BUT_ONLY
@@ -147,7 +147,7 @@ BEGIN
 			END
 			PATCH_VERBOSE
 			PATCH_PRINT "...done"
-	
+
 	END ELSE BEGIN
 		FAIL "immunities_via_324 is running in read mode (write=0) but there is no protective.txt file at path %path%"
 	END
@@ -196,7 +196,7 @@ BEGIN
 						BUT_ONLY
 					END ELSE BEGIN
 						WARN "immunities_via_324 tried to add spellstates to (supposed) protective object %resource%, but it doesn't exist"
-					END		
+					END
 				END
 
 			END
@@ -223,7 +223,7 @@ BEGIN
 					PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
 						SPRINT $output_array_itm("%SOURCE_FILE%") ""
 					END ELSE BEGIN
-						SPRINT $output_array_spl("%SOURCE_FILE%") ""			
+						SPRINT $output_array_spl("%SOURCE_FILE%") ""
 					END
 				END
 			END
@@ -260,15 +260,15 @@ BEGIN
 				END
 				PATCH_VERBOSE
 				PATCH_PRINT "...done"
-		
+
 		END ELSE BEGIN
 			FAIL "immunities_via_324 is running in read mode (write=0) but there is no offensive.txt file at path %path%"
 		END
 
-	
+
 	END
-	
-	
+
+
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 //// Now do MGI/GI
@@ -280,7 +280,7 @@ BEGIN
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
-	
+
 	// get the 206'd spells from MGI
 	ACTION_CLEAR_ARRAY mgi_spells
 
@@ -298,7 +298,7 @@ BEGIN
 
 	// get the 206'd spells from GI
 	ACTION_CLEAR_ARRAY gi_spells
-	
+
 	COPY_EXISTING - "spwi602.spl" nowhere
 		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
 		GET_OFFSET_ARRAY2 fx_arr ab_arr_0 SPL_V10_HEAD_EFFECTS
@@ -312,9 +312,9 @@ BEGIN
 			END
 		END
 	BUT_ONLY
-	
+
 	// mark them up
-	
+
 	ACTION_PHP_EACH mgi_spells AS resref=>discard BEGIN
 		COPY_EXISTING "%resref%.spl" override
 			PATCH_IF !in_fixpack BEGIN
@@ -336,9 +336,9 @@ BEGIN
 				LPF fp_log_this STR_VAR file="gi_spells.txt" input="%SOURCE_RES%" END
 			END
 		IF_EXISTS
-	END	
+	END
 	// mark up actual immunity spells
-	
+
 	ACTION_FOR_EACH spell IN
 		spin736 // in BGEE, this just casts MGI - hence the silent=1 clause
 		spwi406
@@ -354,7 +354,7 @@ BEGIN
 	END
 
 	ACTION_FOR_EACH spell IN
-		jwglobe 
+		jwglobe
 		spwi602
 		spwi954
 	BEGIN
@@ -362,15 +362,15 @@ BEGIN
 			LPF DELETE_EFFECT INT_VAR match_opcode=206 END
 			PATCH_IF !in_fixpack BEGIN
 				LPF DELETE_EFFECT INT_VAR match_opcode=328 match_parameter2=$opcode_splstate_map("minorglobe") END
-				LPF DELETE_EFFECT INT_VAR match_opcode=328 match_parameter2=$opcode_splstate_map("majorglobe") END			
+				LPF DELETE_EFFECT INT_VAR match_opcode=328 match_parameter2=$opcode_splstate_map("majorglobe") END
 			END
 			LPF CLONE_EFFECT INT_VAR match_opcode=102 multi_match=1 parameter2=$opcode_splstate_map("minorglobe") opcode=328 special=1 STR_VAR insert=first END
 			LPF CLONE_EFFECT INT_VAR match_opcode=102 multi_match=1 parameter2=$opcode_splstate_map("majorglobe") opcode=328 special=1 STR_VAR insert=first END
 		IF_EXISTS
-	END	
-	
+	END
+
 ///// end of main function
-	
+
 END
 
 /////////////////////////////////////////////////////////////
@@ -398,15 +398,15 @@ BEGIN
 					READ_LONG (fx_off+0x8) opcode
 					PATCH_IF VARIABLE_IS_SET $immunity_search_map("%opcode%") BEGIN
 						SET $immunity_search_map("%opcode%")=1
-					END	
-				END ELSE 
+					END
+				END ELSE
 				PATCH_IF !has_206 && SHORT_AT fx_off=206 BEGIN
 					has_206=1
 				END
 			END
 		END
 		PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
-			GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS	
+			GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 		END ELSE BEGIN
 			GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
 			END
@@ -417,8 +417,8 @@ BEGIN
 					READ_LONG (fx_off+0x8) opcode
 					PATCH_IF VARIABLE_IS_SET $immunity_search_map("%opcode%") BEGIN
 						SET $immunity_search_map("%opcode%")=1
-					END	
-				END ELSE 
+					END
+				END ELSE
 				PATCH_IF !has_206 && SHORT_AT fx_off=206 BEGIN
 					has_206=1
 				END
@@ -449,7 +449,7 @@ BEGIN
 			PATCH_IF "%SOURCE_EXT%" STR_EQ itm BEGIN
 				GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 			END ELSE BEGIN
-				GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS		
+				GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
 			END
 			PHP_EACH ab_arr AS ab_ind=>ab_off BEGIN
 				GET_OFFSET_ARRAY2 fx_arr ab_off ITM_V10_HEAD_EFFECTS
@@ -469,12 +469,12 @@ END
 //// to an offensive spell or item
 /////////////////////////////////////////////////////////////
 
-DEFINE_PATCH_FUNCTION apply_324_to_offensive_object 
+DEFINE_PATCH_FUNCTION apply_324_to_offensive_object
 	RET modified
 BEGIN
 	modified=0
 	PATCH_IF "%SOURCE_EXT%" STR_EQ "itm" BEGIN
-		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS	
+		GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
 	END ELSE BEGIN
 		GET_OFFSET_ARRAY ab_arr SPL_V10_HEADERS
 		END
@@ -491,7 +491,7 @@ BEGIN
 				PATCH_IF VARIABLE_IS_SET $eff_opcodes("%eff%") BEGIN
 					opcode=$eff_opcodes("%eff%")
 				END
-			END 
+			END
 			PATCH_IF VARIABLE_IS_SET $opcode_splstate_map("%opcode%") BEGIN
 				PATCH_IF !(opcode=current_opcode) BEGIN
 					++number_of_matches
@@ -526,7 +526,7 @@ BEGIN
 						currently_177=0
 					END
 					PATCH_MATCH "%opcode%" WITH
-					"%current_opcode%" 
+					"%current_opcode%"
 					BEGIN
 						reached_payload_opcode=1
 						PATCH_IF currently_177 BEGIN
@@ -549,7 +549,7 @@ BEGIN
 												  // we need immunity only once the payload is reached
 						END
 					END
-				END			
+				END
 				PATCH_IF !non_cosmetic && reached_payload_opcode BEGIN
 					parameter1=$opcode_splstate_map("%current_opcode%")
 					PATCH_IF !in_fixpack BEGIN
@@ -570,7 +570,7 @@ BEGIN
 					PATCH_IF write && in_fixpack BEGIN
 						LPF fp_log_this INT_VAR repeat=0 STR_VAR file=complex_effects_for_immunity.txt input="%SOURCE_FILE% %current_opcode%" END
 						PATCH_IF currently_177 BEGIN
-							LPF fp_log_this INT_VAR repeat=0 STR_VAR file=complex_effects_for_immunity_177.txt input="%SOURCE_FILE% %current_opcode%" END						
+							LPF fp_log_this INT_VAR repeat=0 STR_VAR file=complex_effects_for_immunity_177.txt input="%SOURCE_FILE% %current_opcode%" END
 						END
 					END
 				END
@@ -590,12 +590,12 @@ END
 /////////////////////////////////////////////////////////////
 
 DEFINE_PATCH_FUNCTION immunity_delete_redundant_206s
-	INT_VAR fx_off=0 
+	INT_VAR fx_off=0
 BEGIN
 	READ_ASCII (fx_off+0x14) resource
 	PATCH_MATCH "%resource%" WITH
 		SPWI305 // haste x 4
-		SPRA301 
+		SPRA301
 		SPIN828
 		SPIN 572
 		SPWI613 // improved haste
@@ -609,7 +609,7 @@ BEGIN
 		SPWI312 // slow
 		SPWISH25
 		SPIN983
-		SPWM164 
+		SPWM164
 		SPIN977 // Golem slow
 	BEGIN
 		delete=$immunity_search_map(40)

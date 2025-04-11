@@ -11,6 +11,6 @@ OUTER_FOR (index = 1 ; index < 7 ; ++index) BEGIN
     FOR (index2 = 0 ; index2 < 37 ; ++index2) BEGIN // blank slots
       PATCH_IF item_num >= 0 BEGIN SET item_num -= 1 END
       WRITE_SHORT (slot_off + (0x02 * (36 - index2))) item_num
-    END  
-    
+    END
+
 END

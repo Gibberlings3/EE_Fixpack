@@ -1,8 +1,8 @@
-// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
-// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+// strings to replace, rename this file WITHOUT the underscore at the beginning.
 
-// any strings < 34000 are non-sod strings and should go into the fixes_bgee.tra file instead. 
+// any strings < 34000 are non-sod strings and should go into the fixes_bgee.tra file instead.
 
 // strref #34567, updating because "X is misspelled"
 @34567 = ~This is a test replacement string.~

@@ -5,18 +5,18 @@ REPLACE_TRIGGER_TEXT dgntslav ~RandomNumLT(4,[ %TAB%]*5)~ ~RandomNum(5,5)~ // fi
 REPLACE_STATE_TRIGGER dkurum 11 ~False()~ // false out arundel line
 REPLACE_STATE_TRIGGER dkurum 15 ~RandomNum(15,12)~ // move in #16 into #12 slot
 REPLACE_TRIGGER_TEXT  dkurum ~RandomNum(16,~ ~RandomNum(15,~ // refactor into random-of-15 instead of random-of-16
-  
+
 // ie-6012, cam
 // Multiclasses should have special replies with Hobart
 ALTER_TRANS DHOBART BEGIN 28 END BEGIN 2 END BEGIN "TRIGGER" ~Alignment(LastTalkedToBy,MASK_EVIL) Class(LastTalkedToBy,CLERIC_ALL)~ END // from cleric
 ALTER_TRANS DHOBART BEGIN 28 END BEGIN 3 END BEGIN "TRIGGER" ~Alignment(LastTalkedToBy,MASK_EVIL) Class(LastTalkedToBy,MAGE_ALL)~ END // from mage
-  
+
 // ie-6011, cam
 // Grisella shouldn't give rewards unprompted - grisella should only give cash if party asked for it
 REPLACE_ACTION_TEXT DGRISELL ~GivePartyGold(5)~ ~~ // remove all
 ADD_TRANS_TRIGGER DGRISELL 12 ~Global("Grisella_Cash","GLOBAL",1)~ DO 4
 ADD_TRANS_ACTION DGRISELL BEGIN 12 END BEGIN 3 4 END ~GivePartyGold(5)~
-  
+
 // ie-6010, cam
 // Everard lacking the correct replies - IWDFP < v6 fixed this incorrectly, now setting it right
 ALTER_TRANS DACCALIA BEGIN 6 END BEGIN 1 END BEGIN "TRIGGER" ~~ END // removes SetGlobal("Jered_Stone","GLOBAL", 1)
@@ -33,10 +33,10 @@ EXTEND_BOTTOM DTARNELM 4 IF ~~ REPLY #11383 EXIT END
 ALTER_TRANS dogre BEGIN 1 END BEGIN 4 END BEGIN ~TRIGGER~ ~OR(2) Class(LastTalkedToBy,RANGER_ALL) Class(LastTalkedToBy,PALADIN_ALL) !Kit(LastTalkedToBy,Blackguard)~ END // ranger > ranger|paladin
 ALTER_TRANS dogre BEGIN 2 END BEGIN 2 END BEGIN ~TRIGGER~ ~OR(2) Class(LastTalkedToBy,RANGER_ALL) Class(LastTalkedToBy,PALADIN_ALL) !Kit(LastTalkedToBy,Blackguard)~ END
 
-ALTER_TRANS DKUTOWNG BEGIN 0 END BEGIN 13 END BEGIN 
+ALTER_TRANS DKUTOWNG BEGIN 0 END BEGIN 13 END BEGIN
   ~TRIGGER~ ~Global("Kuldahar_Rumor","GLOBAL",7)~        // swap trigger
   ~ACTION~  ~SetGlobal("Kuldahar_Rumor","GLOBAL",0)~ END // swap action
-  
+
 SET_WEIGHT dcapvil 20 #999 // two lines blocked because of weighting
 
 // contact other plane fixes
@@ -59,15 +59,15 @@ ALTER_TRANS ddavin BEGIN 1 END BEGIN 0 END BEGIN ~ACTION~ ~~ END // remove here
 ALTER_TRANS ddavin BEGIN 1 END BEGIN 1 END BEGIN ~ACTION~ ~AddJournalEntry(34294,QUEST)~ END // and add it back
 // three different paths to inform davin you killed frostbite - one lacks journal entry, one has wrong reward (22.0 is fine)
 REPLACE_ACTION_TEXT ddavin ~AddXP2DA("Level_10_Hard")~ ~AddXP2DA("Level_12_Hard")~ // fixes 7.0
-ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END ~AddJournalEntry(34291,QUEST_DONE) 
+ADD_TRANS_ACTION ddavin BEGIN 21 END BEGIN 0 END ~AddJournalEntry(34291,QUEST_DONE)
                                                   EraseJournalEntry(34294)
-                                                  EraseJournalEntry(2097) 
-                                                  EraseJournalEntry(2119) 
-                                                  EraseJournalEntry(3422) 
+                                                  EraseJournalEntry(2097)
+                                                  EraseJournalEntry(2119)
+                                                  EraseJournalEntry(3422)
                                                   EraseJournalEntry(19286)
                                                   EraseJournalEntry(20256)
                                                   EraseJournalEntry(23442)~ // fixes 21.0
-                                                  
+
 // joril not setting var, journal as he does the two other places you can ask him this question
 ADD_TRANS_ACTION djoril BEGIN 17 END BEGIN 0 END ~SetGlobal("Know_Sacrifices","GLOBAL",1) AddJournalEntry(34241,INFO)~
 

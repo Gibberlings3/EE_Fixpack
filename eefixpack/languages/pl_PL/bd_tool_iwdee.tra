@@ -386,30 +386,30 @@ Wymagania:
 Waga: 13~
 []
 // main tlk contents mismatch; female tlk contents mismatch;
-@12186 = ~Zmrażający dotyk 
+@12186 = ~Zmrażający dotyk
 (Nekromancja)
 
-Poziom: 1 
-Zasięg: 0 
-Czas działania: 3 rundy + 1 runda/poziom 
-Czas rzucania: 1 
-Obszar działania: rzucający czar 
+Poziom: 1
+Zasięg: 0
+Czas działania: 3 rundy + 1 runda/poziom
+Czas rzucania: 1
+Obszar działania: rzucający czar
 Rzut obronny: neguje
 
-Z chwilą, gdy mag ukończy rzucanie tego zaklęcia, jego rękę spowijać zaczyna błękitna poświata. Wytworzona przy tym energia atakuje siły życiowe każdej żyjącej istoty, przeciw której mag wykona udany atak dotykowy. Dotknięta istota musi wykonać rzut obronny przeciw czarom lub otrzyma 1k4 obrażeń od zimna, a jej TraK0 zmniejszy się o 1 na okres jednej tury. 
+Z chwilą, gdy mag ukończy rzucanie tego zaklęcia, jego rękę spowijać zaczyna błękitna poświata. Wytworzona przy tym energia atakuje siły życiowe każdej żyjącej istoty, przeciw której mag wykona udany atak dotykowy. Dotknięta istota musi wykonać rzut obronny przeciw czarom lub otrzyma 1k4 obrażeń od zimna, a jej TraK0 zmniejszy się o 1 na okres jednej tury.
 
 Nieumarli nie otrzymują obrażeń, ani kary do testów trafienia, w efekcie działania Zmrażającego dotyku, lecz wpadną w panikę na dwie tury, jeśli nie wykonają rzutu obronnego przeciw czarom.~
-~Zmrażający dotyk 
+~Zmrażający dotyk
 (Nekromancja)
 
-Poziom: 1 
-Zasięg: 0 
-Czas działania: 3 rundy + 1 runda/poziom 
-Czas rzucania: 1 
-Obszar działania: rzucający czar 
+Poziom: 1
+Zasięg: 0
+Czas działania: 3 rundy + 1 runda/poziom
+Czas rzucania: 1
+Obszar działania: rzucający czar
 Rzut obronny: neguje
 
-Z chwilą, gdy mag ukończy rzucanie tego zaklęcia, jego rękę spowijać zaczyna błękitna poświata. Wytworzona przy tym energia atakuje siły życiowe każdej żyjącej istoty, przeciw której mag wykona udany atak dotykowy. Dotknięta istota musi wykonać rzut obronny przeciw czarom lub otrzyma 1k4 obrażeń od zimna, a jej TraK0 zmniejszy się o 1 na okres jednej tury. 
+Z chwilą, gdy mag ukończy rzucanie tego zaklęcia, jego rękę spowijać zaczyna błękitna poświata. Wytworzona przy tym energia atakuje siły życiowe każdej żyjącej istoty, przeciw której mag wykona udany atak dotykowy. Dotknięta istota musi wykonać rzut obronny przeciw czarom lub otrzyma 1k4 obrażeń od zimna, a jej TraK0 zmniejszy się o 1 na okres jednej tury.
 
 Nieumarli nie otrzymują obrażeń, ani kary do testów trafienia, w efekcie działania Zmrażającego dotyku, lecz wpadną w panikę na dwie tury, jeśli nie wykonają rzutu obronnego przeciw czarom.~
 []
@@ -1472,7 +1472,7 @@ Wymagania:
 Waga: 8~
 []
 // main tlk contents mismatch; female tlk contents mismatch;
-@22615 = ~Dominacja 
+@22615 = ~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -1483,7 +1483,7 @@ Obszar działania: 1 istota
 Rzut obronny: neguje
 
 Czar ten umożliwia rzucającemu kontrolowanie wszystkich działań istoty, będącej pod jego wpływem. Kontrola ta jest sprawowana poprzez telepatyczną więź pomiędzy rzucającym a ofiarą. W odróżnieniu od efektów 4. poziomowego zaklęcia kapłańskiego o nazwie Dominacja umysłowa, czar ten powoduje, że jego ofiara nie ma możliwości uwolnienia się, nawet jeśli zostanie zmuszona do zrobienia czegoś głęboko przeciwnego jej naturze. Oczywiście czar może zostać zdjęty przez Rozproszenie magii. Ofiara ma prawo do wykonania rzutu obronnego przeciw czarom z modyfikatorem -2, w celu uniknięcia efektów działania tego zaklęcia.~
-~Dominacja 
+~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -1506,7 +1506,7 @@ PARAMETRY:
 
 Specjalne:
 – Klasa Pancerza: +3 (tylko +2 przeciw pociskom)
-– Rzuty obronne: +2 
+– Rzuty obronne: +2
 – Odporność na magię: +10%
 
 Wymagania:
@@ -1519,7 +1519,7 @@ PARAMETRY:
 
 Specjalne:
 – Klasa Pancerza: +3 (tylko +2 przeciw pociskom)
-– Rzuty obronne: +2 
+– Rzuty obronne: +2
 – Odporność na magię: +10%
 
 Wymagania:
@@ -1586,7 +1586,7 @@ Waga: 0~
 
 Zalety:
 – Może rzucić Prawdziwe widzenie, raz dziennie na pięć poziomów (zaczynając od jednego użycia na 1. poziomie).
-– Może rzucić Przeszywający miecz (szczegóły poniżej), raz dziennie na dziesięć poziomów (zaczynając od jednego użycia na 1. poziomie). 
+– Może rzucić Przeszywający miecz (szczegóły poniżej), raz dziennie na dziesięć poziomów (zaczynając od jednego użycia na 1. poziomie).
 
 PRZESZYWAJĄCY MIECZ: Czar ten tworzy w dłoni postaci miecz, którego nie można wyrzucić ani odłożyć. Miecz jest traktowany jako broń +4 pod względem tego, kogo może zranić, ale nie dodaje premii do testów trafienia i obrażeń. Zadaje 2k4 obrażeń każdemu, kogo trafi. Zwiększa liczbę ataków kapłana do trzech i istnieje przez jedną rundę na poziom. Dopóki kapłan dzierży w dłoni miecz, nie może rzucać kolejnych czarów.
 
@@ -1596,7 +1596,7 @@ Wady:
 
 Zalety:
 – Może rzucić Prawdziwe widzenie, raz dziennie na pięć poziomów (zaczynając od jednego użycia na 1. poziomie).
-– Może rzucić Przeszywający miecz (szczegóły poniżej), raz dziennie na dziesięć poziomów (zaczynając od jednego użycia na 1. poziomie). 
+– Może rzucić Przeszywający miecz (szczegóły poniżej), raz dziennie na dziesięć poziomów (zaczynając od jednego użycia na 1. poziomie).
 
 PRZESZYWAJĄCY MIECZ: Czar ten tworzy w dłoni postaci miecz, którego nie można wyrzucić ani odłożyć. Miecz jest traktowany jako broń +4 pod względem tego, kogo może zranić, ale nie dodaje premii do testów trafienia i obrażeń. Zadaje 2k4 obrażeń każdemu, kogo trafi. Zwiększa liczbę ataków kapłana do trzech i istnieje przez jedną rundę na poziom. Dopóki kapłan dzierży w dłoni miecz, nie może rzucać kolejnych czarów.
 
@@ -1865,7 +1865,7 @@ przemierzającego morze piasku, którego każde
 ziarenko niosło śmierć z szybkością wichru.
 
 Strach, który ogarnął lorda Maluradka,
-udzielił się też pozostałym, jakby 
+udzielił się też pozostałym, jakby
 chciał zawrócić nasze konie i uciec wraz z naszym panem
 na wschód, by szukać schronienia w zamkowych murach.
 
@@ -1894,7 +1894,7 @@ przemierzającego morze piasku, którego każde
 ziarenko niosło śmierć z szybkością wichru.
 
 Strach, który ogarnął lorda Maluradka,
-udzielił się też pozostałym, jakby 
+udzielił się też pozostałym, jakby
 chciał zawrócić nasze konie i uciec wraz z naszym panem
 na wschód, by szukać schronienia w zamkowych murach.
 
@@ -2256,7 +2256,7 @@ Czas rzucania: 9
 Obszar działania: w promieniu 3 metrów
 Rzut obronny: brak
 
-Czar ten sprawia, że wszystkie przyjazne istoty znajdujące się w promieniu 6 metrów od rzucającego czar znikają z pola widzenia i są niewykrywalne wzrokiem i w podczerwieni. Niewidzialna istota nie traci oczywiście swych magicznych atrybutów, a pewne inne warunki mogą sprawić, że można ją wykryć. Nawet sojusznicy nie widzą niewidzialnej istoty ani jej sprzętu bojowego, chyba że mają zdolność dostrzegania niewidzialnych rzeczy, bądź wykorzystują w tym celu magię. Rzeczy upuszczone lub odłożone na bok przez niewidzialną istotę, stają się widzialne. Przedmioty podniesione znikają, jeśli dana istota wetknie je sobie gdzieś w ubranie lub do torby. 
+Czar ten sprawia, że wszystkie przyjazne istoty znajdujące się w promieniu 6 metrów od rzucającego czar znikają z pola widzenia i są niewykrywalne wzrokiem i w podczerwieni. Niewidzialna istota nie traci oczywiście swych magicznych atrybutów, a pewne inne warunki mogą sprawić, że można ją wykryć. Nawet sojusznicy nie widzą niewidzialnej istoty ani jej sprzętu bojowego, chyba że mają zdolność dostrzegania niewidzialnych rzeczy, bądź wykorzystują w tym celu magię. Rzeczy upuszczone lub odłożone na bok przez niewidzialną istotę, stają się widzialne. Przedmioty podniesione znikają, jeśli dana istota wetknie je sobie gdzieś w ubranie lub do torby.
 
 Czar działa aż do momentu, gdy zostanie przełamany lub rozproszony za pomocą magii, odwołany przez maga lub istotę będącą pod jego wpływem, gdy niewidzialna istota kogoś zaatakuje, lub gdy upłyną dwadzieścia cztery godziny. Tak więc, istota niewidzialna może otwierać drzwi, rozmawiać, jeść, wchodzić na schody itp., ale gdy zaatakuje, traci niewidzialność, choć dzięki niewidzialności może atakować pierwsza.~
 ~Niewidzialność, promień 3 metry
@@ -2269,12 +2269,12 @@ Czas rzucania: 9
 Obszar działania: w promieniu 3 metrów
 Rzut obronny: brak
 
-Czar ten sprawia, że wszystkie przyjazne istoty znajdujące się w promieniu 6 metrów od rzucającego czar znikają z pola widzenia i są niewykrywalne wzrokiem i w podczerwieni. Niewidzialna istota nie traci oczywiście swych magicznych atrybutów, a pewne inne warunki mogą sprawić, że można ją wykryć. Nawet sojusznicy nie widzą niewidzialnej istoty ani jej sprzętu bojowego, chyba że mają zdolność dostrzegania niewidzialnych rzeczy, bądź wykorzystują w tym celu magię. Rzeczy upuszczone lub odłożone na bok przez niewidzialną istotę, stają się widzialne. Przedmioty podniesione znikają, jeśli dana istota wetknie je sobie gdzieś w ubranie lub do torby. 
+Czar ten sprawia, że wszystkie przyjazne istoty znajdujące się w promieniu 6 metrów od rzucającego czar znikają z pola widzenia i są niewykrywalne wzrokiem i w podczerwieni. Niewidzialna istota nie traci oczywiście swych magicznych atrybutów, a pewne inne warunki mogą sprawić, że można ją wykryć. Nawet sojusznicy nie widzą niewidzialnej istoty ani jej sprzętu bojowego, chyba że mają zdolność dostrzegania niewidzialnych rzeczy, bądź wykorzystują w tym celu magię. Rzeczy upuszczone lub odłożone na bok przez niewidzialną istotę, stają się widzialne. Przedmioty podniesione znikają, jeśli dana istota wetknie je sobie gdzieś w ubranie lub do torby.
 
 Czar działa aż do momentu, gdy zostanie przełamany lub rozproszony za pomocą magii, odwołany przez maga lub istotę będącą pod jego wpływem, gdy niewidzialna istota kogoś zaatakuje, lub gdy upłyną dwadzieścia cztery godziny. Tak więc, istota niewidzialna może otwierać drzwi, rozmawiać, jeść, wchodzić na schody itp., ale gdy zaatakuje, traci niewidzialność, choć dzięki niewidzialności może atakować pierwsza.~
 []
 // main tlk contents mismatch; female tlk contents mismatch;
-@35961 = ~Dominacja 
+@35961 = ~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -2285,7 +2285,7 @@ Obszar działania: 1 istota
 Rzut obronny: neguje
 
 Czar ten umożliwia rzucającemu kontrolowanie wszystkich działań istoty, będącej pod jego wpływem. Kontrola ta jest sprawowana poprzez telepatyczną więź pomiędzy rzucającym a ofiarą. W odróżnieniu od efektów 4. poziomowego zaklęcia kapłańskiego o nazwie Dominacja umysłowa, czar ten powoduje, że jego ofiara nie ma możliwości uwolnienia się, nawet jeśli zostanie zmuszona do zrobienia czegoś głęboko przeciwnego jej naturze. Oczywiście czar może zostać zdjęty przez Rozproszenie magii. Ofiara ma prawo do wykonania rzutu obronnego przeciw czarom z modyfikatorem -2, w celu uniknięcia efektów działania tego zaklęcia.~
-~Dominacja 
+~Dominacja
 (Zaczarowania/Zauroczenia)
 
 Poziom: 5
@@ -2370,13 +2370,13 @@ Podstawowa cecha potrzebna przy dwuklasowości: Inteligencja~
 
 CECHY KLASOWE:
 
-– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję). 
-– Nie może używać tarczy większej niż puklerz. 
+– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję).
+– Nie może używać tarczy większej niż puklerz.
 – Może osiągnąć Wyszkolenie (jeden punkt biegłości) w dowolnym rodzaju broni.
-– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki. 
-– Umiejętności złodziejskie: Kradzież kieszonkowa 
+– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki.
+– Umiejętności złodziejskie: Kradzież kieszonkowa
 – Posiada zwiększony współczynnik Wiedzy.
-– Może rzucać zaklęcia maga, począwszy od 2. poziomu. 
+– Może rzucać zaklęcia maga, począwszy od 2. poziomu.
 – Może używać zdolności Pieśń barda. Kiedy jest aktywna, może zagrać dowolną pieśń ze swojego repertuaru:
 Poziom 1: „Ballada o Trzech Bohaterach” – wszyscy sojusznicy w promieniu 10 metrów otrzymują premię +1 do testów trafienia, obrażeń oraz rzutów obronnych.
 Poziom 3: „Opowieść o Curranie Mocnym Sercu” – wszyscy sojusznicy w promieniu 10 metrów zyskują niewrażliwość na efekty strachu na czas trwania pieśni, ponadto usunięte zostają już istniejące efekty strachu.
@@ -2390,13 +2390,13 @@ Poziom 11: „Pieśń Wojenna Sith” – wszyscy sojusznicy w promieniu 10 metr
 
 CECHY KLASOWE:
 
-– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję). 
-– Nie może używać tarczy większej niż puklerz. 
+– Nie może nosić zbroi cięższej niż kolczuga (nie może rzucać czarów nosząc jakąkolwiek zbroję).
+– Nie może używać tarczy większej niż puklerz.
 – Może osiągnąć Wyszkolenie (jeden punkt biegłości) w dowolnym rodzaju broni.
-– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki. 
-– Umiejętności złodziejskie: Kradzież kieszonkowa 
+– Może osiągnąć Wyszkolenie (jeden punkt biegłości) w każdym stylu walki.
+– Umiejętności złodziejskie: Kradzież kieszonkowa
 – Posiada zwiększony współczynnik Wiedzy.
-– Może rzucać zaklęcia maga, począwszy od 2. poziomu. 
+– Może rzucać zaklęcia maga, począwszy od 2. poziomu.
 – Może używać zdolności Pieśń barda. Kiedy jest aktywna, może zagrać dowolną pieśń ze swojego repertuaru:
 Poziom 1: „Ballada o Trzech Bohaterach” – wszyscy sojusznicy w promieniu 10 metrów otrzymują premię +1 do testów trafienia, obrażeń oraz rzutów obronnych.
 Poziom 3: „Opowieść o Curranie Mocnym Sercu” – wszyscy sojusznicy w promieniu 10 metrów zyskują niewrażliwość na efekty strachu na czas trwania pieśni, ponadto usunięte zostają już istniejące efekty strachu.
@@ -2481,7 +2481,7 @@ Specjalne:
 – 3% szans na odcięcie przeciwnikowi głowy, po trafieniu
 
 Obrażenia: 1k10+3, +2 magiczne obrażenia przeciw istotom ze sfer zewnętrznych
-TraK0: +3, +5 przeciw istotom ze sfer zewnętrznych 
+TraK0: +3, +5 przeciw istotom ze sfer zewnętrznych
 Typ obrażeń: sieczne
 Opóźnienie: 1
 Rodzaj biegłości: katana
@@ -2500,7 +2500,7 @@ Specjalne:
 – 3% szans na odcięcie przeciwnikowi głowy, po trafieniu
 
 Obrażenia: 1k10+3, +2 magiczne obrażenia przeciw istotom ze sfer zewnętrznych
-TraK0: +3, +5 przeciw istotom ze sfer zewnętrznych 
+TraK0: +3, +5 przeciw istotom ze sfer zewnętrznych
 Typ obrażeń: sieczne
 Opóźnienie: 1
 Rodzaj biegłości: katana
@@ -2572,7 +2572,7 @@ Obrażenia: Dwie strzały zadające 1k6 obrażeń od pocisków +4k6 obrażeń od
 Zasięg: 10 metrów
 
 – Przywołanie potwora IV
-Przyzywa 1k3 potworów 4. poziomu 
+Przyzywa 1k3 potworów 4. poziomu
 Zasięg: 6 metrów
 Czas działania: 15 rund
 
@@ -2602,7 +2602,7 @@ Obrażenia: Dwie strzały zadające 1k6 obrażeń od pocisków +4k6 obrażeń od
 Zasięg: 10 metrów
 
 – Przywołanie potwora IV
-Przyzywa 1k3 potworów 4. poziomu 
+Przyzywa 1k3 potworów 4. poziomu
 Zasięg: 6 metrów
 Czas działania: 15 rund
 
@@ -2628,14 +2628,14 @@ Waga: 3~
 
 PARAMETRY:
 
-Obrażenia: 1k6 +3 
-TraK0: +3 
-Typ obrażeń: obuchowe 
+Obrażenia: 1k6 +3
+TraK0: +3
+Typ obrażeń: obuchowe
 Opóźnienie: 1
-Rodzaj biegłości: kij 
+Rodzaj biegłości: kij
 Typ broni: 2-ręczna
 
-Wymagania: 
+Wymagania:
 – Siła: 5
 
 Waga: 3~
@@ -2643,14 +2643,14 @@ Waga: 3~
 
 PARAMETRY:
 
-Obrażenia: 1k6 +3 
-TraK0: +3 
-Typ obrażeń: obuchowe 
+Obrażenia: 1k6 +3
+TraK0: +3
+Typ obrażeń: obuchowe
 Opóźnienie: 1
-Rodzaj biegłości: kij 
+Rodzaj biegłości: kij
 Typ broni: 2-ręczna
 
-Wymagania: 
+Wymagania:
 – Siła: 5
 
 Waga: 3~

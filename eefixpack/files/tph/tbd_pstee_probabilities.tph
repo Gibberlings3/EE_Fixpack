@@ -1,10 +1,10 @@
 // tbd, cam: probability fixes
 
 // delete leftover effects (319 unless indicated otherwise)
-COPY_EXISTING ~aclue.itm~    ~override~ // a clue!: 0% 
-              ~acontrac.itm~ ~override~ // angyar's dead contract: 0% 
+COPY_EXISTING ~aclue.itm~    ~override~ // a clue!: 0%
+              ~acontrac.itm~ ~override~ // angyar's dead contract: 0%
               ~agoody.itm~   ~override~ // a goody!: 0% 319
-              ~agscroll.itm~ ~override~ // scroll of agril-shanak: 0% 
+              ~agscroll.itm~ ~override~ // scroll of agril-shanak: 0%
               ~baatorsk.itm~ ~override~ // baator spell key: 0%
               ~bagocoin.itm~ ~override~ // bag of coins: 0%
               ~bagteeth.itm~ ~override~ // bag of teeth: 0%
@@ -103,13 +103,13 @@ COPY_EXISTING ~aclue.itm~    ~override~ // a clue!: 0%
               ~tombplan.itm~ ~override~ // tomb plans: 0%
               ~vkey.itm~     ~override~ // vlask's portal key: 0%
               ~wscroll.itm~  ~override~ // ancient scroll: 0%
-              
+
               ~cddetevl.spl~ ~override~ // <invalid strref -1>: leftover detect evil shell, has 0% visuals
               ~dhell.spl~    ~override~ // <no text>: 0% tint screen
               ~exodie.spl~   ~override~ // <invalid strref -1>: 0% visuals
-  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END 
-  BUT_ONLY 
-              
+  LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END
+  BUT_ONLY
+
 COPY_EXISTING ~amace.itm~    ~override~ // blind terror: 35% blind
               ~bolt01.itm~   ~override~ // bolts of acheron: 50% stun
 //            ~bsider.itm~   ~override~ // blindsider: 34% flash screen; probabilities fine as-is
@@ -125,14 +125,14 @@ COPY_EXISTING ~amace.itm~    ~override~ // blind terror: 35% blind
 //            ~m3cteeth.itm~ ~override~ // ingress' teeth: 34% paralysis; probabilities fine as-is
 //            ~m3pteeth.itm~ ~override~ // ingress' teeth: 34% paralysis; probabilities fine as-is
               ~nettles.itm~  ~override~ // club of nettles: 50% confusion
-              ~ntoken.itm~   ~override~ // negative token: 75%/50% chance to paralyze 
+              ~ntoken.itm~   ~override~ // negative token: 75%/50% chance to paralyze
 //            ~shadow1.itm~  ~override~ // shadow 1 attack: 34% str drain; probabilities fine as-is
 //            ~shadow2.itm~  ~override~ // shadow 2 attack: 34% str drain; probabilities fine as-is
 //            ~shadow3.itm~  ~override~ // shadow 3 attack: 34% str drain; probabilities fine as-is
               ~shard.itm~    ~override~ // shards of fate: 75% damage to self
               ~tpunch.itm~   ~override~ // punch daggers of true death: 25% poison
 //            ~vteeth.itm~   ~override~ // teeth of the viper: 34% poison; probabilities fine as-is
-              
+
               ~bstorm.spl~   ~override~ // unk: 5% extra damage
 //            ~igarm.spl~    ~override~ // <invalid strref -1>: 33/67 split is fine
 //            ~spwi101.spl~  ~override~ // chromatic orb: 1d4 rolled for paralysis diration; probabilities fine as-is

@@ -3,7 +3,7 @@ OUTER_SPRINT match_damage @109
 OUTER_SPRINT match_speed  @103
 OUTER_SPRINT damage_line  @110
 
-DEFINE_ACTION_FUNCTION cd_damage_type 
+DEFINE_ACTION_FUNCTION cd_damage_type
   INT_VAR strref = 0
           mode   = 0 // mode 0 ads (missile), mode 1 adds 'Damage type' line
   STR_VAR match  = EVAL "%match_damage%"
@@ -18,10 +18,10 @@ BEGIN
       REPLACE_TEXTUALLY ~\(%speed%\)~ ~%line%%LNL%\1~ // change "Damage: +1" to "Damage: +1 (missile)"
     END ELSE BEGIN
       REPLACE_TEXTUALLY ~%match%~ ~\1 %type%~ // change "Damage: +1" to "Damage: +1 (missile)"
-    END   
+    END
   END
   STRING_SET_EVALUATE ~%strref%~ ~%text%~
-  
+
 END
 
 ACTION_IF game_is_bgee BEGIN
@@ -40,17 +40,17 @@ ACTION_IF game_is_bgee BEGIN
   LAF cd_damage_type INT_VAR strref = 30709 END // bow16.itm, name: composite longbow +2
   LAF cd_damage_type INT_VAR strref = 30713 END // bow17.itm, name: longbow +2
   LAF cd_damage_type INT_VAR strref = 30715 END // bow18.itm, name: shortbow +2
-  
-  ACTION_IF game_includes_sod BEGIN 
-  
+
+  ACTION_IF game_includes_sod BEGIN
+
     LAF cd_damage_type INT_VAR strref = 56501 mode = 1 END // bdbow01.itm, name: blightbringer +1
     LAF cd_damage_type INT_VAR strref = 61809 END // bdbow02.itm, name: corinth's bow +2
     LAF cd_damage_type INT_VAR strref = 61838 END // bdbow03.itm, name: fleshripper +2
     LAF cd_damage_type INT_VAR strref = 62112 END // bdbow04.itm, name: bow of the banshee +2
     LAF cd_damage_type INT_VAR strref = 69233 mode = 1 END // bdbow05.itm, name: savage shortbow +2
     LAF cd_damage_type INT_VAR strref = 69239 END // bdbow06.itm, name: corwin's bow +1
-    
-  END 
+
+  END
 
 END ELSE
 
@@ -60,7 +60,7 @@ ACTION_IF game_is_bg2ee BEGIN
   LAF cd_damage_type INT_VAR strref =  7353 END // xbow06
   LAF cd_damage_type INT_VAR strref = 66390 mode = 1 END // xbow15
   LAF cd_damage_type INT_VAR strref = 66391 mode = 1 END // xbow16
-  
+
 END ELSE BEGIN // iwdee
 
   LAF cd_damage_type INT_VAR strref =  3323 END // bowmess.itm, name: messenger of sseth +1
@@ -74,5 +74,5 @@ END ELSE BEGIN // iwdee
   LAF cd_damage_type INT_VAR strref = 25818 END // storm.itm, name: storm bow +2
   LAF cd_damage_type INT_VAR strref = 27364 END // sbowebu.itm, name: shortbow of ebullience +3
   LAF cd_damage_type INT_VAR strref = 40639 END // cdxbowbm.itm, name: bren muller's crossbow
-  
+
 END

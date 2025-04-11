@@ -14,7 +14,7 @@ COPY_EXISTING ~ankheg.cre~   ~override~
   READ_BYTE  0x234 level1
   PATCH_IF level1 < 8 BEGIN
     WRITE_BYTE 0x234 8 // level 1
-  END  
+  END
   WRITE_BYTE 0x235 1 // level 2
   WRITE_BYTE 0x236 1 // level 3
   LPF cd_no_pickpocket STR_VAR item = misc12 END

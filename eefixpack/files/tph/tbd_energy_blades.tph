@@ -1,5 +1,5 @@
 // tbd, cam
 // per descript, energy blades should do missile damage, not slashing
 COPY_EXISTING ~eneblade.itm~ ~override~
-  LPF ALTER_HEADER INT_VAR match_damage_type = 3 damage_type = 4 END 
+  LPF ALTER_HEADER INT_VAR match_damage_type = 3 damage_type = 4 END
   BUT_ONLY

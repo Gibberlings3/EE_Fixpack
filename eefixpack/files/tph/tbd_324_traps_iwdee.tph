@@ -83,4 +83,3 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_spells_via_trap BEGIN
 END
 
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_code.tph~
-              
