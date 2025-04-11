@@ -206,6 +206,17 @@ COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes 
 INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
 INCLUDE ~eefixpack/files/tph/hexxat_death.tph~ // better death scripting for hexxat
 
+// fix misspelled resref
+COPY_EXISTING ~cut85a.bcs~   ~override~
+              ~ohbcut04.bcs~ ~override~
+              ~ohbcut07.bcs~ ~override~
+              ~ohdbodh1.bcs~ ~override~
+              ~ohdbodhi.bcs~ ~override~
+              ~ohdcut12.bcs~ ~override~
+              ~ohdnoob2.bcs~ ~override~
+  REPLACE_TEXTUALLY ~"CALLIGH"~ ~"CALLLIGH"~
+BUT_ONLY
+
 // reduce chance for love talk interruption
 COPY_EXISTING ~aeri25.bcs~   ~override~
               ~aerie25d.bcs~ ~override~
