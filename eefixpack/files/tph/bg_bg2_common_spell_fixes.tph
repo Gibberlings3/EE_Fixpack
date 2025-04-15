@@ -715,7 +715,7 @@ COPY_EXISTING ~sppr509.spl~ ~override~ //magic resistance
 
 COPY_EXISTING ~sppr608.spl~ ~override~ // harm
               ~sppr414.spl~ ~override~ // cause serious wounds
-              ~sppr510.spl~ ~override~ // cause serious wounds
+              ~sppr510.spl~ ~override~ // cause critical wounds
   LPF ALTER_EFFECT INT_VAR match_duration = 15 duration = 12 END // duration is three seconds long
 
 // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
