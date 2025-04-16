@@ -127,8 +127,7 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 ///// mass copy/includes actions                       \\\\\
 /////                                                  \\\\\
 
-COPY ~eefixpack/files/bam/ixbow04.bam~      ~override~ // tbd, cam: fix light crossbow BAM
-     ~eefixpack/files/bam/ixbow09.bam~      ~override~ // tbd, cam: fix HQ light crossbow BAM
+COPY ~eefixpack/files/bam/ixbow09.bam~      ~override~ // tbd, cam: fix HQ light crossbow BAM
      ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing sound for talonite poison
      ~eefixpack/files/2da/clabmo02.2da~     ~override~ // tbd, cam: borked kit ability table, dark moon monk
      ~eefixpack/files/2da/clabmo03.2da~     ~override~ // tbd, cam: borked kit ability table, sun soul monk
