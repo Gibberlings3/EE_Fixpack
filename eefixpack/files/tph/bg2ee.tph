@@ -312,7 +312,7 @@ COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
   END   
 
 // consolidate bernard's store (see also bernard2.sto, bernard.dlg)
-EXTEND_BOTTOM ~bernard.bcs~ ~eefixpack/files/baf/bernard.baf~
+EXTEND_BOTTOM ~ar0406.bcs~ ~eefixpack/files/baf/bernard.baf~
 
 // prevent ler from initiating dialogue once chapter is advanced
 COPY_EXISTING ~bystand1.bcs~ ~override~
