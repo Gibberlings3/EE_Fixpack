@@ -96,14 +96,14 @@ ADD_TRANS_ACTION ohnszass BEGIN 40 END BEGIN END ~AddJournalEntry(96075,QUEST_DO
 // you can navigate through gaal's dialogue without discovering the unseeing eye is a beholder
 // all journal entries &c. assume that you learn this, so we strucutre the dialogue so that you have to
 // set variable on anything going to 3, as it leads to the beholder reveal in 4
-ADD_TRANS_ACTION gaal BEGIN 17      END BEGIN 0 END ~SetGlobal("cd_gaal_beholder","AR0205",1)~
-ADD_TRANS_ACTION gaal BEGIN  0 6 24 END BEGIN 1 END ~SetGlobal("cd_gaal_beholder","AR0205",1)~
-ADD_TRANS_ACTION gaal BEGIN 26      END BEGIN 2 END ~SetGlobal("cd_gaal_beholder","AR0205",1)~
+ADD_TRANS_ACTION gaal BEGIN 17      END BEGIN 0 END ~SetGlobal("cd_gaal_beholder","MYAREA",1)~
+ADD_TRANS_ACTION gaal BEGIN  0 6 24 END BEGIN 1 END ~SetGlobal("cd_gaal_beholder","MYAREA",1)~
+ADD_TRANS_ACTION gaal BEGIN 26      END BEGIN 2 END ~SetGlobal("cd_gaal_beholder","MYAREA",1)~
 // check variable on anything going to 7, as it leads to the job in 8 via 27
-ADD_TRANS_TRIGGER gaal 6  ~Global("cd_gaal_beholder","AR0205",1)~ DO 0
-ADD_TRANS_TRIGGER gaal 2  ~Global("cd_gaal_beholder","AR0205",1)~ DO 1
-ADD_TRANS_TRIGGER gaal 26 ~Global("cd_gaal_beholder","AR0205",1)~ DO 1
-ADD_TRANS_TRIGGER gaal 17 ~Global("cd_gaal_beholder","AR0205",1)~ DO 2
+ADD_TRANS_TRIGGER gaal 6  ~Global("cd_gaal_beholder","MYAREA",1)~ DO 0
+ADD_TRANS_TRIGGER gaal 2  ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
+ADD_TRANS_TRIGGER gaal 26 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
+ADD_TRANS_TRIGGER gaal 17 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 2
 
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\

@@ -925,6 +925,25 @@ COPY_EXISTING ~sppr606.spl~ ~override~ // fire seeds
     LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (((30 - abil_num) + index) * 70) duration = (((30 - abil_num) + index) * 60) END 
   END   
 
+// false dawn fixes - push blindness, damage to subspells for 7 eyes
+COPY_EXISTING ~sppr609.spl~ ~override/sppr609a.spl~ // damage
+  WRITE_LONG 0x08 `0 // blank name
+  LPF ALTER_HEADER INT_VAR projectile = "1" END // no projectile 
+  PATCH_FOR_EACH op IN 174 318 324 74 142 139 BEGIN 
+    LPF DELETE_EFFECT INT_VAR match_opcode = op END
+  END
+COPY_EXISTING ~sppr609.spl~ ~override/sppr609d.spl~ // blind
+  WRITE_LONG 0x08 `0 // blank name
+  LPF ALTER_HEADER INT_VAR projectile = "1" END // no projectile 
+  PATCH_FOR_EACH op IN 174 318 324 12 BEGIN 
+    LPF DELETE_EFFECT INT_VAR match_opcode = op END
+  END     
+COPY_EXISTING ~sppr609.spl~ ~override~ // main
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 139 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 opcode = 326 parameter2 = 0 dicenumber = 0 dicesize = 0 savingthrow = 0 STR_VAR resource = sppr609a END // op 12 > 326 for damage
+  LPF ALTER_EFFECT INT_VAR match_opcode = 74 opcode = 326 timing = 1 duration = 0 STR_VAR resource = sppr609d END  
+
 // tbd, davidw
 // entropy shield (remove spurious protection from Breach/Spellstrike/Imprisonment; doesn't protect against Flame Strike)
 COPY_EXISTING "%CLERIC_ENTROPY_SHIELD%.spl" ~override~ // sppr615

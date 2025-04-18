@@ -241,7 +241,6 @@ ACTION_IF game_is_bg2ee BEGIN
                 ~cut32a.bcs~   ~override~
                 ~cut41q.bcs~   ~override~
                 ~newgame.bcs~  ~override~
-                ~oh4101.bcs~   ~override~
                 ~ohhcutkl.bcs~ ~override~
                 ~ohhmortl.bcs~ ~override~
                 ~ohncut30.bcs~ ~override~

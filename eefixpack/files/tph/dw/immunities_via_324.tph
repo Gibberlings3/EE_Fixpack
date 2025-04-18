@@ -188,7 +188,7 @@ BEGIN
 							PATCH_IF !in_fixpack BEGIN
 								LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter1=parameter1 match_parameter2=110 END
 							END
-							LPF CLONE_EFFECT INT_VAR multi_match=1 duration=0 timing=0 match_opcode parameter1 parameter2=110 opcode=324 STR_VAR resource="%SOURCE_RES%" insert=first END
+							LPF CLONE_EFFECT INT_VAR multi_match=1 duration=0 timing=0 match_opcode parameter1 parameter2=110 opcode=324 power = 0 savingthrow = 0 STR_VAR resource="%SOURCE_RES%" insert=first END
 							PATCH_IF write BEGIN
 								TO_LOWER resource
 								SPRINT $processed("%resource%") ""
@@ -556,12 +556,12 @@ BEGIN
 						LPF DELETE_EFFECT INT_VAR header=ab_ind match_opcode=324 match_parameter1=parameter1 match_parameter2=110 END
 					END
 					PATCH_IF payload_is_177 BEGIN
-						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=177 parameter1 parameter2=110 opcode=324 STR_VAR match_resource="%current_eff%" resource="%SOURCE_RES%" insert END
+						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=177 parameter1 parameter2=110 opcode=324 power = 0 savingthrow = 0 STR_VAR match_resource="%current_eff%" resource="%SOURCE_RES%" insert END
 						PATCH_IF write BEGIN
 							LPF fp_log_this INT_VAR repeat=0 STR_VAR file=177_offensive_for_immunity.txt input="%SOURCE_FILE%" END
 						END
 					END ELSE BEGIN
-						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=current_opcode parameter1 parameter2=110 opcode=324 STR_VAR resource="%SOURCE_RES%" insert END
+						LPF CLONE_EFFECT INT_VAR header=ab_ind multi_match=1 duration=0 timing=0 match_opcode=current_opcode parameter1 parameter2=110 opcode=324 power = 0 savingthrow = 0 STR_VAR resource="%SOURCE_RES%" insert END
 					END
 					PATCH_IF write BEGIN
 						modified=1
