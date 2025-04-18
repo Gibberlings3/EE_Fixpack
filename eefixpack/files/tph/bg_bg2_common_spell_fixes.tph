@@ -30,7 +30,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Lesser Fire Spirit – Suppress misleading "One of the spell has failed" message
+// Lesser Fire Spirit ï¿½ Suppress misleading "One of the spell has failed" message
 // 1) Set subspell's range to a very high value (max signed value)
 // 2) Set subspell's projectile to either "RANGE05", "RANGE07" or "RANGE10". The second one is the most appropriate IMHO (given ELEMENTAL_FIRE_SMALL selection circle)...
 WITH_SCOPE BEGIN
@@ -41,18 +41,18 @@ END// grease should work like web and check for grease once/round
 COPY_EXISTING ~grease.pro~ ~override/grease1.pro~
   WRITE_SHORT 0x210 100 // one round
   WRITE_BYTE  0x216   4 // repititions (3 rds + 1 rd/level)
-ADD_PROJECTILE ~override/grease1.pro~  
+ADD_PROJECTILE ~override/grease1.pro~
 
 OUTER_FOR (index = 2 ; index < 21 ; ++index) BEGIN
 
   COPY_EXISTING ~grease1.pro~ ~override/grease%index%.pro~
     WRITE_BYTE  0x216 (index + 3) // repititions (3 rds + 1 rd/level)
-  ADD_PROJECTILE ~override/grease%index%.pro~  
+  ADD_PROJECTILE ~override/grease%index%.pro~
 
 END
 
 // luke
-// Grease – Remove duplicate op321 effect
+// Grease ï¿½ Remove duplicate op321 effect
 // grease should work like web and check for grease once/round
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_GREASE%.spl~ ~override~ // Grease spwi101
@@ -66,13 +66,13 @@ WITH_SCOPE BEGIN
       FOR (index = 1 ; index < (abil_num + 1) ; ++index) BEGIN
         LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = (18 + (6 * index)) duration = 6 END
         LPF ALTER_HEADER INT_VAR header = (index - 1) projectile = EVAL ~grease%index%~ END
-      END   
+      END
     END
   BUT_ONLY_IF_IT_CHANGES
 END
 
 // luke
-// Magic Missile – better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
+// Magic Missile ï¿½ better feedback for the player when you cast it at someone protected by WIZARD_SHIELD
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%WIZARD_MAGIC_MISSILE%.spl~   ~override~ // spwi112
                 ~%TRAP_MAGIC_MISSILE%.spl~     ~override~ // spwi003
@@ -101,7 +101,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Detect Evil – should not interact with spell protections
+// Detect Evil ï¿½ should not interact with spell protections
 // 1) there's no need for the subspell
 //// 1a) its effects have incorrect power levels
 //// 1b) more importantly, as of v2.6, you should no longer be able to bypass other's Magic Resistance by targeting yourself with an area-effect ability => see `https://gibberlings3.github.io/iesdp/file_formats/ie_formats/eff_v2.htm#effv2_Body_0x5C` (BIT3) for further details...
@@ -135,7 +135,7 @@ WITH_SCOPE BEGIN
     END
     PATCH_IF game_is_bg2ee BEGIN
       LAUNCH_PATCH_FUNCTION ~ADD_SPELL_EFFECT~ INT_VAR "insert_point" = 0 "opcode" = 324 "target" = 2 "parameter2" = 55 "resist_dispel" = 2 "power" = 2 STR_VAR "resource" = "%DEST_RES%" END
-    END  
+    END
     LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 142 END
     LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~match_opcode~ = 39 ~special~ = 126 END
   BUT_ONLY_IF_IT_CHANGES
@@ -166,7 +166,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Lightning Bolt – remove duplicate op318 effect
+// Lightning Bolt ï¿½ remove duplicate op318 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_LIGHTNING_BOLT%.spl" "override" // spwi308
                 "%TALOS_LIGHTNING_BOLT%.spl" "override" // spcl722
@@ -185,7 +185,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Protection From Normal Missiles – remove duplicate op328 effect
+// Protection From Normal Missiles ï¿½ remove duplicate op328 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_MISSILES%.spl" "override" // spwi311
                 "spra303.spl" "override" // Stalker
@@ -232,7 +232,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Minor Spell Deflection – remove duplicate op328 / op233 effects
+// Minor Spell Deflection ï¿½ remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_MINOR_SPELL_DEFLECTION%.spl" "override" // spwi318
                 "spra302.spl" "override" // Stalker
@@ -285,7 +285,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Feeblemind – make sure it is truly permanent (until dispelled or character death)
+// Feeblemind ï¿½ make sure it is truly permanent (until dispelled or character death)
 //// Unlike other effects that alter a creature's stat, this one does leave behind a removable effect when applied with `timing=1`
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_FEEBLEMIND%.spl" "override" // spwi509
@@ -295,7 +295,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Protection From Normal Weapons – remove duplicate op328 effect
+// Protection From Normal Weapons ï¿½ remove duplicate op328 effect
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_PROTECTION_FROM_NORMAL_WEAPONS%.spl" "override" // spwi511
     PATCH_WITH_SCOPE BEGIN
@@ -310,7 +310,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Minor Spell Turning – remove duplicate op328 / op233 effects
+// Minor Spell Turning ï¿½ remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_MINOR_SPELL_TURNING%.spl" "override" // spwi522
                 "%BEHOLDER_SPELL_TURNING%.spl" "override" // spin920
@@ -329,7 +329,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Deflection – remove duplicate op328 / op233 effects
+// Spell Deflection ï¿½ remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_DEFLECTION%.spl" "override" // spwi618
                 "%SPELL_DEFLECTION_NO_VISUAL%.spl" "override" // spin710
@@ -349,7 +349,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Turning – remove duplicate op328 / op233 effects
+// Spell Turning ï¿½ remove duplicate op328 / op233 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TURNING%.spl" "override" // spwi701
     PATCH_WITH_SCOPE BEGIN
@@ -383,7 +383,7 @@ WITH_SCOPE BEGIN
 END
 
 // luke
-// Spell Trap – remove duplicate op328 / op282 effects
+// Spell Trap ï¿½ remove duplicate op328 / op282 effects
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_SPELL_TRAP%.spl" "override" // spwi902
     PATCH_WITH_SCOPE BEGIN
@@ -612,7 +612,7 @@ WITH_SCOPE BEGIN
     BUT_ONLY_IF_IT_CHANGES
   END
 END
-  
+
 // kai using dispel magic icon
 COPY_EXISTING ~spcl144.spl~ ~override~
   WRITE_ASCII 0x3a ~spcl144~ #8
@@ -633,22 +633,22 @@ COPY_EXISTING ~%PALADIN_LAY_ON_HANDS%.spl~ ~override~ // spcl211, lay on hands
       READ_SHORT (fx_off +        ((index2 + abil_fx_idx) * 0x30)) op
       PATCH_IF op = 17 BEGIN // cur hp bonus
         WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (level * 2)
-      END        
-    END  
+      END
+    END
   END
   BUT_ONLY
 
-// make protection from evil 10' radius actually, uh, have a 10' radius  
-COPY_EXISTING ~spargrpa.pro~ ~override/spprot10.pro~ // new 10' projectile 
-  WRITE_SHORT 0x204 171 
+// make protection from evil 10' radius actually, uh, have a 10' radius
+COPY_EXISTING ~spargrpa.pro~ ~override/spprot10.pro~ // new 10' projectile
+  WRITE_SHORT 0x204 171
   WRITE_SHORT 0x206 171
-ADD_PROJECTILE ~override/spprot10.pro~   
+ADD_PROJECTILE ~override/spprot10.pro~
 COPY_EXISTING ~spcl233.spl~ ~override~ // protection from evil 10'
               ~sppr408.spl~ ~override~ // protection from evil 10'
-  LPF ALTER_HEADER INT_VAR projectile = spprot10 END    
+  LPF ALTER_HEADER INT_VAR projectile = spprot10 END
 
 COPY_EXISTING ~spin698.spl~ ~override~ // non_detection_self aka improved invisibility [bg2]
-  LPF ALTER_EFFECT INT_VAR header = 0 match_opcode = 69 duration = 60 END // non-detection outlasts invis by five rounds  
+  LPF ALTER_EFFECT INT_VAR header = 0 match_opcode = 69 duration = 60 END // non-detection outlasts invis by five rounds
 
 // tbd, cam
 // update psychic drain to use generic mind flayer spell animation, spflayer
@@ -679,7 +679,7 @@ COPY_EXISTING ~spin956.spl~ ~override~ // hell hound breath [bg2]
 
 COPY_EXISTING ~sppr110.spl~ ~override~ //shillelagh
   LPF ALTER_EFFECT INT_VAR header = 19 match_duration = 142 duration = 144 END // duration is two seconds too short at level 20
-  
+
 COPY_EXISTING ~%CLERIC_CALL_LIGHTNING%.spl~ ~override~ // sppr302, call lightning - caps at 18
   LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = 0 damage_rolls = 1 base_dmg_rolls = 2 save_for_half = 1 RET abil_delta END // damage is 2d8 + 1d8 per level of caster
   // duration is one round/4 levels in bg2, 1 round/level in iwdee--both are handled by projectile
@@ -692,9 +692,9 @@ COPY_EXISTING ~%CLERIC_CALL_LIGHTNING%.spl~ ~override~ // sppr302, call lightnin
       PATCH_IF level > (43 - (33 * game_is_iwdee)) BEGIN SET proj = 91 END ELSE BEGIN SET proj = (80 + (level / (4 - (3 * game_is_iwdee)))) END // 91 is last call lightning projectile
       WRITE_SHORT (abil_off + 0x26 + (index * 0x28)) proj // projectile
     END
-  END  
+  END
   BUT_ONLY
-  
+
 COPY_EXISTING ~%CLERIC_GLYPH_OF_WARDING%.spl~ ~override~ // sppr304, glyph of warding - capping at 18
   LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = 0 damage_rolls = 1 END // damage is 1d4/level, save negates
   BUT_ONLY
@@ -703,23 +703,25 @@ COPY_EXISTING ~sppr508.spl~ ~override~ // chaotic commands [bg, bg2] - capping a
   LPF CD_LEVEL_SELECT-O-MATIC INT_VAR step_dur = (10 * round) END // 1 turn/level
   PATCH_IF game_is_bg2ee BEGIN
     LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 267 match_parameter1 = 16233 END // blocks "gulp" string (bg2 only)
-  END  
+  END
   READ_SHORT 0x68 abil_num
   FOR (index = 1 ; index < abil_num ; ++index) BEGIN // start at 1 to skip first header which doesn't have dupe
     LPF DELETE_EFFECT INT_VAR header = index multi_match = 1 match_opcode = 101 match_parameter2 = 128 END // all headers except first have dupe confusion immunity
-  END   
+  END
 
 COPY_EXISTING ~sppr509.spl~ ~override~ //magic resistance
   LPF ALTER_EFFECT INT_VAR header = 10 match_duration = 126 duration = 132 END // duration is one round short at level 19
   LPF ALTER_EFFECT INT_VAR header = 11 match_duration = 126 duration = 138 END // duration is two rounds short at level 20
 
 COPY_EXISTING ~sppr608.spl~ ~override~ // harm
+              ~sppr414.spl~ ~override~ // cause serious wounds
+              ~sppr510.spl~ ~override~ // cause critical wounds
   LPF ALTER_EFFECT INT_VAR match_duration = 15 duration = 12 END // duration is three seconds long
 
 // at levels 14-15, shield of the archons absorbs 9 levels of level 3 spells instead of the correct 7
 COPY_EXISTING ~sppr701.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END 
-  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 252 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 201 match_parameter1 = 9 parameter1 = 7 match_duration = 270 END
   BUT_ONLY
 
 COPY_EXISTING ~sppr709.spl~ ~override~ // Confusion [bg2]
@@ -739,7 +741,7 @@ COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving 
   BUT_ONLY
 
 COPY_EXISTING ~spwi517.spl~ ~override~ // protection from acid [bg, bg2, iwd]
-  LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 141 END                 // shouldn't be here 
+  LPF DELETE_EFFECT INT_VAR header = 0 match_opcode = 141 END                 // shouldn't be here
   LPF DELETE_EFFECT INT_VAR header = 0 match_opcode =  61 multi_match = 1 END // dupe effect
 
 COPY_EXISTING ~%WIZARD_PHANTOM_BLADE%.spl~ ~override~ // spwi518, phantom blade - caps at 18
