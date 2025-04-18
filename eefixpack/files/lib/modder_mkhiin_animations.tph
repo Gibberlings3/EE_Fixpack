@@ -1,0 +1,94 @@
+/*
+see: eefixpack/files/tph/sod_mkhiin_animations.tph for full explanation
+
+this is a macro for other mods to include to apply the necessary opcodes for mkhiin's
+animations to keep working
+*/
+
+ACTION_IF !FILE_EXISTS_IN_GAME cdmk25.eff BEGIN // sanity check
+
+  DEFINE_PATCH_FUNCTION cd_eefp_mkhiin_animation BEGIN END
+  
+END ELSE BEGIN 
+
+  ACTION_IF ((MOD_IS_INSTALLED ~cdtweaks.tp2~ ~2161~) OR (MOD_IS_INSTALLED ~cdtweaks.tp2~ ~2162~)) BEGIN // bg-style profs from anthology
+    OUTER_SET cd_sb_prof = 100
+    OUTER_SET cd_ax_prof = 104
+    OUTER_SET cd_st_prof = 105
+  END ELSE   
+  ACTION_IF ((MOD_IS_INSTALLED ~cdtweaks.tp2~ ~2163~) OR (MOD_IS_INSTALLED ~cdtweaks.tp2~ ~2164~)) BEGIN  // iwd-style profs from anthology
+    OUTER_SET cd_sb_prof = 95
+    OUTER_SET cd_ax_prof = 94
+    OUTER_SET cd_st_prof = 107
+  END ELSE BEGIN // defaults
+    OUTER_SET cd_sb_prof = 105
+    OUTER_SET cd_ax_prof = 92
+    OUTER_SET cd_st_prof = 102
+  END
+
+  DEFINE_PATCH_FUNCTION cd_eefp_mkhiin_animation
+    INT_VAR prof_sb  = cd_sb_prof
+            prof_ax  = cd_ax_prof
+            prof_st  = cd_st_prof
+            cd_debug = 0
+  BEGIN
+
+    READ_LONG  0x18 flags
+    READ_LONG  0x1e use
+    PATCH_IF (((use & BIT30) = 0) AND ((flags & BIT2) = BIT2)) BEGIN // usable by druids and droppable
+      READ_SHORT 0x1c type
+      READ_BYTE  0x31 prof
+      PATCH_IF (((type = 26) AND (prof = prof_st)) OR     // staff
+                ((type = 25) AND (prof = prof_ax)) OR     // axe
+                ((type = 15) AND (prof = prof_sb)) OR     // shortbow
+                 (type =  2)                      ) BEGIN // armor
+        READ_LONG  0x6a fx_off
+        READ_SHORT 0x70 fx_num
+        SET cd_altered = 0
+        FOR (index = 0 ; index < fx_num ; ++index) BEGIN 
+          READ_SHORT (fx_off + 0x00 + (index * 0x30)) op
+          READ_ASCII (fx_off + 0x14 + (index * 0x30)) resref
+          PATCH_IF (((op = 318) OR (op = 177)) AND 
+                   ("%resref%" STRING_COMPARE_REGEXP "^cdmk\(15\|25\|26\)a?$" = 0)) BEGIN // already has ops
+            SET cd_altered = 1
+            SET index = fx_num // kill loop
+          END    
+        END
+        PATCH_IF cd_altered = 0 BEGIN  
+          PATCH_IF (type = 26) BEGIN // staff
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~ END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~ END // apply effs to only shamans
+          END ELSE    
+          PATCH_IF (type = 2) BEGIN // armor
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk25~ END // block non-armored axe animation
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk15~ END // block non-armored bow animation
+          END ELSE BEGIN // axe, shortbow 
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~  END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // apply effs to only shamans
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~  END // apply effs to only shamans
+          END
+          PATCH_IF cd_debug = 1 BEGIN 
+            READ_LONG 0x0c name
+            PATCH_IF (name > 0) AND (name < 999999) BEGIN
+              READ_STRREF 0x0c name
+            END ELSE BEGIN
+              READ_STRREF 0x08 name
+            END
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+            PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                                      BEGIN SPRINT spc "        " END
+            PATCH_PRINT "              ~%SOURCE_FILE%~%spc%~override~ // %name%"
+          END // debug 
+        END // alter check
+      END // type/prof check 
+    END // usable check 
+
+  END 
+  
+END
