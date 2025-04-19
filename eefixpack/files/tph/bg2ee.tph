@@ -110,6 +110,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
      ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
      ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
+     ~eefixpack/files/bam/spwi324a.bam~ ~override~ // fixed hold undead icon (scroll)
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
