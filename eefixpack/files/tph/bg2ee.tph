@@ -31,6 +31,8 @@ INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
   
+APPEND ~specifics.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
+  
 APPEND ~spell.ids~ ~3119 SAFANA_CHARM~ UNLESS ~^3119[ %TAB%]+SAFANA_CHARM[ %TAB%%MNL%%LNL%]+~ // syncing spell.ids
 
 /*

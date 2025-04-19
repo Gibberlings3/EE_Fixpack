@@ -54,6 +54,8 @@ APPEND ~object.ids~
 112 EighthFarthestEnemyOf
 113 NinthFarthestEnemyOf
 114 TenthFarthestEnemyOf~
+  
+APPEND ~specifics.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
 
 // tbd, cam
 // nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
