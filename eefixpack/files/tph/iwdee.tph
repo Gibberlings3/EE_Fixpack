@@ -25,6 +25,7 @@ INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation def
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
 INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
+INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
