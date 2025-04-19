@@ -5,8 +5,11 @@ In the process it also handles EE save-for-half functionality.
 
 DEFINE_ACTION_FUNCTION holy_unholy BEGIN
 
+  COPY_EXISTING "SPPR314.spl" override
+    READ_LONG 0x08 unholy_name
+
   // add portrait icons (copied in mass copy)
-  LAF ADD_STATDESC_ENTRY INT_VAR description = 4346 STR_VAR bam_file = sppr314d RET unholy = index END // unholy blight icon
+  LAF ADD_STATDESC_ENTRY INT_VAR description = unholy_name STR_VAR bam_file = sppr314d RET unholy = index END // unholy blight icon
   
   ACTION_IF GAME_IS "bgee bg2ee" BEGIN // rebuild to use 324s instead of horrific pile of EFFs
   
