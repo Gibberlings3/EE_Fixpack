@@ -120,6 +120,9 @@ OR(3) !InParty("Jaheira") !AreaCheckObject("AR2009","Jaheira") Dead("Jaheira")  
 OR(3) !InParty("Minsc")   !AreaCheckObject("AR2009","Minsc")   Dead("Minsc")~    // transition 2 n/a
 END // p1 gets comment only if minsc/jaheira comments unavailable
 
+// does have another 'done' entry if you give talisman to daxus
+REPLACE_ACTION_TEXT ohnknock ~AddJournalEntry(100041,QUEST)~ ~AddJournalEntry(100041,QUEST_DONE)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
