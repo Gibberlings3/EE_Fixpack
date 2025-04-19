@@ -54,6 +54,12 @@ REPLACE_TRANS_ACTION DEBB BEGIN 65 74 END BEGIN 0 END ~GiveItemCreate("SPWI505",
 REPLACE_TRANS_ACTION DIGNUS BEGIN 67 71 76 80 END BEGIN 0 END ~GiveItemCreate(\("[^"]+"\),Protagonist,[0-9]+,[0-9]+,[0-9]+)~ ~GiveItemCreate(\1,Protagonist,1,1,0)~
 REPLACE_TRANS_ACTION DNORDOM BEGIN 84 END BEGIN 0 END ~GiveItemCreate("Enoll",Protagonist,[0-9]+,[0-9]+,[0-9]+)~ ~GiveItemCreate("Enoll",Protagonist,1,1,0)~
 
+// fixes for nodd/amarysse quest
+ALTER_TRANS dnodd BEGIN 7 END BEGIN 0 END BEGIN ~TRIGGER~ ~PartyGoldGT(1)~ END // was gt 2
+ALTER_TRANS damarys BEGIN 4 END BEGIN 0 1 END BEGIN ~TRIGGER~ ~GlobalLT("Nodd_Quest","GLOBAL",3)~ END // excluded 1
+ALTER_TRANS damarys BEGIN 5 END BEGIN 0 3 END BEGIN ~TRIGGER~ ~GlobalLT("Nodd_Quest","GLOBAL",3)~ END // excluded 1
+ALTER_TRANS damarys BEGIN 7 END BEGIN 0 2 END BEGIN ~TRIGGER~ ~GlobalLT("Nodd_Quest","GLOBAL",3)~ END // excluded 1
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
