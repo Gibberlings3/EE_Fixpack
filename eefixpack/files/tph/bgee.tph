@@ -1045,6 +1045,9 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
+COPY_EXISTING ~hamm13.itm~ ~override~ // hammer of dawn's portrait effect has a save
+  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 142 savingthrow = 0 END 
+  
 COPY_EXISTING ~helm14.itm~ ~override~ // don't leave a bunch of op23's laying around on the creature
   LPF ALTER_EFFECT INT_VAR match_opcode = 23 special = 0 END 
 
