@@ -105,6 +105,9 @@ ADD_TRANS_TRIGGER gaal 2  ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
 ADD_TRANS_TRIGGER gaal 26 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
 ADD_TRANS_TRIGGER gaal 17 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 2
 
+// Korgan shouldn't ask about the book of kaza if he already had it
+ADD_TRANS_TRIGGER nevaziah 12 ~!Dead("korshag")~ DO 1
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
