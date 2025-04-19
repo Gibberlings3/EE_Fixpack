@@ -311,6 +311,20 @@ Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
 
+// iwdee remove magic is 100% effective, does not use the chance to dispel based on levels
+// most of the flavor text is from dispel magic with a new first sentence and swapping 'remove magic' for 'dispel magic'
+@35872 = ~Remove Magic
+(Abjuration)
+
+Level: 3
+Range: 40 ft.
+Duration: Instant
+Casting Time: 3
+Area of Effect: 15-ft. radius
+Saving Throw: None
+
+This is the combat version of Dispel Magic; it will only affect opponents. Remove Magic removes magical effects upon anyone within the area of effect. This includes magically created items and the effects of spells and potions. It does not, however, affect magical items themselves.~
+
 // sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 37263)
 @36015 = ~Sun Soulbeam
 
