@@ -242,11 +242,5 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
-//DEPRECATED ~For internal use only~
+DEPRECATED ~For internal use only~
 LABEL ~cd_eefp_internal_test_space~
-
-<<<<<<<<./inline/cernd.d
-// does have another 'done' entry if you give talisman to daxus
-REPLACE_ACTION_TEXT ohnknock ~AddJournalEntry(100041,QUEST)~ ~AddJournalEntry(100041,QUEST_DONE)~
->>>>>>>>
-COMPILE ~./inline/cernd.d~
