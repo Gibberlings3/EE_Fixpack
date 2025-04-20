@@ -226,13 +226,11 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, wyvern (plus shadow); monk paperdoll; 
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook); 
-//  missing short flaming sword bams (f2); shocking grasp icons
+//  missing short flaming sword bams (f2); shocking grasp icons; updated spell BAMs
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
-
-INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
