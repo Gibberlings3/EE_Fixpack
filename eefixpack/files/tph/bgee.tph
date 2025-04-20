@@ -251,10 +251,10 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
 
 // fixing shadows on item icons
-COPY ~eefixpack/files/bam/item_shadows/bgee~       ~override~
-     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~ ~override~
-     ~eefixpack/files/bam/item_shadows/bgee_iwdee~ ~override~
-     ~eefixpack/files/bam/item_shadows/universal~  ~override~
+COPY ~eefixpack/files/bam/copy/bgee~             ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
+     ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
 
 INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
@@ -275,9 +275,9 @@ ACTION_IF !game_includes_sod BEGIN
   COPY_EXISTING ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
 
   // fixing shadows on item icons
-  COPY ~eefixpack/files/bam/item_shadows/sod~             ~override~
-       ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
-       ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
+  COPY ~eefixpack/files/bam/copy/sod~             ~override~
+       ~eefixpack/files/bam/copy/sod_bg2ee~       ~override~
+       ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~ ~override~
 
   // installing BAM V2 resources
   INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~

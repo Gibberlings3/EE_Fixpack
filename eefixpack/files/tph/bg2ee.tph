@@ -116,12 +116,12 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/spwi324a.bam~ ~override~ // fixed hold undead icon (scroll)
 
 // fixing shadows on item icons
-COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
-     ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
-     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~      ~override~
-     ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
-     ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
-     ~eefixpack/files/bam/item_shadows/universal~       ~override~
+COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
+     ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
+     ~eefixpack/files/bam/copy/sod_bg2ee~        ~override~
+     ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~  ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
 
 INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
 
