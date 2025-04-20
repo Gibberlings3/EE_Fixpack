@@ -305,6 +305,13 @@ COPY_EXISTING ~baldur.bcs~   ~override~
     REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODHELM)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(3)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForLathander","GLOBAL",0)~
       ~\1 OR(2)~
   END
+  
+ACTION_FOR_EACH item IN ohhcask ohhcask2 BEGIN // fix bug of removing hexxat's casket from her bag
+  ACTION_FOR_EACH object IN Player1 Player2 Player3 Player4 Player5 Player6 Familiar BEGIN
+    EXTEND_BOTTOM ~baldur.bcs~   ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+    EXTEND_BOTTOM ~baldur25.bcs~ ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+  END
+END 
 
 // shaman summon script errors - fix for bgee, bg2ee, iwdee
 COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
