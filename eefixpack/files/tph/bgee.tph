@@ -240,9 +240,9 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
      ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
-     ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, wyvern (plus shadow); monk paperdoll; unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, wyvern (plus shadow); monk paperdoll; 
+// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook)
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
