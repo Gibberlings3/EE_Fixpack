@@ -1456,6 +1456,21 @@ The wall of fire spell brings forth an immobile, blazing curtain of magical fire
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @12343 = ~Innkeeper~
 
+// history of shadowdale titles lack chapter references (all just "History of Shadowdale")
+@13094 = ~History of Shadowdale I~
+@13095 = ~History of Shadowdale II~
+@13096 = ~History of Shadowdale III~
+@13097 = ~History of Shadowdale IV~
+@13098 = ~History of Shadowdale V~
+@13099 = ~History of Shadowdale VI~
+@13100 = ~History of Shadowdale VII~
+@13101 = ~History of Shadowdale VIII~
+@13102 = ~History of Shadowdale IX~
+@13103 = ~History of Shadowdale X~
+@13104 = ~History of Shadowdale XI~
+@13105 = ~History of Shadowdale XII~
+@13106 = ~History of Shadowdale XIII~
+
 // [automatic scan] Issues: 9  | Surplus trailing whitespace at line 1 | Surplus trailing whitespace at line 3 | Surplus trailing whitespace at line 5 | Surplus trailing whitespace at line 7 | Surplus trailing whitespace at line 9 | Surplus trailing whitespace at line 11 | Surplus trailing whitespace at line 13 | Surplus trailing whitespace at line 15 | Surplus trailing line break at line 17
 @13136 = ~History of Amn:
 
