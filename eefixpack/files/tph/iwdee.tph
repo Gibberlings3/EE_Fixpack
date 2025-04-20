@@ -830,6 +830,12 @@ COPY_EXISTING ~spitm99.spl~ ~override~
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter1 = 187 parameter2 = 115 duration = 1 STR_VAR resource = spitm99 END // block class != fire_elemental
   BUT_ONLY
 
+COPY_EXISTING ~sppr106.spl~ ~override~ // rather than multiple EFFs targeted at general IDS values, split as =4 and !=4
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 STR_VAR match_resource = ~#magstn1~ END
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 999 opcode = 318 target = 2 parameter2 = 1 STR_VAR resource = sppr106 END // block 3d4 non-undead damage from undead 
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 999 opcode =  12 target = 2 timing = 1 dicenumber = 3 dicesize = 4 END    // since they get their damage via eff
+  BUT_ONLY   
+
 // tbd, cam
 // IWDEE bug 321 should be subject to same MR check as AC effect
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
