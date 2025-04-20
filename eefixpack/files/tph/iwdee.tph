@@ -909,6 +909,15 @@ COPY_EXISTING ~%CLERIC_WALL_OF_MOONLIGHT%a.spl~ ~override~ // sppr428a
               ~%CLERIC_WALL_OF_MOONLIGHT%b.spl~ ~override~ // sppr428b
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = 0 resist_dispel = 0 END
 
+COPY_EXISTING ~sppr518a.spl~ ~override~ // rwotf effects for same alignment
+  PATCH_FOR_EACH spell IN spwi305 spra301 sppr518a BEGIN // remove 321s for spells with fatigue - stacking with normal haste provides no further benefits
+    LPF DELETE_EFFECT INT_VAR match_opcode = 321 STR_VAR match_resource = EVAL ~%spell%~ END
+  END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 93 resist_dispel = 0 END // can't dispel fatigue
+  LPF CLONE_EFFECT INT_VAR match_opcode = 54 opcode = 332 END // clone to-hit bonus to damage bonus
+  LPF CLONE_EFFECT INT_VAR match_opcode = 54 opcode = 206 parameter1 = 0 STR_VAR resource = sppr518a insert = last END // use 206 to prevent stack rather than 321
+  BUT_ONLY   
+
 // tbd, cam
 // IWDEE bug 321 should be timing 1/dur 0
 COPY_EXISTING ~%CLERIC_SPIKE_STONES%.spl~ ~override~ // sppr519
