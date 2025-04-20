@@ -82,6 +82,20 @@ Requires:
 
 Weight: 7~
 
+// glyph of warding does persist in the EEs, so remove the last sentence of the description about it disappearing if you leave
+@12200 = ~Glyph of Warding
+(Abjuration, Evocation)
+
+Level: 3
+Sphere: Guardian
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 9
+Area of Effect: 12-ft. radius
+Saving Throw: 1/2
+
+A glyph of warding is a powerful inscription, magically drawn to prevent unauthorized or hostile creatures from passing, entering, or opening. It can be used to guard a small bridge, to ward an entry, or as a trap on a chest or box. Any creature violating the warded area sets off the glyph. The glyph deals 1d4 points of electrical damage per level of the caster to the victim(s). A successful Save vs. Spell halves the damage.~
+
 // strike the last sentence about acting as a +1 weapon--it's a spell that just does damage, not a summoned weapon
 @12317 = ~Magical Stone
 (Enchantment)
