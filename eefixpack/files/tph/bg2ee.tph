@@ -94,7 +94,6 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
      ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
      ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
      ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
@@ -115,7 +114,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
      ~eefixpack/files/bam/spwi324a.bam~ ~override~ // fixed hold undead icon (scroll)
 
-// fixing shadows on item icons
+// cumulative BAM fixes: item shadows, merged 4-frame demogorgon
 COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
      ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~

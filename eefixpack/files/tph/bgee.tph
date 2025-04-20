@@ -250,7 +250,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
      ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
 
-// fixing shadows on item icons
+// cumulative BAM fixes: item shadows, merged 4-frame demogorgon
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
