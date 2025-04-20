@@ -135,11 +135,6 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
      ~eefixpack/files/2da/clabmo03.2da~     ~override~ // tbd, cam: borked kit ability table, sun soul monk
      ~eefixpack/files/2da/clabrn02.2da~     ~override~ // tbd, cam: table isn't borked, but does lack the last +1 missile bump
      ~eefixpack/files/2da/spwi417.2da~      ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/mdr1~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
-     ~eefixpack/files/bam/mdr2~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
-     ~eefixpack/files/bam/mdr3~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-     ~eefixpack/files/bam/mwdr~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon white
-     ~eefixpack/files/bam/mwyv~             ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/bam/cmnk1inv.bam~     ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
@@ -151,7 +146,7 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
      ~eefixpack/files/bam/nboh~             ~override~ // sam.: removing shadows from vampires, bodhi
      ~eefixpack/files/bam/spsdbur.bam~      ~override~ // fixed silver dragon breath
 
-// cumulative BAM fixes: item shadows, merged 4-frame demogorgon
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow)
 COPY ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
      ~eefixpack/files/bam/copy/iwdee~            ~override~
