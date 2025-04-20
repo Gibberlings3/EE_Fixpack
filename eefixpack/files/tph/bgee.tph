@@ -223,26 +223,10 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/wphf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wplf2inv.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wplf2oin.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a1.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a3.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a5.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a7.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a8.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2a9.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2g1.bam~  ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2oa7.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2oa8.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2oa9.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/wqnf2og1.bam~ ~override~ // missing short flaming sword bams (f2)
-     ~eefixpack/files/bam/sgraspa.bam~  ~override~ // fix spell icon
-     ~eefixpack/files/bam/sgraspb.bam~  ~override~ // fix spell icon
-     ~eefixpack/files/bam/sgraspc.bam~  ~override~ // fix spell icon
 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, wyvern (plus shadow); monk paperdoll; 
-// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook)
+// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook); 
+//  missing short flaming sword bams (f2); shocking grasp icons
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
@@ -261,12 +245,8 @@ ACTION_IF !game_includes_sod BEGIN
      
  END ELSE BEGIN      
 
-  COPY ~eefixpack/files/bam/coadbar_.bam~ ~override~ // fix loading bar animation
-       ~eefixpack/files/bam/coadcntr.bam~ ~override~ // fix logo animation
-       ~eefixpack/files/bam/pxbow15.bam~  ~override~ // fix item description image
-       ~eefixpack/files/bam/mgo7gu.bam~   ~override~ // m'khiin's missing getting-up animation
-
-  // cumulative BAM fixes: item shadows; merged 4-frame animations: dragon (red)
+  // cumulative BAM fixes: item shadows; merged 4-frame animations: dragon (red); fix loading bar animation; 
+  // fix logo animation; m'khiin's missing getting-up animation
   COPY ~eefixpack/files/bam/copy/sod~             ~override~
        ~eefixpack/files/bam/copy/sod_bg2ee~       ~override~
        ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~ ~override~
