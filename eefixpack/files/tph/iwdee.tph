@@ -989,6 +989,10 @@ COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
   LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 END // 1 rd/2 levels
 
+COPY_EXISTING ~sppr720.spl~ ~override~ // earthquake: "creatures with 10 or more Hit Dice are unaffected by this spell"
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = 0 parameter2 = 0 dicenumber = 99 dicesize = 10 END
+  BUT_ONLY   
+
 // evasion fixes - missing evasion check
 COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 63 END 
