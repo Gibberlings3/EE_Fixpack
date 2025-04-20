@@ -135,18 +135,10 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
      ~eefixpack/files/2da/clabmo03.2da~     ~override~ // tbd, cam: borked kit ability table, sun soul monk
      ~eefixpack/files/2da/clabrn02.2da~     ~override~ // tbd, cam: table isn't borked, but does lack the last +1 missile bump
      ~eefixpack/files/2da/spwi417.2da~      ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/cmnk1inv.bam~     ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
-     ~eefixpack/files/bam/sppr314d.bam~     ~override~ // new unholy blight portrait icon
-     ~eefixpack/files/bam/mglc/mglcg1.bam~  ~override~ // fix SC sequence for creature animation 0x7F07 GOLEM_CLAY
-     ~eefixpack/files/bam/spwi524d.bam~     ~override~ // fix rle-encoding error
-     ~eefixpack/files/bam/mvaf~             ~override~ // sam.: removing shadows from vampires, female
-     ~eefixpack/files/bam/mvam~             ~override~ // sam.: removing shadows from vampires, male
-     ~eefixpack/files/bam/nboh~             ~override~ // sam.: removing shadows from vampires, bodhi
-     ~eefixpack/files/bam/spsdbur.bam~      ~override~ // fixed silver dragon breath
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow)
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow); monk paperdoll; unholy blight portrait icon; fix SC sequence for creature animation 0x7F07 GOLEM_CLAY; rle-encoding error for shroud of flame portrait icon; removing vamp shadows; fixed silver dragon breath
 COPY ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
      ~eefixpack/files/bam/copy/iwdee~            ~override~
