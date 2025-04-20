@@ -1,15 +1,7 @@
 DEFINE_ACTION_FUNCTION "NISHRUU_HAKEASHAR"
 BEGIN
-	// Let us add a new IDS entry to properly flag them
-	LAF "ADD_IDS_ENTRY"
-	INT_VAR
-		"minValue" = 1
-	STR_VAR
-		"idsFile" = "specific"
-		"identifier" = "NISHRUU_HAKEASHAR"
-	RET
-		"SPECIFIC_NISHRUU_HAKEASHAR" = "value"
-	END
+ 
+  OUTER_SET SPECIFIC_NISHRUU_HAKEASHAR = 25
 
 	// They should be vulnerable to Dispel/Remove Magic
 
@@ -67,9 +59,9 @@ BEGIN
 		COPY_EXISTING
 			"nishrusu.cre" "override" // Nishruu
 			"haksu.cre" "override" // Hakeashar
-			WRITE_BYTE 0x271 IDS_OF_SYMBOL ("GENERAL" "MONSTER") // was GIANTHUMANOID on bgee
-			WRITE_BYTE 0x272 IDS_OF_SYMBOL ("RACE" "MIST") // was OGRE on bgee
-			WRITE_BYTE 0x273 IDS_OF_SYMBOL ("CLASS" "MIST") // was OGRE_MAGE on bg(2)ee
+			WRITE_BYTE 0x271 255 // was GIANTHUMANOID on bgee
+			WRITE_BYTE 0x272 136 // was OGRE on bgee
+			WRITE_BYTE 0x273 174 // was OGRE_MAGE on bg(2)ee
 			WRITE_BYTE 0x274 "%SPECIFIC_NISHRUU_HAKEASHAR%"
 			REMOVE_KNOWN_SPELLS
 			REMOVE_MEMORIZED_SPELLS
@@ -95,7 +87,7 @@ BEGIN
 
 	WITH_SCOPE BEGIN
 		COPY_EXISTING "nishrusu.cre" "override" // Nishruu
-			WRITE_LONG 0x28 IDS_OF_SYMBOL ("ANIMATE" "NISHRUU") // was MIST_CREATURE on bg(2ee)
+			WRITE_LONG 0x28 0x7f50 // was MIST_CREATURE on bg(2ee)
 			LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~multi_match~ = 1 ~match_opcode~ = 101 ~match_parameter2~ = 25 ~opcode~ = 173 ~parameter1~ = 100 ~parameter2~ = 0 STR_VAR ~resource~ = ~~ END // Poison resistance (set to 100)
 			PATCH_IF "%game_is_iwdee%" BEGIN
 				LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 233 END // delete unused weapon proficiencies
@@ -104,7 +96,7 @@ BEGIN
 		BUT_ONLY_IF_IT_CHANGES
 		WITH_SCOPE BEGIN
 			COPY_EXISTING "haksu.cre" "override" // Hakeashar
-				WRITE_LONG 0x28 IDS_OF_SYMBOL ("ANIMATE" "HAKEASHAR") // was MIST_CREATURE on bg(2ee)
+				WRITE_LONG 0x28 0x7f50  // was MIST_CREATURE on bg(2ee)
 				PATCH_IF "%game_is_iwdee%" BEGIN
 					LPF "DELETE_EFFECT" INT_VAR "match_opcode" = 233 END // delete unused weapon proficiencies
 				END

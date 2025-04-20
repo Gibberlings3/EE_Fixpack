@@ -82,6 +82,34 @@ Requires:
 
 Weight: 7~
 
+// glyph of warding does persist in the EEs, so remove the last sentence of the description about it disappearing if you leave
+@12200 = ~Glyph of Warding
+(Abjuration, Evocation)
+
+Level: 3
+Sphere: Guardian
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 9
+Area of Effect: 12-ft. radius
+Saving Throw: 1/2
+
+A glyph of warding is a powerful inscription, magically drawn to prevent unauthorized or hostile creatures from passing, entering, or opening. It can be used to guard a small bridge, to ward an entry, or as a trap on a chest or box. Any creature violating the warded area sets off the glyph. The glyph deals 1d4 points of electrical damage per level of the caster to the victim(s). A successful Save vs. Spell halves the damage.~
+
+// strike the last sentence about acting as a +1 weapon--it's a spell that just does damage, not a summoned weapon
+@12317 = ~Magical Stone
+(Enchantment)
+
+Level: 1
+Sphere: Combat
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 4
+Area of Effect: 1 creature
+Saving Throw: None
+
+By using this spell, the priest can temporarily enchant a small pebble, which is then hurled or slung at an opponent. The stone deals 3d4 points of crushing damage to whomever it hits except undead creatures, who take 6d4 points of crushing damage instead.~
+
 // ie-6024, cam - see also string 18095, patches to uhxbw2a.itm and xbow01.itm
 // Two crossbows have the wrong strength requirement
 @14432 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller. The bow is usually made of ash or yew. The crossbow fires a quarrel (also called a bolt).
@@ -310,6 +338,20 @@ Area of Effect: Special
 Saving Throw: None
 
 There are two parts to this spell. First, a small portal opens and summons one or two carrion crawlers to a point designated by the wizard. Second, the magic mutates the carrion crawlers into larger, more vicious versions of themselves. The wizard now has control over these creature(s) until they are slain or the spell's duration expires. There is a 35% chance that two carrion crawlers will be summoned instead of one.~
+
+// iwdee remove magic is 100% effective, does not use the chance to dispel based on levels
+// most of the flavor text is from dispel magic with a new first sentence and swapping 'remove magic' for 'dispel magic'
+@35872 = ~Remove Magic
+(Abjuration)
+
+Level: 3
+Range: 40 ft.
+Duration: Instant
+Casting Time: 3
+Area of Effect: 15-ft. radius
+Saving Throw: None
+
+This is the combat version of Dispel Magic; it will only affect opponents. Remove Magic removes magical effects upon anyone within the area of effect. This includes magically created items and the effects of spells and potions. It does not, however, affect magical items themselves.~
 
 // sun soulbeam does not roll an attack, just acts as a normal spell--deleted relevant sentence. (see also 37263)
 @36015 = ~Sun Soulbeam

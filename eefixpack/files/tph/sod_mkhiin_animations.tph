@@ -51,6 +51,8 @@ COPY_EXISTING ~item_use.2da~ ~override~ // remove arbitrary restrictions
   REPLACE_TEXTUALLY ~^[^ %TAB%]+[ %TAB%]+MKHIIN[ %TAB%]+[0-9]+[ %TAB%]+4[ %TAB%]+[0-9]+[ %TAB%%LNL%%MNL%]+~ ~~ // delete other, existing mkhiin lines
   PRETTY_PRINT_2DA
 
+INCLUDE ~eefixpack/files/lib/modder_mkhiin_animations.tph~
+
 ACTION_FOR_EACH item IN 
   
   ~ax1h01~    // battle axe
@@ -133,48 +135,7 @@ ACTION_FOR_EACH item IN
 BEGIN 
 
   COPY_EXISTING ~%item%.itm~ ~override~
-    READ_LONG  0x18 flags
-    READ_LONG  0x1e use
-    //SET alter = 0
-    PATCH_IF (((use & BIT30) = 0) AND ((flags & BIT2) = BIT2)) BEGIN // usable by druids and droppable
-      READ_SHORT 0x1c type
-      READ_BYTE  0x31 prof
-      PATCH_IF ((type = 26) AND (prof = 102)) BEGIN // staff  
-        //SET alter = 1
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~ END // block non-goblins
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~ END // apply effs to only shamans
-      END ELSE    
-      PATCH_IF (((type = 25) AND (prof =  92)) OR     // axe
-                ((type = 15) AND (prof = 105))) BEGIN // shortbow  
-        //SET alter = 1
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // block non-goblins
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~  END // block non-goblins
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // apply effs to only shamans
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~  END // apply effs to only shamans
-      END ELSE    
-      PATCH_IF (type = 2) BEGIN // armor
-        //SET alter = 1
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk25~ END // block non-armored axe animation
-        LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk15~ END // block non-armored bow animation
-      END
-    END    
-  //  PATCH_IF alter AND debug BEGIN 
-  //    READ_LONG 0x0c name
-  //    PATCH_IF (name > 0) AND (name < 999999) BEGIN
-  //      READ_STRREF 0x0c name
-  //    END ELSE BEGIN
-  //      READ_STRREF 0x08 name
-  //    END
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
-  //    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
-  //                                                              BEGIN SPRINT spc "        " END
-  //    PATCH_PRINT "              ~%SOURCE_FILE%~%spc%~override~ // %name%"
-  //  END  
+    LPF cd_eefp_mkhiin_animation END 
     BUT_ONLY 
 
 END

@@ -6,6 +6,8 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_iwdee.tra~ BEGIN STRING_SET
   8663 @8663
   8712 @8712
   8911 @8911
+  12200 @12200
+  12317 @12317
   14432 @14432
   14913 @14913
   17287 @17287
@@ -22,6 +24,7 @@ WITH_TRA ~eefixpack/languages/en_us/fixes_iwdee.tra~ BEGIN STRING_SET
   26214 @26214
   27373 @27373
   35784 @35784
+  35872 @35872
   36015 @36015
   36135 @36135
   36172 @36172

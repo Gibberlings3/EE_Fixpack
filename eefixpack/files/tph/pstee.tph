@@ -22,6 +22,8 @@ INCLUDE ~eefixpack/files/tph/a7/pst_ui_fix_str_help.tph~
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
+
 // tbd, cam
 // Names of parameters 2 and 3 for ExploreMapChunk() should be swapped in ACTION.IDS
 // adding non-res version of ForceSpellNoFeedback action

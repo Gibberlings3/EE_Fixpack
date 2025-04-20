@@ -111,6 +111,21 @@ Saving Throw: None
 
 When this spell is cast, all allied creatures within a 10-ft. radius are affected individually by Protection From Evil. It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target protected creatures.~
 
+// strike the last sentence about acting as a +1 weapon--it's a spell that just does damage, not a summoned weapon
+@26130 = ~Magical Stone
+(Enchantment)
+
+Level: 1
+Sphere: Combat 
+Range: 50 ft.
+Duration: Instant
+Casting Time: 4 
+Area of Effect: 1 creature
+Saving Throw: None 
+
+By using this spell, the priest can create a small magical pebble, which then flies out and hits a target opponent. The stone deals 1d4 points of damage to whomever it hits.~
+
+
 // shield of the archons cannot be dispelled, but it also doesn't absorb dispel - just use strref 15965 from iwdee
 @26287 = ~Shield of the Archons
 (Abjuration)

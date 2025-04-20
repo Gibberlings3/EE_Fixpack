@@ -105,6 +105,24 @@ ADD_TRANS_TRIGGER gaal 2  ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
 ADD_TRANS_TRIGGER gaal 26 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 1
 ADD_TRANS_TRIGGER gaal 17 ~Global("cd_gaal_beholder","MYAREA",1)~ DO 2
 
+// Korgan shouldn't ask about the book of kaza if he already had it
+ADD_TRANS_TRIGGER nevaziah 12 ~Global("TalkedAboutShagbag","GLOBAL",0)~ DO 1
+
+// cernd nvlor
+ALTER_TRANS cernd BEGIN 6 END BEGIN 0 END BEGIN ~TRIGGER~ ~~ END // failsafe transition
+ALTER_TRANS cernd BEGIN 6 END BEGIN 2 END BEGIN ~TRIGGER~ 
+~OR(3) !InParty("Jaheira") !AreaCheckObject("AR2009","Jaheira") Dead("Jaheira")   // transition 1 n/a 
+        InParty("Minsc")    AreaCheckObject("AR2009","Minsc")  !Dead("Minsc")~    // minsc available
+END // minsc's transition should check all three of jaheira's conditions, not just InParty
+ALTER_TRANS cernd BEGIN 6 END BEGIN 3 END BEGIN ~TRIGGER~ 
+~OR(2) Class(Player1,DRUID_ALL) Class(Player1,RANGER_ALL) !Class(Player1,SHAMAN) // p1 is a ranger/druid (but not shaman)
+OR(3) !InParty("Jaheira") !AreaCheckObject("AR2009","Jaheira") Dead("Jaheira")   // transition 1 n/a 
+OR(3) !InParty("Minsc")   !AreaCheckObject("AR2009","Minsc")   Dead("Minsc")~    // transition 2 n/a
+END // p1 gets comment only if minsc/jaheira comments unavailable
+
+// does have another 'done' entry if you give talisman to daxus
+REPLACE_ACTION_TEXT ohnknock ~AddJournalEntry(100041,QUEST)~ ~AddJournalEntry(100041,QUEST_DONE)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\

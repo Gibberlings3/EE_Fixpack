@@ -1,0 +1,7 @@
+IF
+  NumItemsGT("%item%",%object%,0)
+  PartyHasItem("%item%")
+THEN
+  RESPONSE #100
+    ActionOverride(%object%,DestroyItem("%item%"))
+END

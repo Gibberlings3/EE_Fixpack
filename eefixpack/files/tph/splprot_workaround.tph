@@ -1,0 +1,79 @@
+/*
+https://www.gibberlings3.net/forums/topic/39418-about-the-bug-when-checking-negative-stat-values/
+https://www.gibberlings3.net/forums/topic/34892-code-code-fixes-aka-stuff-we-cant-fix/page/7/#comment-325537
+
+tl;dr: using the splprot entry for poison resistance >= 100 will also block effects for creatures with negative 
+poison resistance values because the game doesn't check for signed integers. Clever workaround for this
+hardcoded issue from jmerry and RoyalProtector. 
+*/
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_splprot BEGIN
+  14,  3 => FIRE
+  15, 25 => COLD
+  74, 77 => POISON
+  17, 79 => ACID
+  16, 81 => ELECTRICITY
+  73, 83 => MAGICDAMAGERESISTANCE
+  19,  0 => MAGICFIRE
+  20,  0 => MAGICCOLD
+  21,  0 => SLASHING
+  22,  0 => CRUSHING
+  23,  0 => PIERCING
+  24,  0 => MISSILE  
+END
+
+ACTION_PHP_EACH cd_splprot AS stat => desc BEGIN
+
+  ACTION_IF stat_0 = 73 BEGIN OUTER_SPRINT mlabel ~%desc%~ END ELSE BEGIN OUTER_SPRINT mlabel ~RESIST%desc%~ END
+  
+  ACTION_IF stat_1 BEGIN // has existing entries
+  
+    OUTER_SET stat_2 = stat_1 +  1
+
+    COPY_EXISTING ~splprot.2da~ ~override~ // pst just has raw numbers as descripts, hence the large \(stuff\)? in the regexp
+      REPLACE_TEXTUALLY ~^%stat_1%\(_STAT(%mlabel%)>=100\)?[ %TAB%]+%stat_0%[ %TAB%]+100[ %TAB%]+4~ ~%stat_1%_%desc%_IMMUNE 0x104 %%desc%1% %%desc%2%~
+      REPLACE_TEXTUALLY ~^%stat_2%\(_STAT(%mlabel%)<100\)?[ %TAB%]+%stat_0%[ %TAB%]+100[ %TAB%]+2~  ~%stat_2%_%desc%_VULNERABLE 0x103 %%desc%1% %%desc%2%~
+      
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = stat_0 STR_VAR value = 100 relation = 2 label = EVAL "STAT(%mlabel%)<100" RET ~%desc%1~ = index END
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = stat_0 STR_VAR value = 127 relation = 3 label = EVAL "STAT(%mlabel%)>127" RET ~%desc%2~ = index END
+    
+  END ELSE BEGIN 
+  
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = stat_0 STR_VAR value = 100 relation = 2 label = EVAL "STAT(%mlabel%)<100" RET ~stat1~ = index END
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = stat_0 STR_VAR value = 127 relation = 3 label = EVAL "STAT(%mlabel%)>127" RET ~stat2~ = index END 
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = 0x103 STR_VAR value = EVAL ~%stat1%~ relation = EVAL ~%stat2%~ label = EVAL "%desc%_IMMUNE" END   
+    LAF ADD_SPLPROT_ENTRY INT_VAR stat = 0x104 STR_VAR value = EVAL ~%stat1%~ relation = EVAL ~%stat2%~ label = EVAL "%desc%_VULNERABLE" END   
+
+  END 
+  
+END
+
+COPY_EXISTING ~splprot.2da~ ~override~ EVALUATE_BUFFER
+  PRETTY_PRINT_2DA
+ 
+/*
+// testing items
+ OUTER_FOR (index = 25 ; index < 250 ; index = index + 50) BEGIN
+   
+   ACTION_IF index > 127 BEGIN OUTER_SET desc = index - 255 END ELSE BEGIN OUTER_SET desc = index END 
+ 
+   COPY_EXISTING ~ring01.itm~ ~override/cd%desc%.itm~
+     LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 30 target = 1 parameter1 = desc timing = 2 END
+     SAY NAME1 ~Ring of %desc%% fire resist~
+     SAY NAME2 ~Ring of %desc%% fire resist~
+ 
+ END
+ 
+ COPY_EXISTING ~dagg01.itm~ ~override/cdtest1.itm~
+   SAY NAME1 ~Dagger with fire damage~
+   SAY NAME2 ~Dagger with fire damage~
+   LPF ALTER_HEADER INT_VAR to_hit = 20 END 
+   LPF ADD_ITEM_EFFECT INT_VAR type = 1 insert_point = 0 opcode = 324 target = 2 parameter2 = 3 STR_VAR resource = cdtest1 END
+   LPF ADD_ITEM_EFFECT INT_VAR type = 1 insert_point = 1 opcode = 139 target = 2 parameter1 = RESOLVE_STR_REF(~Effects!~) timing = 1 END
+   
+ COPY_EXISTING ~cdtest1.itm~ ~override/cdtest2.itm~
+   SAY NAME1 ~Opposite Dagger~
+   SAY NAME2 ~Opposite Dagger~
+   LPF ALTER_EFFECT INT_VAR match_opcode = 324 parameter2 = 4 STR_VAR resource = cdtest2 END
+   
+*/

@@ -26,10 +26,13 @@ INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit che
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
 INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
+INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
+  
+APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
   
 APPEND ~spell.ids~ ~3119 SAFANA_CHARM~ UNLESS ~^3119[ %TAB%]+SAFANA_CHARM[ %TAB%%MNL%%LNL%]+~ // syncing spell.ids
 
@@ -110,6 +113,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
      ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
      ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
+     ~eefixpack/files/bam/spwi324a.bam~ ~override~ // fixed hold undead icon (scroll)
 
 // fixing shadows on item icons
 COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
@@ -301,6 +305,13 @@ COPY_EXISTING ~baldur.bcs~   ~override~
     REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODHELM)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(3)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForLathander","GLOBAL",0)~
       ~\1 OR(2)~
   END
+  
+ACTION_FOR_EACH item IN ohhcask ohhcask2 BEGIN // fix bug of removing hexxat's casket from her bag
+  ACTION_FOR_EACH object IN Player1 Player2 Player3 Player4 Player5 Player6 Familiar BEGIN
+    EXTEND_BOTTOM ~baldur.bcs~   ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+    EXTEND_BOTTOM ~baldur25.bcs~ ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+  END
+END 
 
 // shaman summon script errors - fix for bgee, bg2ee, iwdee
 COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
@@ -386,6 +397,12 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
     REPLACE_TEXTUALLY ~\(MoveToPoint(\[[0-9]+\.[0-9]+\])\)~ ~\1 SetGlobal("f4imoved","LOCALS",1)~
   END
   BUT_ONLY
+  
+COPY_EXISTING ~haerdax.bcs~ ~override~ // refining haer'dalis' out of party combat scripting
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~AttackReevaluate(\([^,]+\),[0-9]+)~ ~Attack(\1)~
+  END
+  BUT_ONLY   
   
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~hexxat.bcs~ ~override~
@@ -608,6 +625,13 @@ COPY_EXISTING ~chevil01.cre~ ~override~
               ~chgood05.cre~ ~override~
   LPF ALTER_CREATURE_ITEM INT_VAR flag_unstealable = 1 flag_undroppable = 1 STR_VAR match_item = all END
   BUT_ONLY
+
+COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 with powers 1-9
+  FOR (index = 1 ; index < 10 ; ++index) BEGIN
+    LPF ALTER_EFFECT INT_VAR match_opcode = 102 match_power = index match_parameter1 = 0 power = 0 parameter1 = index END
+  END
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 102 parameter1 = 0 END 
+  BUT_ONLY   
 
 // ie-3658, cam
 // Jassar (and others) shouldn't drop identified magic armor

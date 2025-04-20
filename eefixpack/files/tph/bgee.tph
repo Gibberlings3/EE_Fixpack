@@ -57,10 +57,13 @@ INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit che
 INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
 INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
+INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
+  
+APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
 
 ACTION_IF (game_includes_sod) BEGIN
   INCLUDE ~eefixpack/files/tph/a7/sod_fogtype.tph~ // apply workaround for buggy FOG_TYPE implementation
@@ -1043,6 +1046,9 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
   LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
 
+COPY_EXISTING ~hamm13.itm~ ~override~ // hammer of dawn's portrait effect has a save
+  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 142 savingthrow = 0 END 
+  
 COPY_EXISTING ~helm14.itm~ ~override~ // don't leave a bunch of op23's laying around on the creature
   LPF ALTER_EFFECT INT_VAR match_opcode = 23 special = 0 END 
 

@@ -25,6 +25,7 @@ INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation def
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
 INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
+INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
@@ -54,6 +55,8 @@ APPEND ~object.ids~
 112 EighthFarthestEnemyOf
 113 NinthFarthestEnemyOf
 114 TenthFarthestEnemyOf~
+  
+APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
 
 // tbd, cam
 // nymphs from 'call woodland beings' lack their confusion ability due to a spell not being ported
@@ -827,6 +830,12 @@ COPY_EXISTING ~spitm99.spl~ ~override~
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter1 = 187 parameter2 = 115 duration = 1 STR_VAR resource = spitm99 END // block class != fire_elemental
   BUT_ONLY
 
+COPY_EXISTING ~sppr106.spl~ ~override~ // rather than multiple EFFs targeted at general IDS values, split as =4 and !=4
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 STR_VAR match_resource = ~#magstn1~ END
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 999 opcode = 318 target = 2 parameter2 = 1 STR_VAR resource = sppr106 END // block 3d4 non-undead damage from undead 
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 999 opcode =  12 target = 2 timing = 1 dicenumber = 3 dicesize = 4 END    // since they get their damage via eff
+  BUT_ONLY   
+
 // tbd, cam
 // IWDEE bug 321 should be subject to same MR check as AC effect
 COPY_EXISTING ~%CLERIC_ALICORN_LANCE%.spl~ ~override~ // sppr218
@@ -900,6 +909,15 @@ COPY_EXISTING ~%CLERIC_WALL_OF_MOONLIGHT%a.spl~ ~override~ // sppr428a
               ~%CLERIC_WALL_OF_MOONLIGHT%b.spl~ ~override~ // sppr428b
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 power = 0 resist_dispel = 0 END
 
+COPY_EXISTING ~sppr518a.spl~ ~override~ // rwotf effects for same alignment
+  PATCH_FOR_EACH spell IN spwi305 spra301 sppr518a BEGIN // remove 321s for spells with fatigue - stacking with normal haste provides no further benefits
+    LPF DELETE_EFFECT INT_VAR match_opcode = 321 STR_VAR match_resource = EVAL ~%spell%~ END
+  END  
+  LPF ALTER_EFFECT INT_VAR match_opcode = 93 resist_dispel = 0 END // can't dispel fatigue
+  LPF CLONE_EFFECT INT_VAR match_opcode = 54 opcode = 332 END // clone to-hit bonus to damage bonus
+  LPF CLONE_EFFECT INT_VAR match_opcode = 54 opcode = 206 parameter1 = 0 STR_VAR resource = sppr518a insert = last END // use 206 to prevent stack rather than 321
+  BUT_ONLY   
+
 // tbd, cam
 // IWDEE bug 321 should be timing 1/dur 0
 COPY_EXISTING ~%CLERIC_SPIKE_STONES%.spl~ ~override~ // sppr519
@@ -970,6 +988,10 @@ COPY_EXISTING ~sppr711.spl~ ~override~ // regeneration
               ~sppr740.spl~ ~override~ // wither
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 20 END // trim off incorrect headers
   LPF CD_EXTEND-O-MATIC INT_VAR dur_special = 1 step_size = 2 step_dur = 6 END // 1 rd/2 levels
+
+COPY_EXISTING ~sppr720.spl~ ~override~ // earthquake: "creatures with 10 or more Hit Dice are unaffected by this spell"
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = 0 parameter2 = 0 dicenumber = 99 dicesize = 10 END
+  BUT_ONLY   
 
 // evasion fixes - missing evasion check
 COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death
