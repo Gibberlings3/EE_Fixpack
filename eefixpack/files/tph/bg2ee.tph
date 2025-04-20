@@ -398,6 +398,12 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
   END
   BUT_ONLY
   
+COPY_EXISTING ~haerdax.bcs~ ~override~ // refining haer'dalis' out of party combat scripting
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~AttackReevaluate(\([^,]+\),[0-9]+)~ ~Attack(\1)~
+  END
+  BUT_ONLY   
+  
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~hexxat.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN 
