@@ -638,6 +638,10 @@ COPY_EXISTING ~%PALADIN_LAY_ON_HANDS%.spl~ ~override~ // spcl211, lay on hands
   END
   BUT_ONLY
 
+COPY_EXISTING ~spcl721.spl~ ~override~ // don't keep repeating animation
+  LPF ALTER_EFFECT INT_VAR match_opcode = 215 duration = 2 END
+  BUT_ONLY   
+
 // make protection from evil 10' radius actually, uh, have a 10' radius
 COPY_EXISTING ~spargrpa.pro~ ~override/spprot10.pro~ // new 10' projectile
   WRITE_SHORT 0x204 171
