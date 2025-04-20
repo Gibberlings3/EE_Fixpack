@@ -1,8 +1,7 @@
 // tbd, cam
 // make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
-COPY ~eefixpack/files/bam/mscr~ ~override~ // troll_scrag
-     ~eefixpack/files/bam/mtic~ ~override~ // troll_ice
-     ~eefixpack/files/bam/mtsn~ ~override~ // troll_snow
+
+// troll_scrag, troll_ice, troll_snow copied in main anim copy
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_troll_anims BEGIN
 
