@@ -94,46 +94,22 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
      ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
-     ~eefixpack/files/bam/mdem~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, demogorgon
-     ~eefixpack/files/bam/mdr1~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon red
-     ~eefixpack/files/bam/mdr2~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon black
-     ~eefixpack/files/bam/mdr3~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, dragon silver
-     ~eefixpack/files/bam/mwyv~         ~override~ // tbd, sam.: merging four-frame animations to fix issues, wyvern big - also add shadows
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
-     ~eefixpack/files/bam/cmnk1inv.bam~ ~override~ // monk (tutorial, not pc) paperdoll
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
      ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
-     ~eefixpack/files/bam/sppr314d.bam~ ~override~ // new unholy blight portrait icon
      ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
-     ~eefixpack/files/bam/mvaf~         ~override~ // sam.: removing shadows from vampires, female
-     ~eefixpack/files/bam/mvam~         ~override~ // sam.: removing shadows from vampires, male
-     ~eefixpack/files/bam/nboh~         ~override~ // sam.: removing shadows from vampires, bodhi
-     ~eefixpack/files/bam/ohbcnosh.bam~ ~override~ // broken noser uniform BAM
-     ~eefixpack/files/bam/spwi516a.bam~ ~override~ // fix uncolored BAM for conjure lesser fire elemental scroll
-     ~eefixpack/files/bam/spsdbur.bam~  ~override~ // fixed silver dragon breath
-     ~eefixpack/files/bam/sppr203c.bam~ ~override~ // fixed chant icon (spellbook)
-     ~eefixpack/files/bam/spwi324a.bam~ ~override~ // fixed hold undead icon (scroll)
 
-// fixing shadows on item icons
-COPY ~eefixpack/files/bam/item_shadows/bg2ee~           ~override~
-     ~eefixpack/files/bam/item_shadows/bg2ee_iwdee~     ~override~
-     ~eefixpack/files/bam/item_shadows/bgee_bg2ee~      ~override~
-     ~eefixpack/files/bam/item_shadows/sod_bg2ee~       ~override~
-     ~eefixpack/files/bam/item_shadows/sod_bg2ee_iwdee~ ~override~
-     ~eefixpack/files/bam/item_shadows/universal~       ~override~
-
-INCLUDE ~eefixpack/files/tph/spell_bams.tph~ // updated spell BAMs
-
-// tbd, sam.
-// merging multi-part area animations to eliminate issues
-ACTION_FOR_EACH file IN
-  1400t001 1400t002 1400t003 1400t004 1400t005 am0602c am0602d am0602k1 am0602k2 am0602l1 am0602l2
-  am0801b1 am0801b2 am0902l am0902l1 am0902l2 am0902l3 am0902l4 am2000a am2000a1 am2000a2 am2000a3
-  am2000a4 am2000b am2000b1 am2000b2 am2000b3 am2000b4 am2805b am2805c am414e11 am414e12
-BEGIN
-  COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
-END
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), wyvern (plus shadow); monk paperdoll; 
+// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; broken noser uniform BAM; uncolored BAM for conjure lesser fire
+// elemental scroll; fixed chant icon (spellbook); fixed hold undead icon (scroll); troll_scrag, troll_ice, troll_snow anims for troll fixes;
+// updated spell BAMs; merging multi-part area animations to eliminate issues
+COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
+     ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
+     ~eefixpack/files/bam/copy/sod_bg2ee~        ~override~
+     ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~  ~override~
+     ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
 
 // installing BAM V2 resources
 INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
