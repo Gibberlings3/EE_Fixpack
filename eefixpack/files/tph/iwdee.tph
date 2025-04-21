@@ -30,6 +30,8 @@ INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resista
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
+  
+COPY ~eefixpack/files/2da/entries.2da~ ~override~ // had bg2 references
 
 APPEND ~object.ids~
 ~57 EighthNearestEnemyOfType
