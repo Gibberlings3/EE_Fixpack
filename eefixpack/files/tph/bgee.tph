@@ -1543,6 +1543,11 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
+ACTION_IF game_includes_sod BEGIN // bonus damage from Pritchard's Family Stiletto +2 should be piercing, not fire
+  COPY_EXISTING ~bdsw1h7d.eff~ ~override~
+    WRITE_SHORT 0x22 16
+END
+
 // corrupted wed fixes
 COPY_EXISTING ~ar1000.wed~ ~override~
               ~oh2010.wed~ ~override~

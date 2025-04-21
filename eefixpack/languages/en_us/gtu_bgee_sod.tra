@@ -7063,6 +7063,26 @@ Weight: 3~
 
 Hoach Randymonk has finished repairing my Boots of Speed.~
 
+// [automatic scan] Issues: 1  | Surplus trailing whitespace at line 5
+// style: moving (piercing) from damage line to its own line
+@52046 = ~This thin, nasty-looking blade was wielded by the gnomish Gardnersonson family in two Dragonspear Wars. Though delicate in appearance and obviously designed for a smaller than human hand, the weapon is extraordinarily effective when turned against ogres, giants, ettins, and other similarly sized creatures.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +2 vs. giant humanoids
+
+THAC0: +2, +4 vs. giant humanoids
+Damage: 1d4+2, +4 vs. giant humanoids
+Damage type: Piercing
+Speed Factor: 0
+Proficiency Type: Dagger
+Type: One-handed
+Requires:
+ 3 Strength
+
+Weight: 1~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @52056 = ~You're going in the wrong direction, <CHARNAME>.~
 

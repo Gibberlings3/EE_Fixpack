@@ -33,24 +33,6 @@ Requires:
 
 Weight: 12~
 
-// needs to clarify the bonus damage vs. giant humanoids is fire damage
-@52046 = ~This thin, nasty-looking blade was wielded by the gnomish Gardnersonson family in two Dragonspear Wars. Though delicate in appearance and obviously designed for a smaller than human hand, the weapon is extraordinarily effective when turned against ogres, giants, ettins, and other similarly sized creatures.
-
-STATISTICS:
-
-Equipped abilities:
-– Armor Class: +2 vs. giant humanoids
-
-THAC0: +2, +4 vs. giant humanoids
-Damage: 1d4+2 (piercing), +4 fire damage vs. giant humanoids
-Speed Factor: 0
-Proficiency Type: Dagger
-Type: One-handed
-Requires:
- 3 Strength
-
-Weight: 1~
-
 // The weight in the description and in-game should be 0
 @52365 = "Any target hit by this bolt must making a Saving Throw or be paralyzed for 5 rounds.
 
