@@ -123,6 +123,10 @@ END // p1 gets comment only if minsc/jaheira comments unavailable
 // does have another 'done' entry if you give talisman to daxus
 REPLACE_ACTION_TEXT ohnknock ~AddJournalEntry(100041,QUEST)~ ~AddJournalEntry(100041,QUEST_DONE)~
 
+// dawn ring quest sets a couple of ongoing journal entries in the finished section
+ALTER_TRANS scyarryl BEGIN 31 END BEGIN 1 2 3 4 END BEGIN ~UNSOLVED_JOURNAL~ ~#2071~ END
+ALTER_TRANS sctelwyn BEGIN 30 END BEGIN 1 2 3 4 END BEGIN ~UNSOLVED_JOURNAL~ ~#2074~ END
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
