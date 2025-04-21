@@ -140,23 +140,13 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow); 
 // monk paperdoll; unholy blight portrait icon; fix SC sequence for creature animation 0x7F07 GOLEM_CLAY; rle-encoding error for shroud 
-// of flame portrait icon; removing vamp shadows; fixed silver dragon breath; updated spell BAMs
+// of flame portrait icon; removing vamp shadows; fixed silver dragon breath; updated spell BAMs; merging multi-part area animations to 
+// eliminate issues
 COPY ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
      ~eefixpack/files/bam/copy/iwdee~            ~override~
      ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~  ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
-
-// tbd, sam.
-// merging multi-part area animations to eliminate issues
-ACTION_FOR_EACH file IN
-  1000ms1 1105ms1 1201ms2 1400t001 1400t002 1400t003 1400t004 1400t005 3001ms1 3601ms1
-  6013ms1 am0602c am0602d am0602k1 am0602k2 am0602l1 am0602l2 am0801b1 am0801b2 am0902l
-  am0902l1 am0902l2 am0902l3 am0902l4 am2000a am2000a1 am2000a2 am2000a3 am2000a4 am2000b
-  am2000b1 am2000b2 am2000b3 am2000b4 am2805b am2805c am414e11 am414e12
-BEGIN
-  COPY ~eefixpack/files/bam/area_anim/%file%.bam~ ~override~
-END
 
 // installing BAM V2 resources
 INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
