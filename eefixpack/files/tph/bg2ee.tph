@@ -613,6 +613,9 @@ COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 
   END
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 102 parameter1 = 0 END 
   BUT_ONLY   
+  
+COPY_EXISTING ~jaga3.cre~ ~override~ // give XP value for Nadinal
+  WRITE_LONG 0x14 2500
 
 // ie-3658, cam
 // Jassar (and others) shouldn't drop identified magic armor
