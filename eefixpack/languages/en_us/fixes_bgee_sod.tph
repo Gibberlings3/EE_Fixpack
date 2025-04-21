@@ -3,6 +3,7 @@
 WITH_TRA ~eefixpack/languages/en_us/fixes_bgee_sod.tra~ BEGIN STRING_SET
   46138 @46138
   51969 @51969
+  52046 @52046
   52365 @52365
   67456 @67456
 END
