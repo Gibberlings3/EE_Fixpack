@@ -602,6 +602,11 @@ COPY_EXISTING ~chevil01.cre~ ~override~
   LPF ALTER_CREATURE_ITEM INT_VAR flag_unstealable = 1 flag_undroppable = 1 STR_VAR match_item = all END
   BUT_ONLY
 
+// moving demogorgon's broken regen from his cre to his weapon (see also demogorg.itm)
+COPY_EXISTING ~demogor2.cre~ ~override~ // demogorgon
+              ~ohb5bhal.cre~ ~override~ // bhaal
+  LPF DELETE_EFFECT INT_VAR match_opcode = 98 END
+
 COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 with powers 1-9
   FOR (index = 1 ; index < 10 ; ++index) BEGIN
     LPF ALTER_EFFECT INT_VAR match_opcode = 102 match_power = index match_parameter1 = 0 power = 0 parameter1 = index END
@@ -710,6 +715,10 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
 // poison icon shouldn't be dispellable
 COPY_EXISTING ~dart05.itm~ ~override~ // asp's nest
   LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END
+  
+// moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
+COPY_EXISTING ~demogorg.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END 
 
 // tbd, cam (from MiH)
 // flindbar should decrease thac0 of target, not increase it
