@@ -21,6 +21,30 @@ COPY_EXISTING ~ghoul1.itm~   ~override~ // Ghoul Touch - causes hold - plays sou
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = hold_immunity parameter2 = 110 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 */
 
+// many items/spells that block stun miss whirlwind's 'stunned' string
+COPY_EXISTING ~behamu.itm~   ~override~ // no such index
+              ~cibossb.itm~  ~override~ // ring
+              ~cigbard.itm~  ~override~ // ring of free action
+              ~freeact.itm~  ~override~ // ring of free action
+              ~invulner.itm~ ~override~ // ring
+              ~ipsion.itm~   ~override~ // greenstone amulet
+              ~labelt.itm~   ~override~ // girdle of labelas
+              ~minhp1.itm~   ~override~ // no such index
+              ~plyjelly.itm~ ~override~ // attack
+              ~ring09.itm~   ~override~ // ring of free action
+              ~ring90.itm~   ~override~ // ring
+              ~ring91.itm~   ~override~ // ring
+              ~stalker.itm~  ~override~ // ring
+              ~trollall.itm~ ~override~ // attack
+              ~trollimm.itm~ ~override~ // ring
+              ~spcl152.spl~  ~override~ // rage
+              ~spcl321.spl~  ~override~ // enrage
+              ~spcl542a.spl~ ~override~ // no such index
+              ~spcl920a.spl~ ~override~ // no such index
+              ~sppr403.spl~  ~override~ // free action
+              ~sppr422.spl~  ~override~ // blood rage
+  LPF CLONE_EFFECT INT_VAR match_opcode = 101 match_parameter2 = 45 opcode = 267 parameter1 = 35568 parameter2 = 0 END 
+
 // poison immunity blocking slow
 COPY_EXISTING ~jellmu1.itm~  ~override~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
   LPF CLONE_EFFECT  INT_VAR match_opcode = 318 STR_VAR insert = last END
@@ -51,6 +75,10 @@ COPY_EXISTING ~spin119.spl~  ~override~ // (spl) Great Roar - causes fear - port
 COPY_EXISTING ~spin120.spl~  ~override~ // (spl) Retribution - causes sleep - additional effects [color pulse]
               ~spin161.spl~  ~override~ // (spl) <Invalid Strref -1> - causes sleep - additional effects [remove stacking protection]
   LPF CLONE_EFFECT INT_VAR match_opcode = 39 opcode = 324 parameter1 = sleep_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+
+// stun immunity check missing
+COPY_EXISTING ~sppr617b.spl~ ~override~ // (spl) whirlwind stun  
+  LPF CLONE_EFFECT INT_VAR match_opcode = 45 opcode = 324 parameter1 = stun_immunity parameter2 = 110 timing = 0 resist_dispel = 0 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 
 // stun immunity check placed too late
 COPY_EXISTING ~sppr716.spl~  ~override~ // (spl) Symbol, Hopelessness - causes stun - portrait icon(s) 44 - sound(s) #eff_e04 [expiry sound, hopelesssness icon]
