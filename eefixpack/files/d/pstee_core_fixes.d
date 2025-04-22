@@ -63,6 +63,10 @@ ALTER_TRANS damarys BEGIN 7 END BEGIN 0 2 END BEGIN ~TRIGGER~ ~GlobalLT("Nodd_Qu
 // all branches leading to Black-Barbed Seed sprouting should consume the seed
 ADD_TRANS_ACTION dmftree BEGIN 56 57 END BEGIN 2 END ~DestroyPartyItem("BSeed1",TRUE)~
 
+// NVLOR in morte's dialogue: !NearbyDialog("Dgrace") > OR(2) !NearbyDialog("Dgrace") Global("Ravel_Grace","GLOBAL",0) 
+ALTER_TRANS dmorte BEGIN 558 END BEGIN 2 END BEGIN ~TRIGGER~ ~GlobalGT("Ravel_Morte","GLOBAL",0) GlobalLT("Torment_Fell","GLOBAL",2) OR(2) !NearbyDialog("Dgrace") Global("Ravel_Grace","GLOBAL",0)~
+ALTER_TRANS dmorte BEGIN 558 END BEGIN 3 END BEGIN ~TRIGGER~ ~GlobalGT("Ravel_Morte","GLOBAL",0) Global("Torment_Fell","GLOBAL",2) OR(2) !NearbyDialog("Dgrace") Global("Ravel_Grace","GLOBAL",0)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\

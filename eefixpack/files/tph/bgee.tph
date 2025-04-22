@@ -63,6 +63,8 @@ INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resista
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
   
+COPY ~eefixpack/files/2da/entries.2da~ ~override~ // had bg2 references
+  
 APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
 
 ACTION_IF (game_includes_sod) BEGIN
@@ -226,7 +228,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, wyvern (plus shadow); monk paperdoll; 
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook); 
-//  missing short flaming sword bams (f2); shocking grasp icons; updated spell BAMs
+//  missing short flaming sword bams (f2); shocking grasp icons; updated spell BAMs; death knight anim touchups
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
@@ -994,6 +996,10 @@ COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron 
     LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 206 STR_VAR match_resource = sw1h01 resource = EVAL ~%spell%~ insert = below END
   END
   BUT_ONLY   
+  
+// moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
+COPY_EXISTING ~demogorg.itm~ ~override~
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END 
 
 // elven charm immunity can block level drain and other effects
 OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
@@ -1536,6 +1542,11 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
 
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+
+ACTION_IF game_includes_sod BEGIN // bonus damage from Pritchard's Family Stiletto +2 should be piercing, not fire
+  COPY_EXISTING ~bdsw1h7d.eff~ ~override~
+    WRITE_SHORT 0x22 16
+END
 
 // corrupted wed fixes
 COPY_EXISTING ~ar1000.wed~ ~override~
