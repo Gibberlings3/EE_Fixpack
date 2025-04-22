@@ -127,6 +127,9 @@ REPLACE_ACTION_TEXT ohnknock ~AddJournalEntry(100041,QUEST)~ ~AddJournalEntry(10
 ALTER_TRANS scyarryl BEGIN 31 END BEGIN 1 2 3 4 END BEGIN ~UNSOLVED_JOURNAL~ ~#2071~ END
 ALTER_TRANS sctelwyn BEGIN 30 END BEGIN 1 2 3 4 END BEGIN ~UNSOLVED_JOURNAL~ ~#2074~ END
 
+// rasaad quest entry should go into ongoing journal section, not done
+REPLACE_ACTION_TEXT ohralor ~AddJournalEntry(85086,QUEST_DONE)~ ~AddJournalEntry(85086,QUEST)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
