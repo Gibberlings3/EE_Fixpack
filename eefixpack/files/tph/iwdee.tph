@@ -143,7 +143,7 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow); 
 // monk paperdoll; unholy blight portrait icon; fix SC sequence for creature animation 0x7F07 GOLEM_CLAY; rle-encoding error for shroud 
 // of flame portrait icon; removing vamp shadows; fixed silver dragon breath; updated spell BAMs; merging multi-part area animations to 
-// eliminate issues; death knight anim touchups
+// eliminate issues; death knight anim touchups; cleaned up divine spell, bard song, seven eyes icons
 COPY ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_iwdee~       ~override~
      ~eefixpack/files/bam/copy/iwdee~            ~override~
