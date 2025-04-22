@@ -103,7 +103,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), wyvern (plus shadow); monk paperdoll; 
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; broken noser uniform BAM; uncolored BAM for conjure lesser fire
 // elemental scroll; fixed chant icon (spellbook); fixed hold undead icon (scroll); troll_scrag, troll_ice, troll_snow anims for troll fixes;
-// updated spell BAMs; merging multi-part area animations to eliminate issues
+// updated spell BAMs; merging multi-part area animations to eliminate issues; death knight anim touchups
 COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
      ~eefixpack/files/bam/copy/bg2ee_iwdee~      ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
