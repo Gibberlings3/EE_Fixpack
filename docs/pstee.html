@@ -16,7 +16,7 @@
 <body>
 <p><strong>Developer note:</strong> this is essentially copy-pasted (minus this paragraph, natch) into the documentation pages on the G3 project page. Feel free to add/adjust the documentation as needed. The class <span class="bg2fp_beta">bg2fp_beta (red)</span> should be used to mark fixes that are in the Beta Core Fixes (nothing yet) and the <span class="bg2fp_modder">bg2fp_modder (magenta)</span> class should be used for modder notes. In the live pages, these are normally colored, but hidden, unless the user enables them. </p>
 <!-- documentation begins here -->
-<p>This documentation is complete as of Alpha 1 - April 1, 2025. </p>
+<p>This documentation is complete as of Alpha 2 - April 23, 2025. </p>
 <p>
   <input id="cd_modder_show" name="cd_modder_show" onclick="$('.bg2fp_modder').css({'display':'block'}); $('span.bg2fp_modder').css({'display':'inline'}); $('#cd_modder_show').attr('disabled', 'disabled'); $('#cd_modder_hide').removeAttr('disabled');" type="button" value="Show Modder Notes" />
   <input disabled="disabled" id="cd_modder_hide" name="cd_modder_hide" onclick="$('.bg2fp_modder').css({'display':'none'}); $('span.bg2fp_modder').css({'display':'none'}); $('#cd_modder_hide').attr('disabled', 'disabled'); $('#cd_modder_show').removeAttr('disabled');" type="button" value="Hide Modder Notes" />
@@ -39,6 +39,7 @@
 <ul>
   <li>There is a very small window between the end of a cutscene and the initiation of dialogue where actors could disrupt the scripted actions. <span class="bg2fp_modder">(1201csa2.bcs, 1204a1.bcs, 1204d1.bcs, 1204g1.bcs, 1204i1.bcs, 1204m1.bcs, 1204n1.bcs, 1204v1.bcs, 1501cut4.bcs)</span></li>
   <li>Fireshield-type spells&mdash;Fireshields or similar effects that would retaliate or perform other actions when the target was struck&mdash;would interrupt the casting sounds and other audio of the creature they were protecting, even if the fireshield and its effects were silent. <span class="bg2fp_modder">(spwi108.spl)</span></li>
+  <li>Some items and spells that cause elemental damage would prevent their own effects if the target was immune, e.g. the Dagger of Venom wouldn't even apply its poison if the target had 100% (or greater) poison resistance. However, these checks were also erroneously blocking it for targets with negative resistances who should be taking bonus damage. <span class="bg2fp_modder">Additionally, entries were added for all damage types. (splprot.2da)</span></li>
 </ul>
 <h3> <a name="area_fixes" id="area_fixes"></a>Area Fixes <a href="#area_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -59,6 +60,9 @@
   <li>Cleared a reference to a non-existant item in Marissa's dialogue<span class="bg2fp_modder"> (dmarissa.dlg)</span></li>
   <li>Nihl Xander should give you an existing 'Pacify' scroll when following the Dreambuilder conversation branch<span class="bg2fp_modder"> (dxander.dlg)</span></li>
   <li>If actions in dialogues were misordered in a very specific and technical way, some of the actions (such as updating variables for quests) may not get executed. These action queues have been re-ordered to be more robust.<span class="bg2fp_modder"> (bladeim.dlg, d300mer5.dlg, dadyzoel.dlg, danam.dlg, dannah.dlg, dawait.dlg, dbaria.dlg, dberrog.dlg, dbish.dlg, dbladeim.dlg, dburgher.dlg, dcarver.dlg, dcoax.dlg, dcraddo.dlg, ddakkon.dlg, ddeathad.dlg, ddolora.dlg, ddust.dlg, ddustfem.dlg, deivene.dlg, deli.dlg, delobran.dlg, dfinnote.dlg, dghiverm.dlg, dgiantsk.dlg, dgith.dlg, dgoncal.dlg, dhgcorv.dlg, dhguard.dlg, dhivef1.dlg, dhpatrol.dlg, diannis.dlg, dignus.dlg, dkeldor.dlg, dkimasxi.dlg, dkitla.dlg, dlingash.dlg, dmar.dlg, dmorte.dlg, dnordom.dlg, dpox.dlg, dravel.dlg, drkchsr.dlg, dr_bone.dlg, dsabast.dlg, dsarhava.dlg, dscpat2.dlg, dstalema.dlg, dsybil.dlg, dthornco.dlg, dtires.dlg, dvaxis.dlg, dvhail.dlg, dzm985.dlg, finnote.dlg)</span></li>
+  <li>Amarysse could have a  'No Valid Links or Replies' error if you were non-committal when speaking with Nodd. Also fixed a minor trigger error in Nodd's dialogue. <span class="bg2fp_modder">(dnodd.dlg, damarys.dlg)</span></li>
+  <li>In a few dialogue branches, getting the Black-Barbed Seed to sprout when speaking with Mourns-For-Trees wouldn't consume the seed <span class="bg2fp_modder">(dmftree.dlg)</span></li>
+  <li>Fixed a potential 'No Valid Links or Replies' error with Morte prior to entering the Fortress of Regrets <span class="bg2fp_modder">(dmorte.dlg)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -93,6 +97,7 @@
 <ul>
   <li>Fixed a store trigger for Tattoo of the Betrayer in Fell's Studio. <span class="bg2fp_modder">(strref #51352)</span></li>
   <li>Travel times between Hive areas were inconsistent once  worldmap travel was enabled. <span class="bg2fp_modder">(worldmap.wmp)</span></li>
+  <li>Vhailor's statistics screen did not show a strength description <span class="bg2fp_modder">(ui.menu, util.lua)</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
