@@ -65,7 +65,7 @@
     <div class="ribbon_triangle_h2-l"></div>
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
-      <p>The EE Fixpack is designed to work with the Enhanced Editions of Baldur's Gate (with or witout the Siege of Dragonspear expansion), Baldur's Gate II, Icewind Dale, or Planescape: Torment. <strong>In terms of installation order, the
+      <p>The EE Fixpack is designed to work with the Enhanced Editions of Baldur's Gate (with or without the Siege of Dragonspear expansion), Baldur's Gate II, Icewind Dale, or Planescape: Torment. <strong>In terms of installation order, the
         Fixpack should be installed after the official patches, but before other
         mods with the sole exception for DLC Merger, as noted in the installation instructions. </strong></p>
       <p>There are also <a href="https://www.gibberlings3.net/forums/topic/34892-code-code-fixes-aka-stuff-we-cant-fix/">some bugs we can't fix</a>, that we hope can be addressed in a future official patch. </p>
@@ -111,7 +111,7 @@
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
       <p>The <acronym title="Baldur's Gate II">EE</acronym> Fixpack is basically
-        three items: core fixes, a game text update, and beta core fixes. As the overall project is beta, the 'beta core fixes' component is not yet available. </p>
+        three items: core fixes, a game text update, and beta core fixes. As the overall project is curently an alpha, the 'beta core fixes' component is not yet available. </p>
       <p><strong><acronym title="Baldur's Gate II">EE</acronym> Fixpack: Core Fixes </strong></p>
       <p> This component includes all fixes deemed to be core by the Fixpack team.
         While some bugs are clearly bugs, the team also has a review process for
@@ -188,15 +188,14 @@
         <li>Fixes to the fixes:
           <ul>
             <li>[BG2] The  fixes for Gaal's dialogue were resulting in a serious bug where you could no longer accept the Unseeing Eye quest</li>
-            <li>[BG2] The fix to have Albruin, Peridan, and the Jansen Spectroscopes to cast spells directly was removing their global effects</li>
+            <li>[BG2] The fix to change Albruin, Peridan, and the Jansen Spectroscopes to cast spells directly was removing their global effects</li>
             <li>[BG2] The updates to Bernard's store worked, but could be delayed quite a bit by his script. They've been moved to a different script to remove the delays. </li>
             <li>[IWD] False Dawn was having its damage removed as part of the Seven Eyes fixes</li>
             <li>[BG2] The cutscene fixes were causing a hanging cutscene when you reached the interior of the Dark Moon Heretic Temple as part of Rasaad's quest</li>
             <li>[BG, BG2, IWD] The new immunity scheme could sometimes cause a saving throw to be rolled when a creature is immune</li>
-            <li>[BG, BG2, IWD] The fixes to make nishruu and hakeashar more reliably dispelled was affecting other creatures</li>
+            <li>[BG, BG2, IWD] The fix to make nishruu and hakeashar more reliably dispelled was affecting other creatures</li>
             <li>[BG, BG2, IWD] Purged duplicate light crossbow item icons</li>
             <li>[BG] The new portrait icon for Unholy Blight had the wrong description text on BGEE</li>
-            <li>[BG] M'Khiin's animation fix has been re-worked as a library so that other mods can apply these fixes to their own items</li>
           </ul>
         </li>
         <li>Fixes added to the <strong>Core Fixes</strong>
@@ -235,7 +234,7 @@
             <li>[IWD] About 90 more icon fixes for spells and abilities</li>
             <li>[IWD] Murdaugh can now help with Daen Winterbrush after his own quest is complete. Also tightened up his scripting a bit.</li>
             <li>[IWD] Baldemar's dialogue was checking the wrong variable to see if you knew the location of the barbarian camp, and wasn't properly checking variables for other questions</li>
-            <li>[IWD] You should be able to ask Edion about Hjollder when you rach Burial Isle, but he was checking for the wrong variable values.</li>
+            <li>[IWD] You should be able to ask Edion about Hjollder when you reach Burial Isle, but he was checking for the wrong variable values.</li>
             <li>[IWD] Vexing Thoughts asks you to kill an innocent, but one of his dialogue branches was checking for three</li>
             <li>[IWD] Contact Other Plane's question about who was leading the barbarian tribes was unavailable due to a bad variable check. </li>
             <li>[IWD] Hjollder's dialogue could reveal the Gloomfrost on the map too early</li>
@@ -244,6 +243,7 @@
         </li>
         <li>Internal changes
           <ul>
+            <li>M'Khiin's animation fix has been re-worked as a library so that other mods can apply these fixes to their own items</li>
             <li>entries.2da had leftover junk from BG2 that has been cleaned up for BG and IWD</li>
             <li>BAMs were reorganized to reduce future maintenance</li>
           </ul>
