@@ -39,7 +39,7 @@ ALWAYS
 
 END
 
-VERSION ~Alpha 1~
+VERSION ~Alpha 2~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 

@@ -1,0 +1,18 @@
+IF
+  Global("CDMurduaghDaen","MYAREA",1)
+  Global("CDMurduaghDaenTimerSet","MYAREA",0)
+THEN 
+  RESPONSE #100
+    SetGlobal("CDMurduaghDaenTimerSet","MYAREA",1)
+    SetGlobalTimer("CDMurduaghDaenTimer","MYAREA",2)
+END
+
+IF
+  Global("CDMurduaghDaen","MYAREA",1)
+  Global("CDDaen","GLOBAL",0)
+  GlobalTimerExpired("CDMurduaghDaenTimer","MYAREA")
+THEN 
+  RESPONSE #100
+    SetGlobal("CDMurduaghDaen","MYAREA",2)
+    StartDialogueNoSet([PC])
+END

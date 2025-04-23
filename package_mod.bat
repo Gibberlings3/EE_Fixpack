@@ -6,7 +6,7 @@ call "%~dp0..\ModPackaging\utilities\ie_games.bat"
 
 REM /* MODIFY: set the values of the 3 variables below to reflect the current mod version */
 set "mod_name=Enhanced Edition Fixpack"
-set mod_version=Alpha_1
+set mod_version=Alpha_2
 set mod_folder=eefixpack
 
 REM /* MODIFY: list here which IE games the mod is compatible with, from this list of possibilities: */

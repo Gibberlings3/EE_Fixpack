@@ -77,6 +77,42 @@ ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 // should only be able to ask Flozem about Marketh if you know him
 ADD_TRANS_TRIGGER DFLOZEM 2 ~Global("Know_Marketh","GLOBAL",1)~ DO 0
 
+// checking non-existent car for knowledge of barb camp; swap to existing var for checks
+REPLACE_TRIGGER_TEXT dbaldemr ~"Know_Barb_Camp"~ ~"ar9200_revealed"~ 
+// know_threat set properly, but should go to 2 when you ask the followup in 8 (set on 8.0 but not 8.1)
+ADD_TRANS_ACTION dbaldemr BEGIN 8 END BEGIN 1 END ~SetGlobal("Know_Threat","GLOBAL",2)~
+// use new var instead of know_threat for followup about the camp
+ADD_TRANS_ACTION dbaldemr BEGIN 4 END BEGIN END ~SetGlobal("cd_asked_baldemar_camp","GLOBAL",1)~ // state where you've asked sets var
+ALTER_TRANS dbaldemr BEGIN 7 END BEGIN 1 END BEGIN TRIGGER ~Global("cd_asked_baldemar_camp","GLOBAL",1)~ END // gate the followup in 9
+ALTER_TRANS dbaldemr BEGIN 8 END BEGIN 0 END BEGIN TRIGGER ~Global("cd_asked_baldemar_camp","GLOBAL",1)~ END // gate the followup in 9
+// know_threat set properly, but should go to 2 when you ask the followup in 8 (set on 8.0 but not 8.1)
+ADD_TRANS_ACTION dbaldemr BEGIN 9 END BEGIN END ~SetGlobal("cd_asked_baldemar_camp","GLOBAL",2)~
+
+EXTEND_TOP DMURDAUG 52 #2
+  IF ~Global("Know_Murdaugh","GLOBAL",1)
+      Global("CDMurduaghDaen","MYAREA",0)
+      PartyHasItem("cddaen")~ THEN REPLY #40415 GOTO 57
+  IF ~Global("Know_Murdaugh","GLOBAL",1)
+      Global("CDMurduaghDaen","MYAREA",3)
+      PartyHasItem("cddaen")
+      PartyHasItem("myrloch")~ THEN REPLY #40423 GOTO 55
+END
+
+// can't ask edion about hjollder due to a bad var check
+REPLACE_TRIGGER_TEXT dedion ~GlobalLT("Hjollder_Quest","GLOBAL",4)~ ~GlobalLT("Hjollder_Quest","GLOBAL",5)~
+
+// vexing thoughts asks you to kill *an* innocent, not three (see also strref #24285)
+REPLACE_TRIGGER_TEXT dvexing ~GlobalGT("Kill_Innocent","GLOBAL",2)~ ~GlobalGT("Kill_Innocent","GLOBAL",0)~ 
+
+// check if party knows wylfdene before asking who's leading the barbarians
+REPLACE_TRIGGER_TEXT dplanar ~GlobalLT("Hjollder_Quest","GLOBAL",4)~ ~GlobalLT("Hjollder_Quest","GLOBAL",5)~
+
+// map revealed in state 58/59, remove from random 'go away' exit states
+ALTER_TRANS dhjollde BEGIN 53 END BEGIN 2 3 END BEGIN ACTION ~~ END
+
+// not setting var for hearing harald's story
+ADD_TRANS_ACTION dharald BEGIN 10 END BEGIN 0 END ~SetGlobal("Harald_Story","GLOBAL",1)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\

@@ -31,8 +31,8 @@
       <p><strong><a href="http://www.gibberlings3.net/">A Gibberlings Three Mod</a><br />
         Authors: </strong>Multiple<br />
         <strong>On the Web: </strong><a href="https://www.gibberlings3.net/mods/fixes/eefp/">Project Page</a>, <a href="https://www.gibberlings3.net/forums/forum/232-ee-fixpack/">Forum</a>, <a href="https://discord.gg/yTzjMTb">Discord</a>, and <a href="https://www.gibberlings3.net/gallery/album/41-enhanced-edition-fixpack/">preview gallery</a></p>
-      <p><strong>Version Alpha 1</strong><br />
-        <strong> Languages:</strong> English, Chinese, Russian<br />
+      <p><strong>Version Alpha 2</strong><br />
+        <strong> Languages:</strong> English, Chinese, French, Russian<br />
         <strong>Platforms: </strong>Windows, mac<acronym title="Operating System 10">OS</acronym>, and Linux<br />
         <strong>GitHub: </strong><a href="https://github.com/Gibberlings3/EE_Fixpack">Gibberlings3/EE_Fixpack</a></p>
     </div>
@@ -65,7 +65,7 @@
     <div class="ribbon_triangle_h2-l"></div>
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
-      <p>The EE Fixpack is designed to work with the Enhanced Editions of Baldur's Gate (with or witout the Siege of Dragonspear expansion), Baldur's Gate II, Icewind Dale, or Planescape: Torment. <strong>In terms of installation order, the
+      <p>The EE Fixpack is designed to work with the Enhanced Editions of Baldur's Gate (with or without the Siege of Dragonspear expansion), Baldur's Gate II, Icewind Dale, or Planescape: Torment. <strong>In terms of installation order, the
         Fixpack should be installed after the official patches, but before other
         mods with the sole exception for DLC Merger, as noted in the installation instructions. </strong></p>
       <p>There are also <a href="https://www.gibberlings3.net/forums/topic/34892-code-code-fixes-aka-stuff-we-cant-fix/">some bugs we can't fix</a>, that we hope can be addressed in a future official patch. </p>
@@ -111,7 +111,7 @@
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
       <p>The <acronym title="Baldur's Gate II">EE</acronym> Fixpack is basically
-        three items: core fixes, a game text update, and beta core fixes. As the overall project is beta, the 'beta core fixes' component is not yet available. </p>
+        three items: core fixes, a game text update, and beta core fixes. As the overall project is curently an alpha, the 'beta core fixes' component is not yet available. </p>
       <p><strong><acronym title="Baldur's Gate II">EE</acronym> Fixpack: Core Fixes </strong></p>
       <p> This component includes all fixes deemed to be core by the Fixpack team.
         While some bugs are clearly bugs, the team also has a review process for
@@ -182,6 +182,73 @@
     <div class="ribbon_triangle_h2-l"></div>
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
+      <p><strong>Version Alpha 2 - April 23, 2025</strong></p>
+      <ul>
+        <li>Updated French translation from Selphira; updated Chinese translation from MephistoSatanDevil</li>
+        <li>Fixes to the fixes:
+          <ul>
+            <li>[BG2] The  fixes for Gaal's dialogue were resulting in a serious bug where you could no longer accept the Unseeing Eye quest</li>
+            <li>[BG2] The fix to change Albruin, Peridan, and the Jansen Spectroscopes to cast spells directly was removing their global effects</li>
+            <li>[BG2] The updates to Bernard's store worked, but could be delayed quite a bit by his script. They've been moved to a different script to remove the delays. </li>
+            <li>[IWD] False Dawn was having its damage removed as part of the Seven Eyes fixes</li>
+            <li>[BG2] The cutscene fixes were causing a hanging cutscene when you reached the interior of the Dark Moon Heretic Temple as part of Rasaad's quest</li>
+            <li>[BG, BG2, IWD] The new immunity scheme could sometimes cause a saving throw to be rolled when a creature is immune</li>
+            <li>[BG, BG2, IWD] The fix to make nishruu and hakeashar more reliably dispelled was affecting other creatures</li>
+            <li>[BG, BG2, IWD] Purged duplicate light crossbow item icons</li>
+            <li>[BG] The new portrait icon for Unholy Blight had the wrong description text on BGEE</li>
+          </ul>
+        </li>
+        <li>Fixes added to the <strong>Core Fixes</strong>
+          <ul>
+            <li>[All] Some items and spells that cause elemental damage would prevent their own effects if the target was immune, e.g. the Dagger of Venom wouldn't even apply its poison if the target had 100% (or greater) poison resistance. However, these checks were also erroneously blocking it for targets with negative resistances who should be taking bonus damage. </li>
+            <li>[PsT] Vhailor's statistics screen did not show a strength description</li>
+            <li>[IWD] The shriekers in the garden of Marketh's palace are supposed to summon creatures from nearby areas to fight, but were missing the scripting to do so</li>
+            <li>[BG2] Multiple cutscenes were missing lightning effects due to a typo</li>
+            <li>[BG, BG2] The existing duration fix for Harm was also needed for Cause Critical and Serious Wounds</li>
+            <li>[BG2] The sewage golem is supposed to be immune to spell levels 1-9 but the wrong parameter was set</li>
+            <li>[BG2] More spell icons have been fixed</li>
+            <li>[BG2] Korgan should not ask Neveziah about the Book of Kaza if you've already completed his quest</li>
+            <li>[BG2] Cernd's introduction could result in a 'No Valid Links or Replies' error if Minsc or Jaheira were dead</li>
+            <li>[PsT] Amarysse could have a  'No Valid Links or Replies' error if you were non-committal when speaking with Nodd. Also fixed a minor trigger error in Nodd's dialogue.</li>
+            <li>[BG] The Hammer of Dawn's portrait icon could force a saving throw</li>
+            <li>[BG2] The Talisman of the Hearthfire quest should be marked as done in the journal when you receive the Talisman</li>
+            <li>[IWD] Remove Magic always dispels magic in IWDEE, but the description mistakenly stated that it was using the dice roll/level comparison dispel mechanic from BGEE/BG2EE</li>
+            <li>[BG2] Many of the ToB item description images had poorly blended backgrounds</li>
+            <li>[BG2] Hexxat's casket should not be removable from her Bag of Holding. While we can't actually prevent its removal, we have added code that will remove any (undroppable, immovable 1200-lb) copies from the player's regular inventory.</li>
+            <li>[BG2] When out of the party, Haer'Dalis could sometimes attack party members when he was e.g. trying to attack the bounty hunters in the playhouse</li>
+            <li>[BG, BG2, IWD] Magical Stone's description indicated that it was subject to weapon restrictions (e.g. struck as a +1 weapon) but this is not true&mdash;it's a normal spell doing normal spell damage like Magic Missile</li>
+            <li>[IWD] Magical Stone could potentially fail to do damage vs. some edge-case targets</li>
+            <li>[BG, BG2] Storm Shield's application animation could repeat if the player changed areas or reloaded</li>
+            <li>[IWD] Righteous Wrath of the Faithful was not providing its listed +2 damage bonus to allies of the same alignment. Also its fatigue effect from haste could be dispelled and wasn't stacking correctly.</li>
+            <li>[PsT] In a few dialogue branches, getting the Black-Barbed Seed to sprout when speaking with Mourns-For-Trees wouldn't consume the seed</li>
+            <li>[IWD] Glyph of Warding does not go away if the player changes area, but the description said otherwise</li>
+            <li>[IWD] Per its description, Earthquake is not supposed to affect creatures with 10 or more hit dice</li>
+            <li>[BG2] Demogorgon's regeneration was not working</li>
+            <li>[BG] The bonus damage for Pritchard's Family Stiletto +2 should be piercing damage, not fire</li>
+            <li>[PsT] Fixed a potential 'No Valid Links or Replies' error with Morte prior to entering the Fortress of Regrets</li>
+            <li>[BG2] The temple quest to recover the Dawn Ring could set a few active journal entries into the completed section</li>
+            <li>[BG2] Nadinal, one of the Harpers in the Docks, gave no XP when defeated</li>
+            <li>[BG, BG2, IWD] Fixed a disappearing loincloth  and other errors in the Death Knight animation</li>
+            <li>[BG2] One of the active quest entries in Rasaad's quest was placed int he done section of the journal</li>
+            <li>[IWD] The 'Stunned' string from Whirlwind and other spells was not being consistently blocked by items/spells/creatures that were otherwise immune to stun</li>
+            <li>[IWD] About 90 more icon fixes for spells and abilities</li>
+            <li>[IWD] Murdaugh can now help with Daen Winterbrush after his own quest is complete. Also tightened up his scripting a bit.</li>
+            <li>[IWD] Baldemar's dialogue was checking the wrong variable to see if you knew the location of the barbarian camp, and wasn't properly checking variables for other questions</li>
+            <li>[IWD] You should be able to ask Edion about Hjollder when you reach Burial Isle, but he was checking for the wrong variable values.</li>
+            <li>[IWD] Vexing Thoughts asks you to kill an innocent, but one of his dialogue branches was checking for three</li>
+            <li>[IWD] Contact Other Plane's question about who was leading the barbarian tribes was unavailable due to a bad variable check. </li>
+            <li>[IWD] Hjollder's dialogue could reveal the Gloomfrost on the map too early</li>
+            <li>[IWD] Harald's dialogue was not fully tracking if you had asked about his background</li>
+          </ul>
+        </li>
+        <li>Internal changes
+          <ul>
+            <li>M'Khiin's animation fix has been re-worked as a library so that other mods can apply these fixes to their own items</li>
+            <li>entries.2da had leftover junk from BG2 that has been cleaned up for BG and IWD</li>
+            <li>BAMs were reorganized to reduce future maintenance</li>
+          </ul>
+        </li>
+      </ul>
       <p><strong>Version Alpha 1 - April 1, 2025</strong></p>
       <ul>
         <li>Initial release</li>

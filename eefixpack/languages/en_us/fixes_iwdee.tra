@@ -274,6 +274,9 @@ Saving Throw: None
 
 When this spell is cast, all creatures within a 10-ft. radius are affected individually by Protection From Evil. Hence, they receive a +2 bonus to Armor Class and Saving Throws against evil-aligned opponents, summoned fiends will not attack them, and they will be immune to all charm-based spells.~
 
+// change reference from innocents (plural) to innocent (singular) (see also dvexing.dlg)
+@24285 = ~I have done as you asked, Vexing Thoughts. The innocents are slain.~
+
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 27373
 // Weapon damage corrections
 // adding (missile) to damage line
