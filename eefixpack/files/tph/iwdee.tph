@@ -300,6 +300,13 @@ COPY_EXISTING ~d5yxudor.bcs~ ~override~
   END
   BUT_ONLY
 
+COPY_EXISTING ~lwmurd.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Global("CDMurduaghDaen","MYAREA",1)~ ~False()~
+    APPEND_FILE ~eefixpack/files/baf/lwmurd.baf~  
+  END
+  BUT_ONLY   
+
 INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
 /////                                                  \\\\\
