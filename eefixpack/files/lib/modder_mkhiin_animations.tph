@@ -56,17 +56,17 @@ END ELSE BEGIN
         END
         PATCH_IF cd_altered = 0 BEGIN  
           PATCH_IF (type = 26) BEGIN // staff
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~ END // block non-goblins
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~ END // apply effs to only shamans
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = EVAL ~cdmk%type%~ END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = EVAL ~cdmk%type%~ END // apply effs to only shamans
           END ELSE    
           PATCH_IF (type = 2) BEGIN // armor
             LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk25~ END // block non-armored axe animation
             LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 timing = 2 STR_VAR resource = ~cdmk15~ END // block non-armored bow animation
           END ELSE BEGIN // axe, shortbow 
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // block non-goblins
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = ~cdmk%type%~  END // block non-goblins
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%a~ END // apply effs to only shamans
-            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = ~cdmk%type%~  END // apply effs to only shamans
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = EVAL ~cdmk%type%a~ END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 318 target = 1 parameter1 = 161 parameter2 = 114 timing = 2 STR_VAR resource = EVAL ~cdmk%type%~  END // block non-goblins
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = EVAL ~cdmk%type%a~ END // apply effs to only shamans
+            LPF ADD_ITEM_EQEFFECT INT_VAR insert_point = 999 opcode = 177 target = 1 parameter1 =  21 parameter2 =   5 timing = 2 STR_VAR resource = EVAL ~cdmk%type%~  END // apply effs to only shamans
           END
           PATCH_IF cd_debug = 1 BEGIN 
             READ_LONG 0x0c name
