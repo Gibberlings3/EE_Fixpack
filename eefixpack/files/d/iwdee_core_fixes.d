@@ -105,7 +105,7 @@ REPLACE_TRIGGER_TEXT dedion ~GlobalLT("Hjollder_Quest","GLOBAL",4)~ ~GlobalLT("H
 REPLACE_TRIGGER_TEXT dvexing ~GlobalGT("Kill_Innocent","GLOBAL",2)~ ~GlobalGT("Kill_Innocent","GLOBAL",0)~ 
 
 // check if party knows wylfdene before asking who's leading the barbarians
-REPLACE_TRIGGER_TEXT dplanar ~GlobalLT("Hjollder_Quest","GLOBAL",4)~ ~Global("Know_Wylf","GLOBAL",0)~
+REPLACE_TRIGGER_TEXT dplanar ~GlobalLT("Hjollder_Quest","GLOBAL",4)~ ~GlobalLT("Hjollder_Quest","GLOBAL",5)~
 
 // map revealed in state 58/59, remove from random 'go away' exit states
 ALTER_TRANS dhjollde BEGIN 53 END BEGIN 2 3 END BEGIN ACTION ~~ END
