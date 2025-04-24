@@ -257,6 +257,14 @@ COPY_EXISTING ~ar2200.bcs~ ~override~
   END
   BUT_ONLY
 
+// 'Selfish' hell trial: Improve conditions for applying punishments to the right target
+COPY_EXISTING ~ar2904.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~NumInPartyGT(1)[ %TAB%%WNL%]*InPartyAllowDead(Player2)[ %TAB%%WNL%]*InParty(Player2)~ ~!InMyArea("hellvict")~
+    REPLACE_TEXTUALLY ~ReallyForceSpell(Player2,\(HELL_.*\))~ ~ReallyForceSpell(Player2Fill,\1)~
+  END
+BUT_ONLY
+
 // wk spawn points - defer spawn point activion to area script (see also ar3001.are)
 EXTEND_BOTTOM ~ar3001.bcs~ ~eefixpack/files/baf/ar3001.baf~
 
@@ -1235,6 +1243,14 @@ COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
 COPY_EXISTING ~spwish12.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 321 target = 3 END
   BUT_ONLY // Now removes hardiness effects from the same targets it adds them to
+
+// 'Selfish' hell trial: HELL_EXPLODE spell should properly handle targets under death protection
+COPY_EXISTING ~%HELL_EXPLODE%.spl~ ~override~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 318 target = 2 parameter2 = 74 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 87 target = 2 parameter2 = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 17 target = 2 parameter1 = 1 parameter2 = 1 timing = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 12 target = 2 parameter1 = 30 timing = 1 special = BIT5 END // kill through conventional means (perma-death allowed)
+BUT_ONLY
 
 // luke
 // Mis-indexed effects

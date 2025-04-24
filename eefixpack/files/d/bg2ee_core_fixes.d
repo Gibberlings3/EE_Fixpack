@@ -130,6 +130,11 @@ ALTER_TRANS sctelwyn BEGIN 30 END BEGIN 1 2 3 4 END BEGIN ~UNSOLVED_JOURNAL~ ~#2
 // rasaad quest entry should go into ongoing journal section, not done
 REPLACE_ACTION_TEXT ohralor ~AddJournalEntry(85086,QUEST_DONE)~ ~AddJournalEntry(85086,QUEST)~
 
+// 'Selfish' hell trial: improve conditions how to choose hostage
+ALTER_TRANS hellself BEGIN 23 END BEGIN 1 END BEGIN ~TRIGGER~ ~NumInPartyGT(1) InParty(Player2Fill)~ END
+REPLACE_STATE_TRIGGER hellself 30 ~Global("OpenedDoor5","AR2904",1) !InMyArea("hellvict")~
+REPLACE_STATE_TRIGGER hellself 31 ~Global("OpenedDoor5","AR2904",1) InMyArea("hellvict")~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\
