@@ -140,7 +140,7 @@ COPY ~eefixpack/files/wav/#choke.wav~       ~override~ // ie-6009, cam: missing 
      ~eefixpack/files/2da/fogarea.2da~      ~override~ // tbd, cam: add basic 2das to enable fog
      ~eefixpack/files/2da/fogpt.2da~        ~override~ // tbd, cam: add basic 2das to enable fog
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), wyvern (plus shadow); 
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver, white), tanari, wyvern (plus shadow); 
 // monk paperdoll; unholy blight portrait icon; fix SC sequence for creature animation 0x7F07 GOLEM_CLAY; rle-encoding error for shroud 
 // of flame portrait icon; removing vamp shadows; fixed silver dragon breath; updated spell BAMs; merging multi-part area animations to 
 // eliminate issues; death knight anim touchups; cleaned up divine spell, bard song, seven eyes icons
