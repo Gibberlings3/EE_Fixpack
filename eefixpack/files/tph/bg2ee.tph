@@ -100,7 +100,7 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), wyvern (plus shadow); monk paperdoll; 
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), tanari, wyvern (plus shadow); monk paperdoll; 
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; broken noser uniform BAM; uncolored BAM for conjure lesser fire
 // elemental scroll; fixed chant icon (spellbook); fixed hold undead icon (scroll); troll_scrag, troll_ice, troll_snow anims for troll fixes;
 // updated spell BAMs; merging multi-part area animations to eliminate issues; death knight anim touchups
