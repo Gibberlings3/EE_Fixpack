@@ -1,0 +1,19 @@
+ACTION_IF game_is_bg2ee BEGIN 
+
+  ACTION_DEFINE_ARRAY cd_bdjoinxp BEGIN  
+    aerie anomen cernd dorn edwin haerdali hexxat imoen imoen2 jaheira jan keldorn 
+    korgan mazzy minsc nalia neera ohhfak rasaad valygar viconia wilson yoshimo
+  END  
+  
+END ELSE BEGIN // sod 
+
+  ACTION_DEFINE_ARRAY cd_bdjoinxp BEGIN  
+    bdbaelot bdcorwin bddorn bddynahe bdedwin bdglint bdjaheir bdkhalid bdminsc bdmkhiin 
+    bdneera bdrasaad bdsafana bdviconi bdvoghil
+  END  
+  
+END 
+
+ACTION_PHP_EACH cd_bdjoinxp AS var => key BEGIN 
+  EXTEND_BOTTOM ~%key%.bcs~ ~eefixpack/files/baf/bdjoinxp.baf~
+END 

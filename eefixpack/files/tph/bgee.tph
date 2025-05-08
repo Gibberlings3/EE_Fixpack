@@ -323,6 +323,10 @@ COMPILE ~eefixpack/files/d/bgee_tbd_nothing_to_say.d~ // nothing to say fixes fo
 INCLUDE ~eefixpack/files/tph/tbd_dopples_fixes.tph~ // tbd, cam (from k4thos/eet): gorion/teth/elminster dopples breaks if one is one-shot; also prevents disguised dopples from trying to shift if already dead
 INCLUDE ~eefixpack/files/tph/aldeth_dopple.tph~     // more dopple fixes, this time for aldeth's quest
 
+ACTION_IF game_includes_sod BEGIN
+  INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
+END
+
 // tbd, cam (from k4thos/eet)
 // if you lure aec'letec out of the basement, much of the cultist scripting breaks
 COPY_EXISTING ~ar1002.bcs~ ~override~
