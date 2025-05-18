@@ -238,7 +238,7 @@ ACTION_IF game_is_bg2ee BEGIN
 
   COPY_EXISTING ~cut232g.bcs~  ~override~ // has premature endcutscene, goes directly into dialogue anyway
                 ~cut232i.bcs~  ~override~
-                ~cut32a.bcs~   ~override~
+                //~cut32a.bcs~   ~override~ prevents delcia spawn - https://github.com/Gibberlings3/EE_Fixpack/issues/170
                 ~cut41q.bcs~   ~override~
                 ~newgame.bcs~  ~override~
                 ~ohhcutkl.bcs~ ~override~
