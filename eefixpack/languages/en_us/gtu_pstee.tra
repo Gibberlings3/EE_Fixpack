@@ -1339,6 +1339,9 @@ Upon closer inspection, you know for a fact that this arm is yours. How long it 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @17186 = ~He nods greedily and lets you take the finger bone.~
 
+// whines > to whine
+@17187 = ~As you step out of his reach he begins to whine pitifully, like a dog kicked away by its master...~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @17384 = ~"Why, fish, my silly child! Fish of all sorts - and fish heads, for those too short of jink for the whole ones. Teeny-tiny fish-heads! Hee-hee!"~
 
@@ -1421,6 +1424,9 @@ This number represents your health. Whenever you take damage, your hit points wi
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @18503 = ~"Someone's attacking us, let's get them!"~
+
+// though > through
+@18653 = ~"Eh? Come again?" His eyes narrow to slits; he peers at you sideways through them.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @18724 = ~"Eh... maybe... maybe... no. Haven't seen it, haven't seen any books."~
