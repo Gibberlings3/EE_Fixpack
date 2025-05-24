@@ -113,11 +113,12 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @2 DESIGNATED 2
-REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tph~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tph~))) OR
+REQUIRE_PREDICATE (("%EE_LANGUAGE%" STRING_COMPARE_CASE "%LANGUAGE%" = 0) AND // e.g. prevent if installing in English on an Italian tlk
+                  (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tph~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tph~))) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_iwdee.tph~)) OR
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_pstee.tph~)) OR
-                   ((!GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~))) @5
+                   ((!GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~)))) @5
 LABEL ~cd_eefp_game_text_update~
 
 ACTION_IF !game_is_pstee AND FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~ BEGIN // for updating l_%lang%.lua (UI and help strings across the non-pstee games)
