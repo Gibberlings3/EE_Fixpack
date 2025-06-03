@@ -1,0 +1,199 @@
+// Calling this patch function on ITM resources ensures that effects of referenced spells are level-locked.
+// INT_VAR level        Minimum level of the extended SPL header that should be preserved.
+//                      Default: first available header
+// INT_VAR index        Optional index of a suffix to be added to the new resource name.
+//                      Index references a letter (-1: no suffix, 0->A, 1->B, 2->C, ...). Default: 0
+// INT_VAR silent       Specify non-zero to suppress warning messages.
+// INT_VAR forced       Specify non-zero to apply the patch regardless of SPL configuration.
+// STR_VAR itm_resref   Name of the current ITM resource. Default: %SOURCE_RES% if available, %spl_resref% otherwise
+// STR_VAR spl_resref   Name of the referenced SPL resource.
+// RET     new_resref   Updated SPL resource name after the patch operation.
+DEFINE_PATCH_FUNCTION a7_apply_fixed_spell_effect
+INT_VAR
+  level       = 0
+  index       = 0
+  silent      = 0
+  forced      = 0
+STR_VAR
+  itm_resref  = ~~
+  spl_resref  = ~~
+RET
+  new_resref
+BEGIN
+  SPRINT new_resref ~%spl_resref%~
+
+  PATCH_IF (~%itm_resref%~ STR_EQ ~~ && VARIABLE_IS_SET ~SOURCE_RES~) BEGIN
+    SPRINT itm_resref ~%SOURCE_RES%~
+  END ELSE BEGIN
+    SPRINT itm_resref ~%spl_resref%~
+  END
+
+  READ_ASCII 0 sig (8)
+  PATCH_IF (~%sig%~ STR_EQ ~ITM V1  ~) BEGIN
+    PATCH_IF (FILE_EXISTS_IN_GAME ~%spl_resref%.SPL~) BEGIN
+      // cloning spell (if needed)
+      INNER_ACTION BEGIN
+        OUTER_SET patch = forced
+        ACTION_IF (NOT patch) BEGIN
+          COPY_EXISTING ~%spl_resref%.SPL~ ~override~
+            READ_SHORT 0x68 num_spl_abils
+            SET patch = (num_spl_abils > 1)
+          BUT_ONLY IF_EXISTS
+        END
+
+        ACTION_IF (patch) BEGIN
+          LAF a7_derive_resref INT_VAR index silent STR_VAR resref = EVAL ~%itm_resref%~ ext = ~SPL~ RET new_resref END
+          COPY_EXISTING ~%spl_resref%.SPL~ ~override/%new_resref%.SPL~
+            LPF a7_lock_spell_level INT_VAR level spell_type = 4 silent END
+          BUT_ONLY
+        END
+      END
+
+      // updating spell references
+      PATCH_IF (NOT ~%new_resref%~ STR_EQ ~%spl_resref%~) BEGIN
+        READ_LONG 0x64 ofs_abils
+        READ_SHORT 0x68 num_abils
+        READ_LONG 0x6a ofs_effects
+        FOR (i = 0; i < num_abils; ++i) BEGIN
+          SET ofs_abil = ofs_abils + i * 56
+          READ_SHORT (ofs_abil + 0x1e) num_fx
+          READ_SHORT (ofs_abil + 0x20) idx_fx
+          FOR (j = 0; j < num_fx; ++j) BEGIN
+            SET ofs_fx = ofs_effects + (idx_fx + j) * 48
+            READ_SHORT ofs_fx opcode
+            PATCH_IF (opcode == 146 || opcode == 148) BEGIN
+              READ_LONG (ofs_fx + 0x08) mode
+              PATCH_IF (mode > 0) BEGIN
+                READ_ASCII (ofs_fx + 0x14) cur_spl_resref (8) NULL
+                PATCH_IF (~%cur_spl_resref%~ STR_EQ ~%spl_resref%~) BEGIN
+                  // updating SPL reference
+                  WRITE_ASCIIE (ofs_fx + 0x14) ~%new_resref%~ (8)
+                END
+              END
+            END
+          END
+        END
+      END
+    END
+  END ELSE BEGIN
+    PATCH_IF (NOT silent) BEGIN
+      PATCH_WARN ~WARNING: not an item resource~
+    END
+  END
+END
+
+// Converts the current SPL resource into a fixed single-level version.
+// INT_VAR level          Minimum level of the extended header that should be preserved.
+//                        Default: first available header
+// INT_VAR spell_type     The new spell type. Default: no change
+// INT_VAR name_strref    Strref of the new spell name. Default: no change
+// INT_VAR desc_strref    Strref of the new spell description. Default: no change
+// INT_VAR silent         Specify non-zero to suppress warning messages.
+DEFINE_PATCH_FUNCTION a7_lock_spell_level
+INT_VAR
+  level       = 0
+  spell_type  = "-1"
+  name_strref = "-2"
+  desc_strref = "-2"
+  silent      = 0
+BEGIN
+  READ_ASCII 0 sig (8)
+  PATCH_IF (~%sig%~ STR_EQ ~SPL V1  ~) BEGIN
+    PATCH_IF (spell_type >= 0 && spell_type <= 5) BEGIN
+      WRITE_SHORT 0x1c spell_type
+    END ELSE PATCH_IF (spell_type > 0) BEGIN
+      PATCH_IF (NOT silent) BEGIN
+        PATCH_WARN ~WARNING: invalid spell type specified: %spell_type%~
+      END
+    END
+
+    PATCH_IF (name_strref != "-2") BEGIN
+      WRITE_LONG NAME1 name_strref
+    END
+
+    PATCH_IF (desc_strref != "-2") BEGIN
+      WRITE_LONG UNIDENTIFIED_DESC desc_strref
+    END
+
+    // determining closest match
+    READ_LONG 0x64 ofs_abils
+    READ_SHORT 0x68 num_abils
+    SET matched_level = "-1"
+    SET matched_index = "-1"
+    FOR (i = 0; i < num_abils; ++i) BEGIN
+      SET cur_ofs = ofs_abils + i * 40
+      READ_SHORT (cur_ofs + 0x10) min_level
+      PATCH_IF ((level == 0 && matched_level < 0) || (min_level <= level && min_level > matched_level)) BEGIN
+        SET matched_level = min_level
+        SET matched_index = i
+      END
+    END
+
+    PATCH_IF (matched_index < 0 && NOT silent) BEGIN
+      PATCH_WARN ~WARNING: no matching minimum level found for level %level%~
+    END
+
+    // discarding mismatching structures
+    FOR (i = num_abils - 1; i >= 0; --i) BEGIN
+      SET cur_ofs = ofs_abils + i * 40
+      READ_SHORT (cur_ofs + 0x10) min_level
+      PATCH_IF (i != matched_index) BEGIN
+        LPF DELETE_SPELL_HEADER INT_VAR header_type = "-1" min_level END
+      END
+    END
+
+    // updating minimum level of the matching structure
+    READ_LONG 0x64 ofs_abils
+    READ_SHORT 0x68 num_abils
+    PATCH_IF (num_abils > 0) BEGIN
+      WRITE_SHORT (ofs_abils + 0x10) 1
+    END
+  END ELSE BEGIN
+    PATCH_IF (NOT silent) BEGIN
+      PATCH_WARN ~WARNING: not a spell resource~
+    END
+  END
+END
+
+// Returns a resource name that is derived from a given resource name.
+// INT_VAR index        An optional index of a suffix to be added to the resource name.
+//                      Index references a letter (-1: no suffix, 0->A, 1->B, 2->C, ...). Default: 0
+// INT_VAR silent       Specify non-zero to suppress warning messages.
+// STR_VAR resref       Base resource name to derive the new name from.
+// STR_VAR ext          File extension of the returned resource name. Used internally to check for existing files.
+// RET     new_resref   The new resource name.
+DEFINE_DIMORPHIC_FUNCTION a7_derive_resref
+INT_VAR
+  index   = 0
+  silent  = 0
+STR_VAR
+  resref  = ~~
+  ext     = ~~
+RET
+  new_resref
+BEGIN
+  OUTER_SPRINT new_resref ~%resref%~
+  ACTION_DEFINE_ARRAY letters BEGIN A B C D E F G H I J K L M N O P Q R S T U V W X Y Z END
+
+  ACTION_IF (index >= 0 && index < 26) BEGIN
+    OUTER_SPRINT suffix_letter $letters(~%index%~)
+    OUTER_SET max_len = 7
+  END ELSE BEGIN
+    OUTER_SPRINT suffix_letter ~~
+    OUTER_SET max_len = 8
+  END
+
+  ACTION_IF (STRING_LENGTH ~%new_resref%~ > max_len) BEGIN
+    LAF SUBSTRING INT_VAR start = 0 length = max_len STR_VAR string = EVAL ~%new_resref%~ RET new_resref = substring END
+  END
+
+  ACTION_IF (NOT ~%ext%~ STR_EQ ~~ && FILE_EXISTS_IN_GAME ~%new_resref%%suffix_letter%.%ext%~) BEGIN
+    LAF SUBSTRING INT_VAR start = 0 length = max_len STR_VAR string = EVAL ~#%new_resref%~ RET new_resref = substring END
+  END
+
+  OUTER_SPRINT new_resref ~%new_resref%%suffix_letter%~
+
+  ACTION_IF (NOT silent && NOT ~%ext%~ STR_EQ ~~ && FILE_EXISTS_IN_GAME ~%new_resref%.%ext%~) BEGIN
+    WARN ~WARNING: Resource already exists: %new_resref%.%ext%~
+  END
+END
