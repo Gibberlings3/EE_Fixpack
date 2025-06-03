@@ -28,3 +28,124 @@ COPY_EXISTING ~scrlpet.itm~  ~override~ // stone to flesh scroll
               ~scrlpet2.itm~ ~override~ // stone to flesh scroll
   LPF ALTER_HEADER INT_VAR range = 40 STR_VAR match_icon = iscrl3p END // to match scstf
   BUT_ONLY
+
+// Several items cast spells that scale based on the caster level.
+// This patch clones these spells and locks them to the level that matches their item descriptions.
+// https://www.gibberlings3.net/forums/topic/39678-iwdee-list-of-items-which-should-cast-special-abilities-at-a-fixed-caster-level
+// https://www.gibberlings3.net/forums/topic/39677-iwdee-force-bullet-2-duration-of-otilukes-resilient-sphere-should-last-as-described
+// https://www.gibberlings3.net/forums/topic/39676-iwdee-mantle-of-hells-furnace-duration-of-charm-fire-elemental-kin-should-last-as-described
+
+INCLUDE ~eefixpack/files/tph/a7/item_spell_functions.tph~
+
+COPY_EXISTING ~AMUL15.ITM~ ~override~ // Shield Amulet
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPWI114~ END
+BUT_ONLY
+
+COPY_EXISTING ~AMULBAR.ITM~ ~override~  // Barrier Amulet
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 1 index = 0 STR_VAR spl_resref = ~SPWI408~ RET stoneskin_resref = new_resref END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 8 index = 1 STR_VAR spl_resref = ~SPWI406~ END
+BUT_ONLY
+
+COPY_EXISTING ~%stoneskin_resref%.SPL~ ~override~ // Stoneskin
+  // # skins: 1d4 + 2
+  LPF ALTER_EFFECT INT_VAR match_opcode = 218 parameter1 = 2 END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~BLRDECK.ITM~ ~override~  // Blur Deck
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 5 STR_VAR spl_resref = ~SPWI201~ END
+BUT_ONLY
+
+COPY_EXISTING ~BOOTMAN.ITM~ ~override~  // Boots of the Many Paths
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 4 STR_VAR spl_resref = ~SPWI201~ END
+BUT_ONLY
+
+COPY_EXISTING ~BRACEIP.ITM~ ~override~  // Bracers of Icelandic Pearl
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 11 index = 0 STR_VAR spl_resref = ~SPWI527~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 index = 1 STR_VAR spl_resref = ~SPWI503~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 17 index = 2 STR_VAR spl_resref = ~SPWI812~ END
+BUT_ONLY
+
+COPY_EXISTING ~FANGGF.ITM~ ~override~ // Fang of the Gloomfrost +4
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 13 STR_VAR spl_resref = ~SPWI610~ END
+BUT_ONLY
+
+COPY_EXISTING ~FORCE.ITM~ ~override~ // Force Bullet +2
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 0 forced = 1 STR_VAR spl_resref = ~SPWI413A~ RET otiluke_resref = new_resref END
+BUT_ONLY
+
+COPY_EXISTING ~%otiluke_resref%.SPL~ ~override~  // Otiluke's Resilient Sphere
+  // duration: 7 rounds
+  LPF ALTER_EFFECT INT_VAR match_timing = 0 duration = 42 END
+  LPF ALTER_EFFECT INT_VAR match_timing = 4 duration = 42 END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~JASPER.ITM~ ~override~ // Jasper's Ring of Shocking Grasp
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 2 STR_VAR spl_resref = ~SPWI115~ END
+BUT_ONLY
+
+COPY_EXISTING ~MANTLECS.ITM~ ~override~ // Mantle of the Coming Storm
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 1 STR_VAR spl_resref = ~SPPR403~ RET freeaction_resref = new_resref END
+BUT_ONLY
+
+COPY_EXISTING ~%freeaction_resref%.SPL~ ~override~  // Free Action
+  // duration: 4 turns
+  LPF ALTER_EFFECT INT_VAR match_timing = 0 duration = 240 END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~MANTLEHF.ITM~ ~override~ // Mantle of Hell's Furnace
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 3 index = 0 STR_VAR spl_resref = ~SPWI103~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 0 index = 1 forced = 1 STR_VAR spl_resref = ~SPITM99~ RET charm_elemental_resref = new_resref END
+BUT_ONLY
+
+COPY_EXISTING ~%charm_elemental_resref%.SPL~ ~override~  // Charm Fire Elemental Kin
+  // duration: 1 turn
+  LPF ALTER_EFFECT INT_VAR match_opcode = 5 duration = 60 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 142 duration = 60 END
+BUT_ONLY IF_EXISTS
+
+COPY_EXISTING ~MIRROR2.ITM~ ~override~  // Mirror of Black Ice Amulet
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 index = 0 STR_VAR spl_resref = ~SPWI201~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 index = 1 STR_VAR spl_resref = ~SPWI212~ END
+BUT_ONLY
+
+COPY_EXISTING ~ROGUE.ITM~ ~override~  // Rogue's Cowl
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPWI105~ END
+BUT_ONLY
+
+COPY_EXISTING ~SHAWM.ITM~ ~override~  // Owain's Lullabye
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPWI503~ END
+BUT_ONLY
+
+COPY_EXISTING ~SRING.ITM~ ~override~  // Ring of Sanctuary
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPPR109~ END
+BUT_ONLY
+
+COPY_EXISTING ~TIERNON.ITM~ ~override~  // Tiernon's Hearthstone
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 4 index = 0 STR_VAR spl_resref = ~SPPR216~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 1 index = 1 STR_VAR spl_resref = ~SPWI103~ END
+BUT_ONLY
+
+COPY_EXISTING ~TONGGF.ITM~ ~override~ // Tongue of the Gloomfrost +4
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPWI503~ END
+BUT_ONLY
+
+COPY_EXISTING ~U2HAM5A.ITM~ ~override~  // Demon's Breath +3
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 6 STR_VAR spl_resref = ~SPWI304~ END
+BUT_ONLY
+
+COPY_EXISTING ~ULRING.ITM~ ~override~ // Ulcaster Academy Ring
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 10 STR_VAR spl_resref = ~SPWI314~ END
+BUT_ONLY
+
+COPY_EXISTING ~VEXED3.ITM~ ~override~ // Vexed Armor
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 14 STR_VAR spl_resref = ~SPPR705~ END
+BUT_ONLY
+
+COPY_EXISTING ~VIOLIN.ITM~ ~override~ // Viol of the Hollow Men
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 9 STR_VAR spl_resref = ~SPWI426~ END
+BUT_ONLY
+
+COPY_EXISTING ~WANDARM.ITM~ ~override~  // Wand of Armory
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 3 index = 0 STR_VAR spl_resref = ~SPWI114~ END
+  LPF a7_apply_fixed_spell_effect INT_VAR level = 7 index = 1 STR_VAR spl_resref = ~SPWI317~ END
+BUT_ONLY
