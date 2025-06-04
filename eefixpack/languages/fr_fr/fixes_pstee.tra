@@ -1,0 +1,27 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes incorrect placeholder
+@33954 = ~Tu as la Force d'un nouveau-né. Tu as -<STAT_STRVAL1> au toucher et -<STAT_STRVAL2> aux dégâts pour toutes les attaques de mêlée.~
+
+// fixes incorrect placeholder
+@33955 = ~Ta Force est pitoyable. Tu as -<STAT_STRVAL1> au toucher et -<STAT_STRVAL2> aux dégâts pour toutes les attaques de mêlée.~
+
+// fixes incorrect placeholder
+@33956 = ~Ta Force est au-dessous de la moyenne. Tu as -<STAT_STRVAL1> au toucher pour toutes les attaques de mêlée.~
+
+// fixes incorrect placeholder
+@34250 = ~Ta Dextérité est celle d'un empoté. Tu reçois une pénalité de <STAT_DEXVAL1> à ta Classe d'armure.~
+
+// fixes incorrect placeholder
+@34251 = ~Ta Dextérité démontre la médiocrité de tes réflexes. Tu reçois une pénalité de <STAT_DEXVAL1> à ta Classe d'armure.~
+
+// fixes incorrect placeholder
+@34252 = ~Ta médiocre Dextérité te vaut une pénalité de <STAT_DEXVAL1> à ta Classe d'armure.~
+
+// fixes incorrect placeholder
+@34253 = ~Ta Constitution maladive te vaut une pénalité de -<STAT_CONVAL1> par niveau à tes points de vie.~
+
+// fixes incorrect placeholder
+@34254 = ~Ta médiocre Constitution te vaut une pénalité de -<STAT_CONVAL1> par niveau à tes points de vie.~

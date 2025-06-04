@@ -28,6 +28,30 @@ This cranium rat tail charm is particularly filthy and smells faintly of vomit. 
 
 When this rank charm is consumed, the user temporarily becomes much stealthier and shiftier, giving them a greater chance of success with hiding in shadows and picking pockets. People viewing the charmed individual will detect something unsavory about him, however, reducing first impressions accordingly. This unsavoriness will last only as long as the charm is in effect, however.~
 
+// fixes incorrect placeholder
+@33954 = ~Your Strength is that of an infant. You have -<STAT_STRVAL1> to hit and -<STAT_STRVAL2> to damage with all melee attacks.~
+
+// fixes incorrect placeholder
+@33955 = ~Your Strength is pitiable. You have -<STAT_STRVAL1> to hit and -<STAT_STRVAL2> to damage with all melee attacks.~
+
+// fixes incorrect placeholder
+@33956 = ~Your Strength is below average. You have -<STAT_STRVAL1> to hit with all melee attacks.~
+
+// fixes incorrect placeholder
+@34250 = ~Your Dexterity is that of a bumbling fool. You earn a penalty of -<STAT_DEXVAL1> to your Armor Class.~
+
+// fixes incorrect placeholder
+@34251 = ~Your Dexterity demonstrates your poor reflexes. You earn a penalty of -<STAT_DEXVAL1> to your Armor Class.~
+
+// fixes incorrect placeholder
+@34252 = ~Your low Dexterity earns you a penalty of -<STAT_DEXVAL1> to your Armor Class.~
+
+// fixes incorrect placeholder
+@34253 = ~Your sickly Constitution costs you a penalty of -<STAT_CONVAL1> hit points per level.~
+
+// fixes incorrect placeholder
+@34254 = ~Your poor Constitution costs you a penalty of -<STAT_CONVAL1> hit points per level.~
+
 // missing enchantment line
 @46627 = ~ACIDIC SPONGE BOLTS
 Damage: 1-2 Crushing
