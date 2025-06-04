@@ -1,0 +1,27 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes incorrect placeholder
+@33954 = ~Du hast die Stärke eines Kleinkindes. Du erhältst -<STAT_STRVAL1> zur Trefferchance und -<STAT_STRVAL2> zu Schaden bei allen Nahkampfangriffen.~
+
+// fixes incorrect placeholder
+@33955 = ~Deine Stärke ist erbärmlich. Du erhältst -<STAT_STRVAL1> zur Trefferchance und -<STAT_STRVAL2> zu Schaden bei allen Nahkampfangriffen.~
+
+// fixes incorrect placeholder
+@33956 = ~Deine Stärke ist unterdurchschnittlich. Du erhältst -<STAT_STRVAL1> zur Trefferchance bei allen Nahkampfangriffen.~
+
+// fixes incorrect placeholder
+@34250 = ~Deine Geschicklichkeit gleicht der eines Vollidioten. Du bekommst -<STAT_DEXVAL1> Strafpunkte zu deiner Rüstungsklasse.~
+
+// fixes incorrect placeholder
+@34251 = ~Deine Geschicklichkeit zeigt deine miserablen Reflexe. Du bekommst -<STAT_DEXVAL1> Strafpunkte zu deiner Rüstungsklasse.~
+
+// fixes incorrect placeholder
+@34252 = ~Deine niedrige Geschicklichkeit bringt dir -<STAT_DEXVAL1> Strafpunkte zu deiner Rüstungsklasse ein.~
+
+// fixes incorrect placeholder
+@34253 = ~Deine kränkliche Konstitution kostet dich -<STAT_CONVAL1> Straf-Trefferpunkte pro Stufe.~
+
+// fixes incorrect placeholder
+@34254 = ~Deine schlechte Konstitution kostet dich -<STAT_CONVAL1> Straf-Trefferpunkte pro Stufe.~

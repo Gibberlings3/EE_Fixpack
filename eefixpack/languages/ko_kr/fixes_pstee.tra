@@ -1,0 +1,27 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes incorrect placeholder
+@33954 = ~당신의 힘은 유아와 다를 바가 없다. 당신은 접근전에서 명중률에  -<STAT_STRVAL1>, 대미지에  -<STAT_STRVAL2>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@33955 = ~당신의 힘은 가련할 정도이다. 당신은 접근전에서 명중률에  -<STAT_STRVAL1>, 대미지에  -<STAT_STRVAL2>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@33956 = ~당신의 힘은 평균 이하이다. 당신은 접근전에서 명중률에 -<STAT_STRVAL1>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@34250 = ~당신의 민첩성은 실수투성이 얼간이의 그것과 마찬가지다. 당신은 아머 클래스에 -<STAT_DEXVAL1>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@34251 = ~당신의 민첩성은 당신의 반사신경이 빈약함을 보여주고 있다. 당신은 아머 클래스에 -<STAT_DEXVAL1>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@34252 = ~당신은 낮은 민첩성 때문에 아머 클래스에 -<STAT_DEXVAL1>의 페널티를 받는다.~
+
+// fixes incorrect placeholder
+@34253 = ~당신은 허약한 체력 때문에 당신은 레벨 당 -<STAT_CONVAL1> 포인트의 HP를 잃는다.~
+
+// fixes incorrect placeholder
+@34254 = ~당신은 빈약한 체력 때문에 당신은 레벨 당 -<STAT_CONVAL1> 포인트의 HP를 잃는다.~

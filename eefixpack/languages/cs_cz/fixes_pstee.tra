@@ -1,0 +1,27 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes incorrect placeholder
+@33954 = ~Máš sílu kojence. Máš -<STAT_STRVAL1> k zásahu a -<STAT_STRVAL2> poškození při rvačce.~
+
+// fixes incorrect placeholder
+@33955 = ~Tvá síla je k smíchu. Máš -<STAT_STRVAL1> k zásahu a -<STAT_STRVAL2> poškození při rvačce.~
+
+// fixes incorrect placeholder
+@33956 = ~Tvá síla je podprůměrná. Máš -<STAT_STRVAL1> k zásahu.~
+
+// fixes incorrect placeholder
+@34250 = ~Máš obratnost potácejícího se dementa. Máš postih -<STAT_DEXVAL1> na tvou třídu zbroje.~
+
+// fixes incorrect placeholder
+@34251 = ~Tvá obratnost ukazuje, že máš ubohé reflexy. Máš postih -<STAT_DEXVAL1> na tvou třídu zbroje.~
+
+// fixes incorrect placeholder
+@34252 = ~Tvá nízká obratnost ti dává postih -<STAT_DEXVAL1> na na tvou třídu zbroje.~
+
+// fixes incorrect placeholder
+@34253 = ~Tvá mizerná odolnost tě stojí postih -<STAT_CONVAL1> životů za úroveň.~
+
+// fixes incorrect placeholder
+@34254 = ~Tvá ubohá odolnost tě stojí postih -<STAT_CONVAL1> životů za úroveň.~

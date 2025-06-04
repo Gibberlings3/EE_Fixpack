@@ -1,0 +1,27 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+// fixes incorrect placeholder
+@33954 = ~Masz Siłę niemowlęcia. Otrzymujesz -<STAT_STRVAL1> do trafienia oraz -<STAT_STRVAL2> do obrażeń przy wszystkich atakach w walce wręcz.~
+
+// fixes incorrect placeholder
+@33955 = ~Twoja Siła jest wręcz żałosna. Otrzymujesz -<STAT_STRVAL1> do trafienia oraz -<STAT_STRVAL2> do obrażeń przy wszystkich atakach w walce wręcz.~
+
+// fixes incorrect placeholder
+@33956 = ~Twoja Siła jest poniżej przeciętnej. Otrzymujesz -<STAT_STRVAL1> do trafienia przy wszystkich atakach w walce wręcz.~
+
+// fixes incorrect placeholder
+@34250 = ~Masz Zręczność potykającego się idioty. Otrzymujesz ujemny modyfikator -<STAT_DEXVAL1> do Klasy Pancerza.~
+
+// fixes incorrect placeholder
+@34251 = ~Twoja Zręczność pokazuje, że masz bardzo słaby refleks. Otrzymujesz ujemny modyfikator -<STAT_DEXVAL1> do Klasy Pancerza.~
+
+// fixes incorrect placeholder
+@34252 = ~Twoja niska Zręczność sprawia, że otrzymujesz ujemny modyfikator -<STAT_DEXVAL1> do Klasy Pancerza.~
+
+// fixes incorrect placeholder
+@34253 = ~Twoja mizerna Kondycja sprawia, że otrzymujesz ujemny modyfikator -<STAT_CONVAL1> punktów życia na poziom.~
+
+// fixes incorrect placeholder
+@34254 = ~Twoja słaba Kondycja sprawia, że otrzymujesz ujemny modyfikator -<STAT_CONVAL1> punktów życia na poziom.~
