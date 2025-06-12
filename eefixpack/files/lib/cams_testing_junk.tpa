@@ -702,7 +702,7 @@ PRINT ~%debug%~
 
 // used to find creatures who are missing proficiencies
 
-PRINT prof_debug ~~
+OUTER_SPRINT prof_debug ~~
 COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
 //COPY_EXISTING ~cambion1.cre~ ~override~
   SET update_needed = 0
