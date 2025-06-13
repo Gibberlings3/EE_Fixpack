@@ -1,0 +1,7 @@
+		if game:GetMissionPackInfoTBP() then
+			logoFrame = 2
+		elseif game:GetMissionPackInfo25() then
+			logoFrame = 1
+		else
+			logoFrame = 0
+		end
