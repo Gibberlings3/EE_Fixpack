@@ -1,0 +1,10 @@
+// Game logo should be updated in Options and Main Menu screens when transitioning from SoA to ToB campaign
+COPY_EXISTING ~ui.menu~ ~override~
+  SET pos = INDEX_BUFFER(CASE_SENSITIVE ~name[%TAB% ]+"ESC_MENU"~)
+  PATCH_IF (pos > 0) BEGIN
+    SET pos = INDEX_BUFFER(CASE_SENSITIVE ~^[%TAB% ]*versionString[%TAB% ]*=[%TAB% ]*CBaldurChitin:GetVersionString()~ pos)
+    PATCH_IF (pos > 0) BEGIN
+      INSERT_FILE pos ~eefixpack/files/menu/bg2ee_game_logo_update.menu~
+    END
+  END
+BUT_ONLY
