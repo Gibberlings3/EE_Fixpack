@@ -509,6 +509,8 @@ INCLUDE ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ // tbd, cam (from MiH):
 
 INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
 
+INCLUDE ~eefixpack/files/tph/a7/floor_triggers_fix.tph~ // fix floor triggers to fire more reliably
+
 
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
