@@ -564,6 +564,11 @@ COPY_EXISTING ~ar3001.are~ ~override~
   END
   BUT_ONLY
 
+// Beholder Lair (Unseeing Eye quest) - access position of container should be accessible
+COPY_EXISTING ~ar0205.are~ ~override~
+  LPF ALTER_AREA_CONTAINER INT_VAR coord_y = 1170 STR_VAR container_name = ~Container 7~ END
+BUT_ONLY
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
