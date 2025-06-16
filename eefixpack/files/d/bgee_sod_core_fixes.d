@@ -63,6 +63,9 @@ ADD_TRANS_ACTION BDRHYNWI BEGIN 0 END BEGIN END ~EraseJournalEntry(61532) EraseJ
 // two journal entries never removed
 ADD_TRANS_ACTION bdstoneh BEGIN 63 END BEGIN END ~EraseJournalEntry(61530) EraseJournalEntry(61537)~
 
+// Coldhearth Lich should take all amulets even if they are stored in a bag
+REPLACE_ACTION_TEXT ~bdcoldh~ ~TakePartyItemAll("bdamul09")~ ~TakePartyItemNum("bdamul09",5)~
+
 /////                                                  \\\\\
 ///// angry rejoins                                    \\\\\
 /////                                                  \\\\\
