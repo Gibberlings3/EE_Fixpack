@@ -1247,6 +1247,7 @@ COPY_EXISTING ~spwish12.spl~ ~override~
 
 // 'Selfish' hell trial: HELL_EXPLODE spell should properly handle targets under death protection
 COPY_EXISTING ~%HELL_EXPLODE%.spl~ ~override~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 2 timing = 1 insert_point = 0 STR_VAR resource = EVAL ~%HELL_HOLD%~ END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 318 target = 2 parameter2 = 74 STR_VAR resource = EVAL ~%SOURCE_RES%~ END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 87 target = 2 parameter2 = 1 END
   LPF ADD_SPELL_EFFECT INT_VAR opcode = 17 target = 2 parameter1 = 1 parameter2 = 1 timing = 1 END
