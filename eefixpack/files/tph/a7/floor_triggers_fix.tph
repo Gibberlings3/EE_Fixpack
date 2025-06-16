@@ -1,0 +1,155 @@
+// Floor triggers should reliably fire even for characters with increased movement speed
+// https://www.gibberlings3.net/forums/topic/39616-bg2ee-floor-triggers-should-reliably-fire-even-for-characters-with-increased-movement-speed
+
+/**
+ * Patches existing vertices of the specified region polygon. Does not add new vertices.
+ *
+ * INT_VAR region_index   0-based index of the region structure. (Required if "region_name" not specified.)
+ * INT_VAR silent         Controls whether the function should suppress any warning messages. (Default: 0)
+ * INT_VAR vertex_0, ...  One or more vertex definitions as "X coordinate + (Y coordinate << 16)".
+ * STR_VAR region_name    Name of the region to patch. (Required if "region_index" not specified.)
+ */
+DEFINE_PATCH_FUNCTION ALTER_AREA_REGION_VERTICES
+INT_VAR
+  region_index = "-1"
+  silent       = 0
+STR_VAR
+  region_name  = ~~
+BEGIN
+  READ_ASCII 0 sig (8)
+  PATCH_IF (~%sig%~ STR_EQ ~AREAV1.0~) BEGIN
+    READ_SHORT 0x5a num_regions
+    READ_LONG 0x5c ofs_regions
+    READ_LONG 0x7c ofs_vertices
+    READ_SHORT 0x80 num_vertices_all
+
+    // finding region structure
+    SET index = "-1"
+    PATCH_IF (region_index >= 0 && region_index < num_regions) BEGIN
+      SET index = region_index
+    END ELSE BEGIN
+      FOR (i = 0; i < num_regions; ++i) BEGIN
+        SET ofs = ofs_regions + i * 196
+        READ_ASCII ofs name (32) NULL
+        PATCH_IF (~%name%~ STR_EQ ~%region_name%~) BEGIN
+          SET index = i
+          SET i = num_regions
+        END
+      END
+    END
+
+    PATCH_IF (index >= 0) BEGIN
+      SET ofs_region = ofs_regions + index * 196
+      READ_SHORT (ofs_region + 0x2a) num_vertices
+      READ_LONG (ofs_region + 0x2c) idx_vertices
+      SET ofs_vertex = ofs_vertices + idx_vertices * 4
+      SET min_x = 32767
+      SET min_y = 32767
+      SET max_x = "-32768"
+      SET max_y = "-32768"
+      FOR (i = 0; i < num_vertices; ++i) BEGIN
+        // patching vertex
+        PATCH_IF (VARIABLE_IS_SET $vertex(~%i%~)) BEGIN
+          SET vtx = $vertex(~%i%~)
+          WRITE_LONG ofs_vertex vtx
+        END ELSE BEGIN
+          READ_LONG ofs_vertex vtx
+        END
+
+        // updating bounding box values
+        SET x = (vtx & 0xffff) >= 0x8000 ? BNOT 0xffff : 0  // preserve sign
+        SET x = x BOR (vtx & 0xffff)
+        SET y = ((vtx >> 16) & 0xffff) >= 0x8000 ? BNOT 0xffff : 0  // preserve sign
+        SET y = y BOR ((vtx >> 16) & 0xffff)
+        SET min_x = (x < min_x) ? x : min_x
+        SET min_y = (y < min_y) ? y : min_y
+        SET max_x = (x > max_x) ? x : max_x
+        SET max_y = (y > max_y) ? y : max_y
+
+        SET ofs_vertex += 4
+      END
+
+      // patching bounding box
+      WRITE_SHORT (ofs_region + 0x22) min_x
+      WRITE_SHORT (ofs_region + 0x24) min_y
+      WRITE_SHORT (ofs_region + 0x26) max_x
+      WRITE_SHORT (ofs_region + 0x28) max_y
+    END ELSE BEGIN
+      PATCH_IF (NOT silent) BEGIN
+        PATCH_WARN ~WARNING: Specified region does not exist~
+      END
+    END
+  END ELSE BEGIN
+    PATCH_IF (NOT silent) BEGIN
+      PATCH_WARN ~WARNING: Not a valid ARE resource~
+    END
+  END
+END
+
+
+ACTION_IF (game_is_bg2ee) BEGIN
+
+// Updated vertices of area region polygons
+ACTION_DEFINE_ASSOCIATIVE_ARRAY area_regions BEGIN
+  // area, region name    => comma-separated list of x.y coordinates
+  ~ar2806~, ~VineTrig1a~  => ~728.631, 948.631, 886.822, 681.689~
+  ~ar2806~, ~VineTrig1b~  => ~1110.217, 1267.315, 1201.408, 990.382~
+  ~ar2806~, ~VineTrig2a~  => ~1492.234, 1559.292, 1574.449, 1433.377~
+  ~ar2806~, ~VineTrig2b~  => ~2029.288, 2069.479, 1881.509, 1951.326~
+  ~ar2806~, ~VineTrig3a~  => ~1011.2391, 1143.2471, 939.2587, 830.2479~
+  ~ar2806~, ~VineTrig3b~  => ~306.1624, 395.1906, 303.1933, 150.1664~
+  ~ar2806~, ~VineTrig4a~  => ~2130.2308, 2272.2323, 2313.2455, 2095.2441~
+  ~ar2806~, ~VineTrig4b~  => ~3083.2039, 3228.2171, 2928.2260, 2843.2147~
+END
+
+// Updating region polygons
+ACTION_PHP_EACH area_regions AS keys => coords BEGIN
+  OUTER_SPRINT are_resref $keys(~0~)
+  OUTER_SPRINT region_name $keys(~1~)
+  COPY_EXISTING ~%are_resref%.are~ ~override~
+    PATCH_WITH_SCOPE BEGIN
+      INNER_PATCH ~%coords%~ BEGIN
+        SET vertex = 0
+        REPLACE_EVALUATE ~\([0-9]+\)\.\([0-9]+\)~ BEGIN
+          SET $vertex(~%vertex%~) = MATCH1 | (MATCH2 << 16)
+          SET vertex += 1
+        END ~~
+      END
+
+      LPF ALTER_AREA_REGION_VERTICES STR_VAR region_name END
+    END
+  BUT_ONLY
+END
+
+
+// Fallback trigger: required to defuse events that are not covered by existing script conditions
+<<<<<<<< .../inlined/entered-default.baf
+IF
+  Entered([ANYONE])
+THEN
+  RESPONSE #100
+    NoAction()
+END
+>>>>>>>>
+
+// Converting state-based trigger to event-based trigger
+COPY_EXISTING ~udspit.bcs~   ~override~
+              ~ambush2.bcs~  ~override~
+              ~spbridge.bcs~ ~override~
+              ~sharkamb.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~IsOverMe(\[ANYONE\])~ ~Entered([ANYONE])~
+    APPEND_FILE TEXT ~.../inlined/entered-default.baf~
+  END
+BUT_ONLY
+
+COPY_EXISTING ~ar2202.are~ ~override~
+  LPF ALTER_AREA_REGION
+    INT_VAR
+      flag_resets = 1
+    STR_VAR
+      region_name = ~SpawnPit~
+  END
+BUT_ONLY
+
+END // game_is_bg2ee
