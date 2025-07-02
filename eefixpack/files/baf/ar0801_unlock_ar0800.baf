@@ -1,0 +1,21 @@
+IF
+  Global("Tran0800cUsed","GLOBAL",0)
+  OR(3)
+    Clicked([ANYONE])
+    Entered([ANYONE])
+    WalkedToTrigger([ANYONE])
+THEN
+  RESPONSE #100
+    SetGlobal("Tran0800cUsed","GLOBAL",1)
+END
+
+IF
+  !Global("Tran0800cUsed","GLOBAL",0)
+  OR(3)
+    Clicked([ANYONE])
+    Entered([ANYONE])
+    WalkedToTrigger([ANYONE])
+THEN
+  RESPONSE #100
+    NoAction()
+END
