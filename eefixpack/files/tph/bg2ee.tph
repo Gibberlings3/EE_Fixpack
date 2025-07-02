@@ -569,6 +569,28 @@ COPY_EXISTING ~ar0205.are~ ~override~
   LPF ALTER_AREA_CONTAINER INT_VAR coord_y = 1170 STR_VAR container_name = ~Container 7~ END
 BUT_ONLY
 
+// Leaving Bodhi's hideout through the main entrance should unlock the door in the graveyard district
+OUTER_SPRINT script_resref ~tr0800c~
+COPY_EXISTING ~ar0801.are~ ~override~
+  READ_SHORT 0x5a region_num
+  READ_LONG 0x5c region_off
+  FOR (; region_num > 0; --region_num region_off += 0xc4) BEGIN
+    READ_ASCII region_off tran_name (32) NULL
+    PATCH_IF (~%tran_name%~ STR_EQ ~Tran0800c~) BEGIN
+      READ_ASCII (region_off + 0x7c) resref (8) NULL
+      PATCH_IF (~%resref%~ STR_EQ ~~) BEGIN
+        WRITE_ASCIIE (region_off + 0x7c) ~%script_resref%~ (8)
+      END ELSE BEGIN
+        SPRINT script_resref ~%resref%~
+      END
+      SET region_num = 0
+    END
+  END
+BUT_ONLY
+
+EXTEND_TOP ~%script_resref%.bcs~ ~eefixpack/files/baf/ar0801_unlock_ar0800.baf~
+EXTEND_TOP ~ar0800.bcs~ ~eefixpack/files/baf/ar0800_unlock_ar0801.baf~
+
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\

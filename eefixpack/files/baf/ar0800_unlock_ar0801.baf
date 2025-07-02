@@ -1,0 +1,11 @@
+IF
+  Global("Tran0800cUsed","GLOBAL",1)
+  Global("WorkingForBodhi","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("Tran0800cUsed","GLOBAL",2)
+    TriggerActivation("Tran0801c",TRUE)
+    Unlock("DOOR12")
+    OpenDoor("DOOR12")
+    Continue()
+END
