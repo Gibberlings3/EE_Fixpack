@@ -4,31 +4,73 @@
 // https://www.gibberlings3.net/forums/topic/39357-bg-bg2-iwd-pst-debug-area-menu-list-corrections/
 COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_is_bgee BEGIN
-    REPLACE_TEXTUALLY ~Duchal~ ~Ducal~ // ar0108 - ar0111, ar0200
-    REPLACE_TEXTUALLY ~cariron~ ~carrion~ // ar5103
+    DEFINE_ASSOCIATIVE_ARRAY area_replace BEGIN
+      // search regexp => replacement string
+      ~Duchal~ => ~Ducal~ // ar0108, ar0109, ar0110, ar0111, ar0200
+      ~Ulgoth Beard's Inn~ => ~Ulgoth's Beard Inn~  // ar1001
+      ~Firebeard~ => ~Firebead~ // ar3333, ar3334
+      ~Drizzt. Bjornin's half-ogres~ => ~Drizzt, Bjornin's half-ogres~  // ar4200
+      ~cariron~ => ~carrion~  // ar5103
+    END
   END ELSE  
   PATCH_IF game_is_bg2ee BEGIN
-    REPLACE_TEXTUALLY ~Favour for Edwin~ ~Favor for Edwin~ // ar0315 - ar0317
-    REPLACE_TEXTUALLY ~Enginge~ ~Engine~ // ar0413
-    REPLACE_TEXTUALLY ~Armourer~ ~Armorer~ // ar0706
-    REPLACE_TEXTUALLY ~Councel~ ~Council~ // ar1002
-    REPLACE_TEXTUALLY ~Elven Table while Spellhold Test~ ~Elven Table (Spellhold Test)~ // ar1511
-    //REPLACE_TEXTUALLY ~Irenicus' Living Room~ ~Irenicus's Living Room~ // ar1515 - already fixed
-    REPLACE_TEXTUALLY ~Tiri's~ ~Tiris's~ // ar2006
-    REPLACE_TEXTUALLY ~Natha; 2nd~ ~Natha 2nd~ // ar2203
-    REPLACE_TEXTUALLY ~Kuo Toa~ ~Kuo-Toa~ // ar2402
-    REPLACE_TEXTUALLY ~Thetyr Wood~ ~Forest of Tethir~ // ar2600
-    REPLACE_TEXTUALLY ~Keep --Cambion~ ~Keep -- Cambion~ // ar3007
-    REPLACE_TEXTUALLY ~Manman~ ~Madman~ // ar3011
-    REPLACE_TEXTUALLY ~breath under~ ~breathe under~ // ar6012
-    REPLACE_TEXTUALLY ~Selune~ ~Selûne~ // oh4010
-    REPLACE_TEXTUALLY ~{"AR2906", "[^"]+"},[ %TAB%%LNL%%MNL%]+{~ ~{~ // ar2906 doesn't exist in BG2EE
-  END ELSE BEGIN // iwdee
-    REPLACE_TEXTUALLY ~Gherg~ ~Ghereg~ // ar2003
-    REPLACE_TEXTUALLY ~Orrick the Grey~ ~Orrick the Gray~ // ar2101, ar2102
-    REPLACE_TEXTUALLY ~Kraken garde~ ~Kraken garden~ // ar8005
-    REPLACE_TEXTUALLY ~Mekrath~ ~Marketh~ // ar8007
-    REPLACE_TEXTUALLY ~\(south\|north\|east\|west\) Tower~ ~\1 tower~ // ar9701-ar9708
+    DEFINE_ASSOCIATIVE_ARRAY area_replace BEGIN
+      // search regexp => replacement string
+      ~^[ %TAB%]*{"AR006[0-5]", "[^"]+"},.*[%WNL%]+~ => ~~  // ar0060, ar0061, ar0062, ar0063, ar0064, ar0060 don't exist in BG2EE
+      ~'Silence do, you have no purpose...'~ => ~'Silence, dog! You have no purpose...'~  // ar0071
+      ~Favour~ => ~Favor~ // ar0315, ar0316, ar0317
+      ~Enginge~ => ~Engine~ // ar0413
+      ~Armourer~ => ~Armorer~ // ar0706
+      ~Councel~ => ~Council~  // ar1002
+      ~while Spellhold Test~ => ~(Spellhold Test)~  // ar1511
+      ~CW's~ => ~Cowled Wizard's~ // ar1605
+      ~Tiri's~ => ~Tiris's~ // ar2006
+      ~Raffee~ => ~Raafee~  // ar2016
+      ~Natha;~ => ~Natha~ // ar2203
+      ~Kuo Toa~ => ~Kuo-Toa~  // ar2402
+      ~Thetyr Wood~ => ~Forest of Tethir~ // ar2600
+      ~^[ %TAB%]*{"AR2906", "[^"]+"},.*[%WNL%]+~ => ~~  // ar2906 doesn't exist in BG2EE
+      ~tieflings~ => ~Tieflings~  // ar3005
+      ~--Cambion~ => ~-- Cambion~ // ar3007
+      ~Manman~ => ~Madman~  // ar3011
+      ~\bbreath\b~ => ~breathe~ // ar6012
+      ~Selune~ => ~Selûne~  // oh4010
+    END
+  END ELSE
+  PATCH_IF game_is_iwdee BEGIN
+    DEFINE_ASSOCIATIVE_ARRAY area_replace BEGIN
+      // search regexp => replacement string
+      ~Gherg~ => ~Ghereg~ // ar2003
+      ~Orrick the Grey~ => ~Orrick the Gray~  // ar2101, ar2102
+      ~ (inaccessible without Heart of Winter)~ => ~~ // ar2109
+      ~garde"~ => ~garden"~ // ar8005
+      ~Mekrath~ => ~Marketh~  // ar8007
+      ~\(south\|west\|north\|east\) Tower~ => ~\1 tower~  // ar9701, ar9703, ar9704, ar9705, ar9706, ar9707, ar9708
+    END
   END
-  BUT_ONLY 
-    
+
+  // performing replacement operations
+  PHP_EACH area_replace AS search => replace BEGIN
+    REPLACE_TEXTUALLY CASE_SENSITIVE ~%search%~ ~%replace%~
+  END
+
+  PATCH_IF game_is_pstee BEGIN
+    // AR13G1, AR13G2, and AR13G3 only exist as WED/TIS files and are used by the modron maze areas AR1301-AR1364
+    SPRINT search ~^\([ %TAB%]*\){"AR13G1",  \([0-9]+\)},.*%LNL%~
+    SPRINT replace ~~
+    FOR (i = 1; i <= 64; ++i) BEGIN
+      PATCH_IF (i < 10) BEGIN
+        SPRINT resref ~AR130%i%~
+      END ELSE BEGIN
+        SPRINT resref ~AR13%i%~
+      END
+      SPRINT line ~\1{"%resref%",  \2},%WNL%~
+      SPRINT replace ~%replace%%line%~
+    END
+    REPLACE_TEXTUALLY ~%search%~ ~%replace%~
+
+    // removing remaining AR13G* entries
+    REPLACE_TEXTUALLY ~^[ %TAB%]*{"AR13G[1-3]",.*[%WNL%]+~ ~~
+  END
+
+  BUT_ONLY
