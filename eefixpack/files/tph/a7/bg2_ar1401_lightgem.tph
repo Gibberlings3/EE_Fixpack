@@ -1,0 +1,79 @@
+// Fixes slightly off position and coloring of the illuminated version of the light gem in the Shadow Temple
+
+WITH_SCOPE BEGIN
+
+// finding free pvrz slot for AR1401.TIS
+OUTER_SET pvrz_index = "-1"
+OUTER_SPRINT pvrz_resref ~~
+OUTER_FOR (i = 0; i < 100; ++i) BEGIN
+  ACTION_IF (i < 10) BEGIN
+    OUTER_SPRINT resref ~a14010%i%~
+  END ELSE BEGIN
+    OUTER_SPRINT resref ~a1401%i%~
+  END
+  ACTION_IF (NOT FILE_EXISTS_IN_GAME ~%resref%.pvrz~) BEGIN
+    OUTER_SET pvrz_index = i
+    OUTER_SPRINT pvrz_resref ~%resref%~
+    OUTER_SET i = 100
+  END
+END
+
+COPY ~eefixpack/files/pvrz/a1401-lightgem.pvrz~ ~override/%pvrz_resref%.pvrz~
+
+// rectangular area that covers the entire region to patch, in tiles
+OUTER_SET region_width = 10
+OUTER_SET region_height = 7
+
+// pvrz texture width, in tiles
+OUTER_SET pvrz_width = 16
+
+// top-left position of the region on the map, in tiles
+OUTER_SET map_x = 7
+OUTER_SET map_y = 16
+
+// top-left position of the region on the pvrz texture, in tiles
+OUTER_SET pvrz_x = 1
+OUTER_SET pvrz_y = 1
+
+ACTION_CLEAR_ARRAY tis_mapping
+
+// retrieving secondary tile indices
+COPY_EXISTING ~ar1401.wed~ ~override~
+  READ_LONG 0x10 ofs_ovl
+  READ_LONG (ofs_ovl + 0x10) ofs_tilemaps
+  READ_SHORT (ofs_ovl + 0x00) tis_width
+  FOR (y = 0; y < region_height; ++y) BEGIN
+    FOR (x = 0; x < region_width; ++x) BEGIN
+      SET map_tile_idx = (map_y + y) * tis_width + (map_x + x)
+      SET pvrz_tile_idx = (pvrz_y + y) * pvrz_width + (pvrz_x + x)
+      SET ofs = ofs_tilemaps + map_tile_idx * 10
+      READ_SSHORT (ofs + 0x04) sec_tile_idx
+      PATCH_IF (sec_tile_idx >= 0) BEGIN
+        SET $tis_mapping(~%sec_tile_idx%~) = pvrz_tile_idx
+      END
+    END
+  END
+BUT_ONLY
+
+// updating tileset
+COPY_EXISTING ~ar1401.tis~ ~override~
+  SET block_size = 0x0c
+  READ_LONG 0x08 num_tiles
+  READ_LONG 0x0c tile_size
+  PATCH_IF (tile_size == block_size) BEGIN
+    PHP_EACH tis_mapping AS tis_idx => pvrz_idx BEGIN
+      PATCH_IF (tis_idx >= 0 && tis_idx < num_tiles) BEGIN
+        SET tis_ofs = 0x18 + tis_idx * block_size
+        SET x = (pvrz_idx MODULO 16) * 64
+        SET y = (pvrz_idx / 16) * 64
+        WRITE_LONG tis_ofs pvrz_index
+        WRITE_LONG (tis_ofs + 0x04) x
+        WRITE_LONG (tis_ofs + 0x08) y
+      END ELSE BEGIN
+        PATCH_WARN ~WARNING: Tile index is out of bounds (tile index: %tis_idx%, tile count: %num_tiles%)~
+      END
+    END
+  END
+BUT_ONLY
+
+END

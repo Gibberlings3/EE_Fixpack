@@ -511,6 +511,7 @@ INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scr
 
 INCLUDE ~eefixpack/files/tph/a7/floor_triggers_fix.tph~ // fix floor triggers to fire more reliably
 
+INCLUDE ~eefixpack/files/tph/a7/bg2_ar1401_lightgem.tph~ // improve tileset for light gem in the shadow temple
 
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
