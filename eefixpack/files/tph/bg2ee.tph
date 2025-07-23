@@ -185,6 +185,7 @@ COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes 
 
 INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
 INCLUDE ~eefixpack/files/tph/hexxat_death.tph~ // better death scripting for hexxat
+INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
 
 // fix misspelled resref
 COPY_EXISTING ~cut85a.bcs~   ~override~

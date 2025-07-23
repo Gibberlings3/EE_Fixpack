@@ -697,3 +697,120 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
   END
   BUT_ONLY 
 PRINT ~%debug%~
+
+
+
+// used to find creatures who are missing proficiencies
+
+OUTER_SPRINT prof_debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
+//COPY_EXISTING ~cambion1.cre~ ~override~
+  SET update_needed = 0
+  READ_LONG  0x2c0 itm_num
+  READ_LONG  0x2b8 slot_off
+  FOR (index = 1 ; index < 5 ; ++index) BEGIN 
+    READ_SHORT (slot_off + 0x10 + (index * 0x02)) ref
+    PATCH_IF ((ref < itm_num) AND (ref >= 0)) BEGIN SET ~valid%index%~ = ref END ELSE BEGIN  SET ~valid%index%~ = "-1" END
+  END
+  PATCH_IF ((valid1 >= 0) OR (valid2 >= 0) OR (valid3 >= 0) OR (valid4 >= 0)) BEGIN // if there's a valid weapon reference
+    SPRINT cre_file ~%SOURCE_RES%~ // might get reset with INNER_ACTION
+    TO_LOWER cre_file
+    // find existing obg profs
+    FOR (index = 110 ; index < 118 ; ++index) BEGIN 
+      READ_BYTE index val
+      SET val = ("%val%" BAND 0b00000111) // acvtive prof value is only first three bits
+      SET $cd_profs_possessed("obg_%index%") = val
+    END 
+    // find existing bg2 profs
+    FOR (index = 89 ; index < 108 ; ++index) BEGIN // first reset values
+      SET $cd_profs_possessed("bg2_%index%") = 0
+    END      
+    SET $cd_profs_possessed("bg2_115") = 0 // clubs
+    READ_BYTE 0x33 fx_type
+    READ_LONG 0x2c4 fx_off
+    READ_LONG 0x2c8 fx_num
+    FOR (index = 0 ; index < fx_num ; ++index) BEGIN
+      READ_SHORT (fx_off        + (0x08 * fx_type) + (index * (0x30 + (0xd8 * fx_type)))) opcode
+      READ_SHORT (fx_off + 0x04 + (0x10 * fx_type) + (index * (0x30 + (0xd8 * fx_type)))) stars // use short to only capture actuve
+      READ_SHORT (fx_off + 0x08 + (0x10 * fx_type) + (index * (0x30 + (0xd8 * fx_type)))) prof  // use short to just grab prof value
+      PATCH_IF opcode = 233 BEGIN
+        SET $cd_profs_possessed("bg2_%prof%") = stars
+      END  
+    END
+    // now check weapons
+    SPRINT patch_string ~~
+    READ_LONG  0x2bc itm_off
+    FOR (index = 1 ; index < 5 ; ++index) BEGIN 
+      PATCH_IF ~valid%index%~ >= 0 BEGIN 
+        SET obg_prof = 0
+        READ_ASCII (itm_off + (0x14 * ~valid%index%~)) item
+        TO_LOWER item
+        PATCH_IF VARIABLE_IS_SET $cd_prof_db_bg2("%item%") BEGIN // if the item has been encountered in other creatures
+          SET obg_prof = $cd_prof_db_obg("%item%")
+          SET bg2_prof = $cd_prof_db_bg2("%item%")
+        END ELSE BEGIN    
+          PATCH_IF FILE_EXISTS_IN_GAME ~%item%.itm~ BEGIN
+            INNER_ACTION BEGIN 
+            
+              COPY_EXISTING ~%item%.itm~ ~override~
+                READ_BYTE 0x31 prof
+                PATCH_IF prof BEGIN // if prof=0, there's no non-prof penalty
+                  READ_SHORT 0x1c type
+                  PATCH_MATCH type WITH
+                    20 BEGIN SET obg_prof = 110 SET $cd_prof_db_obg("%item%") = 110 END // large swords
+                    19 BEGIN SET obg_prof = 111 SET $cd_prof_db_obg("%item%") = 111 END // small swords
+                    16 BEGIN SET obg_prof = 111 SET $cd_prof_db_obg("%item%") = 111 END // daggers
+                    15 BEGIN SET obg_prof = 112 SET $cd_prof_db_obg("%item%") = 112 END // bows
+                    29 BEGIN SET obg_prof = 113 SET $cd_prof_db_obg("%item%") = 113 END // spears
+                    30 BEGIN SET obg_prof = 113 SET $cd_prof_db_obg("%item%") = 113 END // halberds
+                    17 BEGIN SET obg_prof = 114 SET $cd_prof_db_obg("%item%") = 114 END // maces
+                    21 BEGIN SET obg_prof = 114 SET $cd_prof_db_obg("%item%") = 114 END // hammers
+                    26 BEGIN SET obg_prof = 114 SET $cd_prof_db_obg("%item%") = 114 END // staves
+                    22 BEGIN SET obg_prof = 115 SET $cd_prof_db_obg("%item%") = 115 END // morningstars
+                    23 BEGIN SET obg_prof = 115 SET $cd_prof_db_obg("%item%") = 115 END // flails
+                    25 BEGIN SET obg_prof = 116 SET $cd_prof_db_obg("%item%") = 116 END // axes
+                    18 BEGIN SET obg_prof = 117 SET $cd_prof_db_obg("%item%") = 117 END // slings
+                    24 BEGIN SET obg_prof = 117 SET $cd_prof_db_obg("%item%") = 117 END // darts
+                    27 BEGIN SET obg_prof = 117 SET $cd_prof_db_obg("%item%") = 117 END // xbows
+                    DEFAULT  SET obg_prof =   0 SET $cd_prof_db_obg("%item%") =   0     // unknown type
+                  END  
+                  SET $cd_prof_db_bg2("%item%")= prof
+                  SET bg2_prof = prof
+                END  
+                BUT_ONLY
+
+            END // inner action
+          END // file exists
+        END // VARIABLE_IS_SET
+        PATCH_IF obg_prof BEGIN // if this is now non-zero, it means we found a valid prof needed
+          SET has_prof = 0
+          PATCH_IF ((bg2_prof = 115) OR ((bg2_prof > 88) AND (bg2_prof < 108))) BEGIN // if valid bg2 proif value
+            PATCH_IF $cd_profs_possessed("bg2_%bg2_prof%") != 0 BEGIN SET has_prof = 1 END
+          END
+          // if no bg2 prof, check for oBG prof
+          PATCH_IF !has_prof BEGIN
+            PATCH_IF $cd_profs_possessed("obg_%obg_prof%") = 0 BEGIN // doesn't have a prof
+              SET update_needed = 1
+              SPRINT patch_string ~%WNL%  WRITE_BYTE %obg_prof% (THIS + 1) // needed for for %item%~
+            END   
+          END
+        END   
+      END // individual valid check
+    END // FOR loop
+  END // valid weapon check
+  PATCH_IF update_needed BEGIN 
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+    PATCH_IF ("%cre_file%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                            BEGIN SPRINT spc "        " END
+    READ_STRREF 0x08 name
+    SPRINT patch_string "COPY_EXISTING ~%cre_file%.cre~%spc%~override~ // %name%%patch_string%"
+    SPRINT prof_debug ~%prof_debug%%WNL%%WNL%%patch_string%~
+  END   
+  BUT_ONLY  
+
+PRINT ~%prof_debug%~
