@@ -1415,12 +1415,47 @@ END
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
 
+// purging duplicate items for sale 
+COPY_EXISTING ~25spell.sto~ ~override~ //  (Arcana Archives): Duplicate item SCRL3G.ITM (Vocalize) at slots 29 and 37
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = scrl3g END 
+
+// purging duplicate items for sale
+COPY_EXISTING ~bernard.sto~  ~override~ //  (Copper Coronet): 
+              ~uddrow23.sto~ ~override~ //  (Merchant): 
+              ~uhmer01.sto~  ~override~ //  (Merchant): 
+  LPF cd_purge_sale_dupes INT_VAR keep = 2               STR_VAR item = ax1h01 END // Duplicate item AX1H01.ITM (Battle Axe) at slots 14 and 43
+  LPF cd_purge_sale_dupes INT_VAR keep = 1 quantity = 10 STR_VAR item = dagg01 END // Duplicate item DAGG01.ITM (Dagger) at slots 11 and 45
+
 // consolidate bernard's store (see also bernard.bcs, bernard.dlg)
 COPY_EXISTING ~bernard.sto~ ~override/bernard2.sto~
+
+// purging duplicate items for sale
+COPY_EXISTING ~cdaemerc.sto~ ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
+              ~ppstor01.sto~ ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
+              ~trthf02.sto~  ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = shld04 END 
+
+// purging duplicate items for sale  
+COPY_EXISTING ~kpchap01.sto~ ~override~ //  (Bolumir of Tempus): Duplicate item SCRL63.ITM (Raise Dead) at slots 17 and 20
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 5 STR_VAR item = scrl63 END 
+  
+// purging duplicate items for sale
+COPY_EXISTING ~shop08.sto~ ~override~ //  (Merchant): Duplicate item SCRL5H.ITM (Emotion: Hopelessness) at slots 62 and 78
+  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = scrl5h END 
+  
+// purging duplicate items for sale
+COPY_EXISTING ~trrak01.sto~ ~override~ //  (Adratha the Witch): Duplicate item POTN42.ITM (Potion of Regeneration) at slots 3 and 14
+  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = potn42 END 
+  // fix potn31 while we're here - has expiry time, no ID flag
+  LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 1 overwrite = 1 STR_VAR item_name = potn31 flags = identified position = "AFTER potn14" END
 
 COPY_EXISTING ~type2.sto~ ~override~ //Adventurers' Mart (unused)
   REMOVE_STORE_ITEM ~scrl7a~ //Invalid item
   BUT_ONLY
+
+// purging duplicate items for sale
+COPY_EXISTING ~wilmat.sto~ ~override~ //  (Temple of Ilmater): Duplicate item SCRL63.ITM (Raise Dead) at slots 7 and 14
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 4 STR_VAR item = scrl63 END 
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\

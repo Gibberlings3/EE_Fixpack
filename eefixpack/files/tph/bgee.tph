@@ -1530,11 +1530,9 @@ END
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
 
-// tbd, cam (from jmerry)
-// Correct number of charges on the Sandthief's Ring at tier 3
-COPY_EXISTING ~bpxith03.sto~ ~override~
-  LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
-  BUT_ONLY
+COPY_EXISTING ~bdbeleg3.sto~ ~override~ // (Quartermaster): Duplicate item RESTORE.ITM (Greater Restoration) at slots 51 and 147
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 10 STR_VAR item = restore END 
+  BUT_ONLY IF_EXISTS // sod asset
 
 // tbd, cam
 // Frair Tajik is only merchant that takes helmets but not hats (peacock hat)
@@ -1551,6 +1549,12 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
     END
   END
   BUT_ONLY IF_EXISTS // sod asset
+
+// tbd, cam (from jmerry)
+// Correct number of charges on the Sandthief's Ring at tier 3
+COPY_EXISTING ~bpxith03.sto~ ~override~
+  LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
+  BUT_ONLY
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\

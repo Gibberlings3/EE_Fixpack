@@ -438,3 +438,58 @@ DEFINE_PATCH_MACRO cd_bulk_fix_item_strings_bulk BEGIN
   END
 
 END
+
+/////                                                  \\\\\
+///// cd_purge_sale_dupes                              \\\\\
+/////                                                  \\\\\
+
+// used to remove dupe items for sale in stores
+DEFINE_PATCH_FUNCTION cd_purge_sale_dupes
+
+  INT_VAR keep = 0
+          charge1  = "-1"
+          charge2  = "-1"
+          charge3  = "-1"
+          flags    = "-1"
+          quantity = "-1"
+          infinite = "-1"
+  STR_VAR item = ""
+  
+BEGIN 
+
+  PATCH_IF ((keep > 0) AND ("%item%" STRING_COMPARE_CASE "")) BEGIN // bad input check
+    SET item_delta = 0
+    SET match = 0
+    READ_LONG 0x34 sale_off
+    READ_LONG 0x38 sale_num
+    FOR (index = 0 ; index < sale_num ; ++index) BEGIN
+      READ_ASCII (sale_off + 0x00 + (0x1c * index)) item_check
+      PATCH_IF ("%item%" STRING_COMPARE_CASE "%item_check%" = 0) BEGIN 
+        SET match += 1
+        PATCH_IF match = keep BEGIN // if it's the one we want to keep, apply changes if specified
+          PATCH_IF charge1  >= 0 BEGIN WRITE_SHORT (sale_off + 0x0a + (0x1c * index)) charge1  END
+          PATCH_IF charge2  >= 0 BEGIN WRITE_SHORT (sale_off + 0x0c + (0x1c * index)) charge2  END
+          PATCH_IF charge3  >= 0 BEGIN WRITE_SHORT (sale_off + 0x0e + (0x1c * index)) charge3  END
+          PATCH_IF flags    >= 0 BEGIN WRITE_LONG  (sale_off + 0x10 + (0x1c * index)) flags    END
+          PATCH_IF quantity >= 0 BEGIN WRITE_LONG  (sale_off + 0x14 + (0x1c * index)) quantity END
+          PATCH_IF infinite >= 0 BEGIN WRITE_LONG  (sale_off + 0x18 + (0x1c * index)) infinite END
+        END ELSE BEGIN
+          DELETE_BYTES (sale_off + 0x00 + (0x1c * index)) 0x1c
+          SET item_delta -= 1
+          SET sale_num -= 1
+          SET index -= 1
+        END // delete
+      END // item match
+    END // for
+    PATCH_IF item_delta BEGIN // if an item was removed
+      WRITE_LONG 0x38 sale_num // update num of items for sale
+      PATCH_FOR_EACH offset IN 0x2c 0x4c 0x70 BEGIN // correct any offsets after the deleted bytes
+        READ_LONG offset off
+        PATCH_IF off > sale_off BEGIN 
+          WRITE_LONG offset (THIS + (item_delta * 0x1c))
+        END
+      END
+    END
+  END // input check
+
+END  
