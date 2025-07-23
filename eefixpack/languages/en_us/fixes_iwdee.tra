@@ -328,6 +328,9 @@ Requires:
 
 Weight: 4~
 
+// name is wrong, he's Crieck (two c's) not Criek - conflicts with 27311
+@27380 = ~Crieck of Bane~
+
 // second sentence in description said "1d2 carrion crawlers", but actually it's a 35/65 split. Changed to a more general "one or two carrion crawlers"
 // same fix required for bg (26586), bg2 (29212), and iwd (35784)
 @35784 = ~Carrion Summons
