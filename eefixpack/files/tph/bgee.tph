@@ -327,6 +327,12 @@ ACTION_IF game_includes_sod BEGIN
   INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
 END
 
+// potential script loop for irlentree
+COPY_EXISTING ~ar0127.bcs~ ~override~ // area script for Merchant League, ground floor (Irlentree)
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("RemoveIrelentre","GLOBAL",1)\)~ ~\1 Exists("Irlentre")~ // check for existance before destroySelf
+  END  
+
 // tbd, cam (from k4thos/eet)
 // if you lure aec'letec out of the basement, much of the cultist scripting breaks
 COPY_EXISTING ~ar1002.bcs~ ~override~
