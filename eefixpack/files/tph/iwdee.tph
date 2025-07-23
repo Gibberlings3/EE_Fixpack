@@ -429,6 +429,14 @@ INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that ca
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 
+// shortbows using longbow paperdoll/avatar animation
+COPY_EXISTING ~bow05.itm~   ~override~ // Shortbow
+              ~bow06.itm~   ~override~ // Shortbow +1
+              ~hqsbow.itm~  ~override~ // High Quality Shortbow
+              ~sbowebu.itm~ ~override~ // Shortbow of Ebullience +3
+              ~storm.itm~   ~override~ // Storm Bow +2
+  WRITE_ASCII 0x22 ~BS~ #2
+
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
               ~book08.itm~ ~override~
