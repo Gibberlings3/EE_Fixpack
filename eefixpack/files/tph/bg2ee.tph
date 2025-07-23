@@ -789,6 +789,10 @@ COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
 COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
   LPF ALTER_EFFECT INT_VAR match_opcode = 174 timing = 4 duration = 600 STR_VAR match_resource = eff_e07 END
 
+// fire salamader class has changed, so update wave halberd to target new class
+COPY_EXISTING ~halb09.itm~ ~override~
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 check_globals = 0 match_opcode = 177 match_parameter1 = 187 parameter1 = 218 END 
+
 // prevent hexxat, haer'dalis from using racially-restricted items (see also npbow.itm, npsw01.itm, hlolth.itm)
 COPY_EXISTING ~hamm06.itm~ ~override~
   LPF ADD_ITEM_EQEFFECT INT_VAR opcode=319 target=2 power=1 parameter1=4 parameter2=4 special=1100 END // dwarves only
