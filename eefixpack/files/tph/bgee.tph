@@ -449,6 +449,13 @@ ACTION_IF game_includes_sod BEGIN
     END
     BUT_ONLY
 
+  // edwin shouldn't lament chance to kill vichand if he wasn't there when you spoke to him originally (see also bdvichan.dlg)
+  COPY_EXISTING ~bdedwin.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~\(Global("bd_vichand_talk","bd2000",1)\)~ ~\1 Global("cd_edwin_vichand_met","bd2000",1)~
+    END
+    BUT_ONLY   
+
   // correctly count monsters where you have to kill a specific number of them (see also bdwe1str.bcs et al)
   COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff). 
                 ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals. 
