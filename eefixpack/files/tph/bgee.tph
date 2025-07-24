@@ -441,6 +441,13 @@ ACTION_IF game_includes_sod BEGIN
     
   EXTEND_BOTTOM ~bdbartle.bcs~ ~eefixpack/files/baf/bdbartle.baf~  
 
+  // tsolak's messenger shouldn't spawn in scrying cutscenes
+  COPY_EXISTING ~bdbaldur.bcs~ ~override~
+    DECOMPILE_AND_PATCH BEGIN 
+      REPLACE_TEXTUALLY ~\(GlobalTimerExpired("bd_123_messenger_timer","global")\)~ ~\1 !AreaCheck("BD0070") !AreaCheck("BD0071") !AreaCheck("BD0118")~
+    END
+    BUT_ONLY   
+
   // tbd, cam (from k4thos/eet)
   //Dead NPCs stays in party in chapter 13
   COPY_EXISTING ~bdcut61.bcs~ ~override~
