@@ -317,6 +317,8 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 // spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total.
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_area_dv_fixes.tpa~
 
+INCLUDE ~eefixpack/files/tph/region_cursors.tph~ // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
+
 COPY_EXISTING ~ar1015.are~ ~override~ // beetle has redundant script
   LPF ALTER_AREA_ACTOR STR_VAR actor_name = ehbeetle script_override = ~~ END // name not unique, but it's ok since all shouldn't have override script
 
