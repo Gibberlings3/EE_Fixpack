@@ -327,6 +327,12 @@ ACTION_IF game_includes_sod BEGIN
   INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
 END
 
+// potential script loop for irlentree
+COPY_EXISTING ~ar0127.bcs~ ~override~ // area script for Merchant League, ground floor (Irlentree)
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("RemoveIrelentre","GLOBAL",1)\)~ ~\1 Exists("Irlentre")~ // check for existance before destroySelf
+  END  
+
 // tbd, cam (from k4thos/eet)
 // if you lure aec'letec out of the basement, much of the cultist scripting breaks
 COPY_EXISTING ~ar1002.bcs~ ~override~
@@ -780,6 +786,7 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+INCLUDE ~eefixpack/files/tph/region_cursors.tph~ // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
 
 // bgcs-3454, cam
 // lady's house lacks its normal music
@@ -1524,11 +1531,9 @@ END
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
 
-// tbd, cam (from jmerry)
-// Correct number of charges on the Sandthief's Ring at tier 3
-COPY_EXISTING ~bpxith03.sto~ ~override~
-  LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
-  BUT_ONLY
+COPY_EXISTING ~bdbeleg3.sto~ ~override~ // (Quartermaster): Duplicate item RESTORE.ITM (Greater Restoration) at slots 51 and 147
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 10 STR_VAR item = restore END 
+  BUT_ONLY IF_EXISTS // sod asset
 
 // tbd, cam
 // Frair Tajik is only merchant that takes helmets but not hats (peacock hat)
@@ -1545,6 +1550,12 @@ COPY_EXISTING ~bdfrair.sto~ ~override~
     END
   END
   BUT_ONLY IF_EXISTS // sod asset
+
+// tbd, cam (from jmerry)
+// Correct number of charges on the Sandthief's Ring at tier 3
+COPY_EXISTING ~bpxith03.sto~ ~override~
+  LPF REPLACE_STORE_ITEM INT_VAR number_in_stock = 1 charges1 = 8 charges2 = 0 charges3 = 0 STR_VAR old_item = ring05 new_item = ring05 END
+  BUT_ONLY
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\

@@ -1,0 +1,213 @@
+
+ACTION_IF game_is_bgee BEGIN 
+
+  COPY_EXISTING ~ar0512.are~ ~override~
+    FOR (index = 1 ; index < 8; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Ghast%index%~ END
+    END  
+    FOR (index = 1 ; index < 7; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~UrnTrap%index%~ END
+    END  
+    PATCH_FOR_EACH region IN Left Right1 Right2 R9b L2c BEGIN 
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Chase%region%~ END
+    END  
+
+  COPY_EXISTING ~ar0514.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~crushtrap2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~crushtrap3~ END
+
+  //COPY_EXISTING ~bd1000.are~ ~override~ // Tradeway_exit, Dead Goblins, Bddgob[1-4]: none are visible
+  //COPY_EXISTING ~bd2000.are~ ~override~ //Bridgefort_exit not visible
+  //COPY_EXISTING ~bd4300.are~ ~override~ // Infopoint06 not visible
+
+  COPY_EXISTING ~oh2000.are~ ~override~
+    FOR (index = 1 ; index < 5; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Guardtrigger%index%~ END
+    END  
+
+  COPY_EXISTING ~oh2010.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Doortrigger~ END
+
+  COPY_EXISTING ~oh3020.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Prisoners~ END
+
+  COPY_EXISTING ~oh9360.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Info Point 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Info Point 2~ END
+
+END ELSE ACTION_IF game_is_bg2ee BEGIN
+
+  //COPY_EXISTING ~oh4010.are~ ~override~ // lightning[1-3] not visible
+  //COPY_EXISTING ~oh4101.are~ ~override~ // Ohrtruth not visible
+  //COPY_EXISTING ~oh4220.are~ ~override~ // Ohrchasm not visible
+  //COPY_EXISTING ~oh5100.are~ ~override~ // Gorgeinterjects not visible
+  //COPY_EXISTING ~oh5120.are~ ~override~ // Ritualcircle
+
+  COPY_EXISTING ~oh5200.are~ ~override~ // Way[1-6] not visible
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Icywater1~ END
+
+  //COPY_EXISTING ~oh5500.are~ ~override~ // Silverdragons2? not visible
+  //COPY_EXISTING ~oh7000.are~ ~override~ // Deadendwithshades, Dragomirstops, Rodmessage, Rodhint not visible
+  //COPY_EXISTING ~oh7100.are~ ~override~ // Hexxatmother, Mindflayers not visible
+
+  COPY_EXISTING ~oh7200.are~ ~override~ // Provetrap[1-3], Furiousgenietrap, Spiketrap, Statuetrap, Proveunproved not visible
+    FOR (index = 1 ; index < 4; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Webtrap%index%~ END
+    END  
+
+  COPY_EXISTING ~oh8100.are~ ~override~ // Ohb_messhall1 not visible
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Thassk Room~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Joker Cloth 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Joker Cloth 2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Lounge Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Lounge Trap 2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Lounge Trap 3~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Lounge Trap 4~ END
+
+END ELSE BEGIN // iwdee
+
+  COPY_EXISTING ~ar1105.are~ ~override~
+    FOR (index = 1 ; index < 7; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trigger Point %index%~ END
+    END  
+
+  COPY_EXISTING ~ar3101.are~ ~override~
+    FOR (index = 1 ; index < 5; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trap %index%~ END
+    END  
+
+  COPY_EXISTING ~ar3201.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 2~ END
+
+  COPY_EXISTING ~ar3301.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 1~ END
+
+  COPY_EXISTING ~ar3501.are~ ~override~
+    FOR (index = 1 ; index < 4; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trap %index%~ END
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Ramp%index% Trap~ END
+    END  
+
+  COPY_EXISTING ~ar3502.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Entry Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Crypt Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Crypt Trap 2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap 3~ END
+
+  COPY_EXISTING ~ar3503.are~ ~override~
+    FOR (index = 1 ; index < 5; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trap %index%~ END
+    END  
+
+  COPY_EXISTING ~ar3601.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trigger Point 4~ END
+
+  COPY_EXISTING ~ar3602.are~ ~override~
+    FOR (index = 6 ; index < 10; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trigger Point %index%~ END
+    END  
+
+  COPY_EXISTING ~ar4003.are~ ~override~
+    FOR (index = 1 ; index < 6; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Glyph Trap %index%~ END
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Needle Trap %index%~ END
+    END  
+    FOR (index = 6 ; index < 13; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Glyph Trap %index%~ END
+    END  
+
+  COPY_EXISTING ~ar4005.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Hallway Death Fog Trap~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Poison Needle Paralyze 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Penta Confusion 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Penta Confusion 2~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Penta Paralyze~ END
+    FOR (index = 1 ; index < 6; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Poison Needle Damage %index%~ END
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Poison Needle Confusion %index%~ END
+    END  
+    FOR (index = 6 ; index < 11; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Poison Needle Damage %index%~ END
+    END  
+
+  COPY_EXISTING ~ar6005.are~ ~override~
+    FOR (index = 1 ; index < 4; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trap %index%~ END
+    END  
+
+  COPY_EXISTING ~ar6006.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trigger Point 12~ END
+
+  COPY_EXISTING ~ar6011.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap~ END
+
+  COPY_EXISTING ~ar7005.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Bridge~ END
+
+  COPY_EXISTING ~ar8003.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Umber Hulk Trap~ END
+
+  COPY_EXISTING ~ar8009.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Eye Trap 1~ END
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Eye Trap 2~ END
+
+  COPY_EXISTING ~ar9502.are~ ~override~
+    FOR (index = 1 ; index < 10; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trap %index%~ END
+    END  
+
+  COPY_EXISTING ~ar9600.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Aggro door guards~ END
+
+  COPY_EXISTING ~ar9603.are~ ~override~
+    FOR (index = 9 ; index < 26; ++index) BEGIN
+      LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = EVAL ~Trigger Point %index%~ END
+    END  
+
+  COPY_EXISTING ~ar9708.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Fire Trap~ END
+
+  COPY_EXISTING ~ar9714.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap~ END // actually handles 35 traps
+
+  COPY_EXISTING ~ar9718.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap~ END // three traps
+
+  COPY_EXISTING ~ar9800.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap-Silence~ END 
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap-Hold~ END // x3
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap-Fire~ END // x2
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Trap-Para Darts~ END // x2
+
+  COPY_EXISTING ~ar9801.are~ ~override~
+    LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~Mino Trap~ END
+  
+END // no branch for pstee since I couldn't find any
+
+/* code used to find and generate code for checking
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.are$~ ~override~
+  SET match = 0
+  SPRINT debug_local ~~
+  READ_SHORT 0x5a trig_num
+  READ_LONG  0x5c trig_off
+  FOR (index = 0 ; index < trig_num ; ++index) BEGIN
+    READ_SHORT (trig_off + 0x20 + (index * 0xc4)) type
+    READ_LONG  (trig_off + 0x34 + (index * 0xc4)) cursor
+    PATCH_IF ((type = 0) AND (cursor != 0)) BEGIN // proximity trigger with a cursor
+      SET match = 1
+      READ_ASCII (trig_off + 0x00 + (index * 0xc4)) name (32) NULL
+      SPRINT debug_local "%debug_local%%WNL%  LPF ALTER_AREA_REGION INT_VAR cursor = 0 STR_VAR region_name = ~%name%~ END"
+    END
+  END
+  PATCH_IF match BEGIN   
+    TO_LOWER SOURCE_RES
+    SPRINT debug "%debug%%WNL%%WNL%COPY_EXISTING ~%SOURCE_RES%.are~ ~override~%debug_local%"
+  END
+  BUT_ONLY
+
+PRINT ~%debug%~  
+*/

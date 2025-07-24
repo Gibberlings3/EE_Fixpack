@@ -317,6 +317,8 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 // spaces) so that SPRITE_IS_DEADfoo won't exceed 32 characters total.
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_area_dv_fixes.tpa~
 
+INCLUDE ~eefixpack/files/tph/region_cursors.tph~ // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
+
 COPY_EXISTING ~ar1015.are~ ~override~ // beetle has redundant script
   LPF ALTER_AREA_ACTOR STR_VAR actor_name = ehbeetle script_override = ~~ END // name not unique, but it's ok since all shouldn't have override script
 
@@ -446,6 +448,14 @@ COPY_EXISTING ~moonbla.itm~ ~override~
 COPY_EXISTING ~vexed.itm~ ~override~ // vexed armor: has 2x cold resist icon, one should be cursed instead
   LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 25 parameter2 = 35 multi_match = 1 END
   BUT_ONLY
+
+// shortbows using longbow paperdoll/avatar animation
+COPY_EXISTING ~bow05.itm~   ~override~ // Shortbow
+              ~bow06.itm~   ~override~ // Shortbow +1
+              ~hqsbow.itm~  ~override~ // High Quality Shortbow
+              ~sbowebu.itm~ ~override~ // Shortbow of Ebullience +3
+              ~storm.itm~   ~override~ // Storm Bow +2
+  WRITE_ASCII 0x22 ~BS~ #2
 
 // tbd, cam
 // upgraded bren muller's crossbow needs feedback that effect was activated (copy bg2 Heartseeker's visuals)
