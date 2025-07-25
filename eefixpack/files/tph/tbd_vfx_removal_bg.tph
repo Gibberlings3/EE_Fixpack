@@ -484,7 +484,7 @@ COPY_EXISTING ~bdbrd03.spl~  ~override~ // Dispel Confusion - cures confusion
 // create resource removal spell
 COPY ~eefixpack/files/spl/cdcure.spl~ ~override/#curedef.spl~
   LPF ADD_SPELL_EFFECT INT_VAR opcode =  81 target = 2 timing = 1                  END // cure: deafness
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 122 END // remove icon: deafness
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 240 target = 2 timing = 1 parameter2 = 112 END // remove icon: deafness
   PATCH_FOR_EACH res IN
 //    ~bdbrd04~  // (spl) Sound Burst - causes deafness - portrait icon 112
 //    ~bdshriek~ // (spl) Piercing Shriek - causes confusion deafness stun - [confusion routed to bdshriec.spl, stun to bdshries.spl, deaf to bdshried.spl]
