@@ -432,3 +432,25 @@ SetGlobal("bd_npc_camp","locals",1)
 ChangeAIScript("bdparty",DEFAULT)
 RemoveMapNote([3700.358],68675)~
 END
+
+// edwin shouldn't lament chance to kill vichand if he wasn't there when you spoke to him originally (see also bdedwin.bcs)
+// add edwin check and var set for existing entry states
+ADD_TRANS_ACTION bdvichan BEGIN 0 5 38 40 END BEGIN END ~SetGlobal("cd_edwin_vichand_met","bd2000",1)~
+ADD_TRANS_TRIGGER bdvichan 0 ~InParty("edwin")~ 5 38 40
+// now dupe transitions fom entry states (copy trans captures pre-compile transitions)
+EXTEND_BOTTOM bdvichan 0 
+  COPY_TRANS bdvichan 0
+END 
+EXTEND_BOTTOM bdvichan 5 
+  COPY_TRANS bdvichan 5
+END 
+EXTEND_BOTTOM bdvichan 38 
+  COPY_TRANS bdvichan 38
+END 
+EXTEND_BOTTOM bdvichan 40 
+  COPY_TRANS bdvichan 40
+END 
+ADD_TRANS_TRIGGER bdvichan  0 ~!InParty("edwin")~  DO 4 5 6 7 // now add !edwin checks to new transitions
+ADD_TRANS_TRIGGER bdvichan  5 ~!InParty("edwin")~  DO 2 3
+ADD_TRANS_TRIGGER bdvichan 38 ~!InParty("edwin")~  DO 6 7 8 9 10 11
+ADD_TRANS_TRIGGER bdvichan 40 ~!InParty("edwin")~  DO 1
