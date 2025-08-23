@@ -368,9 +368,11 @@ ACTION_IF game_includes_sod BEGIN
 
   // tbd, cam
   // can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
+  // fall_of_sarevok.baf is to clear leftover bg chapter 7 journal entries
   COPY_EXISTING ~bd0120.bcs~ ~override~
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
+      APPEND_FILE ~eefixpack/files/baf/fall_of_sarevok.baf~
     END
     BUT_ONLY
     
