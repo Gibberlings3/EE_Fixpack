@@ -1,5 +1,8 @@
 IF
-	NumberOfTimesTalkedTo(0)
+  OR(2)
+    Global("KangaxxHurt","LOCALS",1)
+    NumberOfTimesTalkedTo(0)
+  Global("cd_change","LOCALS",0)
 THEN
 	RESPONSE #100
 		StartDialogueNoSet([PC])

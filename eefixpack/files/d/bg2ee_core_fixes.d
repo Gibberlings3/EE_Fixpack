@@ -890,3 +890,6 @@ SetGlobal("KickedOut","LOCALS",1)
 SetLeavePartyDialogFile()
 EscapeAreaMove("AR0800",496,1090,SE)~
 END
+
+// kangaxx triggers, again
+REPLACE_TRIGGER_TEXT hlkang ~HP(Myself,1)~ ~Global("KangaxxHurt","LOCALS",1)~ // sync with script trigger
