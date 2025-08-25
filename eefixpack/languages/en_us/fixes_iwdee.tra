@@ -306,6 +306,24 @@ Weight: 3~
 @26213 = ~[A sword has just taken a chunk of his stomach]Ahh!~ [] // sound will be assigned via soundset fixes
 @26214 = ~[Shot through the neck with an arrow]Uggghkk!~ [male3m]
 
+// axe of the minotaur lord: add duration of stun to the 'combat abilities' section, not just the flavor description
+@27035 = ~This fine weapon once belonged to the Minotaur Lord in the Luremaster's catacombs. The axe sports a double blade mounted on a solid oak shaft. It is finely balanced and may be used one-handed. The axe is enchanted, giving the user a +4 to both hit and damage. A successful hit also has a 25% chance of stunning an opponent for 1d4 rounds.
+
+STATISTICS:
+
+Combat abilities:
+– 25% chance target is stunned for 1d4 rounds
+
+THAC0: +4
+Damage: 1d12+4 (slashing)
+Speed Factor: 8
+Proficiency Type: Axe
+Type: One-handed
+Requires:
+ 10 Strength
+
+Weight: 10~
+
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 25818
 // Weapon damage corrections
 @27373 = ~Skullflail, or "The Flail of Teeth" as it is more commonly known, was constructed in 1035 DR for the barbarian warlord Wychgar. During a battle in the northern wastes which became known as Hallowed Pass, Wychgar lost his three brothers to the orc army led by Kraag the Mighty. Wychgar was distraught and during the night he wandered the battlefield looking for their bodies to take away for proper burial. He stumbled across them and was visited by the brothers' spirits who were trapped between the land of the living and the land of the dead. Unable to help them leave he had their souls stored in the flail with the help of a shaman.
