@@ -240,6 +240,18 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
   END
   BUT_ONLY
 
+// tighten up garren windspear's appearance post-knight fight
+COPY_EXISTING ~ar1200.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY 
+      ~\(SetGlobal("DomainPaladinBattle","GLOBAL",1)\)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("bdoffscr",Player1,0,0,0)[ %TAB%%LNL%%MNL%%WNL%]+ApplySpellRES("bdoffscr","bdoffscr")[ %TAB%%LNL%%MNL%%WNL%]+SmallWait(1)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("garren","bdoffscr",0,0,0)~ 
+      ~StartCutSceneMode() \1~
+    REPLACE_TEXTUALLY 
+      ~\(CreateCreatureAtLocation("LOCpalkni05","GLOBAL","deadb01")\)~ 
+      ~\1 CreateCreatureObject("bdoffscr",Player1,0,0,0) ApplySpellRES("bdoffscr","bdoffscr") SmallWait(1) CreateCreatureObject("garren","bdoffscr",0,0,0) EndCutSceneMode()~
+  END
+  BUT_ONLY
+
 // tbd, cam  (from MiH)
 // open all shadow doors if shade lord is defeated
 COPY_EXISTING ~ar1401.bcs~ ~override~
