@@ -21,6 +21,20 @@ COPY_EXISTING ~ghoul1.itm~   ~override~ // Ghoul Touch - causes hold - plays sou
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 324 parameter1 = hold_immunity parameter2 = 110 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
 */
 
+// the new 328s are being set above the self-324s on some spells
+COPY_EXISTING ~sppr422.spl~ ~override~ // blood rage
+  LPF CLONE_EFFECT INT_VAR match_opcode = 324 opcode = 500 STR_VAR insert = first END // laaaaaaaaaaaaaaaaaaaaaaaazy
+  LPF DELETE_EFFECT INT_VAR match_opcode = 324 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 500 opcode = 324 END
+
+// the new 324 is above the self-318 for minor globe and shouldn't be
+COPY_EXISTING ~sppr423.spl~ ~override~ // cloud of pestilence
+              ~sppr426.spl~ ~override~ // smashing wave
+  LPF CLONE_EFFECT INT_VAR match_opcode = 318 opcode = 500 STR_VAR insert = first END // laaaaaaaaaaaaaaaaaaaaaaaazy
+  LPF DELETE_EFFECT INT_VAR match_opcode = 318 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 500 opcode = 318 END
+
+
 // many items/spells that block stun miss whirlwind's 'stunned' string
 COPY_EXISTING ~behamu.itm~   ~override~ // no such index
               ~cibossb.itm~  ~override~ // ring

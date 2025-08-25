@@ -368,9 +368,11 @@ ACTION_IF game_includes_sod BEGIN
 
   // tbd, cam
   // can't reach the required deathcount for comments on lower difficulty since too many 'Followers' despawn
+  // fall_of_sarevok.baf is to clear leftover bg chapter 7 journal entries
   COPY_EXISTING ~bd0120.bcs~ ~override~
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~NumDeadGT("Followers",4)~ ~NumDeadGT("Followers",2)~
+      APPEND_FILE ~eefixpack/files/baf/fall_of_sarevok.baf~
     END
     BUT_ONLY
     
@@ -968,6 +970,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bgee.tph~ // bulk general change
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
+INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
 
 ACTION_IF game_includes_sod BEGIN
 

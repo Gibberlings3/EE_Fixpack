@@ -1,0 +1,136 @@
+/*
+the issue: if a target is supposed to do something to the wielder and target
+on a sporadic basis (non-100%) it should be outsourced to a spell since the
+probabilities for these effects will get rolled separately. E.g. Blackrazor's
+'drain effect' that triggers on 10% of hits would not necessarily affect the 
+wielder and target on the same hits, even though the effects are supposed to
+be connected. First reported
+
+https://www.gibberlings3.net/forums/topic/39871-bg2ee-blackrazors-haste-effect-on-the-wielder-overrides-previously-cast-improved-haste-effects/
+
+The solution is to roll these effects into a spell that does both (with 100%
+probability effects) that triggers on a single, target-based probability roll.
+*/
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_multi_target_sporadic_items BEGIN
+  
+  // new spell, header, prob1, prob2, opcode to convert to 146 => item
+  // prob1 using old, wrong values since this runs prior to tbd_bg(2)ee_probabilities.tph
+  cdblkbld,          0,    10,     0,                      216 => blakblad // bbod's level drain
+  cdmiscbc,          0,    15,     0,                      216 => miscbc   // blackrazor's level drain
+  
+END
+
+ACTION_PHP_EACH cd_multi_target_sporadic_items AS params => item BEGIN
+
+  ACTION_IF FILE_EXISTS_IN_GAME ~%item%.itm~ BEGIN
+
+    COPY_EXISTING ~%item%.itm~ ~override~
+      SET fx_delta = 0
+      SPRINT template ~~
+      READ_LONG  0x64 abil_off
+      READ_SHORT 0x68 abil_num
+      READ_LONG  0x6a fx_off
+      FOR (index = 0 ; index < abil_num ; ++index) BEGIN
+        PATCH_IF index != params_1 BEGIN 
+          WRITE_SHORT (abil_off + 0x20 + (index * 0x38)) THIS - fx_delta
+        END ELSE BEGIN   
+          READ_SHORT (abil_off + 0x1e + (index * 0x38)) abil_fx_num
+          READ_SHORT (abil_off + 0x20 + (index * 0x38)) abil_fx_idx
+          FOR (index2 = (abil_fx_idx) ; index2 < (abil_fx_idx + abil_fx_num); ++index2) BEGIN
+            READ_BYTE (fx_off + 0x12 + (index2 * 0x30)) prob1
+            READ_BYTE (fx_off + 0x13 + (index2 * 0x30)) prob2
+            PATCH_IF ((prob1 = params_2) AND (prob2 = params_3)) BEGIN 
+              READ_ASCII (fx_off + 0x00 + (index2 * 0x30)) local_template (48) // read effect into template
+              SPRINT template ~%template%%local_template%~
+              READ_SHORT (fx_off + 0x00 + (index2 * 0x30)) opcode
+              PATCH_IF opcode = params_4 BEGIN 
+                // goal: change to 326 while preserving power, probabilities, save, reist/dispel, min/max levels
+                WRITE_SHORT  (fx_off + 0x00 + (index2 * 0x30)) 326 // opcode: cast spell 
+                WRITE_LONG   (fx_off + 0x04 + (index2 * 0x30)) 0 // clear
+                WRITE_LONG   (fx_off + 0x08 + (index2 * 0x30)) 0 // apply to everyone
+                WRITE_BYTE   (fx_off + 0x0c + (index2 * 0x30)) 1 // timing: instant/perm
+                WRITE_BYTE   (fx_off + 0x0d + (index2 * 0x30)) 0 // duration
+                WRITE_ASCIIE (fx_off + 0x14 + (index2 * 0x30)) ~%params_0%~ #8 // spell name
+              END ELSE BEGIN // if target:self or 146 has already been made, just delete the effect
+                DELETE_BYTES (fx_off + 0x00 + (index2 * 0x30)) 0x30 
+                SET fx_delta += 1
+                SET index2 -= 1
+                SET abil_fx_num -= 1
+              END   
+            END // probability check
+          END // fx loop
+          WRITE_SHORT (abil_off + 0x1e + (index * 0x38)) abil_fx_num
+        END // header check
+      END // ability loop
+      BUT_ONLY 
+      
+    COPY ~eefixpack/files/spl/multi_target_sporadic_items.spl~ ~override/%params_0%.spl~
+      SET fx_delta += 1 // add 1 since 1 effect was converted to an op326
+      WRITE_SHORT 0x90 fx_delta // updated number of effects
+      INSERT_BYTES 0x9a (fx_delta * 0x30) // insert bytes foe new effects
+      WRITE_ASCIIE 0x9a ~%template%~ // write in new effects from template
+      FOR (index = 0 ; index < fx_delta ; ++index) BEGIN // adjust some parameters
+        WRITE_BYTE (0x9a + 0x03 + (index * 0x30))   0 // power
+        WRITE_BYTE (0x9a + 0x0d + (index * 0x30))   0 // resist/dispel
+        WRITE_BYTE (0x9a + 0x12 + (index * 0x30)) 100 // probability 1
+        WRITE_BYTE (0x9a + 0x13 + (index * 0x30))   0 // probability 2
+        WRITE_LONG (0x9a + 0x24 + (index * 0x30)) (THIS BAND `(BIT0 + BIT1 + BIT2 + BIT3 + BIT4)) // remove saving throws
+        WRITE_LONG (0x9a + 0x28 + (index * 0x30))   0 // save bonus
+      END 
+
+  END 
+  
+END     
+    
+   
+ 
+ 
+/*
+
+ 
+  
+  
+
+
+original regecp to generate item lists to check
+
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+  SET warn = 0
+  SPRINT warn_message ~~
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  READ_LONG  0x6a fx_off
+  FOR (index = 0 ; index < abil_num ; ++index) BEGIN
+    SET multi_target = 0
+    SET multi_probs = 0
+    READ_SHORT (abil_off + 0x1e + (index * 0x38)) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (index * 0x38)) abil_fx_idx
+    PATCH_IF abil_fx_num > 1 BEGIN // only proceed if there are 2 or more effects
+      READ_BYTE (fx_off + 0x02 + (abil_fx_idx * 0x30)) b_target // get baseline target
+      FOR (index2 = (abil_fx_idx) ; index2 < (abil_fx_idx + abil_fx_num); ++index2) BEGIN
+        READ_BYTE (fx_off + 0x02 + (index2 * 0x30)) target
+        READ_BYTE (fx_off + 0x12 + (index2 * 0x30)) prob1
+        READ_BYTE (fx_off + 0x13 + (index2 * 0x30)) prob2
+        PATCH_IF target != b_target BEGIN 
+          SET multi_target = 1
+        END   
+        PATCH_IF ((prob1 < 99) OR (prob2 != 0)) BEGIN 
+          SET multi_probs = 1
+        END
+      END
+    END   
+    PATCH_IF multi_target AND multi_probs BEGIN 
+      SET warn = 1
+      SPRINT warn_message ~%warn_message%%WNL% - check ability %index%~
+    END
+  END    
+  PATCH_IF warn BEGIN 
+    SPRINT debug ~%debug%%WNL%%WNL% == %SOURCE_RES%%warn_message%~
+  END
+  BUT_ONLY
+
+PRINT ~%debug%~
+
+*/

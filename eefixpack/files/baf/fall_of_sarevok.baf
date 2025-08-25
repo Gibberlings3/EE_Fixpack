@@ -1,0 +1,39 @@
+IF
+  Global("cd_fall_of_sarevok","bd0120",0)
+THEN
+  RESPONSE #100
+    EraseJournalEntry(31475) // final 'find sarevok' entry
+    EraseJournalEntry(26812) // rise of sarevok series
+    EraseJournalEntry(26871) // rise of sarevok series
+    EraseJournalEntry(26892) // rise of sarevok series
+    EraseJournalEntry(26962) // rise of sarevok series
+    EraseJournalEntry(26967) // rise of sarevok series
+    EraseJournalEntry(27091) // rise of sarevok series
+    EraseJournalEntry(27093) // rise of sarevok series
+    EraseJournalEntry(27094) // rise of sarevok series
+    EraseJournalEntry(27095) // rise of sarevok series
+    EraseJournalEntry(27096) // rise of sarevok series
+    EraseJournalEntry(27132) // rise of sarevok series
+    EraseJournalEntry(27190) // rise of sarevok series
+    EraseJournalEntry(27192) // rise of sarevok series
+    EraseJournalEntry(27201) // rise of sarevok series
+    EraseJournalEntry(27283) // rise of sarevok series
+    EraseJournalEntry(27284) // rise of sarevok series
+    EraseJournalEntry(27285) // rise of sarevok series
+    EraseJournalEntry(27286) // rise of sarevok series
+    EraseJournalEntry(27287) // rise of sarevok series
+    EraseJournalEntry(27327) // rise of sarevok series
+    EraseJournalEntry(27329) // rise of sarevok series
+    EraseJournalEntry(27330) // rise of sarevok series
+    EraseJournalEntry(27331) // rise of sarevok series
+    EraseJournalEntry(27332) // rise of sarevok series
+    EraseJournalEntry(27333) // rise of sarevok series
+    EraseJournalEntry(27339) // rise of sarevok series
+    EraseJournalEntry(27340) // rise of sarevok series
+    EraseJournalEntry(27352) // rise of sarevok series
+    EraseJournalEntry(27387) // rise of sarevok series
+    EraseJournalEntry(27399) // rise of sarevok series
+    EraseJournalEntry(27488) // rise of sarevok series
+    EraseJournalEntry(27514) // rise of sarevok series
+    SetGlobal("cd_fall_of_sarevok","bd0120",1)
+END

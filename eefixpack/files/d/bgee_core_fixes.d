@@ -455,3 +455,7 @@ SetGlobal("HelpZhurlong","GLOBAL",1)
 EraseJournalEntry(27519)
 FillSlot(SLOT_BOOTS)~
 END
+
+// clear 'freed by tethtoril' journal entry when saving dukes
+ADD_TRANS_ACTION belt BEGIN 13 15 END BEGIN 0 END ~EraseJournalEntry(31464)~
+ADD_TRANS_ACTION liia BEGIN 11 13 END BEGIN 0 END ~EraseJournalEntry(31464)~
