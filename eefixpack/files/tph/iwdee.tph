@@ -431,6 +431,10 @@ INCLUDE ~eefixpack/files/tph/tbd_iwdee_146.tph~ // tbd, cam: fixes items that ca
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 
+// bad luck visual should play on target, not wielder
+COPY_EXISTING ~bess.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 61 target = 2 END 
+
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
               ~book08.itm~ ~override~

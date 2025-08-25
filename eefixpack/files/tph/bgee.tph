@@ -970,6 +970,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bgee.tph~ // bulk general change
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
 INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
+INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
 
 ACTION_IF game_includes_sod BEGIN
 
