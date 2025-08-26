@@ -870,3 +870,39 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
 
 PRINT ~%debug%~
   
+
+// finding melee items using projectiles  
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+  SPRINT debug_local ~~
+  READ_SHORT 0x68 abil_num 
+  PATCH_IF abil_num BEGIN 
+    READ_LONG 0x64 abil_off
+    FOR (index = 0 ; index < abil_num ; ++index) BEGIN
+      READ_BYTE  (abil_off + 0x00 + (index * 0x38)) type
+      READ_SHORT (abil_off + 0x2a + (index * 0x38)) proj
+      PATCH_IF type = 1 AND proj > 1 BEGIN 
+        SPRINT debug_local ~%debug_local% - ability %index% uses %proj%~
+      END
+    END
+    PATCH_IF ("%debug_local%" STRING_COMPARE_CASE "") BEGIN     
+      READ_STRREF 0x0c name
+      PATCH_IF ("%name%" STRING_COMPARE_REGEXP ~<Invalid Strref -?[0-9]+>~ = 0) BEGIN
+        READ_STRREF 0x08 name
+      END
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                                BEGIN SPRINT spc "        " END
+      TO_LOWER SOURCE_FILE                                                              
+      SPRINT debug "%debug%%WNL%              ~%SOURCE_FILE%~%spc%~override~ // %name%%debug_local%"
+    END  
+  END   
+  BUT_ONLY
+  
+PRINT ~%debug%~
+  

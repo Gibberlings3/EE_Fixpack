@@ -728,6 +728,29 @@ INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, e
 INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
 INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
 
+// melee weapons using projectiles - bg2ee version 
+COPY_EXISTING ~aegis.itm~    ~override~ // Aegis-fang +3 - ability 1 uses 10
+              ~aegis2.itm~   ~override~ // Aegis-fang +3 - ability 0 uses 10
+              ~ax1h05.itm~   ~override~ // Throwing Axe +2 - ability 1 uses 10
+              ~ax1h06.itm~   ~override~ // Throwing Axe +2 - ability 0 uses 10
+              ~ax1h08.itm~   ~override~ // Hangard's Axe +2 - ability 1 uses 10
+              ~ax1h09.itm~   ~override~ // Rifthome Axe +3 - ability 1 uses 10
+              ~ax1h10.itm~   ~override~ // Azuredge +3 - ability 1 uses 10
+              ~ax1h16.itm~   ~override~ // K'logarath +4 - ability 1 uses 10
+              ~dagg11.itm~   ~override~ // Boomerang Dagger +2 - ability 1 uses 27
+              ~dagg12.itm~   ~override~ // Firetooth +3 - ability 1 uses 27
+              ~hamm07.itm~   ~override~ // Hammer of Thunderbolts +3 - ability 0 uses 10
+              ~hamm09.itm~   ~override~ // Crom Faeyr +5 - ability 0 uses 10
+              ~hamm10.itm~   ~override~ // Runehammer +4 - ability 0 uses 10
+              ~hamm11.itm~   ~override~ // Runehammer +5 - ability 0 uses 10
+              ~staf10.itm~   ~override~ // Staff of Curing - ability 0 uses 157
+              ~staf11.itm~   ~override~ // Staff of the Magi - ability 0 uses 157
+              ~staf12.itm~   ~override~ // Staff of Power - ability 0 uses 157
+              ~staf13.itm~   ~override~ // Staff of Thunder and Lightning +2 - ability 0 uses 158
+              ~sw2h10.itm~   ~override~ // Carsomyr +5 - ability 0 uses 55
+              ~sw2h19.itm~   ~override~ // Carsomyr +6 - ability 0 uses 55
+  LPF ALTER_HEADER INT_VAR match_type = 1 projectile = 1 END // remove projectile from melee header
+
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~  ~override~
@@ -1403,6 +1426,13 @@ COPY_EXISTING ~spin597.spl~  ~override~ // blue dragon breath needs additional f
   WRITE_SHORT 0x22 0     // blanks casting animation
   WRITE_LONG  0x34 1     // set spell level 1
   LPF ALTER_EFFECT INT_VAR power = 0 resist_dispel = 0 END
+
+// pfnm missing some key protections
+COPY_EXISTING ~spwi311.spl~ ~override~ // arcane pfnm
+              ~spra303.spl~ ~override~ // avenger pfnm
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 83 parameter2 = 313 END // 1dart01
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 83 parameter2 = 309 END // 1dagg05
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 83 parameter2 =   9 END // generic throwing axe
 
 /////                                                  \\\\\
 ///// projectile fixes                                 \\\\\

@@ -200,6 +200,9 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+COPY_EXISTING ~spra303.spl~ ~override~ // stalker verison of pfnm lacks opening sound
+  LPF CLONE_EFFECT INT_VAR match_opcode = 174 match_timing = 4 timing = 1 duration = 0 STR_VAR insert = after resource = eff_m02 END  
+
 // luke
 // Vampiric Touch
 // 1) subspell's effects should have `power=0`

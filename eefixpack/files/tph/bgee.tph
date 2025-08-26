@@ -979,6 +979,9 @@ INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain
 
 ACTION_IF game_includes_sod BEGIN
 
+  COPY_EXISTING ~bdax1h04.itm~ ~override~ // Throwing Axe +1
+    LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 7 END // change projectile to not be blocked by pfnm
+
   // poison resistance blocking dispel
   COPY_EXISTING ~bdbelhi1.itm~ ~override~ // Attack - causes poison
                 ~bdbelhi2.itm~ ~override~ // Attack - causes poison
@@ -992,6 +995,10 @@ ACTION_IF game_includes_sod BEGIN
     LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spdr301 END 
     LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spcl722 END 
     BUT_ONLY IF_EXISTS 
+  
+  COPY_EXISTING ~bddagg04.itm~ ~override~ // Throwing Dagger +1
+                ~bddagg07.itm~ ~override~ // Throwing Dagger +1
+    LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 30 END // change projectile to not be blocked by pfnm
 
   // poison resistance blocking *gulp*
   COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
@@ -1012,6 +1019,15 @@ ACTION_IF game_includes_sod BEGIN
 
 END
 
+// melee weapons using projectiles - bgee version 
+COPY_EXISTING ~ax1h05.itm~   ~override~ // Throwing Axe +2 - ability 1 uses 10
+              ~ax1h06.itm~   ~override~ // Rhyte's Last Arrow +2 - ability 1 uses 10
+              ~ax1h16.itm~   ~override~ // K'logarath +4 - ability 1 uses 10
+              ~bdax1h02.itm~ ~override~ // Axe of Kruntur +2 - ability 1 uses 10
+              ~bdax1h05.itm~ ~override~ // Grubdoubler's Axe +1 - ability 1 uses 10
+  LPF ALTER_HEADER INT_VAR match_type = 1 projectile = 1 END // remove projectile from melee header
+  IF_EXISTS // sod asset(s)
+  
 // tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
 // add ability drain icon to strength-drain-via-disease for bddraggh.itm (already has general disease icon)
 COPY_EXISTING ~bddraggh.itm~ ~override~ // (itm) Attack - causes disease level drain
@@ -1037,6 +1053,15 @@ COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron 
     LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 206 STR_VAR match_resource = sw1h01 resource = EVAL ~%spell%~ insert = below END
   END
   BUT_ONLY   
+  
+COPY_EXISTING ~bull07.itm~ ~override~ // Bullet of Fire +1
+  LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 18 END // change projectile to not be blocked by pfnm
+  
+COPY_EXISTING ~bull08.itm~ ~override~ // Bullet of Ice +1
+  LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 17 END // change projectile to not be blocked by pfnm
+  
+COPY_EXISTING ~bull09.itm~ ~override~ // Bullet of Electricity +1
+  LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 21 END // change projectile to not be blocked by pfnm
   
 // moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
 COPY_EXISTING ~demogorg.itm~ ~override~
