@@ -25,6 +25,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   ghoult, null, null, 0, null, null, null, null, null, null, null, null, null => ghoult // luke: Ghoul Touch – should not interact with spell protections
   harm, null, null, null, null, null, null, null, null, null, null, null, 0 => harm // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   melfmet, null, null, 0, null, null, null, null, null, null, null, null, null => melfmet // luke: Melf's Minute Meteors – should not interact with spell protections
+  misc4q, null, null, null, null, null, null, null, null, 89, null, null, null => misc4q // ogre’s sword is a bastard sword, not long sword
   serious, null, null, null, null, null, null, null, null, null, null, null, 0 => serious // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   slaylive, null, null, null, null, null, null, null, null, null, null, null, 0 => slaylive // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
 
