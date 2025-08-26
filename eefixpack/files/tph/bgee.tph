@@ -840,6 +840,11 @@ COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
     END
   END
   BUT_ONLY IF_EXISTS // bd0116 is sod
+  
+// quantity for random treasure is incorrect
+COPY_EXISTING ~bd0130.are~ ~override~
+  LPF ALTER_AREA_ITEM INT_VAR charge1 = 1 STR_VAR match_item = rndtri03 END
+  BUT_ONLY IF_EXISTS // bd0130 is sod
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
