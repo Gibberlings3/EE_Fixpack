@@ -760,3 +760,7 @@ COPY_EXISTING ~spwi620.spl~ ~override~ // conjure fire elemental
 
 COPY_EXISTING ~spwi622.spl~ ~override~ // Conjure Earth Elemental [sod, bg2]
   LPF ALTER_EFFECT INT_VAR header = 0 match_duration = 840 duration = 660 END // some durations wrong when cast at min level
+
+// mismatching save types between cosmetics and actual effects
+COPY_EXISTING  ~spwm179.spl~  ~override~ // Polymorph Other (wild surge)
+  LPF ALTER_EFFECT INT_VAR match_savingthrow = BIT4 savingthrow = BIT0 END 

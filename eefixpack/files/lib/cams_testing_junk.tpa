@@ -814,3 +814,59 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
   BUT_ONLY  
 
 PRINT ~%prof_debug%~
+
+
+
+
+
+// this was used to find spells and items with mismatching saves for further scrutiny
+// https://www.gibberlings3.net/forums/topic/39645-spells-and-items-with-mismatched-save-types/
+OUTER_SPRINT debug ~~
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+                          ~^.+\.spl$~ ~override~
+  READ_SHORT 0x68 abil_num ELSE 0
+  PATCH_IF abil_num BEGIN // 
+    SET abil_length    = 0x38
+    PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "spl" = 0) BEGIN
+      SET abil_length    = 0x28
+    END   
+    READ_LONG  0x6a fx_off   ELSE 0
+    READ_LONG  0x64 abil_off ELSE 0
+    READ_SHORT (abil_off + 0x1e + (abil_length * (abil_num - 1))) abil_fx_num
+    READ_SHORT (abil_off + 0x20 + (abil_length * (abil_num - 1))) abil_fx_idx
+    SET final_fx = abil_fx_num + abil_fx_idx
+    READ_SHORT 0x70 start_fx
+    SET save_spell = 0
+    SET save_breath = 0
+    SET save_death = 0
+    SET save_wand = 0
+    SET save_poly = 0
+    FOR (index = start_fx ; index < final_fx ; ++index) BEGIN
+      READ_LONG (fx_off + 0x24 + (index * 0x30)) saves
+      PATCH_IF ((saves & BIT0) = BIT0) BEGIN SET save_spell = 1 END
+      PATCH_IF ((saves & BIT1) = BIT1) BEGIN SET save_breath = 1 END
+      PATCH_IF ((saves & BIT2) = BIT2) BEGIN SET save_death = 1 END
+      PATCH_IF ((saves & BIT3) = BIT3) BEGIN SET save_wand = 1 END
+      PATCH_IF ((saves & BIT4) = BIT4) BEGIN SET save_poly = 1 END
+    END 
+    PATCH_IF (save_spell + save_breath + save_death + save_wand + save_poly) > 1  BEGIN 
+      READ_STRREF 0x0c name
+      PATCH_IF ("%name%" STRING_COMPARE_REGEXP ~<Invalid Strref -?[0-9]+>~ = 0) BEGIN
+        READ_STRREF 0x08 name
+      END
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+      PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                                BEGIN SPRINT spc "        " END
+      TO_LOWER SOURCE_FILE                                                              
+      SPRINT debug "%debug%%WNL%              ~%SOURCE_FILE%~%spc%~override~ // %name%"
+    END  
+  END   
+  BUT_ONLY
+
+PRINT ~%debug%~
+  

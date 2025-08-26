@@ -996,6 +996,10 @@ COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
 // remove undocumented +2 save bonus from wand of fear
 INCLUDE ~eefixpack/files/tph/wand02.tph~
 
+// remove agannazar's scorcher ability from web sack
+COPY_EXISTING ~wand14.itm~   ~override~ // Web Sack
+  LPF DELETE_HEADER INT_VAR match_projectile = 109 END 
+
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
