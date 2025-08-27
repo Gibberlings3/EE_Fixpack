@@ -1521,6 +1521,9 @@ INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
 COPY ~music/vb.mus~ ~music/vb.mus~
   REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
+  
+COPY_EXISTING ~spfirsd2.vvc~ ~override~ // bad blend on fire damage from clubs of detonation
+  WRITE_SHORT 0x18 (THIS BOR (BIT3 + BIT9)) // add blend, 3d blend flag
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
