@@ -51,6 +51,12 @@ END
 INCLUDE ~eefixpack/files/lib/alter_header.tpa~
 
 /////                                                  \\\\\
+///// delete_header                                    \\\\\
+/////                                                  \\\\\
+
+INCLUDE ~eefixpack/files/lib/delete_header.tpa~
+
+/////                                                  \\\\\
 ///// alter_store_item                                 \\\\\
 /////                                                  \\\\\
 

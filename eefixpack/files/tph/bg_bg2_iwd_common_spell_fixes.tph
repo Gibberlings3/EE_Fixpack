@@ -69,6 +69,10 @@ COPY_EXISTING ~spcl321.spl~ ~override~
   LPF ALTER_SPELL_HEADER STR_VAR icon = ~enrageb~ END
   BUT_ONLY
 
+// stunning blow lasts one round, not 1.5 rounds
+COPY_EXISTING ~spcl811.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_duration = 9 duration = 6 END
+
 COPY_EXISTING ~spin978.spl~ ~override~ // golem haste [bg2]
   LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // has a bunch of headers that never get used and don't match
   LPF CLONE_EFFECT INT_VAR match_opcode = 16 opcode = 142 parameter2 = 38 END                            // clone into portrait icon

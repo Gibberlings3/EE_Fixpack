@@ -890,3 +890,20 @@ SetGlobal("KickedOut","LOCALS",1)
 SetLeavePartyDialogFile()
 EscapeAreaMove("AR0800",496,1090,SE)~
 END
+
+// kangaxx triggers, again
+REPLACE_TRIGGER_TEXT hlkang ~HP(Myself,1)~ ~Global("KangaxxHurt","LOCALS",1)~ // sync with script trigger
+
+// (romanced) neera-bodhi kidnapping issues - see also ar0800,bcs changes in main bg2ee.tph
+ALTER_TRANS bodhiamb BEGIN 38 END BEGIN 0 END BEGIN ACTION // moving Setglobal after vamp spawns
+~DialogInterrupt(FALSE)
+CreateCreatureObject("VAMPIM01","bodhiamb",0,0,0)  // Vampire
+CreateCreatureObject("VAMPIM01","bodhiamb",0,0,0)  // Vampire
+CreateCreatureObject("VAMPIM01","bodhiamb",0,0,0)  // Vampire
+CreateCreatureObject("VAMPIM01","bodhiamb",0,0,0)  // Vampire
+SetGlobal("OHN_bodhiamb","AR0800",2)
+ActionOverride("bodhiamb",ForceSpell(Myself,DRYAD_TELEPORT))  // SPWI995.SPL (Dimension Door)
+Wait(1)
+SetGlobal("Deactivate0801","AR0800",3)  // Graveyard
+ActionOverride("bodhiamb",DestroySelf())~
+END

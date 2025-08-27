@@ -32,6 +32,11 @@ It should be "south of the battlefield", not "north of the battlefield".
 */
 @7421   = ~Aye, south of the battlefield as he had said. You make the correct choice, <CHARNAME>.~
 
+// ninja-to to Ninjatō
+@7529 = ~Ninjatō~
+@7530 = ~Ninjatō~
+@7531 = ~Ninjatō +1~
+
 // remove the line about the save penalty for water/plants since it's not implemented
 @7680 = ~Abi-Dalzim's Horrid Wilting
 (Necromancy) 

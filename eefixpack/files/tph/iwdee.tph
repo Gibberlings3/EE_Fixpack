@@ -721,6 +721,13 @@ COPY_EXISTING ~#sunrund.spl~ ~override~ // (spl) <Invalid Strref -1> - causes bl
               ~spwi806.spl~  ~override~ // (spl) Great Shout - causes deafness pause sleep - portrait icon(s) 112 - additional effects
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 duration = 0 END
 
+// axe of the minotaur lord is supposed to stun for 1d4 rounds, not 4 seconds
+COPY_EXISTING ~axemino.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_duration =  4 duration =  6 probability1 =  24 probability2 =  0 END // fix existing into 1-round stun
+  LPF CLONE_EFFECT INT_VAR match_duration =  6 duration = 12 probability1 =  49 probability2 = 25 STR_VAR insert = last END // clone 1-round stun into 2-round stun
+  LPF CLONE_EFFECT INT_VAR match_duration = 12 duration = 18 probability1 =  74 probability2 = 50 STR_VAR insert = last END // clone 2-round stun into 3-round stun
+  LPF CLONE_EFFECT INT_VAR match_duration = 18 duration = 24 probability1 = 100 probability2 = 75 STR_VAR insert = last END // clone 3-round stun into 4-round stun 
+
 // tbd, cam
 // crippling strike should extend t0 -10 for assassins
 COPY_EXISTING ~backstab.spl~ ~override~

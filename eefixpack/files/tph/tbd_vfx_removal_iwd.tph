@@ -204,13 +204,16 @@ COPY_EXISTING ~spwi028.spl~  ~override/spwi028h.spl~ // (spl) <Invalid Strref -1
   LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT2 END // delete poison
   LPF DELETE_EFFECT INT_VAR match_opcode = 318 END // poison protections
   LPF DELETE_EFFECT INT_VAR match_opcode = 12 END // delete damage
+  LPF DELETE_EFFECT INT_VAR match_opcode = 146 END // delete cast of spwi028a
   LPM cd_make_subspell
 
 // poison immunity blocking hold, needs hold subspell
 COPY_EXISTING ~spwi028.spl~  ~override~ // (spl) <Invalid Strref -1> - causes hold poison - portrait icon(s) 6 13
-  LPF CLONE_EFFECT  INT_VAR match_opcode = 175 opcode = 146 parameter2 = 2 timing = 1 duration = 0 savingthrow = 17 STR_VAR resource = spwi028h insert = first END // change hold to cast spell
+  LPF CLONE_EFFECT  INT_VAR match_opcode = 175 opcode = 146 parameter2 = 2 timing = 1 duration = 0 savingthrow = 17 STR_VAR resource = spwi028h insert = last END // change hold to cast spell
   LPF DELETE_EFFECT INT_VAR match_savingthrow = BIT0 END // delete other hold effects
   LPF ALTER_EFFECT  INT_VAR match_opcode = 146 match_savingthrow = 17 savingthrow = BIT0 END // reinstate savingthrow
+  LPF ALTER_EFFECT INT_VAR match_opcode = 318 STR_VAR resource = spwi028b END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 324 STR_VAR resource = spwi028h END 
 
 // poison immunity stepping on confusion, move confusion to subspell
 COPY_EXISTING ~spwi029.spl~ ~override/spwi029c.spl~ // (spl) <Invalid Strref -1> - causes confusion poison - portrait icon(s) 6 3

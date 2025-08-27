@@ -2,6 +2,24 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+// FoD does 2d8+1 damage on a successful save, not 2d8
+@2864 = ~The original name of this odd blade is lost in the murky depths of the Sea of Swords. Crafted of magically strengthened sahuagin bone, the weapon is believed to have been used by kuo-toa in bizarre rituals. The handle is crafted from coral wrapped in sahuagin skin. At one time, it was owned by Lockhart, a prominent adventuring thief and smuggler on the Sword Coast. It was he who gave the blade its current name.
+
+STATISTICS:
+
+Combat abilities:
+– 2% chance per hit of casting Finger of Death on target (Save vs. Spell to suffer 2d8+1 damage instead of dying)
+
+THAC0: +2
+Damage: 1d4+2 (piercing)
+Speed Factor: 1
+Proficiency Type: Dagger
+Type: One-handed
+Requires:
+ 4 Strength
+
+Weight: 1~
+
 // tenser's provides a +2 bonus to hit and damage, not just damage
 @7808 = ~Tenser's Transformation
 (Alteration, Evocation)
@@ -305,6 +323,24 @@ Weight: 3~
 // it is incredibly unlikely that these need to be fixed in non-English games
 @26213 = ~[A sword has just taken a chunk of his stomach]Ahh!~ [] // sound will be assigned via soundset fixes
 @26214 = ~[Shot through the neck with an arrow]Uggghkk!~ [male3m]
+
+// axe of the minotaur lord: add duration of stun to the 'combat abilities' section, not just the flavor description
+@27035 = ~This fine weapon once belonged to the Minotaur Lord in the Luremaster's catacombs. The axe sports a double blade mounted on a solid oak shaft. It is finely balanced and may be used one-handed. The axe is enchanted, giving the user a +4 to both hit and damage. A successful hit also has a 25% chance of stunning an opponent for 1d4 rounds.
+
+STATISTICS:
+
+Combat abilities:
+– 25% chance target is stunned for 1d4 rounds
+
+THAC0: +4
+Damage: 1d12+4 (slashing)
+Speed Factor: 8
+Proficiency Type: Axe
+Type: One-handed
+Requires:
+ 10 Strength
+
+Weight: 10~
 
 // ie-6007, cam - see also items clbhand, kaybow, lxbowbm, cdxbowbm, storm, flailsk; strings 8663, 8712, 8911, 40639, 25818
 // Weapon damage corrections

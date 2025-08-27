@@ -3710,12 +3710,13 @@ From what I can garner from this, five gems are needed to activate the device. E
 Now, this all seems rather straightforward, and that is exactly what worries me. It is not the Master's way to be so forthcoming with information. It is my belief that the gems, whatever they may be, must be changed somehow. That would explain the line about the seasons. I must think about this some more..."~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
+// from the main fixes component: add duration of stun to the 'combat abilities' section, not just the flavor description
 @27035 = ~This fine weapon once belonged to the Minotaur Lord in the Luremaster's catacombs. The axe sports a double blade mounted on a solid oak shaft. It is finely balanced and may be used one-handed. The axe is enchanted, giving the user a +4 to both hit and damage. A successful hit also has a 25% chance of stunning an opponent for 1d4 rounds.
 
 STATISTICS:
 
 Combat abilities:
-– 25% chance target is stunned
+– 25% chance target is stunned for 1d4 rounds
 
 THAC0: +4
 Damage: 1d12+4 (slashing)
