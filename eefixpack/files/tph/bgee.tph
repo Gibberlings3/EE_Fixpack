@@ -874,6 +874,8 @@ COPY_EXISTING ~arlin.cre~  ~override~
     END
   END
   BUT_ONLY
+  
+INCLUDE ~eefixpack/files/tph/edwin_amulet.tph~ // move edwin's bonus spells from his amulet to creature file
 
 // tbd, cam (originally from jmerry)
 // Nonstandard wand of missiles on Imoen and Mordaine replaced

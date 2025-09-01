@@ -1,0 +1,19 @@
+// move the amulet effects directly to edwin
+COPY_EXISTING ~misc89.itm~ ~override~ // bg2
+  LPF DELETE_EFFECT INT_VAR match_opcode = 42 check_headers = 0 END
+  BUT_ONLY IF_EXISTS
+  
+COPY_EXISTING ~edwin.cre~   ~override~ // bgee
+              ~edwin2.cre~  ~override~
+              ~edwin4.cre~  ~override~
+              ~edwin6.cre~  ~override~
+              ~edwin7.cre~  ~override~ // bgee/bg2ee
+              ~edwin9.cre~  ~override~ // bg2ee
+              ~edwin11.cre~ ~override~
+              ~edwin12.cre~ ~override~
+              ~edwin13.cre~ ~override~
+              ~edwin15.cre~ ~override~
+  FOR (index = 0 ; index < 9 ; ++index) BEGIN
+    LPF ADD_CRE_EFFECT INT_VAR opcode = 42 target = 1 parameter1 = 2 parameter2 = (2 ** index) timing = 9 END
+  END
+  BUT_ONLY IF_EXISTS 

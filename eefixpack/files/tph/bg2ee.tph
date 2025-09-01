@@ -666,6 +666,8 @@ COPY_EXISTING ~chevil01.cre~ ~override~
 COPY_EXISTING ~demogor2.cre~ ~override~ // demogorgon
               ~ohb5bhal.cre~ ~override~ // bhaal
   LPF DELETE_EFFECT INT_VAR match_opcode = 98 END
+  
+INCLUDE ~eefixpack/files/tph/edwin_amulet.tph~ // move edwin's bonus spells from his amulet to creature file
 
 COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 with powers 1-9
   FOR (index = 1 ; index < 10 ; ++index) BEGIN
