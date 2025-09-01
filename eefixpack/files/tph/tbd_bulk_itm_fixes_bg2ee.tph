@@ -10,6 +10,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   blun26, null, null, null, 1, null, null, null, null, null, null, null, null => blun26 // speed factor not accounting for enchantment
   blun27, null, null, null, 0, null, null, null, null, null, null, null, null => blun27 // speed factor not accounting for enchantment
   critical, null, null, null, null, null, null, null, null, null, null, null, 0 => critical // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
+  dagg24, null, null, null, null, 1, null, null, null, null, null, null, null => dagg24 // rp: dagger+3 should have some weight
   elemchan, null, null, null, null, null, null, null, null, null, 4, null, null => elemchan // upping enchantment for elemental princes
   elemcryo, null, null, null, null, null, null, null, null, null, 4, null, null => elemcryo // upping enchantment for elemental princes
   elemhydr, null, null, null, null, null, null, null, null, null, 4, null, null => elemhydr // upping enchantment for elemental princes
@@ -28,6 +29,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_itm BEGIN
   misc4q, null, null, null, null, null, null, null, null, 89, null, null, null => misc4q // ogre’s sword is a bastard sword, not long sword
   serious, null, null, null, null, null, null, null, null, null, null, null, 0 => serious // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
   slaylive, null, null, null, null, null, null, null, null, null, null, null, 0 => slaylive // luke: cause wounds spells should be 0 range (from files/tph/luke/cause_wounds.tph)
+  sw1h28, null, null, null, 0, null, null, null, null, null, null, null, null => sw1h28 // rp: cutthroat should have 0 WS as a +4 SS
+  sw2h14, null, null, null, 7, null, null, null, null, null, null, null, null => sw2h14 // rp: lilarcor should have ws 7 as a +3 2HS
 
 END
 
