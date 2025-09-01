@@ -753,6 +753,9 @@ COPY_EXISTING ~aegis.itm~    ~override~ // Aegis-fang +3 - ability 1 uses 10
               ~sw2h19.itm~   ~override~ // Carsomyr +6 - ability 0 uses 55
   LPF ALTER_HEADER INT_VAR match_type = 1 projectile = 1 END // remove projectile from melee header
 
+COPY_EXISTING ~amul21.itm~ ~override~ // Amulet of Power: blocks domination portrait icon for no reason 
+  LPF DELETE_EFFECT INT_VAR match_opcode = 169 match_parameter2 = 43 END
+
 // basilisk petrification should force, you know, a save against petrification
 COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~  ~override~
@@ -987,6 +990,10 @@ COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
     LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 221 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index
   END
   BUT_ONLY
+
+// shakti figurine weapon is ss+4 which should have WS 0
+COPY_EXISTING ~shakti1.itm~ ~override~ // don't do in bulk since it would update the wrong description
+  LPF ALTER_HEADER INT_VAR silent = 1 match_location = 1 speed = 0 END
 
 // the feeblemind effect already sets INT=3, so purging redundant effects
 COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unknown long effect - plays sound EFF_E05 - portrait icon 48
