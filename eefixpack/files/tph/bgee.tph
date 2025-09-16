@@ -1673,6 +1673,12 @@ COPY_EXISTING ~ar1000.wed~ ~override~
   END   
   BUT_ONLY  
 
+ACTION_IF (NOT game_includes_sod) BEGIN
+  // Improve portrait placeholder images
+  COPY ~eefixpack/files/bmp/bg1/noportlm.bmp~ ~override~
+       ~eefixpack/files/bmp/bg1/noportls.bmp~ ~override~
+END
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\

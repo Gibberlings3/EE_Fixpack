@@ -1534,6 +1534,11 @@ COPY ~music/vb.mus~ ~music/vb.mus~
 COPY_EXISTING ~spfirsd2.vvc~ ~override~ // bad blend on fire damage from clubs of detonation
   WRITE_SHORT 0x18 (THIS BOR (BIT3 + BIT9)) // add blend, 3d blend flag
 
+// Improve portrait placeholder images
+COPY ~eefixpack/files/bmp/bg2/noportll.bmp~ ~override~
+COPY_EXISTING ~noportmd.bmp~ ~override/noportlm.bmp~
+              ~noportsm.bmp~ ~override/noportls.bmp~
+
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
