@@ -4,7 +4,69 @@
 
 /*
 
-got tired of crappy ALTER_ITEM_HEADER and ALTER_SPELL_HEADER
+This is a patch function for item or spell files that will match an existing header and alter it
+based on the defined variables. Numerous variables are available for matching the specified header
+and for specifying new values.
+
+The first batch of variables are meta-variables which will help determine the scope of the function:
+
+* INT_VAR header to check only the N-th header, counting the first header as 0. Set to -1 to check
+  all headers (default is -1)
+* INT_VAR multi_match to the number of headers to alter in the active stack. If you just want to match
+  the first header and have the function stop, use 1. Otherwise the function will continue matching until
+  the number of altered headers matches this value. The function will always make at least one change
+  (e.g. 0 or negative values are treated as 1). (default is 999).
+* INT_VAR verbose to whether the function should provide some rudimentary information on how many headers
+  were altered (default is 0).
+* INT_VAR silent to whether the function should suppress warnings when no headers were altered. This option
+  also suppresses the verbose option (default is 0).
+
+The next batch of variables sets the function boundaries on matching a header to alter. Any variables not
+specified will not be used to determine a match. The function will only determine a header is a match only if
+ALL of the variables specified are matched.
+
+* INT_VAR match_type
+* INT_VAR match_location
+* INT_VAR match_target
+* INT_VAR match_target_num
+* INT_VAR match_range
+* INT_VAR match_speed
+* INT_VAR match_projectile
+* STR_VAR match_icon
+* [spell only] INT_VAR match_level
+* [item only] INT_VAR match_identify
+* [item only] INT_VAR match_alt_dicesize
+* [item only] INT_VAR match_launcher
+* [item only] INT_VAR match_alt_dicenumber
+* [item only] INT_VAR match_alt_damage
+* [item only] INT_VAR match_to_hit
+* [item only] INT_VAR match_dicesize
+* [item only] INT_VAR match_primary
+* [item only] INT_VAR match_dicenumber
+* [item only] INT_VAR match_secondary
+* [item only] INT_VAR match_damage
+* [item only] INT_VAR match_damage_type
+* [item only] INT_VAR match_charges
+* [item only] INT_VAR match_drained
+* [item only] INT_VAR match_overhand
+* [item only] INT_VAR match_backhand
+* [item only] INT_VAR match_thrust
+* [item only] INT_VAR match_arrow
+* [item only] INT_VAR match_bolt
+* [item only] INT_VAR match_bullet
+* [item only, flags at 0x26] INT_VAR match_flag_strength
+* [item only, flags at 0x26] INT_VAR match_flag_break
+* [item only, flags at 0x26] INT_VAR match_flag_str_damage
+* [item only, flags at 0x26] INT_VAR match_flag_str_to_hit
+* [item only, flags at 0x26] INT_VAR match_flag_hostile
+* [item only, flags at 0x26] INT_VAR match_flag_recharge
+* [item only, flags at 0x26] INT_VAR match_flag_bypass
+* [item only, flags at 0x26] INT_VAR match_flag_keenedge
+* [item only, flags at 0x26] INT_VAR match_flag_backstab
+* [item only, flags at 0x26] INT_VAR match_flag_noinvisible
+
+Once matched, you use the same variables without the match_ prefix to set new values, e.g. the variable
+'range' will set the new range or 'target' to the new target.
 
 used:
   bg2 fixpack, as bg2fixpack/lib/alter_header.tpa [symbolic link]
@@ -13,16 +75,17 @@ used:
   Tweaks Anthology, as cdtweaks/lib/alter_header.tpa [symbolic link]
   EE Fixpack, as eefixpack/files/lib/alter_header.tpa [symbolic link]
   Item Upgrade, as itemupgrade/lib/alter_header.tpa [symbolic link]
-  Javelins, as cd_javelins/lib/alter_header.tpa [symbolic link]
+  Project Javelin, as cd_javelins/lib/alter_header.tpa [symbolic link]
   G3 Community Item Pack as g3cip/lib/alter_header.tpa [symbolic link]
   The Divine Remix, as divine_remix/lib/alter_header.tpa [symbolic link]
   Sword and Fist, as sword_and_fist/lib/alter_header.tpa [symbolic link]
 
 platform:
   all except iwd2 and pst
- 
-version history: 
+
+version history:
   unknown
+  9/12/25 - added better documentation, better feedback
 
 */
 
@@ -280,7 +343,7 @@ BEGIN
               PATCH_IF (arrow >= 0)          BEGIN WRITE_SHORT (base + 0x32) arrow          END
               PATCH_IF (bolt >= 0)           BEGIN WRITE_SHORT (base + 0x34) bolt           END
               PATCH_IF (bullet >= 0)         BEGIN WRITE_SHORT (base + 0x36) bullet         END
-  
+
               PATCH_IF (flag_strength = 0)    BEGIN WRITE_LONG (base + 0x26) (THIS &  `BIT0)  END
               PATCH_IF (flag_strength > 0)    BEGIN WRITE_LONG (base + 0x26) (THIS BOR BIT0)  END
               PATCH_IF (flag_break = 0)       BEGIN WRITE_LONG (base + 0x26) (THIS &  `BIT1)  END
@@ -316,13 +379,20 @@ BEGIN
   END
 
   PATCH_IF (verbose && !silent) BEGIN
-    READ_LONG 0x0c strref
-    PATCH_IF ((strref > 0) AND (strref < 200000)) BEGIN
-      READ_STRREF 0x0c name
-    END ELSE BEGIN
+    READ_STRREF 0x0c name
+    PATCH_IF ("%name%" STRING_COMPARE_REGEXP ~<Invalid Strref -?[0-9]+>~ = 0) BEGIN
       READ_STRREF 0x08 name
     END
-    PATCH_PRINT "              ~%SOURCE_FILE%~   ~override~ // %name%, %alter% effect(s) altered"
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^........$" = 0) BEGIN SPRINT spc " " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.......$" = 0) BEGIN SPRINT spc "  " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^......$" = 0) BEGIN SPRINT spc "   " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^.....$" = 0) BEGIN SPRINT spc "    " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^....$" = 0) BEGIN SPRINT spc "     " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^...$" = 0) BEGIN SPRINT spc "      " END ELSE
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_REGEXP "^..$" = 0) BEGIN SPRINT spc "       " END ELSE
+                                                              BEGIN SPRINT spc "        " END
+    TO_LOWER SOURCE_FILE    
+    PATCH_PRINT "              ~%SOURCE_FILE%~%spc%~override~ // %name%, %alter% abilities altered"
   END
 
 END

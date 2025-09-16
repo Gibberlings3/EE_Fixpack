@@ -4,7 +4,13 @@
 
 /*
 
-A variation of ALTER_HEADER added for EEFP
+Part of the ALTER/CLONE/DELETE_HEADER series of functions. 
+Check the ALTER_HEADER documentation for more information as
+the function variables are the same except as noted below:
+
+* Since the header is deleted, none of the variables for 
+  changing values are available, e.g. 'match_range' is 
+  available but not 'range'. 
 
 used:
   EE Fixpack, as eefixpack/files/lib/delete_header.tpa [symbolic link]
