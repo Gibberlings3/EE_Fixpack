@@ -97,6 +97,15 @@ COPY_EXISTING ~movidesc.2da~ ~override~ // and then make it pretty
 COPY_EXISTING ~npclevel.2da~ ~override~
   REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
 
+// lock pick xp bonus wrong at level >= 16
+COPY_EXISTING ~xpbonus.2da~ ~override~
+  COUNT_2DA_COLS cols
+  FOR (col = 16 ; col < cols ; ++col) BEGIN
+    SET_2DA_ENTRY 1 col cols 155
+  END
+  PRETTY_PRINT_2DA
+  BUT_ONLY   
+
 // tbd, cam
 // dupe text for wild surges: https://forums.beamdog.com/discussion/comment/1169266/#Comment_1169266
 COPY_EXISTING ~wildmag.2da~ ~override~
