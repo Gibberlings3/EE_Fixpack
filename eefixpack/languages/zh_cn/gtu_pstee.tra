@@ -3,12 +3,12 @@
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
 //Fix UI mod bug caused by Chinese punctuation.
-@11293   = ~<CLASS>: 等级<LEVEL>~
-@16480   = ~<CLASS>: 等级<LEVEL>
+@69270   = ~<CLASS>: 等级<LEVEL>~
+@69269   = ~<CLASS>: 等级<LEVEL>
 经验值: <EXPERIENCE>
 下个等级: <NEXTLEVEL>~
-@19719   = ~<CLASS>: 等级<LEVEL>
+@69390   = ~<CLASS>: 等级<LEVEL>
 经验值: <EXPERIENCE>
-暂不作用~
-@19720   = ~<CLASS>: 等级<LEVEL>
+暂不生效~
+@69292   = ~<CLASS>: 等级<LEVEL>
 经验值: <EXPERIENCE>~
