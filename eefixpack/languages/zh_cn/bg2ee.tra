@@ -1,0 +1,21 @@
+@100 = ~元素被摧毁~
+@101 = ~陷阱~
+@102 = ~唔，或许我的祝福护腕还能帮到他……~
+
+// @103 - 105 need translation
+// @103-@105 are identical in bgee.tra, bg2ee.tra, iwdee.tra, pstee.tra
+// copy-pasted from bg2 fixpack strings @30-@32 (may already be translated there)
+@103 = ~^\（ *使用速度：? *\）[0-9]+~
+@104 = ~^\（ *重量：? *\）[0-9]+~
+@105 = ~^\（ *零级命中值：? *\+? *\）[0-9]+\（ *奖励\）?~
+
+// strings @322001, 322002 from game.tra in Tweaks Anthology 
+@106 = ~好女孩~
+@107 = ~天使~
+
+// @108-@110 are identical in bgee.tra, bg2ee.tra, and iwdee.tra
+// these lines are for changing "Damage: +1" to "Damage: +1 (missile)" on bows and 
+// crossbows where it may be missing. 
+@108 = ~（远程）~
+@109 = ~\（伤害：\+[0-9]+\）~
+@110 = ~伤害类型：远程~
