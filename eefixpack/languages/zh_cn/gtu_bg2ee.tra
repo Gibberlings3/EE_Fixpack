@@ -1,0 +1,14 @@
+// this will form the basis for the string fixes for this game. Simply add strings as needed and the installer will replace 
+// the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
+// strings to replace, rename this file WITHOUT the underscore at the beginning. 
+
+//Fix UI mod bug caused by Chinese punctuation.
+@11293   = ~<CLASS>: 等级<LEVEL>~
+@16480   = ~<CLASS>: 等级<LEVEL>
+经验值: <EXPERIENCE>
+下个等级: <NEXTLEVEL>~
+@19719   = ~<CLASS>: 等级<LEVEL>
+经验值: <EXPERIENCE>
+暂不生效~
+@19720   = ~<CLASS>: 等级<LEVEL>
+经验值: <EXPERIENCE>~
