@@ -34,6 +34,13 @@ ALWAYS
     INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
     INCLUDE ~eefixpack/files/lib/gt_functions.tph~
     INCLUDE ~eefixpack/files/lib/dw_functions.tph~
+    
+    // for fixes that have restored/fixed voiceovers and other audio, need a separate
+    // variable to check for applying the fixes
+    OUTER_SPRINT vo_lang ~%LANGUAGE%~
+    ACTION_IF ((!game_is_pstee) AND (!FILE_EXISTS ~lang/%LANGUAGE%/sounds/female1a.wav~)) BEGIN // e.g. simplified chinese on bgee
+      OUTER_SPRINT vo_lang ~en_us~
+    END   
 
   END
 

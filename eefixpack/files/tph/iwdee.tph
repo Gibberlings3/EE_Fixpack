@@ -70,7 +70,7 @@ COPY ~eefixpack/files/spl/spin704.spl~ ~override~
 // fixing missing starting equipment in HoW games for shaman, others
 COPY ~eefixpack/files/2da/25stweap.2da~ ~override~
 
-ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/sounds/cd_ch6a.wav~ BEGIN
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%vo_lang%/sounds/cd_ch6a.wav~ BEGIN
   INCLUDE ~eefixpack/files/tph/iwdee_alt_ch6.tph~ // alternatve ch 6 narration
 END
 

@@ -1,16 +1,8 @@
-ACTION_IF (FILE_EXISTS ~lang/%LANGUAGE%/sounds/FFIGHT1#.wav~) BEGIN
+// used to set and use variable 'langpath' - updated to use vo_lang set in the ALWAYS block
 
-  OUTER_SPRINT langpath ~%LANGUAGE%~ // languages that have native soundsets
-  
-END ELSE BEGIN
+ACTION_IF FILE_EXISTS ~eefixpack/languages/%vo_lang%/sounds/charstr.2da~ BEGIN // check that this is available
 
-  OUTER_SPRINT langpath ~en_us~ // languages without native soundsets default to english, so do the english fixes for them as well
-
-END    
-
-ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/charstr.2da~ BEGIN // check that this is available
-
-  ACTION_IF ("%langpath%" STRING_COMPARE_CASE "en_us" = 0) BEGIN // english-specific fixes
+  ACTION_IF ("%vo_lang%" STRING_COMPARE_CASE "en_us" = 0) BEGIN // english-specific fixes
 
     // string sound asignments fixed in tra file
     MOVE ~lang/en_us/sounds/fthief1l.wav~  ~lang/en_us/sounds/fthief1m_.wav~ // female thief 1 has damage and dying sounds reversed
@@ -43,7 +35,7 @@ COPY_EXISTING ~charsnd.2da~ ~override~ // get column numbers in advance
   PRETTY_PRINT_2DA
   BUT_ONLY
 
-COPY ~eefixpack/languages/%langpath%/sounds/charstr.2da~ ~eefixpack/languages/%langpath%/sounds/charstr.2da~ // read table into variables
+COPY ~eefixpack/languages/%vo_lang%/sounds/charstr.2da~ ~eefixpack/languages/%vo_lang%/sounds/charstr.2da~ // read table into variables
   COUNT_2DA_ROWS 41 rows   
   FOR (row = 0 ; row < rows ; ++row) BEGIN
     READ_2DA_ENTRY row 0 41 rowname
@@ -90,11 +82,11 @@ END
  
 ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
 
-  ACTION_IF FILE_EXISTS ~eefixpack/languages/%langpath%/sounds/%params_0%01.wav~ BEGIN // language check, basically
+  ACTION_IF FILE_EXISTS ~eefixpack/languages/%vo_lang%/sounds/%params_0%01.wav~ BEGIN // language check, basically
  
-    ACTION_BASH_FOR ~eefixpack/languages/%langpath%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
+    ACTION_BASH_FOR ~eefixpack/languages/%vo_lang%/sounds~ ~^%params_0%[0-9]+\.wav$~ BEGIN 
     
-      COPY ~eefixpack/languages/%langpath%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
+      COPY ~eefixpack/languages/%vo_lang%/sounds/%BASH_FOR_RES%.wav~ ~override~ 
         INNER_PATCH ~%BASH_FOR_RES%~ BEGIN // grab number from file name
           REPLACE_EVALUATE ~%params_0%\([0-9]+\)~ BEGIN
             SET number = MATCH1
