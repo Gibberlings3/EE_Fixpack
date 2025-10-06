@@ -14,6 +14,11 @@ INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack 
 
 INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
 
+COPY_EXISTING ~ui.menu~ ~override~
+  // fix scrollbar position of kit selection list in the character creation menu
+  REPLACE_TEXTUALLY ~area 22 90 360 500\([ %TAB%%WNL%]+table "chargen.kit"\)~ ~area 22 90 352 500\1~
+BUT_ONLY
+
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\

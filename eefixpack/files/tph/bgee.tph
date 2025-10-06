@@ -45,6 +45,13 @@ COPY_EXISTING ~bgee.lua~ ~override~
 
 INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
 
+ACTION_IF game_includes_sod BEGIN
+  COPY_EXISTING ~ui.menu~ ~override~
+    // add scrollbar to kit selection list in the character creation menu
+    REPLACE_TEXTUALLY ~^\([ %TAB%]*\)var[ %TAB%]+currentChargenKit.*~ ~\0\1scrollbar	'GUISCRC'~
+  BUT_ONLY
+END
+
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
 /////                                                  \\\\\
