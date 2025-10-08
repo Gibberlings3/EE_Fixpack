@@ -48,7 +48,7 @@ INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/s
 ACTION_IF game_includes_sod BEGIN
   COPY_EXISTING ~ui.menu~ ~override~
     // add scrollbar to kit selection list in the character creation menu
-    REPLACE_TEXTUALLY ~^\([ %TAB%]*\)var[ %TAB%]+currentChargenKit.*~ ~\0\1scrollbar	'GUISCRC'~
+    REPLACE_TEXTUALLY ~^\([ %TAB%]*\)var[ %TAB%]+currentChargenKit[^%WNL%]*~ ~\0%WNL%\1scrollbar	'GUISCRC'~
   BUT_ONLY
 END
 
