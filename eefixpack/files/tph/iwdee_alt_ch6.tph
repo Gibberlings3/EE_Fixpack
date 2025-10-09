@@ -2,7 +2,7 @@
 // chapter narration always mentioned the caves. this provides an alternative chapter 
 // narration that doesn't mention the caves.
 
-COPY ~eefixpack/languages/%LANGUAGE%/sounds/cd_ch6a.wav~ ~override~
+COPY ~eefixpack/languages/%vo_lang%/sounds/cd_ch6a.wav~ ~override~
 
 COPY_EXISTING ~chptxt6.2da~ ~override/chptxt6a.2da~
   REPLACE 14448 @101
