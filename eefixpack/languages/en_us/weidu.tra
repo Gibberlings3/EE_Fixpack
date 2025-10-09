@@ -10,5 +10,8 @@
   @8 = ~BG2EE detected.~
   @9 = ~IWDEE detected.~
  @10 = ~PsTEE detected.~
+ @11 = ~
+        The EE Fixpack cannot be installed directly on EET. It should be installed on *both*
+        BGEE and BG2EE *before* merging them into an EET game.~
  
 // translators, feel free to put your weidu command prompt strings here (e.g. @-1000 et al)
