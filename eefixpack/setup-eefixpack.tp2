@@ -81,6 +81,7 @@ LANGUAGE
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @0 DESIGNATED 0
+REQUIRE_PREDICATE !GAME_IS ~eet~ @11
 REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee.tph~)) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee.tph~)) OR
@@ -100,6 +101,7 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @1 DESIGNATED 1  
+REQUIRE_PREDICATE !GAME_IS ~eet~ @11
 REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee_beta.tph~)) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/files/tph/bg2ee_beta.tph~)) OR
                    ((GAME_IS ~iwdee~) AND (FILE_EXISTS ~eefixpack/files/tph/iwdee_beta.tph~)) OR
@@ -120,6 +122,7 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @2 DESIGNATED 2
+REQUIRE_PREDICATE !GAME_IS ~eet~ @11
 REQUIRE_PREDICATE (("%EE_LANGUAGE%" STRING_COMPARE_CASE "%LANGUAGE%" = 0) AND // e.g. prevent if installing in English on an Italian tlk
                   (((GAME_IS ~bgee~)  AND ((FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee.tph~) OR (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bgee_sod.tph~))) OR
                    ((GAME_IS ~bg2ee~) AND (FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_bg2ee.tph~)) OR
