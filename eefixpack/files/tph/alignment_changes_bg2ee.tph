@@ -20,6 +20,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_cre_changes_align BEGIN
   aegnoll  => 51 // gnoll, from chaotic_neutral
   dagnoll  => 51 // gnoll, from chaotic_neutral
   gnollhp1 => 51 // gnoll, from chaotic_neutral
+  golbra01 => 19 // brain golem from CG to LE 
+  udgol    => 19 // brain golem from TN to LE
   ohdugcut => 51 // ur-gothoz, le > ce [multipart fix, see eefixpack/files/tph/tbd_bg2ee_urgothoz.tph]
   ohdugoth => 51 // ur-gothoz, le > ce [multipart fix, see eefixpack/files/tph/tbd_bg2ee_urgothoz.tph] 
   
