@@ -182,6 +182,80 @@
     <div class="ribbon_triangle_h2-l"></div>
     <div class="ribbon_triangle_h2-r"></div>
     <div class="section">
+      <p><strong>WIP Notes through <a href="https://github.com/Gibberlings3/EE_Fixpack/commit/9b3e1180b94a2e293e18cb47766f897fd01a8b9a">this commit </a></strong></p>
+      <ul>
+        <li>Changed how the Fixpack handles voice-over changes vs. text language changes, as this will account for non-English-language games which use the English VOs to get the English VO fixes</li>
+        <li>Fixes/changes to the existing fixes:
+          <ul>
+            <li>[BG, BG2, IWD] The fixed tanar'ri animations (merged four-quadrant to remove seams) were not being copied over</li>
+            <li>[BG2] A few of the cutscene fixes to close the gap between cutscene end and dialogue caused cutscene hangs</li>
+            <li>[BG2] One of the door fixes in Ust Natha was causing the upper level to be inaccessible</li>
+            <li>[All] More fixes for the debug console's area list, and it now covers PsT entries</li>
+            <li>[BG, BG2] The item type for the female body item in BG was added to the bulk fixes; same for The Ogre's Sword in BG2</li>
+            <li>[BG2] Weight (Dagger +3) and weapon speed (Lilarcor, Cutthroat, Shakti Figurine's weapon) were added to the bulk item fixes</li>
+            <li>[IWD] Darts of Bone weapon speed fix added to the bulk item fixes</li>
+            <li>[BG2] Fire salamanders were updated as part of the race/class syncing between games, but it meant that the Wave halberd no longer worked against them</li>
+            <li>[BG, BG2, IWD] The catch-all spell to cure deafness was removing the wrong portrait icon</li>
+            <li>[BG, BG2, IWD] Like Simulacrum and Project Image, Mislead shouldn't have access to Shadow Twin. Also fixed the issue where created clones of larger creatures  couldn't properly use touch-range spells since their personal space data was being overwritten</li>
+            <li>[IWD] For three spells, the new immunity system was not completely blocking spell effects an intended due to the effects being out of order</li>
+            <li>[BG2] Yet Another Way has been found for Kangaxx to fail to shift from his lich to demi-lich form, so this was added to the existing Kangaxx fixes</li>
+            <li>[IWD] One of the trap spells had been boosted to double damage and not properly blocking its hold/poison effects as necessary, and has been fixed accordingly</li>
+            <li>[Chinese, All games] Fixed a Chinese-language-specific UI bug</li>
+          </ul>
+        </li>
+        <li>New fixes:
+          <ul>
+            <li>[BG2] In the hell selfish trial, there were multiple oversights to correct. The first was that the Selfish demon would potentially not grab a party member for the trial. There is a potential soft-lock if the demon chose a party member that was immune to the demon's death effect. Another soft-lock can occur if you choose the evil path while story mode is active.</li>
+            <li>[BG2, SoD] Joinable NPCs have scripting that helps match their (approximate) XP to the player's XP when they join the party, but these could fire substantially later at inappropriate times. </li>
+            <li>[BG] Davaeorn would not go hostile if attacked while silenced</li>
+            <li>[IWD] A number of items which cast spells were casting them at a level different than the one stated in their description, resulting in the spell lasting for longer or shorter than the item stated</li>
+            <li>[PsT] Notes for various ability scores, if lower than nine, would result in placeholder messages in the UI.</li>
+            <li>[BG2] After moving from SoA to ToB, the main menu logo would still use the SoA logo instead of ToB</li>
+            <li>[SoD] The Coldhearth Lich could fail to take all of the required amulets if some are stored in a bag.</li>
+            <li>[BG2] Some areas have floor triggers, which can be used for any number of reasons (traps, triggering dialogue or scripting, &amp;c.) When moving quickly&mdash;think hasted with Boots of Speed&mdash;these triggers could be missed. The ones specifically needed for quest advancement are enlarged to reduce the chance of this happening.</li>
+            <li>[BG2] One container in the Unseeing Eye's lair had bad opening coordinates, causing characters to stutter trying to access it.</li>
+            <li>[BG2] One of the doors to Bodhi's Lair says it's 'barred from the inside' even after the party just used it to get out. In this scenario, the party will now be able to use the entrance. </li>
+            <li>[BG2] One of the light gems in the first level of the Shadow Temple would <a href="https://www.gibberlings3.net/gallery/image/878-light-gem-fix-before/">shift position</a> when it was deactivated</li>
+            <li>[IWD] Several short bows were using long bow animations on the avatars and paperdolls</li>
+            <li>[BG] There was a potential loop in the ground floor of the Merchant League, which could block other events in the area script</li>
+            <li>[IWD] Crieck's name was not consistent</li>
+            <li>[BG2, SoD] Some stores had the same item listed multiple times and when the item was selected the player could not deselect them without leaving the store. It also caused other issues such as being unable to steal these items.</li>
+            <li>[BG, BG2, IWD] If the 'Show Triggers On Tab' option was enabled in the game's baldur.lua, it would show visible triggers over area triggers which are supposed to be invisible, e.g. a region used to prompt dialogue or a quest event</li>
+            <li>[SoD] Edwin's comments about Vichand in SoD could fire out of order if you met Vichand before recruiting Edwin</li>
+            <li>[SoD] Tsolak's messenger shouldn't appear during a scrying cutscene</li>
+            <li>[BG2] A handful of item description images had black backgrounds since the art was only partially imported from BGEE</li>
+            <li>[SoD] When transferring from the end of BGEE to the start of SoD, the entire series of 'The Rise of Sarevok' journal entries are never cleared </li>
+            <li>[BG] One of the 'Freed by Tethtoril' journal entries is never cleared </li>
+            <li>[BG2] Tightened up the scripting around Garren Windspear's appearance, as we had intermittent reports of him not spawning and blocking the Windspear Hills quest</li>
+            <li>[IWD] The 'bad luck' animation from Black Bess should play on the target, not the wielder</li>
+            <li>[BG, BG2] Items which 'drain' their target on hit, aside from hit point drains, could apply the effects to the target and wielder separately</li>
+            <li>[IWD] The Axe of the Minotaur Lord is supposed to stun for 1d4 rounds, not four seconds</li>
+            <li>[BG2] The EEs updated oBG2's &quot;Ninja-to&quot; to &quot;Ninjat&#333;&quot; everywhere except the name of the base and +1 weapon names</li>
+            <li>[IWD] Ol' Withery states that the target takes 2d8 damage if they make their save against Finger of Death, but it actually does 2d8+1 on a failed save</li>
+            <li>[BG, BG2, IWD] Stunning Blow is supposed to last for six seconds (one round) but was lasting for nine seconds</li>
+            <li>[SoD] Fixed a stack of random items in the Safehouse in SoD. On its own it was harmless but could cause problems when interacting with mods</li>
+            <li>[BG2] The unused 'Web Sack' wand had a leftover Agannazzar's Scorcher ability since it was copied from the Wand of Fire</li>
+            <li>[BG] Two creature  attacks  cause a strength drain via a disease effect, but lacked an ability drain portrait icon</li>
+            <li>[BG, BG2] The Polymorph Other via wild surge was using different save types for effects which should be using one save</li>
+            <li>[BG2] Bodhi attempts to abduct romanced Neera, but a wild surge blocks the attempt and is supposed to bring her back right after the ensuing combat. However, Neera's reappearance could happen too soon, breaking the sequence and preventing Bodhi from leaving</li>
+            <li>[BG] Protection from Normal Missiles was  blocking SoD's +1 Throwing Axes, +1 throwing daggers, and the various +1 elemental bullets. The stalker version was also missing a sound effect.</li>
+            <li>[BG2] Protection from Normal Missiles was  not blocking unenchanted darts, throwing daggers, or throwing axes. The stalker version was also missing a sound effect.</li>
+            <li>[BG2] The extra fire damage effect from the Club of Detonation was <a href="https://www.gibberlings3.net/gallery/image/877-club-of-detonation-blending-error/">poorly blended</a></li>
+            <li>[BG, BG2] Fixed a longstanding bug where Edwin's Projected Image would not have his +2 spells per level bonus</li>
+            <li>[BG2] The Amulet of Power was blocking the 'domination' portrait icon for no reason</li>
+            <li>[IWD, SoD] During kit selection in  character creation, the kits could be scrolled via mousewheel but there was no scroll bar to indicate the list was scrollable or allow for scrolling via other means</li>
+          </ul>
+        </li>
+        <li>Other fixes and changes:
+          <ul>
+            <li>The external M'Khiin animation fix library no longer relies on the third party mod having AUTO_EVAL_STRINGS enabled</li>
+            <li>A Game Text Update will no longer be offered if the player is installing in a language different from the game's language, e.g. you won't be given the option to install the GTU on an Italian-language game if the mod language selection is English </li>
+            <li>Multiple BG/BG2 melee items had projectiles set on their melee abilities, which have been removed </li>
+            <li>The XP bonus for picking locks at levels &gt;= 16 are incorrect in BGEE and corrected, though these levels aren't obtainable sans mods</li>
+            <li>Added a better  message for why the mod will not install on EET games</li>
+          </ul>
+        </li>
+      </ul>
       <p><strong>Version Alpha 2 - April 23, 2025</strong></p>
       <ul>
         <li>Updated French translation from Selphira; updated Chinese translation from MephistoSatanDevil</li>
