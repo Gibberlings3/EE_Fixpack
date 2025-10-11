@@ -740,6 +740,11 @@ COPY_EXISTING ~spwi114.spl~ ~override~
   LPF CLONE_EFFECT INT_VAR match_opcode = 142 opcode = 321 power = 0 parameter2 = 0 timing = 1 duration = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
   BUT_ONLY
 
+// chromatic orb's slay should not bypass MR
+COPY_EXISTING ~spdr101.spl~  ~override~ // Chromatic Orb (druid)
+              ~spwi118.spl~  ~override~ // Chromatic Orb (arcane)
+  LPF ALTER_EFFECT INT_VAR header = 8 match_resist_dispel = 2 resist_dispel = 1 END  
+
 // tbd, cam
 // know alignment's save should match description
 COPY_EXISTING ~spwi208.spl~ ~override~ // know alignment, arcane - lacks saving throw

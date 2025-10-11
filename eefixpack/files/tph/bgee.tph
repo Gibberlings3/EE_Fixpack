@@ -1081,6 +1081,11 @@ COPY_EXISTING ~bull08.itm~ ~override~ // Bullet of Ice +1
 COPY_EXISTING ~bull09.itm~ ~override~ // Bullet of Electricity +1
   LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 21 END // change projectile to not be blocked by pfnm
   
+// poison effect and icon have different MR/dispellability
+COPY_EXISTING ~dart04.itm~ ~override~ // darts of wounding
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete icon
+  LPF ALTER_EFFECT INT_VAR match_opcode = 25 special = 6 END // and attach to poison directly
+  
 // moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
 COPY_EXISTING ~demogorg.itm~ ~override~
   LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END 

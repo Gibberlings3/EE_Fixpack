@@ -1,0 +1,28 @@
+// celestial hounds re-using moondog's howl, which buffs party even when hounds are hostile
+COPY_EXISTING ~ohdcdawg.cre~ ~override~
+  WRITE_ASCII 0x258 ~~ #8 // blank moondog entry
+
+COPY_EXISTING ~moondog.bcs~ ~override~
+EXTEND_BOTTOM ~ohdcdawg.bcs~ ~override/moondog.bcs~
+COPY_EXISTING ~ohdcdawg.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~ApplySpell(Myself,MOON_DOG_FEAR)~ ~ForceSpellRES("ohdcdawg",Myself) ForceSpellRES("ohdcdaw2",Myself)~
+  END
+
+COPY_EXISTING ~spin891.spl~ ~override/ohdcdawg.spl~ // enemy-only stuff
+  WRITE_LONG 0x08 "-1" // strip name
+  // everything elow is copied from spin891's edits in tbd_vfx_removal_bg2.tph  
+  LPF ALTER_EFFECT INT_VAR multi_match = 1 match_opcode = 177 match_parameter1 = 3 match_parameter2 = 8 opcode = 326 parameter1 = 0 parameter2 = 37 timing = 1 duration = 0 STR_VAR resource = spin891a END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 177 match_parameter1 = 3 match_parameter2 = 8 END
+  LPF DELETE_EFFECT INT_VAR match_opcode = 321 STR_VAR match_resource = spin891 END                                                      // delete out of stack
+  LPF CLONE_EFFECT  INT_VAR multi_match = 1 match_opcode = 161 opcode = 321 parameter2 = 0 STR_VAR insert = first resource = spin891 END // insert back at top of stack  
+  // new stuff
+  LPF ALTER_HEADER INT_VAR projectile = 159 END
+  LPF DELETE_EFFECT INT_VAR match_target = 3 END 
+
+COPY_EXISTING ~spin891.spl~ ~override/ohdcdaw2.spl~ // party-only stuff
+  WRITE_LONG 0x08 "-1" // strip name
+  LPF ALTER_HEADER INT_VAR projectile = 158 END 
+  LPF DELETE_EFFECT INT_VAR match_target = 1 END   
+  LPF DELETE_EFFECT INT_VAR match_target = 2 END   
+  LPF ALTER_EFFECT INT_VAR match_target = 3 target = 2 END  

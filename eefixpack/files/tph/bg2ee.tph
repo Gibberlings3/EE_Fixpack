@@ -625,6 +625,7 @@ INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental p
 INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
 INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
+INCLUDE ~eefixpack/files/tph/celestial_hounds.tph~ // celestial hounds re-using moondog's howl, which buffs party even when hostile
 
 // applying duergar skin tone to duergar dwarves
 COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
@@ -804,6 +805,15 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
               ~sw1h63.itm~  ~override~ // foebane +5
   LPF CLONE_EFFECT INT_VAR check_globals = 0 match_opcode = 146 opcode = 324 parameter1 = 0 parameter2 = 55 timing = 0 resist_dispel = 0 STR_VAR match_resource = spin104a resource = EVAL ~%SOURCE_RES%~ END
 
+// stun should be 42 seconds, not 45
+COPY_EXISTING ~dart03.itm~ ~override~ // darts of stunning
+  LPF ALTER_EFFECT INT_VAR match_duration = 45 duration = 42 END
+  
+// poison effect and icon have different MR/dispellability
+COPY_EXISTING ~dart04.itm~ ~override~ // darts of wounding
+  LPF DELETE_EFFECT INT_VAR match_opcode = 142 END
+  LPF ALTER_EFFECT INT_VAR match_opcode = 25 special = 6 END
+  
 // poison icon shouldn't be dispellable
 COPY_EXISTING ~dart05.itm~ ~override~ // asp's nest
   LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END

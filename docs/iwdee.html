@@ -38,6 +38,9 @@
   <li>Remove Magic always dispels magic in IWDEE, but the description mistakenly stated that it was using the dice roll/level comparison dispel mechanic from BGEE/BG2EE <span class="bg2fp_modder">(strref #35872)</span></li>
   <li>Magical Stone's description indicated that it was subject to weapon restrictions (e.g. struck as a +1 weapon) but this is not true&mdash;it's a normal spell doing normal spell damage like Magic Missile <span class="bg2fp_modder">(strref #12317)</span></li>
   <li>Glyph of Warding does not go away if the player changes area, but the description said otherwise <span class="bg2fp_modder">(strref #12200)</span></li>
+  <li>Crieck's name was not consistent <span class="bg2fp_modder">(strref #27380)</span></li>
+  <li>Ol' Withery states that the target takes 2d8 damage if they make their save against Finger of Death, but it actually does 2d8+1 on a failed save <span class="bg2fp_modder">(strref #2864)</span></li>
+  <li>Fixed a Chinese-language-specific UI bug <span class="bg2fp_modder">(strrefs #11293, #16480, #19719, #19720)</span></li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -72,6 +75,7 @@
   <li>Floor or container traps could potentially crash the game if the trap effects were channeled through an unnamed spell and blocked by a target who is immune.<span class="bg2fp_modder"> (spwi018.spl, spwi019.spl, spwi028.spl, spwi029.spl)</span></li>
   <li>The aquarium exterior did not have an entry for the tracking skill, as it had been assigned as a duplicate to the frost giant cave <span class="bg2fp_modder">(tracking.2da)</span></li>
   <li>The shriekers in the garden of Marketh's palace are supposed to summon creatures from nearby areas to fight, but were missing the scripting to do so <span class="bg2fp_modder">(ar8005.bcs, ar8005.ini)</span></li>
+  <li>If the 'Show Triggers On Tab' option was enabled in the game's baldur.lua, it would show visible triggers over area triggers which are supposed to be invisible, e.g. a region used to prompt dialogue or a quest event <span class="bg2fp_modder">(ar1105.are, ar3101.are, ar3201.are, ar3301.are, ar3501.are, ar3502.are, ar3503.are, ar3601.are, ar3602.are, ar4003.are, ar4005.are, ar6005.are, ar6006.are, ar6011.are, ar7005.are, ar8003.are, ar8009.are, ar9502.are, ar9600.are, ar9603.are, ar9708.are, ar9714.are, ar9718.are, ar9800.are, ar9801.are)</span></li>
 </ul>
 <h3> <a name="dialogue_fixes" id="dialogue_fixes"></a>Dialogue Fixes <a href="#dialogue_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -125,9 +129,14 @@
   <li>The Oil of Second Chances should take one round to apply per its description <span class="bg2fp_modder">(chance.itm)</span></li>
   <li>Monks could use arrows and bolts despite not being able to use bows or crossbows <span class="bg2fp_modder">(angarow.itm, arhand.itm, arow01.itm, arow02.itm, arow03.itm, arow04.itm, arow05.itm, arow06.itm, arow07.itm, arow08.itm, arow09.itm, arow10.itm, arow11.itm, arow12.itm, arow14.itm, arow15.itm, arow16.itm, arow1a.itm, arowkc.itm, arowtrn.itm, arrophe2.itm, bdarow01.itm, bolt01.itm, bolt02.itm, bolt03.itm, bolt04.itm, bolt05.itm, bolt06.itm, bolt07.itm, bolt08.itm, bolt09.itm, cutarow1.itm, dwbolt01.itm, dwbolt02.itm, dwbolt03.itm, garrow.itm, holdfst.itm, hqarow.itm, hqbolt.itm, iarow01.itm, kuobolt.itm, kuobolt2.itm, kuobolt3.itm, oharow50.itm, ohbolt50.itm, quiv01.itm, quiver01.itm, quiver02.itm, quiver03.itm, quiver04.itm, sahbolt.itm, sekolah.itm, uarow2a.itm, uarow3a.itm, uarow3b.itm, uarow3c.itm, uarow4a.itm)</span></li>
   <li>The Tranquil Bolt had no usability restrictions at all <span class="bg2fp_modder">(trnbolt.itm)</span></li>
+  <li>A number of items which cast spells were casting them at a level different than the one stated in their description, resulting in the spell lasting for longer or shorter than the item stated <span class="bg2fp_modder">(amul15.itm, amulbar.itm, amulbar.spl, blrdeck.itm, bootman.itm, braceip.itm, fanggf.itm, force.itm, force.spl, jasper.itm, mantlecs.itm, mantlecs.spl, mantlehf.itm, mantlehf.spl, mirror2.itm, rogue.itm, shawm.itm, sring.itm, tiernon.itm, tonggf.itm, u2ham5a.itm, ulring.itm, vexed3.itm, violin.itm, wandarm.itm)</span></li>
+  <li>Several short bows were using long bow animations on the avatars and paperdolls<span class="bg2fp_modder"> (bow05.itm, bow06.itm, hqsbow.itm, sbowebu.itm, storm.itm)</span></li>
+  <li>The 'bad luck' animation from Black Bess should play on the target, not the wielder <span class="bg2fp_modder">(bess.itm)</span></li>
+  <li>The Axe of the Minotaur Lord is supposed to stun for 1d4 rounds, not four seconds <span class="bg2fp_modder">(axemino.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): The enchantment levels of melee attacks from elemental princes were worse then their respective elementals. <span class="bg2fp_modder">(aegis.itm, aegis2.itm, elemchan.itm, elemcryo.itm, elemhydr.itm, elemimix.itm, elemogre.itm, elemsunn.itm, elemyanc.itm, elemzaam.itm)</span></li>
+      <li>Weapon Speed: Darts of Bone should have 0 WS <span class="bg2fp_modder">(dobone.itm)</span></li>
     </ul>
   </li>
 </ul>
@@ -143,7 +152,7 @@
   <li>Black Blade of Disaster could be blocked by spell protections, and the weapon grandmastery that should accompany the weapon could sometimes get blocked. <span class="bg2fp_modder">(blakblad.eff, blakblad.itm, blakblad.spl, cdbblade.spl)</span></li>
   <li>Iron Body split its effects between the spell and its equipped weapon, which could cause complications (particularly with other polymorphs). <span class="bg2fp_modder">(ibody.itm, spwi814.spl)</span></li>
   <li>Spider Spawn was only summoning Giant Spiders but should  be summoning Phase and Sword Spiders at higher levels. <span class="bg2fp_modder">(smtables.2da, spidphsu.2da, spidswsu.2da, spwi423.spl)</span></li>
-  <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. <span class="bg2fp_modder">(projimag.spl, simulacr.spl)</span></li>
+  <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. Mislead also shouldn't get the Shadow Twin ability. Created clones of larger creatures also couldn't properly use touch-range spells since their personal space data was being overwritten <span class="bg2fp_modder">(mislead.spl, projimag.spl, simulacr.spl)</span></li>
   <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdsha12a.spl, leat23a.spl, ohbglov1.spl, spcl237d.spl, spimixd.spl, spcryod.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
   <li>Lich Touch should paralyze on hit, not hold. <span class="bg2fp_modder">(ltouch.spl)</span></li>
   <li>Enrage was using Berserk's spell icon instead of its own unique one. <span class="bg2fp_modder">(spcl321.spl)</span></li>
@@ -211,6 +220,7 @@
   <li>Righteous Wrath of the Faithful was not providing its listed +2 damage bonus to allies of the same alignment. Also its fatigue effect from haste could be dispelled and wasn't stacking correctly. <span class="bg2fp_modder">(sppr518a.spl)</span></li>
   <li>Per its description, Earthquake is not supposed to affect creatures with 10 or more hit dice <span class="bg2fp_modder">(sppr720.spl)</span></li>
   <li>The 'Stunned' string from Whirlwind and other spells was not being consistently blocked by items/spells/creatures that were otherwise immune to stun <span class="bg2fp_modder">(cibossb.itm, cigbard.itm, freeact.itm, invulner.itm, ipsion.itm, labelt.itm, minhp1.itm, plyjelly.itm, ring09.itm, ring90.itm, ring91.itm, spcl152.spl, spcl321.spl, spcl542a.spl, spcl920a.spl, sppr403.spl, sppr422.spl, sppr617b.spl, stalker.itm, trollall.itm, trollimm.itm)</span></li>
+  <li>Stunning Blow is supposed to last for six seconds (one round) but was lasting for nine seconds <span class="bg2fp_modder">(spcl811.spl)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>School: Several innate creature abilities were assigned as 'generalist' school spells instead of schoolless, which gave generalist mages an unwarranted +2 saving throw against them. Corrections were also made for Blade Barrier and special versions of Confusion, Flame Strike, and Call Lightning. <span class="bg2fp_modder">(spin176.spl, spin177.spl, spin180.spl, spin181.spl, spin182.spl, spin183.spl, spin184.spl, spin186.spl, spin187.spl, spin188.spl, spin189.spl, spin190.spl, spin192.spl, spin193.spl, spin194.spl, sppr603d.spl, sppr983.spl, 
@@ -267,7 +277,7 @@
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
-  <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mdr2*.bam, mdr3*.bam, mwdr*.bam, mwyv*.bam)</span></li>
+  <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mdr2*.bam, mdr3*.bam, mtan*.bam, mwdr*.bam, mwyv*.bam)</span></li>
   <li>Similar to the above, large animations in areas could also be split and show the same seams where merged. <span class="bg2fp_modder">(1000ms1.bam, 1105ms1.bam, 1201ms2.bam, 1400t001.bam, 1400t002.bam, 1400t003.bam, 1400t004.bam, 1400t005.bam, 3001ms1.bam, 3601ms1.bam, 6013ms1.bam, am0602c.bam, am0602d.bam, am0602k1.bam, am0602k2.bam, am0602l1.bam, am0602l2.bam, am0801b1.bam, am0801b2.bam, am0902l.bam, am0902l1.bam, am0902l2.bam, am0902l3.bam, am0902l4.bam, am2000a.bam, am2000a1.bam, am2000a2.bam, am2000a3.bam, am2000a4.bam, am2000b.bam, am2000b1.bam, am2000b2.bam, am2000b3.bam, am2000b4.bam, am2805b.bam, am2805c.bam, am414e11.bam, am414e12.bam)</span></li>
   <li>The paperdoll for monks (the tutorial ones in Candlekeep, not the player class) were corrupted. <span class="bg2fp_modder">(cmnk1inv.bam)</span></li>
   <li>Summoned lizardmen had weapons equipped, but they <a href="https://www.gibberlings3.net/gallery/image/829-liazardmen-animation-fixes/">were not visible</a>. <span class="bg2fp_modder">(mli2h*.bam, mli2q*.bam, ms2lizm.cre, ms2lizm.itm, ms3tliz.cre, ms3tliz.itm, ss1liz3.cre, ss1liz4.cre, ss2liz5.cre, ss2liz6.cre, ss2liz7.cre)</span></li>
@@ -305,6 +315,7 @@
   <li>One piece of music wasn't working correctly sue to a typo <span class="bg2fp_modder">(bm2.mus)</span></li>
   <li>The Icewind worldmap had <a href="https://www.gibberlings3.net/forums/topic/36416-iwd-worldmap/">multiple travel time errors</a>. <span class="bg2fp_modder">(worldmap.wmp)</span></li>
   <li>Corrected numerous typos and other errors in the debug console's area list<span class="bg2fp_modder"> (bgee.lua)</span></li>
+  <li>During kit selection in  character creation, the kits could be scrolled via mousewheel but there was no scroll bar to indicate the list was scrollable or allow for scrolling via other means <span class="bg2fp_modder">(ui.menu}</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>

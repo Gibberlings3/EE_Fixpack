@@ -255,6 +255,20 @@ Weight: 14~
 
 // ie-5925, cam
 // cause disease is an abjuration spell, not necromancy
+@21461 = ~Soul Eater
+(Necromancy)
+
+Level: 6
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 5
+Area of Effect: 7-ft. radius
+Saving Throw: None
+
+This spell deals 3d8 magic damage to all living creatures within a 7-ft. radius. Any creatures that die as a result of this damage are obliterated, and their essence is transformed into a 3-Hit-Dice skeleton under control of the caster. Also, for each creature that dies in this manner, the caster receives a +1 bonus to Strength, Dexterity, and Constitution for 1 turn. Soul Eater has no effect on undead, constructs, and elemental creatures.~
+
+// ie-5925, cam
+// cause disease is an abjuration spell, not necromancy
 @21478 = ~Cause Disease
 (Abjuration)
 

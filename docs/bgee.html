@@ -39,7 +39,8 @@
   <li>Clarified several skill progressions in the descriptions for monks and archers <span class="bg2fp_modder">(strrefs #24234, #24298)</span></li>
   <li>Updated description of Abi-Dalzim's Horrid Wilting to clarify that there is no save penalty implemented for water/plant-based creatures<span class="bg2fp_modder"> (strref #26646)</span></li>
   <li>Some  bows and crossbows didn't specify the damage type if they provided bonus damage <span class="bg2fp_modder">(strrefs #6858, #7350, #7351, #7352, #7353, #16287, #16288, #17643, #17668, #18095, #19046, #30709, #30713, #30715, #56501, #61809, #61838, #62112, #69233, #69239)</span></li>
-  <li>Magical Stone's description indicated that it was subject to weapon restrictions (e.g. struck as a +1 weapon) but this is not true&mdash;it's a normal spell doing normal spell damage like Magic Missile<span class="bg2fp_modder">(strref #26130)</span></li>
+  <li>Magical Stone's description indicated that it was subject to weapon restrictions (e.g. struck as a +1 weapon) but this is not true&mdash;it's a normal spell doing normal spell damage like Magic Missile <span class="bg2fp_modder">(strref #26130)</span></li>
+  <li>Fixed a Chinese-language-specific UI bug <span class="bg2fp_modder">(strrefs #11293, #16480, #19719, #19720)</span></li>
 </ul>
 <h3> <a name="mechanics_fixes" id="mechanics_fixes"></a>Mechanics Fixes <a href="#mechanics_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -70,6 +71,8 @@
   <li>Footstep sounds were not being played in the Ducal Palace basement and one of the tutorial areas due to a bad ambient flag. <span class="bg2fp_modder">(bd0116.are, tu0018.are)</span></li>
   <li>Floor or container traps  could have potentially crashed the game if the trap effects were channeled through an unnamed spell and blocked by a target who is immune.<span class="bg2fp_modder"> (bdstonec.spl, bdtr01.spl, spin707.spl, spwi008.spl)</span></li>
   <li>Multiple areas had area scripts assigned or corrected <span class="bg2fp_modder">(ar0116.are, ar0133.are, ar0137.are, ar0501.are, ar0503.are, ar0504.are, ar0505.are, ar0506.are, ar0515.are, ar0619.are, ar0621.are, ar0810.are, ar1001.are, ar1005.are, ar1006.are, ar1007.are, ar1009.are, ar1010.are, ar1502.are, ar1503.are, ar1504.are, ar1505.are, ar1903.are, ar2002.are, ar2003.are, ar2004.are, ar2005.are, ar2006.are, ar2007.are, ar2008.are, ar2009.are, ar2010.are, ar2011.are, ar2012.are, ar2302.are, ar2622.are, ar2623.are, ar2635.are, ar2637.are, ar2638.are, ar4501.are, ar7100.are, ar9901.are, oh3010.are)</span></li>
+  <li>If the 'Show Triggers On Tab' option was enabled in the game's baldur.lua, it would show visible triggers over area triggers which are supposed to be invisible, e.g. a region used to prompt dialogue or a quest event <span class="bg2fp_modder">(ar0512.are, ar0514.are, oh2000.are, oh2010.are, oh3020.are, oh9360.are)</span></li>
+  <li>Fixed a stack of random items in the Safehouse in SoD. On its own it was harmless but could cause problems when interacting with mods <span class="bg2fp_modder">(bd0130.are)</span></li>
 </ul>
 <h3> <a name="dialogue_fixes" id="dialogue_fixes"></a>Dialogue Fixes <a href="#dialogue_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -109,6 +112,7 @@
   <li>Baeloth doesn't have a banter file assigned <span class="bg2fp_modder">(interdia.dlg)</span></li>
   <li>If actions in dialogues were misordered in a very specific and technical way, some of the actions (such as updating variables for quests) may not get executed. These action queues have been re-ordered to be more robust.<span class="bg2fp_modder"> (bdammon.dlg, bdbanno.dlg, bdbartle.bcs, bdbartle.dlg, bdclovis.dlg, bdcrubbm.dlg, bddanine.dlg, bddorn.dlg, bdfloss.dlg, bdgarrol.dlg, bdgurgle.dlg, bdjunia.dlg, bdminsc.dlg, bdmorlis.dlg, bdtaield.dlg, bdvoghil.dlg, dorn.dlg, edwinj.dlg, flamal.dlg, hull.dlg, imoenp.dlg, kielpc.dlg, neera.dlg, neerap.dlg, perdue.dlg, rasaadp.dlg, rsbassan.dlg, silke.dlg, tenya.dlg, zhurlo.dlg)</span></li>
   <li>Cernd's introduction could result in a 'No Valid Links or Replies' error if Minsc or Jaheira were dead <span class="bg2fp_modder">(cernd.dlg)</span></li>
+  <li>Edwin's comments about Vichand in SoD could fire out of order if you met Vichand before recruiting Edwin <span class="bg2fp_modder">(bdedwin.bcs, bdvichan.dlg)</span></li>
 </ul>
 <h3> <a name="item_fixes" id="item_fixes"></a>Item Fixes <a href="#item_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -141,11 +145,12 @@
   <li>Rancor and other swords that provide bonuses upon the death of an opponent now more tightly control whether it was due to the sword itself<span class="bg2fp_modder"> (bdcrimsn.spl, bdsw1h01.itm, bdsw1h08.itm, bdsw1h08.spl, ohdsw4.spl, sw2hd1.itm)</span></li>
   <li>The Hammer of Dawn's portrait icon could force a saving throw <span class="bg2fp_modder">(hamm13.itm)</span></li>
   <li>The bonus damage for Pritchard's Family Stiletto +2 should be piercing damage, not fire <span class="bg2fp_modder">(bdsw1h7d.eff)</span></li>
+  <li>Items which 'drain' their target on hit, aside from hit point drains, could apply the effects to the target and wielder separately <span class="bg2fp_modder">(blakblad.itm, cdblkbld.spl, cdmiscbc.spl, miscbc.itm)</span></li>
   <li>Bulk fixes:
     <ul>
       <li>Power (power determines how an item interacts with spell protections): Various summoned weapons are set to zero power (energy blades, flame blade, fire seeds, ghoul touch, Melf's Minute Meteors); several wands are changed to power 1 to better match their effects (Wands of Fear, Magic Missiles, Sleep). <span class="bg2fp_modder">(eneblade.itm, fblade.itm, fireseed.itm, ghoult.itm, melfmet.itm, wand02.itm, wand03.itm, wand08.itm, wand12.itm)</span></li>
       <li>Enchantment (enchantment determines if a weapon can strike a creature that requires +x weapons): Sword of Balduran is a 0-enchantment weapon. The enchantment levels of melee attacks from elemental princes were worse then their respective elementals. <span class="bg2fp_modder">(comps18.itm, elemchan.itm, elemsunn.itm, elemzaam.itm, </span><span class="bg2fp_modder">sw1h18.itm)</span></li>
-      <li>Type: Two keys were not set as item type: key <span class="bg2fp_modder">(misc83.itm, misc93.itm)</span></li>
+      <li>Type: Two keys were not set as item type: key; same with the female body item <span class="bg2fp_modder">(misc79.itm, misc83.itm, misc93.itm)</span></li>
     </ul>
   </li>
 </ul>
@@ -157,7 +162,7 @@
   <li>Shocking Grasp should not be blocked by spell protections. <span class="bg2fp_modder">(sgrasp.itm, sgrasp.spl, spwi115.spl)</span></li>
   <li>Black Blade of Disaster could be blocked by spell protections, and the weapon grandmastery that should accompany the weapon could sometimes get blocked. <span class="bg2fp_modder">(blakblad.eff, blakblad.itm, cdbblade.spl)</span></li>
   <li>Sol's Searing Orb  could be blocked by spell protections, and the spell was rebuilt in a substantially cleaner fashion. <span class="bg2fp_modder">(sorb.itm, sppr614a.spl, sppr614b.spl)</span></li>
-  <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. <span class="bg2fp_modder">(projimag.spl, simulacr.spl)</span></li>
+  <li>Simulacrums and Projected Images should retain their stealth abilities, however, the Shadow Twin ability should be blocked. Mislead also shouldn't get the Shadow Twin ability. Created clones of larger creatures also couldn't properly use touch-range spells since their personal space data was being overwritten <span class="bg2fp_modder">(mislead.spl, projimag.spl, simulacr.spl)</span></li>
   <li>When a creature with reflective damage enabled (e.g. Fireshield) attacks another with a similar protection, they could get caught in an infinite loop of retaliatory damage, potentially crashing the game. Also corrected the power levels of a few of these. <span class="bg2fp_modder">(bdbarbde.spl, bdsha12a.spl, bdshld02.spl, keldorn.spl, leat23a.spl, ohbglov1.spl, spcl237d.spl, spimixd.spl, spcryod.spl, sppr730d.spl, sppr951d.spl, sppr952d.spl, spwi403d.spl, spwi418d.spl)</span></li>
   <li>The various Cure Wounds, Restoration, and Lay on Hands spells should be touch range and not dispellable. <span class="bg2fp_modder">(bdcaela3.spl, spcl211.spl, spcl815.spl, spin109.spl, spin679.spl, spin711.spl, spin773.spl, spin827.spl, spin958.spl, sppr103.spl, sppr315.spl, sppr401.spl, sppr502.spl, sppr514.spl, sppr607.spl, spwm168.spl)</span></li>
   <li>The various Cause Wounds spells should be touch range and not bypass magic resistance. <span class="bg2fp_modder">(critical.itm, harm.itm, serious.itm, slaylive.itm, sppr599.spl, sppr699.spl)</span></li>
@@ -217,6 +222,9 @@
   <li>The duration of Harm,  Cause Critical Wounds, and Cause Serious Wounds were three seconds too long<span class="bg2fp_modder"> (sppr414.spl, sppr510.spl, sppr608.spl)</span></li>
   <li>Some class/kit abilities scaled with their characters but still were not extended out to the maximum level cap<span class="bg2fp_modder"> (ohdn01a.spl, spcl211.spl)</span></li>
   <li>Storm Shield's application animation could repeat if the player changed areas or reloaded <span class="bg2fp_modder">(spcl721.spl)</span></li>
+  <li>Stunning Blow is supposed to last for six seconds (one round) but was lasting for nine seconds <span class="bg2fp_modder">(spcl811.spl)</span></li>
+  <li>The Polymorph Other via wild surge was using different save types for effects which should be using one save <span class="bg2fp_modder">(spwm179.spl)</span></li>
+  <li>Protection from Normal Missiles was  blocking SoD's +1 Throwing Axes, +1 throwing daggers, and the various +1 elemental bullets. The stalker version was also missing a sound effect. <span class="bg2fp_modder">(bdax1h04itm, bddagg04.itm, bddagg07.itm, bull07.itm, bull08.itm, bull09.itm, spra303.spl)</span></li>
   <li>Bulk Fixes:
     <ul>
       <li>Power determines how a spell interacts with protections where a creature is immune to spells of level X. <span class="bg2fp_modder">(spin828.spl)</span></li>
@@ -248,6 +256,9 @@
   <li>The Mind Flayer attack was missing its 'Devour brain' combat feedback <span class="bg2fp_modder">(mindflay.itm)</span></li>
   <li>Depending on the difficulty, Belhifet has two different melee attacks. His weapon for higher difficulties was doing less poison damage than the lower difficulty one, and has been adjusted. Belhifet was immune to regular, arcane lightning bolts but not the copies used by Avengers or Stormlords. <span class="bg2fp_modder">(bdbelhi1.itm, bdbelhi2.itm, bdbelhia.itm)</span></li>
   <li>Many wraiths and mist creatures had leftover memorized spells from their source creature<span class="bg2fp_modder"> (bdwrai01.cre, bdwrait1.cre, bpshadow.cre, bpwrai01.cre, daitel.cre, mistpo01.cre, mistposu.cre, shadfi02.cre, shadowsu.cre, slaysh01.cre)</span></li>
+  <li>Joinable NPCs in SoD have scripting that helps match their (approximate) XP to the player's XP when they join the party, but these could fire substantially later at inappropriate times. <span class="bg2fp_modder">(bdbaelot.bcs, bdcorwin.bcs,  bddorn.bcs,  bddynahe.bcs,  bdedwin.bcs,  bdglint.bcs,  bdjaheir.bcs,  bdkhalid.bcs,  bdminsc.bcs,  bdmkhiin.bcs,  bdneera.bcs,  bdrasaad.bcs,  bdsafana.bcs,  bdviconi.bcs,  bdvoghil.bcs)</span></li>
+  <li>Two creature  attacks  cause a strength drain via a disease effect, but lacked an ability drain portrait icon <span class="bg2fp_modder">(bddraggh.itm, pudden01.itm)</span></li>
+  <li>Fixed a longstanding bug where Edwin's Projected Image would not have his +2 spells per level bonus <span class="bg2fp_modder">(edwin.cre, edwin2.cre, edwin4.cre, edwin6.cre, edwin7.cre, misc89.itm)</span></li>
   <!--  <li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(ankheg2.itm, basilg2.itm, basill2.itm, cdfampsd.itm, etterc1.itm, etterc2.itm, finsol02.itm, flind1.itm, ghoul1.itm, hgnymph.itm, impclaw.itm, lichel01.itm, magispwr.itm, mistice.itm, mistva2.itm, paraghas.itm, paraghou.itm, poisa.itm, poisspid.itm, psdclaw.itm, revent2.itm, slaysh01.itm, spidgi1.itm, spidhu1.itm, spidsw1.itm, spidwr1.itm, spspid3.itm, squirp.itm, sw1h14.itm, sw1h98.itm, bddraggh.itm, bdneo1.itm, bdneo2.itm, bdneo3.itm, bdspidgi.itm, bdspidhu.itm, figspid.itm, ghast1.itm, lich02.itm)</span></li>-->
   <li>Bulk fixes:
     <ul>
@@ -273,6 +284,10 @@
   <li>Taerom's ankheg shell processing blocks advancement of the Vial of Mysterious Liquid quest. Also his store update at then conclusion of this quest resets a lot of depreciation rates. <span class="bg2fp_modder">(baldur.bcs, taerom.dlg)</span></li>
   <li>Killing the dopplegangers at the Merchant League frequently results in one of the principals insisting that not all of them have been defeated even when they have been. We've made the counting more robust. <span class="bg2fp_modder">(ar0127.bcs, ar0128.bcs, ar0129.bcs, dopzorl.bcs, dopzorl.cre, irlentre.bcs, zorl.bcs)</span></li>
   <li>If the player imports characters from Black Pits into an SoD game, their slave rings never get removed <span class="bg2fp_modder">(bd0120.bcs)</span></li>
+  <li>The Coldhearth Lich could fail to take all of the required amulets if some are stored in a bag. <span class="bg2fp_modder">(bdcoldh.dlg)</span></li>
+  <li>Tsolak's messenger shouldn't appear during a scrying cutscene <span class="bg2fp_modder">(bdbaldur.bcs)</span></li>
+  <li>When transferring from the end of BGEE to the start of SoD, the entire series of 'The Rise of Sarevok' journal entries are never cleared <span class="bg2fp_modder">(bd0120.bcs)</span></li>
+  <li>One of the 'Freed by Tethtoril' journal entries is never cleared <span class="bg2fp_modder">(belt.dlg, liia.dlg)</span></li>
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
@@ -299,11 +314,13 @@
   <li>At the beginning of SoD, which NPCs spawn&mdash;and how and where&mdash;depends on several factors, like whether you met them in BG, traveled with them, &amp;c. A check to see if Safana was alive was inverted. <span class="bg2fp_modder">(bd0101.bcs)</span></li>
   <li>If Neera has been panicked or otherwise rendered incapable of speech in her initial fight with the Red Wizards in Beregost, she will not wait until the effects are gone to initiate dialogue. <span class="bg2fp_modder">(neera.bcs)</span></li>
   <li>Shaman summons weren't getting their item bonuses if the shaman was wearing special gear due to some bad script ordering. One other trigger was also incorrect. <span class="bg2fp_modder">(bdshunsu.bcs)</span></li>
+  <li>Davaeorn would not go hostile if attacked while silenced <span class="bg2fp_modder">(davaeorn.bcs)</span></li>
+  <li>There was a potential loop in the ground floor of the Merchant League, which could block other events in the area script <span class="bg2fp_modder">(ar0127.bcs)</span></li>
   <li>Various spells and items weren't setting &quot;scripting states&quot; values correctly, meaning AI scripts may not react to them correctly.<span class="bg2fp_modder"> (abazring.itm, amul15.itm, amul21.itm, bazpatrg.itm, bdmisc1b.itm, bdmisc1c.itm, bdogre03.bcs, bdringge.itm, bdringgh.itm, bhaalhp1.itm, bhaalimm.itm, chalslay.itm, demogorg.itm, deva.itm, finmel01.itm, fsspir.itm, gorchr.itm, gorfirg.itm, gorjelfu.itm, gorjelgr.itm, gormisti.itm, holdring.itm, immcloud.itm, imoenhp1.itm, innoc.itm, invulner.itm, jwsuper.itm, minhp1.itm, ohnmode1.spl, ohsmode4.spl, plyjelly.itm, plywyvrn.itm, princess.itm, ravag03.itm, ref1.itm, ring94.itm, ring95.itm, ring99.itm, sengua04.itm, spcl152.spl, spcl242.spl, spcl321.spl, spcl321.spl, spcl741.spl, spcl741.spl, spcl917.spl, spin117.spl, spin117.spl, spin853.spl, sppr507.spl, sprngw03.itm, sprngw04.itm, sprngz05.itm, spwi603.spl, spwi853.spl, surehp1.itm, telslav2.itm, vampreg.itm)</span></li>
 </ul>
 <h3> <a name="animation_fixes" id="animation_fixes"></a>Animation Fixes <a href="#animation_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
-  <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mwyv*.bam)</span></li>
+  <li>For larger creatures such as dragons, creature animations were typically split into four quadrants and stitched together on the game screen. Unfortunately, this could sometimes result in <a href="https://www.gibberlings3.net/gallery/image/823-issues-with-large-creature-animations-ii/">visible seams</a> between the four disparate animations or, if a spell was in effect, animations <a href="https://www.gibberlings3.net/gallery/image/822-issues-with-large-creature-animations-i/">cycling out of sync</a> with one another. These larger animations have been merged into a single, monolithic animation to address these issues. <span class="bg2fp_modder">(all mdem*.bam, mdr1*.bam, mtan*.bam, mwyv*.bam)</span></li>
   <li>Similar to the above, large animations in areas could also be split and show the same seams where merged. <span class="bg2fp_modder">(bdfug01.bam, bdfug02.bam, bdfug03.bam, bdfug04.bam)</span></li>
   <li>The paperdoll for monks (the tutorial ones in Candlekeep, not the player class) were corrupted. <span class="bg2fp_modder">(cmnk1inv.bam)</span></li>
   <li>The animation for flaming short swords was missing some files. <span class="bg2fp_modder">(wphf2*.bam)</span></li>
@@ -344,6 +361,9 @@
   <li>With SoD installed, the OHxxxx areas are listed twice in the debug menu. <span class="bg2fp_modder">(bgee.lua)</span></li>
   <li>Multiple movies are missing from the replay menu <span class="bg2fp_modder">(movidesc.2da)</span></li>
   <li>Corrected numerous typos and other errors in the debug console's area list<span class="bg2fp_modder"> (bgee.lua)</span></li>
+  <li>Some stores had the same item listed multiple times and when the item was selected the player could not deselect them without leaving the store. It also caused other issues such as being unable to steal these items.<span class="bg2fp_modder"> (bdbeleg3.sto)</span></li>
+  <li>The placeholder portait images on the Party Selection screen were not updated to match their UI and have been adjusted accordingly <span class="bg2fp_modder">(noportlm.bmp, noportls.bmp)</span></li>
+  <li>During kit selection in SoD character creation, the kits could be scrolled via mousewheel but there was no scroll bar to indicate the list was scrollable or allow for scrolling via other means <span class="bg2fp_modder">(ui.menu}</span></li>
 </ul>
 <div class="bg2fp_modder">
   <h3> <a name="internal_fixes" id="internal_fixes"></a>Internal Fixes <a href="#internal_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
@@ -378,6 +398,8 @@
     <li>Although they're already prevented from breaking from chapter checks. the BP Slave Rings now block all weapon breakage spells explicitly (bprng1.itm)</li>
     <li>entries.2da had leftover junk from BG2 that has been cleaned up (entries.2da)</li>
     <li>Demogorgon's weapon was updated to match fixes in BG2EE (demogorg.itm)</li>
+    <li>Multiple melee items had projectiles set on their melee abilities, which have been removed (ax1h05.itm, ax1h06.itm, ax1h16.itm, bdax1h02.itm, bdax1h05.itm)</li>
+    <li>The XP bonus for picking locks at levels &gt;= 16 are incorrect (xpbonus.2da)</li>
   </ul>
 </div>
 <!-- documentation ends here -->
