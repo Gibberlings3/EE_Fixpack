@@ -1,0 +1,53 @@
+/*
+
+0 - default starting equipment
+  goes to 1 to initiate
+1 - no cloak
+  goes to 4 on dead/hp=1
+  goes to 2 when cloak equipped
+  goes to 3 when cloak not equipped & cowl not equipped & outdoor & !ar1400 & timeGT dawn_start & timelt dusk_end
+  goes to 3 in oh5500
+2 - has Cloak of Dragomir equipped
+  goes to 4 on dead/hp=1
+  goes to 1 when cloak unequipped
+  goes to 5 in oh5500
+3
+  goes to 4 on dead/hp=1/expired timer
+  goes to 2 when cloak equipped (oh5500 excluded)
+  goes to 5 when cloak equipped (oh5500 only)
+4 - dead
+  goes to 1 during revive
+5 - exclusive to oh5500, cloak equipped
+  goes to 3 without cloak  
+  goes to 1 when leaving oh5500
+  
+  
+MISSING: 
+  5 > 4 on normal dead conditions
+  3 > 1 on multiple conditions
+*/
+
+IF
+  OR(2)
+    HP(Myself,1)
+    StateCheck(Myself,STATE_REALLY_DEAD)
+  HasItemEquiped("ohhexam5",Myself)  // Hexxat's Amulet
+THEN
+  RESPONSE #100
+    TransformItem("ohhexam5","ohhexam4")  // Hexxat's Amulet
+    DropInventory()
+END
+
+IF
+  HasItemEquiped("ohhexam3",Myself)  // Hexxat's Amulet
+  OR(4)
+    !AreaType(OUTDOOR)
+    AreaCheck("ar1400")  // Shadow Temple Land (restored, Ranger)
+    !TimeGT(DAWN_START)
+    !TimeLT(DUSK_END)
+THEN
+  RESPONSE #100
+    TransformItem("ohhexam3","ohhexam1")  // Hexxat's Amulet
+END
+  
+  

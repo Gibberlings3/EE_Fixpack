@@ -33,3 +33,6 @@ OUTER_FOR (index = 6 ; index > 0; --index) BEGIN
   EXTEND_BOTTOM ~baldur25.bcs~ ~eefixpack/files/baf/hexxat_deathbd.baf~ EVALUATE_BUFFER
   
 END 
+
+EXTEND_BOTTOM ~hexxat.bcs~  ~eefixpack/files/baf/hexxat_even_more_death.baf~
+EXTEND_BOTTOM ~hexxa25.bcs~ ~eefixpack/files/baf/hexxat_even_more_death.baf~
