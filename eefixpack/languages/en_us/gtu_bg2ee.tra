@@ -14283,6 +14283,7 @@ Requires:
 Weight: 8~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
+// changing the thac0/damage formatting to match other bracers
 @66424 = ~These rarest of gauntlets are highly sought after by duelists, warriors, and fighters of all kinds.
 
 STATISTICS:
@@ -14290,8 +14291,9 @@ STATISTICS:
 Combat abilities:
 – Extra 1/2 attack per round
 
-THAC0: +1
-Damage: +2
+Equipped abilities:
+– THAC0: +1
+– Damage: +2
 
 Weight: 1~
 
