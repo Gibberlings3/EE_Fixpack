@@ -84,7 +84,6 @@ ACTION_IF game_is_bgee BEGIN
                 ~dratan.cre~   ~override~ // Dra'tan - needed for for Dagger (dagg01)
                 ~drelik.cre~   ~override~ // Drelik - needed for for Short Sword +1 (sw1h08)
                 ~dryad.cre~    ~override~ // Dryad of the Cloud Peaks - needed for for Dagger (dagg01)
-//                ~e33.cre~      ~override~ // Alora - needed for for The Shadow's Blade +3 (sw1h10)
                 ~gentho.cre~   ~override~ // Genthore - needed for for Dagger (dagg01)
                 ~halftr.cre~   ~override~ // Furret - needed for for Dagger (dagg01)
                 ~harbor.cre~   ~override~ // Harbor Master - needed for for Dagger (dagg01)
@@ -273,7 +272,6 @@ ACTION_IF game_is_bgee BEGIN
                 ~stepha.cre~   ~override~ // Stephan - needed for for Quarterstaff (staf01)
                 ~tarnes.cre~   ~override~ // Tarnesh - needed for for Quarterstaff (staf01)
                 ~thief2.cre~   ~override~ // <Invalid Strref -1> - needed for for Quarterstaff (staf01)
-//                ~voghil7.cre~  ~override~ // Voghiln - needed for for War Hammer +1 (hamm02)
                 ~william.cre~  ~override~ // William Garst - needed for for Quarterstaff (staf01)
     WRITE_BYTE 0x72 (THIS + 1) // needs blunt pip
     BUT_ONLY IF_EXISTS
@@ -308,9 +306,6 @@ ACTION_IF game_is_bgee BEGIN
                 ~corpse2.cre~  ~override~ // Corpse - needed for for Dart (dart01)
                 ~corpse3.cre~  ~override~ // Corpse - needed for for Dart (dart01)
                 ~halfg6.cre~   ~override~ // Halfling Man - needed for for Sling (slng01)
-                ~neera.cre~    ~override~ // Neera - needed for for Sling (slng01)
-                ~neera2.cre~   ~override~ // Neera - needed for for Sling (slng01)
-                ~neera4.cre~   ~override~ // Neera - needed for for Sling (slng01)
     WRITE_BYTE 0x75 (THIS + 1) // needs missile pip
     BUT_ONLY IF_EXISTS
     
