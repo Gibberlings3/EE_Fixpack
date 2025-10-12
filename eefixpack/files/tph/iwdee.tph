@@ -419,6 +419,7 @@ INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_iwdee.tph~ // bulk general chang
 
 INCLUDE ~eefixpack/files/tph/a7/iwd_blast_skeleton.tph~ // blast skeleton should self-destruct more reliably
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
+INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
 
 // ie-6035, cam
 // Why are constructs carrying gold?

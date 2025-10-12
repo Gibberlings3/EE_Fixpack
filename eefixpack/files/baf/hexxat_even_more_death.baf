@@ -42,7 +42,7 @@ IF
   HasItemEquiped("ohhexam3",Myself)  // Hexxat's Amulet
   OR(4)
     !AreaType(OUTDOOR)
-    AreaCheck("ar1404")  // Shadow Temple Land (restored, Ranger)
+    AreaCheck("ar1404")  // Shadow Temple Land shadowed
     !TimeGT(DAWN_START)
     !TimeLT(DUSK_END)
 THEN
