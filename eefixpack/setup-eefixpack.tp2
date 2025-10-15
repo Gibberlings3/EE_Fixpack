@@ -46,7 +46,7 @@ ALWAYS
 
 END
 
-VERSION ~Alpha 2~
+VERSION ~Alpha 3~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 
@@ -153,6 +153,8 @@ ACTION_IF game_includes_sod BEGIN
   END
 END
 
+/* suppress these for release versions
+
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////                                                  \\\\\
@@ -200,7 +202,8 @@ LABEL ~cd_eefp_internal_tlk_comparator~
 INCLUDE ~eefixpack/files/lib/cd_tlk.tph~
 
 OUTER_SPRINT lang pl
-ACTION_FOR_EACH game IN sod iwdee bg2ee /* pstee */ BEGIN
+ACTION_FOR_EACH game IN sod iwdee bg2ee BEGIN
+//ACTION_FOR_EACH game IN sod iwdee bg2ee pstee BEGIN
   LAF cd_tlk_comparator INT_VAR f_tlk_exists = 1 STR_VAR      // dialogf.tlk exists for Polish
     m_tlk_26       = ~eefixpack/tlk/%game%_%lang%_m_26.tlk~   // male/sole tlk that ships with 2.6 (with path)
     m_tlk_tool     = ~eefixpack/tlk/%game%_%lang%_m_tool.tlk~ // male/sole tlk from the Beamdog tool (with path)
@@ -255,3 +258,5 @@ END
 BEGIN ~Temporary test space~ DESIGNATED 1000
 DEPRECATED ~For internal use only~
 LABEL ~cd_eefp_internal_test_space~
+
+*/
