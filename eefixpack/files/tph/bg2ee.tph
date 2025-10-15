@@ -626,6 +626,7 @@ INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bear
 INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
 INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 INCLUDE ~eefixpack/files/tph/celestial_hounds.tph~ // celestial hounds re-using moondog's howl, which buffs party even when hostile
+INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
 
 // applying duergar skin tone to duergar dwarves
 COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
