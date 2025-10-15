@@ -833,7 +833,7 @@ ACTION_PHP_EACH JOINABLE_NPC_ARRAY AS file => dv BEGIN
         END  
                                                                   
         READ_STRREF 0x08 name
-        SPRINT ~%prof%_debug~ EVALUATE_BUFFER "%%prof%_debug%%WNL%                ~%cre_file%.cre~%spc%~override~ // %name% - needed for for %item2%" 
+        SPRINT ~%prof%_debug~ EVALUATE_BUFFER "%%prof%_debug%%WNL%                ~%cre_file%.cre~%spc%~override~ // %name% - needed for %item2%" 
       END
       BUT_ONLY  
 
