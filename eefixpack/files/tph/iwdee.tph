@@ -231,6 +231,14 @@ COPY ~scripts/cleric1.bs~ ~scripts/cleric1.bs~
     REPLACE_TEXTUALLY ~!HasItem("chillt",Myself)~ ~!HasItem("ctouch",Myself)~ // wrong resref for chill touch
   END
   BUT_ONLY
+  
+COPY_EXISTING ~4001lpt1.bcs~ ~override~ // wrong scope on area var
+              ~4001lt1a.bcs~ ~override~
+              ~4001t1as.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~("5001_Alert_1","AR5001"~ ~("5001_Alert_1","MYAREA"~
+  END
+  BUT_ONLY
 
 // remove team 5 from Ilmadia's scripting (she's already team 2)
 // see also edits to ar8011.are
