@@ -49,6 +49,9 @@ ACTION_IF game_includes_sod BEGIN
   COPY_EXISTING ~ui.menu~ ~override~
     // add scrollbar to kit selection list in the character creation menu
     REPLACE_TEXTUALLY ~^\([ %TAB%]*\)var[ %TAB%]+currentChargenKit[^%WNL%]*~ ~\0%WNL%\1scrollbar	'GUISCRC'~
+
+    // restore campaign-specific logo on game menu screen "ESC_MENU"
+    REPLACE_TEXTUALLY CASE_SENSITIVE ~\(bam[ %TAB%]+BIGLOGO[ %TAB%%WNL%]+frame\)[ %TAB%]+1~ ~\1 lua "getBigLogo()"~
   BUT_ONLY
 END
 
