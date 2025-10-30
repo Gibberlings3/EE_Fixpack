@@ -5,10 +5,10 @@
 //Fix UI mod bug caused by Chinese punctuation.
 @69270   = ~<CLASS>: 等级<LEVEL>~
 @69269   = ~<CLASS>: 等级<LEVEL>
-经验值: <EXPERIENCE>
-下个等级: <NEXTLEVEL>~
+经验值: <EXPERIENCE>
+下个等级: <NEXTLEVEL>~
 @69390   = ~<CLASS>: 等级<LEVEL>
-经验值: <EXPERIENCE>
+经验值: <EXPERIENCE>
 暂不生效~
 @69292   = ~<CLASS>: 等级<LEVEL>
-经验值: <EXPERIENCE>~
+经验值: <EXPERIENCE>~
