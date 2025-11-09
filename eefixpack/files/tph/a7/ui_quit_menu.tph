@@ -1,0 +1,26 @@
+// [bg, sod, bg2, iwd] Allow to force-quit the game if cutscene mode is active
+// https://www.gibberlings3.net/forums/topic/40678-suggestion-improve-the-quit-menu-to-allow-force-quitting-the-game-if-stuck-in-cutscene-mode
+
+WITH_SCOPE BEGIN
+
+<<<<<<<< .../inlined/eefixpack/QuitMenu_onOpen
+	onOpen
+	"
+		if Infinity_GetInCutsceneMode() then
+			restoreOverlayFromQuit()
+			Infinity_ShutdownGame()
+		end
+	"
+>>>>>>>>
+
+COPY_EXISTING ~ui.menu~ ~override~
+  SET menu_ofs = INDEX_BUFFER(~\bmenu[ %TAB%%WNL%]*{[ %TAB%%WNL%]*name[ %TAB%]*['"]QuitMenu['"]~)
+  PATCH_IF (menu_ofs >= 0) BEGIN
+    SET on_open_ofs = INDEX_BUFFER(~^[ %TAB%]*label\([ %TAB%%WNL%]*--.*[%WNL%]+\)*~ menu_ofs)
+    PATCH_IF (on_open_ofs > menu_ofs) BEGIN
+      INSERT_FILE on_open_ofs ~.../inlined/eefixpack/QuitMenu_onOpen~
+    END
+  END
+BUT_ONLY
+
+END

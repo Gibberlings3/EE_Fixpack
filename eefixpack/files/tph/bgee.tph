@@ -19,6 +19,8 @@ INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack 
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
+
 ACTION_IF game_includes_sod BEGIN
   WITH_SCOPE BEGIN
     INCLUDE ~eefixpack/files/tph/a7/sod_cinematics.tph~ // enable subtitles for sod cinematics
