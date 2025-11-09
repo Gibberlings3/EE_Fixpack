@@ -14,6 +14,7 @@ INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack 
 
 INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
 INCLUDE ~eefixpack/files/tph/a7/bg2_ui_logo_fix.tph~  // updating game logo when transitioning from SoA to ToB campaign
+INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
 
 /////                                                  \\\\\
 ///// ids/2da/ini fixes                                \\\\\
