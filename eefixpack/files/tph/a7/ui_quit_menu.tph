@@ -16,7 +16,7 @@ WITH_SCOPE BEGIN
 COPY_EXISTING ~ui.menu~ ~override~
   SET menu_ofs = INDEX_BUFFER(~\bmenu[ %TAB%%WNL%]*{[ %TAB%%WNL%]*name[ %TAB%]*['"]QuitMenu['"]~)
   PATCH_IF (menu_ofs >= 0) BEGIN
-    SET on_open_ofs = INDEX_BUFFER(~^[ %TAB%]*label\([ %TAB%%WNL%]*--.*[%WNL%]+\)*~ menu_ofs)
+    SET on_open_ofs = INDEX_BUFFER(~^[ %TAB%]*label\([ %TAB%%WNL%]*--.*[%WNL%]+\)*[ %TAB%%WNL%]*{~ menu_ofs)
     PATCH_IF (on_open_ofs > menu_ofs) BEGIN
       INSERT_FILE on_open_ofs ~.../inlined/eefixpack/QuitMenu_onOpen~
     END
