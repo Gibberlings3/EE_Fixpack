@@ -907,3 +907,6 @@ Wait(1)
 SetGlobal("Deactivate0801","AR0800",3)  // Graveyard
 ActionOverride("bodhiamb",DestroySelf())~
 END
+
+// thieves guild guard brannel shouldn't use intro dialogue when prompted to warn
+ADD_STATE_TRIGGER shthdr01 0 ~Global("LathanPlot","GLOBAL",0) !Global("PGFailed","GLOBAL",1)~ 2
