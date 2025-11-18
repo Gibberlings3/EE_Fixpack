@@ -1,0 +1,35 @@
+// Fixes scripting of summoned squirrels in Easthaven (finale)
+// https://www.gibberlings3.net/forums/topic/40707-iwdee-scripting-issues-with-squirrel-horde-in-easthaven-finale
+
+WITH_SCOPE BEGIN
+
+// repurposing unused cre resource
+COPY_EXISTING ~eesquir4.cre~ ~override~
+  WRITE_ASCII SCRIPT_OVERRIDE ~EESQLMOB~ (8)
+  WRITE_ASCII SCRIPT_GENERAL ~EFATKMEL~ (8)
+  WRITE_ASCII SCRIPT_DEFAULT ~EFFOLPTY~ (8)
+BUT_ONLY
+
+ACTION_DEFINE_ARRAY coords BEGIN
+  ~[1381.558]~
+  ~[1392.574]~
+  ~[1399.594]~
+  ~[1369.574]~
+  ~[1364.552]~
+  ~[2169.1088]~
+  ~[2188.1099]~
+  ~[2199.1112]~
+  ~[2214.1128]~
+END
+
+COPY_EXISTING ~ar1100.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    PHP_EACH coords AS _ => coord BEGIN
+      REPLACE_TEXTUALLY EXACT_MATCH
+        ~CreateCreature("eesquirl",%coord%~
+        ~CreateCreature("eesquir4",%coord%~
+    END
+  END
+BUT_ONLY
+
+END

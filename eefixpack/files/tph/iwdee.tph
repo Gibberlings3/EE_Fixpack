@@ -220,6 +220,7 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 INCLUDE ~eefixpack/files/tph/tbd_iwd_locals_scripts.tph~ // tbd, cam - region/container scripts can't use LOCALS-scoped variables
 INCLUDE ~eefixpack/files/tph/a7/iwd_luremaster.tph~ // luremaster cutscene fixes
 INCLUDE ~eefixpack/files/tph/a7/iwd_ldd_shriekers.tph~ // fixes shrieker behavior in Lower Dorn's Deep
+INCLUDE ~eefixpack/files/tph/a7/iwd_squirrels.tph~ // fixes scripting of summoned squirrels in Easthaven (finale)
 
 // tbd, cam
 // player ai checks if magical weapon present before casting shillelagh, but checks old resources
