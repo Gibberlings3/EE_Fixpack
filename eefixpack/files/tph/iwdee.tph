@@ -27,6 +27,7 @@ BUT_ONLY
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
+INCLUDE ~eefixpack/files/tph/a7/iwd_movescale_fixes.tph~ // fixes movement rate in several creature animation definitions
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
