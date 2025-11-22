@@ -1,0 +1,25 @@
+// Fixes movement rate in several creature animation definitions
+// https://www.gibberlings3.net/forums/topic/39424-iwdee-movement-speed-differences-of-creature-animations-between-oiwd-and-iwdee
+
+WITH_SCOPE BEGIN
+
+COPY - ~eefixpack/files/2da/iwd/move_scale.2da~ ~override~
+  READ_2DA_ENTRIES_NOW move_scale_table 3
+BUT_ONLY
+
+OUTER_FOR (row = 0; row < move_scale_table; ++row) BEGIN
+  OUTER_SPRINT resref $move_scale_table(~%row%~ ~0~)
+  OUTER_SET old_value = $move_scale_table(~%row%~ ~1~)
+  OUTER_SET new_value = $move_scale_table(~%row%~ ~2~)
+  COPY_EXISTING ~%resref%.ini~ ~override~
+    SPRINT pattern ~^\(move_scale\)=%old_value%\b~
+    COUNT_REGEXP_INSTANCES ~%pattern%~ count
+    PATCH_IF (count > 0) BEGIN
+      REPLACE_TEXTUALLY ~%pattern%~ ~\1=%new_value%~
+    END ELSE BEGIN
+      PATCH_WARN ~WARNING: No movement rate definition found in %SOURCE_FILE%~
+    END
+  BUT_ONLY IF_EXISTS
+END
+
+END
