@@ -1,0 +1,98 @@
+// Prevents exploding deaths of incorporeal undead creatures
+// https://www.gibberlings3.net/forums/topic/40797-iwdee-prevent-exploding-death-for-shadowed-creatures
+
+// Action and patch function: Returns the hexadecimal notation of the given integer value.
+DEFINE_DIMORPHIC_FUNCTION to_hex
+INT_VAR
+  value = 0       // numeric value to convert
+  digits = 4      // min. number of hex digits
+RET
+  hex_value       // value in hexadecimal notation (without prefix)
+BEGIN
+  OUTER_PATCH ~~ BEGIN SPRINTF hex_value ~%x~ (value) END
+  OUTER_PATCH_SAVE hex_value ~%hex_value%~ BEGIN DELETE_BYTES 0 2 END // no prefix
+  OUTER_WHILE (STRING_LENGTH ~%hex_value%~ < digits) BEGIN OUTER_SPRINT hex_value ~0%hex_value%~ END
+END
+
+
+// gathering used animation slots
+OUTER_SET ea_neutral = IDS_OF_SYMBOL(~ea~ ~NEUTRAL~)
+OUTER_SET spectral_undead = IDS_OF_SYMBOL(~race~ ~SPECTRAL_UNDEAD~)
+COPY_EXISTING_REGEXP ~^.+\.cre~ ~override~
+  READ_BYTE 0x270 ea
+  READ_BYTE 0x272 race
+  PATCH_IF (ea >= ea_neutral && race == spectral_undead) BEGIN
+    READ_LONG 0x28 anim_id
+    LPF to_hex INT_VAR value = anim_id RET anim_hex = hex_value END
+    PATCH_IF (FILE_EXISTS_IN_GAME ~%anim_hex%.ini~ &&
+              NOT RESOURCE_CONTAINS ~%anim_hex%.ini~ ~color_chunks=255~) BEGIN
+      SET $anim_slots(~%anim_id%~) = anim_id
+    END
+  END
+BUT_ONLY
+
+ACTION_SORT_ARRAY_INDICES ~anim_slots~ NUMERICALLY
+
+// cloning animation slots
+OUTER_SPRINT label_suffix ~_GHOST~
+OUTER_SPRINT label_suffix_lower ~_ghost~
+OUTER_SPRINT pattern ~color_chunks=[0-9]+~
+OUTER_SPRINT replacement ~color_chunks=255~
+ACTION_PHP_EACH anim_slots AS slot => _ BEGIN
+  LAF to_hex INT_VAR value = slot RET slot_hex = hex_value END
+
+  ACTION_IF (slot >= 0x5000 && slot < 0x7000) BEGIN
+    // character/character_old
+    OUTER_SET step_size = 0x20
+  END ELSE ACTION_IF (slot >= 0x7000 && slot < 0x8000) BEGIN
+    // monster/monster_old
+    OUTER_SET step_size = 0x10
+  END ELSE BEGIN
+    // monster_icewind and other types
+    OUTER_SET step_size = 1
+  END
+
+  OUTER_SET match = 0
+  OUTER_SET new_slot = slot
+  OUTER_SET slot_max = (slot & 0xf000) + 0x1000
+  OUTER_WHILE (NOT match && new_slot < slot_max) BEGIN
+    OUTER_SET new_slot += step_size
+    LAF to_hex INT_VAR value = new_slot RET new_slot_hex = hex_value END
+    OUTER_SET match = NOT FILE_EXISTS_IN_GAME ~%new_slot_hex%.ini~
+  END
+
+  ACTION_IF (match) BEGIN
+    OUTER_SET $anim_slots(~%slot%~) = new_slot
+    COPY_EXISTING ~%slot_hex%.ini~ ~override/%new_slot_hex%.ini~
+      LOOKUP_IDS_SYMBOL_OF_INT slot_label ~animate~ slot
+      // updating info comment
+      REPLACE_TEXTUALLY ~^//[ %TAB%]*[^ %TAB%%WNL%]+[ %TAB%]+[^ %TAB%%WNL%]+~ ~\0%label_suffix_lower%~
+      // updating color_chunks
+      COUNT_REGEXP_INSTANCES ~%pattern%~ count
+      PATCH_IF (count > 0) BEGIN
+        // replace
+        REPLACE_TEXTUALLY ~%pattern%~ ~%replacement%~
+      END ELSE BEGIN
+        // add
+        REPLACE_TEXTUALLY ~animation_type=.+[ %TAB%%WNL%]+~ ~\0%replacement%~
+      END
+
+    // adding new ANIMATE.IDS entry
+    OUTER_SPRINT new_slot_label ~%slot_label%%label_suffix%~
+    APPEND ~animate.ids~ ~0x%new_slot_hex% %new_slot_label%~
+  END
+END
+
+CLEAR_IDS_MAP
+
+// updating animation slots
+COPY_EXISTING_REGEXP ~^.+\.cre~ ~override~
+  READ_BYTE 0x270 ea
+  READ_BYTE 0x272 race
+  PATCH_IF (ea >= ea_neutral && race == spectral_undead) BEGIN
+    READ_LONG 0x28 anim_id
+    PATCH_IF (VARIABLE_IS_SET $anim_slots(~%anim_id%~)) BEGIN
+      WRITE_LONG 0x28 $anim_slots(~%anim_id%~)
+    END
+  END
+BUT_ONLY
