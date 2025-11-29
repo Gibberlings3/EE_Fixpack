@@ -322,7 +322,14 @@ COPY_EXISTING ~lwmurd.bcs~ ~override~
     REPLACE_TEXTUALLY ~Global("CDMurduaghDaen","MYAREA",1)~ ~False()~
     APPEND_FILE ~eefixpack/files/baf/lwmurd.baf~  
   END
-  BUT_ONLY   
+  BUT_ONLY
+
+// The Voice of Durdel Anatha: fix blending mode of visual effect used by resurrection
+COPY_EXISTING ~lddurd01.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~"sphollyw"~ ~"spholy"~
+  END
+BUT_ONLY
 
 INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
