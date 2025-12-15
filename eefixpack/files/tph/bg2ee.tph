@@ -1237,6 +1237,18 @@ WITH_SCOPE BEGIN
   END
 END
 
+// Staff of Command and Staff of Power are +2 and yet have a speed factor of 1 instead of 2, as expected
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~staf09.itm~ ~override~
+                ~staf12.itm~ ~override~
+    LPF ALTER_HEADER INT_VAR match_type = 1 speed = 2 END
+    READ_STRREF 0x54 desc
+    INNER_PATCH_SAVE desc ~%desc%~ BEGIN
+      REPLACE_TEXTUALLY ~%itm_speed_text%~ ~\12~ // casting speed
+    END
+    SAY_EVALUATED 0x54 ~%desc%~
+END
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
