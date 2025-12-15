@@ -1237,6 +1237,7 @@ WITH_SCOPE BEGIN
   END
 END
 
+// RoyalProtector
 // Staff of Command and Staff of Power are +2 and yet have a speed factor of 1 instead of 2, as expected
 WITH_SCOPE BEGIN
   COPY_EXISTING ~staf09.itm~ ~override~
