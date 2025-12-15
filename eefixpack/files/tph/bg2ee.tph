@@ -1245,7 +1245,7 @@ WITH_SCOPE BEGIN
     LPF ALTER_HEADER INT_VAR match_type = 1 speed = 2 END
     READ_STRREF 0x54 desc
     INNER_PATCH_SAVE desc ~%desc%~ BEGIN
-      REPLACE_TEXTUALLY ~%itm_speed_text%~ ~\12~ // casting speed
+      REPLACE_TEXTUALLY ~%itm_speed_text%~ ~\12~
     END
     SAY_EVALUATED 0x54 ~%desc%~
 END
