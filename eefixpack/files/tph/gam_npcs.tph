@@ -1,0 +1,72 @@
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_gam_npcs BEGIN // 0 south, 4 west, 8 north, 12 east
+  ttbran   => 10 // tutorial npcs in both bg/bg2ee GAMs
+  ttimoen  => 10
+  ttjahier =>  6 // yes, in-game filename is misspelled
+  ttminsc  =>  6
+  ttxan    => 10  
+END 
+
+ACTION_IF game_is_bgee BEGIN
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_gam_npcs BEGIN // 0 south, 4 west, 8 north, 12 east
+    // default south (0) is fine: kivan, safana, tiax, shar-teel, viconia
+    alora    => 14
+    minsc    =>  2
+    dynahe   => 11
+    yeslic   =>  6
+    coran    => 15
+    ajanti   => 15
+    khalid   => 13
+    jaheir   => 13
+    garric   =>  1
+    faldor   =>  3
+    branwe   =>  2
+    quayle   => 14
+    xan      =>  3
+    skie     =>  4
+    eldoth   => 10
+    xzar     =>  1
+    montar   =>  1
+    kagain   => 14
+    edwin    => 14
+    imoen1   => 12
+    obe      =>  1 // training party at candlekeep
+    cander   =>  1
+    mordai   =>  1
+    arkani   =>  1
+    deder    =>  1
+    osprey   =>  1    
+  END 
+  
+END ELSE BEGIN // bg2ee  
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_gam_npcs BEGIN // 0 south, 4 west, 8 north, 12 east
+    // existing is fine: jan (0), valygar (0), mazzy (2), cernd (14), imoen2 (2)
+    yoshi7   =>  3
+    jaheir7  =>  2
+    minsc7   =>  2
+    imoen10  => 14
+    aerie7   =>  1
+    nalia8   =>  2
+    anomen6  =>  2
+    korgan8  => 10
+    edwin7   => 14
+    keldor8  => 10
+    viconi8  => 14
+    haer10   => 13    
+  END 
+
+END   
+
+COPY_EXISTING ~baldur.gam~ ~override~
+  READ_LONG 0x30 npc_off
+  READ_LONG 0x34 npc_num
+  FOR (index = 0; index < npc_num; ++index) BEGIN
+    READ_ASCII (npc_off + 0x0c + (index * 0x160)) ~CREName~
+    PATCH_PHP_EACH cd_gam_npcs AS npc => orient BEGIN
+      PATCH_IF (~%CREName%~ STRING_COMPARE_CASE ~%npc%~ = 0) BEGIN
+        WRITE_LONG   (npc_off + 0x14 + (index * 0x160)) orient
+      END
+    END  
+  END
+  BUT_ONLY  

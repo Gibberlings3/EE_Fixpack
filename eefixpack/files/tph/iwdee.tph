@@ -21,7 +21,7 @@ COPY_EXISTING ~ui.menu~ ~override~
 BUT_ONLY
 
 /////                                                  \\\\\
-///// ids/2da/ini fixes                                \\\\\
+///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
