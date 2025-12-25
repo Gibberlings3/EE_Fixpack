@@ -1,0 +1,4 @@
+// prevents creatures with exactly 2 strength from being killed instantly by the strength drain effect, affects only BG2EE and IWDEE
+COPY_EXISTING ~sppr751.spl~ ~override~
+    LPF ALTER_EFFECT INT_VAR match_opcode = 318 match_parameter2 = 125 parameter1 = 3 END
+BUT_ONLY
