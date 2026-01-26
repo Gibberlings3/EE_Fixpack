@@ -1026,7 +1026,7 @@ COPY_EXISTING ~sppr720.spl~ ~override~ // earthquake: "creatures with 10 or more
 
 // evasion fixes - missing evasion check
 COPY_EXISTING ~sppr725d.spl~ ~override~ // aura o' flaming death
-  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 63 END 
+  LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 324 target = 2 parameter2 = 63 STR_VAR resource = "sppr725d" END 
 
 COPY_EXISTING ~spra302.spl~ ~override~ // Minor Spell Deflection [ranger]
   LPF DELETE_EFFECT INT_VAR header = 6 multi_match = 1 match_opcode = 233 END // dupe 233s ar level 11
@@ -1138,6 +1138,9 @@ COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
   BUT_ONLY
+
+// kaelyn, fixes bad str check
+INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
 
 // luke
 // 1) Grease should not interact with spell protections
