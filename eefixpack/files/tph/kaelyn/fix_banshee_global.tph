@@ -1,0 +1,3 @@
+COPY_EXISTING ~spwi913.spl~ ~override~
+    LPF DELETE_EFFECT INT_VAR check_headers = 0 match_opcode = 101 match_parameter2 = 55 END
+BUT_ONLY
