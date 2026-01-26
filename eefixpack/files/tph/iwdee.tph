@@ -1139,9 +1139,6 @@ COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
   BUT_ONLY
 
-// kaelyn, fixes bad str check
-INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
-
 // luke
 // 1) Grease should not interact with spell protections
 // 2) Grease (in particular "spwi101b.spl" and "spwi101c.spl") should apply the GREASE stat.

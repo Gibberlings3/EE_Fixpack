@@ -16,6 +16,9 @@ COPY_EXISTING ~spcl923.spl~ ~override~ // summon deva
   LPF ALTER_EFFECT INT_VAR silent = 1 duration = 78 END // iwdee (unused) has wrong base duration
   LPF CD_EXTEND-O-MATIC INT_VAR min_lev_alt = 9 step_size = 1 base_dur = 24 step_dur = 6 END // 4 rds + 1 rd/level
 
+// kaelyn, fixes bad str check
+INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
+
 // tbd, cam
 // expiry sound is way too early
 COPY_EXISTING ~spwish33.spl~ ~override~ // Intoxication - causes drunkenness - plays sound EFF_E06 - portrait icon 5

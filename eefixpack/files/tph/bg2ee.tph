@@ -1344,9 +1344,6 @@ COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
     LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END 
   END   
 
-// kaelyn, fixes bad str check
-INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
-
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects
 COPY_EXISTING ~spwish12.spl~ ~override~
