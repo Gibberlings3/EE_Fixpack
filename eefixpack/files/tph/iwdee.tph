@@ -21,7 +21,7 @@ COPY_EXISTING ~ui.menu~ ~override~
 BUT_ONLY
 
 /////                                                  \\\\\
-///// ids/2da/ini fixes                                \\\\\
+///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
@@ -1138,9 +1138,6 @@ COPY_EXISTING ~%WIZARD_GREAT_SHOUT%.spl~ ~override~ // spwi806 great shout
   LPF CLONE_EFFECT INT_VAR match_opcode =  142 match_duration = 12 opcode = 206 parameter1 = 0 parameter2 = 0 duration = 1 STR_VAR resource = EVAL ~%WIZARD_GREAT_SHOUT%~ insert = below END
   LPF ADD_SPELL_EFFECT INT_VAR insert_point = 0 opcode = 174 target = 1 power = 8 timing = 1 resist_dispel = 2 STR_VAR resource = ~#ff_m101~ END
   BUT_ONLY
-
-// kaelyn, fixes bad str check
-INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
 
 // luke
 // 1) Grease should not interact with spell protections

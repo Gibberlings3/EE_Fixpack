@@ -21,7 +21,7 @@ INCLUDE ~eefixpack/files/tph/a7/pst_ui_fix_str_help.tph~
 INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
 
 /////                                                  \\\\\
-///// ids/2da/ini fixes                                \\\\\
+///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types

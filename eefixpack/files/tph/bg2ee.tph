@@ -17,9 +17,10 @@ INCLUDE ~eefixpack/files/tph/a7/bg2_ui_logo_fix.tph~  // updating game logo when
 INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
 
 /////                                                  \\\\\
-///// ids/2da/ini fixes                                \\\\\
+///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
+INCLUDE ~eefixpack/files/tph/gam_npcs.tph~ // corrects spawn orientation for GAM NPCs
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
@@ -1342,9 +1343,6 @@ COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
   FOR (index = abil_num ; index > 1 ; --index) BEGIN // skip header 0 since it's correct
     LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END 
   END   
-
-// kaelyn, fixes bad str check
-INCLUDE ~eefixpack/files/tph/kaelyn/ethereal_retribution_bad_check.tph~
 
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects
