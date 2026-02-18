@@ -1238,6 +1238,12 @@ WITH_SCOPE BEGIN
   END
 END
 
+// kaelyn, fix for Balduran's Plate 
+// having a clearly unintended minimum level 6 for its benefits to apply
+COPY_EXISTING ~wa2plat.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR match_dicesize = 6 dicesize = 0 END
+
+
 /////                                                  \\\\\
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
