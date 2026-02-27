@@ -53,7 +53,7 @@ DEFINE_ACTION_FUNCTION make_generic_items BEGIN
 			OUTER_SET name_strref=$generic_items("%resref%" name_strref)
 			OUTER_SET desc_strref=$generic_items("%resref%" desc_strref)
 			OUTER_SPRINT copy_from $generic_items("%resref%" copy_from)
-			WITH_TRA "%MOD_FOLDER%/languages/%EE_LANGUAGE%/copy_from_%source_root%.tra" BEGIN
+			WITH_TRA "%MOD_FOLDER%/languages/en_us/copy_from_%source_root%.tra" "%MOD_FOLDER%/languages/%EE_LANGUAGE%/copy_from_%source_root%.tra" BEGIN
 				COPY_EXISTING "%copy_from%.itm" "override/%resref%.itm"
 					SAY 0xc (AT name_strref)
 					SAY 0x54 (AT desc_strref)

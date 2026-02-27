@@ -88,7 +88,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee.tph~))) @4
 LABEL ~cd_eefp_core_fixes~
 
-WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+WITH_TRA ~eefixpack/languages/en_us/%game%.tra~ ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
   INCLUDE ~eefixpack/files/tph/%game%.tph~
 END  
 
@@ -108,8 +108,8 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
                    ((GAME_IS ~pstee~) AND (FILE_EXISTS ~eefixpack/files/tph/pstee_beta.tph~))) @4
 LABEL ~cd_eefp_beta_core_fixes~
 
-// none of these files have been created yet, as the initial releases will be betass
-WITH_TRA ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN 
+// none of these files have been created yet, as the initial releases will be betas
+WITH_TRA ~eefixpack/languages/en_us/%game%.tra~ ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
   INCLUDE ~eefixpack/files/tph/%game%_beta.tph~
 END  
 
