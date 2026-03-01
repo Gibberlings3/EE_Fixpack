@@ -1004,6 +1004,12 @@ INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain
 
 ACTION_IF game_includes_sod BEGIN
 
+  // fix (null} damage display bug by adding a 0% damage opcode (see also bdhamm02.itm, bdsw1h06.itm)
+  COPY_EXISTING ~bdarow02.itm~ ~override~ // Void-tipped Arrow +3: has 0d0+0 type 2 ability, has damage but not as first effect
+                ~bdbull02.itm~ ~override~ // Bullet of Darkness +3: has 0d0+0 type 2 ability, has damage but not as first effect
+    LPF CLONE_EFFECT INT_VAR header_type = 2 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
+    BUT_ONLY 
+
   COPY_EXISTING ~bdax1h04.itm~ ~override~ // Throwing Axe +1
     LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 7 END // change projectile to not be blocked by pfnm
 
@@ -1024,6 +1030,12 @@ ACTION_IF game_includes_sod BEGIN
   COPY_EXISTING ~bddagg04.itm~ ~override~ // Throwing Dagger +1
                 ~bddagg07.itm~ ~override~ // Throwing Dagger +1
     LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 30 END // change projectile to not be blocked by pfnm
+
+  // fix (null} damage display bug by adding a 0% damage opcode (see also bdarow02.itm, bdbull02.itm)
+  COPY_EXISTING ~bdhamm02.itm~ ~override~ // Voidhammer +3: has 0d0+0 type 1 ability, has damage but not as first effect
+                ~bdsw1h06.itm~ ~override~ // Voidsword +3: has 0d0+0 type 1 ability, has damage but not as first effect
+    LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
+    BUT_ONLY 
 
   // poison resistance blocking *gulp*
   COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
