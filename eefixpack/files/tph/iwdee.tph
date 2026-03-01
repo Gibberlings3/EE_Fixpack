@@ -14,6 +14,7 @@ INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack 
 
 INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
 INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
+INCLUDE ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ // fixes "(null)" damage display bug on inventory screen
 
 COPY_EXISTING ~ui.menu~ ~override~
   // fix scrollbar position of kit selection list in the character creation menu

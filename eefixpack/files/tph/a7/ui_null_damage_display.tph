@@ -1,0 +1,26 @@
+// [bg, sod, bg2, iwd] Fixes "(null)" damage display bug on inventory screen for weapons that only deal damage through effects
+// https://www.gibberlings3.net/forums/topic/41055-display-issue-in-inventory-screen-with-weapons-that-dont-deal-physical-damage
+
+<<<<<<<< .../inlined/eefixpack/getInventoryDamageDetails
+function getInventoryDamageDetails()
+	local str = ""
+	if characters[id].damage.detailsOffhand == nil or characters[id].damage.detailsOffhand == "" then
+		str = characters[id].damage.details
+	else
+		str = characters[id].damage.details.."\n\n"..characters[id].damage.detailsOffhand
+	end
+	local dice = Infinity_FetchString(0xf00000 + 564)
+	str = string.gsub(str, "%(null%)", "0" .. dice .. "0")
+	return str
+end
+>>>>>>>>
+COPY_EXISTING ~ui.menu~ ~override~
+  SET pos1 = INDEX_BUFFER(~function[ %TAB%%WNL%]+getInventoryDamageDetails()~)
+  PATCH_IF (pos1 >= 0) BEGIN
+    SET pos2 = INDEX_BUFFER(~function ~ pos1 + 1)
+    PATCH_IF (pos2 > pos1) BEGIN
+      DELETE_BYTES pos1 (pos2 - pos1)
+      INSERT_FILE pos1 ~.../inlined/eefixpack/getInventoryDamageDetails~
+    END
+  END
+BUT_ONLY
