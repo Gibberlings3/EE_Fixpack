@@ -1,0 +1,83 @@
+// Radiant Heart interior map versions should be consistent (AR0903 and OH5000)
+// https://www.gibberlings3.net/forums/topic/41076-bg2ee-cosmetic-tiles-in-the-oh5000-tileset-should-be-rearranged
+
+// Fixes:
+// - AR0903.TIS is used for OH5000 to make lighting conditions consistent across both maps
+// - fixes tileset layout in OH5000.WED overlay structure
+// - OH5000.WED file is also used for AR0903 to fix issues with wallpolygons in original AR0903.WED
+
+// fixing tileset layout
+COPY_EXISTING ~oh5000.wed~ ~override~
+  READ_LONG 0x10 ofs_overlays
+  READ_LONG (ofs_overlays + 0x10) ofs_tilemaps
+
+  // sanity check: is overlay tilemap already in correct sorting order (starting at index=0)?
+  SET patched = (SHORT_AT ofs_tilemaps) == 0
+
+  PATCH_IF (NOT patched) BEGIN
+    PATCH_PRINT ~Patching %SOURCE_FILE%...~
+
+    // reordering overlay #0 tile indices
+    READ_SHORT ofs_overlays ovl_width
+    READ_SHORT (ofs_overlays + 0x02) ovl_height
+    SET num_tilemaps = ovl_width * ovl_height
+    FOR (i = 0; i < num_tilemaps; ++i) BEGIN
+      SET ofs_tm = ofs_tilemaps + (i * 10)
+      WRITE_SHORT ofs_tm i
+    END
+
+    // adding a single secondary (door) tile index to tilemap #563
+    SET ofs_tm = ofs_tilemaps + (563 * 10)
+    WRITE_SHORT (ofs_tm + 0x04) 1100  // secondary tile index
+
+    // patching door
+    READ_LONG 0x0c num_doors
+    READ_LONG 0x14 ofs_header2
+    READ_LONG 0x18 ofs_doors
+    READ_LONG 0x1c ofs_door_lookups
+
+    // adding tilemap index #563 to door #3
+    SET ofs_door = ofs_doors + (3 * 26)
+    READ_SHORT (ofs_door + 0x0a) idx_lookup
+    READ_SHORT (ofs_door + 0x0c) num_tilemaps
+    SET ofs_lookup = ofs_door_lookups + (idx_lookup + num_tilemaps) * 2
+    INSERT_BYTES ofs_lookup 2
+    WRITE_SHORT ofs_lookup 563
+    WRITE_SHORT (ofs_door + 0x0c) (num_tilemaps + 1)
+
+    // adjusting lookup indices and polygon offsets in door entries
+    FOR (i = 0; i < num_doors; ++i) BEGIN
+      SET ofs_door = ofs_doors + (i * 26)
+      WRITE_SHORT (ofs_door + 0x0a) (THIS > idx_lookup ? THIS + 1 : THIS)
+      WRITE_LONG (ofs_door + 0x12) (THIS > ofs_door_lookups ? THIS + 2 : THIS)
+      WRITE_LONG (ofs_door + 0x16) (THIS > ofs_door_lookups ? THIS + 2 : THIS)
+    END
+
+    // adjusting offsets in overlay entries
+    READ_LONG 0x08 num_overlays
+    FOR (i = 0; i < num_overlays; ++i) BEGIN
+      SET ofs_overlay = ofs_overlays + (i * 24)
+      WRITE_LONG (ofs_overlay + 0x10) (THIS > ofs_door_lookups ? THIS + 2 : THIS)
+      WRITE_LONG (ofs_overlay + 0x14) (THIS > ofs_door_lookups ? THIS + 2 : THIS)
+    END
+
+    // adjusting secondary header offsets
+    PATCH_FOR_EACH ofs IN 4 8 12 16 BEGIN
+      SET cur_ofs = ofs_header2 + ofs
+      WRITE_LONG cur_ofs (THIS > ofs_door_lookups) ? THIS + 2 : THIS
+    END
+  END ELSE BEGIN
+    PATCH_PRINT ~Patching not needed. Skipping %SOURCE_FILE%...~
+  END
+BUT_ONLY
+
+ACTION_IF (NOT patched) BEGIN
+  // assigning AR0903.TIS to OH5000
+  COPY_EXISTING ~ar0903.tis~ ~override/oh5000.tis~
+  COPY_EXISTING_REGEXP ~^a0903\([0-9][0-9]\)\.pvrz$~ ~override/o5000\1.pvrz~
+
+  // assigning OH5000.WED to AR0903
+  COPY_EXISTING ~oh5000.wed~ ~override/ar0903.wed~
+    READ_LONG 0x10 ofs_overlay
+    WRITE_ASCII (ofs_overlay + 0x04) ~AR0903~ (8)
+END
