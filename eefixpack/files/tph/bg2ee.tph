@@ -553,9 +553,10 @@ COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
   BUT_ONLY
 
 // completing the norh flip, pt 1 (see cdhorse1.cre, cdhorse2.cre)
-  COPY_EXISTING ~ar0903.are~ ~override~
-    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
-    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
+COPY_EXISTING ~ar0903.are~ ~override~
+              ~oh5000.are~ ~override~
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
 
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
