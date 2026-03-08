@@ -233,6 +233,15 @@ END
 
 LAM "SPELL_IDS" // relaunch so as to take into account the BG2 entries
 
+// luke: fix incorrect signature for "AttackedBy()" script/dialog trigger
+WITH_SCOPE BEGIN
+  COPY "eefixpack\files\ids\attackby.ids" "override"
+  //
+  COPY_EXISTING "trigger.ids" "override"
+    REPLACE_TEXTUALLY CASE_INSENSITIVE EVALUATE_REGEXP "0x0002[ %TAB%]+AttackedBy(O:Object\*,I:Style\*AStyles)" "0x0002 AttackedBy(O:Object*,I:Slot*ATTACKBY)"
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
