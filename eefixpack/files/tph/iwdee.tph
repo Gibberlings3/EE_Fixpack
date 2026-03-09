@@ -130,6 +130,17 @@ COPY_EXISTING ~tracking.2da~ ~override~
  // tbd, graion: more consistent op5 setup, see header
 INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
 
+// luke: fix dupe entry in enginest.2da
+WITH_SCOPE BEGIN
+  OUTER_TEXT_SPRINT "regexp" "[ %TAB%]*STRREF_FEEDBACK_SNAREFAILED_ENEMIES[ %TAB%]+31891[ %TAB%]*"
+  //
+  COPY_EXISTING ~enginest.2da~ ~override~
+    REPLACE_TEXTUALLY CASE_INSENSITIVE EVALUATE_REGEXP ~^\(%regexp%\)%WNL%%regexp%~ ~\1%WNL%STRREF_FEEDBACK_SNAREFAILED 34667%WNL%~ // Set snare failed.
+    // formatting
+    PRETTY_PRINT_2DA
+  BUT_ONLY_IF_IT_CHANGES
+END
+
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
