@@ -1,7 +1,7 @@
 // generated from docs/eefixpack_arrays.ods > [game] creature tab
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
 
-  //file, race, class, general, sex, gender, animation, dv, kit => file // notes  anomen10, null, null, null, null, null, null, null, 0x40000000 => anomen10 // tbd, cam (from jmerry): joinable NPCs should have proper trueclass kit values
+  //file, race, class, general, sex, gender, animation, dv, kit => file // notes
   amcow, 182, null, null, null, null, null, null, null => amcow // IDS sync race updates: cow
   amminot, 171, null, null, null, null, null, null, null => amminot // IDS sync race updates: minotaur
   anast, 125, 163, 4, null, null, null, null, null => anast // valen is a vampire
@@ -123,9 +123,13 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   sarprovf, 125, 163, 4, null, null, null, null, null => sarprovf // saradush courtesans are vampires
   sarprovm, 125, 163, 4, null, null, null, null, null => sarprovm // saradush courtesans are vampires
   seagul, 170, null, null, null, null, null, null, null => seagul // IDS sync race updates:seagull
-  shadra01, null, 191, 255, null, null, null, null, null => shadra01 // change Thaxll'ssillyia’s class from cleric to shadow_dragon for casting; general to monster
+  shadra01, null, 191, 255, null, null, null, null, null => shadra01 // change Thaxll'ssillyia's class from cleric to shadow_dragon for casting; general to monster
   sickrat, 182, null, null, null, null, null, null, null => sickrat // IDS sync race updates: diseased rat
+  sirine01, 120, 1, null, null, null, null, null, null => sirine01 // angel: (probably unused) sirine general and race correction
   slandor, 171, null, null, null, null, null, null, null => slandor // IDS sync race updates: andorian
+  skelsu01, null, 115, null, null, null, null, null, null => skelsu01 // Angel: inconsistent race, all other skeletons are race skeleton
+  skelsu07, null, 115, null, null, null, null, null, null => skelsu07 // Angel: inconsistent race, all other skeletons are race skeleton
+  skelsu11, null, 115, null, null, null, null, null, null => skelsu11 // Angel: inconsistent race, all other skeletons are race skeleton
   smound01, 176, 255, null, null, 0, null, null, null => smound01 // tbd, cam: shambling mound consistency
   smoundsu, 176, 255, null, null, null, null, null, null => smoundsu // tbd, cam: shambling mound consistency
   snake01, 183, null, null, null, null, null, null, null => snake01 // IDS sync race updates: snake
