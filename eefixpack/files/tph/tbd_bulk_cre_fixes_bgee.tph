@@ -48,6 +48,10 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   sirine_a, null, null, 1, null, null, null, null, null => sirine_a // Sirine general to humanoid
   sirine_b, null, null, 1, null, null, null, null, null => sirine_b // Sirine general to humanoid
   sirine02, null, null, 1, null, null, null, null, null => sirine02 // Sirine general to humanoid
+  skelwasu, 115, null, null, null, null, null, null, null => skelwasu // Summoned skeleton warrior race to skeleton (was human)
+  skelsu01, 115, null, null, null, null, null, null, null => skelsu01 // Summoned skeleton warrior race to skeleton (was human)
+  skelsu07, 115, null, null, null, null, null, null, null => skelsu07 // Summoned skeleton warrior race to skeleton (was human)
+  skelsu11, 115, null, null, null, null, null, null, null => skelsu11 // Summoned skeleton warrior race to skeleton (was human)
   smoundsu, 176, 255, 7, null, null, null, null, null => smoundsu // tbd, cam: shambling mound consistency
   telicesa, null, 216, null, null, null, null, null, null => telicesa // from IDS sync
   tellan, null, 1, null, null, null, null, null, null => tellan // tbd, cam (from scs): Tellan THIEF > MAGE
