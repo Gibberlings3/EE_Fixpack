@@ -128,7 +128,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   slandor, 171, null, null, null, null, null, null, null => slandor // IDS sync race updates: andorian
   smound01, 176, 255, null, null, 0, null, null, null => smound01 // tbd, cam: shambling mound consistency
   smoundsu, 176, 255, null, null, null, null, null, null => smoundsu // tbd, cam: shambling mound consistency
-  sirine01, null, null, 1, 120, null, null, null, null => sirine01 // Sirine (unused), general to humanoid, race to fairy (was basilisk)
+  sirine01, 120, null, 1, null, null, null, null, null => sirine01 // Sirine (unused), general to humanoid, race to fairy (was basilisk)
   snake01, 183, null, null, null, null, null, null, null => snake01 // IDS sync race updates: snake
   snakeb01, 183, null, null, null, null, null, null, null => snakeb01 // IDS sync race updates: boalisk
   snakeg01, 183, null, null, null, null, null, null, null => snakeg01 // IDS sync race updates: giant snake
