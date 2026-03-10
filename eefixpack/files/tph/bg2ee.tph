@@ -556,9 +556,10 @@ COPY_EXISTING ~ar0800.are~ ~override~ // Graveyard District, Stein
   BUT_ONLY
 
 // completing the norh flip, pt 1 (see cdhorse1.cre, cdhorse2.cre)
-  COPY_EXISTING ~ar0903.are~ ~override~
-    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
-    LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
+COPY_EXISTING ~ar0903.are~ ~override~
+              ~oh5000.are~ ~override~
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Atta Girl" cre_file = cdhorse1 END
+  LPF ALTER_AREA_ACTOR STR_VAR actor_name = "Angel"     cre_file = cdhorse2 END
 
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
@@ -768,6 +769,12 @@ COPY_EXISTING ~basigaze.itm~ ~override~
               ~basilg1.itm~  ~override~
               ~basill1.itm~  ~override~
   LPF ALTER_EFFECT INT_VAR savingthrow = BIT4 END // save vs. spell > petrification
+
+// fix (null} damage display bug by adding a 0% damage opcode
+COPY_EXISTING ~bdhamm02.itm~ ~override~ // Voidhammer +3: has 0d0+0 type 1 ability, has damage but not as first effect
+              ~bdsw1h06.itm~ ~override~ // Voidsword +3: has 0d0+0 type 1 ability, has damage but not as first effect
+  LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
+  BUT_ONLY 
 
 COPY_EXISTING ~blun26.itm~ ~override~ // club of detonation +3 (see blun26fb.spl, blun27fb.spl)
               ~blun27.itm~ ~override~ // club of detonation +5

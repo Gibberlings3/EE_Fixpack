@@ -86,6 +86,7 @@ platform:
 version history:
   unknown
   9/12/25 - added better documentation, better feedback
+  2/27/26: Swapping from signature check to SOURCE_EXT
 
 */
 
@@ -188,14 +189,13 @@ DEFINE_PATCH_FUNCTION ALTER_HEADER
           icon            = "SAME"
 BEGIN
 
-  READ_ASCII 0x00 sig (3)
   SET abil_length = 0
   SET proceed = 0
   SET alter = 0
-  PATCH_IF ("%sig%" STRING_COMPARE_CASE "ITM" = 0) BEGIN
+  PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "ITM" = 0) BEGIN
     SET abil_length = 0x38
   END ELSE
-  PATCH_IF ("%sig%" STRING_COMPARE_CASE "SPL" = 0) BEGIN
+  PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "SPL" = 0) BEGIN
     SET abil_length = 0x28
   END
   PATCH_IF abil_length = 0 BEGIN

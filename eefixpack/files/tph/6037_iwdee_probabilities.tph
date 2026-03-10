@@ -23,9 +23,10 @@ COPY_EXISTING ~spcl132.spl~  ~override~ // leftover spell failure icon (already 
   LPF DELETE_EFFECT INT_VAR match_probability1 = 0 match_probability2 = 0 END 
   BUT_ONLY 
   
-// 1% chance for bonus 1d4 cold damage
+// 1% chance for bonus 1d4 cold damage - keep, but change to 0% to prevent display bug in
+// https://www.gibberlings3.net/forums/topic/41055-display-issue-in-inventory-screen-with-weapons-that-dont-deal-physical-damage/
 COPY_EXISTING ~ctouch.itm~ ~override~
-  LPF DELETE_EFFECT INT_VAR check_globals = 0 match_opcode = 12 END // damage applied in spwi117b; still has 1% chance to fire
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 probability1 = 100 probability2 = 100 END // damage applied in spwi117b; still has 1% chance to fire
   BUT_ONLY
 
 // dazer has wrong percentage on one effect, so do manually

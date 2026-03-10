@@ -39,6 +39,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   elwatg01, null, 219, null, null, null, null, null, null => elwatg01 // tbd, cam (from MiH): water elementals should use ELEMENTAL_WATER as their class
   famfer, 182, null, null, null, null, null, null, null => famfer // IDS sync race updates: ferret
   famfer25, 182, null, null, null, null, null, null, null => famfer25 // IDS sync race updates: ferret
+  firkra01, null, null, 1, null, null, null, null, null => firkra01 // Firkraag in human form; change general to humanoid
   fsgobl, 161, null, null, null, null, null, null, null => fsgobl // goblin
   fshorde1, 161, null, null, null, null, null, null, null => fshorde1 // goblin
   fshorde2, 161, null, null, null, null, null, null, null => fshorde2 // goblin
@@ -122,7 +123,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_bulk_changes_cre BEGIN
   sarprovf, 125, 163, 4, null, null, null, null, null => sarprovf // saradush courtesans are vampires
   sarprovm, 125, 163, 4, null, null, null, null, null => sarprovm // saradush courtesans are vampires
   seagul, 170, null, null, null, null, null, null, null => seagul // IDS sync race updates:seagull
-  shadra01, null, 191, null, null, null, null, null, null => shadra01 // change Thaxll'ssillyia’s class from cleric to shadow_dragon for casting
+  shadra01, null, 191, 255, null, null, null, null, null => shadra01 // change Thaxll'ssillyia’s class from cleric to shadow_dragon for casting; general to monster
   sickrat, 182, null, null, null, null, null, null, null => sickrat // IDS sync race updates: diseased rat
   slandor, 171, null, null, null, null, null, null, null => slandor // IDS sync race updates: andorian
   smound01, 176, 255, null, null, 0, null, null, null => smound01 // tbd, cam: shambling mound consistency
