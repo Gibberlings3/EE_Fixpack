@@ -376,6 +376,22 @@ COPY_EXISTING ~cut100a.bcs~ ~override~
   END
   BUT_ONLY
 
+// wk dead/wild magic area effects shouldn't follow to next area; see also cdnowild.spl
+// ar3004/8 are wild, ar3005/9 are dead; they route through the referenced tpXX scripts to these cutscenes to facilitate the actual area transfer
+COPY_EXISTING ~cut202c.bcs~ ~override~ // [tp3003b/tp3003c] from ar3005, wild magic zone; from ar3008, dead magic zone; from ar3009, wild magic zone
+              ~cut202d.bcs~ ~override~ // [tp3004] from ar3008, dead magic zone; from ar3009, wild magic zone
+              ~cut202e.bcs~ ~override~ // [tp3005] from ar3005, wild magic zone; from ar3009, wild magic zone
+              ~cut202f.bcs~ ~override~ // [tp3006] from ar3004, dead magic zone; from ar3008, dead magic zone; from ar3009, wild magic zone
+              ~cut202g.bcs~ ~override~ // [tp3007] from ar3005, wild magic zone
+              ~cut202h.bcs~ ~override~ // [tp3008] from ar3004, dead magic zone
+              ~cut202i.bcs~ ~override~ // [tp3009] from ar3004, dead magic zone
+              ~cut202j.bcs~ ~override~ // [tp3010] from ar3005, wild magic zone
+              ~cut202l.bcs~ ~override~ // [tp3012] from ar3004, dead magic zone; from ar3008, dead magic zone
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~CutSceneId(Player1)~ ~\0 ApplySpellRES("cdnowild",Player1)~
+  END
+  BUT_ONLY
+
 // bodari's subcontract takes multiple days, have party rested
 COPY_EXISTING ~cut244b.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
@@ -1305,6 +1321,11 @@ OUTER_FOR (index = 1 ; index < 6 ; ++index) BEGIN // for bhaal3b (unused, fixed 
   COPY_EXISTING ~bdpweapn.eff~ ~override/bh3b%index%.eff~
     WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8  
 END
+
+// wk dead/wild magic area effects shouldn't follow to next area; see also cut202X.bcs patches
+COPY ~eefixpack/files/spl/cdcure.spl~ ~override/cdnowild.spl~
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 4 timing = 1 STR_VAR resource = spin645 END // wild
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 321 target = 4 timing = 1 STR_VAR resource = spin646 END // dead
 
 // tbd, cam
 // Hexxat's ability is supposed to summon 1d4 creatures, does something wacky intstead
