@@ -2777,6 +2777,9 @@ And now Don is long gone.
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @10782 = ~There ye be, <CHARNAME>. If you haven't trained with Obe yet, then the door's wide open and all ye needs to do is march in. If you've already done yer training, then you should go and see Gorion. Yer father is anxious to see you.~
 
+// not keep the Sarevok waiting > not keep Sarevok waiting
+@10992 = ~It's about time you got out here, Prat! It is Prat, isn't it? I don't need to tell you that we must not keep Sarevok waiting! I trust you didn't have any trouble in there? He said that the monks fell for the ruse and that <CHARNAME> was locked up, so he took the surface route out of the keep instead of meeting you in the crypts. We really must get moving if we are to catch up with him!~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @11075 = ~[ELF FEMALE 5]~ [FELFF05]
 
@@ -5095,6 +5098,9 @@ Weight: 2~
 
 // peoples wastes > people's wastes - left remainder of grammatical errors, as they seem intentional
 @19776 = ~My people are rulers of the deeps. Where your people's wastes are sent, that where we thrive. Ratchild's tribe is stronger than all others. Ratchild's tribe trained to beat anyone. ANYONE. No one can stand up to Ratchild and tribe!~
+
+// naked as the day your were born > naked as the day you were born
+@19998 = ~Yep, and then old Khelben busts out in the biggest laugh you ever heard. Everyone in the keep was laughing like mad, except you, <CHARNAME>. You just stood there naked as the day your were born and wondering what the fuss was about. I tell you, those were the days.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @20632 = ~Flooding the Cloakwood Mine
