@@ -96,13 +96,16 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 
 COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit ability table, dark moon monk
      ~eefixpack/files/2da/clabmo03.2da~ ~override~ // tbd, cam: borked kit ability table, sun soul monk
-     ~eefixpack/files/2da/clabrn02.2da~ ~override~ // tbd, cam: borked kit ability table, archer
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
      ~eefixpack/files/eff/balth01b.eff~ ~override~ // tbd, cam: balthazar's solar stance! should have fire-damage melee hit effects that also drain hp
      ~eefixpack/files/vvc/spsetsh.vvc~  ~override~ // tbd, cam: fixing unblended fire animation for Hexxat's sunlight damage
      ~eefixpack/files/vvc/spnpoisi.vvc~ ~override~ // tbd, cam: fixing bad blend, placement for tear eye graphics in ar2900
      ~eefixpack/files/vvc/spccmdsi.vvc~ ~override~ // tbd, cam: fixing unblended portal animation for hexxat tomb cutscene in ar0800 (ohhopen)
      ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
+
+// archer table lacks last bumps; do as separate copy since files are slightly different
+OUTER_SPRINT tracking ~****      ~ OUTER_SPRINT archthac ~AP_SPCL122~
+COPY ~eefixpack/files/2da/clabrn02.2da~ ~override~ EVALUATE_BUFFER // tbd, cam: table isn't borked, but does lack the last +1 missile bump
 
 // cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), tanari, wyvern (plus shadow); monk paperdoll; 
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; broken noser uniform BAM; uncolored BAM for conjure lesser fire
