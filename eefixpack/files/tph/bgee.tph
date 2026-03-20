@@ -107,9 +107,10 @@ END
 COPY_EXISTING ~movidesc.2da~ ~override~ // and then make it pretty
   PRETTY_PRINT_2DA
 
-// imoen should only use one cre file, like other NPCs
+// effectively disable npclevel.2da - fixes branwen turning back into a statue, imoen's multiple cre files
 COPY_EXISTING ~npclevel.2da~ ~override~
-  REPLACE_TEXTUALLY ~Imoen2~ ~Imoen1~
+  REPLACE_TEXTUALLY ~\([ %TAB%]\)[A-Za-z]+[0-9]*\([ %TAB%%LNL%%MNL%%WNL%]\)~ ~\1****\2~ // include preceding space to avoid column 1
+  PRETTY_PRINT_2DA  
 
 // lock pick xp bonus wrong at level >= 16
 COPY_EXISTING ~xpbonus.2da~ ~override~
@@ -375,6 +376,13 @@ COPY_EXISTING ~ar2700.bcs~ ~override~
     REPLACE_TEXTUALLY ~Exists("\(Xzar\|Imoen\|Montaron\)")~ ~InMyArea("\1")~
   END
   BUT_ONLY
+
+// cleaning up branwen's de-petrification scripting
+COPY_EXISTING ~ar4900.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Global("Sprite_Is_DeadBranwen","GLOBAL",0)~ ~!GlobalGT("Sprite_Is_DeadBranwen","GLOBAL",0)~
+    REPLACE_TEXTUALLY ~ActionOverride("Branwen",SetName(9499))~ ~\0 SetGlobal("Sprite_Is_DeadBranwen","GLOBAL",0)~
+  END
 
 // tarom should not purge breakable items when updating his store (don't reset depreciation)
 COPY_EXISTING ~baldur.bcs~ ~override~
