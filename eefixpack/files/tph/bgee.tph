@@ -349,6 +349,7 @@ COMPILE ~eefixpack/files/d/bgee_tbd_nothing_to_say.d~ // nothing to say fixes fo
 
 INCLUDE ~eefixpack/files/tph/tbd_dopples_fixes.tph~ // tbd, cam (from k4thos/eet): gorion/teth/elminster dopples breaks if one is one-shot; also prevents disguised dopples from trying to shift if already dead
 INCLUDE ~eefixpack/files/tph/aldeth_dopple.tph~     // more dopple fixes, this time for aldeth's quest
+INCLUDE ~eefixpack/files/tph/ground_lightning.tph~  // certain projectiles from ground traps cause crashes
 
 ACTION_IF game_includes_sod BEGIN
   INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events

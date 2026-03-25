@@ -1,0 +1,32 @@
+// certain projectiles from ground traps cause crashes
+// https://www.gibberlings3.net/forums/topic/34892-code-code-fixes-aka-stuff-we-cant-fix/page/10/#findComment-358120
+COPY ~eefixpack/files/cre/cdgtlb.cre~ ~override/cdgtlbtr.cre~
+     ~eefixpack/files/cre/cdgtlb.cre~ ~override/cdgtlbwi.cre~
+  WRITE_ASCIIE 0x280 ~%DEST_RES%~ #32
+
+COMPILE ~eefixpack/files/baf/cdgtlb.baf~
+
+COPY_EXISTING ~gtlb.bcs~     ~override~
+              ~urntrap1.bcs~ ~override~
+              ~urntrap2.bcs~ ~override~
+              ~urntrap3.bcs~ ~override~
+              ~urntrap4.bcs~ ~override~
+              ~urntrap5.bcs~ ~override~
+              ~urntrap6.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~ForceSpell(\(\[PC\]\|LastTrigger\),TRAP_LIGHTNING_BOLT)~ 
+      ~CreateCreatureObject("cdgtlbtr",Myself,0,0,0) 
+      ActionOverride("cdgtlbtr",ReallyForceSpell(\1,TRAP_LIGHTNING_BOLT))
+      ActionOverride("cdgtlbtr",DestroySelf())~
+  END
+
+COPY_EXISTING ~trpblack.bcs~ ~override~
+              ~trpwhite.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~ForceSpell(\(Player[1-6]\),WIZARD_LIGHTNING_BOLT)~ 
+      ~CreateCreatureObject("cdgtlbwi",Myself,0,0,0) 
+      ActionOverride("cdgtlbwi",ReallyForceSpell(\1,WIZARD_LIGHTNING_BOLT))
+      ActionOverride("cdgtlbwi",DestroySelf())~
+  END
