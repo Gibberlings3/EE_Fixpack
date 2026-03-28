@@ -301,6 +301,9 @@ INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant ani
 // charmed dialogue fixes: https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
 INCLUDE ~eefixpack/files/tph/tbd_bgee_charm_dlg_fixes.tph~
 
+// fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/charged_items.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\

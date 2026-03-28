@@ -964,6 +964,7 @@ PRINT ~%debug%~
 
 // code for checking for over/undercharged items in areas, creatures, and stores
 // generalized solution to https://github.com/Gibberlings3/EE_Fixpack/issues/234
+
 COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   TO_LOWER SOURCE_RES
   SET charge1 = 0
@@ -1033,13 +1034,19 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.\([ac]re\|sto\)$~ ~override~
       SET check3 = $cd_itm_charge3("%item%")
       PATCH_IF report_over BEGIN 
         PATCH_IF charge1 > check1 BEGIN 
-          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 1%WNL%  LPF %function_name% INT_VAR charge1 = %check1% STR_VAR match_item = %item% END"
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 1%WNL%  LPF %function_name% INT_VAR charge1 = %check1% STR_VAR match_item = %item% END"
+          END  
         END   
         PATCH_IF charge2 > check2 BEGIN 
-          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 2%WNL%  LPF %function_name% INT_VAR charge2 = %check2% STR_VAR match_item = %item% END"
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 2%WNL%  LPF %function_name% INT_VAR charge2 = %check2% STR_VAR match_item = %item% END"
+          END  
         END   
         PATCH_IF charge3 > check3 BEGIN 
-          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 3%WNL%  LPF %function_name% INT_VAR charge3 = %check3% STR_VAR match_item = %item% END"
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 3%WNL%  LPF %function_name% INT_VAR charge3 = %check3% STR_VAR match_item = %item% END"
+          END  
         END
       END  
       PATCH_IF report_under BEGIN 
@@ -1058,9 +1065,3 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.\([ac]re\|sto\)$~ ~override~
   BUT_ONLY 
 
 PRINT ~%debug_msg%~
-      
-          
-                
-          
-    
-  

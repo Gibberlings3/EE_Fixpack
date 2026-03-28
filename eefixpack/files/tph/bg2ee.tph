@@ -157,6 +157,9 @@ INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~
 // potion of icedust doesn't work since it uses an enemy-only projectile for a buff
 INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
 
+// fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/charged_items.tph~
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -721,6 +724,18 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohnvgc.cre~   ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
+
+// corrupted item block for Fil and the other faerie dragons
+COPY_EXISTING ~ohdfaer.cre~  ~override~ // corrupted item block
+              ~ohdtmfil.cre~ ~override~
+  REMOVE_MEMORIZED_SPELL ~fammy~
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~212~ END // junk in lring slot
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~immcloud~ END // not a weapon
+  REPLACE_CRE_ITEM ~immcloud~ #0 #0 #0 ~NONE~ ~amulet~ // replace junk entry
+  ADD_CRE_ITEM ~s1-2~ #0 #0 #0 ~NONE~ ~weapon1~ EQUIP
+
+COPY_EXISTING ~ohdfaer.cre~  ~override~ // corrupted item block
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~ohdsums2~ END // only fil should have this item
 
 // tbd, cam
 // has all hallmarks of fear immunity except fear immunity itself

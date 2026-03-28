@@ -67,6 +67,9 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 // cumulative BAM fixes: merging multi-part area animations to eliminate issues
 COPY ~eefixpack/files/bam/copy/pstee~ ~override~
 
+// fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/charged_items.tph~
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
