@@ -641,9 +641,6 @@ END ELSE ACTION_IF game_is_iwdee BEGIN
     LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn28 END
     LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn05 END
     LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn02 END // overcharged potn02 in charge 3
-
-  COPY_EXISTING ~ldd_dl2.sto~ ~override~ // overcharged potn33 in charge 3
-                ~ldd_dl3.sto~ ~override~
     LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn33 END
 
   COPY_EXISTING ~ldd_nym.sto~ ~override~ // overcharged violin in charge 2
