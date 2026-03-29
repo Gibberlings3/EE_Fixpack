@@ -1,0 +1,106 @@
+/////                                                  \\\\\
+///// bgee                                             \\\\\
+/////                                                  \\\\\
+
+ACTION_IF game_is_bgee BEGIN 
+
+// creatures
+
+  COPY_EXISTING ~bdabis1d.cre~ ~override~ // sod file
+                ~bdabis2d.cre~ ~override~ // sod file
+                ~bdabis3d.cre~ ~override~ // sod file
+                ~bdcut57b.cre~ ~override~ // sod file
+                ~bddcor01.cre~ ~override~ // sod file
+                ~bdimpd.cre~   ~override~ // sod file
+                ~bdlemurd.cre~ ~override~ // sod file
+                ~bdlemure.cre~ ~override~ // sod file
+                ~bdpremat.cre~ ~override~ // sod file
+                ~bdthrix.cre~  ~override~ // sod file
+                ~dorn.cre~     ~override~
+                ~dorn2.cre~    ~override~
+                ~rasaad.cre~   ~override~
+                ~rasaad2.cre~  ~override~
+                ~rasaad6.cre~  ~override~
+    REMOVE_CRE_ITEM ~~
+    IF_EXISTS
+
+  COPY_EXISTING ~bparty1.cre~ ~override~ // missing _staf01
+    REMOVE_CRE_ITEM ~_staf01~
+
+/////                                                  \\\\\
+///// sod                                              \\\\\
+/////                                                  \\\\\
+  
+  ACTION_IF game_includes_sod BEGIN 
+
+// creatures
+
+    COPY_EXISTING ~bdbandam.cre~ ~override~ // missing 0
+                  ~bdbgobg1.cre~ ~override~ // missing 0
+                  ~bdbgobg3.cre~ ~override~ // missing 0
+                  ~bdgob01.cre~  ~override~ // missing 0
+                  ~bdgob02.cre~  ~override~ // missing 0
+                  ~bdgob07.cre~  ~override~ // missing 0
+                  ~bdgob08.cre~  ~override~ // missing 0
+                  ~bdgogh02.cre~ ~override~ // missing 0
+                  ~bdure10a.cre~ ~override~ // missing 0
+      REMOVE_CRE_ITEM ~0~
+
+    COPY_EXISTING ~bdbandff.cre~ ~override~ // missing bdsw1h16
+    COPY_EXISTING ~bdcarlin.cre~ ~override~ // missing bdsw1h16
+    COPY_EXISTING ~bdcrommu.cre~ ~override~ // missing bdsw1h16
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdsw1h16 item = sw1h20 END // has scimitar prof
+
+    COPY_EXISTING ~bdbandfm.cre~ ~override~ // missing bdsw1h10
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdsw1h10 item = sw1h20 END // has scimitar prof
+
+    COPY_EXISTING ~bdccarc1.cre~ ~override~ // missing unicael; - typo
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = ~unicael;~ item = ~unicael~ END
+
+    COPY_EXISTING ~bdcccae.cre~ ~override~ // missing bdhelmc2, bdchanc2, bdshldc2, bdsw1hc2 - copy of caelar, give her caelar's equipment
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdhelmc2 item = bdhelmca END
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdchanc2 item = bdchanca END
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdshldc2 item = bdshldca END
+      LPF ALTER_CREATURE_ITEM STR_VAR match_item = bdsw1hc2 item = bdsw1hca END
+
+    COPY_EXISTING ~bdwe1str.cre~ ~override~ // missing spawn
+                  ~bdwe2str.cre~ ~override~ // missing spawn
+      REMOVE_CRE_ITEM ~spawn~
+  
+  END
+  
+/////                                                  \\\\\
+///// bg2ee                                            \\\\\
+/////                                                  \\\\\
+  
+END ELSE ACTION_IF game_is_bg2ee BEGIN
+
+// areas
+
+  COPY_EXISTING ~oh7300.are~ ~override~ // missing
+    LPF ALTER_AREA_ITEM STR_VAR match_item = ~~ item = ~cdtemp~ END // laaaaaaaaaaaaaaazy
+    LPF DELETE_AREA_ITEM STR_VAR item_to_delete = ~cdtemp~ END 
+
+// creatures
+
+  COPY_EXISTING ~ohdterp.cre~ ~override~ // missing none
+    REMOVE_CRE_ITEM ~None~
+
+/////                                                  \\\\\
+///// iwdee                                            \\\\\
+/////                                                  \\\\\
+
+END ELSE BEGIN // iwdee
+    
+// creatures
+
+  COPY_EXISTING ~bdcutid.cre~ ~override~ // missing imoenhp1
+    LPF ALTER_CREATURE_ITEM STR_VAR match_item = imoenhp1 item = minhp1 END
+
+  COPY_EXISTING ~cutspy.cre~ ~override~ // missing imoenhp1
+    LPF ALTER_CREATURE_ITEM STR_VAR match_item = imoenhp1 item = minhp1 END
+
+  COPY_EXISTING ~cutspy2.cre~ ~override~ // missing imoenhp1
+    LPF ALTER_CREATURE_ITEM STR_VAR match_item = imoenhp1 item = minhp1 END
+
+END 

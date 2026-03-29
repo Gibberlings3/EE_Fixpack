@@ -157,8 +157,8 @@ INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~
 // potion of icedust doesn't work since it uses an enemy-only projectile for a buff
 INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
 
-// fix for overcharged items in areas/creatures/stores
-INCLUDE ~eefixpack/files/tph/charged_items.tph~
+INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\

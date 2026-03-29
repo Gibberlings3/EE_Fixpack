@@ -964,7 +964,6 @@ PRINT ~%debug%~
 
 // code for checking for over/undercharged items in areas, creatures, and stores
 // generalized solution to https://github.com/Gibberlings3/EE_Fixpack/issues/234
-
 COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   TO_LOWER SOURCE_RES
   SET charge1 = 0
@@ -996,10 +995,12 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
 OUTER_SET $cd_itm_charge1("misc07") = 999999 // prevent false positive reports for gold stacks
   
 OUTER_SPRINT debug_msg ~// debug results from charge scan~
-OUTER_SET report_missing = 0
+OUTER_SET report_missing = 1
 OUTER_SET report_under = 0
-OUTER_SET report_over = 1
-COPY_EXISTING_REGEXP GLOB ~^.+\.\([ac]re\|sto\)$~ ~override~
+OUTER_SET report_over = 0
+COPY_EXISTING_REGEXP GLOB ~^.+\.are$~ ~override~
+                          ~^.+\.cre$~ ~override~
+                          ~^.+\.sto$~ ~override~
   TO_LOWER SOURCE_FILE                          
   PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "are" = 0) BEGIN
     READ_SHORT 0x76 item_num ELSE 0
@@ -1017,13 +1018,15 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.\([ac]re\|sto\)$~ ~override~
     READ_LONG  0x38 item_num ELSE 0
     SPRINT function_name ALTER_STORE_ITEM
     SET length = 0x1c
+    READ_ASCII 0x04 sto_version (4)
+    PATCH_IF ("%sto_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN SET length = 0x58 END // pstee's item listings
   END
   FOR (index = 0 ; index < item_num ; ++index) BEGIN 
     READ_ASCII (item_off + 0x00 + (length * index)) item
     TO_LOWER item
     PATCH_IF !VARIABLE_IS_SET $cd_itm_charge1("%item%") BEGIN
       PATCH_IF report_missing BEGIN 
-        SPRINT debug_msg ~%debug_msg%%WNL%%SOURCE_FILE% references nonexistent item %item%~
+        SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // missing %item%%WNL%  LPF %function_name% STR_VAR match_item = %item% item = %item% END"
       END  
     END ELSE BEGIN 
       READ_SHORT (item_off + 0x0a + (length * index)) charge1
@@ -1063,5 +1066,5 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.\([ac]re\|sto\)$~ ~override~
     END
   END
   BUT_ONLY 
-
+  
 PRINT ~%debug_msg%~

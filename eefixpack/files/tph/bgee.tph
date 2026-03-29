@@ -301,8 +301,8 @@ INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant ani
 // charmed dialogue fixes: https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
 INCLUDE ~eefixpack/files/tph/tbd_bgee_charm_dlg_fixes.tph~
 
-// fix for overcharged items in areas/creatures/stores
-INCLUDE ~eefixpack/files/tph/charged_items.tph~
+INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -1025,6 +1025,9 @@ INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bol
 INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
 
 ACTION_IF game_includes_sod BEGIN
+      
+  COPY_EXISTING ~b3-24.itm~ ~override/b3-12.itm~ // needed for bdmimic
+    LPF ALTER_HEADER INT_VAR dicesize = 4 END 
 
   // fix (null} damage display bug by adding a 0% damage opcode (see also bdhamm02.itm, bdsw1h06.itm)
   COPY_EXISTING ~bdarow02.itm~ ~override~ // Void-tipped Arrow +3: has 0d0+0 type 2 ability, has damage but not as first effect

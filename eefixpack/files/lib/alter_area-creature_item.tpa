@@ -13,6 +13,9 @@ when using the area and creature variants.
 Since this was originally built for just creatures and items and already symlinked by
 multiple mods, the file name will not be updated.
 
+As of the 3/28/26 version, has full IWD2 support so the separate IWD2 version of these
+functions can be deprecated. 
+
 used:
   BG2 Fixpack, as bg2fixpack/lib/alter_area-creature_item.tpa [symbolic link]
   EE Fixpack, as eefixpack/files/lib/alter_area-creature_item.tpa [symbolic link]
@@ -24,6 +27,7 @@ version history:
   unk: creation
   4/2/25: added return values
   3/27/26: added support for store items
+  3/28/26: added universal support: added sto v1.1; are v9.1; cre v1.2, v2.2, v9.0
 
 */
 
@@ -46,8 +50,14 @@ DEFINE_PATCH_FUNCTION ALTER_AREA_ITEM
 
 BEGIN
 
-  READ_SHORT 0x76 item_num ELSE 0
-  READ_LONG  0x78 item_off ELSE 0
+  READ_ASCII 0x04 are_version (4) // thankfully item blocks are identical, just different offsets
+  PATCH_IF ("%are_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN // iwd2
+    READ_SHORT 0x86 item_num ELSE 0
+    READ_LONG  0x88 item_off ELSE 0
+  END ELSE BEGIN 
+    READ_SHORT 0x76 item_num ELSE 0
+    READ_LONG  0x78 item_off ELSE 0
+  END  
   LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
                                              flag_stolen flag_undroppable item_num item_off
                                      STR_VAR item match_item RET replaced_slot replaced_item END
@@ -73,8 +83,23 @@ DEFINE_PATCH_FUNCTION ALTER_CREATURE_ITEM
 
 BEGIN
 
-  READ_LONG  0x2bc item_off ELSE 0
-  READ_LONG  0x2c0 item_num ELSE 0
+
+  READ_ASCII 0x04 cre_version (4) // thankfully item blocks are identical, just different offsets
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V1.2" = 0) THEN BEGIN // pst
+    READ_LONG  0x360 item_off ELSE 0
+    READ_LONG  0x364 item_num ELSE 0
+  END ELSE   
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V2.2" = 0) THEN BEGIN // iwd2
+    READ_LONG  0x616 item_off ELSE 0
+    READ_LONG  0x61a item_num ELSE 0
+  END ELSE   
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V9.0" = 0) THEN BEGIN // iwd
+    READ_LONG  0x324 item_off ELSE 0
+    READ_LONG  0x328 item_num ELSE 0
+  END ELSE BEGIN // ee, bg, bg2
+    READ_LONG  0x2bc item_off ELSE 0
+    READ_LONG  0x2c0 item_num ELSE 0
+  END  
   LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
                                              flag_stolen flag_undroppable item_num item_off
                                      STR_VAR item match_item RET replaced_slot replaced_item END
@@ -104,8 +129,12 @@ BEGIN
 
   READ_LONG  0x34 item_off ELSE 0
   READ_LONG  0x38 item_num ELSE 0
+  // pst's sto format identical through 0x1c but then has extra space for triggers so just needs a custom length
+  SET length = 0x1c
+  READ_ASCII 0x04 sto_version (4)
+  PATCH_IF ("%sto_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN SET length = 0x58 END // pstee's item listings
   LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
-                                             flag_stolen flag_undroppable item_num item_off stock infinite length = 0x1c
+                                             flag_stolen flag_undroppable item_num item_off stock infinite length
                                      STR_VAR item match_item RET replaced_slot replaced_item END
 
 END
