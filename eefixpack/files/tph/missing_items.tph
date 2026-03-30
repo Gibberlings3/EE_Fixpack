@@ -24,7 +24,7 @@ ACTION_IF game_is_bgee BEGIN
     REMOVE_CRE_ITEM ~~
     IF_EXISTS
 
-  COPY_EXISTING ~bparty1.cre~ ~override~ // missing _staf01
+  COPY_EXISTING ~bparty01.cre~ ~override~ // missing _staf01
     REMOVE_CRE_ITEM ~_staf01~
 
 /////                                                  \\\\\
