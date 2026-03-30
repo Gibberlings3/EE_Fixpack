@@ -67,6 +67,9 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 // cumulative BAM fixes: merging multi-part area animations to eliminate issues
 COPY ~eefixpack/files/bam/copy/pstee~ ~override~
 
+INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+//INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
+
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
 /////                                                  \\\\\
@@ -129,6 +132,11 @@ COPY_EXISTING ~trias.cre~  ~override~
 /////                                                  \\\\\
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_pstee.tph~ // bulk general changes (nothing here yet)
+
+// berrog, burgher have references to imfear, which doesn't exist - from name, should provide immunity to fear
+COPY_EXISTING ~imdeath.itm~ ~override/imfear.itm~
+  LPF DELETE_EFFECT INT_VAR match_opcode = 7 END // remove color change
+  LPF ALTER_EFFECT INT_VAR match_opcode = 101 parameter2 = 24 END // immune to kill > immune to fear
 
 // multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
 COPY_EXISTING ~imdeath.itm~ ~override~

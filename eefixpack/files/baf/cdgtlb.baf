@@ -1,0 +1,14 @@
+IF
+  Global("cd_destroy","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("cd_destroy","LOCALS",1)
+    SetGlobalTimer("cd_destroy_timer","LOCALS",6)
+END
+
+IF
+  GlobalTimerExpired("cd_destroy_timer","LOCALS")
+THEN
+  RESPONSE #100
+    DestroySelf()
+END

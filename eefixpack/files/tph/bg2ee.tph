@@ -71,6 +71,11 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 COPY_EXISTING ~25stweap.2da~ ~override~
   REPLACE_TEXTUALLY ~[ %TAB%]ham07[ %TAB%]~ ~ hamm07 ~
   PRETTY_PRINT_2DA
+  
+// effectively disable npclevel.2da - fix really for bgee, but carrying it over for continuity
+COPY_EXISTING ~npclevel.2da~ ~override~
+  REPLACE_TEXTUALLY ~\([ %TAB%]\)[A-Za-z]+[0-9]*\([ %TAB%%LNL%%MNL%%WNL%]\)~ ~\1****\2~ // include preceding space to avoid column 1
+  PRETTY_PRINT_2DA  
 
 // tbd, cam
 // sync bgee/bg2ee spell.ids entries with extra sod spells
@@ -152,6 +157,9 @@ INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~
 // potion of icedust doesn't work since it uses an enemy-only projectile for a buff
 INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
 
+INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\
@@ -189,9 +197,10 @@ COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes 
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/temple.tph~ // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
-INCLUDE ~eefixpack/files/tph/hexxat_death.tph~ // better death scripting for hexxat
-INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
+INCLUDE ~eefixpack/files/tph/temple.tph~           // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
+INCLUDE ~eefixpack/files/tph/hexxat_death.tph~     // better death scripting for hexxat
+INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~         // fix random XP gains on NPC dual-classes and other events
+INCLUDE ~eefixpack/files/tph/ground_lightning.tph~ // certain projectiles from ground traps cause crashes
 
 // fix misspelled resref
 COPY_EXISTING ~cut85a.bcs~   ~override~
@@ -715,6 +724,18 @@ COPY_EXISTING ~ohbgit01.cre~ ~override~
               ~ohnvgc.cre~   ~override~
               ~ohrjassa.cre~ ~override~
   REPLACE_CRE_ITEM ~plat23~ #0 #0 #0 ~NONE~ ~ARMOR~ // replace plat19, the special 0-lore armor from wish with identical plate with lore
+
+// corrupted item block for Fil and the other faerie dragons
+COPY_EXISTING ~ohdfaer.cre~  ~override~ // corrupted item block
+              ~ohdtmfil.cre~ ~override~
+  REMOVE_MEMORIZED_SPELL ~fammy~
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~212~ END // junk in lring slot
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~immcloud~ END // not a weapon
+  REPLACE_CRE_ITEM ~immcloud~ #0 #0 #0 ~NONE~ ~amulet~ // replace junk entry
+  ADD_CRE_ITEM ~s1-2~ #0 #0 #0 ~NONE~ ~weapon1~ EQUIP
+
+COPY_EXISTING ~ohdfaer.cre~  ~override~ // corrupted item block
+  LPF DELETE_CRE_ITEM STR_VAR item_to_delete = ~ohdsums2~ END // only fil should have this item
 
 // tbd, cam
 // has all hallmarks of fear immunity except fear immunity itself

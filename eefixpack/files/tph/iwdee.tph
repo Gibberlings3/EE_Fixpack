@@ -189,6 +189,9 @@ INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~            // bgcs-3397, cam: r
 INCLUDE ~eefixpack/files/tph/tbd_extraplanar_tieflings.tph~ // tbd, cam: tieflings should not be included in effects that target 'outer' or 'extraplanars'
 INCLUDE ~eefixpack/files/tph/tbd_iwdee_chargen.tph~         // tbd, cam: very specific circumstances can crash if starting HoW game
 
+INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
+
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
 /////                                                  \\\\\

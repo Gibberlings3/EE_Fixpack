@@ -956,4 +956,115 @@ COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
   BUT_ONLY
   
 PRINT ~%debug%~
+
+
+
+
+
+
+// code for checking for over/undercharged items in areas, creatures, and stores
+// generalized solution to https://github.com/Gibberlings3/EE_Fixpack/issues/234
+COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+  TO_LOWER SOURCE_RES
+  SET charge1 = 0
+  SET charge2 = 0
+  SET charge3 = 0
+  READ_SHORT 0x38 stack
+  READ_LONG  0x64 abil_off
+  READ_SHORT 0x68 abil_num
+  PATCH_IF abil_num > 0 BEGIN 
+    READ_SHORT (abil_off + 0x22) charge1
+    PATCH_IF abil_num > 1 BEGIN 
+      READ_SHORT (abil_off + 0x5a) charge2
+      PATCH_IF (abil_num > 2) BEGIN 
+        READ_SHORT (abil_off + 0x92) charge3
+      END
+    END
+  END
+  PATCH_IF (stack > 1) BEGIN
+    SET $cd_itm_charge1("%SOURCE_RES%") = stack
+    SET $cd_itm_charge2("%SOURCE_RES%") = charge1
+    SET $cd_itm_charge3("%SOURCE_RES%") = charge2
+  END ELSE BEGIN   
+    SET $cd_itm_charge1("%SOURCE_RES%") = charge1
+    SET $cd_itm_charge2("%SOURCE_RES%") = charge2
+    SET $cd_itm_charge3("%SOURCE_RES%") = charge3
+  END  
+  BUT_ONLY
   
+OUTER_SET $cd_itm_charge1("misc07") = 999999 // prevent false positive reports for gold stacks
+  
+OUTER_SPRINT debug_msg ~// debug results from charge scan~
+OUTER_SET report_missing = 1
+OUTER_SET report_under = 0
+OUTER_SET report_over = 0
+COPY_EXISTING_REGEXP GLOB ~^.+\.are$~ ~override~
+                          ~^.+\.cre$~ ~override~
+                          ~^.+\.sto$~ ~override~
+  TO_LOWER SOURCE_FILE                          
+  PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "are" = 0) BEGIN
+    READ_SHORT 0x76 item_num ELSE 0
+    READ_LONG  0x78 item_off ELSE 0
+    SET length = 0x14
+    SPRINT function_name ALTER_AREA_ITEM
+  END ELSE   
+  PATCH_IF ("%SOURCE_EXT%" STRING_COMPARE_CASE "cre" = 0) BEGIN
+    READ_LONG  0x2bc item_off ELSE 0
+    READ_LONG  0x2c0 item_num ELSE 0
+    SPRINT function_name ALTER_CREATURE_ITEM
+    SET length = 0x14
+  END ELSE BEGIN // store  
+    READ_LONG  0x34 item_off ELSE 0
+    READ_LONG  0x38 item_num ELSE 0
+    SPRINT function_name ALTER_STORE_ITEM
+    SET length = 0x1c
+    READ_ASCII 0x04 sto_version (4)
+    PATCH_IF ("%sto_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN SET length = 0x58 END // pstee's item listings
+  END
+  FOR (index = 0 ; index < item_num ; ++index) BEGIN 
+    READ_ASCII (item_off + 0x00 + (length * index)) item
+    TO_LOWER item
+    PATCH_IF !VARIABLE_IS_SET $cd_itm_charge1("%item%") BEGIN
+      PATCH_IF report_missing BEGIN 
+        SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // missing %item%%WNL%  LPF %function_name% STR_VAR match_item = %item% item = %item% END"
+      END  
+    END ELSE BEGIN 
+      READ_SHORT (item_off + 0x0a + (length * index)) charge1
+      READ_SHORT (item_off + 0x0c + (length * index)) charge2
+      READ_SHORT (item_off + 0x0e + (length * index)) charge3
+      SET check1 = $cd_itm_charge1("%item%") // unnecessary, but allows them to be used in debug prints
+      SET check2 = $cd_itm_charge2("%item%")
+      SET check3 = $cd_itm_charge3("%item%")
+      PATCH_IF report_over BEGIN 
+        PATCH_IF charge1 > check1 BEGIN 
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 1%WNL%  LPF %function_name% INT_VAR charge1 = %check1% STR_VAR match_item = %item% END"
+          END  
+        END   
+        PATCH_IF charge2 > check2 BEGIN 
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 2%WNL%  LPF %function_name% INT_VAR charge2 = %check2% STR_VAR match_item = %item% END"
+          END  
+        END   
+        PATCH_IF charge3 > check3 BEGIN 
+          PATCH_IF NOT ((charge1 = 1) AND (check1 = 0)) BEGIN 
+            SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // overcharged %item% in charge 3%WNL%  LPF %function_name% INT_VAR charge3 = %check3% STR_VAR match_item = %item% END"
+          END  
+        END
+      END  
+      PATCH_IF report_under BEGIN 
+        PATCH_IF charge1 < check1 BEGIN 
+          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // undercharged %item% in charge 1%WNL%  LPF %function_name% INT_VAR charge1 = %check1% STR_VAR match_item = %item% END"
+        END   
+        PATCH_IF charge2 < check2 BEGIN 
+          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // undercharged %item% in charge 2%WNL%  LPF %function_name% INT_VAR charge2 = %check2% STR_VAR match_item = %item% END"
+        END   
+        PATCH_IF charge3 < check3 BEGIN 
+          SPRINT debug_msg "%debug_msg%%WNL%%WNL%COPY_EXISTING ~%SOURCE_FILE%~ ~override~ // undercharged %item% in charge 3%WNL%  LPF %function_name% INT_VAR charge3 = %check3% STR_VAR match_item = %item% END"
+        END
+      END  
+    END
+  END
+  BUT_ONLY 
+  
+PRINT ~%debug_msg%~

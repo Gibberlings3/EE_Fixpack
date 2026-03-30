@@ -1,13 +1,24 @@
 /////                                                  \\\\\
-///// ALTER_AREA/CREATURE_ITEM                         \\\\\
+///// ALTER_AREA/CREATURE/STORE_ITEM                   \\\\\
 /////                                                  \\\\\
 
 /*
 
-alter_creature and alter_area just feed into a common macro that does the work
+Since the format of items in areas and creatures are identical, and stores pretty close,
+I've created three functions to alter basic information and then feed it into a larger
+function that actually does the work. ALTER_STORE_ITEM doesn't do anything that WeiDU's
+built-in ADD_STO_ITEM can already do, but I had the code. Stock/infinite get discarded 
+when using the area and creature variants.
+
+Since this was originally built for just creatures and items and already symlinked by
+multiple mods, the file name will not be updated.
+
+As of the 3/28/26 version, has full IWD2 support so the separate IWD2 version of these
+functions can be deprecated. 
 
 used:
   BG2 Fixpack, as bg2fixpack/lib/alter_area-creature_item.tpa [symbolic link]
+  EE Fixpack, as eefixpack/files/lib/alter_area-creature_item.tpa [symbolic link]
   IWDification, as iwdification/iwdspells/lib/alter_area-creature_item.tpa [symbolic link]
   IWDSpells library, as dw_iwdspells/iwdspells/lib/alter_area-creature_item.tpa [symbolic link]
   The Calling, as thecalling/lib/alter_area-creature_item.tpa [symbolic link]
@@ -15,6 +26,8 @@ used:
 version history: 
   unk: creation
   4/2/25: added return values
+  3/27/26: added support for store items
+  3/28/26: added universal support: added sto v1.1; are v9.1; cre v1.2, v2.2, v9.0
 
 */
 
@@ -37,10 +50,17 @@ DEFINE_PATCH_FUNCTION ALTER_AREA_ITEM
 
 BEGIN
 
-  READ_SHORT 0x76 item_num ELSE 0
-  READ_LONG  0x78 item_off ELSE 0
-  LPF ALTER_AREA-CREATURE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable flag_stolen flag_undroppable item_num item_off
-                               STR_VAR item match_item RET replaced_slot replaced_item END
+  READ_ASCII 0x04 are_version (4) // thankfully item blocks are identical, just different offsets
+  PATCH_IF ("%are_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN // iwd2
+    READ_SHORT 0x86 item_num ELSE 0
+    READ_LONG  0x88 item_off ELSE 0
+  END ELSE BEGIN 
+    READ_SHORT 0x76 item_num ELSE 0
+    READ_LONG  0x78 item_off ELSE 0
+  END  
+  LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
+                                             flag_stolen flag_undroppable item_num item_off
+                                     STR_VAR item match_item RET replaced_slot replaced_item END
 
 END
 
@@ -63,14 +83,63 @@ DEFINE_PATCH_FUNCTION ALTER_CREATURE_ITEM
 
 BEGIN
 
-  READ_LONG  0x2bc item_off ELSE 0
-  READ_LONG  0x2c0 item_num ELSE 0
-  LPF ALTER_AREA-CREATURE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable flag_stolen flag_undroppable item_num item_off
-                               STR_VAR item match_item RET replaced_slot replaced_item END
+
+  READ_ASCII 0x04 cre_version (4) // thankfully item blocks are identical, just different offsets
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V1.2" = 0) THEN BEGIN // pst
+    READ_LONG  0x360 item_off ELSE 0
+    READ_LONG  0x364 item_num ELSE 0
+  END ELSE   
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V2.2" = 0) THEN BEGIN // iwd2
+    READ_LONG  0x616 item_off ELSE 0
+    READ_LONG  0x61a item_num ELSE 0
+  END ELSE   
+  PATCH_IF ("%cre_version%" STRING_COMPARE_CASE "V9.0" = 0) THEN BEGIN // iwd
+    READ_LONG  0x324 item_off ELSE 0
+    READ_LONG  0x328 item_num ELSE 0
+  END ELSE BEGIN // ee, bg, bg2
+    READ_LONG  0x2bc item_off ELSE 0
+    READ_LONG  0x2c0 item_num ELSE 0
+  END  
+  LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
+                                             flag_stolen flag_undroppable item_num item_off
+                                     STR_VAR item match_item RET replaced_slot replaced_item END
 
 END
 
-DEFINE_PATCH_FUNCTION ALTER_AREA-CREATURE_ITEM
+DEFINE_PATCH_FUNCTION ALTER_STORE_ITEM
+
+  // defines what we're going to check
+  INT_VAR expiry           = "-1"
+          charge1          = "-1"
+          charge2          = "-1"
+          charge3          = "-1"
+          flags            = "-1"
+          flag_identified  = "-1"
+          flag_unstealable = "-1"
+          flag_stolen      = "-1"
+          flag_undroppable = "-1"
+          stock            = "-1"
+          infinite         = "-1"
+  STR_VAR item       = "same"
+          match_item = "same"
+  RET     replaced_slot
+          replaced_item
+
+BEGIN
+
+  READ_LONG  0x34 item_off ELSE 0
+  READ_LONG  0x38 item_num ELSE 0
+  // pst's sto format identical through 0x1c but then has extra space for triggers so just needs a custom length
+  SET length = 0x1c
+  READ_ASCII 0x04 sto_version (4)
+  PATCH_IF ("%sto_version%" STRING_COMPARE_CASE "V1.1" = 0) THEN BEGIN SET length = 0x58 END // pstee's item listings
+  LPF ALTER_AREA-CREATURE-STORE_ITEM INT_VAR expiry charge1 charge2 charge3 flags flag_identified flag_unstealable 
+                                             flag_stolen flag_undroppable item_num item_off stock infinite length
+                                     STR_VAR item match_item RET replaced_slot replaced_item END
+
+END
+
+DEFINE_PATCH_FUNCTION ALTER_AREA-CREATURE-STORE_ITEM
 
   // defines what we're going to check
   INT_VAR expiry           = "-1"
@@ -84,6 +153,9 @@ DEFINE_PATCH_FUNCTION ALTER_AREA-CREATURE_ITEM
           flag_undroppable = "-1"
           item_num         = 0
           item_off         = 0
+          length           = 0x14
+          stock            = "-1"
+          infinite         = "-1"
   STR_VAR item       = "same"
           match_item = "same"
   RET     replaced_slot
@@ -94,7 +166,7 @@ BEGIN
   SET replaced_slot = "-1"
   SPRINT replaced_item ""
   FOR (index = 0 ; index < item_num ; ++index) BEGIN
-    SET base = (item_off + (index * 0x14))
+    SET base = (item_off + (index * length))
     READ_ASCII base o_item
     PATCH_IF (("%o_item%" STRING_COMPARE_CASE "%match_item%" = 0) OR
               ("all"      STRING_COMPARE_CASE "%match_item%" = 0)) BEGIN
@@ -104,6 +176,10 @@ BEGIN
       PATCH_IF (charge1 >= 0) BEGIN WRITE_SHORT (base + 0x0a) charge1 END
       PATCH_IF (charge2 >= 0) BEGIN WRITE_SHORT (base + 0x0c) charge2 END
       PATCH_IF (charge3 >= 0) BEGIN WRITE_SHORT (base + 0x0e) charge3 END
+      PATCH_IF (length > 0x14) BEGIN // store-only fields
+        PATCH_IF (stock >= 0)    BEGIN WRITE_LONG (base + 0x14) stock END
+        PATCH_IF (infinite >= 0) BEGIN WRITE_LONG (base + 0x18) infinite END
+      END   
       PATCH_IF (flags >= 0)   BEGIN
         WRITE_LONG (base + 0x10) flags
       END ELSE BEGIN // only check individual flags if overall value not given

@@ -1,0 +1,702 @@
+/////                                                  \\\\\
+///// bgee                                             \\\\\
+/////                                                  \\\\\
+
+ACTION_IF game_is_bgee BEGIN 
+
+// areas
+
+  //COPY_EXISTING ~ar0121.are~ ~override~ // overcharged misc29 in charge 1 - seems intentional
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 20 STR_VAR match_item = misc29 END
+
+  COPY_EXISTING ~ar0618.are~ ~override~ // overcharged book60 in charge 2
+    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = book60 END
+
+// creatures
+
+  COPY_EXISTING ~deckass1.cre~ ~override~ // overcharged leat02 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = leat02 END
+
+  COPY_EXISTING ~e33.cre~ ~override~ // overcharged sw1h10 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = sw1h10 END
+
+  COPY_EXISTING ~eldotd.cre~ ~override~ // overcharged dagg01 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = dagg01 END
+
+  //COPY_EXISTING ~erik.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  //COPY_EXISTING ~ihobgob.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  //COPY_EXISTING ~ihobgob.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  //COPY_EXISTING ~ihobgob.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  //COPY_EXISTING ~ikobold.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  //COPY_EXISTING ~ikobold.cre~ ~override~ // overcharged arow13 in charge 1 - unused item, not allowed to stack
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = arow13 END
+
+  COPY_EXISTING ~kobcap01.cre~ ~override~ // overcharged bow01 in charge 1
+                ~negob01.cre~  ~override~ // overcharged bow01 in charge 1
+                ~neguar01.cre~ ~override~ // overcharged bow01 in charge 1
+                ~neguar02.cre~ ~override~ // overcharged bow01 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bow01 END
+
+  COPY_EXISTING ~mulahe.cre~ ~override~ // overcharged ring22 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ring22 END
+
+  COPY_EXISTING ~shartd.cre~ ~override~ // overcharged dagg01 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = dagg01 END
+
+  COPY_EXISTING ~sil.cre~ ~override~ // overcharged compb05 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = compb05 END
+
+/////                                                  \\\\\
+///// sod                                              \\\\\
+/////                                                  \\\\\
+  
+  ACTION_IF game_includes_sod BEGIN 
+
+// areas
+
+    COPY_EXISTING ~bd0105.are~ ~override~ // overcharged shld10 in charge 1
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = shld10 END
+
+    COPY_EXISTING ~bd0120.are~ ~override~ // overcharged dagg05 x3 in charge 1 - max stack is 40, but has three instances of 80 stacks
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 40 STR_VAR match_item = dagg05 END
+
+    COPY_EXISTING ~bd0120.are~ ~override~ // overcharged ax1h04 x3 in charge 1 - max stack is 40, but has three instances of 80 stacks
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 40 STR_VAR match_item = ax1h04 END
+
+    COPY_EXISTING ~bd0130.are~ ~override~ 
+      LPF ALTER_AREA_ITEM INT_VAR charge3 = 0 STR_VAR match_item = wand05 END // overcharged wand05 in charge 3
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = chan05 END // overcharged chan05 in charge 1
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = misc56 END // overcharged misc56 in charge 1
+
+    //COPY_EXISTING ~bd1200.are~ ~override~ // overcharged rndgem01 in charge 1 - these are fine as they create a stack of random gems
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem01 END
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem03 END
+
+    //COPY_EXISTING ~bd2000.are~ ~override~ // overcharged rndtre01 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre01 END
+
+    COPY_EXISTING ~bd2010.are~ ~override~ // overcharged bdhelm16 in charge 1
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bdhelm16 END
+
+    //COPY_EXISTING ~bd5000.are~ ~override~ // overcharged rndgem02 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem02 END
+
+    //COPY_EXISTING ~bd5000.are~ ~override~ // overcharged rndgem03 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem03 END
+
+    COPY_EXISTING ~bd5300.are~ ~override~ // overcharged bdstaf02 in charge 1
+      LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bdstaf02 END
+
+    //COPY_EXISTING ~bd7110.are~ ~override~ // overcharged rndgem04 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem04 END
+
+    //COPY_EXISTING ~bd7400.are~ ~override~ // overcharged rndgem03 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem03 END
+
+    //COPY_EXISTING ~bd7410.are~ ~override~ // overcharged rndaro02 in charge 1
+    //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro02 END
+
+// creatures
+
+    COPY_EXISTING ~bdasha05.cre~ ~override~ // overcharged sw1h05 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = sw1h05 END
+
+    COPY_EXISTING ~bdcrus10.cre~ ~override~ // overcharged sw2h02 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = sw2h02 END
+
+    COPY_EXISTING ~bdgarrus.cre~ ~override~ // overcharged dagg02 in charge 1
+                  ~bdmaxwel.cre~ ~override~ // overcharged dagg02 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = dagg02 END
+
+    //COPY_EXISTING ~bdgob07.cre~ ~override~ // overcharged rndaro01 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro01 END
+
+    COPY_EXISTING ~bdhalbaz.cre~ ~override~ // overcharged dagg05 in charge 1 - max stack is 40, not 80
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 40 STR_VAR match_item = dagg05 END
+
+    COPY_EXISTING ~bdhensle.cre~ ~override~ // overcharged slng04 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = slng04 END
+
+    //COPY_EXISTING ~bdhobg02.cre~ ~override~ // overcharged rndaro02 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro02 END
+
+    //COPY_EXISTING ~bdhobg03.cre~ ~override~ // overcharged rndaro02 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro02 END
+
+    COPY_EXISTING ~bdimoen.cre~ ~override~ // overcharged potn14 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 24 STR_VAR match_item = potn14 END
+
+    COPY_EXISTING ~bdisabel.cre~ ~override~ // overcharged bdshld02 in charge 2
+      LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bdshld02 END
+
+    COPY_EXISTING ~bdkjarva.cre~ ~override~ // overcharged blun02 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = blun02 END
+
+    //COPY_EXISTING ~bdkorde8.cre~ ~override~ // overcharged rndaro01 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro01 END
+
+    COPY_EXISTING ~bdlieutg.cre~ ~override~ // overcharged slng02 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = slng02 END
+
+    COPY_EXISTING ~bdmesse1.cre~ ~override~ // overcharged sw1h07 in charge 1
+                  ~bdmesse2.cre~ ~override~ // overcharged sw1h07 in charge 1
+                  ~bdmesse3.cre~ ~override~ // overcharged sw1h07 in charge 1
+                  ~bdshis08.cre~ ~override~ // overcharged sw1h07 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = sw1h07 END
+
+    COPY_EXISTING ~bdraeann.cre~ ~override~ // overcharged bdring01 in charge 2
+      LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = bdring01 END
+
+    //COPY_EXISTING ~bdraeann.cre~ ~override~ // overcharged rndgem02 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem02 END
+
+    //COPY_EXISTING ~bdraeann.cre~ ~override~ // overcharged rndgem01 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndgem01 END
+
+    //COPY_EXISTING ~bdshis10.cre~ ~override~ // overcharged rndaro01 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro01 END
+
+    COPY_EXISTING ~bdteam12.cre~ ~override~ // overcharged dagg01 in charge 1
+                  ~bdteam13.cre~ ~override~ // overcharged dagg01 in charge 1
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = dagg01 END
+
+    COPY_EXISTING ~bdzaviak.cre~ ~override~ // overcharged bdmisc01 in charge 2
+      LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bdmisc01 END
+
+    COPY_EXISTING ~bdzhadro.cre~ ~override~ // overcharged bdrobe01 in charge 2
+      LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = bdrobe01 END
+
+    COPY_EXISTING ~edwin7.cre~ ~override~ // overcharged bddagg04 x2 in charge 1 - stack size is 40
+      LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 40 STR_VAR match_item = bddagg04 END
+
+    //COPY_EXISTING ~orc02.cre~ ~override~ // overcharged rndaro01 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro01 END
+
+    //COPY_EXISTING ~orc07.cre~ ~override~ // overcharged rndaro02 in charge 1
+    //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndaro02 END
+
+// stores
+
+    COPY_EXISTING ~bdherod.sto~ ~override~
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = sw1h08 END // overcharged sw1h08 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bow06  END // overcharged bow06 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = xbow05 END // overcharged xbow05 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ring21 END // overcharged ring21 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ring35 END // overcharged ring35 in charge 1
+
+    COPY_EXISTING ~bdkazzre.sto~ ~override~ // overcharged bdring06 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bdring06 END
+
+    COPY_EXISTING ~bdwaizah.sto~ ~override~ // overcharged bddagg04 in charge 1
+      LPF ALTER_STORE_ITEM INT_VAR charge1 = 40 STR_VAR match_item = bddagg04 END
+  
+  END
+  
+/////                                                  \\\\\
+///// bg2ee                                            \\\\\
+/////                                                  \\\\\
+  
+END ELSE ACTION_IF game_is_bg2ee BEGIN
+
+// areas
+
+  //COPY_EXISTING ~ar2209.are~ ~override~ // overcharged misc36 in charge 1 - 45 pearls - bug?
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 20 STR_VAR match_item = misc36 END
+
+  COPY_EXISTING ~oh4210.are~ ~override~
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = shld06 END // overcharged shld06 in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre03 END // overcharged rndtre03 in charge 1
+
+  COPY_EXISTING ~oh8100.are~ ~override~
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 1 STR_VAR match_item = ohbptn10 END // overcharged ohbptn10 in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = misc61 END // overcharged misc61 in charge 1
+
+// creatures
+
+  COPY_EXISTING ~c6regis.cre~  ~override~ // overcharged regisamu in charge 2
+                ~c6regis2.cre~ ~override~ // overcharged regisamu in charge 2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = regisamu END
+
+  //COPY_EXISTING ~giantf01.cre~ ~override~ // overcharged dart06 in charge 1 (unused cre file)
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 1 STR_VAR match_item = dart06 END
+
+  COPY_EXISTING ~mdk2doc.cre~ ~override~ // overcharged mdk2mtov in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2mtov END
+
+  COPY_EXISTING ~mdk2kurt.cre~ ~override~ // overcharged mdk2bull in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2bull END
+
+  COPY_EXISTING ~mdk2max.cre~ ~override~ // overcharged mdk2bul2 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2bul2 END
+
+  //COPY_EXISTING ~ohb3iren.cre~ ~override~
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 6 STR_VAR match_item = wand18 END // overcharged wand18 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 8 STR_VAR match_item = wand19 END // overcharged wand19 in charge 1 - undroppable
+
+  //COPY_EXISTING ~ohbdul02.cre~ ~override~ // overcharged dart02 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart02 END
+
+  //COPY_EXISTING ~ohbdul04.cre~ ~override~ // overcharged dart08 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = dart08 END
+
+  COPY_EXISTING ~ohbell03.cre~ ~override~ // overcharged helm19 in charge 1
+                ~ohbell04.cre~ ~override~ // overcharged helm19 in charge 1
+                ~ohbell05.cre~ ~override~ // overcharged helm19 in charge 1
+                ~ohbellra.cre~ ~override~ // overcharged helm19 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = helm19 END
+
+  COPY_EXISTING ~ohbgc01.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = bolt03 END // overcharged bolt03 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = bolt06 END // overcharged bolt06 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn07 END // overcharged potn07 in charge 3
+
+  COPY_EXISTING ~ohbgc01.cre~  ~override~
+                ~ohbleoka.cre~ ~override~
+                ~ohbthkni.cre~ ~override~
+                ~ohnthkn1.cre~ ~override~
+                ~ohramb.cre~   ~override~
+                ~ohrlemp.cre~  ~override~
+                ~ohrovidi.cre~ ~override~
+                ~ohrrazva.cre~ ~override~
+                ~ohrsbg.cre~   ~override~
+                ~ohrsdg1.cre~  ~override~
+                ~ohrsdg2.cre~  ~override~
+                ~ohrsgma1.cre~ ~override~
+                ~ohrsgma2.cre~ ~override~
+                ~ohrshr11.cre~ ~override~
+                ~ohrtallu.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn55 END // overcharged potn55 in charge 3
+
+  COPY_EXISTING ~ohbgc01.cre~  ~override~
+                ~ohbleoka.cre~ ~override~
+                ~ohbthkni.cre~ ~override~
+                ~ohnthkn1.cre~ ~override~
+                ~ohnthkni.cre~ ~override~
+                ~ohramb.cre~   ~override~
+                ~ohrovidi.cre~ ~override~
+                ~ohrsgma1.cre~ ~override~
+                ~ohrsgma2.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn14 END // overcharged potn14 in charge 3
+
+  //COPY_EXISTING ~ohbger02.cre~ ~override~ // overcharged dart02 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart02 END
+
+  //COPY_EXISTING ~ohbger03.cre~ ~override~ // overcharged dart02 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart02 END
+
+  //COPY_EXISTING ~ohbger04.cre~ ~override~ // overcharged dart03 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart03 END
+
+  //COPY_EXISTING ~ohbger05.cre~ ~override~ // overcharged dart03 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart03 END
+
+  //COPY_EXISTING ~ohbgerro.cre~ ~override~ // overcharged dart03 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart03 END
+
+  //COPY_EXISTING ~ohbgez02.cre~ ~override~ // overcharged dart04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart04 END
+
+  //COPY_EXISTING ~ohbgez03.cre~ ~override~ // overcharged dart04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart04 END
+
+  //COPY_EXISTING ~ohbgez04.cre~ ~override~ // overcharged dart04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart04 END
+
+  //COPY_EXISTING ~ohbgez05.cre~ ~override~ // overcharged dart04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart04 END
+
+  //COPY_EXISTING ~ohbgezzt.cre~ ~override~ // overcharged dart04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = dart04 END
+
+  COPY_EXISTING ~ohbgua10.cre~ ~override~
+                ~ohbgua11.cre~ ~override~
+                ~ohbgua12.cre~ ~override~
+                ~ohbgua13.cre~ ~override~
+                ~ohblngg1.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow10 END // overcharged arow10 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow02 END // overcharged arow02 in charge 3
+
+  COPY_EXISTING ~ohbgua10.cre~ ~override~
+                ~ohbgua11.cre~ ~override~
+                ~ohbgua12.cre~ ~override~
+                ~ohbgua13.cre~ ~override~
+                ~ohblngg1.cre~ ~override~
+                ~ohnfadel.cre~ ~override~
+                ~ohnfmer1.cre~ ~override~
+                ~ohnmerc1.cre~ ~override~
+                ~ohnmerc2.cre~ ~override~
+                ~ohnmerc3.cre~ ~override~
+                ~ohnmmer1.cre~ ~override~
+                ~ohnredw2.cre~ ~override~
+                ~ohnredw3.cre~ ~override~
+                ~ohnredw4.cre~ ~override~
+                ~ohnredw7.cre~ ~override~
+                ~ohnredw8.cre~ ~override~
+                ~ohnrwt1.cre~  ~override~
+                ~ohnrwt2.cre~  ~override~
+                ~ohnrwt3.cre~  ~override~
+                ~ohnrwt4.cre~  ~override~
+                ~ohnthkn2.cre~ ~override~
+                ~ohnthkni.cre~ ~override~
+                ~ohramb.cre~   ~override~
+                ~ohrdwrf2.cre~ ~override~
+                ~ohrjolst.cre~ ~override~
+                ~ohrmeems.cre~ ~override~
+                ~ohrovs1.cre~  ~override~
+                ~ohrrazva.cre~ ~override~
+                ~ohrrolf.cre~  ~override~
+                ~ohrsdg2.cre~  ~override~
+                ~ohrshr12.cre~ ~override~
+                ~ohrtallu.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn52 END
+
+  COPY_EXISTING ~ohbleoka.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow10 END // overcharged arow10 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow11 END // overcharged arow11 in charge 3
+
+  //COPY_EXISTING ~ohblittl.cre~ ~override~ // overcharged ax1h04 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 40 STR_VAR match_item = ax1h04 END
+
+  //COPY_EXISTING ~ohbmer02.cre~ ~override~ // overcharged arow02 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = arow02 END
+
+  //COPY_EXISTING ~ohbmer03.cre~ ~override~ // overcharged arow11 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = arow11 END
+
+  //COPY_EXISTING ~ohbmer04.cre~ ~override~ // overcharged arow15 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = arow15 END
+
+  //COPY_EXISTING ~ohbmer05.cre~ ~override~ // overcharged oharow50 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = oharow50 END
+
+  //COPY_EXISTING ~ohbmercy.cre~ ~override~ // overcharged oharow50 in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = oharow50 END
+
+  COPY_EXISTING ~ohbszass.cre~ ~override~ // overcharged staf12 in charge 1
+                ~ohnszass.cre~ ~override~ // overcharged staf12 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = staf12 END
+
+  COPY_EXISTING ~ohbthkni.cre~ ~override~
+                ~ohnrwt1.cre~ ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn35 END // overcharged potn35 in charge 3
+
+  COPY_EXISTING ~ohbthkni.cre~ ~override~
+                ~ohnthkn1.cre~ ~override~
+                ~ohrlemp.cre~  ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn05 END // overcharged potn05 in charge 3
+
+  COPY_EXISTING ~ohhculak.cre~ ~override~ // overcharged wand19 in charge 2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = wand19 END
+
+  COPY_EXISTING ~ohnmerc3.cre~ ~override~ // overcharged bolt01 in charge 2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bolt01 END
+
+  COPY_EXISTING ~ohnrwt1.cre~ ~override~ // overcharged potn21 in charge 3
+                ~ohnrwt4.cre~ ~override~ // overcharged potn21 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn21 END
+
+  COPY_EXISTING ~ohnrwt2.cre~ ~override~ // overcharged potn34 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn34 END
+
+  COPY_EXISTING ~ohnrwt3.cre~ ~override~ // overcharged potn18 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn18 END
+
+  COPY_EXISTING ~ohnthkn2.cre~ ~override~ // overcharged potn17 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn17 END
+
+  COPY_EXISTING ~ohramb.cre~ ~override~ // overcharged arow02 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow02 END
+
+  COPY_EXISTING ~ohrcuddy.cre~ ~override~ // overcharged ax1h04 in charge 3 - make a stack of throwing axes
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 40 charge2 = 0 charge3 = 0 STR_VAR match_item = ax1h04 END
+
+  COPY_EXISTING ~ohrjolst.cre~ ~override~ // overcharged arow01 in charge 2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow01 END
+
+  COPY_EXISTING ~ohrlemp.cre~ ~override~ // overcharged potn09 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn09 END
+
+  COPY_EXISTING ~ohrovidi.cre~ ~override~ // overcharged arow06 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow06 END
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = arow11 END
+
+  COPY_EXISTING ~ohrsgma1.cre~ ~override~ // overcharged potn06 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn06 END
+
+  COPY_EXISTING ~ohrsgma2.cre~ ~override~ // overcharged potn11 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn11 END
+
+  COPY_EXISTING ~ohrshr11.cre~ ~override~ // overcharged potn23 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn23 END
+
+  //COPY_EXISTING ~udmaster.cre~ ~override~ // overcharged misc32 in charge 1 - extra large stack of gems
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 20 STR_VAR match_item = misc32 END
+
+/////                                                  \\\\\
+///// iwdee                                            \\\\\
+/////                                                  \\\\\
+
+END ELSE ACTION_IF game_is_iwdee BEGIN
+
+// areas
+
+  COPY_EXISTING ~ar1201.are~ ~override~
+                ~ar3501.are~ ~override~
+                ~ar5001.are~ ~override~
+                ~ar5002.are~ ~override~
+                ~ar5004.are~ ~override~
+                ~ar5104.are~ ~override~
+                ~ar5202.are~ ~override~
+                ~ar5203.are~ ~override~
+                ~ar5302.are~ ~override~
+                ~ar5303.are~ ~override~
+                ~ar5401.are~ ~override~
+                ~ar5403.are~ ~override~
+                ~ar5404.are~ ~override~
+                ~ar7004.are~ ~override~
+    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 STR_VAR match_item = misc07 END // overcharged misc07 in charge 2
+
+  COPY_EXISTING ~ar1201.are~ ~override~ // overcharged misc01 in charge 1
+                ~ar9400.are~ ~override~ // overcharged misc01 in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = misc01 END
+
+  //COPY_EXISTING ~ar4001.are~ ~override~ // overcharged rndtre28 in charge 1 - fine, as this randomizes to ammo
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre28 END
+
+  COPY_EXISTING ~ar4004.are~ ~override~ // overcharged cddaen in charge 2
+    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = cddaen END
+
+  //COPY_EXISTING ~ar4005.are~ ~override~ // overcharged rndtre30 in charge 1 - fine, as this randomizes to ammo
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre30 END
+
+  //COPY_EXISTING ~ar6005.are~ ~override~ // overcharged rndtre31 in charge 1 - fine, as this randomizes to ammo
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre31 END
+
+  //COPY_EXISTING ~ar9200.are~ ~override~ // overcharged rndtre78 in charge 1 - can randomize to item that needs three charges
+  //  LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre78 END
+
+  COPY_EXISTING ~ar9400.are~ ~override~
+    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn17 END // overcharged potn17 in charge 3
+    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = scrl04 END // overcharged scrl04 in charge 3
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ring13 END // overcharged ring13 in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = yeti END // overcharged yeti in charge 1
+
+  COPY_EXISTING ~ar9600.are~ ~override~ // overcharged bflaoil in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 3 STR_VAR match_item = bflaoil END
+    LPF ADD_AREA_ITEM INT_VAR charges1 = 3 container_to_add_to = 2 STR_VAR item_to_add = bflaoil END
+    LPF ADD_AREA_ITEM INT_VAR charges1 = 1 container_to_add_to = 3 STR_VAR item_to_add = bflaoil END
+
+  COPY_EXISTING ~ar9601.are~ ~override~ // overcharged bflaoil in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 3 STR_VAR match_item = bflaoil END
+    LPF ADD_AREA_ITEM INT_VAR charges1 = 3 container_to_add_to = 1 STR_VAR item_to_add = bflaoil END
+    LPF ADD_AREA_ITEM INT_VAR charges1 = 1 container_to_add_to = 1 STR_VAR item_to_add = bflaoil END
+    
+// creatures
+
+  COPY_EXISTING ~acolyte.cre~  ~override~ // overcharged misc07 in charge 2
+                ~acolyted.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm1hwax.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm1hwaxy.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm1hwms.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm1hwmsy.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm1hwpo.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm1hwpoy.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm2hwla.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm2hwlay.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm2hwna.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm2hwnay.cre~ ~override~ // overcharged misc07 in charge 2
+                ~lm2hwte.cre~  ~override~ // overcharged misc07 in charge 2
+                ~lm2hwtey.cre~ ~override~ // overcharged misc07 in charge 2
+                ~orc2004.cre~  ~override~ // overcharged misc07 in charge 2
+                ~orca2004.cre~ ~override~ // overcharged misc07 in charge 2
+                ~orcewaxe.cre~ ~override~ // overcharged misc07 in charge 2
+                ~orcwaxe.cre~  ~override~ // overcharged misc07 in charge 2
+                ~orcwbow.cre~  ~override~ // overcharged misc07 in charge 2
+                ~priestd.cre~  ~override~ // overcharged misc07 in charge 2
+                ~rdeliza.cre~  ~override~ // overcharged misc07 in charge 2
+                ~rocorca.cre~  ~override~
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = misc07 END // overcharged misc07 in charge 2
+
+  //COPY_EXISTING ~ad2sklr.cre~  ~override~ // overcharged rndtre01 in charge 1 - fine as this randomizes to ammo
+  //              ~ad3sklr.cre~  ~override~ // overcharged rndtre01 in charge 1
+  //              ~ktska1.cre~   ~override~ // overcharged rndtre01 in charge 1
+  //              ~ktska2.cre~   ~override~ // overcharged rndtre01 in charge 1
+  //              ~rktskelr.cre~ ~override~ // overcharged rndtre01 in charge 1
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre01 END
+
+  //COPY_EXISTING ~ad4sklr.cre~ ~override~ // overcharged rndtre02 in charge 1 - fine as this randomizes to ammo
+  //              ~ktska3.cre~ ~override~ // overcharged rndtre02 in charge 1
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = rndtre02 END
+
+  COPY_EXISTING ~adran.cre~    ~override~ // overcharged wand05 in charge 3
+                ~animtest.cre~ ~override~ // overcharged wand05 in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge3 = 0 STR_VAR match_item = wand05 END
+
+  COPY_EXISTING ~corcat.cre~   ~override~ // overcharged aport in charge 2
+                ~cornugo.cre~  ~override~ // overcharged aport in charge 2
+                ~fincor01.cre~ ~override~ // overcharged aport in charge 2
+                ~fincor01.cre~ ~override~ // overcharged aport in charge 3
+                ~fincor02.cre~ ~override~ // overcharged aport in charge 2
+                ~fincor02.cre~ ~override~ // overcharged aport in charge 3
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = aport END
+
+  COPY_EXISTING ~cpmumg.cre~ ~override~ // overcharged wandtrp in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 5 STR_VAR match_item = wandtrp END
+
+  COPY_EXISTING ~dlbar1a.cre~ ~override~ // overcharged bflaoil in charge 1
+                ~dlbar1m.cre~ ~override~ // overcharged bflaoil in charge 1
+                ~dlbar1s.cre~ ~override~ // overcharged bflaoil in charge 1
+                ~dlbar3a.cre~ ~override~ // overcharged bflaoil in charge 1
+                ~dlbar3m.cre~ ~override~ // overcharged bflaoil in charge 1
+                ~dlbar3s.cre~ ~override~ // overcharged bflaoil in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 3 STR_VAR match_item = bflaoil END
+
+  //COPY_EXISTING ~dlwater.cre~ ~override~ // overcharged fbolt in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = fbolt END
+
+  //COPY_EXISTING ~kaylessa.cre~ ~override~ // overcharged farrow in charge 1 - undroppable
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = farrow END
+
+  COPY_EXISTING ~ktska1.cre~ ~override~ // overcharged rndtre28 in charge 2 - randomizes to ammo so charge1 is fine, but erase charge2
+                ~ktska2.cre~ ~override~ // overcharged rndtre28 in charge 2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = rndtre28 END
+
+  COPY_EXISTING ~ktska3.cre~ ~override~ // overcharged rndtre29 in charge 2 - randomizes to ammo so charge1 is fine, but erase charge2
+    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = rndtre29 END
+
+  COPY_EXISTING ~lddarchr.cre~ ~override~ // overcharged bow01 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = bow01 END
+
+  COPY_EXISTING ~mdk2doc.cre~ ~override~ // overcharged mdk2mtov in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2mtov END
+
+  COPY_EXISTING ~mdk2kurt.cre~ ~override~ // overcharged mdk2bull in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2bull END
+
+  COPY_EXISTING ~mdk2max.cre~ ~override~ // overcharged mdk2bul2 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = mdk2bul2 END
+
+  COPY_EXISTING ~ogre.cre~ ~override~ // overcharged misc01 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = misc01 END
+
+  //COPY_EXISTING ~rshelfb.cre~ ~override~ // overcharged arow1-6 in charge 1 - undroppable
+  //              ~rshorcb.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdelfbw1.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdelfbw2.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdelfbwh.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdgobbw1.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdgobbw2.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdgobbwh.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdorcbw1.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdorcbw2.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //              ~sdorcbwh.cre~ ~override~ // overcharged arow1-6 in charge 1
+  //  LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 80 STR_VAR match_item = arow1-6 END
+
+  COPY_EXISTING ~sdgobbw2.cre~ ~override~ // overcharged shlgbow2 in charge 1
+                ~sdgobbwh.cre~ ~override~ // overcharged shlgbow2 in charge 1
+                ~sdorcbw2.cre~ ~override~ // overcharged shlgbow2 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = shlgbow2 END
+
+  COPY_EXISTING ~vaarglan.cre~ ~override~ // overcharged ring09 in charge 1
+                ~vaarglnd.cre~ ~override~ // overcharged ring09 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ring09 END
+
+// stores
+
+  COPY_EXISTING ~edion.sto~ ~override~
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = oblood END // overcharged oblood in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = revenan END // overcharged revenan in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge3 = 0 STR_VAR match_item = blast END // overcharged blast in charge 3
+
+  COPY_EXISTING ~kugerth.sto~ ~override~ // overcharged bardic in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bardic END
+
+  COPY_EXISTING ~kuork0.sto~ ~override~
+                ~kuork1.sto~ ~override~
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = scarab END // overcharged scarab in charge 3
+
+  COPY_EXISTING ~kuork2.sto~ ~override~ 
+    LPF ALTER_STORE_ITEM INT_VAR charge1 = 5 charge2 = 5 charge3 = 5 STR_VAR match_item = wandfre END // has 11/11/11 charges but max is 5/5/5
+    LPF ALTER_STORE_ITEM INT_VAR charge1 = 11 STR_VAR match_item = wandmis END // overcharged wandmis in charge 1
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = jasper END // overcharged jasper in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge3 = 0 STR_VAR match_item = rogue END // overcharged rogue in charge 3
+    
+  // note: kuork[1-3] are unused but fixed anyway - checked scripted AddstoreItem in ar2100.bcs and looks fine  
+
+  COPY_EXISTING ~ldd_dl1.sto~ ~override~
+                ~ldd_dl2.sto~ ~override~
+                ~ldd_dl3.sto~ ~override~
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = spirit END // overcharged spirit in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn17 END
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn28 END
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn05 END
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn02 END // overcharged potn02 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn33 END
+
+  COPY_EXISTING ~ldd_nym.sto~ ~override~ // overcharged violin in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = violin END // overcharged violin in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn19 END // overcharged potn19 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn14 END // overcharged potn14 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = potn05 END // overcharged potn05 in charge 3
+
+  COPY_EXISTING ~shlehlan.sto~ ~override~
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = arow01 END // overcharged arow01 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = arow08 END // overcharged arow08 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = arow04 END // overcharged arow04 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bolt01 END // overcharged bolt01 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bolt03 END // overcharged bolt03 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bolt06 END // overcharged bolt06 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bull01 END // overcharged bull01 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = bull03 END // overcharged bull03 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = ubull4a END // overcharged ubull4a in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = dart01 END // overcharged dart01 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = udart1a END // overcharged udart1a in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = udart3b END // overcharged udart3b in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = elfwine END // overcharged elfwine in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge1 = 2 STR_VAR match_item = pellon END // overcharged pellon in charge 1
+
+  COPY_EXISTING ~tiernon.sto~ ~override~
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = misc42 END // overcharged misc42 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = misc40 END // overcharged misc40 in charge 2
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = misc27 END // overcharged misc27 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = misc21 END // overcharged misc21 in charge 3
+
+  COPY_EXISTING ~waukeen.sto~ ~override~ // overcharged scrlpet2 in charge 3
+    LPF ALTER_STORE_ITEM INT_VAR charge2 = 0 charge3 = 0 STR_VAR match_item = scrlpet2 END
+  
+/////                                                  \\\\\
+///// pstee                                            \\\\\
+/////                                                  \\\\\
+
+END ELSE BEGIN // pstee
+
+// areas
+
+  COPY_EXISTING ~ar1500.are~ ~override~ // overcharged club in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = club END
+
+  COPY_EXISTING ~ar1600.are~ ~override~ // overcharged ax2 in charge 1
+    LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = ax2 END
+
+// creatures
+
+  COPY_EXISTING ~cassius.cre~ ~override~ // overcharged imac3d8 in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = imac3d8 END
+
+  COPY_EXISTING ~ravel.cre~ ~override~ // overcharged fingnail in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = fingnail END
+
+  COPY_EXISTING ~sbaur.cre~ ~override~ // overcharged polearm in charge 1
+    LPF ALTER_CREATURE_ITEM INT_VAR charge1 = 0 STR_VAR match_item = polearm END
+
+END 
