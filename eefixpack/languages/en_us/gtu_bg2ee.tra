@@ -14414,6 +14414,28 @@ Requires:
 
 Weight: 5~
 
+// been know to strike > been known to strike
+@66475 = ~Taking the blood-soaked shaft of this weapon in hand brings a sudden chill along your spine. The origins of this gruesome halberd are unknown, though the very sight of it has been known to strike terror into the heart of an opponent.
+
+STATISTICS:
+
+Charge abilities:
+– Cloak of Fear twice per day
+  Special: Affected enemies flee in terror for 4 rounds (Save vs. Spell negates)
+  Range: 0
+  Duration: Instant
+  Area of Effect: 15-ft. radius
+
+THAC0: +4
+Damage: 1d10+4 (piercing)
+Speed Factor: 5
+Proficiency Type: Halberd
+Type: Two-handed
+Requires:
+ 13 Strength
+
+Weight: 12~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @66523 = ~You know, I bet that explains all those screams and explosions I kept hearing a while back. At least now I know why the fans shut down—nobody left to start them up.~
 
