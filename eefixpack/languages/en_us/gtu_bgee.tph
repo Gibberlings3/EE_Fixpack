@@ -821,6 +821,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_bgee.tra~ BEGIN STRING_SET
   15994 @15994
   15996 @15996
   15997 @15997
+  16000 @16000
   16040 @16040
   16219 @16219
   16222 @16222
@@ -1220,6 +1221,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_bgee.tra~ BEGIN STRING_SET
   30275 @30275
   30283 @30283
   30685 @30685
+  30711 @30711
   30719 @30719
   30729 @30729
   30733 @30733
