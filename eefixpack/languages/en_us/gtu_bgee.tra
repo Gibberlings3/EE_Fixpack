@@ -8643,8 +8643,8 @@ Equipped abilities:
 
 Weight: 0~
 
-// poisonous > venomous
-@30711 = ~While working for the Shadow Thieves, Fargon Fol collected thousands of small venomous snakes to create the Asp's Nest. Fargon took each snake and with her powerful magic she made a dart of each. She made the dart so that when it strikes its opponent, the snake returns to life, biting and inflicting poison damage on the target. The title Asp's Nest refers to the entire collection of darts, most of which have vanished, either destroyed in use or lost on a long forgotten battlefield.
+// poisonous > venomous, long forgotten battlefield > long-forgotten battlefield
+@30711 = ~While working for the Shadow Thieves, Fargon Fol collected thousands of small venomous snakes to create the Asp's Nest. Fargon took each snake and with her powerful magic she made a dart of each. She made the dart so that when it strikes its opponent, the snake returns to life, biting and inflicting poison damage on the target. The title Asp's Nest refers to the entire collection of darts, most of which have vanished, either destroyed in use or lost on a long-forgotten battlefield.
 
 STATISTICS:
 
