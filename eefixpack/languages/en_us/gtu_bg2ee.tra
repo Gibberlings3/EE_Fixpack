@@ -5428,6 +5428,15 @@ Weight: 1~
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @17833 = ~Stand down your weapons, Jaheira. We need not shed any blood here today.~
 
+// imbibed > imbiber
+@17857 = ~The elixir of health is a powerful healing mixture designed to cleanse the body of all impurities. First, it cures all poisons and diseases; then, once the system has been purged, the imbibed is cured by 10 Hit Points to speed the recovery process.
+
+STATISTICS:
+
+Special: Cures poison and disease and heals 10 Hit Points
+
+Weight: 1~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @17850 = ~I know you to be truthful, Jaheira, and I have heard good things of <CHARNAME>. I will try to sway the others, but passions run high in this matter.~
 

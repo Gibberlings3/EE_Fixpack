@@ -4830,6 +4830,15 @@ Duration: 2 hours
 
 Weight: 1~
 
+// imbibed > imbiber
+@17857 = ~The elixir of health is a powerful healing mixture designed to cleanse the body of all impurities. First, it cures all poisons and diseases; then, once the system has been purged, the imbiber is cured by 10 Hit Points to speed the recovery process.
+
+STATISTICS:
+
+Special: Cures poison and disease and heals 10 Hit Points
+
+Weight: 1~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @17871 = ~This potion will imbue the drinker with the ability to focus the mind unerringly towards any task that needs to be performed.
 
