@@ -816,6 +816,17 @@ COPY_EXISTING ~spcl118.spl~  ~override~ // the siren's yearning—enthralls crea
   LPF ALTER_EFFECT INT_VAR match_opcode = 215 opcode = 8 parameter1 = ((46 << 8) + (56 << 16) + (0 << 24)) parameter2 = 255 STR_VAR match_resource = spmindat END
   BUT_ONLY
 
+// should be setting CANNOT_TURN_INVISIBLE spell states
+COPY_EXISTING ~spcl232.spl~  ~override~ // true sight [inquis]
+              ~spcl232d.spl~ ~override~ // true sight [inquis, pulse]
+              ~spcl732.spl~  ~override~ // true sight [watcher]
+              ~sppr505.spl~  ~override~ // true seeing
+              ~sppr505d.spl~ ~override~ // true seeing [pulse]
+              ~sppr950.spl~  ~override~ // true sight [pulse]
+              ~spwi609.spl~  ~override~ // true sight
+              ~spwi609d.spl~ ~override~ // true sight [pulse]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 221 opcode = 328 parameter1 = 0 parameter2 = 72 timing = 0 duration = 7 special = 1 END // spellstate: CANNOT_TURN_INVISIBLE
+
 // ie-6027, cam
 // HP draining spells shouldn't work on undead and extraplanar creatures
 COPY_EXISTING ~%MONK_LAY_ON_HANDS%.spl~ ~override~ // spcl815 lay on hands (monk)
@@ -1063,6 +1074,11 @@ COPY_EXISTING ~spwi030.spl~ ~override~ // via trap
 // see also cwoslim.itm, #cofear.spl, spin132.spl, sppr617.spl, spin161.spl, sppr250.spl, spwi101b/c.spl
 COPY_EXISTING ~spwi101.spl~ ~override~
   LPF DELETE_EFFECT INT_VAR match_opcode = 206 END
+
+// glitterdust should be setting GLITTERDuST, CANNOT_TURN_INVISIBLE spell states
+COPY_EXISTING ~spwi224.spl~ ~override~
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 142 opcode = 328 parameter2 = 71 special = 1 END // spellstate: GLITTERDuST
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 142 opcode = 328 parameter2 = 72 special = 1 END // spellstate: CANNOT_TURN_INVISIBLE
 
 // tbd, cam
 // stun icons provided by stun effect, remove redundant 142

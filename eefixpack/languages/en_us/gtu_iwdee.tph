@@ -258,6 +258,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   15994 @15994
   15996 @15996
   15997 @15997
+  16000 @16000
   16039 @16039
   16190 @16190
   16215 @16215
@@ -304,6 +305,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   17753 @17753
   17754 @17754
   17855 @17855
+  17857 @17857
   17871 @17871
   17904 @17904
   17912 @17912
@@ -453,6 +455,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   37407 @37407
   37417 @37417
   37419 @37419
+  37421 @37421
   37431 @37431
   37536 @37536
   37584 @37584
@@ -526,6 +529,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   39526 @39526
   39532 @39532
   39534 @39534
+  39535 @39535
   39538 @39538
   39540 @39540
   39547 @39547
@@ -537,6 +541,7 @@ WITH_TRA ~eefixpack/languages/en_us/gtu_iwdee.tra~ BEGIN STRING_SET
   39625 @39625
   39628 @39628
   39633 @39633
+  39656 @39656
   39679 @39679
   39700 @39700
   39704 @39704

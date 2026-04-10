@@ -2441,6 +2441,14 @@ Kobolds are a cowardly, sadistic race of short humanoids that vigorously contest
 
 Barely clearing three feet in height, kobolds have scaly hides that range from dark, rusty brown to a rusty black. They smell of damp dogs and stagnant water. Their eyes glow like a pair of bright red sparks, and they have two small horns ranging from tan to white. Because of the kobold fondness for wearing raggedy garb of red and orange, their non-prehensile rat-like tails, and their language (which sounds like small dogs yapping), these fell creatures are often not taken seriously. This is often a fatal mistake, for what they lack in size and strength they make up in ferocity and tenacity.~
 
+// poisonous > venomous
+@16000 = ~Giant Spider
+Spiders are aggressive predators, dwelling both above and below ground. Most are venomous and bite prey before devouring them because unconscious victims are easier to carry to a lair.
+
+Spiders have eight legs and eight eyes. They usually fit into two categories: web-spinners, which have bulbous abdomens and thin, sleek legs; and hunting spiders, which have smaller bodies, larger heads and fangs, and hairy bodies and legs.
+
+Most giant spiders are simply much bigger versions of the web-spinning large spiders.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @16039 = ~A bullet is simply a rounded, well-balanced stone.
 
@@ -2834,6 +2842,15 @@ STATISTICS:
 Damage: 5d6 fire (Save vs. Breath for half)
 Range: 40 ft.
 Area of Effect: 15-ft. radius
+
+Weight: 1~
+
+// imbibed > imbiber
+@17857 = ~The elixir of health is a powerful healing mixture designed to cleanse the body of all impurities. First, it cures all poisons and diseases; then, once the system has been purged, the imbiber is cured by 10 Hit Points to speed the recovery process.
+
+STATISTICS:
+
+Special: Cures poison and disease and heals 10 Hit Points
 
 Weight: 1~
 
@@ -4864,6 +4881,14 @@ Shadows are malevolent, undead creatures that drain strength from their victims 
 @37419 = ~Slime
 A beast with no visible support within its gelatinous body. The acid touch of these creatures can vary from type to type, but all are deadly scavengers.~
 
+// poisonous > venomous
+@37421 = ~Giant Spider
+Spiders are aggressive predators, dwelling both above and below ground. Most are venomous and bite prey before devouring them because unconscious victims are easier to carry to a lair.
+
+Spiders have eight legs and eight eyes. They usually fit into two categories: web-spinners, which have bulbous abdomens and thin, sleek legs; and hunting spiders, which have smaller bodies, larger heads and fangs, and hairy bodies and legs.
+
+Most giant spiders are simply much bigger versions of the web-spinning large spiders.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 6
 @37431 = ~Your struggle to find and kill Lord Roenall takes too long, and almost belatedly you realize that your forces about you have become thinner and are falling back despite themselves.
 
@@ -5363,6 +5388,22 @@ Requires:
 
 Weight: 12~
 
+// poisonous > venomous, long forgotten battlefield > long-forgotten battlefield
+@39535 = ~While working for the Shadow Thieves, Fargon Fol collected thousands of small venomous snakes to create the Asp's Nest. Fargon took each snake and with her powerful magic she made a dart of each. She made the dart so that when it strikes its opponent, the snake returns to life, biting and inflicting poison damage on the target. The title Asp's Nest refers to the entire collection of darts, most of which have vanished, either destroyed in use or lost on a long-forgotten battlefield.
+
+STATISTICS:
+
+Combat abilities:
+– Hit target must save vs. Death or take 1 point of damage every 3 seconds until 40 Hit Points of damage has been inflicted
+
+THAC0: +1
+Damage: 1d3+1 (missile)
+Speed Factor: 1
+Proficiency Type: Dart
+Type: One-handed
+
+Weight: 0~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @39538 = ~Hunting gorgons is a highly dangerous drow sport. Often, after a successful hunt, the blood of the gorgon is taken and used in the creation of a new suit of plate. This special type of drow plate is actually able to withstand the light of the surface world.
 
@@ -5561,6 +5602,19 @@ Requires:
  5 Strength
 
 Weight: 3~
+
+// poisonous > venomous
+@39656 = ~This black spider figurine fits in the palm of your hand. When the command word is spoken, the figurine comes to life as a semi-intelligent spider called Kitthix. The huge spider will obey its master's commands for the duration of the spell or until slain. After one hour, regardless of whether the spider lived or died, the figurine returns. It takes a day to recharge the figurine.
+
+STATISTICS:
+
+Charge abilities:
+– Summon Kitthix once per day
+  Range: 20 ft.
+  Duration: 1 hour
+  The spider can phase during combat. It can also use its Web Tangle ability, which sprays a stream of webbing at one target. If the target fails its Save vs. Spell at -2, it will be held by the webbing for 2 rounds. Kitthix's melee attack inflicts 1d8 damage (piercing), occurs 3/2 times per round, and is venomous (Save vs. Poison at -1 negates).
+
+Weight: 0~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 6
 @39679 = ~Dragonslayer: Peridan

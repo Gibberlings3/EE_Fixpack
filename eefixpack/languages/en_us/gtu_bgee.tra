@@ -4378,6 +4378,14 @@ Kobolds are a cowardly, sadistic race of short humanoids that vigorously contest
 
 Barely clearing three feet in height, kobolds have scaly hides that range from dark, rusty brown to a rusty black. They smell of damp dogs and stagnant water. Their eyes glow like a pair of bright red sparks, and they have two small horns ranging from tan to white. Because of the kobold fondness for wearing raggedy garb of red and orange, their non-prehensile rat-like tails, and their language (which sounds like small dogs yapping), these fell creatures are often not taken seriously. This is often a fatal mistake, for what they lack in size and strength they make up in ferocity and tenacity.~
 
+// poisonous > venomous
+@16000 = ~Giant Spider
+Spiders are aggressive predators, dwelling both above and below ground. Most are venomous and bite prey before devouring them because unconscious victims are easier to carry to a lair.
+
+Spiders have eight legs and eight eyes. They usually fit into two categories: web-spinners, which have bulbous abdomens and thin, sleek legs; and hunting spiders, which have smaller bodies, larger heads and fangs, and hairy bodies and legs.
+
+Most giant spiders are simply much bigger versions of the web-spinning large spiders.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @16040 = ~I am sorry for~
 
@@ -4819,6 +4827,15 @@ STATISTICS:
 
 Strength: 24 (Storm Giant Strength)
 Duration: 2 hours
+
+Weight: 1~
+
+// imbibed > imbiber
+@17857 = ~The elixir of health is a powerful healing mixture designed to cleanse the body of all impurities. First, it cures all poisons and diseases; then, once the system has been purged, the imbiber is cured by 10 Hit Points to speed the recovery process.
+
+STATISTICS:
+
+Special: Cures poison and disease and heals 10 Hit Points
 
 Weight: 1~
 
@@ -8632,6 +8649,22 @@ STATISTICS:
 
 Equipped abilities:
 – Regenerate 1 Hit Point per round
+
+Weight: 0~
+
+// poisonous > venomous, long forgotten battlefield > long-forgotten battlefield
+@30711 = ~While working for the Shadow Thieves, Fargon Fol collected thousands of small venomous snakes to create the Asp's Nest. Fargon took each snake and with her powerful magic she made a dart of each. She made the dart so that when it strikes its opponent, the snake returns to life, biting and inflicting poison damage on the target. The title Asp's Nest refers to the entire collection of darts, most of which have vanished, either destroyed in use or lost on a long-forgotten battlefield.
+
+STATISTICS:
+
+Combat abilities:
+– Hit target takes 1 point of poison damage every 3 seconds for 2 turns (Save vs. Death negates)
+
+THAC0: +1
+Damage: 1d3+1 (missile)
+Speed Factor: 1
+Proficiency Type: Dart
+Type: One-handed
 
 Weight: 0~
 

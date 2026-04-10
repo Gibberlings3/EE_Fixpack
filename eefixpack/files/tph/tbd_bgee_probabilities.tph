@@ -165,7 +165,7 @@ COPY_EXISTING ~ax1h01.itm~   ~override~ // battle axe: 1% to break
               ~sw1h12.itm~   ~override~ // hull's long sword: 1% to break
               ~sw1h17.itm~   ~override~ // perdue's short sword: 1% to break
               ~sw1h20.itm~   ~override~ // scimitar: 1% to break
-              ~sw1h21.itm~   ~override~ // short sword: 1% to break
+//              ~sw1h21.itm~   ~override~ // short sword: 1% to break - effect removed elsewhere
               ~sw1h99.itm~   ~override~ // sword of chaos: 10% vorpal
 //            ~sw1p01.itm~   ~override~ // viper's edge +2: lots of random effects, seems fine
               ~sw2h01.itm~   ~override~ // two-handed sword: 1% to break

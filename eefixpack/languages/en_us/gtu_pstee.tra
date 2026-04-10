@@ -5989,6 +5989,9 @@ Weight: 0
 
 This piece of sweet, dark chocolate has had its crunchy, praline-filled center prayed over by the Eoialn, an order of wise, mystical monks from the Prime World of Irm. Eating it will protect the user against the forces of evil for a time.~
 
+// poisonous > venomous
+@52861 = ~As you close your eyes, you blink and re-open them - your eyes are brimming with tears, and you are overcome with a terrible sensation of *drowning.* As the sensation rolls through you, there is a stirring in your breast, a *hunger,* venomous like a serpent, BITING into your heart, until you feel as if your breast will *explode.* You want desperately to steady yourself, focus, but all that comes to your eye is tears...~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @52894 = ~Her words slide off of him like water. The serpent in her breast, the one piercing her heart with its poison has been replaced by this serpent in the flesh. She sees nothing of this, and his next words are planned, carefully, so carefully...~
 
@@ -7857,6 +7860,12 @@ QUIVERING PALM: The next successful attack forces the opponent to save vs. Spell
 — 20th level: Becomes immune to non-magical weapons.
 — Alignment restricted to lawful.
 — Hit Die: d8~
+
+// poisonous > venomous
+@68912 = ~Giant Spider
+Spiders are aggressive predators, dwelling both above and below ground. Most are venomous and bite prey before devouring them because unconscious victims are easier to carry to a lair.
+Spiders have eight legs and eight eyes. They usually fit into two categories: web-spinners, which have bulbous abdomens and thin, sleek legs; and hunting spiders, which have smaller bodies, larger heads and fangs, and hairy bodies and legs.
+Most giant spiders are simply much bigger versions of the web-spinning large spiders.~
 
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @106577 = ~So you have come?~
