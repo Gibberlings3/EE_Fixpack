@@ -1455,6 +1455,10 @@ COPY_EXISTING ~spcl152.spl~ ~override~ // Barbarian rage
   LPF ALTER_EFFECT INT_VAR match_opcode=321 STR_VAR match_resource=SPCL102 resource=SPCL152 END
   BUT_ONLY // Effect removing previous instances of rage needs to be first in stack
 
+// should be setting CANNOT_TURN_INVISIBLE spell states
+COPY_EXISTING ~spcl732.spl~  ~override~ // true sight [watcher]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 221 opcode = 328 parameter1 = 0 parameter2 = 72 timing = 0 duration = 7 special = 1 END // spellstate: CANNOT_TURN_INVISIBLE
+
 // has permanent-timed effect with duration
 COPY_EXISTING ~spin672.spl~              ~override~ // <Invalid Strref -1> - causes invisibility - plays sound EFF_M51
               ~spin878.spl~              ~override~

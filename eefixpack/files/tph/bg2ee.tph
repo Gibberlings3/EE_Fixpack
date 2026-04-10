@@ -1363,6 +1363,10 @@ COPY_EXISTING ~ohhsumm.spl~ ~override~ // children of the night
   LPF CD_EXTEND-O-MATIC INT_VAR step_dur = 6 level_cap = 50 END // 1 round/level
   BUT_ONLY
 
+// should be setting CANNOT_TURN_INVISIBLE spell states
+COPY_EXISTING ~spcl732.spl~  ~override~ // true sight [watcher]
+  LPF CLONE_EFFECT INT_VAR match_opcode = 221 opcode = 328 parameter1 = 0 parameter2 = 72 timing = 0 duration = 7 special = 1 END // spellstate: CANNOT_TURN_INVISIBLE
+
 // tbd, cam
 // shadow twin duration should be two turns, not one
 COPY_EXISTING ~spcl936.spl~ ~override~ // shadow twin
