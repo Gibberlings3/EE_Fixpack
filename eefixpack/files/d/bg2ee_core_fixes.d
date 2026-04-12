@@ -910,3 +910,7 @@ END
 
 // thieves guild guard brannel shouldn't use intro dialogue when prompted to warn
 ADD_STATE_TRIGGER shthdr01 0 ~Global("LathanPlot","GLOBAL",0) !Global("PGFailed","GLOBAL",1)~ 2
+
+// Drow creature trader in Ust Natha should not be interrupted when teleporting creatures out of their cells
+REPLACE_TRANS_ACTION DADROW16 BEGIN 9 10 11 12 END BEGIN 0 END ~\(SetGlobal("\(Gnoll\|Troll\|Spirit\|Umber\)Sold","AR2200",1)\)~ ~StartCutSceneMode() \1~ UNLESS ~StartCutSceneMode()~
+REPLACE_TRANS_ACTION DADROW16 BEGIN 9 10 11 12 END BEGIN 0 END ~\(ActionOverride(LastTalkedToBy(),ReallyForceSpell("[^"]+",PERM_CHARM))\)~ ~\1 EndCutSceneMode()~ UNLESS ~EndCutSceneMode()~
