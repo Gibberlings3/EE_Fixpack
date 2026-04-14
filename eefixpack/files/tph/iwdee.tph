@@ -252,6 +252,13 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
   END
 BUT_ONLY
 
+// Malavon should be backed by his apprentice mage Ilair after defeating his simulacrum
+COPY_EXISTING ~ar8010.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(SetGlobal("#spawn_group_0","MYAREA",1)\)~ ~\1 CreateCreature("ilair",[330.617],S)~
+  END
+BUT_ONLY
+
 // tbd, cam
 // player ai checks if magical weapon present before casting shillelagh, but checks old resources
 COPY ~scripts/cleric1.bs~ ~scripts/cleric1.bs~
