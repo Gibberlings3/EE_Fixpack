@@ -253,6 +253,9 @@ Weight: 14~
 @20007 = ~Unfff!~ [fthief1l]
 @20011 = ~Uhhh.~ [fthief1m]
 
+// this line just needs the sound reference removed - no text changes
+@20969 = ~You cannot control more than 6 monsters at any given time.~
+
 // ie-5925, cam
 // cause disease is an abjuration spell, not necromancy
 @21461 = ~Soul Eater

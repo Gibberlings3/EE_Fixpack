@@ -16,6 +16,7 @@ ACTION_IF FILE_EXISTS ~eefixpack/languages/%vo_lang%/sounds/charstr.2da~ BEGIN /
       REPLACE_TEXTUALLY ~[ %TAB%]20011[ %TAB%]~ ~ 20007 ~
       REPLACE_TEXTUALLY ~[ %TAB%]temp20011[ %TAB%]~ ~ 20011 ~
       REPLACE_TEXTUALLY ~[ %TAB%]26213[ %TAB%]~ ~ 26214 ~ // male3 uses damage sound for dying; 
+      REPLACE_TEXTUALLY ~[ %TAB%]20969[ %TAB%]~ ~ 34566 ~ // 20969 is used by enginest.2da, so this text was moved here
       PRETTY_PRINT_2DA
       BUT_ONLY
     
@@ -95,6 +96,7 @@ ACTION_PHP_EACH cd_iwdee_soundset_map AS params => soundset BEGIN
       
       OUTER_SET strref = ~%params_1%_%number%~ // from charstr lookups, earlier
       ACTION_GET_STRREF strref string
+//      PRINT ~ == assigning to strref %strref% - %BASH_FOR_RES%~
       STRING_SET_EVALUATE strref ~%string%~ [%BASH_FOR_RES%] // add sound file to existing string
       
       OUTER_FOR (index = 0 ; index < 7 ; ++index) BEGIN // reset row0-row6 variables
@@ -219,3 +221,10 @@ ACTION_PHP_EACH cd_iwdee_party_soundset_map AS creature => column BEGIN
     BUT_ONLY
 
 END
+
+ACTION_GET_STRREF 20598 temp // hrothgar's death re-uses one of the female soundset lines, so swap to a new text-only line
+COPY_EXISTING ~ar1004.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~20598~ "~%temp%~"
+  END
+  BUT_ONLY   
