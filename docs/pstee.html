@@ -16,7 +16,7 @@
 <body>
 <p><strong>Developer note:</strong> this is essentially copy-pasted (minus this paragraph, natch) into the documentation pages on the G3 project page. Feel free to add/adjust the documentation as needed. The class <span class="bg2fp_beta">bg2fp_beta (red)</span> should be used to mark fixes that are in the Beta Core Fixes (nothing yet) and the <span class="bg2fp_modder">bg2fp_modder (magenta)</span> class should be used for modder notes. In the live pages, these are normally colored, but hidden, unless the user enables them. </p>
 <!-- documentation begins here -->
-<p>This documentation is complete as of Alpha 3 - October 15, 2025. </p>
+<p>This documentation is complete as of April 17, 2026, through <a href="https://github.com/Gibberlings3/EE_Fixpack/commit/44edf42f38043d389a5dd24f6426bbf7e4edfe44">this commit</a>.</p>
 <p>
   <input id="cd_modder_show" name="cd_modder_show" onclick="$('.bg2fp_modder').css({'display':'block'}); $('span.bg2fp_modder').css({'display':'inline'}); $('#cd_modder_show').attr('disabled', 'disabled'); $('#cd_modder_hide').removeAttr('disabled');" type="button" value="Show Modder Notes" />
   <input disabled="disabled" id="cd_modder_hide" name="cd_modder_hide" onclick="$('.bg2fp_modder').css({'display':'none'}); $('span.bg2fp_modder').css({'display':'none'}); $('#cd_modder_hide').attr('disabled', 'disabled'); $('#cd_modder_show').removeAttr('disabled');" type="button" value="Hide Modder Notes" />
@@ -58,7 +58,7 @@
   <li>One of the replies in Fall-from-Grace's dialogue used the wrong string. <span class="bg2fp_modder">(dgrace.dlg)</span></li>
   <li>When Ingress' teeth are upgraded, they should preserve the damage type. <span class="bg2fp_modder">(ipteeth.dlg)</span></li>
   <li>One attack action for Vhailor wasn't working as it had the wrong actor name<span class="bg2fp_modder"> (dtrias.dlg)</span></li>
-  <li>Cleared a reference to a non-existant item in Marissa's dialogue<span class="bg2fp_modder"> (dmarissa.dlg)</span></li>
+  <li>Cleared a reference to a nonexistent item in Marissa's dialogue<span class="bg2fp_modder"> (dmarissa.dlg)</span></li>
   <li>Nihl Xander should give you an existing 'Pacify' scroll when following the Dreambuilder conversation branch<span class="bg2fp_modder"> (dxander.dlg)</span></li>
   <li>If actions in dialogues were misordered in a very specific and technical way, some of the actions (such as updating variables for quests) may not get executed. These action queues have been re-ordered to be more robust.<span class="bg2fp_modder"> (bladeim.dlg, d300mer5.dlg, dadyzoel.dlg, danam.dlg, dannah.dlg, dawait.dlg, dbaria.dlg, dberrog.dlg, dbish.dlg, dbladeim.dlg, dburgher.dlg, dcarver.dlg, dcoax.dlg, dcraddo.dlg, ddakkon.dlg, ddeathad.dlg, ddolora.dlg, ddust.dlg, ddustfem.dlg, deivene.dlg, deli.dlg, delobran.dlg, dfinnote.dlg, dghiverm.dlg, dgiantsk.dlg, dgith.dlg, dgoncal.dlg, dhgcorv.dlg, dhguard.dlg, dhivef1.dlg, dhpatrol.dlg, diannis.dlg, dignus.dlg, dkeldor.dlg, dkimasxi.dlg, dkitla.dlg, dlingash.dlg, dmar.dlg, dmorte.dlg, dnordom.dlg, dpox.dlg, dravel.dlg, drkchsr.dlg, dr_bone.dlg, dsabast.dlg, dsarhava.dlg, dscpat2.dlg, dstalema.dlg, dsybil.dlg, dthornco.dlg, dtires.dlg, dvaxis.dlg, dvhail.dlg, dzm985.dlg, finnote.dlg)</span></li>
   <li>Amarysse could have a  'No Valid Links or Replies' error if you were non-committal when speaking with Nodd. Also fixed a minor trigger error in Nodd's dialogue. <span class="bg2fp_modder">(dnodd.dlg, damarys.dlg)</span></li>
@@ -71,11 +71,13 @@
   <li>Uhir's Knife should not by usable by Annah. <span class="bg2fp_modder">(uhrknf.itm)</span></li>
   <li>Silver Fork and Entropic Blade should not be usable by priests or some NPCs. <span class="bg2fp_modder">(fork.itm, supwep.itm)</span></li>
   <li>Various items were given to the party with the wrong number of charges<span class="bg2fp_modder"> (dcandri.dlg, ddakkon.dlg, debb.dlg, dghiverm.dlg, diannis.dlg, dignus.dlg, dkitla.dlg, dnordom.dlg)</span></li>
+  <li>Every item has three item charge fields when added to an area, store, or creature, even if the item doesn't use charges (items that stack use the first charge field as quantity). A comprehensive review was performed, and all items that had charges over their maximum (or didn't need any) have been adjusted; specifics in the <a href="https://www.gibberlings3.net/forums/topic/41152-all-overcharged-and-missing-items/">associated forum thread</a>. For the most part these bugs aren't visible to players, with some exceptions. <span class="bg2fp_modder">(ar1500.are, ar1600.are, cassius.cre, ravel.cre, sbaur.cre)</span></li>
 </ul>
 <h3> <a name="creature_fixes" id="creature_fixes"></a>Creature Fixes <a href="#creature_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
 <ul>
   <li>Corrected races for several creatures. <span class="bg2fp_modder">(bsohmien.cre, hbdygrd.cre, lady.cre, trias.cre, triasa.cre, triasb.cre, triasc.cre, worm.cre)</span></li>
   <li>Trias is vulnerable to several spell effects that make it impossible to finish the game such as Abyssal Fury<span class="bg2fp_modder"> (imdeath.itm, trias.cre, triasa.cre, triasb.cre, triasc.cre, splstate.ids, spwi912.spl, spwi912a.spl, spwi912b.spl)</span></li>
+  <li>Two creatures referred to a nonexistent item that (from its file name) should have prevented fear; this item is created <span class="bg2fp_modder">(imfear.itm)</span></li>
   <!--<li>Multiple creatures had natural melee attacks, but were not receiving strength bonuses when using them. <span class="bg2fp_modder">(gronk.itm, mshbite.itm, shadow1.itm, shadow2.itm, shadow3.itm, trigit.itm, troco.itm, vargbite.itm, zfist.itm, zfistw.itm)</span></li>-->
 </ul>
 <h3> <a name="scripting_fixes" id="scripting_fixes"></a>Scripting/AI Fixes <a href="#scripting_fixes"><img src="https://content.invisioncic.com/u284679/monthly_2022_11/link.png.a311bee5fc8e33e5450e13e9586b2372.png" alt="Link to this section" width="14" height="9" /></a></h3>
