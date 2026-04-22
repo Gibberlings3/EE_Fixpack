@@ -23,6 +23,7 @@ INCLUDE ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ // fixes "(null)" da
 
 INCLUDE ~eefixpack/files/tph/gam_npcs.tph~ // corrects spawn orientation for GAM NPCs
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
+INCLUDE ~eefixpack/files/tph/a7/trigger_param_fix.tph~ // fix parameter order in several script trigger definitions
 INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
 INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
 INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
