@@ -1,0 +1,8 @@
+// Fixes incorrect parameter order of NearSavedLocation() and CheckItemSlot() script triggers
+
+COPY_EXISTING ~trigger.ids~ ~override~
+  PATCH_FOR_EACH trigger IN ~NearSavedLocation~ ~CheckItemSlot~ BEGIN
+    REPLACE_TEXTUALLY ~\(0x[0-9a-f]+\)[ %TAB%]+%trigger%(\(O:[^,]+\),\(S:[^,]+\),\(I:[^)]+\))~
+                      ~\1 %trigger%(\3,\2,\4)~
+  END
+BUT_ONLY

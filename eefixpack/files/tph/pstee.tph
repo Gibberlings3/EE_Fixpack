@@ -47,6 +47,7 @@ COPY_EXISTING ~damages.ids~ ~override~
 APPEND ~splstate.ids~ ~136 DEATH_IMMUNITY~
 
 INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
+INCLUDE ~eefixpack/files/tph/a7/trigger_param_fix.tph~ // fix parameter order in several script trigger definitions
 INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
 INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
