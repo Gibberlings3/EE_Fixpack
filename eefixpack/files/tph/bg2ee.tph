@@ -202,6 +202,7 @@ INCLUDE ~eefixpack/files/tph/temple.tph~           // temple changes for ar0900/
 INCLUDE ~eefixpack/files/tph/hexxat_death.tph~     // better death scripting for hexxat
 INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~         // fix random XP gains on NPC dual-classes and other events
 INCLUDE ~eefixpack/files/tph/ground_lightning.tph~ // certain projectiles from ground traps cause crashes
+INCLUDE ~eefixpack/files/tph/a7/bg2_chapter6_scripts.tph~ // improve chapter checks in creature spawning scripts
 
 // fix misspelled resref
 COPY_EXISTING ~cut85a.bcs~   ~override~
