@@ -1,0 +1,7 @@
+IF
+  Entered([ANYONE])
+  HasItemEquiped("OHBNOSHU",LastTrigger)
+THEN
+  RESPONSE #100
+    NoAction()
+END
