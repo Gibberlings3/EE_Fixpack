@@ -559,6 +559,12 @@ ACTION_IF (NOT FILE_EXISTS_IN_GAME ~AR6300.BCS~) BEGIN
 END
 EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
+// Trigger state of ground traps that require the Noser Uniform being equipped in the BP2 Staging Area (OH8100)
+// should not persist indefinitely after they are passed.
+ACTION_FOR_EACH resref IN ~ohbloun1~ ~ohbloun2~ ~ohbloun3~ ~ohbloun4~ BEGIN
+  EXTEND_BOTTOM ~%resref%.bcs~ ~eefixpack/files/baf/bp2_noser_traps.baf~
+END
+
 INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
 /////                                                  \\\\\
