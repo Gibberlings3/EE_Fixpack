@@ -1,0 +1,21 @@
+// Scripts for spawning creatures in chapter 6: Expand check to chapter > 5
+COPY_EXISTING ~c6behold.bcs~ ~override~
+              ~c6goljug.bcs~ ~override~
+              ~c6golsto.bcs~ ~override~
+              ~c6mindul.bcs~ ~override~
+              ~c6rakraj.bcs~ ~override~
+              ~c6vamp.bcs~   ~override~
+              ~c6vamver.bcs~ ~override~
+              ~c6weregr.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~Global("Chapter","GLOBAL",6)~ ~GlobalGT("Chapter","GLOBAL",5)~
+  END
+BUT_ONLY
+
+// Beholders spawning in Athkatla's sewers should depend on the outcome of the Unseeing Eye quest.
+// Adding AreaCheck() since the script can theoretically be used globally in the game for spawning beholders.
+COPY_EXISTING ~c6behold.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global\(GT\)?("Chapter","GLOBAL",.*\)~ ~\1 OR(2) !Global("UnseeingEye","GLOBAL",2) !AreaCheck("AR0701")~
+  END
+BUT_ONLY
