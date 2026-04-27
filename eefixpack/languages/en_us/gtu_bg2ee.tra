@@ -9895,6 +9895,9 @@ You have lost the day.~
 // [automatic scan] Issues: 1  | Surplus leading whitespace at line 1
 @40977 = ~'Tis a grand thing to have the council anoint the playhouse so. And an even greater honor to be a part of the troupe that done it. This will be a great place someday... a fine, honorable theater.~
 
+// was at in its last moments > was in its last moments
+@41008 = ~I must thank you for the timely rescue. I was worried my life was in its last moments. Please, let me pay you something that I might show my gratitude.~
+
 // [automatic scan] Issues: 1  | Surplus trailing whitespace at line 1
 @41043 = ~Yes, yes, enough with the chatter.~
 
