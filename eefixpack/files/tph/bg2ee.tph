@@ -255,6 +255,14 @@ COPY_EXISTING ~ar0800.bcs~ ~override~
     REPLACE_TEXTUALLY ~\(Global("OHN_bodhiamb","AR0800",2)\)~ ~!Exists("bodhiamb") \1~
   END 
 
+// can break transitions to ch6 bodhi's lair if never visited in ch6 but come back in ch7
+COPY_EXISTING ~ar0802.bcs~ ~override~
+              ~ar0804.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY ~Global("Chapter","GLOBAL",6)~ ~GlobalGT("Chapter","GLOBAL",5)~
+  END
+  BUT_ONLY   
+
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
 COPY_EXISTING ~ar1100.bcs~ ~override~
