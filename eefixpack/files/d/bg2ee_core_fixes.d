@@ -85,7 +85,13 @@ END
 
 // trying to make the exit statue from spellhold dungeon level 1 more reliable - ppridd.dlg and ar1512.bcs
 ADD_STATE_TRIGGER PPRIDD 3 ~Global("openHead","AR1512",0)~
-ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END 
+ALTER_TRANS PPRIDD BEGIN 3 END BEGIN END BEGIN ACTION ~SetGlobal("openHead","AR1512",1)~ END
+
+// add shorcut to dead warden branch of tagget's dialogue
+// https://github.com/Gibberlings3/EE_Fixpack/issues/251
+EXTEND_BOTTOM ptagget 1 
+  IF ~Dead("pwarden") Global("ThrallOrb","GLOBAL",2)~ THEN GOTO 34
+END   
 
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 ADD_STATE_TRIGGER neeraj 137 ~Global("SahauginTravel","GLOBAL",0)~
