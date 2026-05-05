@@ -1,0 +1,35 @@
+// table of resources that should be patched to NOT trigger the Cowled Wizards in BG2
+ACTION_DEFINE_ASSOCIATIVE_ARRAY a7_bulk_cowled_res BEGIN
+  // resref, ext, clone, check_headers, opcode, cur_spl_resref, new_spl_resref, level => resref
+  // resref: ITM or SPL resref
+  // ext: resource type (ITM or SPL)
+  // clone: 0=update spell type only, 1=clone and update spell type
+  // check_headers: 0=only global effects, 1=only header effects
+  // opcode: opcode to match
+  // cur_spl_resref: current SPL resref
+  // new_spl_resref: new SPL resref (ignored if clone=0)
+  // level: spell level to cast
+  blun26, itm, 1, 1, 146, spwi304, blun26f, 1 => blun26
+  blun27, itm, 1, 1, 146, spwi304, blun27f, 10 => blun27
+  blun29, itm, 0, 1, 146, spblun29, none, 10 => blun29
+  chan20, itm, 1, 1, 148, spwi503, chan20c, 10 => chan20
+  ohdmask, itm, 1, 1, 146, spwi506, ohdmaskd, 10 => ohdmask
+  ohdsw03, itm, 1, 1, 146, SPWI304, ohdsw03f, 10 => ohdsw03
+  ohnwand1, itm, 0, 1, 146, ohnwand1, none, 10 => ohnwand1
+  ohrbelt2, itm, 1, 0, 232, spwi406, ohrbel2g, 20 => ohrbelt2
+  ohrbelt2, itm, 1, 1, 146, spwi406, ohrbel2g, 20 => ohrbelt2
+  ohrboot1, itm, 1, 1, 146, spwi505, ohrboo1d, 1 => ohrboot1
+  ohrclck4, itm, 1, 1, 146, spwi606, ohrclc4m, 20 => ohrclck4
+  ring27, itm, 1, 1, 146, sppr503, ring27f, 1 => ring27 // flame strike damage is adjusted later
+  ring27, itm, 1, 1, 148, spwi103, ring27h, 1 => ring27
+  ring28, itm, 1, 1, 146, spwi405, ring28i, 1 => ring28
+  ring29, itm, 1, 1, 146, spwi625, ring29s, 10 => ring29
+  rods06, itm, 1, 1, 146, spwi704, rods06r, 10 => rods06
+  staf13, itm, 1, 1, 146, spwi308, staf13l, 10 => staf13
+  staf17, itm, 1, 1, 146, spwi418, staf17s, 10 => staf17
+  sw1h51, itm, 0, 1, 146, spin714, none, 10 => sw1h51
+  sw2h07, itm, 1, 1, 146, spwi304, sw2h07f, 10 => sw2h07
+  wand16, itm, 0, 1, 146, spin713, none, 10 => wand16
+END
+
+INCLUDE ~eefixpack/files/tph/bulk_spl_cowleds_fixes_code.tph~

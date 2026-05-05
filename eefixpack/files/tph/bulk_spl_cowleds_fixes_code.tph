@@ -1,0 +1,100 @@
+// fixes item spell effects to NOT trigger the Cowled Wizards in BG2
+
+// Clones SPL "src_resref" into "dst_resref", updates spell type and trims spell headers
+DEFINE_ACTION_FUNCTION a7_clone_spell
+INT_VAR
+  spell_type = 4    // new spell type (default: innate)
+  level = 10        // spell level to preserve (specify -1 to preserve all headers)
+STR_VAR
+  src_resref = ~~   // Resref of the spell to clone
+  dst_resref = ~~   // Resref of the cloned spell
+RET
+  success
+BEGIN
+  OUTER_SET success = 0
+
+  COPY_EXISTING ~%src_resref%.spl~ ~override/%dst_resref%.spl~
+    WRITE_SHORT 0x1c spell_type
+
+    PATCH_IF (level >= 0) BEGIN
+      // determining header to keep
+      SET header_index = 0
+      GET_OFFSET_ARRAY headers_array SPL_V10_HEADERS
+      PHP_EACH headers_array AS index => ofs_header BEGIN
+        READ_SHORT (ofs_header + 0x10) min_level
+        SET header_index = (min_level <= level) ? index : header_index
+      END
+
+      // removing unrelated headers
+      READ_SHORT 0x64 ofs_headers
+      READ_SHORT 0x68 num_headers
+      WRITE_SHORT (ofs_headers + header_index * 40 + 0x10) 256  // exclude preserved header from DELETE_SPELL_HEADER match
+      FOR (idx = num_headers - 1; idx >= 0; --idx) BEGIN
+        PATCH_IF (idx != header_index) BEGIN
+          READ_SHORT (ofs_headers + idx * 40 + 0x10) min_level
+          LPF DELETE_SPELL_HEADER INT_VAR header_type = "-1" min_level END
+        END
+      END
+      WRITE_SHORT (ofs_headers + 0x10) 1  // preserved header is valid for all character levels
+    END
+
+    SET success = 1
+  IF_EXISTS
+END
+
+
+ACTION_PHP_EACH a7_bulk_cowled_res AS params => resref BEGIN
+
+  // 0_resref, 1_ext, 2_clone, 3_check_headers, 4_opcode, 5_cur_spl_resref, 6_new_spl_resref, 7_level => resref
+  OUTER_SPRINT ext $params(~1~)
+  OUTER_SET clone = $params(~2~)
+  OUTER_SET check_globals = $params(~3~) == 0
+  OUTER_SET check_headers = $params(~3~) != 0
+  OUTER_SET match_opcode = $params(~4~)
+  OUTER_SET level = $params(~7~)
+
+  OUTER_SPRINT src_resref $params(~5~)
+  ACTION_IF (clone) BEGIN
+    // clone spell: src -> dst
+    OUTER_SPRINT dst_resref $params(~6~)
+  END ELSE BEGIN
+    // update only: src == dst
+    OUTER_SPRINT dst_resref ~%src_resref%~
+  END
+
+  LAF a7_clone_spell
+    INT_VAR
+      level
+    STR_VAR
+      src_resref
+      dst_resref
+    RET
+      success
+  END
+
+  ACTION_IF (success) BEGIN
+
+    // updating spell resref in parent resource
+    ACTION_IF (clone) BEGIN
+
+      COPY_EXISTING ~%resref%.%ext%~ ~override~
+        LPF ALTER_EFFECT
+          INT_VAR
+            check_globals
+            check_headers
+            match_opcode
+          STR_VAR
+            match_resource = EVAL ~%src_resref%~
+            resource = EVAL ~%dst_resref%~
+        END
+      BUT_ONLY IF_EXISTS
+
+    END
+
+  END ELSE BEGIN
+
+    WARN ~WARNING: %resref%.%ext%: Cloning "%src_resref%.spl" was not successful. Skipping operation.~
+
+  END
+
+END
