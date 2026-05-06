@@ -1023,6 +1023,7 @@ INCLUDE ~eefixpack/files/tph/tbd_sod_action4-7_restoration.tph~
 /////                                                  \\\\\
 
 INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bgee.tph~ // bulk general changes
+INCLUDE ~eefixpack/files/tph/bulk_spl_cowleds_fixes_bgee.tph~ // bulk changes for items that trigger the Cowled Wizards
 
 INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
 INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
@@ -1445,6 +1446,11 @@ COPY_EXISTING ~shoal.spl~ ~override~
 // change survivable shoal kiss to use magic damage, not acid
 COPY_EXISTING ~shoal1.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
+
+// change "Flame Strike" damage of "Ring of Fire Control" to match item description
+COPY_EXISTING ~ring27f.spl~ ~override~
+  LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 dicenumber = 6 END
+BUT_ONLY
 
 // tbd, cam (from jmerry)
 // misordered 321 removes several (cosmetic) protections from barbarian rage

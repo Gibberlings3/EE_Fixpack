@@ -1,0 +1,54 @@
+// table of resources that should be patched to NOT trigger the Cowled Wizards in BG2
+ACTION_DEFINE_ASSOCIATIVE_ARRAY a7_bulk_cowled_res BEGIN
+  // resref, ext, clone, check_headers, opcode, cur_spl_resref, new_spl_resref, level => resref
+  // resref: ITM or SPL resref
+  // ext: resource type (ITM or SPL)
+  // clone: 0=update spell type only, 1=clone and update spell type
+  // check_headers: 0=only global effects, 1=only header effects
+  // opcode: opcode to match
+  // cur_spl_resref: current SPL resref
+  // new_spl_resref: new SPL resref (ignored if clone=0)
+  // level: spell level to cast
+  ax1h01, itm, 0, 1, 146, ax1h01, none, 10 => ax1h01
+  blun02, itm, 0, 1, 146, blun02, none, 10 => blun02
+  blun04, itm, 0, 1, 146, blun04, none, 10 => blun04
+  blun06, itm, 0, 1, 146, blun06, none, 10 => blun06
+  blun08, itm, 0, 1, 146, blun08, none, 10 => blun08
+  cattac1, itm, 0, 1, 146, cattac1, none, 10 => cattac1
+  dagg01, itm, 0, 1, 146, dagg01, none, 10 => dagg01
+  dagg06, itm, 0, 1, 146, dagg06, none, 10 => dagg06
+  dagg07, itm, 0, 1, 146, dagg07, none, 10 => dagg07
+  halb01, itm, 0, 1, 146, halb01, none, 10 => halb01
+  hamm01, itm, 0, 1, 146, hamm01, none, 10 => hamm01
+  sper01, itm, 0, 1, 146, sper01, none, 10 => sper01
+  sw1h01, itm, 0, 1, 146, sw1h01, none, 10 => sw1h01
+  sw1h04, itm, 0, 1, 146, sw1h04, none, 10 => sw1h04
+  sw1h07, itm, 0, 1, 146, sw1h07, none, 10 => sw1h07
+  sw1h12, itm, 0, 1, 146, sw1h12, none, 10 => sw1h12
+  sw1h17, itm, 0, 1, 146, sw1h17, none, 10 => sw1h17
+  sw1h20, itm, 0, 1, 146, sw1h20, none, 10 => sw1h20
+  sw1h21, itm, 0, 1, 146, sw1h21, none, 10 => sw1h21
+  sw2h01, itm, 0, 1, 146, sw2h01, none, 10 => sw2h01
+  sw2h01b, itm, 0, 1, 146, sw2h01b, none, 10 => sw2h01b
+  ring27, itm, 1, 1, 146, sppr503, ring27f, 1 => ring27 // flame strike damage is adjusted later
+  ring27, itm, 1, 1, 148, spwi103, ring27h, 1 => ring27
+  shld08p, itm, 1, 0, 232, spwi413, 1tarso, 10 => shld08p
+  shld08p, itm, 1, 0, 232, spwi405, 1tarsi, 10 => shld08p
+  shld08p, itm, 0, 0, 232, 1tarss, none, 10 => shld08p
+END
+
+ACTION_IF (game_includes_sod) BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY a7_bulk_cowled_res BEGIN
+    // resref, ext, clone, check_headers, opcode, cur_spl_resref, new_spl_resref, level => resref
+    bdamul06, itm, 1, 1, 146, spwi322, bdamu06d, 10 => bdamul06
+    bdbow02, itm, 0, 0, 341, bdbow02, none, 10 => bdbow02
+    bdclck03, itm, 0, 0, 232, bdclck03, none, 10 => bdclck03
+    bdshld02, itm, 1, 1, 146, spwi523, bdshl02s, 10 => bdshld02
+    bdstaf03, itm, 1, 1, 146, spwi523, bdsta03s, 10 => bdstaf03
+    bdstaf03, itm, 1, 1, 146, spwi418, bdsta03f, 10 => bdstaf03
+    bdsw1h08, spl, 1, 1, 146, spwi418, bdsw108f, 10 => bdsw1h08
+    bdsw1h20, itm, 1, 1, 146, spwi223, bdsw120d, 10 => bdsw1h20
+  END
+END
+
+INCLUDE ~eefixpack/files/tph/bulk_spl_cowleds_fixes_code.tph~
