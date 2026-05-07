@@ -1,0 +1,120 @@
+// create the gold randomizing spells for creatures - good news is there are only three
+// random rolls across the entire game so only need three spells
+ACTION_FOR_EACH die IN 7 10 20 BEGIN
+
+  COPY ~eefixpack/files/spl/cdrgld0.spl~ ~override/cdrgld%die%.spl~
+    LPF ALTER_EFFECT INT_VAR match_opcode = 206 STR_VAR resource = EVAL ~%DEST_RES%~ END
+    SET upper = "-1"
+    FOR (index = 1 ; index <= die ; ++index) BEGIN
+      PATCH_IF index = die BEGIN // final loop
+        SET lower = upper + 1 // uses previous upper value
+        LPF ALTER_EFFECT INT_VAR multi_match = 1 match_opcode = 105 parameter1 = index probability2 = lower STR_VAR insert = below END // prob1 is already 100
+      END ELSE BEGIN
+        SET lower = upper + 1 // uses previous upper value
+        SET upper = (((index * 100) / die) - 1) // add -1 since rolls are 0-99, not 1-100
+        LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 105 parameter1 = index probability1 = upper probability2 = lower STR_VAR insert = below END
+      END
+    END
+
+END
+
+COPY_EXISTING ~acolyte.cre~  ~override~ // has random gold: 2 - 8 (1d7 roll)
+              ~acolyted.cre~ ~override~ // has random gold: 2 - 8 (1d7 roll)
+              ~lm1hwax.cre~  ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm1hwaxy.cre~ ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm1hwms.cre~  ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm1hwmsy.cre~ ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm1hwpo.cre~  ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm1hwpoy.cre~ ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~lm2hwla.cre~  ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~lm2hwlay.cre~ ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~lm2hwna.cre~  ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~lm2hwnay.cre~ ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~lm2hwte.cre~  ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~lm2hwtey.cre~ ~override~ // has random gold: 10 - 29 (1d20 roll)
+              ~orc2004.cre~  ~override~ // has random gold: 6 - 15 (1d10 roll)
+              ~orca2004.cre~ ~override~ // has random gold: 6 - 15 (1d10 roll)
+              ~orcewaxe.cre~ ~override~ // has random gold: 5 - 24 (1d20 roll)
+              ~orcwaxe.cre~  ~override~ // has random gold: 6 - 15 (1d10 roll)
+              ~orcwbow.cre~  ~override~ // has random gold: 6 - 15 (1d10 roll)
+//              ~priestd.cre~  ~override~ // has random gold: 2 - 8 (1d7 roll) - dead creature, skip
+              ~rdeliza.cre~  ~override~ // has random gold: 7 - 26 (1d20 roll)
+              ~rocorca.cre~  ~override~ // has random gold: 6 - 15 (1d10 roll)
+  READ_LONG  0x2bc item_off ELSE 0
+  READ_LONG  0x2c0 item_num ELSE 0
+  SET length = 0x14
+  FOR (index = 0 ; index < item_num ; ++index) BEGIN
+    READ_ASCII (item_off + 0x00 + (length * index)) item
+    PATCH_IF ("%item%" STRING_COMPARE_CASE "misc07" = 0) BEGIN
+      READ_SHORT (item_off + 0x0a + (length * index)) charge1 // static gold
+      READ_SHORT (item_off + 0x0c + (length * index)) charge2 // 1dX-1 roll
+      SET index = item_num // kill loop - can be a lil sloppy since all of these only have one misc07 item
+    END
+  END
+  WRITE_LONG 0x1c (THIS + charge1 - 1) // add fixed gold to gold field -- apply minus 1 here rather than applied spell
+  REMOVE_CRE_ITEM misc07 // delete gold item
+  LPF ADD_CRE_EFFECT INT_VAR opcode = 146 target = 1 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~cdrgld%charge2%~ END
+  BUT_ONLY
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_random_gold BEGIN
+  // area, container, base gold, 100s, 10s => area
+  ar1201, Chest1,           20,  0,  5 => ar1201 // has random gold: 20 - 69 (1d50 roll)
+  ar1201, Chest2,           14,  0,  7 => ar1201 // has random gold: 14 - 83 (1d70 roll)
+  ar3501, TrapSarcophagus,  37,  0,  5 => ar3501 // has random gold: 37 - 86 (1d50 roll)
+  ar5001, Container1,       50,  0,  7 => ar5001 // has random gold: 50 - 119 (1d70 roll)
+  ar5001, Container6,       50,  0,  3 => ar5001 // has random gold: 50 - 79 (1d30 roll)
+  ar5002, Container2,       50,  0,  7 => ar5002 // has random gold: 50 - 119 (1d70 roll)
+  ar5004, Container2,       50,  0,  7 => ar5004 // has random gold: 50 - 119 (1d70 roll)
+  ar5104, Container2,       50,  0,  7 => ar5104 // has random gold: 50 - 119 (1d70 roll)
+  ar5202, Container2,       50,  0,  8 => ar5202 // has random gold: 50 - 129 (1d80 roll)
+  ar5203, Container1,       50,  0,  7 => ar5203 // has random gold: 50 - 119 (1d70 roll)
+  ar5302, Container2,       50,  0,  7 => ar5302 // has random gold: 50 - 119 (1d70 roll)
+  ar5303, Container3,       50,  0,  7 => ar5303 // has random gold: 50 - 119 (1d70 roll)
+  ar5401, Container1,       80,  0,  3 => ar5401 // has random gold: 80 - 109 (1d30 roll)
+  ar5403, Container1,       50,  0,  7 => ar5403 // has random gold: 50 - 119 (1d70 roll)
+  ar5404, Container1,       30,  0,  3 => ar5404 // has random gold: 30 - 59 (1d30 roll)
+  ar7004, Lair1,           300, 10, 10 => ar7004 // has random gold: 300 - 1299 (1d1000 roll)
+END
+
+ACTION_PHP_EACH cd_random_gold AS params => area BEGIN
+
+  // build base + singles digit
+  OUTER_SPRINT magic ~IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",0)%WNL%THEN~ // base, 1d10
+  OUTER_FOR (index = 0 ; index < 10 ; ++index) BEGIN // all are multiples of 10, so always need a 1d10
+    OUTER_SET gold = index + params_2
+    OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",1)%WNL%SetGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
+  END
+  OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
+
+  // add tens digit
+  OUTER_SPRINT magic ~%magic%%WNL%IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",1)%WNL%THEN~ // adds 1d10*10
+  OUTER_FOR (index = 0 ; index < params_4 ; ++index) BEGIN // rolls vary in 30, 50, 70 so don't need to iterate through all
+    ACTION_IF !index BEGIN
+      OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",2)~ // skip gold add since gold = 0
+    END ELSE BEGIN
+      OUTER_SET gold = index * 10
+      OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",2)%WNL%IncrementGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
+    END
+  END
+  OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
+
+  // add hundreds digit
+  ACTION_IF !params_3 BEGIN // no hundreds digit
+    OUTER_SET final = 2
+  END ELSE BEGIN
+    OUTER_SET final = 3
+    OUTER_SPRINT magic ~%magic%%WNL%IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",2)%WNL%THEN~ // adds 1d10*10
+    OUTER_FOR (index = 0 ; index < params_4 ; ++index) BEGIN // rolls vary in 30, 50, 70 so don't need to iterate through all
+      ACTION_IF !index BEGIN
+        OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",3)~ // skip gold add since gold = 0
+      END ELSE BEGIN
+        OUTER_SET gold = index * 100
+        OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",3)%WNL%IncrementGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
+      END
+    END
+    OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
+  END
+
+  EXTEND_BOTTOM ~%area%.bcs~ ~eefixpack/files/baf/iwd_random_gold.baf~ EVALUATE_BUFFER
+
+END

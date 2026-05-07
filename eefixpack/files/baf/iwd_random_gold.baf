@@ -1,0 +1,10 @@
+%magic%
+
+IF
+  Global("cd_rgp_%params_1%","MYAREA",%final%)
+THEN
+  RESPONSE #100
+    SetGlobal("cd_rgp_%params_1%","MYAREA",99)
+    ActionOverride("%params_1%",DestroyItem("misc07"))
+    GiveObjectGoldGlobal("cd_rgt_%params_1%","MYAREA","%params_1%")
+END
