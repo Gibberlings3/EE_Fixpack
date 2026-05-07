@@ -57,63 +57,26 @@ COPY_EXISTING ~acolyte.cre~  ~override~ // has random gold: 2 - 8 (1d7 roll)
   BUT_ONLY
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_random_gold BEGIN
-  // area, container, base gold, 100s, 10s => area
-  ar1201, Chest1,           20,  0,  5 => ar1201 // has random gold: 20 - 69 (1d50 roll)
-  ar1201, Chest2,           14,  0,  7 => ar1201 // has random gold: 14 - 83 (1d70 roll)
-  ar3501, TrapSarcophagus,  37,  0,  5 => ar3501 // has random gold: 37 - 86 (1d50 roll)
-  ar5001, Container1,       50,  0,  7 => ar5001 // has random gold: 50 - 119 (1d70 roll)
-  ar5001, Container6,       50,  0,  3 => ar5001 // has random gold: 50 - 79 (1d30 roll)
-  ar5002, Container2,       50,  0,  7 => ar5002 // has random gold: 50 - 119 (1d70 roll)
-  ar5004, Container2,       50,  0,  7 => ar5004 // has random gold: 50 - 119 (1d70 roll)
-  ar5104, Container2,       50,  0,  7 => ar5104 // has random gold: 50 - 119 (1d70 roll)
-  ar5202, Container2,       50,  0,  8 => ar5202 // has random gold: 50 - 129 (1d80 roll)
-  ar5203, Container1,       50,  0,  7 => ar5203 // has random gold: 50 - 119 (1d70 roll)
-  ar5302, Container2,       50,  0,  7 => ar5302 // has random gold: 50 - 119 (1d70 roll)
-  ar5303, Container3,       50,  0,  7 => ar5303 // has random gold: 50 - 119 (1d70 roll)
-  ar5401, Container1,       80,  0,  3 => ar5401 // has random gold: 80 - 109 (1d30 roll)
-  ar5403, Container1,       50,  0,  7 => ar5403 // has random gold: 50 - 119 (1d70 roll)
-  ar5404, Container1,       30,  0,  3 => ar5404 // has random gold: 30 - 59 (1d30 roll)
-  ar7004, Lair1,           300, 10, 10 => ar7004 // has random gold: 300 - 1299 (1d1000 roll)
+  // area, container, base gold, die size => area
+  ar1201, Chest1,           19,   50 => ar1201 // has random gold: 20 - 69 (1d50 roll)
+  ar1201, Chest2,           13,   70 => ar1201 // has random gold: 14 - 83 (1d70 roll)
+  ar3501, TrapSarcophagus,  36,   50 => ar3501 // has random gold: 37 - 86 (1d50 roll)
+  ar5001, Container1,       49,   70 => ar5001 // has random gold: 50 - 119 (1d70 roll)
+  ar5001, Container6,       49,   30 => ar5001 // has random gold: 50 - 79 (1d30 roll)
+  ar5002, Container2,       49,   70 => ar5002 // has random gold: 50 - 119 (1d70 roll)
+  ar5004, Container2,       49,   70 => ar5004 // has random gold: 50 - 119 (1d70 roll)
+  ar5104, Container2,       49,   70 => ar5104 // has random gold: 50 - 119 (1d70 roll)
+  ar5202, Container2,       49,   80 => ar5202 // has random gold: 50 - 129 (1d80 roll)
+  ar5203, Container1,       49,   70 => ar5203 // has random gold: 50 - 119 (1d70 roll)
+  ar5302, Container2,       49,   70 => ar5302 // has random gold: 50 - 119 (1d70 roll)
+  ar5303, Container3,       49,   70 => ar5303 // has random gold: 50 - 119 (1d70 roll)
+  ar5401, Container1,       79,   30 => ar5401 // has random gold: 80 - 109 (1d30 roll)
+  ar5403, Container1,       49,   70 => ar5403 // has random gold: 50 - 119 (1d70 roll)
+  ar5404, Container1,       29,   30 => ar5404 // has random gold: 30 - 59 (1d30 roll)
+  ar7004, Lair1,           299, 1000 => ar7004 // has random gold: 300 - 1299 (1d1000 roll)
 END
 
 ACTION_PHP_EACH cd_random_gold AS params => area BEGIN
-
-  // build base + singles digit
-  OUTER_SPRINT magic ~IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",0)%WNL%THEN~ // base, 1d10
-  OUTER_FOR (index = 0 ; index < 10 ; ++index) BEGIN // all are multiples of 10, so always need a 1d10
-    OUTER_SET gold = index + params_2
-    OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",1)%WNL%SetGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
-  END
-  OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
-
-  // add tens digit
-  OUTER_SPRINT magic ~%magic%%WNL%IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",1)%WNL%THEN~ // adds 1d10*10
-  OUTER_FOR (index = 0 ; index < params_4 ; ++index) BEGIN // rolls vary in 30, 50, 70 so don't need to iterate through all
-    ACTION_IF !index BEGIN
-      OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",2)~ // skip gold add since gold = 0
-    END ELSE BEGIN
-      OUTER_SET gold = index * 10
-      OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",2)%WNL%IncrementGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
-    END
-  END
-  OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
-
-  // add hundreds digit
-  ACTION_IF !params_3 BEGIN // no hundreds digit
-    OUTER_SET final = 2
-  END ELSE BEGIN
-    OUTER_SET final = 3
-    OUTER_SPRINT magic ~%magic%%WNL%IF%WNL%  Global("cd_rgp_%params_1%","MYAREA",2)%WNL%THEN~ // adds 1d10*10
-    OUTER_FOR (index = 0 ; index < params_4 ; ++index) BEGIN // rolls vary in 30, 50, 70 so don't need to iterate through all
-      ACTION_IF !index BEGIN
-        OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",3)~ // skip gold add since gold = 0
-      END ELSE BEGIN
-        OUTER_SET gold = index * 100
-        OUTER_SPRINT ~magic~ ~%magic%%WNL%  RESPONSE #1%WNL%  SetGlobal("cd_rgp_%params_1%","MYAREA",3)%WNL%IncrementGlobal("cd_rgt_%params_1%","MYAREA",%gold%)~
-      END
-    END
-    OUTER_SPRINT magic ~%magic%%WNL%END%WNL%~ // end scripting block
-  END
 
   EXTEND_BOTTOM ~%area%.bcs~ ~eefixpack/files/baf/iwd_random_gold.baf~ EVALUATE_BUFFER
 
