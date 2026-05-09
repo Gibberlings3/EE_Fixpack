@@ -3,14 +3,13 @@
 ACTION_FOR_EACH die IN 7 10 20 BEGIN
 
   COPY ~eefixpack/files/spl/cdrgld0.spl~ ~override/cdrgld%die%.spl~
-    LPF ALTER_EFFECT INT_VAR match_opcode = 206 STR_VAR resource = EVAL ~%DEST_RES%~ END
+    LPF ALTER_EFFECT INT_VAR match_opcode = 321 STR_VAR resource = EVAL ~%DEST_RES%~ END
     SET upper = "-1"
     FOR (index = 1 ; index <= die ; ++index) BEGIN
+      SET lower = upper + 1 // uses previous upper value
       PATCH_IF index = die BEGIN // final loop
-        SET lower = upper + 1 // uses previous upper value
         LPF ALTER_EFFECT INT_VAR multi_match = 1 match_opcode = 105 parameter1 = index probability2 = lower STR_VAR insert = below END // prob1 is already 100
       END ELSE BEGIN
-        SET lower = upper + 1 // uses previous upper value
         SET upper = (((index * 100) / die) - 1) // add -1 since rolls are 0-99, not 1-100
         LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 105 parameter1 = index probability1 = upper probability2 = lower STR_VAR insert = below END
       END
@@ -53,7 +52,7 @@ COPY_EXISTING ~acolyte.cre~  ~override~ // has random gold: 2 - 8 (1d7 roll)
   END
   WRITE_LONG 0x1c (THIS + charge1 - 1) // add fixed gold to gold field -- apply minus 1 here rather than applied spell
   REMOVE_CRE_ITEM misc07 // delete gold item
-  LPF ADD_CRE_EFFECT INT_VAR opcode = 146 target = 1 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~cdrgld%charge2%~ END
+  LPF ADD_CRE_EFFECT INT_VAR opcode = 146 target = 1 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~cdrgld%charge2%~ effsource = EVAL ~cdrgld%charge2%~ END
   BUT_ONLY
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_random_gold BEGIN
