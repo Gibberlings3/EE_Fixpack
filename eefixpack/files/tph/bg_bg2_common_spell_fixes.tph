@@ -436,6 +436,7 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+/*
 // luke
 // **Slow Poison**
 // - Make sure it truly slows poison (so as to match `IWDEE` and spell description/name)
@@ -444,6 +445,7 @@ WITH_SCOPE BEGIN
     LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 11 "opcode" = 329 "parameter1" = 10 "parameter2" = 0 END // Cure poison => Slow poison
   BUT_ONLY_IF_IT_CHANGES
 END
+*/
 
 // luke
 // **Summon Insects, Insect Plague**
