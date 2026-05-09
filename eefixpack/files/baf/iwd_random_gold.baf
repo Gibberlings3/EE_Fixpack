@@ -1,0 +1,9 @@
+IF
+  Global("cd_rgp_%params_1%","%area%",0)
+THEN
+  RESPONSE #100
+    SetGlobal("cd_rgp_%params_1%","%area%",1)
+    SetGlobalRandomPlus("cd_rgt_%params_1%","%area%",1,%params_3%,%params_2%)
+    ActionOverride("%params_1%",DestroyItem("misc07"))
+    GiveObjectGoldGlobal("cd_rgt_%params_1%","%area%","%params_1%")
+END

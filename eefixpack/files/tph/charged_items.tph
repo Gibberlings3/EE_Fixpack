@@ -450,22 +450,6 @@ END ELSE ACTION_IF game_is_iwdee BEGIN
 
 // areas
 
-  COPY_EXISTING ~ar1201.are~ ~override~
-                ~ar3501.are~ ~override~
-                ~ar5001.are~ ~override~
-                ~ar5002.are~ ~override~
-                ~ar5004.are~ ~override~
-                ~ar5104.are~ ~override~
-                ~ar5202.are~ ~override~
-                ~ar5203.are~ ~override~
-                ~ar5302.are~ ~override~
-                ~ar5303.are~ ~override~
-                ~ar5401.are~ ~override~
-                ~ar5403.are~ ~override~
-                ~ar5404.are~ ~override~
-                ~ar7004.are~ ~override~
-    LPF ALTER_AREA_ITEM INT_VAR charge2 = 0 STR_VAR match_item = misc07 END // overcharged misc07 in charge 2
-
   COPY_EXISTING ~ar1201.are~ ~override~ // overcharged misc01 in charge 1
                 ~ar9400.are~ ~override~ // overcharged misc01 in charge 1
     LPF ALTER_AREA_ITEM INT_VAR charge1 = 0 STR_VAR match_item = misc01 END
@@ -502,30 +486,6 @@ END ELSE ACTION_IF game_is_iwdee BEGIN
     LPF ADD_AREA_ITEM INT_VAR charges1 = 1 container_to_add_to = 1 STR_VAR item_to_add = bflaoil END
     
 // creatures
-
-  COPY_EXISTING ~acolyte.cre~  ~override~ // overcharged misc07 in charge 2
-                ~acolyted.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm1hwax.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm1hwaxy.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm1hwms.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm1hwmsy.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm1hwpo.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm1hwpoy.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm2hwla.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm2hwlay.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm2hwna.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm2hwnay.cre~ ~override~ // overcharged misc07 in charge 2
-                ~lm2hwte.cre~  ~override~ // overcharged misc07 in charge 2
-                ~lm2hwtey.cre~ ~override~ // overcharged misc07 in charge 2
-                ~orc2004.cre~  ~override~ // overcharged misc07 in charge 2
-                ~orca2004.cre~ ~override~ // overcharged misc07 in charge 2
-                ~orcewaxe.cre~ ~override~ // overcharged misc07 in charge 2
-                ~orcwaxe.cre~  ~override~ // overcharged misc07 in charge 2
-                ~orcwbow.cre~  ~override~ // overcharged misc07 in charge 2
-                ~priestd.cre~  ~override~ // overcharged misc07 in charge 2
-                ~rdeliza.cre~  ~override~ // overcharged misc07 in charge 2
-                ~rocorca.cre~  ~override~
-    LPF ALTER_CREATURE_ITEM INT_VAR charge2 = 0 STR_VAR match_item = misc07 END // overcharged misc07 in charge 2
 
   //COPY_EXISTING ~ad2sklr.cre~  ~override~ // overcharged rndtre01 in charge 1 - fine as this randomizes to ammo
   //              ~ad3sklr.cre~  ~override~ // overcharged rndtre01 in charge 1
