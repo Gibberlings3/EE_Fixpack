@@ -774,3 +774,13 @@ COPY_EXISTING ~spwi622.spl~ ~override~ // Conjure Earth Elemental [sod, bg2]
 // mismatching save types between cosmetics and actual effects
 COPY_EXISTING  ~spwm179.spl~  ~override~ // Polymorph Other (wild surge)
   LPF ALTER_EFFECT INT_VAR match_savingthrow = BIT4 savingthrow = BIT0 END 
+
+//angel
+// various innate domination effects display the charm icon and -string
+// instead of the domination ones
+
+WITH_SCOPE BEGIN
+  INCLUDE "eefixpack/files/tph/angel/innate_domination_fix.tph"
+END
+
+

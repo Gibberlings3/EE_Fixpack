@@ -1,0 +1,31 @@
+// SPIN883	- VAMPIRE_DOMINATION
+// SPIN910	- PSIONIC_DOMINATION
+// SPIN975	- MIND_FLAYER_DOMINATION
+// SPIN985	- BEHOLDER_DOMINATION
+//
+// These all clearly are domination effects, but they display
+// the "charmed" string and -icon, not the "dominated" ones.
+//
+// The cleric- and wizard spells get it right, as do some others.
+
+COPY_EXISTING "spin883.spl" "override"
+              "spin910.spl" "override"
+              "spin975.spl" "override"
+              "spin985.spl" "override"
+  LAUNCH_PATCH_FUNCTION ALTER_EFFECT
+    INT_VAR
+    match_opcode	= 5
+    parameter2		= 1003
+  END
+
+  LAUNCH_PATCH_FUNCTION CLONE_EFFECT
+    INT_VAR
+    match_opcode	= 5
+    opcode		= 139
+    timing		= 1
+    duration		= 0
+    parameter1		= game_is_bgee ? 26206 : 8364
+    parameter2		= 0
+  END
+
+
