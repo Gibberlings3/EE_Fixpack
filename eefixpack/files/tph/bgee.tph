@@ -265,10 +265,9 @@ DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unuse
 
 ACTION_IF !game_includes_sod BEGIN
 
-  // cumulative BAM fixes: cornugon animation;
-  COPY ~eefixpack/files/bam/copy/bgee_no_sod~ ~override~  
-  
-  COPY ~eefixpack/files/wav/mcor~ ~override~ // adding cornugon animation for albert/rufie change
+  COPY ~eefixpack/files/bam/copy/bgee_no_sod~ ~override~ // adding cornugon animation for albert/rufie change
+  COPY ~eefixpack/files/bmp/copy/bgee_no_sod~ ~override~ // Improve portrait placeholder images, missing tanarri skins
+  COPY ~eefixpack/files/wav/copy/bgee_no_sod~ ~override~ // missing audio for multiple animations
      
  END ELSE BEGIN      
 
@@ -1755,12 +1754,6 @@ COPY_EXISTING ~ar1000.wed~ ~override~
     END
   END   
   BUT_ONLY  
-
-ACTION_IF (NOT game_includes_sod) BEGIN
-  // Improve portrait placeholder images
-  COPY ~eefixpack/files/bmp/bg1/noportlm.bmp~ ~override~
-       ~eefixpack/files/bmp/bg1/noportls.bmp~ ~override~
-END
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\

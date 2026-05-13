@@ -46,7 +46,7 @@ ALWAYS
 
 END
 
-VERSION ~Beta 2~
+VERSION ~Beta 2 - Working Master~
 
 README ~eefixpack/languages/%LANGUAGE%/readme-eefixpack.html~ ~eefixpack/readme-eefixpack.html~
 

@@ -123,6 +123,8 @@ COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
      ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~  ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee_iwdee~ ~override~
 
+COPY ~eefixpack/files/bmp/copy/bg2ee~ ~override~ // Improve portrait placeholder images - additional changes below for noportm/s.bmp
+
 // installing BAM V2 resources
 INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
 ACTION_FOR_EACH bam_resref IN cshld05 BEGIN
@@ -1631,8 +1633,7 @@ COPY_EXISTING ~spfirsd2.vvc~ ~override~ // bad blend on fire damage from clubs o
   WRITE_SHORT 0x18 (THIS BOR (BIT3 + BIT9)) // add blend, 3d blend flag
 
 // Improve portrait placeholder images
-COPY ~eefixpack/files/bmp/bg2/noportll.bmp~ ~override~
-COPY_EXISTING ~noportmd.bmp~ ~override/noportlm.bmp~
+COPY_EXISTING ~noportmd.bmp~ ~override/noportlm.bmp~ // new noportll copied in bulk copy section, above
               ~noportsm.bmp~ ~override/noportls.bmp~
 
 /////                                                  \\\\\
