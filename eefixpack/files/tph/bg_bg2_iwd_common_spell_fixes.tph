@@ -4,6 +4,13 @@ INCLUDE ~eefixpack/files/tph/tbd_simulacrum.tph~ // tbd, cam (from jmerry) - sim
 INCLUDE ~eefixpack/files/tph/tbd_fireshields.tph~ // tbd, cam (from jmerry) - prevent infinite feedback (and resultant crash) from interacting fireshield-ish effects by giving them a brief immunity to re-application
 INCLUDE ~eefixpack/files/tph/invis_expiry_sound.tph~ // expiry sound for invisibility spells
 
+// archer's called shot bonus damage can get blocked by (M)GoI - fix bad power level
+COPY_EXISTING ~archstun.eff~ ~override~
+  WRITE_LONG 0x18 0 // power
+  WRITE_LONG 0x28 0 // duration - clean up other fields while we're here
+  WRITE_LONG 0x44 0 // save bonus
+  WRITE_LONG 0x60 0 // p3
+
 // luke
 // **Spirit Fire**
 // - should not interact with level-based spell protections
