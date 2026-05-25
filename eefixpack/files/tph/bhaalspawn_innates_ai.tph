@@ -1,0 +1,66 @@
+// various AI scripts don't account for the innate versions of spells granted to the PC
+
+// dragons/celestials not detecting innate DUHM
+COPY_EXISTING ~gorsal.bcs~   ~override~
+              ~ohdddolr.bcs~ ~override~
+              ~ohddixth.bcs~ ~override~
+              ~ohdpplan.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(14)[ %TAB%%LNL%%MNL%%WNL%]+\(See(\[GOODCUTOFF\.0\.0\.0\.0\.SUMMONED\])\)~
+      ~OR(15) SpellCastInnate([GOODCUTOFF],INNATE_DRAW_UPON_HOLY_MIGHT) \1~
+  END
+  BUT_ONLY  
+
+// dragons/celestials not detecting innate DUHM
+COPY_EXISTING ~draggre2.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(10)[ %TAB%%LNL%%MNL%%WNL%]+\(SpellCast(\[GOODCUTOFF\],WIZARD_HASTE)\)~
+      ~OR(11) SpellCastInnate([GOODCUTOFF],INNATE_DRAW_UPON_HOLY_MIGHT) \1~
+  END
+  BUT_ONLY  
+
+// mage not detecting innate DUHM
+COPY_EXISTING ~mage10d.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(31)[ %TAB%%LNL%%MNL%%WNL%]+\(SpellCastPriest(\[PC\],CLERIC_BLESS)\)~
+      ~OR(32) SpellCastInnate([PC],INNATE_DRAW_UPON_HOLY_MIGHT) \1~
+  END
+  BUT_ONLY  
+
+// npc combat scripts not accounting for innate horror
+COPY_EXISTING ~mazzyx.bcs~  ~override~
+              ~minscx.bcs~  ~override~
+              ~minvsed.bcs~ ~override~
+              ~ohhmaz.bcs~  ~override~
+              ~ohhval.bcs~  ~override~
+              ~valvsed.bcs~ ~override~
+              ~valygx.bcs~  ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(4)[ %TAB%%LNL%%MNL%%WNL%]+\(StateCheck(Myself,STATE_PANIC)\)~
+      ~OR(5) SpellCastInnate([ANYONE],INNATE_HORROR) \1~
+  END
+  BUT_ONLY  
+
+// mage combat scripts not accounting for innate horror
+COPY_EXISTING ~gpmage1.bcs~  ~override~
+              ~magehigh.bcs~ ~override~
+              ~ohrmage1.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(4)[ %TAB%%LNL%%MNL%%WNL%]+\(SpellCast(\[GOODCUTOFF\],WIZARD_HORROR)\)~
+      ~OR(5) SpellCastInnate([GOODCUTOFF],INNATE_HORROR) \1~
+  END
+  BUT_ONLY 
+
+// viekang not accounting for innate horror - power should be gone by now, but fixing anyway
+COPY_EXISTING ~sarvie01.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN 
+    REPLACE_TEXTUALLY 
+      ~OR(13)[ %TAB%%LNL%%MNL%%WNL%]+\(SpellCastOnMeRES("OHREYEB3",\[ANYONE\])\)~
+      ~OR(14) SpellCastInnate([ANYONE],INNATE_HORROR) \1~
+  END
+  BUT_ONLY   
