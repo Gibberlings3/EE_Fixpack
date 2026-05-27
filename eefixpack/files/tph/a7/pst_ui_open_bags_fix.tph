@@ -1,0 +1,29 @@
+// Button for opening bags should not be available if the bag is in a static container (chest, ground pile, etc.), or for sale in a store
+ACTION_DEFINE_ASSOCIATIVE_ARRAY ui_item_fixes_lua BEGIN
+  // lua function name, search string => replacement string
+  ~itemDescLeftButtonEnabled()~, ~^[ %TAB%]+else[ %TAB%%WNL%]+return itemDesc.item.isBag~ => ~%TAB%elseif(itemDesc.mode == 1) then%WNL%%TAB%%TAB%return (itemDesc.item.isBag == 1 and itemDesc.storeItem == 0)~
+  ~itemDescLeftButtonText()~, ~^[ %TAB%]+else[ %TAB%%WNL%]+\(return t('OPEN_CONTAINER_BUTTON')\)~ => ~%TAB%elseif(itemDesc.mode == 1) then%WNL%%TAB%%TAB%\1~
+  ~itemDescLeftButtonAction()~, ~^^[ %TAB%]+else[ %TAB%%WNL%]+\(storeScreen:OpenBag(itemDesc.item.res)\)~ => ~%TAB%elseif(itemDesc.mode == 1) then%WNL%%TAB%%TAB%\1~
+END
+
+COPY_EXISTING ~ui.menu~ ~override~
+  PHP_EACH ui_item_fixes_lua AS header => replace BEGIN
+    SPRINT function $header(~0~)
+    SPRINT search $header(~1~)
+    SET pos1 = INDEX_BUFFER(~function[ %TAB%]+%function%~)
+    PATCH_IF (pos1 >= 0) BEGIN
+      SET pos2 = INDEX_BUFFER(~^end[%WNL%]+~ pos1)
+      PATCH_IF (pos2 > pos1) BEGIN
+        SET old_len = pos2 - pos1
+        READ_ASCII pos1 block (old_len)
+        INNER_PATCH_SAVE new_block ~%block%~ BEGIN
+          REPLACE_TEXTUALLY ~%search%~ ~%replace%~
+        END
+        SET new_len = STRING_LENGTH ~%new_block%~
+        DELETE_BYTES pos1 old_len
+        INSERT_BYTES pos1 new_len
+        WRITE_ASCIIE pos1 ~%new_block%~ (new_len)
+      END
+    END
+  END
+BUT_ONLY
