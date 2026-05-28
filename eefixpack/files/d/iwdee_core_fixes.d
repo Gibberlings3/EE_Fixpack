@@ -77,7 +77,7 @@ ADD_TRANS_ACTION dbeorn BEGIN 0 END BEGIN 1 END ~AddJournalEntry(34420,INFO)~
 // should only be able to ask Flozem about Marketh if you know him
 ADD_TRANS_TRIGGER DFLOZEM 2 ~Global("Know_Marketh","GLOBAL",1)~ DO 0
 
-// checking non-existent car for knowledge of barb camp; swap to existing var for checks
+// checking non-existent var for knowledge of barb camp; swap to existing var for checks
 REPLACE_TRIGGER_TEXT dbaldemr ~"Know_Barb_Camp"~ ~"ar9200_revealed"~ 
 // know_threat set properly, but should go to 2 when you ask the followup in 8 (set on 8.0 but not 8.1)
 ADD_TRANS_ACTION dbaldemr BEGIN 8 END BEGIN 1 END ~SetGlobal("Know_Threat","GLOBAL",2)~
