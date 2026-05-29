@@ -1413,6 +1413,8 @@ INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes i
 
 INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
+INCLUDE ~eefixpack/files/tph/a7/snares_autonotes_fix.tph~ // fixes adding an automap note to the area when a snare is set
+
 // tbd, cam
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
 COPY_EXISTING ~spin558.spl~   ~override~
