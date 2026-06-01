@@ -141,6 +141,10 @@ ALTER_TRANS hellself BEGIN 23 END BEGIN 1 END BEGIN ~TRIGGER~ ~NumInPartyGT(1) I
 REPLACE_STATE_TRIGGER hellself 30 ~Global("OpenedDoor5","AR2904",1) !InMyArea("hellvict")~
 REPLACE_STATE_TRIGGER hellself 31 ~Global("OpenedDoor5","AR2904",1) InMyArea("hellvict")~
 
+// Updates Edwin's spellcasting voice after the gender change
+REPLACE_TRANS_ACTION EDWINJ BEGIN 15 END BEGIN 0 END ~SetPlayerSound(Myself,-?[0-9]+,\(72\|SET_A_TRAP\))~ ~\0 ChangeStat(Myself,SEX,2,SET)~ UNLESS ~ChangeStat(Myself,SEX,2,SET)~
+REPLACE_TRANS_ACTION EDWINJ BEGIN 16 END BEGIN 0 END ~SetPlayerSound(Myself,-?[0-9]+,\(72\|SET_A_TRAP\))~ ~\0 ChangeStat(Myself,SEX,1,SET)~ UNLESS ~ChangeStat(Myself,SEX,1,SET)~
+
 /////                                                  \\\\\
 ///// mixing instants and non-instants                 \\\\\
 /////                                                  \\\\\

@@ -560,6 +560,14 @@ BUT_ONLY
 // Yoshimo Should Have Follow-Up Banters with the PC
 EXTEND_BOTTOM ~yoshimo.bcs~ ~eefixpack/files/baf/yoshimo_banter.baf~ // add script prompt for third banter
 
+// Updates Edwin's spellcasting voice after the gender change
+COPY_EXISTING ~edwin.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~SetGlobal("TurnedFemale","LOCALS",1)~ ~ChangeStat(Myself,SEX,2,SET) \0~
+    REPLACE_TEXTUALLY ~SetGlobal("TurnedFemale","LOCALS",0)~ ~ChangeStat(Myself,SEX,1,SET) \0~
+  END
+BUT_ONLY
+
 // Fixes an exploit that would allow the party to bypass the Oasis when travelling to Amkethran
 // via Deepstone Clanhold (Rasaad's quest) or the Clearing (Neera's quest).
 // https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/?do=findComment&comment=339326
