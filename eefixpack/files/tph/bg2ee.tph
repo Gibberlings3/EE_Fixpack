@@ -71,6 +71,12 @@ INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties f
 COPY_EXISTING ~25stweap.2da~ ~override~
   REPLACE_TEXTUALLY ~[ %TAB%]ham07[ %TAB%]~ ~ hamm07 ~
   PRETTY_PRINT_2DA
+
+// female body drop/move noise shouldn't be random abela soundclips
+COPY_EXISTING ~itemtype.2da~ ~override~
+  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~ 
+  PRETTY_PRINT_2DA
+  BUT_ONLY
   
 // effectively disable npclevel.2da - fix really for bgee, but carrying it over for continuity
 COPY_EXISTING ~npclevel.2da~ ~override~

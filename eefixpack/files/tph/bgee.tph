@@ -96,6 +96,12 @@ APPEND ~interdia.2da~ ~BAELOTH BDBAELOB~ // missing banter file assignment for b
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
 
+// female body drop/move noise shouldn't be random abela soundclips
+COPY_EXISTING ~itemtype.2da~ ~override~
+  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~ 
+  PRETTY_PRINT_2DA
+  BUT_ONLY
+
 ACTION_IF !game_includes_sod BEGIN // add missing movie entries for bgee/sod
   APPEND ~movidesc.2da~ ~LOGO 25295~ // only logo missing w/o SoD
 END ELSE BEGIN
