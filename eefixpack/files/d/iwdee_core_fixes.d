@@ -32,6 +32,25 @@ EXTEND_BOTTOM DTARNELM 4 IF ~~ REPLY #11383 EXIT END
 // paladin reply in 7 being blocked by ranger-only check before it
 ALTER_TRANS dogre BEGIN 1 END BEGIN 4 END BEGIN ~TRIGGER~ ~OR(2) Class(LastTalkedToBy,RANGER_ALL) Class(LastTalkedToBy,PALADIN_ALL) !Kit(LastTalkedToBy,Blackguard)~ END // ranger > ranger|paladin
 ALTER_TRANS dogre BEGIN 2 END BEGIN 2 END BEGIN ~TRIGGER~ ~OR(2) Class(LastTalkedToBy,RANGER_ALL) Class(LastTalkedToBy,PALADIN_ALL) !Kit(LastTalkedToBy,Blackguard)~ END
+// shaman should be able to give non-druid replies
+ALTER_TRANS DOGRE BEGIN 1 END BEGIN 6 END BEGIN ~TRIGGER~
+~Global("Ghereg_Head","GLOBAL",2)
+OR(2)
+  !Class(LastTalkedToBy,DRUID_ALL)
+  Class(LastTalkedToBy,SHAMAN)~
+END
+ALTER_TRANS DOGRE BEGIN 2 END BEGIN 4 END BEGIN ~TRIGGER~
+~Global("Ghereg_Head","GLOBAL",2)
+OR(2)
+  !Class(LastTalkedToBy,DRUID_ALL)
+  Class(LastTalkedToBy,SHAMAN)~
+END
+ALTER_TRANS DOGRE BEGIN 6 END BEGIN 1 END BEGIN ~TRIGGER~
+~Global("Ghereg_Head","GLOBAL",2)
+OR(2)
+  !Class(LastTalkedToBy,DRUID_ALL)
+  Class(LastTalkedToBy,SHAMAN)~
+END
 
 ALTER_TRANS DKUTOWNG BEGIN 0 END BEGIN 13 END BEGIN 
   ~TRIGGER~ ~Global("Kuldahar_Rumor","GLOBAL",7)~        // swap trigger
