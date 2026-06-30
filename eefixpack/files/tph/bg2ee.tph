@@ -1637,6 +1637,9 @@ COPY_EXISTING ~wilmat.sto~ ~override~ //  (Temple of Ilmater): Duplicate item SC
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
+// fixing creature animations without ranged animation sequences
+INCLUDE ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~
+
 COPY ~music/vb.mus~ ~music/vb.mus~
   REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
   
