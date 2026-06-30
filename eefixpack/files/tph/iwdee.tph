@@ -1334,6 +1334,9 @@ COPY_EXISTING ~bagh02.sto~ ~override~
 // illusionary creatures shouldn't save when dispelled
 INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
 
+// fixing creature animations without ranged animation sequences
+INCLUDE ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~
+
 // Fix reference to non-existing ACM sound resource
 COPY ~music/bm2.mus~ ~music/bm2.mus~
   REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~

@@ -1,0 +1,203 @@
+// Adds missing attack animation sequences in selected type 7000 "monster_old" animations
+
+WITH_SCOPE BEGIN
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY clone_seq BEGIN
+  // prefix => attack animation sequence to clone (0 or 1)
+  "mber" => 0 // 7200/BEAR_BLACK, 7201/BEAR_BROWN, 7202/BEAR_CAVE, 7203/BEAR_POLAR
+  "mdog" => 0 // 7400/DOG_WILD, 7401/DOG_WAR, 7402/DOG_MOON, 7603/DOG_GRAY
+  "mett" => 0 // 7600/ETTERCAP
+  "mghl" => 0 // 7601/MAUREZHI, 7700/GHOUL, 7701/REVENANT, 7702/GHAST
+  "mgib" => 0 // 7800/GIBBERLING, 7801/GIBBERLING_BROOD
+  "mogh" => 0 // 7000/HALF_OGRE
+  "mogn" => 0 // 7001/OGRILLON
+  "mspi" => 0 // 7602/MYRLOCHAR, 7604/SPIDER_WATER, 7A00/SPIDER_GIANT, 7A01/SPIDER_HUGE, 7A02/SPIDER_PHASE, 7A03/SPIDER_SWORD, 7A04/SPIDER_WRAITH
+  "mtas" => 0 // 7C01/KOBOLD_TASLOI
+  "mxvt" => 0 // 7C00/KOBOLD_XVART
+  "mzom" => 0 // 7D00/ZOMBIE
+END
+
+/**
+ * Action function that creates a range animation sequence for "monster_old" creature animations if needed.
+ *
+ * INT_VAR sequence     Index of the animation sequence to clone.
+ * INT_VAR cycles_count Number of cycles to clone.
+ * STR_VAR resref       Base resref of the creature animation (as defined in the associated INI).
+ * RET success          Returns 1 if successful, 0 if patching isn't needed, and -1 if an error occurred.
+ */
+DEFINE_ACTION_FUNCTION patch_bam_monster_old
+INT_VAR
+  sequence = 0
+  cycles_count = 8
+STR_VAR
+  resref = ~~
+RET
+  success
+BEGIN
+  OUTER_SET success = "-1"
+  
+  ACTION_IF (NOT ~%resref%~ STR_EQ ~~ && FILE_EXISTS_IN_GAME ~%resref%g2.bam~ && FILE_EXISTS_IN_GAME ~%resref%g2e.bam~) BEGIN
+    OUTER_SET success = 0
+
+    ACTION_FOR_EACH suffix IN ~g2~ ~g2e~ BEGIN
+      COPY_EXISTING ~%resref%%suffix%.bam~ ~override~
+        SET compressed = 0
+        READ_ASCII 0 sig (8)
+        PATCH_IF (~%sig%~ STR_EQ ~BAMCV1  ~) BEGIN
+          SET cmp_length = BUFFER_LENGTH - 12
+          READ_LONG 08 unc_length
+          DECOMPRESS_REPLACE_FILE 12 cmp_length unc_length
+          SET compressed = 1
+        END
+
+        READ_BYTE 0x0a num_cycles
+        PATCH_IF (num_cycles == 16) BEGIN
+          LPF clone_bam_cycles
+            INT_VAR
+              source_index = sequence * cycles_count
+              target_index = "-1" // append
+              cycles_count
+            RET
+              result
+          END
+          SET success = (result >= 0) ? 1 : "-1"
+        END
+
+        PATCH_IF (compressed) BEGIN
+          SET unc_length = BUFFER_LENGTH
+          COMPRESS_REPLACE_FILE 0 BUFFER_LENGTH 6
+          INSERT_BYTES 0 12
+          WRITE_ASCII 0 ~BAMCV1  ~ (8)
+          WRITE_LONG 8 unc_length
+        END
+      BUT_ONLY
+    END
+
+  END
+END
+
+/**
+ * Patch function that clones a range of animation cycles in the current BAM.
+ *
+ * INT_VAR source_index   First cycle index to clone. (Default: 0)
+ * INT_VAR target_index   Start index of the cloned cycle range. (Default: -1 / append)
+ * INT_VAR cycles_count   Number of cycles to clone. (Default: 8)
+ * RET result             The effective start index of the cloned cycle range. Returns -1 if the operation was not successful.
+ */
+DEFINE_PATCH_FUNCTION clone_bam_cycles
+INT_VAR
+  source_index = 0
+  target_index = "-1"
+  cycles_count = 8
+RET
+  result
+BEGIN
+  SET size_frame = 12 // size of a frame entry
+  SET size_cycle = 4  // size of a cycle entry
+  SET size_lookup = 2 // size of a frame lookup entry
+  READ_SHORT 0x08 num_frames
+  READ_BYTE 0x0a num_cycles
+  READ_LONG 0x0c ofs_frames
+  READ_LONG 0x10 ofs_palette
+  READ_LONG 0x14 ofs_lookup
+  SET ofs_cycles = ofs_frames + num_frames * size_frame
+
+  // validations
+  SET cycles_count = (cycles_count < 0) ? 0 : (cycles_count > num_cycles) ? num_cycles : cycles_count
+  SET source_index = (source_index < 0) ? 0 : (source_index + cycles_count > num_cycles) ? num_cycles - cycles_count : source_index
+  PATCH_IF (target_index >= 0) BEGIN
+    SET target_index = (target_index < 0) ? 0 : (target_index > num_cycles) ? num_cycles : target_index
+    // no overlapping allowed between target and source range
+    SET result = (target_index + cycles_count <= source_index || source_index + cycles_count <= target_index) ? target_index : "-1"
+  END ELSE BEGIN
+    SET target_index = num_cycles
+    SET result = target_index
+  END
+
+  PATCH_IF (result >= 0 && cycles_count > 0) BEGIN
+    // determining start index of frame lookup table for target cycle range
+    SET new_lookup_idx = 0
+    FOR (i = 0; i < target_index; ++i) BEGIN
+      SET cur_cycle_ofs = ofs_cycles + i * size_cycle
+      SET new_idx = (SHORT_AT cur_cycle_ofs) + (SHORT_AT (cur_cycle_ofs + 2))
+      SET new_lookup_idx = (new_idx > new_lookup_idx) ? new_idx : new_lookup_idx
+    END
+
+    // cloning cycle entries
+    FOR (i = 0; i < cycles_count; ++i) BEGIN
+      // getting source cycle data
+      SET cur_cycle_ofs = ofs_cycles + (source_index + i) * size_cycle
+      SET cycle_size = 1 * size_cycle
+      READ_SHORT cur_cycle_ofs frame_count
+      READ_SHORT (cur_cycle_ofs + 2) frame_index
+
+      // adding new cycle
+      SET new_cycle_ofs = ofs_cycles + (target_index + i) * size_cycle
+      INSERT_BYTES new_cycle_ofs cycle_size
+      WRITE_SHORT new_cycle_ofs frame_count
+      WRITE_SHORT (new_cycle_ofs + 2) new_lookup_idx
+      // updating references
+      SET num_cycles += 1
+      SET ofs_palette += (ofs_palette > ofs_frames) ? cycle_size : 0
+      SET ofs_lookup += (ofs_lookup > ofs_frames) ? cycle_size : 0
+      // cycle frame lookup (if target < source)
+      PATCH_IF (target_index < source_index) BEGIN
+        SET source_index += 1
+        SET frame_index += frame_count
+        FOR (j = target_index + i + 1; j < num_cycles; ++j) BEGIN
+          SET cur_cycle_ofs = ofs_cycles + j * size_cycle
+          WRITE_SHORT (cur_cycle_ofs + 2) (THIS + frame_count)
+        END
+      END
+      // frame data offsets
+      FOR (j = 0; j < num_frames; ++j) BEGIN
+        SET cur_frame_ofs = ofs_frames + j * size_frame
+        SET frame_ofs = (LONG_AT (cur_frame_ofs + 0x08)) & (BIT31 - 1)
+        SET frame_ofs += (frame_ofs > ofs_frames) ? cycle_size : 0
+        WRITE_LONG (cur_frame_ofs + 0x08) (THIS & BIT31) | frame_ofs
+      END
+
+      // adding new frame lookup entries
+      SET old_lookup_ofs = ofs_lookup + frame_index * size_lookup
+      SET new_lookup_ofs = ofs_lookup + new_lookup_idx * size_lookup
+      SET lookup_size = frame_count * size_lookup
+      INSERT_BYTES new_lookup_ofs lookup_size
+      FOR (j = 0; j < frame_count; ++j) BEGIN
+        READ_SHORT (old_lookup_ofs + j * size_lookup) value
+        WRITE_SHORT (new_lookup_ofs + j * size_lookup) value
+      END
+      // updating references
+      SET ofs_frames += (ofs_frames > ofs_lookup) ? lookup_size : 0
+      SET ofs_cycles += (ofs_cycles > ofs_lookup) ? lookup_size : 0
+      SET ofs_palette += (ofs_palette > ofs_lookup) ? lookup_size : 0
+      // frame data offsets
+      FOR (j = 0; j < num_frames; ++j) BEGIN
+        SET cur_frame_ofs = ofs_frames + j * size_frame
+        SET frame_ofs = (LONG_AT (cur_frame_ofs + 0x08)) & (BIT31 - 1)
+        SET frame_ofs += (frame_ofs > ofs_lookup) ? lookup_size : 0
+        WRITE_LONG (cur_frame_ofs + 0x08) (THIS & BIT31) | frame_ofs
+      END
+
+      SET new_lookup_idx += frame_count
+    END
+
+    WRITE_BYTE 0x0a num_cycles
+    WRITE_LONG 0x0c ofs_frames
+    WRITE_LONG 0x10 ofs_palette
+    WRITE_LONG 0x14 ofs_lookup
+  END
+END
+
+
+ACTION_PHP_EACH clone_seq AS resref => sequence BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%resref%g2.bam~ && FILE_EXISTS_IN_GAME ~%resref%g2e.bam~) BEGIN
+    LAF patch_bam_monster_old INT_VAR sequence STR_VAR resref RET success END
+    ACTION_IF (success < 0) BEGIN
+      WARN ~WARNING: Could not patch creature animation (resref=%resref%)~
+    END ELSE ACTION_IF (success == 0) BEGIN
+      PRINT ~%resref%: Creature animation already patched. Skipping.~
+    END
+  END
+END
+
+END
