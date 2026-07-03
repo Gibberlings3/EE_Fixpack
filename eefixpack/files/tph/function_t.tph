@@ -1,0 +1,8 @@
+// 2.7 changed t() to getUiString(); add alias for older UI mods
+APPEND ~util.lua~ ~
+function t(string) {
+    return getUiString(string)
+}
+~ 
+  UNLESS ~function t(stringName)~   // don't add a t() definition if there's one present (e.g. 2.6)
+  IF ~function getUiString(string)~ // also don't t() alias unless getUiString is actually defined
