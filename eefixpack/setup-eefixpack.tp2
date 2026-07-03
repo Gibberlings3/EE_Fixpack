@@ -246,7 +246,6 @@ ACTION_FOR_EACH lang IN cs_cz de_de en_us es_es fr_fr hu_hu it_it ja_jp ko_kr nb
 
 END
 
-*/
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////                                                  \\\\\
@@ -256,7 +255,7 @@ END
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN ~Temporary test space~ DESIGNATED 1000
-//DEPRECATED ~For internal use only~
+DEPRECATED ~For internal use only~
 LABEL ~cd_eefp_internal_test_space~
 
-INCLUDE ~eefixpack/files/tph/function_t.tph~
+*/
