@@ -21,6 +21,7 @@ INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack 
 
 INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
 INCLUDE ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ // fixes "(null)" damage display bug on inventory screen
+INCLUDE ~eefixpack/files/tph/function_t.tph~ // 2.7 changed t() to getUiString(); add alias for odler UI mods
 
 ACTION_IF game_includes_sod BEGIN
   WITH_SCOPE BEGIN
@@ -95,6 +96,12 @@ APPEND ~interdia.2da~ ~BAELOTH BDBAELOB~ // missing banter file assignment for b
 // tbd, cam (from jmerry)
 // clck31 available in bp, but missing in armor exclusionlist (fixed in sod)
 APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available via black pits
+
+// female body drop/move noise shouldn't be random abela soundclips
+COPY_EXISTING ~itemtype.2da~ ~override~
+  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~ 
+  PRETTY_PRINT_2DA
+  BUT_ONLY
 
 ACTION_IF !game_includes_sod BEGIN // add missing movie entries for bgee/sod
   APPEND ~movidesc.2da~ ~LOGO 25295~ // only logo missing w/o SoD

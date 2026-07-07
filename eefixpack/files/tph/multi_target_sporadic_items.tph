@@ -16,8 +16,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_multi_target_sporadic_items BEGIN
   
   // new spell, header, prob1, prob2, opcode to convert to 146 => item
   // prob1 using old, wrong values since this runs prior to tbd_bg(2)ee_probabilities.tph
-  cdblkbld,          0,    10,     0,                      216 => blakblad // bbod's level drain
-  cdmiscbc,          0,    15,     0,                      216 => miscbc   // blackrazor's level drain
+  cdblkbld,          0,    10,     0,                      17 => blakblad // bbod's level drain
+  cdmiscbc,          0,    15,     0,                      17 => miscbc   // blackrazor's level drain
   
 END
 
