@@ -1,0 +1,23 @@
+ACTION_DEFINE_ASSOCIATIVE_ARRAY bg2_songlist BEGIN
+  // song slot => new music filename
+  64 => ~MX1600.MUS~
+  65 => ~MX2000.MUS~
+  66 => ~TAV2.MUS~
+  67 => ~TAV3.MUS~
+END
+
+COPY_EXISTING ~songlist.2da~ ~override~
+  READ_2DA_ENTRIES_NOW songlist_table 1
+  SET count = 0
+  FOR (row = 3; row < songlist_table; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER songlist_table row 0 slot
+    PATCH_IF (VARIABLE_IS_SET $bg2_songlist(~%slot%~)) BEGIN
+      SET_2DA_ENTRY_LATER songlist_table_out row 2 $bg2_songlist(~%slot%~)
+      SET count += 1
+    END
+  END
+
+  PATCH_IF (count > 0) BEGIN
+    SET_2DA_ENTRIES_NOW songlist_table_out 1
+  END
+BUT_ONLY
