@@ -1,0 +1,89 @@
+// First failed pickpocket attempt should only trigger a warning
+
+// Fix requires
+// - removal of Continue() in the pickpocket detection block
+// - reordering of actor script slots to prevent failed attempts from being detected as attack.
+
+// pickpocket detection script
+OUTER_SPRINT key_script ~efpikwrn~
+
+// patching script
+COPY_EXISTING ~%key_script%.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    SET start_pos = INDEX_BUFFER(~!Global("CREATURE_STATE_VARBit14","LOCALS",1)~)
+    PATCH_IF (start_pos >= 0) BEGIN
+      SET start_pos = INDEX_BUFFER(~^THEN$~ start_pos)
+      SET end_pos = INDEX_BUFFER(~^END$~ start_pos)
+      SET old_len = end_pos - start_pos
+      READ_ASCII start_pos old_block (old_len)
+      INNER_PATCH_SAVE new_block ~%old_block%~ BEGIN
+        REPLACE_TEXTUALLY ~Continue()~ ~~
+      END
+      SET new_len = STRING_LENGTH ~%new_block%~
+      DELETE_BYTES start_pos old_len
+      INSERT_BYTES start_pos new_len
+      WRITE_ASCIIE start_pos ~%new_block%~ (new_len)
+    END
+  END
+BUT_ONLY
+
+// priorities of actor script slots
+ACTION_DEFINE_ASSOCIATIVE_ARRAY script_slots BEGIN
+  // slot offset => priority
+  80  => 0 // override
+  120 => 1 // specifics
+  96  => 2 // class
+  104 => 3 // race
+  88  => 4 // general
+  112 => 5 // default
+END
+
+ACTION_DEFINE_ARRAY script_slots_rev BEGIN
+  // [implicit priority] => slot offset
+  80  // override
+  120 // specifics
+  96  // class
+  104 // race
+  88  // general
+  112 // default
+END
+
+// patching actor script order
+COPY_EXISTING_REGEXP ~^.+\.are$~ ~override~
+  CLEAR_ARRAY ~actor_offsets~
+  GET_OFFSET_ARRAY actor_offsets ARE_V10_ACTORS
+  PHP_EACH actor_offsets AS _ => actor_ofs BEGIN
+    SET patched = 0
+    // determining script priority
+    PHP_EACH script_slots AS slot_ofs => priority BEGIN
+      PATCH_IF (NOT patched) BEGIN
+        READ_ASCII (actor_ofs + slot_ofs) resref (8) NULL
+        PATCH_IF (~%resref%~ STR_EQ ~%key_script%~ && priority > 1) BEGIN
+          SPRINT key_resref ~%resref%~
+          // no need to reorder if higher priority slots are empty
+          SET min_priority = priority
+          FOR (i = priority - 1; i > 0; --i) BEGIN
+            SET ofs1 = $script_slots_rev(~%i%~)
+            READ_ASCII (actor_ofs + ofs1) resref1 (8) NULL
+            PATCH_IF (NOT ~%resref1%~ STR_EQ ~~) BEGIN
+              SET min_priority = i
+            END
+          END
+
+          // reordering scripts
+          FOR (i = priority - 1; i >= min_priority; --i) BEGIN
+            SET j = i + 1
+            SET ofs1 = $script_slots_rev(~%i%~)
+            SET ofs2 = $script_slots_rev(~%j%~)
+            READ_ASCII (actor_ofs + ofs1) resref1 (8) NULL
+            PATCH_IF (NOT ~%resref1%~ STR_EQ ~~) BEGIN
+              WRITE_ASCIIE (actor_ofs + ofs2) ~%resref1%~ (8)
+              WRITE_ASCIIE (actor_ofs + ofs1) ~%key_resref%~ (8)
+            END
+          END
+          SET patched = min_priority < priority
+        END
+      END
+    END
+  END
+BUT_ONLY
