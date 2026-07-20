@@ -28,17 +28,7 @@ COPY_EXISTING ~%key_script%.bcs~ ~override~
 BUT_ONLY
 
 // priorities of actor script slots
-ACTION_DEFINE_ASSOCIATIVE_ARRAY script_slots BEGIN
-  // slot offset => priority
-  80  => 0 // override
-  120 => 1 // specifics
-  96  => 2 // class
-  104 => 3 // race
-  88  => 4 // general
-  112 => 5 // default
-END
-
-ACTION_DEFINE_ARRAY script_slots_rev BEGIN
+ACTION_DEFINE_ARRAY script_slots BEGIN
   // [implicit priority] => slot offset
   80  // override
   120 // specifics
@@ -55,7 +45,7 @@ COPY_EXISTING_REGEXP ~^.+\.are$~ ~override~
   PHP_EACH actor_offsets AS _ => actor_ofs BEGIN
     SET patched = 0
     // determining script priority
-    PHP_EACH script_slots AS slot_ofs => priority BEGIN
+    PHP_EACH script_slots AS priority => slot_ofs BEGIN
       PATCH_IF (NOT patched) BEGIN
         READ_ASCII (actor_ofs + slot_ofs) resref (8) NULL
         PATCH_IF (~%resref%~ STR_EQ ~%key_script%~ && priority > 1) BEGIN
@@ -63,7 +53,7 @@ COPY_EXISTING_REGEXP ~^.+\.are$~ ~override~
           // no need to reorder if higher priority slots are empty
           SET min_priority = priority
           FOR (i = priority - 1; i > 0; --i) BEGIN
-            SET ofs1 = $script_slots_rev(~%i%~)
+            SET ofs1 = $script_slots(~%i%~)
             READ_ASCII (actor_ofs + ofs1) resref1 (8) NULL
             PATCH_IF (NOT ~%resref1%~ STR_EQ ~~) BEGIN
               SET min_priority = i
@@ -73,8 +63,8 @@ COPY_EXISTING_REGEXP ~^.+\.are$~ ~override~
           // reordering scripts
           FOR (i = priority - 1; i >= min_priority; --i) BEGIN
             SET j = i + 1
-            SET ofs1 = $script_slots_rev(~%i%~)
-            SET ofs2 = $script_slots_rev(~%j%~)
+            SET ofs1 = $script_slots(~%i%~)
+            SET ofs2 = $script_slots(~%j%~)
             READ_ASCII (actor_ofs + ofs1) resref1 (8) NULL
             PATCH_IF (NOT ~%resref1%~ STR_EQ ~~) BEGIN
               WRITE_ASCIIE (actor_ofs + ofs2) ~%resref1%~ (8)
