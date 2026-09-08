@@ -1,0 +1,20 @@
+// A custom party may break the BGEE tutorial
+
+COPY_EXISTING ~ui.menu~ ~override~
+  // disable "Create Party" button at character generation for the tutorial campaign
+  SET ofs1 = INDEX_BUFFER(~text "CREATE_PARTY_BUTTON"~)
+  SET ofs2 = (ofs1 >= 0) ? INDEX_BUFFER(~}~ ofs1) : ofs1
+  PATCH_IF (ofs2 > ofs1) BEGIN
+    SET src_len = ofs2 - ofs1
+    READ_ASCII ofs1 src_block (src_len)
+    INNER_PATCH_SAVE dst_block ~%src_block%~ BEGIN
+      SPRINT search  ~clickable lua "createCharScreen:IsAdvancedButtonClickable() == true"~
+      SPRINT replace ~clickable lua "not game:GetMissionPackInfo() and createCharScreen:IsAdvancedButtonClickable() == true"~
+      REPLACE_TEXTUALLY ~%search%~ ~%replace%~
+    END
+    SET dst_len = STRING_LENGTH ~%dst_block%~
+    DELETE_BYTES ofs1 src_len
+    INSERT_BYTES ofs1 dst_len
+    WRITE_ASCIIE ofs1 ~%dst_block%~ (dst_len)
+  END
+BUT_ONLY
