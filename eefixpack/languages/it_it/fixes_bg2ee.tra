@@ -103,7 +103,7 @@ Mazzy
 
 Sotto questa sezione, la pagina è lesa e frastagliata, come se fosse stata strappata l'altra metà.~
 
-@25209 = ~ARCIERE: L'arciere è l'emblema dell'abilità nel tiro con l'arco. È il tiratore scelto per eccellenza, un <PRO_MANWOMAN> capace di portare a segno quasi ogni tiro, non importa quanto sia difficile. Per diventare così abile con l'arco, l'arciere ha dovuto sacrificare parte della <PRO_HISHER> competenza con le armi da mischia e con le armature.
+@25209 = ~ARCIERE: L'arciere è l'emblema dell'abilità nel tiro con l'arco. È il tiratore scelto per eccellenza, capace di portare a segno quasi ogni tiro, non importa quanto sia difficile. Per diventare così abile con l'arco, l'arciere ha dovuto sacrificare parte della sua competenza con le armi da mischia e con le armature.
 
 Vantaggi:
 - Bonus pari a +1 ai tiri per colpire e al danno con qualsiasi arma da lancio ogni 3 livelli fino al 18° livello.
@@ -162,7 +162,7 @@ Tiro-salvezza: Nessuno
 
 Lanciando questo incantesimo, il personaggio evoca un essere magico di considerevole potere: il nishruu. A un primo sguardo, esso appare come una specie di nebbia ma, osservandolo più da vicino, questa ribollente massa grigia di vapori e di forme si muove con una vita propria. Attratto dalla magia come una falena dalla fiamma, il nishruu si nutre delle energie che circondano e che utilizzano gli incantatori. Fortunatamente, non c'è alcun dubbio sulla lealtà della creatura ed essa non attaccherà il suo evocatore, anche se le piacerebbe molto.
 
-Il nishruu non ha attacchi fisici, benché questi possano ferirlo. Ogni volta che la creatura tocca un incantatore bersaglio e avvolge i suoi tentacoli intorno a <PRO_HIMHER>, ci sono due effetti principali. In primo luogo, tutti gli oggetti magici a cariche posseduti dal bersaglio saranno privati di una carica o distrutti se ne è rimasta solo una. Secondariamente, fa sì che l'avversario perda a caso uno degli incantesimi memorizzati di più alto livello. Il nishruu è completamente immune ai danni da energia e viene invece curato dalla magia. La creatura rimane sotto il controllo dell'incantatore finché non viene uccisa o finché la durata dell'incantesimo non giunge a termine.~
+Il nishruu non ha attacchi fisici, benché questi possano ferirlo. Ogni volta che la creatura tocca un incantatore bersaglio e avvolge il bersaglio con i suoi tentacoli, ci sono due effetti principali. In primo luogo, tutti gli oggetti magici a cariche posseduti dal bersaglio saranno privati di una carica o distrutti se ne è rimasta solo una. Secondariamente, fa sì che l'avversario perda a caso uno degli incantesimi memorizzati di più alto livello. Il nishruu è completamente immune ai danni da energia e viene invece curato dalla magia. La creatura rimane sotto il controllo dell'incantatore finché non viene uccisa o finché la durata dell'incantesimo non giunge a termine.~
 
 @34092 = ~Aiutare le driadi prigioniere di Irenicus
 
@@ -186,7 +186,7 @@ Tiro-salvezza: Nessuno
 
 Immediatamente e una volta al round per 1 turno dal lancio, tutti gli incantesimi ostili di Illusione/Visione nell'area d'effetto verranno dissolti. Gli incantesimi che ne sono influenzati sono: Immagine Riflessa, Invisibilità, Immagini Illusorie, Anti-individuazione, Invisibilità Potenziata, Porta d'Ombra, Ingannare, Ologramma e Simulacro. La Resistenza alla Magia del bersaglio, se presente, non viene applicata con questo incantesimo. Vera Vista agisce soltanto sui nemici, quindi non può dissolvere l'invisibilità di un membro del gruppo.~
 
-@39437 = ~Questo antico volume scricchiola quando lo apri. Ogni pagina del Libro degli Incantesimi Infiniti contiene la descrizione di un incantesimo in linguaggio comune, abbastanza facile da essere compreso e lanciato anche da un ladro, da un chierico o a un guerriero. Ogni incantesimo su una pagina può essere lanciato una volta al giorno.
+@39437 = ~Questo antico volume scricchiola quando lo apri. Ogni pagina del Libro degli Incantesimi Infiniti contiene la descrizione di un incantesimo in linguaggio comune, abbastanza facile da essere compreso e lanciato anche da un ladro, da un chierico o da un guerriero. Ogni incantesimo su una pagina può essere lanciato una volta al giorno.
 Una seconda funzione del libro può essere quella di andare a una pagina diversa del volume per cercare di ottenere degli incantesimi migliori. Tuttavia una volta girata la pagina, l'incantesimo precedente è perduto per sempre, a meno che non ricompaia di nuovo per caso.
 
 Fate attenzione. Una volta arrivati all'ultima pagina del libro, sarete costretti a rimanere con quell'incantesimo.
@@ -232,7 +232,7 @@ Livello 15 e oltre: 1d20
 COLPO STORDENTE: Tutti gli attacchi messi a segno nel successivo round costringono la vittima ad effettuare con successo un tiro-salvezza contro Incantesimi o restare stordita. Questa abilità speciale modifica automaticamente i normali attacchi; non c'è quindi bisogno di selezionare un bersaglio.
 
 - Diventa immune a tutte le malattie e non può essere né rallentato né velocizzato a partire dal 5° livello.
-- A partire dal 7° livello può utilizzare l'abilità Imposizione delle Mani su <PRO_HIMHER>, recuperando 2 Punti Ferita per livello.
+- A partire dal 7° livello può utilizzare l'abilità Imposizione delle Mani per curarsi, recuperando 2 Punti Ferita per livello.
 - All'8° livello ottiene un bonus pari a -1 al Fattore-velocità.
 - Ottiene un bonus pari a +1 a tutti i tiri-salvezza e diventa immune allo Charme a partire dal 9° livello.
 - Diventa immune al veleno a partire dall'11° livello.
@@ -275,19 +275,19 @@ Peso: 2~
 Vantaggi:
 - Può utilizzare l'abilità Raggio Spirituale del Sole una volta al giorno a partire dal 2° livello.
 
-RAGGIO SPIRITUALE DEL SOLE: Aprendo il palmo della <PRO_HISHER> mano, il monaco dell'anima solare sprigiona un'esplosione di luce, infliggendo 1d8 punti di danno da fuoco ogni 2 livelli, fino a un massimo di 5d8. Questa abilità infligge 6 punti di danno addizionale contro i non morti. Ottiene un ulteriore uso al 6°, al 10° e al 15° livello.
+RAGGIO SPIRITUALE DEL SOLE: Aprendo il palmo della sua mano, il monaco dell'anima solare sprigiona un'esplosione di luce, infliggendo 1d8 punti di danno da fuoco ogni 2 livelli, fino a un massimo di 5d8. Questa abilità infligge 6 punti di danno addizionale contro i non morti. Ottiene un ulteriore uso al 6°, al 10° e al 15° livello.
 
 - Può utilizzare l'abilità Pugni Infuocati una volta al giorno dal 5° livello.
 
-PUGNI INFUOCATI: Il monaco dell'anima solare incanala la <PRO_HISHER> luce interiore nella <PRO_HISHER> tecnica di combattimento a mani nude e sprigiona la <PRO_HISHER> energia sotto forma di fiamme, facendo sì che i suoi attacchi a mani nude infliggano 2d6 punti di danno da fuoco addizionale per il successivo round. La durata sale a 2 round al 9° livello, 3 round al 12° livello, 4 round al 15° livello e 5 round al 25° livello. Questa abilità speciale modifica automaticamente i normali attacchi; non è necessario cambiare arma.
+PUGNI INFUOCATI: Il monaco dell'anima solare incanala la propria luce interiore nei suoi attacchi a mani nude, trasformando i suoi pugni in armi infuocate che infliggono ad ogni colpo 2d6 punti di danno da fuoco addizionale per il successivo round. La durata sale a 2 round al 9° livello, 3 round al 12° livello, 4 round al 15° livello e 5 round al 25° livello. Questa abilità speciale modifica automaticamente i normali attacchi; non è necessario cambiare arma.
 
 - Può utilizzare l'abilità Anima del Sole Maggiore una volta al giorno a partire dall'8° livello.
 
-ANIMA DEL SOLE MAGGIORE: Il monaco dell'anima solare si circonda di fiamme che agiscono come uno Scudo di Fuoco (Rosso), conferendogli il 50% di Resistenza al Fuoco e proteggendo <PRO_HIMHER> dagli attacchi effettuati in un raggio di 1,5 metri. Un avversario che colpisce <PRO_HIMHER> con qualsiasi arma o incantesimo all'interno di questo raggio subisce 1d8+2 punti di danno da fuoco.
+ANIMA DEL SOLE MAGGIORE: Il monaco dell'anima solare si circonda di fiamme che agiscono come uno Scudo di Fuoco (Rosso), conferendogli il 50% di Resistenza al Fuoco e proteggendolo dagli attacchi effettuati in un raggio di 1,5 metri. Un avversario che colpisce il monaco con qualsiasi arma o incantesimo all'interno di questo raggio subisce 1d8+2 punti di danno da fuoco.
 
 - Può utilizzare l'abilità Fascio di Luce dell'Anima una volta al giorno a partire dal 13° livello.
 
-FASCIO DI LUCE DELL'ANIMA: Il monaco dell'anima solare emette un'accecante scarica di luce che colpisce tutte le altre creature in un raggio di 4,5 metri. Le creature colpite subiscono 9d6 punti di danno (9d6+3 se non morte), dimezzati se effettuano con successo un tiro-salvezza contro Incantesimi. In aggiunta a ciò, tutte le creature ad eccezione del monaco devono effettuare con successo un tiro-salvezza contro Incantesimi o rimanere accecate per 2 ore.
+FASCIO DI LUCE DELL'ANIMA: Il monaco dell'anima solare emette un'accecante scarica di luce che colpisce tutte le altre creature in un raggio di 4,5 metri. Le creature colpite subiscono 9d6 punti di danno da fuoco (9d6+3 se non morte), dimezzati se effettuano con successo un tiro-salvezza contro Incantesimi. In aggiunta a ciò, tutte le creature ad eccezione del monaco devono effettuare con successo un tiro-salvezza contro Incantesimi o rimanere accecate per 2 ore.
 
 Svantaggi:
 - Può essere soltanto di allineamento Legale Buono.
