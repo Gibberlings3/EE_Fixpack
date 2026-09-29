@@ -1,0 +1,19 @@
+// Because of an engine bug animation sequences in ITEMANIM.2DA are read by their raw byte value
+// instead of human-readable numbers
+
+COPY_EXISTING ~itemanim.2da~ ~override~
+  SET modified = 0
+  READ_2DA_ENTRIES_NOW ~itemanim_table~ 1
+  FOR (row = 3; row < itemanim_table; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~itemanim_table~ row 1 number
+    PATCH_IF (IS_AN_INT ~number~) BEGIN
+      INNER_PATCH_SAVE value ~ ~ BEGIN WRITE_BYTE 0 number END
+      SET_2DA_ENTRY_LATER itemanim_table_out row 1 ~%value%~
+      SET modified = 1
+    END
+  END
+
+  PATCH_IF (modified) BEGIN
+    SET_2DA_ENTRIES_NOW ~itemanim_table_out~ 1
+  END
+BUT_ONLY
