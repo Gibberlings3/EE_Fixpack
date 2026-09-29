@@ -142,6 +142,12 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
+// In IWDEE the druid spell "Fire Seeds" creates FSEEDS.ITM instances
+COPY_EXISTING ~itemanim.2da~ ~override~
+  REPLACE_TEXTUALLY ~\bFIRESEED\b~ ~FSEEDS~
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
   LPF sort_ids END
