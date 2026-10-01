@@ -1,0 +1,14 @@
+@100 = ~Elementale distrutto~
+@101 = ~Trappola~
+@102 = ~Uhm, forse i miei Bracciali Benedetti potrebbero ancora essergli d'aiuto...~
+
+@103 = ~^\( *Fattore-velocità:? *\)[0-9]+~
+@104 = ~^\( *Peso:? *\)[0-9]+~
+@105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
+
+@106 = ~Atta~
+@107 = ~Angel~
+
+@108 = ~(proiettile)~
+@109 = ~\(Danno: \+[0-9]+\)~
+@110 = ~Tipo di Danno: Proiettile~
