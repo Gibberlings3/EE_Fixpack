@@ -775,6 +775,11 @@ COPY_EXISTING ~spwi622.spl~ ~override~ // Conjure Earth Elemental [sod, bg2]
 COPY_EXISTING  ~spwm179.spl~  ~override~ // Polymorph Other (wild surge)
   LPF ALTER_EFFECT INT_VAR match_savingthrow = BIT4 savingthrow = BIT0 END 
 
+// Sanctuary - remove non-working completion sound fx
+COPY_EXISTING ~sppr109.spl~ ~override~  // Sanctuary
+  LPF DELETE_EFFECT INT_VAR match_opcode = 174 STR_VAR match_resource = ~EFF_P01~ END
+BUT_ONLY
+
 //angel
 // various innate domination effects display the charm icon and -string
 // instead of the domination ones
