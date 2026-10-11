@@ -909,6 +909,8 @@ INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bear
 INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
 INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
 
+INCLUDE ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ // fixes translucency issues with type E000 creature animations
+
 // tbd, cam (from scs)
 // make gretek and friends go hostile more reliably (see also gretek.baf, gretek.dlg)
 COPY_EXISTING ~arlin.cre~  ~override~

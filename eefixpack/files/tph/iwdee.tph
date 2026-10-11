@@ -485,6 +485,8 @@ INCLUDE ~eefixpack/files/tph/a7/iwd_blast_skeleton.tph~ // blast skeleton should
 INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
 INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
 
+INCLUDE ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ // fixes translucency issues with type E000 creature animations
+
 // ie-6035, cam
 // Why are constructs carrying gold?
 COPY_EXISTING ~biknight.cre~ ~override~ // black ice knight

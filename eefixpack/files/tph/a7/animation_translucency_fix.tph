@@ -1,0 +1,152 @@
+// Works around an engine bug with type E000 creature animations where eastern directions
+// are rendered opaque even if the translucency attribute is set.
+// https://www.gibberlings3.net/forums/topic/41616-bg2ee-iwdee-wailing_virgin-on-eastern-orientations-is-not-translucent
+
+// Checks CRE effects for translucency instances
+DEFINE_PATCH_FUNCTION check_cre_translucency
+INT_VAR
+  min = 32          // min. translucency
+  max = 224         // max. translucency
+  check_field = 1   // whether to check CRE translucency field
+  check_effect = 1  // whether to check CRE effects
+RET result  // returns 1 if translucency was found
+BEGIN
+  SET result = 0
+
+  SET min = (min < 0) ? 0 : (min > 255) ? 255 : min
+  SET max = (max < 0) ? 0 : (max > 255) ? 255 : max
+  PATCH_IF (min > max) BEGIN
+    SET tmp = min
+    SET min = max
+    SET max = tmp
+  END
+
+  PATCH_IF (check_field) BEGIN
+    // checking CRE translucency field
+    READ_BYTE 0x7e value
+    SET result = (value >= min && value <= max)
+  END
+
+  PATCH_IF (check_effect && NOT result) BEGIN
+    // checking CRE effects
+    READ_BYTE 0x33 version  // EFF version (0: V1, 1: V2)
+    PATCH_IF (version == 1) BEGIN
+      GET_OFFSET_ARRAY fx_array CRE_V10_EFFECTS
+    END ELSE BEGIN
+      GET_OFFSET_ARRAY fx_array 0x2c4 4 0x2c8 4 0 0 0x30
+    END
+
+    PHP_EACH fx_array AS _ => ofs BEGIN
+      PATCH_IF (NOT result) BEGIN
+        SET opcode = version ? LONG_AT (ofs + 0x08) : SHORT_AT ofs
+        SET param1 = version ? LONG_AT (ofs + 0x14) : LONG_AT (ofs + 0x04)
+        SET result = (opcode == 66 && (param1 >= min && param1 <= max))
+      END
+    END
+  END
+END
+
+// Checks while-equipped ITM effects for translucency instances
+DEFINE_PATCH_FUNCTION check_itm_translucency
+INT_VAR
+  min = 32  // min. translucency
+  max = 224 // max. translucency
+RET result  // returns 1 if translucency was found
+BEGIN
+  SET result = 0
+
+  SET min = (min < 0) ? 0 : (min > 255) ? 255 : min
+  SET max = (max < 0) ? 0 : (max > 255) ? 255 : max
+  PATCH_IF (min > max) BEGIN
+    SET tmp = min
+    SET min = max
+    SET max = tmp
+  END
+
+  GET_OFFSET_ARRAY fx_array ITM_V10_GEN_EFFECTS
+  PHP_EACH fx_array AS _ => ofs BEGIN
+    PATCH_IF (NOT result) BEGIN
+      READ_SHORT ofs opcode
+      READ_LONG (ofs + 0x04) param1
+      READ_BYTE (ofs + 0x0c) mode // timing mode
+      SET result = (opcode == 66 && mode == 2 && (param1 >= min && param1 <= max))
+    END
+  END
+END
+
+
+WITH_SCOPE BEGIN
+  // fixing animation definitions
+  OUTER_SPRINT hex ~[0-9a-f]~
+  COPY_EXISTING_REGEXP ~^e%hex%%hex%%hex%\.ini$~ ~override~
+    REPLACE_EVALUATE ~translucent[ %TAB%]*=[ %TAB%]*1~ BEGIN
+      SET slot = ~0x%SOURCE_RES%~
+      SET $cre_anim_slots(~%slot%~) = 1 // caching animation id for later
+    END ~translucent=0~
+  BUT_ONLY
+
+  OUTER_SET FX_CRE = BIT0 // whether translucency effect is applied via CRE effect
+  OUTER_SET FX_ITM = BIT1 // whether translucency effect is applied via ITM effect
+  ACTION_DEFINE_ARRAY cre_item_slots BEGIN 0 1 2 3 4 5 6 7 8 17 END  // item slot indices where translucency items can be equipped
+
+  COPY_EXISTING_REGEXP ~.+\.cre$~ ~override~
+    READ_SHORT 0x28 anim_id
+    PATCH_IF (VARIABLE_IS_SET $cre_anim_slots(~%anim_id%~)) BEGIN
+      // matching animation id found: patching creature
+      SPRINT cre_file ~%SOURCE_FILE%~
+      SET cre_mode = 0  // tracks whether translucency has already been applied
+
+      // checking translucency as CRE effect
+      LPF check_cre_translucency RET result END
+      PATCH_IF (result) BEGIN SET cre_mode |= FX_CRE END
+
+      // checking translucency as equipped ITM effect
+      // initializing inventory slots: item must be equipped to work
+      CLEAR_ARRAY ~inv_slots~
+      READ_LONG 0x2b8 ofs_slots
+      PHP_EACH cre_item_slots AS _ => slot_idx BEGIN
+        READ_SSHORT (ofs_slots + slot_idx * 2) value
+        SET $inv_slots(~%slot_idx%~) = value
+      END
+
+      // checking CRE items
+      CLEAR_ARRAY ~itm_array~
+      GET_OFFSET_ARRAY itm_array CRE_V10_ITEMS
+      PHP_EACH itm_array AS itm_idx => ofs BEGIN
+        READ_ASCII ofs itm_resref (8) NULL
+        TO_LOWER ~itm_resref~
+        PATCH_IF (NOT VARIABLE_IS_SET $item_cache(~%itm_resref%~) && FILE_EXISTS_IN_GAME ~%itm_resref%.itm~) BEGIN
+          // caching item state to speed up patch operation
+          INNER_ACTION BEGIN
+            COPY_EXISTING ~%itm_resref%.itm~ ~override~
+              LPF check_itm_translucency RET result END
+              SET $item_cache(~%itm_resref%~) = result
+            BUT_ONLY
+          END
+        END
+
+        // item must be equipped to be considered
+        PATCH_IF (VARIABLE_IS_SET $item_cache(~%itm_resref%~) && $item_cache(~%itm_resref%~) != 0) BEGIN
+          PHP_EACH inv_slots AS _ => itm BEGIN
+            PATCH_IF (itm_idx == itm) BEGIN
+              SET cre_mode |= FX_ITM
+            END
+          END
+        END
+      END
+
+      // patching CRE if needed
+      PATCH_IF (cre_mode == 0) BEGIN
+        PATCH_PRINT ~Applying translucency effect: %cre_file%~
+        WRITE_BYTE 0x7e 128 // 50% translucency
+      END ELSE BEGIN
+        PATCH_IF ((cre_mode & FX_CRE) != 0) BEGIN
+          SPRINT fx_source ~effect~
+        END ELSE BEGIN
+          SPRINT fx_source ~item~
+        END
+        PATCH_PRINT ~Skipping %cre_file%. Translucency effect already applied via %fx_source%.~
+      END
+    END
+  BUT_ONLY
+END
