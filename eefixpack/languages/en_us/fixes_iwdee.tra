@@ -168,6 +168,19 @@ Requires:
 
 Weight: 6~
 
+// added note about critical hit protection
+@16976 = ~This helm was worn by the dwarven warrior Danel Silverfrost, king and martyr of the lost dwarven city-state of Silverrock. Danel's deeds are not as well known as those of many other heroic dwarves, but that is perhaps because his kingdom died with him. His nation suffered heavy losses when trolls and giants attacked it over a thousand years ago in the nearly forgotten "War of Curdling Blood." The war between the tribes of monsters and the kingdom of Silverrock was waged over fifteen years. Danel never attempted to flee his kingdom, seek the aid of neighboring countries, or abandon his people. Despite the fact that many of his subjects did indeed flee, Danel remained in Silverrock until the very end. Before the final battle of the terrible war, Danel told his people, "When ye see this plume on me head fall, I want ye to make sure that our people don't bow, like gold, but that they break, like iron."
+
+Almost as soon as the battle was joined, Danel charged to the front of the fray and leapt into the talons of a dozen trolls. The moment his plume disappeared from sight, every man, woman, and child remaining in Silverrock poured out of the fortified caverns and dragged down as many trolls and giants as they could. Barrels of flaming oil were dumped all over Danel's palace and the common areas of the city, consuming as many dwarves as trolls and terrible frost giants. In the end, the monsters had achieved a Pyrrhic victory. The dwarven city was a smoldering ruin from which little treasure, no slaves, and no food could be taken. Many trolls died of starvation that winter, and when they turned on their giant allies for sustenance, the entire army fell into disarray forever.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +2
+– Protects against critical hits
+
+Weight: 4~
+
 // wand of fear's AoE is a 10' radius, not 15'
 @17287 = ~A wand of fear strikes terror into the heart of any creature within its target area. This panic is not universal, however, as the stout of heart have been known to resist its magic. Like all wands, the wand of fear can only be used a limited number of times before it is destroyed.
 
@@ -284,6 +297,23 @@ Area of Effect: 1 creature
 Saving Throw: Neg.
 
 This spell afflicts one creature the priest touches with a disease that saps the target of 5d4 points of Strength. A successful Save vs. Spell negates the effects. This spell has no effect on undead, constructs, or extraplanar creatures. It cannot be cast by good-aligned characters.~
+
+// added note about critical hit protection
+@21498 = ~This sleek, well-polished helm was a prized possession of the infamous eccentric adventurer Ullie the Loud. Ullie was the nominal head of a large mercenary company called the Bronze Boars. His followers were inattentive, disrespectful, and loud. To counter this, Ullie had a helm made to give him a powerful voice over his fellows. Not everyone liked Ullie's shouting, though, and he eventually got into a fatal fight with an ornery priest of Milil. The priest confiscated the helm for a number of years until a group of burglars stole it from his chapel.
+
+STATISTICS:
+
+Equipped abilities:
+– Armor Class: +1
+– Protects against critical hits
+
+Charge abilities:
+– Shout once per day
+  Deafness and 4d6 damage (Save vs. Spell to negate deafness and halve damage)
+  Range: 0
+  Area of Effect: 17-ft. cone with 15 deg. arc
+
+Weight: 2~
 
 // ie-6026, cam - see also string updates to 14913 and thrym.itm, u1ham5b.itm
 // Revert changes to Thrym Extract and War Hammer +4: Defender (had wrong effects which were documented as if intended)
