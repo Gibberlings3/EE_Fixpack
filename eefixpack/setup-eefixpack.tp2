@@ -63,6 +63,10 @@ LANGUAGE
   ~en_us~
   ~eefixpack/languages/en_us/weidu.tra~
 LANGUAGE
+  ~Italian~
+  ~it_it~
+  ~eefixpack/languages/it_it/weidu.tra~
+LANGUAGE
   ~Russian~
   ~ru_ru~
   ~eefixpack/languages/ru_ru/weidu.tra~

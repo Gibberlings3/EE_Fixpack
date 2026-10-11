@@ -1,0 +1,15 @@
+// stringhe usate esclusivamente dall'installer
+@0 = ~Correzioni principali~
+@1 = ~Correzioni principali (beta)~
+@2 = ~Aggiornamento dei testi di gioco~
+@3 = ~DLC Merger deve essere installato prima di poter installare mod su questo gioco. Consulta il readme per ulteriori informazioni e per il collegamento da cui scaricare DLC Merger.~
+@4 = ~Non sono state rilevate correzioni per questo gioco.~
+@5 = ~L'Aggiornamento dei testi di gioco non è disponibile per questo gioco nella lingua selezionata.~
+@6 = ~Rilevato BGEE.~
+@7 = ~Rilevato BGEE con SoD.~
+@8 = ~Rilevato BG2EE.~
+@9 = ~Rilevato IWDEE.~
+@10 = ~Rilevato PsTEE.~
+@11 = ~
+        EE Fixpack non può essere installato direttamente su EET. Deve essere installato *sia* su
+        BGEE *sia* su BG2EE *prima* di unirli in un'installazione EET.~

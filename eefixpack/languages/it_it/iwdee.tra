@@ -1,0 +1,2 @@
+// Compatibility stub: IWDEE Core localization is not included in this PR.
+// Missing strings continue to fall back to the English TRA loaded by the Core component.

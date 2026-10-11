@@ -1,0 +1,465 @@
+// Traduzione italiana Core Fixes - BG2EE. Base terminologica: dialog.tlk/dialogf.tlk italiani ufficiali forniti.
+
+@6511 = ~Credo proprio che tu abbia ragione. Dovremmo subito dirigerci lì. Aveva detto che si trovava a sud del campo di battaglia, giusto?~
+
+@7148 = ~Il rito di evocazione drow
+
+Phaere mi ha rivelato il piano di Ardulace nella sua interezza. La drow intende invadere la superficie... non so a quale scopo, ma il rito di matrona Ardulace evocherà un grande demone in aiuto. Le uova di drago dovranno essere sacrificate al demone in cambio dei suoi servigi e questo metterà la Casata Despana in posizione di grande favore con Lolth.
+
+Phaere intende tradire matrona Ardulace e mi ha costretto ad aiutarla. Vuole che io entri nella tesoreria dei Despana (nel tempio di Lolth) e che sostituisca le uova di drago d'argento con le uova finte che Phaere ha fatto realizzare. Dopodiché, quando Ardulace avrà offerto al demone le false uova, Phaere potrà farsi avanti con quelle vere.
+
+Devo prestare attenzione ad introdurmi nella tesoreria... Se sarà necessario uccidere le guardie, dovrò farlo con discrezione. E anche quando avrò in mano le uova, matrona Ardulace avrà comunque sigillato la città... Non ci sarà via d'uscita. Devo continuare ad assecondarla... per ora.~ ~Il rito di evocazione drow
+
+Phaere mi ha rivelato il piano di Ardulace nella sua interezza. La drow intende invadere la superficie... non so a quale scopo, ma il rito di matrona Ardulace evocherà un grande demone in aiuto. Le uova di drago dovranno essere sacrificate al demone in cambio dei suoi servigi e questo metterà la Casata Despana in posizione di grande favore con Lolth.
+
+Phaere intende tradire matrona Ardulace e mi ha costretta ad aiutarla. Vuole che io entri nella tesoreria dei Despana (nel tempio di Lolth) e che sostituisca le uova di drago d'argento con le uova finte che Phaere ha fatto realizzare. Dopodiché, quando Ardulace avrà offerto al demone le false uova, Phaere potrà farsi avanti con quelle vere.
+
+Devo prestare attenzione ad introdurmi nella tesoreria... Se sarà necessario uccidere le guardie, dovrò farlo con discrezione. E anche quando avrò in mano le uova, matrona Ardulace avrà comunque sigillato la città... Non ci sarà via d'uscita. Devo continuare ad assecondarla... per ora.~
+
+@7417 = ~Credo tu abbia ragione. Dovremmo andare là, adesso. Aveva detto che si trovava a sud del campo di battaglia, giusto?~
+
+@7421 = ~E sia, a sud del campo di battaglia, come ci aveva detto. Hai fatto la scelta giusta, <CHARNAME>.~
+
+@7529 = ~Ninjatō~
+
+@7530 = ~Ninjatō~
+
+@7531 = ~Ninjatō +1~
+
+@7680 = ~Orripilante Avvizzimento di Abi-Dalzim
+(Necromanzia)
+Livello: 8
+Raggio d'azione: Visuale del lanciatore
+Durata: Istantanea
+Tempo di lancio: 8
+Area d'effetto: Raggio di 4,5 metri
+Tiro-salvezza: 1/2
+
+Questo incantesimo prosciuga i liquidi dai corpi di qualsiasi creatura vivente all'interno dell'area d'effetto, infliggendo 1d8 punti di danno per livello del lanciatore. Le creature colpite possono effettuare un tiro-salvezza contro Incantesimi per dimezzare il danno. Questo incantesimo non danneggerà i componenti del gruppo.~
+
+@10468 = ~L'offerta che hai devoluto alla chiesa è stata molto apprezzata e la tua reputazione è cresciuta di un punto.~ [REPUP]
+
+@11015 = ~Scudo degli Arconti
+(Scongiurazione)
+Livello: 7
+Sfera: Protezione
+Raggio d'azione: Tocco
+Durata: 3 round per livello
+Tempo di lancio: 9
+Area d'effetto: Il lanciatore
+Tiro-salvezza: Nessuno
+
+Questo potente incantesimo di scongiurazione fa sì che qualsiasi incantesimo lanciato contro il personaggio sia assorbito e dissipato. Il numero totale di livelli di incantesimo assorbibili è pari alla metà del livello del lanciatore. La protezione include anche gli incantesimi lanciati da pergamene e le abilità innate che funzionano come incantesimi, ma esclude gli effetti ad area che non sono centrati direttamente sul personaggio protetto e quelli stazionari, come Nube Assassina e Nube Maleodorante.
+
+Finché rimangono livelli di incantesimo assorbibili, gli incantesimi vengono assorbiti. Per esempio, se rimane soltanto 1 livello e contro il personaggio viene lanciato un incantesimo di 3° livello, quest'ultimo viene assorbito, ma Scudo degli Arconti termina.
+
+Questo incantesimo non protegge il lanciatore da Dissolvi Magie, ma non può neppure essere dissolto da Dissolvi Magie.~
+
+@11195 = ~Portale alla Regina delle Fate che vive all'estremità sud-est delle Colline Windspear. Sarà la nostra liberazione da questo... questo Irenicus e dalle sue segrete!~
+
+@11354 = ~Grazie! Devi prendere le nostre ghiande e portarle alla Regina delle Fate all'estremità sud-est delle Colline Windspear.~
+
+@11381 = ~Se porti le ghiande alla Regina delle Fate, lei può far ricrescere i nostri alberi e liberarci! Vive all'estremità sud-est delle Colline Windspear. Lo faresti per noi?~
+
+@11488 = ~Soldato di Tombelthen~
+
+@11489 = ~Soldato di Tombelthen~
+
+@12317 = ~Pietra Magica
+(Incantamento)
+Livello: 1
+Sfera: Combattimento
+Raggio d'azione: 15 metri
+Durata: Istantanea
+Tempo di lancio: 4
+Area d'effetto: 1 creatura
+Tiro-salvezza: Nessuno
+
+Lanciando questo incantesimo, il personaggio può creare un piccolo ciottolo magico che in seguito vola in alto e colpisce un nemico. La pietra infligge 1d4 punti di danno a chiunque colpisca.~
+
+@12433 = ~[THE SURGEON 3]~ [SURGN03]
+
+@12434 = ~[THE SURGEON 4]~ [SURGN04]
+
+@17169 = ~Wallag,
+
+Oggi viaggeremo alla ricerca della tana dei lupi. La mia esplorazione della zona ha confermato i sospetti di Merella, cioè che in questa regione vive un grosso branco di lupi. Sulla mappa che ho incluso, ho indicato dove credo si possa trovare la tana. Seguici se puoi, ma fa' attenzione. Non possiamo permetterci altre misteriose sparizioni. A presto.
+
+Mazzy
+
+(Sullo stesso foglio è disegnata una mappa rozza ma chiara che indica un sentiero verso un'area della foresta a qualche ora di viaggio a ovest di Imnesvale).~
+
+@17759 = ~Hai compiuto un nobile gesto per noi. Ti prego, porta queste ghiande alla Regina delle Fate che vive all'estremità sud-est delle Colline Windspear, appena a nord-est dell'insediamento umano chiamato Trademeet.~
+
+@17774 = ~Hai compiuto un nobile gesto per noi. Ti prego, porta queste ghiande alla Regina delle Fate che vive all'estremità sud-est delle Colline Windspear.~
+
+@17788 = ~Hai compiuto un nobile gesto per noi. Ti prego, porta queste ghiande alla Regina delle Fate all'estremità sud-est delle Colline Windspear.~
+
+@19686 = ~La reputazione del gruppo è aumentata~ [REPUP]
+
+@19723 = ~Questa mezza pagina di pergamena, ingiallita dal tempo e con l'inchiostro quasi sbiadito ma ancora leggibile, recita:
+
+"Il suolo vicino alle Colline di Umar è ricco di giacimenti di mithral, ma sfortunatamente troppe canaglie e troppi banditi se ne sono accorti e derubano i ricercatori della zona senza pietà. Ho trovato un ottimo nascondiglio per il mio carico di mithral, uno che quei ladri non troveranno mai. È lontano, a ovest del villaggio di Imnesvale, in una foresta..."
+
+Sotto questa sezione, la pagina è lesa e frastagliata, come se fosse stata strappata l'altra metà.~
+
+@25209 = ~ARCIERE: L'arciere è l'emblema dell'abilità nel tiro con l'arco. È il tiratore scelto per eccellenza, capace di portare a segno quasi ogni tiro, non importa quanto sia difficile. Per diventare così abile con l'arco, l'arciere ha dovuto sacrificare parte della sua competenza con le armi da mischia e con le armature.
+
+Vantaggi:
+- Bonus pari a +1 ai tiri per colpire e al danno con qualsiasi arma da lancio ogni 3 livelli fino al 18° livello.
+- Bonus addizionale pari a +1 ai tiri per colpire e al danno con qualsiasi arma da lancio ogni 5 livelli a partire dal 23° livello.
+- Può diventare Gran Maestro (cinque punti) con l'arco lungo, l'arco corto e la balestra.
+- Può utilizzare l'abilità Colpo Mirato una volta al giorno (inizia al 4° livello con un uso e ne ottiene uno addizionale ogni 4 livelli).
+
+COLPO MIRATO: Tutti gli attacchi a distanza messi a segno nei successivi 10 secondi, oltre ad infliggere un normale danno, hanno i seguenti effetti cumulativi a seconda del livello:
+
+4° Livello: Penalità pari a -1 al THAC0 del bersaglio.
+8° Livello: Penalità pari a -1 ai tiri-salvezza contro Incantesimi del bersaglio.
+12° Livello: Penalità pari a -1 alla Forza del bersaglio.
+16° Livello: Bonus pari a +2 al danno.
+
+Svantaggi:
+- Può indossare soltanto armature di cuoio, armature di cuoio borchiato e armature di pelle.
+- Può diventare soltanto Competente (un punto) nelle armi da mischia.
+- Non può utilizzare l'abilità Charmare Animali.~
+
+@22832 = ~Protezione dal Male nel Raggio di 3 Metri
+(Scongiurazione)
+Livello: 4
+Sfera: Protezione
+Raggio d'azione: Tocco
+Durata: 1 turno per livello
+Tempo di lancio: 7
+Area d'effetto: Raggio di 3 metri
+Tiro-salvezza: Nessuno
+
+Quando questo incantesimo viene lanciato, tutte le creature alleate all'interno di un raggio di 3 metri sono soggette a Protezione dal Male. L'incantesimo crea intorno ai destinatari una barriera distante 30 centimetri. La barriera si sposta con i beneficiari dell'incantesimo e ha due importanti effetti. In primo luogo, tutti gli attacchi effettuati da una creatura o evocazione malvagia ricevono una penalità pari a -2 a ogni tiro per colpire. Secondariamente, i demoni evocati non possono scegliere i personaggi protetti come bersagli.~
+
+@25308 = ~E lo spasimante di mia sorella, Gomph, era straordinariamente ben dotato, ma con le gambe storte. Un dobluth... un esiliato. Mia sorella doveva averci sentiti nella nostra alcova e non riuscì a resistere.~
+
+@28025 = ~Allora la prossima volta che hai intenzione di farmi parlare per niente fammelo sapere: provvederò ad includere disegni colorati e vignette animate per tenere desto l'interesse della tua mente infantile.~
+
+@29212 = ~Evocare Vermeiena
+(Evocazione/Attrazione)
+Livello: 6
+Raggio d'azione: 36 metri
+Durata: 7 round + 1 round per livello
+Tempo di lancio: 9
+Area d'effetto: Speciale
+Tiro-salvezza: Nessuno
+
+Questo incantesimo si divide in due parti. In un primo momento, un piccolo portale si apre ed evoca 1 o 2 vermeiena in un punto designato dall'incantatore. Secondariamente, la magia trasforma i vermeiena in versioni più grosse e più crudeli. Il personaggio assume quindi il controllo di queste creature finché non vengono uccise o finché la durata dell'incantesimo non ha termine. C'è il 35% di possibilità che vengano evocati due vermeiena anziché uno.~
+
+@29214 = ~Evocare Nishruu
+(Evocazione/Attrazione)
+
+Livello: 6
+Raggio d'azione: 7,5 metri
+Durata: 1 round per livello
+Tempo di lancio: 9
+Area d'effetto: Speciale
+Tiro-salvezza: Nessuno
+
+Lanciando questo incantesimo, il personaggio evoca un essere magico di considerevole potere: il nishruu. A un primo sguardo, esso appare come una specie di nebbia ma, osservandolo più da vicino, questa ribollente massa grigia di vapori e di forme si muove con una vita propria. Attratto dalla magia come una falena dalla fiamma, il nishruu si nutre delle energie che circondano e che utilizzano gli incantatori. Fortunatamente, non c'è alcun dubbio sulla lealtà della creatura ed essa non attaccherà il suo evocatore, anche se le piacerebbe molto.
+
+Il nishruu non ha attacchi fisici, benché questi possano ferirlo. Ogni volta che la creatura tocca un incantatore bersaglio e avvolge il bersaglio con i suoi tentacoli, ci sono due effetti principali. In primo luogo, tutti gli oggetti magici a cariche posseduti dal bersaglio saranno privati di una carica o distrutti se ne è rimasta solo una. Secondariamente, fa sì che l'avversario perda a caso uno degli incantesimi memorizzati di più alto livello. Il nishruu è completamente immune ai danni da energia e viene invece curato dalla magia. La creatura rimane sotto il controllo dell'incantatore finché non viene uccisa o finché la durata dell'incantesimo non giunge a termine.~
+
+@34092 = ~Aiutare le driadi prigioniere di Irenicus
+
+Ho acconsentito ad aiutare un trio di driadi a restituire le loro ghiande alla Regina delle Fate. Da qualche parte nei sotterranei c'è un duergar chiamato Ilyich che ha le ghiande.~
+
+@39430 = ~Questo antico volume scricchiola quando lo apri. Ciascuna pagina del Libro degli Incantesimi Infiniti contiene la descrizione di un incantesimo in linguaggio comune, abbastanza facile da essere compreso e lanciato anche da un ladro, chierico o guerriero. Ogni incantesimo su una pagina può essere lanciato una volta al giorno.
+Una seconda funzione del libro è quella di andare ad una pagina diversa del volume per cercare di ottenere incantesimi migliori. Tuttavia, una volta girata la pagina, l'incantesimo precedente è perduto per sempre, a meno che non ricompaia di nuovo per caso.
+
+Attenzione: una volta arrivati all'ultima pagina del libro, si è costretti a rimanere con quell'incantesimo.
+
+L'incantesimo su questa pagina è:
+
+Vera Vista
+(Divinazione)
+Livello: 6
+Raggio d'azione: 0
+Durata: 1 turno
+Tempo di lancio: 8
+Area d'effetto: Raggio di 36,5 metri
+Tiro-salvezza: Nessuno
+
+Immediatamente e una volta al round per 1 turno dal lancio, tutti gli incantesimi ostili di Illusione/Visione nell'area d'effetto verranno dissolti. Gli incantesimi che ne sono influenzati sono: Immagine Riflessa, Invisibilità, Immagini Illusorie, Anti-individuazione, Invisibilità Potenziata, Porta d'Ombra, Ingannare, Ologramma e Simulacro. La Resistenza alla Magia del bersaglio, se presente, non viene applicata con questo incantesimo. Vera Vista agisce soltanto sui nemici, quindi non può dissolvere l'invisibilità di un membro del gruppo.~
+
+@39437 = ~Questo antico volume scricchiola quando lo apri. Ogni pagina del Libro degli Incantesimi Infiniti contiene la descrizione di un incantesimo in linguaggio comune, abbastanza facile da essere compreso e lanciato anche da un ladro, da un chierico o da un guerriero. Ogni incantesimo su una pagina può essere lanciato una volta al giorno.
+Una seconda funzione del libro può essere quella di andare a una pagina diversa del volume per cercare di ottenere degli incantesimi migliori. Tuttavia una volta girata la pagina, l'incantesimo precedente è perduto per sempre, a meno che non ricompaia di nuovo per caso.
+
+Fate attenzione. Una volta arrivati all'ultima pagina del libro, sarete costretti a rimanere con quell'incantesimo.
+
+L'incantesimo su questa pagina è:
+
+Fulmine
+(Apparizione)
+Livello: 3
+Raggio d'azione: 21 metri
+Durata: Istantanea
+Tempo di lancio: 3
+Area d'effetto: Tragitto percorso dal fulmine
+Tiro-salvezza: 1/2
+
+Lanciando questo incantesimo, il personaggio rilascia una potente scarica di energia elettrica che provoca 1d6 punti di danno per ogni livello del lanciatore (sino a un massimo di 10d6) ad ogni creatura all'interno dell'area d'effetto. Un tiro-salvezza contro Incantesimi effettuato con successo dimezza il danno (si arrotonda per difetto). Se il fulmine s'imbatte in un muro, rimbalzerà fino a quando non avrà percorso il suo tragitto.~
+
+@45867 = ~MONACO: Il monaco è un combattente che cerca la perfezione attraverso la contemplazione e l'azione. È un guerriero versatile, particolarmente abile nel combattimento senz'armi o armature. Sebbene il monaco non possa lanciare incantesimi, possiede un potere magico unico: è in grado di incanalare un'energia impalpabile, chiamata Ki, che gli permette di compiere imprese incredibili. Il talento più conosciuto del monaco è la sua capacità di stordire un avversario con un colpo a mani nude.
+
+ABILITÀ DI CLASSE:
+
+- Non può indossare nessun'armatura.
+- Può utilizzare soltanto le armi disponibili per la classe del ladro (escluse quelle a due mani).
+- Può diventare soltanto Competente (un punto) in qualsiasi classe di armi.
+- Può diventare soltanto Competente (un punto) nello Stile con Arma Singola e non può assegnare punti ad alcun altro stile di combattimento.
+- Si muove più velocemente degli altri personaggi di 2 punti. Il Fattore-movimento migliora ulteriormente di 1 punto ogni 5 livelli.
+- Può compiere un attacco a mani nude per round. Ottiene 1/2 attacco addizionale ogni 3 livelli. Il danno arrecato dagli attacchi a mani nude aumenta con il livello nel seguente modo:
+
+Livello 1-2: 1d6
+Livello 3-5: 1d8
+Livello 6-8: 1d10
+Livello 9-14: 1d12
+Livello 15 e oltre: 1d20
+
+- Gli attacchi a mani nude sono considerati come armi magiche +1 e ottengono un bonus pari a +1 ai tiri per colpire e al danno a partire dal 9° livello. Questo incantamento diventa +2 al 12° livello, +3 al 15° livello e +4 al 25° livello.
+- Riceve un bonus pari a +2 ai tiri-salvezza contro Incantesimi.
+- Deviare Frecce: bonus pari a +1 alla Classe Armatura contro attacchi con armi da lancio ogni 3 livelli.
+- Inizia con una Classe Armatura pari a 9 al 1° livello e ottiene un ulteriore bonus pari a +1 ogni 2 livelli fino al 18° livello.
+- Ottiene un ulteriore bonus pari a +1 alla Classe Armatura ogni 3 livelli dal 21° al 30° livello.
+- Ottiene un ulteriore bonus pari a +1 alla Classe Armatura ogni 5 livelli a partire dal 35° livello.
+- Può utilizzare l'abilità Colpo Stordente una volta al giorno. Ottiene un uso al 1° livello e un uso addizionale ogni 4 livelli successivi.
+
+COLPO STORDENTE: Tutti gli attacchi messi a segno nel successivo round costringono la vittima ad effettuare con successo un tiro-salvezza contro Incantesimi o restare stordita. Questa abilità speciale modifica automaticamente i normali attacchi; non c'è quindi bisogno di selezionare un bersaglio.
+
+- Diventa immune a tutte le malattie e non può essere né rallentato né velocizzato a partire dal 5° livello.
+- A partire dal 7° livello può utilizzare l'abilità Imposizione delle Mani per curarsi, recuperando 2 Punti Ferita per livello.
+- All'8° livello ottiene un bonus pari a -1 al Fattore-velocità.
+- Ottiene un bonus pari a +1 a tutti i tiri-salvezza e diventa immune allo Charme a partire dal 9° livello.
+- Diventa immune al veleno a partire dall'11° livello.
+- Al 12° livello ottiene un ulteriore bonus pari a -1 al Fattore-velocità.
+- Può utilizzare l'abilità Palmo Tremante una volta al giorno a partire dal 13° livello.
+
+PALMO TREMANTE: Il prossimo attacco messo a segno costringe il nemico ad effettuare con successo un tiro-salvezza contro Incantesimi o a morire. Questa abilità speciale modifica automaticamente i normali attacchi; non c'è quindi bisogno di selezionare un bersaglio.
+
+- Ottiene il 3% di Resistenza alla Magia per livello a partire dal 14° livello (inizia con il 42%).
+- Diventa immune alle armi non magiche a partire dal 20° livello.
+- Può essere soltanto di allineamento Legale Buono, Legale Neutrale, Legale Malvagio.
+- Dado-vita: d8.~
+
+@48516 = ~Ah, sì, il vecchio trucco della scatola-enigma. Ma Jansen nascondeva le chiavi della dispensa nello stesso modo, il che non ci ha mai fermati. "Jan", diceva lei, "uno di questi giorni mangerai un dolcetto di troppo!" Non l'ho mai fatto, anche se mio cugino Arfie una volta lo fece ed esplose. Una storia triste.~
+
+@48747 = ~Non interessato a lei, o non interessato alle donne? Mi chiedo, ranger, se nemmeno le mie attenzioni potrebbero risvegliare un certo interesse per le femmine...~
+
+@51947 = ~Questa lama +2 di acciaio verde dell'Abisso è una delle preferite di Haer'Dalis. Questa spada corta è in grado di infliggere 3 punti di danno addizionale da veleno se il bersaglio non effettua con successo il suo tiro-salvezza.
+
+STATISTICHE:
+
+Abilità in combattimento:
+- Il bersaglio deve effettuare con successo un tiro-salvezza contro Veleno per non subire 3 punti di danno da veleno
+
+THAC0: +2
+Danno: 1d6+2 (perforante)
+Fattore-velocità: 1
+Tipo di Competenza: Spada Corta
+Tipo: A una mano
+
+Richiede:
+Forza 4
+
+Peso: 2~
+
+@57918 = ~Quadrello Paralizzante +1~
+
+@74310 = ~MONACO DELL'ANIMA SOLARE: Ai tempi di Netheril, i monaci dell'anima solare erano seguaci di Amaunator. Oggi la loro devozione è invece ripartita tra Lathander, Selûne e Sune. Il monaco dell'anima solare obbedisce rigorosamente alla legge; si serve delle sue arti marziali e delle sue abilità magiche per scacciare l'oscurità e la corruzione, ovunque esse siano.
+
+Vantaggi:
+- Può utilizzare l'abilità Raggio Spirituale del Sole una volta al giorno a partire dal 2° livello.
+
+RAGGIO SPIRITUALE DEL SOLE: Aprendo il palmo della sua mano, il monaco dell'anima solare sprigiona un'esplosione di luce, infliggendo 1d8 punti di danno da fuoco ogni 2 livelli, fino a un massimo di 5d8. Questa abilità infligge 6 punti di danno addizionale contro i non morti. Ottiene un ulteriore uso al 6°, al 10° e al 15° livello.
+
+- Può utilizzare l'abilità Pugni Infuocati una volta al giorno dal 5° livello.
+
+PUGNI INFUOCATI: Il monaco dell'anima solare incanala la propria luce interiore nei suoi attacchi a mani nude, trasformando i suoi pugni in armi infuocate che infliggono ad ogni colpo 2d6 punti di danno da fuoco addizionale per il successivo round. La durata sale a 2 round al 9° livello, 3 round al 12° livello, 4 round al 15° livello e 5 round al 25° livello. Questa abilità speciale modifica automaticamente i normali attacchi; non è necessario cambiare arma.
+
+- Può utilizzare l'abilità Anima del Sole Maggiore una volta al giorno a partire dall'8° livello.
+
+ANIMA DEL SOLE MAGGIORE: Il monaco dell'anima solare si circonda di fiamme che agiscono come uno Scudo di Fuoco (Rosso), conferendogli il 50% di Resistenza al Fuoco e proteggendolo dagli attacchi effettuati in un raggio di 1,5 metri. Un avversario che colpisce il monaco con qualsiasi arma o incantesimo all'interno di questo raggio subisce 1d8+2 punti di danno da fuoco.
+
+- Può utilizzare l'abilità Fascio di Luce dell'Anima una volta al giorno a partire dal 13° livello.
+
+FASCIO DI LUCE DELL'ANIMA: Il monaco dell'anima solare emette un'accecante scarica di luce che colpisce tutte le altre creature in un raggio di 4,5 metri. Le creature colpite subiscono 9d6 punti di danno da fuoco (9d6+3 se non morte), dimezzati se effettuano con successo un tiro-salvezza contro Incantesimi. In aggiunta a ciò, tutte le creature ad eccezione del monaco devono effettuare con successo un tiro-salvezza contro Incantesimi o rimanere accecate per 2 ore.
+
+Svantaggi:
+- Può essere soltanto di allineamento Legale Buono.
+- Non può utilizzare l'abilità Colpo Stordente.
+- Non può utilizzare l'abilità Palmo Tremante.~
+
+@100356 = ~Charmare Animali
+Questo incantesimo influenza ogni animale su cui è lanciato. L'animale riceve un tiro-salvezza contro Incantesimi per evitarne l'effetto. Lo charme dura due turni.
+
+Se il bersaglio dell'incantesimo fallisce il suo tiro-salvezza, percepirà il lanciatore come un amico fidato e un alleato da ascoltare e da proteggere. Il lanciatore può impartire degli ordini e l'animale charmato li eseguirà il più velocemente possibile.
+
+Se il personaggio ferisce (o cerca di ferire) l'animale charmato con qualche azione deliberata o se viene lanciato con successo l'incantesimo Dissolvi Magie sull'animale charmato, l'incantesimo viene infranto. Se due o più effetti di charme sono usati con successo sulla creatura, il più recente ha la precedenza. Si tenga presente che l'animale diventerà ostile quando l'incantesimo avrà termine, a prescindere dal suo precedente stato. Inoltre, una creatura charmata non può lasciare l'area in cui è stata sottoposta a charme.~
+
+@103011 = ~Mutare Forma in Lupo Mannaro Maggiore
+
+Forza: 21
+Destrezza: 20
+
+Classe Armatura Base: -6
+Numero di Attacchi: 3
+Danno: 1d8 (tagliente), colpisce come un'arma +2
+
+Abilità Speciali:
+- Resistenza al Fuoco: 50%
+- Resistenza al Freddo: 50%
+- Resistenza all'Elettricità: 50%
+- Resistenza all'Acido: 50%
+- Resistenza alla Magia: 40%
+- Rigenera 1 Punto Ferita ogni 2 secondi~
+
+@103237 = ~Mutare Forma in Ragno Spadaccino
+
+Forza: 16
+Destrezza: 16
+
+Classe Armatura Base: 3
+Attacchi per Round: 4
+Danno: 2d6 (perforante), colpisce come un'arma +1
+
+Abilità Speciali:
+- Immunità a Ragnatela
+- Velocizzato~
+
+@100352 = ~Fascio di Luce dell'Anima
+Il personaggio emette una scarica di luce accecante che colpisce tutte le altre creature all'interno di un raggio di 4,5 metri. Le creature colpite subiscono 9d6 punti di danno da fuoco (9d6+3 se non morte), dimezzati se effettuano con successo un tiro-salvezza contro Incantesimi. In aggiunta a ciò, tutte le creature ad eccezione del personaggio devono effettuare con successo un tiro-salvezza contro Incantesimi o rimanere accecate per 2 ore.~
+
+@100374 = ~Mutare Forma in Salamandra del Fuoco
+
+Forza: 18/75
+Destrezza: 19
+
+Classe Armatura Base: 2
+Numero di Attacchi: 1
+Danno: 1d8 (perforante), colpisce come un'arma +3
+
+Abilità Speciali:
+- THAC0: +1
+- Fattore-movimento aumentato
+- Resistenza al Fuoco: 50%
+- Sfera Infuocata (2d6 punti di danno da fuoco al bersaglio)~
+
+@100375 = ~Trasformazione in Gelatina Senape
+
+Forza: 14
+Destrezza: 9
+
+Classe Armatura Base: 4
+Numero di Attacchi: 1
+Danno (a distanza): 5d4 (contundente), colpisce come un'arma +3, avvelena (1 punto di danno per 2 secondi per 5 round; effettuare con successo un tiro-salvezza contro Veleno con un bonus pari a +2 nega gli effetti), rallenta (200 secondi; effettuare con successo un tiro-salvezza contro Soffio con una penalità pari a -2 nega gli effetti)
+
+Abilità Speciali:
+- Resistenza al Freddo: 50%
+- Resistenza all'Elettricità: 100%
+- Resistenza alla Magia: 125%
+- Resistenza al Freddo Magico: 50%
+- Resistenza al Danno Tagliente: 30%
+- Resistenza al Danno Contundente: 30%
+- Resistenza al Danno Perforante: 100%
+- Resistenza al Danno da Proiettile: 85%
+- Immunità a Stordimento, Sonno, Paura, Veleno, Pietrificazione, Confusione, Charme, Paralisi e Risucchio di Livello
+- Immunità alle armi non magiche
+- Fattore-movimento aumentato~
+
+@100390 = ~Trasformazione in Mind Flayer
+
+Forza: 10
+Destrezza: 10
+
+Classe Armatura Base: 5
+Attacchi per Round: 4
+Danno: 1d2 (contundente), colpisce come un'arma +2, riduce di 5 punti l'Intelligenza del bersaglio
+
+Abilità Speciali:
+- Colpo Psionico (stordisce un nemico per cinque round; un tiro-salvezza contro Incantesimi effettuato con successo nega gli effetti)~
+
+@100391 = ~Trasformazione in Golem di Ferro
+
+Forza: 24
+Destrezza: 9
+
+Classe Armatura Base: 3
+Attacchi per Round: 1
+Danno: 4d10 (contundente), colpisce come un'arma +4
+
+Abilità Speciali:
+- Resistenza al Fuoco: 125%
+- Resistenza al Freddo: 100%
+- Resistenza all'Elettricità: 100%
+- Resistenza all'Acido: 100%
+- Resistenza alla Magia: 100%
+- Resistenza al Fuoco Magico: 125%
+- Resistenza al Freddo Magico: 100%
+- Resistenza al Danno Tagliente: 20%
+- Resistenza al Danno Contundente: 20%
+- Resistenza al Danno Perforante: 20%
+- Resistenza al Danno da Proiettile: 20%
+- Immunità alla Pugnalata alle Spalle, alle armi di incantamento +2 o inferiore, Sonno, Paura, Blocco, Charme, Paralisi, Veleno~
+
+@100392 = ~Trasformazione in Troll Gigante
+
+Forza: 18
+Destrezza: 20
+
+Classe Armatura Base: 4
+Attacchi per Round: 3
+Danno: 2d6 (perforante), colpisce come un'arma +2
+
+Abilità Speciali:
+- Immunità a Stordimento, Sonno, Blocco e Paralisi
+- Rigenera 1 Punto Ferita al secondo~
+
+@100393 = ~Trasformazione in Uomo-lupo Maggiore
+
+Forza: 19
+Destrezza: 19
+
+Classe Armatura Base: 2
+Attacchi per Round: 3
+Danno: 1d12 (tagliente), colpisce come un'arma +1
+
+Abilità Speciali:
+- Resistenza al Fuoco: 50%
+- Resistenza al Freddo: 50%
+- Resistenza all'Elettricità: 50%
+- Resistenza all'Acido: 50%
+- Resistenza al Fuoco Magico: 50%
+- Resistenza al Freddo Magico: 50%
+- Immunità alle armi di incantamento +1 o inferiore
+- Rigenera 8 Punti Ferita al secondo~
+
+@100394 = ~Trasformazione in Elementale del Fuoco
+
+Forza: 9
+Destrezza: 9
+
+Classe Armatura Base: 2
+Attacchi per Round: 1
+Danno: 3d8 (contundente), 1d6 punti di danno da fuoco, colpisce come un'arma +4
+
+Abilità Speciali:
+- Resistenza al Fuoco: 100%
+- Resistenza al Fuoco Magico: 100%
+- Immunità alle armi di incantamento +2 o inferiore~
+
+@100395 = ~Trasformazione in Elementale della Terra
+
+Forza: 19
+Destrezza: 9
+
+Classe Armatura Base: 2
+Attacchi per Round: 1
+Danno: 4d8 (contundente), colpisce come un'arma +4
+
+Abilità Speciali:
+– Immunità alle armi di incantamento +2 o inferiore.~

@@ -2,4 +2,23 @@
 
 @1 = ~Mutare nella Forma Naturale (Trasformazione)~
 
-@2 = "Divora Cervello"
+@2 = ~Trasformazione in Elementale dell'Acqua
+
+Forza: 18
+Destrezza: 14
+
+Classe Armatura Base: -2
+Numero di Attacchi: 1
+Danno: 4d8 (contundente), colpisce come un'arma +4
+
+Abilità Speciali:
+- Resistenza al Freddo: -25%
+- Resistenza al Freddo Magico: -25%
+- Resistenza all'Elettricità: -75%
+- Resistenza all'Acido: 75%
+- Resistenza al Danno Tagliente: 75%
+- Resistenza al Danno Contundente: 75%
+- Resistenza al Danno Perforante: 75%
+- Resistenza al Danno da Proiettile: 75%~
+
+@3 = ~Divora Cervello~
