@@ -533,6 +533,13 @@ COPY_EXISTING ~bow05.itm~   ~override~ // Shortbow
               ~storm.itm~   ~override~ // Storm Bow +2
   WRITE_ASCII 0x22 ~BS~ #2
 
+// headgear without critical hit protection
+COPY_EXISTING ~cone.itm~    ~override~ // Cyclocone
+              ~helmsun.itm~ ~override~ // Sune's Laurel of Favor
+              ~rogue.itm~   ~override~ // Rogue's Cowl
+  WRITE_LONG 0x18 (THIS | BIT25)
+BUT_ONLY
+
 // tbd, cam
 // upgraded bren muller's crossbow needs feedback that effect was activated (copy bg2 Heartseeker's visuals)
 COPY_EXISTING ~cdxbowbm.itm~ ~override~
