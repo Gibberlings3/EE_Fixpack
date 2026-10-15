@@ -1,7 +1,5 @@
 // Adds missing attack animation sequences in selected type 7000 "monster_old" animations
 
-WITH_SCOPE BEGIN
-
 ACTION_DEFINE_ASSOCIATIVE_ARRAY clone_seq BEGIN
   // prefix => attack animation sequence to clone (0 or 1)
   "mber" => 0 // 7200/BEAR_BLACK, 7201/BEAR_BROWN, 7202/BEAR_CAVE, 7203/BEAR_POLAR
@@ -198,6 +196,4 @@ ACTION_PHP_EACH clone_seq AS resref => sequence BEGIN
       PRINT ~%resref%: Creature animation already patched. Skipping.~
     END
   END
-END
-
 END

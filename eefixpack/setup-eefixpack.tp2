@@ -38,6 +38,7 @@ ALWAYS
     INCLUDE ~eefixpack/files/lib/cd_functions.tpa~
     INCLUDE ~eefixpack/files/lib/gt_functions.tph~
     INCLUDE ~eefixpack/files/lib/dw_functions.tph~
+    INCLUDE ~eefixpack/files/lib/include_script.tph~
 
     // for fixes that have restored/fixed voiceovers and other audio, need a separate
     // variable to check for applying the fixes
@@ -92,7 +93,7 @@ REQUIRE_PREDICATE (((GAME_IS ~bgee~)  AND (FILE_EXISTS ~eefixpack/files/tph/bgee
 LABEL ~cd_eefp_core_fixes~
 
 WITH_TRA ~eefixpack/languages/en_us/%game%.tra~ ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
-  INCLUDE ~eefixpack/files/tph/%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/%game%.tph~ END
 END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -113,7 +114,7 @@ LABEL ~cd_eefp_beta_core_fixes~
 
 // none of these files have been created yet, as the initial releases will be betas
 WITH_TRA ~eefixpack/languages/en_us/%game%.tra~ ~eefixpack/languages/%LANGUAGE%/%game%.tra~ BEGIN
-  INCLUDE ~eefixpack/files/tph/%game%_beta.tph~
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/%game%_beta.tph~ END
 END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -135,24 +136,24 @@ REQUIRE_PREDICATE (("%EE_LANGUAGE%" STRING_COMPARE_CASE "%LANGUAGE%" = 0) AND //
 LABEL ~cd_eefp_game_text_update~
 
 ACTION_IF !game_is_pstee AND FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/infinity.tph~ BEGIN // for updating l_%lang%.lua (UI and help strings across the non-pstee games)
-  INCLUDE ~eefixpack/files/lib/cd_infinity_processing.tph~
+  LAF include_script STR_VAR script = ~eefixpack/files/lib/cd_infinity_processing.tph~ END
 END
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%.tph~ BEGIN // updates from BD translation tool
-  INCLUDE ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%.tph~ END
 END
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ BEGIN // mainline tlk updates
-  INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/gtu_%game%.tph~ END
 END
 
 ACTION_IF game_includes_sod BEGIN
   ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%_sod.tph~ BEGIN // updates from BD translation tool, SoD edition
-    INCLUDE ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%_sod.tph~
+    LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/bd_tool_%game%_sod.tph~ END
   END
 
   ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ BEGIN // mainline tlk updates, SoD edition
-    INCLUDE ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~
+    LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/gtu_%game%_sod.tph~ END
   END
 END
 

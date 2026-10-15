@@ -3,7 +3,7 @@
 /////                                                  \\\\\
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
-  INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ END
 END
 
 /////                                                  \\\\\
@@ -15,20 +15,20 @@ COPY_EXISTING ~util.lua~ ~override~
   APPEND_FILE TEXT ~eefixpack/files/lua/pstee_util.lua~
 BUT_ONLY
 
-INCLUDE ~eefixpack/files/tph/function_t.tph~ // 2.7 changed t() to getUiString(); add alias for odler UI mods
+LAF include_script STR_VAR script = ~eefixpack/files/tph/function_t.tph~ END // 2.7 changed t() to getUiString(); add alias for odler UI mods
 
 // Strength description text on the Statistics screen should work for all potential strength values
-INCLUDE ~eefixpack/files/tph/a7/pst_ui_fix_str_help.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/pst_ui_fix_str_help.tph~ END
 
-INCLUDE ~eefixpack/files/tph/a7/pst_ui_open_bags_fix.tph~ // fixes bag accessibility issues
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/pst_ui_open_bags_fix.tph~ END // fixes bag accessibility issues
 
-INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
+LAF include_script STR_VAR script = ~eefixpack/files/tph/debug_area_listings.tph~ END // correcting area names/styles in console menu
 
 /////                                                  \\\\\
 ///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
+LAF include_script STR_VAR script = ~eefixpack/files/tph/splprot_workaround.tph~ END // catches negative resistances for damage types
 
 // tbd, cam
 // Names of parameters 2 and 3 for ExploreMapChunk() should be swapped in ACTION.IDS
@@ -50,12 +50,12 @@ COPY_EXISTING ~damages.ids~ ~override~
 // multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
 APPEND ~splstate.ids~ ~136 DEATH_IMMUNITY~
 
-INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
-INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ END // fix parameter order in the ChangeStoreMarkup() script action
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ END // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
 
-INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
-INCLUDE ~eefixpack/files/tph/a7/pst_ini_extra.tph~  // extra animation slots for special characters
-INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
+LAF include_script STR_VAR script = ~eefixpack/files/tph/clswpbon.tpa~ END // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/pst_ini_extra.tph~ END // extra animation slots for special characters
+LAF include_script STR_VAR script = ~eefixpack/files/tph/animation_ini_fixes.tph~ END // errors in animation definitions
 
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
@@ -71,7 +71,7 @@ CLEAR_IDS_MAP // reload ids, if we end up having any changes
 // cumulative BAM fixes: merging multi-part area animations to eliminate issues
 COPY ~eefixpack/files/bam/copy/pstee~ ~override~
 
-INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
+LAF include_script STR_VAR script = ~eefixpack/files/tph/charged_items.tph~ END // fix for overcharged items in areas/creatures/stores
 //INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
 
 /////                                                  \\\\\
@@ -86,7 +86,7 @@ COMPILE ~eefixpack/files/d/%game%_core_fixes.d~ // misc dialogue fixes
 
 COMPILE ~eefixpack/files/baf/pst~
 
-INCLUDE ~eefixpack/files/tph/pst_script_fixes.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_script_fixes.tph~ END
 
 // tbd, cam
 // remove LOCALS set as it doesn't actually do anything in region script
@@ -96,17 +96,17 @@ COPY_EXISTING ~1204trig.bcs~ ~override~
   END
   BUT_ONLY
 
-INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ending_cutscenes.tph~ END // tightening end of cutscenes
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+LAF include_script STR_VAR script = ~eefixpack/files/tph/assign_area_scripts.tph~ END // assign/correct area scripts to areas
 
-INCLUDE ~eefixpack/files/tph/pst_are_fixes.tph~ // ARE-specific fixes
-INCLUDE ~eefixpack/files/tph/pst_wed_fixes.tph~ // WED-specific fixes
-INCLUDE ~eefixpack/files/tph/pst_wmp_fixes.tph~ // WMP-specific fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_are_fixes.tph~ END // ARE-specific fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_wed_fixes.tph~ END // WED-specific fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_wmp_fixes.tph~ END // WMP-specific fixes
 
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
@@ -116,9 +116,9 @@ LAF cd_move_actor INT_VAR old_x =  802 old_y =  218 new_x =  738 new_y =  262 ST
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_pstee.tph~ // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_cre_fixes_pstee.tph~ END // bulk general changes
 
-INCLUDE ~eefixpack/files/tph/pst_cre_color_fixes.tph~ // creature color fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_cre_color_fixes.tph~ END // creature color fixes
 
 // Trias is vulnerable to several spell effects that make it impossible to finish the game
 COPY_EXISTING ~trias.cre~  ~override~
@@ -128,8 +128,8 @@ COPY_EXISTING ~trias.cre~  ~override~
   REMOVE_CRE_ITEM no_curse
   ADD_CRE_ITEM ~no_curse~ #0 #0 #0 ~NONE~ ~cloak~
   ADD_CRE_ITEM ~imdeath~ #0 #0 #0 ~NONE~ ~ring~
-  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END 
-  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END 
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 206 target = 1 timing = 9 STR_VAR resource = spwi912 END
+  //LPF ADD_CRE_EFFECT INT_VAR opcode = 83 target = 1 parameter2 = 233 timing = 9 END
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
@@ -147,20 +147,22 @@ COPY_EXISTING ~imdeath.itm~ ~override~
   LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 328 target = 1 parameter2 = 136 timing = 2 special = 1 END
 
 // The Number of Ku'u Yin should protect from Chaotic creatures
-COPY_EXISTING ~kyname.itm~ ~override~
-  LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 0 END   // Remove: AC bonus
-  LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 33 END  // Remove: Save vs. Death bonus
-  PATCH_FOR_EACH align IN ~49~ ~50~ ~51~ BEGIN // alignment: chaotic good/neutral/evil
-    LPF ADD_ITEM_EQEFFECT
-    INT_VAR
-      opcode        = 219   // AC vs. Creature Type Modifier
-      target        = 1     // Self
-      timing        = 2     // While equipped
-      parameter1    = align // IDS value
-      parameter2    = 8     // IDS target: ALIGN.IDS
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~kyname.itm~ ~override~
+    LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 0 END   // Remove: AC bonus
+    LPF DELETE_ITEM_EQEFFECT INT_VAR opcode_to_delete = 33 END  // Remove: Save vs. Death bonus
+    PATCH_FOR_EACH align IN ~49~ ~50~ ~51~ BEGIN // alignment: chaotic good/neutral/evil
+      LPF ADD_ITEM_EQEFFECT
+      INT_VAR
+        opcode        = 219   // AC vs. Creature Type Modifier
+        target        = 1     // Self
+        timing        = 2     // While equipped
+        parameter1    = align // IDS value
+        parameter2    = 8     // IDS target: ALIGN.IDS
+      END
     END
-  END
-BUT_ONLY
+  BUT_ONLY
+END
 
 // Not usable by Annah
 COPY_EXISTING ~uhrknf.itm~ ~override~
@@ -180,19 +182,19 @@ BUT_ONLY
 
 //INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_pstee.tph~ // bulk general changes (nothing here yet)
 
-// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl  
+// multi-step process to add immunity to Abyssal Fury to imdeath item: see splstate.ids, imdeath.itm, spwi912.spl
 COPY_EXISTING ~spwi912.spl~ ~override/spwi912a.spl~ // payload: this is the original spell and effects
   WRITE_LONG 0x08 `0 // blank name
-  
+
 COPY_EXISTING ~spwi912.spl~ ~override/spwi912b.spl~ // if target is immune, they get this spell which just floats an immunity message
   WRITE_LONG 0x08 `0 // blank name
-  LPF ALTER_HEADER INT_VAR projectile = 1 END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 330 target = 2 parameter1 = RESOLVE_STR_REF(@100) timing = 1 END 
-  
+  LPF ALTER_HEADER INT_VAR projectile = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 330 target = 2 parameter1 = RESOLVE_STR_REF(@100) timing = 1 END
+
 COPY_EXISTING ~spwi912.spl~ ~override~ // the original spell; applies spwi912a or b depending on whether the target is immune via imdeath.itm
-  LPF ALTER_HEADER INT_VAR projectile = 1 END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 110 timing = 1 STR_VAR resource = spwi912b END 
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 111 timing = 1 STR_VAR resource = spwi912a END 
+  LPF ALTER_HEADER INT_VAR projectile = 1 END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 110 timing = 1 STR_VAR resource = spwi912b END
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 2 parameter1 = 136 parameter2 = 111 timing = 1 STR_VAR resource = spwi912a END
 
 /////                                                  \\\\\
 ///// store fixes                                      \\\\\
@@ -203,12 +205,12 @@ COPY_EXISTING ~spwi912.spl~ ~override~ // the original spell; applies spwi912a o
 /////                                                  \\\\\
 
 // prevent spell called via op232 from interrupting caster sounds
-INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/noisy_fireshields.tph~ END
 
 // removing reference to invalid game file
 DISABLE_FROM_KEY ~.bcs~
 
-INCLUDE ~eefixpack/files/tph/pst_bam_fixes.tph~ // BAM-specific fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_bam_fixes.tph~ END // BAM-specific fixes
 
 // tbd, cam
 // this works fine, just doing some cleanup
@@ -225,4 +227,4 @@ COPY_EXISTING ~ar1600.ini~ ~override~
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_pstee_probabilities.tph~ // ie-6021 & ie-6037, cam: probability fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_pstee_probabilities.tph~ END // ie-6021 & ie-6037, cam: probability fixes

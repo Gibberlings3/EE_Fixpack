@@ -1,8 +1,6 @@
 // Fixes scripting of summoned squirrels in Easthaven (finale)
 // https://www.gibberlings3.net/forums/topic/40707-iwdee-scripting-issues-with-squirrel-horde-in-easthaven-finale
 
-WITH_SCOPE BEGIN
-
 // repurposing unused cre resource
 COPY_EXISTING ~eesquir4.cre~ ~override~
   WRITE_ASCII SCRIPT_OVERRIDE ~EESQLMOB~ (8)
@@ -31,5 +29,3 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
     END
   END
 BUT_ONLY
-
-END
