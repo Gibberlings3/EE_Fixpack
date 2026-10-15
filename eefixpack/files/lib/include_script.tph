@@ -1,0 +1,32 @@
+/////                                                  \\\\\
+///// include_script                                   \\\\\
+/////                                                  \\\\\
+
+/*
+This function encapsulates the included script and therefore prevents variable,
+array, or function definitions from affecting code outside the script.
+
+Use this function in place of "INCLUDE" or "PATCH_INCLUDE" to include WeiDU
+scripts.
+
+Do not use this function if the script defines functions for global use.
+Wrap relevant code sections in WITH_SCOPE or PATCH_WITH_SCOPE blocks instead.
+*/
+
+DEFINE_ACTION_FUNCTION include_script
+STR_VAR
+  script = ~~ // path of the WeiDU script file to include
+BEGIN
+  ACTION_IF (NOT ~%script%~ STR_EQ ~~) BEGIN
+    INCLUDE ~%script%~
+  END
+END
+
+DEFINE_PATCH_FUNCTION include_script
+STR_VAR
+  script = ~~ // path of the WeiDU script file to include
+BEGIN
+  PATCH_IF (NOT ~%script%~ STR_EQ ~~) BEGIN
+    PATCH_INCLUDE ~%script%~
+  END
+END

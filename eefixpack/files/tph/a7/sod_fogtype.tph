@@ -63,34 +63,32 @@ BEGIN
 END
 
 
-WITH_SCOPE BEGIN
-  ACTION_DEFINE_ASSOCIATIVE_ARRAY fog_entries BEGIN
-    // source name => target name
-    ~1~ => ~BD1000~
-    ~4~ => ~BD6100~
-  END
-
-  COPY_EXISTING ~fogarea.2da~ ~override~
-                ~fogpt.2da~ ~override~
-    PHP_EACH fog_entries AS from_name => to_name BEGIN
-      LPF a7_clone_2da_entry STR_VAR from_name to_name RET success END
-      PATCH_IF (NOT success) BEGIN
-        PATCH_WARN ~WARNING: Could not clone fog definition (%SOURCE_FILE%: %from_name% => %to_name%)~
-      END
-    END
-  BUT_ONLY
-
-  COPY_EXISTING ~bd1000.are~ ~override~
-                ~bd6100.are~ ~override~
-    WRITE_SHORT 0x4e 0  // fog probability
-  BUT_ONLY
-
-  COPY_EXISTING ~bd6100.bcs~ ~override~
-                ~bdcut14.bcs~ ~override~
-                ~cutskip.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY ~SetGlobal("FOG_TYPE","GLOBAL",[0-9]+)~ ~~
-      REPLACE_TEXTUALLY ~PlaySound("AMB_M160")~ ~PlaySound("AMB_M16O")~ // while we're here...
-    END
-  BUT_ONLY
+ACTION_DEFINE_ASSOCIATIVE_ARRAY fog_entries BEGIN
+  // source name => target name
+  ~1~ => ~BD1000~
+  ~4~ => ~BD6100~
 END
+
+COPY_EXISTING ~fogarea.2da~ ~override~
+              ~fogpt.2da~ ~override~
+  PHP_EACH fog_entries AS from_name => to_name BEGIN
+    LPF a7_clone_2da_entry STR_VAR from_name to_name RET success END
+    PATCH_IF (NOT success) BEGIN
+      PATCH_WARN ~WARNING: Could not clone fog definition (%SOURCE_FILE%: %from_name% => %to_name%)~
+    END
+  END
+BUT_ONLY
+
+COPY_EXISTING ~bd1000.are~ ~override~
+              ~bd6100.are~ ~override~
+  WRITE_SHORT 0x4e 0  // fog probability
+BUT_ONLY
+
+COPY_EXISTING ~bd6100.bcs~ ~override~
+              ~bdcut14.bcs~ ~override~
+              ~cutskip.bcs~ ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~SetGlobal("FOG_TYPE","GLOBAL",[0-9]+)~ ~~
+    REPLACE_TEXTUALLY ~PlaySound("AMB_M160")~ ~PlaySound("AMB_M16O")~ // while we're here...
+  END
+BUT_ONLY

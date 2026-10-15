@@ -3,44 +3,44 @@
 /////                                                  \\\\\
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
-  INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ END
 END
 
-INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack damage type in their description
+LAF include_script STR_VAR script = ~eefixpack/files/tph/launcher_damage_types.tph~ END // many bows/xbows lack damage type in their description
 
 /////                                                  \\\\\
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
-INCLUDE ~eefixpack/files/tph/a7/bg2_ui_logo_fix.tph~  // updating game logo when transitioning from SoA to ToB campaign
-INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
-INCLUDE ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ // fixes "(null)" damage display bug on inventory screen
-INCLUDE ~eefixpack/files/tph/function_t.tph~ // 2.7 changed t() to getUiString(); add alias for odler UI mods
+LAF include_script STR_VAR script = ~eefixpack/files/tph/debug_area_listings.tph~ END // correcting area names/styles in console menu
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg2_ui_logo_fix.tph~ END  // updating game logo when transitioning from SoA to ToB campaign
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/ui_quit_menu.tph~ END     // allow to force-quit the game if cutscene mode is active
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ END // fixes "(null)" damage display bug on inventory screen
+LAF include_script STR_VAR script = ~eefixpack/files/tph/function_t.tph~ END          // 2.7 changed t() to getUiString(); add alias for odler UI mods
 
 /////                                                  \\\\\
 ///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/gam_npcs.tph~ // corrects spawn orientation for GAM NPCs
-INCLUDE ~eefixpack/files/tph/a7/itemanim_workaround.tph~ // workaround for parsing animation sequences
-INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
-INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
-INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
-INCLUDE ~eefixpack/files/tph/a7/bg2_songlist.tph~ // fixes non-existing soundtracks
-INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
-INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
-INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
-INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
-INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
-INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
+LAF include_script STR_VAR script = ~eefixpack/files/tph/gam_npcs.tph~ END // corrects spawn orientation for GAM NPCs
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/itemanim_workaround.tph~ END // workaround for parsing animation sequences
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ END // fix parameter order in the ChangeStoreMarkup() script action
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/anim_3001.tph~ END // fix missing creature animation definitions for Neothelid
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ END // fix height offsets of health bar positions for creature animations
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg2_songlist.tph~ END // fixes non-existing soundtracks
+LAF include_script STR_VAR script = ~eefixpack/files/tph/animation_ini_fixes.tph~ END // errors in animation definitions
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ END // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+LAF include_script STR_VAR script = ~eefixpack/files/tph/portrait_2da.tph~ END // add defaults for portraits not listed in portrait.2da
+LAF include_script STR_VAR script = ~eefixpack/files/tph/infravision.tph~ END // correcting animations subject to infravision
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ids_sync.tph~ END // sync race.ids, class.ids
+LAF include_script STR_VAR script = ~eefixpack/files/tph/splprot_workaround.tph~ END // catches negative resistances for damage types
 
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~13%LNL%\1~ // bg2ee/iwdee
-  
+
 APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
-  
+
 APPEND ~spell.ids~ ~3119 SAFANA_CHARM~ UNLESS ~^3119[ %TAB%]+SAFANA_CHARM[ %TAB%%MNL%%LNL%]+~ // syncing spell.ids
 
 /*
@@ -67,7 +67,7 @@ WITH_SCOPE BEGIN
   BUT_ONLY_IF_IT_CHANGES
 END
 
-INCLUDE ~eefixpack/files/tph/clswpbon.tpa~ // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
+LAF include_script STR_VAR script = ~eefixpack/files/tph/clswpbon.tpa~ END // tbd, cam: fix non-prof penalties for shadowdancers, mage-thieves
 
 //tbd, cam
 // battleguards starting in tob lack a weapon due to a typo
@@ -77,25 +77,25 @@ COPY_EXISTING ~25stweap.2da~ ~override~
 
 // female body drop/move noise shouldn't be random abela soundclips
 COPY_EXISTING ~itemtype.2da~ ~override~
-  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~ 
+  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~
   PRETTY_PRINT_2DA
   BUT_ONLY
-  
+
 // effectively disable npclevel.2da - fix really for bgee, but carrying it over for continuity
 COPY_EXISTING ~npclevel.2da~ ~override~
   REPLACE_TEXTUALLY ~\([ %TAB%]\)[A-Za-z]+[0-9]*\([ %TAB%%LNL%%MNL%%WNL%]\)~ ~\1****\2~ // include preceding space to avoid column 1
-  PRETTY_PRINT_2DA  
+  PRETTY_PRINT_2DA
 
 // tbd, cam
 // sync bgee/bg2ee spell.ids entries with extra sod spells
 ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
-  INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_missing_spells.tph~ END
 END
 
 APPEND ~tooltip.2da~ ~ohdsw03 15529 13053 -1~ // add tooltips for brass blade
 
 // tbd, graion: more consistent op5 setup, see header
-INCLUDE ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_ea_reallycharmed.tph~ END
 
 // ensure that ids tables are properly sorted
 COPY_EXISTING_REGEXP ~^.+\.ids$~ ~override~
@@ -118,10 +118,13 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/wav/repup.wav~    ~override~ // restoring 'reputation up' sound from bgee
 
 // archer table lacks last bumps; do as separate copy since files are slightly different
-OUTER_SPRINT tracking ~****      ~ OUTER_SPRINT archthac ~AP_SPCL122~
-COPY ~eefixpack/files/2da/clabrn02.2da~ ~override~ EVALUATE_BUFFER // tbd, cam: table isn't borked, but does lack the last +1 missile bump
+WITH_SCOPE BEGIN
+  OUTER_SPRINT tracking ~****      ~
+  OUTER_SPRINT archthac ~AP_SPCL122~
+  COPY ~eefixpack/files/2da/clabrn02.2da~ ~override~ EVALUATE_BUFFER // tbd, cam: table isn't borked, but does lack the last +1 missile bump
+END
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), tanari, wyvern (plus shadow); monk paperdoll; 
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, dragon (red, black, silver), tanari, wyvern (plus shadow); monk paperdoll;
 // unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; broken noser uniform BAM; uncolored BAM for conjure lesser fire
 // elemental scroll; fixed chant icon (spellbook); fixed hold undead icon (scroll); troll_scrag, troll_ice, troll_snow anims for troll fixes;
 // updated spell BAMs; merging multi-part area animations to eliminate issues; death knight anim touchups
@@ -135,9 +138,11 @@ COPY ~eefixpack/files/bam/copy/bg2ee~            ~override~
 COPY ~eefixpack/files/bmp/copy/bg2ee~ ~override~ // Improve portrait placeholder images - additional changes below for noportm/s.bmp
 
 // installing BAM V2 resources
-INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
-ACTION_FOR_EACH bam_resref IN cshld05 BEGIN
-  LAF install_bam_v2 STR_VAR bam_resref END
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
+  ACTION_FOR_EACH bam_resref IN cshld05 BEGIN
+    LAF install_bam_v2 STR_VAR bam_resref END
+  END
 END
 
 // tbd, cam (from jmerry)
@@ -146,30 +151,30 @@ END
 
 // tbd, cam (from jmerry)
 // vernus can't be raised
-INCLUDE ~eefixpack/files/tph/tbd_vernus_resurrection.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_vernus_resurrection.tph~ END
 
 //tbd, cam
 // wilson fixes: strength exploit, AC fixes, regen fixes
-INCLUDE ~eefixpack/files/tph/tbd_wilson.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_wilson.tph~ END
 
 // bgcs-3460, cam
 // death tyrant animation fixes
-INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // bgcs-3460, cam: death tyrant animation fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/b3460_death_tyrant.tph~ END // bgcs-3460, cam: death tyrant animation fixes
 
 // bgcs-3397, cam
 // revenant animation fixes
-INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/b3397_revenant.tph~ END // bgcs-3397, cam: revenant animation fixes
 
 // tbd, cam
 // make troll animations make sense: https://www.gibberlings3.net/forums/topic/35642-troll-animations/
-INCLUDE ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bg2_troll_anims.tph~ END
 
 // tbd, cam
 // potion of icedust doesn't work since it uses an enemy-only projectile for a buff
-INCLUDE ~eefixpack/files/tph/tbd_icedust.tph~ // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_icedust.tph~ END // tbd, cam: potion of icedust doesn't work since it uses an enemy-only projectile for a party-only buff
 
-INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
-INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
+LAF include_script STR_VAR script = ~eefixpack/files/tph/charged_items.tph~ END // fix for overcharged items in areas/creatures/stores
+LAF include_script STR_VAR script = ~eefixpack/files/tph/missing_items.tph~ END // fixes missing item errors in areas/creatures
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -189,13 +194,11 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/wing_buffet_vs_mr.tph"
-  LAUNCH_ACTION_FUNCTION "WING_BUFFET_VS_MR" END
+  LAF "WING_BUFFET_VS_MR" END
 END
 
 // argent77
-WITH_SCOPE BEGIN
-  INCLUDE "eefixpack/files/tph/a7/improved_troll_regeneration.tph"
-END
+LAF include_script STR_VAR script = "eefixpack/files/tph/a7/improved_troll_regeneration.tph" END
 
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
@@ -208,12 +211,12 @@ COMPILE ~eefixpack/files/d/temple.d~ // temple changes (see also script changes 
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/temple.tph~           // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
-INCLUDE ~eefixpack/files/tph/hexxat_death.tph~     // better death scripting for hexxat
-INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~         // fix random XP gains on NPC dual-classes and other events
-INCLUDE ~eefixpack/files/tph/ground_lightning.tph~ // certain projectiles from ground traps cause crashes
-INCLUDE ~eefixpack/files/tph/a7/bg2_chapter6_scripts.tph~ // improve chapter checks in creature spawning scripts
-INCLUDE ~eefixpack/files/tph/bhaalspawn_innates_ai.tph~ // ai scripting not accounting for bhaalspawn innates
+LAF include_script STR_VAR script = ~eefixpack/files/tph/temple.tph~ END           // temple changes for ar0900/1/2/4.bcs (see also dialogue changes in temple.d)
+LAF include_script STR_VAR script = ~eefixpack/files/tph/hexxat_death.tph~ END     // better death scripting for hexxat
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bdjoinxp.tph~ END         // fix random XP gains on NPC dual-classes and other events
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ground_lightning.tph~ END // certain projectiles from ground traps cause crashes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg2_chapter6_scripts.tph~ END // improve chapter checks in creature spawning scripts
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bhaalspawn_innates_ai.tph~ END // ai scripting not accounting for bhaalspawn innates
 
 // fix misspelled resref
 COPY_EXISTING ~cut85a.bcs~   ~override~
@@ -257,22 +260,22 @@ COPY_EXISTING ~aeri25.bcs~   ~override~
       ~SetInterrupt(FALSE) \1 SetInterrupt(TRUE)~ // no, no I should not have.
   END
   BUT_ONLY
-  
+
 EXTEND_BOTTOM ~ar0602.bcs~ ~eefixpack/files/baf/ar0602_aataqah.baf~ // offloading dlg actions (see d core fixes)
 
 // (romanced) neera-bodhi kidnapping issues - see also bodhiamb.d changes in bg2ee_core_fixes.d
 COPY_EXISTING ~ar0800.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("OHN_bodhiamb","AR0800",2)\)~ ~!Exists("bodhiamb") \1~
-  END 
+  END
 
 // can break transitions to ch6 bodhi's lair if never visited in ch6 but come back in ch7
 COPY_EXISTING ~ar0802.bcs~ ~override~
               ~ar0804.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~Global("Chapter","GLOBAL",6)~ ~GlobalGT("Chapter","GLOBAL",5)~
   END
-  BUT_ONLY   
+  BUT_ONLY
 
 // tbd, cam
 // ranger stronghold fails if you're in Umar Hills when Delon spawn timer expires; see also delon.dlg
@@ -285,11 +288,11 @@ COPY_EXISTING ~ar1100.bcs~ ~override~
 // tighten up garren windspear's appearance post-knight fight
 COPY_EXISTING ~ar1200.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY 
-      ~\(SetGlobal("DomainPaladinBattle","GLOBAL",1)\)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("bdoffscr",Player1,0,0,0)[ %TAB%%LNL%%MNL%%WNL%]+ApplySpellRES("bdoffscr","bdoffscr")[ %TAB%%LNL%%MNL%%WNL%]+SmallWait(1)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("garren","bdoffscr",0,0,0)~ 
+    REPLACE_TEXTUALLY
+      ~\(SetGlobal("DomainPaladinBattle","GLOBAL",1)\)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("bdoffscr",Player1,0,0,0)[ %TAB%%LNL%%MNL%%WNL%]+ApplySpellRES("bdoffscr","bdoffscr")[ %TAB%%LNL%%MNL%%WNL%]+SmallWait(1)[ %TAB%%LNL%%MNL%%WNL%]+CreateCreatureObject("garren","bdoffscr",0,0,0)~
       ~StartCutSceneMode() \1~
-    REPLACE_TEXTUALLY 
-      ~\(CreateCreatureAtLocation("LOCpalkni05","GLOBAL","deadb01")\)~ 
+    REPLACE_TEXTUALLY
+      ~\(CreateCreatureAtLocation("LOCpalkni05","GLOBAL","deadb01")\)~
       ~\1 CreateCreatureObject("bdoffscr",Player1,0,0,0) ApplySpellRES("bdoffscr","bdoffscr") SmallWait(1) CreateCreatureObject("garren","bdoffscr",0,0,0) EndCutSceneMode()~
   END
   BUT_ONLY
@@ -345,13 +348,15 @@ COPY_EXISTING ~baldur.bcs~   ~override~
     REPLACE_TEXTUALLY ~\(!Kit(Player[2-6],GODHELM)\)[ %TAB%%LNL%%MNL%%WNL%]+OR(3)[ %TAB%%LNL%%MNL%%WNL%]+GlobalGT("CDWorkingForLathander","GLOBAL",0)~
       ~\1 OR(2)~
   END
-  
-ACTION_FOR_EACH item IN ohhcask ohhcask2 BEGIN // fix bug of removing hexxat's casket from her bag
-  ACTION_FOR_EACH object IN Player1 Player2 Player3 Player4 Player5 Player6 Familiar BEGIN
-    EXTEND_BOTTOM ~baldur.bcs~   ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
-    EXTEND_BOTTOM ~baldur25.bcs~ ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+
+WITH_SCOPE BEGIN
+  ACTION_FOR_EACH item IN ohhcask ohhcask2 BEGIN // fix bug of removing hexxat's casket from her bag
+    ACTION_FOR_EACH object IN Player1 Player2 Player3 Player4 Player5 Player6 Familiar BEGIN
+      EXTEND_BOTTOM ~baldur.bcs~   ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+      EXTEND_BOTTOM ~baldur25.bcs~ ~eefixpack/files/baf/casket.baf~ EVALUATE_BUFFER
+    END
   END
-END 
+END
 
 // shaman summon script errors - fix for bgee, bg2ee, iwdee
 COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
@@ -359,7 +364,7 @@ COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
     REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
     	~\1~ // should be detect, not !detect (sod only)
     REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
-  END   
+  END
 
 // consolidate bernard's store (see also bernard2.sto, bernard.dlg)
 EXTEND_BOTTOM ~ar0406.bcs~ ~eefixpack/files/baf/bernard.baf~
@@ -371,7 +376,7 @@ COPY_EXISTING ~bystand1.bcs~ ~override~
   END
 
 // cowled wizard: stop hitting yourself - CWs can end up targeting allies
-COPY_EXISTING ~cowenf01.bcs~ ~override~ 
+COPY_EXISTING ~cowenf01.bcs~ ~override~
               ~cowenf02.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~Nearest(\[ENEMY\])~ ~NearestEnemyOf(Myself)~ // catches SecondNearest, ThirdNearest, &c.
@@ -380,7 +385,7 @@ COPY_EXISTING ~cowenf01.bcs~ ~override~
     REPLACE_TEXTUALLY ~\[\(0\|ENEMY\)\.0\.0\.0\.0\.SUMMONED\]~ ~[GOODCUTOFF.0.0.0.0.SUMMONED]~ // don't target friendly summons
     REPLACE_TEXTUALLY ~\(See(\[ENEMY\])\)~ ~\1 !InMyGroup(LastSeenBy(Myself))~ // if targeting ENEMY, make sure it's not a fellow CW
     REPLACE_TEXTUALLY ~\(!InMyGroup(LastSeenBy(Myself))\)[ %TAB%%LNL%%MNL%]+!InMyGroup(LastSeenBy(Myself))~ ~\1~ // in case previous R_T doubles this trigger
-  END 
+  END
   BUT_ONLY
 
 // tbd, cam
@@ -399,7 +404,7 @@ COPY_EXISTING ~cut59a.bcs~ ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~EndCutSceneMode()~ ~Wait(2) ActionOverride("suelle2",StartDialogueNoSet([PC]))~
   END
-  BUT_ONLY  
+  BUT_ONLY
 
 // ToB bonus equipment spilling out of inventory should also be copied to the expansion
 COPY_EXISTING ~cut100a.bcs~ ~override~
@@ -453,20 +458,20 @@ COPY_EXISTING ~guard1a.bcs~ ~override~ // unbounded guard scripts in CC
     REPLACE_TEXTUALLY ~\(MoveToPoint(\[[0-9]+\.[0-9]+\])\)~ ~\1 SetGlobal("f4imoved","LOCALS",1)~
   END
   BUT_ONLY
-  
+
 COPY_EXISTING ~haerdax.bcs~ ~override~ // refining haer'dalis' out of party combat scripting
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~AttackReevaluate(\([^,]+\),[0-9]+)~ ~Attack(\1)~
   END
-  BUT_ONLY   
-  
+  BUT_ONLY
+
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~hexxat.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
-    REPLACE_TEXTUALLY 
-    ~\(Global("OH_UnderdarkComments","GLOBAL",1)[ %TAB%%LNL%%MNL%]+I[fs]ValidForPartyDialog\(ue\)?(Myself)[ %TAB%%LNL%%MNL%]+Delay(2)[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("dorn")[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("rasaad")[ %TAB%%LNL%%MNL%]+\)!I[fs]ValidForPartyDialog\(ue\)?("neera")~ 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY
+    ~\(Global("OH_UnderdarkComments","GLOBAL",1)[ %TAB%%LNL%%MNL%]+I[fs]ValidForPartyDialog\(ue\)?(Myself)[ %TAB%%LNL%%MNL%]+Delay(2)[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("dorn")[ %TAB%%LNL%%MNL%]+!I[fs]ValidForPartyDialog\(ue\)?("rasaad")[ %TAB%%LNL%%MNL%]+\)!I[fs]ValidForPartyDialog\(ue\)?("neera")~
     ~\1 OR(2) !IfValidForPartyDialog("neera") !Global("SahauginTravel","GLOBAL",0)~
-  END  
+  END
 
 // kangaxx-as-lich should always talk when he appears
 EXTEND_BOTTOM ~hlkang.bcs~ ~eefixpack/files/baf/hlkang.baf~
@@ -481,9 +486,9 @@ COPY_EXISTING ~jaheira.bcs~ ~override~
 
 // neera's underdark comment only makes sense if party skipped sahuagin city (hexxat.bcs, neera.bcs, neeraj.dlg)
 COPY_EXISTING ~neera.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("OH_UnderdarkComments","GLOBAL",1)\)~ ~\1 Global("SahauginTravel","GLOBAL",0)~
-  END  
+  END
 
 // tbd, cam
 // container script doesn't work since it uses LOCALS; in this case the block should be disabled (reward given via dialogue, item given here is placeholder)
@@ -545,10 +550,10 @@ COPY_EXISTING ~ohbhub.bcs~ ~override~
 
 // if renfeld gets rendered incapable, can't init dialogue post-mugging
 COPY_EXISTING ~renfeld.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Dead("rethug01")\)~ ~!StateCheck(Myself,CD_STATE_NOTVALID) \1~
     APPEND_FILE ~eefixpack/files/baf/renfeld_dispel.baf~
-  END   
+  END
 
 // fear via 'Eyes of the Beholder' item should also work to scare viekang in ToB
 COPY_EXISTING ~sarvie01.bcs~ ~override~
@@ -588,27 +593,29 @@ EXTEND_TOP ~AR6300.BCS~ ~eefixpack/files/baf/ar6300_unlock_ar5500.baf~
 
 // Trigger state of ground traps that require the Noser Uniform being equipped in the BP2 Staging Area (OH8100)
 // should not persist indefinitely after they are passed.
-ACTION_FOR_EACH resref IN ~ohbloun1~ ~ohbloun2~ ~ohbloun3~ ~ohbloun4~ BEGIN
-  EXTEND_BOTTOM ~%resref%.bcs~ ~eefixpack/files/baf/bp2_noser_traps.baf~
+WITH_SCOPE BEGIN
+  ACTION_FOR_EACH resref IN ~ohbloun1~ ~ohbloun2~ ~ohbloun3~ ~ohbloun4~ BEGIN
+    EXTEND_BOTTOM ~%resref%.bcs~ ~eefixpack/files/baf/bp2_noser_traps.baf~
+  END
 END
 
-INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ending_cutscenes.tph~ END // tightening end of cutscenes
 
 /////                                                  \\\\\
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ // tbd, cam (from MiH): fix vertex issues for doors and regions
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_are_vertices_bg2ee.tph~ END // tbd, cam (from MiH): fix vertex issues for doors and regions
 
-INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
+LAF include_script STR_VAR script = ~eefixpack/files/tph/assign_area_scripts.tph~ END // assign/correct area scripts to areas
 
-INCLUDE ~eefixpack/files/tph/a7/floor_triggers_fix.tph~ // fix floor triggers to fire more reliably
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/floor_triggers_fix.tph~ END // fix floor triggers to fire more reliably
 
-INCLUDE ~eefixpack/files/tph/a7/bg2_ar1401_lightgem.tph~ // improve tileset for light gem in the shadow temple
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg2_ar1401_lightgem.tph~ END // improve tileset for light gem in the shadow temple
 
-INCLUDE ~eefixpack/files/tph/region_cursors.tph~ // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
+LAF include_script STR_VAR script = ~eefixpack/files/tph/region_cursors.tph~ END // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
 
-INCLUDE ~eefixpack/files/tph/a7/bg2_radiant_heart.tph~ // Radiant Heart interior map fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg2_radiant_heart.tph~ END // Radiant Heart interior map fixes
 
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
@@ -634,19 +641,21 @@ COPY_EXISTING ~ar0903.are~ ~override~
 
 // tbd, cam (from jmerry)
 // npcs spawning/moving on impassable terrain (see also baerie.dlg, aeriej.dlg, ar0800.are)
-COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
-  READ_LONG 0x54 ofsActors
-  READ_SHORT 0x58 numActors
-  FOR (idx = 0; idx < numActors; ++idx) BEGIN
-    SET offsetx = ofsActors + (idx * 0x110) + 0x20
-    SET offsety = ofsActors + (idx * 0x110) + 0x22
-    READ_SHORT offsetx xpos
-    READ_SHORT offsety ypos
-    PATCH_IF ((xpos = 2796) AND (ypos = 538)) BEGIN
-      WRITE_SHORT offsety 558
-    END
-  END // Multiple actors with same name, long version needed
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ar1000.are~ ~override~ // Government District, Amnish Soldier
+    READ_LONG 0x54 ofsActors
+    READ_SHORT 0x58 numActors
+    FOR (idx = 0; idx < numActors; ++idx) BEGIN
+      SET offsetx = ofsActors + (idx * 0x110) + 0x20
+      SET offsety = ofsActors + (idx * 0x110) + 0x22
+      READ_SHORT offsetx xpos
+      READ_SHORT offsety ypos
+      PATCH_IF ((xpos = 2796) AND (ypos = 538)) BEGIN
+        WRITE_SHORT offsety 558
+      END
+    END // Multiple actors with same name, long version needed
+    BUT_ONLY
+END
 
 // tbd, cam
 // make tear door transparent so #3 eye graphic can be seen
@@ -655,13 +664,15 @@ COPY_EXISTING ~ar2900.are~ ~override~
   BUT_ONLY
 
 // wk spawn points - defer spawn point activion to area script (see also ar3001.bcs)
-COPY_EXISTING ~ar3001.are~ ~override~
-  READ_LONG 0x60 spawn_off
-  READ_LONG 0x64 spawn_num
-  FOR (index = 0 ; index < spawn_num ; ++index) BEGIN
-    WRITE_SHORT (spawn_off + 0x86 + (index * 0xc8)) 0 /// turns off all spawn points
-  END
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ar3001.are~ ~override~
+    READ_LONG 0x60 spawn_off
+    READ_LONG 0x64 spawn_num
+    FOR (index = 0 ; index < spawn_num ; ++index) BEGIN
+      WRITE_SHORT (spawn_off + 0x86 + (index * 0xc8)) 0 /// turns off all spawn points
+    END
+    BUT_ONLY
+END
 
 // Beholder Lair (Unseeing Eye quest) - access position of container should be accessible
 COPY_EXISTING ~ar0205.are~ ~override~
@@ -669,43 +680,45 @@ COPY_EXISTING ~ar0205.are~ ~override~
 BUT_ONLY
 
 // Leaving Bodhi's hideout through the main entrance should unlock the door in the graveyard district
-OUTER_SPRINT script_resref ~tr0800c~
-COPY_EXISTING ~ar0801.are~ ~override~
-  READ_SHORT 0x5a region_num
-  READ_LONG 0x5c region_off
-  FOR (; region_num > 0; --region_num region_off += 0xc4) BEGIN
-    READ_ASCII region_off tran_name (32) NULL
-    PATCH_IF (~%tran_name%~ STR_EQ ~Tran0800c~) BEGIN
-      READ_ASCII (region_off + 0x7c) resref (8) NULL
-      PATCH_IF (~%resref%~ STR_EQ ~~) BEGIN
-        WRITE_ASCIIE (region_off + 0x7c) ~%script_resref%~ (8)
-      END ELSE BEGIN
-        SPRINT script_resref ~%resref%~
+WITH_SCOPE BEGIN
+  OUTER_SPRINT script_resref ~tr0800c~
+  COPY_EXISTING ~ar0801.are~ ~override~
+    READ_SHORT 0x5a region_num
+    READ_LONG 0x5c region_off
+    FOR (; region_num > 0; --region_num region_off += 0xc4) BEGIN
+      READ_ASCII region_off tran_name (32) NULL
+      PATCH_IF (~%tran_name%~ STR_EQ ~Tran0800c~) BEGIN
+        READ_ASCII (region_off + 0x7c) resref (8) NULL
+        PATCH_IF (~%resref%~ STR_EQ ~~) BEGIN
+          WRITE_ASCIIE (region_off + 0x7c) ~%script_resref%~ (8)
+        END ELSE BEGIN
+          SPRINT script_resref ~%resref%~
+        END
+        SET region_num = 0
       END
-      SET region_num = 0
     END
-  END
-BUT_ONLY
+  BUT_ONLY
 
-EXTEND_TOP ~%script_resref%.bcs~ ~eefixpack/files/baf/ar0801_unlock_ar0800.baf~
-EXTEND_TOP ~ar0800.bcs~ ~eefixpack/files/baf/ar0800_unlock_ar0801.baf~
+  EXTEND_TOP ~%script_resref%.bcs~ ~eefixpack/files/baf/ar0801_unlock_ar0800.baf~
+  EXTEND_TOP ~ar0800.bcs~ ~eefixpack/files/baf/ar0800_unlock_ar0801.baf~
+END
 
 /////                                                  \\\\\
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph~ // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_cre_fixes_bg2ee.tph~ END // bulk general changes
 
-INCLUDE ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ // bulk alignment changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/alignment_changes_bg2ee.tph~ END // bulk alignment changes
 
-INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
-INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
-INCLUDE ~eefixpack/files/tph/bg2ee_cre_levels.tph~ // sahuagin hit dice
-INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
-INCLUDE ~eefixpack/files/tph/celestial_hounds.tph~ // celestial hounds re-using moondog's howl, which buffs party even when hostile
-INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_elemental_summons.tph~ END // tbd, cam: elemental prince summons shouldn't grant XP
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ END // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg2ee_cre_levels.tph~ END // sahuagin hit dice
+LAF include_script STR_VAR script = ~eefixpack/files/tph/cre_spells.tph~ END // wraiths, mists, shadows and shades all have leftover memorized and known spells
+LAF include_script STR_VAR script = ~eefixpack/files/tph/celestial_hounds.tph~ END // celestial hounds re-using moondog's howl, which buffs party even when hostile
+LAF include_script STR_VAR script = ~eefixpack/files/tph/creature_profs.tph~ END // provide bas profs to creatures to avoind non-prof thac0 penalties
 
-INCLUDE ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ // fixes translucency issues with type E000 creature animations
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ END // fixes translucency issues with type E000 creature animations
 
 // applying duergar skin tone to duergar dwarves
 COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
@@ -716,7 +729,7 @@ COPY_EXISTING ~ar18dwaf.cre~ ~override~ // duergar
               ~sewdue02.cre~ ~override~ // duergar sapper
               ~sewyag01.cre~ ~override~ // duergar sapper
   WRITE_BYTE 0x2f 83 // "dark blusih gray", used by other duergar
-  BUT_ONLY 
+  BUT_ONLY
 
 // tbd, cam (from MiH)
 // give Drizzt proper dual-wielding setup as he has in bg
@@ -747,16 +760,18 @@ COPY_EXISTING ~chevil01.cre~ ~override~
 COPY_EXISTING ~demogor2.cre~ ~override~ // demogorgon
               ~ohb5bhal.cre~ ~override~ // bhaal
   LPF DELETE_EFFECT INT_VAR match_opcode = 98 END
-  
-INCLUDE ~eefixpack/files/tph/edwin_amulet.tph~ // move edwin's bonus spells from his amulet to creature file
 
-COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 with powers 1-9
-  FOR (index = 1 ; index < 10 ; ++index) BEGIN
-    LPF ALTER_EFFECT INT_VAR match_opcode = 102 match_power = index match_parameter1 = 0 power = 0 parameter1 = index END
-  END
-  LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 102 parameter1 = 0 END 
-  BUT_ONLY   
-  
+LAF include_script STR_VAR script = ~eefixpack/files/tph/edwin_amulet.tph~ END // move edwin's bonus spells from his amulet to creature file
+
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~igolem01.cre~ ~override~ // should be blocking levels 0-9, not 0 with powers 1-9
+    FOR (index = 1 ; index < 10 ; ++index) BEGIN
+      LPF ALTER_EFFECT INT_VAR match_opcode = 102 match_power = index match_parameter1 = 0 power = 0 parameter1 = index END
+    END
+    LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 102 parameter1 = 0 END
+    BUT_ONLY
+END
+
 COPY_EXISTING ~jaga3.cre~ ~override~ // give XP value for Nadinal
   WRITE_LONG 0x14 2500
 
@@ -806,25 +821,25 @@ COPY_EXISTING ~ohhgmum.cre~  ~override~ // greater mummy - immune to fear - immu
 
 // tbd, cam
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
-INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_ankheg.tph~ END
 
 //tbd, cam
 // poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
-INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_poison_mists.tph~ END
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ // bulk general changes
-INCLUDE ~eefixpack/files/tph/bulk_spl_cowleds_fixes_bg2ee.tph~ // bulk changes for items that trigger the Cowled Wizards
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_itm_fixes_bg2ee.tph~ END // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bulk_spl_cowleds_fixes_bg2ee.tph~ END // bulk changes for items that trigger the Cowled Wizards
 
-INCLUDE ~eefixpack/files/tph/tbd_bg2ee_146.tph~ // tbd, cam: fixes items that cast spells
-INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
-INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
-INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bg2ee_146.tph~ END // tbd, cam: fixes items that cast spells
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_energy_blades.tph~ END // tbd, cam: per descript, energy blades should do missile damage, not slashing
+LAF include_script STR_VAR script = ~eefixpack/files/tph/usability_arrow_bolt.tph~ END // monks using arrows/bolts
+LAF include_script STR_VAR script = ~eefixpack/files/tph/multi_target_sporadic_items.tph~ END // fixes for drain effects not synced between wilder and target
 
-// melee weapons using projectiles - bg2ee version 
+// melee weapons using projectiles - bg2ee version
 COPY_EXISTING ~aegis.itm~    ~override~ // Aegis-fang +3 - ability 1 uses 10
               ~aegis2.itm~   ~override~ // Aegis-fang +3 - ability 0 uses 10
               ~ax1h05.itm~   ~override~ // Throwing Axe +2 - ability 1 uses 10
@@ -847,7 +862,7 @@ COPY_EXISTING ~aegis.itm~    ~override~ // Aegis-fang +3 - ability 1 uses 10
               ~sw2h19.itm~   ~override~ // Carsomyr +6 - ability 0 uses 55
   LPF ALTER_HEADER INT_VAR match_type = 1 projectile = 1 END // remove projectile from melee header
 
-COPY_EXISTING ~amul21.itm~ ~override~ // Amulet of Power: blocks domination portrait icon for no reason 
+COPY_EXISTING ~amul21.itm~ ~override~ // Amulet of Power: blocks domination portrait icon for no reason
   LPF DELETE_EFFECT INT_VAR match_opcode = 169 match_parameter2 = 43 END
 
 // basilisk petrification should force, you know, a save against petrification
@@ -859,8 +874,8 @@ COPY_EXISTING ~basigaze.itm~ ~override~
 // fix (null} damage display bug by adding a 0% damage opcode
 COPY_EXISTING ~bdhamm02.itm~ ~override~ // Voidhammer +3: has 0d0+0 type 1 ability, has damage but not as first effect
               ~bdsw1h06.itm~ ~override~ // Voidsword +3: has 0d0+0 type 1 ability, has damage but not as first effect
-  LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
-  BUT_ONLY 
+  LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END
+  BUT_ONLY
 
 // mismatched icons between inventory and item ability
 COPY_EXISTING ~book06.itm~ ~override~
@@ -870,7 +885,7 @@ COPY_EXISTING ~book06.itm~ ~override~
   BUT_ONLY
 
 // fixing waterdeep books (fix also used for bg2ee)
-INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/waterdeep_books.tph~ END
 
 // tbd, cam
 // set to 400% speed, not set a fixed value of 30
@@ -903,19 +918,19 @@ COPY_EXISTING ~comps63.itm~ ~override~ // foebane +5, 1pp cosmetic version
 // stun should be 42 seconds, not 45
 COPY_EXISTING ~dart03.itm~ ~override~ // darts of stunning
   LPF ALTER_EFFECT INT_VAR match_duration = 45 duration = 42 END
-  
+
 // poison effect and icon have different MR/dispellability
 COPY_EXISTING ~dart04.itm~ ~override~ // darts of wounding
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 END
   LPF ALTER_EFFECT INT_VAR match_opcode = 25 special = 6 END
-  
+
 // poison icon shouldn't be dispellable
 COPY_EXISTING ~dart05.itm~ ~override~ // asp's nest
   LPF ALTER_EFFECT INT_VAR resist_dispel = 0 END
-  
+
 // moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
 COPY_EXISTING ~demogorg.itm~ ~override~
-  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END 
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END
 
 // tbd, cam (from MiH)
 // flindbar should decrease thac0 of target, not increase it
@@ -926,17 +941,19 @@ COPY_EXISTING ~flind1.itm~ ~override~
 
 // tbd, cam
 // elven charm immunity can block level drain and other effects
-OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
-COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
-  LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
-  PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
-    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
-  END
-//  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+WITH_SCOPE BEGIN
+  OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
+  COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
+    LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
+    LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
+    PATCH_FOR_EACH op IN 5 215 142 BEGIN
+      LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+      LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
+    END
+    // LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
+    LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+    LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+END
 
 // tbd, cam
 // blackmist plays two sounds when it blinds targets; one of them is the expirty sound and should be delayed
@@ -945,7 +962,7 @@ COPY_EXISTING ~halb06.itm~   ~override~ // Blackmist +4 - causes blind
 
 // fire salamader class has changed, so update wave halberd to target new class
 COPY_EXISTING ~halb09.itm~ ~override~
-  LPF CLONE_EFFECT INT_VAR multi_match = 1 check_globals = 0 match_opcode = 177 match_parameter1 = 187 parameter1 = 218 END 
+  LPF CLONE_EFFECT INT_VAR multi_match = 1 check_globals = 0 match_opcode = 177 match_parameter1 = 187 parameter1 = 218 END
 
 // prevent hexxat, haer'dalis from using racially-restricted items (see also npbow.itm, npsw01.itm, hlolth.itm)
 COPY_EXISTING ~hamm06.itm~ ~override~
@@ -1033,7 +1050,7 @@ COPY_EXISTING ~npbow.itm~  ~override~
 // immune to hold, but missing spmindat immunity
 COPY_EXISTING ~ohbetrai.itm~ ~override~ // <invalid strref -1> - immune to stun - immune to hold
   LPF CLONE_EFFECT INT_VAR multi_match = 1 match_opcode = 101 match_parameter2 = 175 opcode = 296 parameter2 = 0 STR_VAR resource = spmindat END
-  BUT_ONLY               
+  BUT_ONLY
 
 COPY_EXISTING ~ohdsw03.itm~ ~override~ // brass blade (see also ohdsw03f.spl)
   LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 savingthrow = 0 END // remove 'bypass MI' flag
@@ -1086,14 +1103,16 @@ COPY_EXISTING ~rods05.itm~ ~override~
 
 // tbd, cam
 // protection from magic scrolls not dispelling all buffs
-COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
-  FOR (index = 0 ; index < 11 ; ++index) BEGIN
-    LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 220 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index
-  END
-  FOR (index = 0 ; index < 14 ; ++index) BEGIN // only 10 spell schools, but 13 secondary types
-    LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 221 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index
-  END
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~scrl07.itm~ ~override~ // protection from magic
+    FOR (index = 0 ; index < 11 ; ++index) BEGIN
+      LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 220 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index
+    END
+    FOR (index = 0 ; index < 14 ; ++index) BEGIN // only 10 spell schools, but 13 secondary types
+      LPF ADD_ITEM_EFFECT INT_VAR insert_point = 0 opcode = 221 parameter1 = 99 parameter2 = index target = 2 timing = 1 END // remove school protections: index
+    END
+    BUT_ONLY
+END
 
 // shakti figurine weapon is ss+4 which should have WS 0
 COPY_EXISTING ~shakti1.itm~ ~override~ // don't do in bulk since it would update the wrong description
@@ -1105,14 +1124,16 @@ COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unkn
 
 // tbd, cam
 // elemental staves' sound effect should only target the specified creature
-OUTER_SET elemental_destroyed = RESOLVE_STR_REF (@100)
-COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
-              ~staf16.itm~ ~override~ // staff of earth +2
-              ~staf17.itm~ ~override~ // staff of fire +2
-  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 318 power = 0 parameter2 = 115 timing = 0 savingthrow = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
-  LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  OUTER_SET elemental_destroyed = RESOLVE_STR_REF (@100)
+  COPY_EXISTING ~staf15.itm~ ~override~ // staff of air +2
+                ~staf16.itm~ ~override~ // staff of earth +2
+                ~staf17.itm~ ~override~ // staff of fire +2
+    LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 318 power = 0 parameter2 = 115 timing = 0 savingthrow = 0 STR_VAR insert = first resource = EVAL ~%SOURCE_RES%~ END
+    LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 139 parameter1 = elemental_destroyed parameter2 = 0 END // add 'elemental destroyed' message
+    LPF ALTER_EFFECT INT_VAR match_opcode = 55 parameter1 = 0 parameter2 = 2 END // now gated by a 318, make 55 universal
+    BUT_ONLY
+END
 
 // tbd, cam
 // per descript knockback shouldn't work on 'large creatures'
@@ -1136,18 +1157,18 @@ COPY_EXISTING ~sw1h53.itm~ ~override~ // Sword of Flame +1
   BUT_ONLY
 
 // remove undocumented +2 save bonus from wand of fear
-INCLUDE ~eefixpack/files/tph/wand02.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/wand02.tph~ END
 
 // remove agannazar's scorcher ability from web sack
 COPY_EXISTING ~wand14.itm~   ~override~ // Web Sack
-  LPF DELETE_HEADER INT_VAR match_projectile = 109 END 
+  LPF DELETE_HEADER INT_VAR match_projectile = 109 END
 
 // luke
 // Mis-indexed effects
 WITH_SCOPE BEGIN
   COPY_EXISTING ~hamm06.itm~ ~override~ // Dwarven Thrower +3
                 ~staf01.itm~ ~override~ // Quarterstaff
-    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+    LPF ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1156,7 +1177,7 @@ END
 // - Unusually large dagger, depicted as a Short Sword => make sure `range=1`
 WITH_SCOPE BEGIN
   COPY_EXISTING "dagg04.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_ITEM_HEADER~ INT_VAR ~range~ = 1 END
+    LPF ~ALTER_ITEM_HEADER~ INT_VAR ~range~ = 1 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1167,7 +1188,7 @@ END
 WITH_SCOPE BEGIN
   COPY_EXISTING "sahbolt.itm" "override"
     /* Feature blocks */
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~resist_dispel~ = 0 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~resist_dispel~ = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1177,8 +1198,8 @@ END
 //// – This isn't implemented properly since the two op12 effects share the same probability range... Also, while we're at it, make sure it's 10% chance and not 11% chance...
 WITH_SCOPE BEGIN
   COPY_EXISTING ~stafn1.itm~ ~override~ // Neera's Staff +1
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 4 END // 5% chance (target)
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 5 ~probability1~ = 9 END // 10% chance (wielder)
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 4 END // 5% chance (target)
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 5 ~probability1~ = 9 END // 10% chance (wielder)
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1186,8 +1207,8 @@ END
 // Chill Touch – better feedback for the player when attacking Golems or Undead
 WITH_SCOPE BEGIN
   COPY_EXISTING "chillt.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 177 END
-    LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~insert_point~ = 0 ~type~ = 1 ~target~ = 2 ~opcode~ = 324 ~parameter2~ = 55 STR_VAR ~resource~ = ~%DEST_RES%~ END // Immunity to resource and message
+    LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 177 END
+    LPF ~ADD_ITEM_EFFECT~ INT_VAR ~insert_point~ = 0 ~type~ = 1 ~target~ = 2 ~opcode~ = 324 ~parameter2~ = 55 STR_VAR ~resource~ = ~%DEST_RES%~ END // Immunity to resource and message
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1201,7 +1222,7 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/shocking_grasp.tph"
-  LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
+  LAF "WIZARD_SHOCKING_GRASP" END
 END
 
 /*
@@ -1220,7 +1241,7 @@ WITH_SCOPE BEGIN
     "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
   BEGIN
     INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
-    LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
+    LAF "WIZARD_BLACK_BLADE_OF_DISASTER" END
   END
 END
 
@@ -1230,7 +1251,7 @@ END
 // - recode from scratch so as to use `op326` effects instead of messy `op177` effects
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/searing_orb.tph"
-  LAUNCH_ACTION_FUNCTION ~CLERIC_SOL_SEARING_ORB~ END
+  LAF ~CLERIC_SOL_SEARING_ORB~ END
 END
 
 /*
@@ -1245,25 +1266,27 @@ WITH_SCOPE BEGIN
     "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
   BEGIN
     INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
-    LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
+    LAF "MAGICAL_WEAPON_SLOT" END
   END
 END
 
 // tbd, cam
 // fixing paperdoll animations
-ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_paperdoll_animations BEGIN
-  misc9q   => sc // Habib's Mighty Scimitar uses a katana paperdoll animation instead of scimitar
-  rodsword => fs // The Flaming Long Sword +1 from the Rod of Lordly Might (rodsword) should use the flaming sword animation
-  sw1h66   => ss // Yamato +4 uses a scimitar animation instead of short sword (like other wakizashi)
-  sw1h67   => s1 // Usuno's Blade uses a scimitar animation instead of long sword (like other ninja-to)
-  sw1h68a  => s2 // The undroppable copy of the Spectral brand has no animation
-END
+WITH_SCOPE BEGIN
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_paperdoll_animations BEGIN
+    misc9q   => sc // Habib's Mighty Scimitar uses a katana paperdoll animation instead of scimitar
+    rodsword => fs // The Flaming Long Sword +1 from the Rod of Lordly Might (rodsword) should use the flaming sword animation
+    sw1h66   => ss // Yamato +4 uses a scimitar animation instead of short sword (like other wakizashi)
+    sw1h67   => s1 // Usuno's Blade uses a scimitar animation instead of long sword (like other ninja-to)
+    sw1h68a  => s2 // The undroppable copy of the Spectral brand has no animation
+  END
 
-ACTION_PHP_EACH cd_paperdoll_animations AS item => anim BEGIN
+  ACTION_PHP_EACH cd_paperdoll_animations AS item => anim BEGIN
 
-  COPY_EXISTING ~%item%.itm~ ~override~
-    WRITE_ASCIIE 0x22 "%anim%" #2
+    COPY_EXISTING ~%item%.itm~ ~override~
+      WRITE_ASCIIE 0x22 "%anim%" #2
 
+  END
 END
 
 // tbd, graion
@@ -1319,17 +1342,17 @@ WITH_SCOPE BEGIN
               /* Feature blocks */
               LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 9 "parameter2" = 1 STR_VAR "resource" = "%spl%" END // cast spell
           END
-          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "ohdsw4" END // apply effects list
+          LPF ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "ohdsw4" END // apply effects list
         END
         DEFAULT
-          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "%spl%" END // apply effects list
+          LPF ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "%spl%" END // apply effects list
       END
-      LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 232 STR_VAR "match_resource" = "%spl%" END // no longer needed
+      LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 232 STR_VAR "match_resource" = "%spl%" END // no longer needed
     BUT_ONLY_IF_IT_CHANGES IF_EXISTS
   END
 END
 
-// kaelyn, fix for Balduran's Plate 
+// kaelyn, fix for Balduran's Plate
 // having a clearly unintended minimum level 6 for its benefits to apply
 COPY_EXISTING ~wa2plat.itm~ ~override~
   LPF ALTER_EFFECT INT_VAR match_dicesize = 6 dicesize = 0 END
@@ -1339,54 +1362,56 @@ COPY_EXISTING ~wa2plat.itm~ ~override~
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_spl_fixes_bg2ee.tph~ END // bulk general changes
 
-INCLUDE ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~     // spell fixes in common between bg, bg2
-INCLUDE ~eefixpack/files/tph/bg2_iwd_common_spell_fixes.tph~    // spell fixes in common between bg2, iwd
-INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~ END     // spell fixes in common between bg, bg2
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg2_iwd_common_spell_fixes.tph~ END    // spell fixes in common between bg2, iwd
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ END // spell fixes in common between bg, bg2, and iwd
 
-INCLUDE ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_324_traps_bg2ee.tph~ END // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
-INCLUDE ~eefixpack/files/tph/a7/snares_autonotes_fix.tph~ // fixes adding an automap note to the area when a snare is set
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/snares_autonotes_fix.tph~ END // fixes adding an automap note to the area when a snare is set
 
 // tbd, cam
 // misindexed effects
 COPY_EXISTING ~ohbwi302.spl~ ~override~
               ~ohbwi304.spl~ ~override~
-  LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  LPF ~FJ_SPL_ITM_REINDEX~ END
   //LPF cd_fx_unmisindex END
   BUT_ONLY
-  
+
 //tbd, cam
 // inconsistent targeting (unused, fixed anyway)
 // also extend to level 50
-COPY_EXISTING ~bhaal1a.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR target = 2 END // some op164s are target party (3)
-  LPF CD_EXTEND-O-MATIC INT_VAR step_dur = 0 level_cap = 50 RET abil_delta END // no duration change, just need addt'l headers
-  SET multiply = 2 // mass cure cures 1d8 + 1/level HP; bhaal1a heals 2d8 + 2/level
-  READ_LONG  0x64 abil_off
-  READ_SHORT 0x68 abil_num
-  READ_LONG  0x6a fx_off
-  FOR (index = (abil_num - abil_delta) ; index < abil_num ; ++index) BEGIN // loop through new abilities only
-    READ_SHORT  (abil_off + 0x10 + (index * 0x28)) level       // just read the level
-    READ_SHORT  (abil_off + 0x1e + (index * 0x28)) abil_fx_num
-    READ_SHORT  (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
-    FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
-      READ_SHORT (fx_off +        ((index2 + abil_fx_idx) * 0x30)) op
-      PATCH_IF op = 17 BEGIN // cur hp bonus
-        WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (level * multiply)
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bhaal1a.spl~ ~override~
+    LPF ALTER_EFFECT INT_VAR target = 2 END // some op164s are target party (3)
+    LPF CD_EXTEND-O-MATIC INT_VAR step_dur = 0 level_cap = 50 RET abil_delta END // no duration change, just need addt'l headers
+    SET multiply = 2 // mass cure cures 1d8 + 1/level HP; bhaal1a heals 2d8 + 2/level
+    READ_LONG  0x64 abil_off
+    READ_SHORT 0x68 abil_num
+    READ_LONG  0x6a fx_off
+    FOR (index = (abil_num - abil_delta) ; index < abil_num ; ++index) BEGIN // loop through new abilities only
+      READ_SHORT  (abil_off + 0x10 + (index * 0x28)) level       // just read the level
+      READ_SHORT  (abil_off + 0x1e + (index * 0x28)) abil_fx_num
+      READ_SHORT  (abil_off + 0x20 + (index * 0x28)) abil_fx_idx
+      FOR (index2 = 0 ; index2 < abil_fx_num ; ++index2) BEGIN
+        READ_SHORT (fx_off +        ((index2 + abil_fx_idx) * 0x30)) op
+        PATCH_IF op = 17 BEGIN // cur hp bonus
+          WRITE_LONG (fx_off + 0x04 + ((index2 + abil_fx_idx) * 0x30)) (level * multiply)
+        END
       END
-    END     
+    END
+    BUT_ONLY
+
+  COPY_EXISTING ~bhaal1b.spl~ ~override~ // Regeneration (unused, fixed anyway)
+    LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // trim down to one header
+    LPF CD_EXTEND-O-MATIC INT_VAR min_lev_alt = 14 dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // then build it back up with proper progression
+
+  OUTER_FOR (index = 1 ; index < 6 ; ++index) BEGIN // for bhaal3b (unused, fixed anyway)
+    COPY_EXISTING ~bdpweapn.eff~ ~override/bh3b%index%.eff~
+      WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8
   END
-  BUT_ONLY
-
-COPY_EXISTING ~bhaal1b.spl~ ~override~ // Regeneration (unused, fixed anyway)
-  LPF CD_TRIM-O-MATIC INT_VAR level_cap = 1 END // trim down to one header
-  LPF CD_EXTEND-O-MATIC INT_VAR min_lev_alt = 14 dur_special = 1 step_size = 2 step_dur = 6 level_cap = 30 END // then build it back up with proper progression
-
-OUTER_FOR (index = 1 ; index < 6 ; ++index) BEGIN // for bhaal3b (unused, fixed anyway)
-  COPY_EXISTING ~bdpweapn.eff~ ~override/bh3b%index%.eff~
-    WRITE_ASCIIE 0x30 ~%DEST_RES%~ #8  
 END
 
 // wk dead/wild magic area effects shouldn't follow to next area; see also cut202X.bcs patches
@@ -1445,11 +1470,13 @@ COPY_EXISTING ~ring27f.spl~ ~override~
   LPF ALTER_EFFECT INT_VAR check_globals = 0 match_opcode = 12 dicenumber = 6 END
 BUT_ONLY
 
-COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
-  READ_SHORT 0x68 abil_num // op206 vs. spcl521 is always 90 seconds - doesn't scale correctly with other effects
-  FOR (index = abil_num ; index > 1 ; --index) BEGIN // skip header 0 since it's correct
-    LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END 
-  END   
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~spwi613.spl~ ~override~ // improved haste
+    READ_SHORT 0x68 abil_num // op206 vs. spcl521 is always 90 seconds - doesn't scale correctly with other effects
+    FOR (index = abil_num ; index > 1 ; --index) BEGIN // skip header 0 since it's correct
+      LPF ALTER_EFFECT INT_VAR header = (index - 1) match_duration = 90 duration = (((33 - abil_num) + index) * 6) END
+    END
+END
 
 // tbd, cam (from jmerry)
 // self-stack protection only targets self, not party, like the rest of the effects
@@ -1471,7 +1498,7 @@ BUT_ONLY
 WITH_SCOPE BEGIN
   COPY_EXISTING ~ohbwi302.spl~ ~override~ // Remove Magic
                 ~ohbwi304.spl~ ~override~ // Fireball
-    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+    LPF ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1485,7 +1512,7 @@ WITH_SCOPE BEGIN
                 "spwish36.spl" "override"
                 "spwish37.spl" "override"
                 "spwish40.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = (BIT0 + BIT1) END
+    LPF ~ALTER_EFFECT~ INT_VAR ~resist_dispel~ = (BIT0 + BIT1) END
     PATCH_WITH_SCOPE BEGIN
       GET_OFFSET_ARRAY "ab_array" SPL_V10_HEADERS
       PHP_EACH "ab_array" AS "hdr" => "ab_off" BEGIN
@@ -1501,7 +1528,7 @@ END
 // cam note: could be in joint bg/bg2 fixes except that it needs  different string
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_ENERGY_DRAIN%.spl" "override" // spwi914
-    LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 40968 STR_VAR ~insert~ = ~below~ END // Display string
+    LPF ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 40968 STR_VAR ~insert~ = ~below~ END // Display string
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1510,7 +1537,7 @@ END
 // - Instantaneous effects should have a duration of `0` (this is probably irrelevant, but just in case...)
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%CLERIC_BARKSKIN%.spl~ ~override~ // sppr202
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_timing" = 1 "duration" = 0 END
+    LPF "ALTER_EFFECT" INT_VAR "match_timing" = 1 "duration" = 0 END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1599,14 +1626,14 @@ END
 ///// store fixes                                      \\\\\
 /////                                                  \\\\\
 
-// purging duplicate items for sale 
+// purging duplicate items for sale
 COPY_EXISTING ~25spell.sto~ ~override~ //  (Arcana Archives): Duplicate item SCRL3G.ITM (Vocalize) at slots 29 and 37
-  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = scrl3g END 
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = scrl3g END
 
 // purging duplicate items for sale
-COPY_EXISTING ~bernard.sto~  ~override~ //  (Copper Coronet): 
-              ~uddrow23.sto~ ~override~ //  (Merchant): 
-              ~uhmer01.sto~  ~override~ //  (Merchant): 
+COPY_EXISTING ~bernard.sto~  ~override~ //  (Copper Coronet):
+              ~uddrow23.sto~ ~override~ //  (Merchant):
+              ~uhmer01.sto~  ~override~ //  (Merchant):
   LPF cd_purge_sale_dupes INT_VAR keep = 2               STR_VAR item = ax1h01 END // Duplicate item AX1H01.ITM (Battle Axe) at slots 14 and 43
   LPF cd_purge_sale_dupes INT_VAR keep = 1 quantity = 10 STR_VAR item = dagg01 END // Duplicate item DAGG01.ITM (Dagger) at slots 11 and 45
 
@@ -1617,19 +1644,19 @@ COPY_EXISTING ~bernard.sto~ ~override/bernard2.sto~
 COPY_EXISTING ~cdaemerc.sto~ ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
               ~ppstor01.sto~ ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
               ~trthf02.sto~  ~override~ //  (Merchant): Duplicate item SHLD04.ITM (Medium Shield +1) at slots 12 and 20
-  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = shld04 END 
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 STR_VAR item = shld04 END
 
-// purging duplicate items for sale  
+// purging duplicate items for sale
 COPY_EXISTING ~kpchap01.sto~ ~override~ //  (Bolumir of Tempus): Duplicate item SCRL63.ITM (Raise Dead) at slots 17 and 20
-  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 5 STR_VAR item = scrl63 END 
-  
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 5 STR_VAR item = scrl63 END
+
 // purging duplicate items for sale
 COPY_EXISTING ~shop08.sto~ ~override~ //  (Merchant): Duplicate item SCRL5H.ITM (Emotion: Hopelessness) at slots 62 and 78
-  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = scrl5h END 
-  
+  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = scrl5h END
+
 // purging duplicate items for sale
 COPY_EXISTING ~trrak01.sto~ ~override~ //  (Adratha the Witch): Duplicate item POTN42.ITM (Potion of Regeneration) at slots 3 and 14
-  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = potn42 END 
+  LPF cd_purge_sale_dupes INT_VAR keep = 1 STR_VAR item = potn42 END
   // fix potn31 while we're here - has expiry time, no ID flag
   LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 1 overwrite = 1 STR_VAR item_name = potn31 flags = identified position = "AFTER potn14" END
 
@@ -1639,21 +1666,21 @@ COPY_EXISTING ~type2.sto~ ~override~ //Adventurers' Mart (unused)
 
 // purging duplicate items for sale
 COPY_EXISTING ~wilmat.sto~ ~override~ //  (Temple of Ilmater): Duplicate item SCRL63.ITM (Raise Dead) at slots 7 and 14
-  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 4 STR_VAR item = scrl63 END 
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 4 STR_VAR item = scrl63 END
 
 /////                                                  \\\\\
 ///// misc/other fixes                                 \\\\\
 /////                                                  \\\\\
 
 // illusionary creatures shouldn't save when dispelled
-INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/illusionary_die.tph~ END
 
 // fixing creature animations without ranged animation sequences
-INCLUDE ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~ END
 
 COPY ~music/vb.mus~ ~music/vb.mus~
   REPLACE_TEXTUALLY ~\(_H2[ %TAB%]+VB[ %TAB%]+\)_B2~ ~\1_B3~
-  
+
 COPY_EXISTING ~spfirsd2.vvc~ ~override~ // bad blend on fire damage from clubs of detonation
   WRITE_SHORT 0x18 (THIS BOR (BIT3 + BIT9)) // add blend, 3d blend flag
 
@@ -1665,15 +1692,15 @@ COPY_EXISTING ~noportmd.bmp~ ~override/noportlm.bmp~ // new noportll copied in b
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/scripting_states.tph~ // cleans up scripting states
+LAF include_script STR_VAR script = ~eefixpack/files/tph/scripting_states.tph~ END // cleans up scripting states
 
 // prevent spell called via op232 from interrupting caster sounds
-INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/noisy_fireshields.tph~ END
 
-INCLUDE ~eefixpack/files/tph/free_action.tph~ // free action swap from 126 > 337
+LAF include_script STR_VAR script = ~eefixpack/files/tph/free_action.tph~ END // free action swap from 126 > 337
 
-INCLUDE ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ // tbd, cam: probability fixes
-INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bg2ee_probabilities.tph~ END // tbd, cam: probability fixes
+LAF include_script STR_VAR script = "%MOD_FOLDER%/files/tph/dw_fixes.tph" END // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
 // the 324 vs death immunity is being inserted between the 'destroyed' message and the actual destruction
 // or, in a few cases, the order was just wrong
@@ -1694,6 +1721,8 @@ WITH_SCOPE BEGIN
   LAF "remove_redundant_effects" END
 END
 
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
-INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~                 // use effect batches to remove vfx from effects which have been removed
+WITH_SCOPE BEGIN
+  INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
+  INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
+  INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg2.tph~                 // use effect batches to remove vfx from effects which have been removed
+END

@@ -75,78 +75,76 @@ BEGIN
 END
 
 
-WITH_SCOPE BEGIN
-  // fixing animation definitions
-  OUTER_SPRINT hex ~[0-9a-f]~
-  COPY_EXISTING_REGEXP ~^e%hex%%hex%%hex%\.ini$~ ~override~
-    REPLACE_EVALUATE ~translucent[ %TAB%]*=[ %TAB%]*1~ BEGIN
-      SET slot = ~0x%SOURCE_RES%~
-      SET $cre_anim_slots(~%slot%~) = 1 // caching animation id for later
-    END ~translucent=0~
-  BUT_ONLY
+// fixing animation definitions
+OUTER_SPRINT hex ~[0-9a-f]~
+COPY_EXISTING_REGEXP ~^e%hex%%hex%%hex%\.ini$~ ~override~
+  REPLACE_EVALUATE ~translucent[ %TAB%]*=[ %TAB%]*1~ BEGIN
+    SET slot = ~0x%SOURCE_RES%~
+    SET $cre_anim_slots(~%slot%~) = 1 // caching animation id for later
+  END ~translucent=0~
+BUT_ONLY
 
-  OUTER_SET FX_CRE = BIT0 // whether translucency effect is applied via CRE effect
-  OUTER_SET FX_ITM = BIT1 // whether translucency effect is applied via ITM effect
-  ACTION_DEFINE_ARRAY cre_item_slots BEGIN 0 1 2 3 4 5 6 7 8 17 END  // item slot indices where translucency items can be equipped
+OUTER_SET FX_CRE = BIT0 // whether translucency effect is applied via CRE effect
+OUTER_SET FX_ITM = BIT1 // whether translucency effect is applied via ITM effect
+ACTION_DEFINE_ARRAY cre_item_slots BEGIN 0 1 2 3 4 5 6 7 8 17 END  // item slot indices where translucency items can be equipped
 
-  COPY_EXISTING_REGEXP ~.+\.cre$~ ~override~
-    READ_SHORT 0x28 anim_id
-    PATCH_IF (VARIABLE_IS_SET $cre_anim_slots(~%anim_id%~)) BEGIN
-      // matching animation id found: patching creature
-      SPRINT cre_file ~%SOURCE_FILE%~
-      SET cre_mode = 0  // tracks whether translucency has already been applied
+COPY_EXISTING_REGEXP ~.+\.cre$~ ~override~
+  READ_SHORT 0x28 anim_id
+  PATCH_IF (VARIABLE_IS_SET $cre_anim_slots(~%anim_id%~)) BEGIN
+    // matching animation id found: patching creature
+    SPRINT cre_file ~%SOURCE_FILE%~
+    SET cre_mode = 0  // tracks whether translucency has already been applied
 
-      // checking translucency as CRE effect
-      LPF check_cre_translucency RET result END
-      PATCH_IF (result) BEGIN SET cre_mode |= FX_CRE END
+    // checking translucency as CRE effect
+    LPF check_cre_translucency RET result END
+    PATCH_IF (result) BEGIN SET cre_mode |= FX_CRE END
 
-      // checking translucency as equipped ITM effect
-      // initializing inventory slots: item must be equipped to work
-      CLEAR_ARRAY ~inv_slots~
-      READ_LONG 0x2b8 ofs_slots
-      PHP_EACH cre_item_slots AS _ => slot_idx BEGIN
-        READ_SSHORT (ofs_slots + slot_idx * 2) value
-        SET $inv_slots(~%slot_idx%~) = value
-      END
+    // checking translucency as equipped ITM effect
+    // initializing inventory slots: item must be equipped to work
+    CLEAR_ARRAY ~inv_slots~
+    READ_LONG 0x2b8 ofs_slots
+    PHP_EACH cre_item_slots AS _ => slot_idx BEGIN
+      READ_SSHORT (ofs_slots + slot_idx * 2) value
+      SET $inv_slots(~%slot_idx%~) = value
+    END
 
-      // checking CRE items
-      CLEAR_ARRAY ~itm_array~
-      GET_OFFSET_ARRAY itm_array CRE_V10_ITEMS
-      PHP_EACH itm_array AS itm_idx => ofs BEGIN
-        READ_ASCII ofs itm_resref (8) NULL
-        TO_LOWER ~itm_resref~
-        PATCH_IF (NOT VARIABLE_IS_SET $item_cache(~%itm_resref%~) && FILE_EXISTS_IN_GAME ~%itm_resref%.itm~) BEGIN
-          // caching item state to speed up patch operation
-          INNER_ACTION BEGIN
-            COPY_EXISTING ~%itm_resref%.itm~ ~override~
-              LPF check_itm_translucency RET result END
-              SET $item_cache(~%itm_resref%~) = result
-            BUT_ONLY
-          END
-        END
-
-        // item must be equipped to be considered
-        PATCH_IF (VARIABLE_IS_SET $item_cache(~%itm_resref%~) && $item_cache(~%itm_resref%~) != 0) BEGIN
-          PHP_EACH inv_slots AS _ => itm BEGIN
-            PATCH_IF (itm_idx == itm) BEGIN
-              SET cre_mode |= FX_ITM
-            END
-          END
+    // checking CRE items
+    CLEAR_ARRAY ~itm_array~
+    GET_OFFSET_ARRAY itm_array CRE_V10_ITEMS
+    PHP_EACH itm_array AS itm_idx => ofs BEGIN
+      READ_ASCII ofs itm_resref (8) NULL
+      TO_LOWER ~itm_resref~
+      PATCH_IF (NOT VARIABLE_IS_SET $item_cache(~%itm_resref%~) && FILE_EXISTS_IN_GAME ~%itm_resref%.itm~) BEGIN
+        // caching item state to speed up patch operation
+        INNER_ACTION BEGIN
+          COPY_EXISTING ~%itm_resref%.itm~ ~override~
+            LPF check_itm_translucency RET result END
+            SET $item_cache(~%itm_resref%~) = result
+          BUT_ONLY
         END
       END
 
-      // patching CRE if needed
-      PATCH_IF (cre_mode == 0) BEGIN
-        PATCH_PRINT ~Applying translucency effect: %cre_file%~
-        WRITE_BYTE 0x7e 128 // 50% translucency
-      END ELSE BEGIN
-        PATCH_IF ((cre_mode & FX_CRE) != 0) BEGIN
-          SPRINT fx_source ~effect~
-        END ELSE BEGIN
-          SPRINT fx_source ~item~
+      // item must be equipped to be considered
+      PATCH_IF (VARIABLE_IS_SET $item_cache(~%itm_resref%~) && $item_cache(~%itm_resref%~) != 0) BEGIN
+        PHP_EACH inv_slots AS _ => itm BEGIN
+          PATCH_IF (itm_idx == itm) BEGIN
+            SET cre_mode |= FX_ITM
+          END
         END
-        PATCH_PRINT ~Skipping %cre_file%. Translucency effect already applied via %fx_source%.~
       END
     END
-  BUT_ONLY
-END
+
+    // patching CRE if needed
+    PATCH_IF (cre_mode == 0) BEGIN
+      PATCH_PRINT ~Applying translucency effect: %cre_file%~
+      WRITE_BYTE 0x7e 128 // 50% translucency
+    END ELSE BEGIN
+      PATCH_IF ((cre_mode & FX_CRE) != 0) BEGIN
+        SPRINT fx_source ~effect~
+      END ELSE BEGIN
+        SPRINT fx_source ~item~
+      END
+      PATCH_PRINT ~Skipping %cre_file%. Translucency effect already applied via %fx_source%.~
+    END
+  END
+BUT_ONLY

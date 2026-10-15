@@ -4,37 +4,35 @@
 /////                                                  \\\\\
 
 ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ BEGIN
-  INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~
+  LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/fixes_%game%.tph~ END
 END
 
 ACTION_IF game_includes_sod BEGIN
   ACTION_IF FILE_EXISTS ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~ BEGIN
-    INCLUDE ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~
+    LAF include_script STR_VAR script = ~eefixpack/languages/%LANGUAGE%/fixes_%game%_sod.tph~ END
   END
 END
 
-INCLUDE ~eefixpack/files/tph/launcher_damage_types.tph~ // many bows/xbows lack damage type in their description
+LAF include_script STR_VAR script = ~eefixpack/files/tph/launcher_damage_types.tph~ END // many bows/xbows lack damage type in their description
 
 /////                                                  \\\\\
 ///// lua fixes                                        \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/a7/ui_quit_menu.tph~     // allow to force-quit the game if cutscene mode is active
-INCLUDE ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ // fixes "(null)" damage display bug on inventory screen
-INCLUDE ~eefixpack/files/tph/a7/bg_ui_tutorial_fix.tph~ // a custom party may break the BGEE tutorial
-INCLUDE ~eefixpack/files/tph/function_t.tph~ // 2.7 changed t() to getUiString(); add alias for odler UI mods
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/ui_quit_menu.tph~ END     // allow to force-quit the game if cutscene mode is active
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/ui_null_damage_display.tph~ END // fixes "(null)" damage display bug on inventory screen
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/bg_ui_tutorial_fix.tph~ END // a custom party may break the BGEE tutorial
+LAF include_script STR_VAR script = ~eefixpack/files/tph/function_t.tph~ END // 2.7 changed t() to getUiString(); add alias for odler UI mods
 
 ACTION_IF game_includes_sod BEGIN
-  WITH_SCOPE BEGIN
-    INCLUDE ~eefixpack/files/tph/a7/sod_cinematics.tph~ // enable subtitles for sod cinematics
-  END
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/sod_cinematics.tph~ END // enable subtitles for sod cinematics
 END
 
 COPY_EXISTING ~bgee.lua~ ~override~
   PATCH_IF game_includes_sod BEGIN
     REPLACE_TEXTUALLY ~\({'BDORCM1L',[ %TAB%]*1},\)~ ~\1%WNL%%TAB%{'HELM',%TAB%1},%WNL%%TAB%{'HVLN',%TAB%1},~
     REPLACE_TEXTUALLY ~\({'BDORCF1L',[ %TAB%]*2},\)~ ~\1%WNL%%TAB%{'SKAN',%TAB%2},~
-    REPLACE_TEXTUALLY // has duplicate blocks of the OH areas in area listing 
+    REPLACE_TEXTUALLY // has duplicate blocks of the OH areas in area listing
       ~{"OH1000".+[%LNL%%MNL% %TAB%]+{"OH2000".+[%LNL%%MNL% %TAB%]+{"OH2010".+[%LNL%%MNL% %TAB%]+{"OH3000".+[%LNL%%MNL% %TAB%]+{"OH3010".+[%LNL%%MNL% %TAB%]+{"OH3020".+[%LNL%%MNL% %TAB%]+{"OH3100".+[%LNL%%MNL%]+\([ %TAB%]+}\)~
       ~\1~
 /* comment this section, pending verification for mobile versions
@@ -48,7 +46,7 @@ COPY_EXISTING ~bgee.lua~ ~override~
   END
   BUT_ONLY
 
-INCLUDE ~eefixpack/files/tph/debug_area_listings.tph~ // correcting area names/styles in console menu
+LAF include_script STR_VAR script = ~eefixpack/files/tph/debug_area_listings.tph~ END // correcting area names/styles in console menu
 
 ACTION_IF game_includes_sod BEGIN
   COPY_EXISTING ~ui.menu~ ~override~
@@ -64,17 +62,17 @@ END
 ///// ids/2da/ini/gam fixes                            \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/gam_npcs.tph~ // corrects spawn orientation for GAM NPCs
-INCLUDE ~eefixpack/files/tph/a7/itemanim_workaround.tph~ // workaround for parsing animation sequences
-INCLUDE ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ // fix parameter order in the ChangeStoreMarkup() script action
-INCLUDE ~eefixpack/files/tph/a7/anim_3001.tph~ // fix missing creature animation definitions for Neothelid
-INCLUDE ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ // fix height offsets of health bar positions for creature animations
-INCLUDE ~eefixpack/files/tph/animation_ini_fixes.tph~ // errors in animation definitions
-INCLUDE ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
-INCLUDE ~eefixpack/files/tph/portrait_2da.tph~ // add defaults for portraits not listed in portrait.2da
-INCLUDE ~eefixpack/files/tph/infravision.tph~ // correcting animations subject to infravision
-INCLUDE ~eefixpack/files/tph/ids_sync.tph~ // sync race.ids, class.ids
-INCLUDE ~eefixpack/files/tph/splprot_workaround.tph~ // catches negative resistances for damage types
+LAF include_script STR_VAR script = ~eefixpack/files/tph/gam_npcs.tph~ END // corrects spawn orientation for GAM NPCs
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/itemanim_workaround.tph~ END // workaround for parsing animation sequences
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/action_changestoremarkup_fix.tph~ END // fix parameter order in the ChangeStoreMarkup() script action
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/anim_3001.tph~ END // fix missing creature animation definitions for Neothelid
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/cre_anim_fixes.tph~ END // fix height offsets of health bar positions for creature animations
+LAF include_script STR_VAR script = ~eefixpack/files/tph/animation_ini_fixes.tph~ END // errors in animation definitions
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_splprot_kitfix.tph~ END // tbd, cam: fixing kit check to be a numerical equality check, not bitwise
+LAF include_script STR_VAR script = ~eefixpack/files/tph/portrait_2da.tph~ END // add defaults for portraits not listed in portrait.2da
+LAF include_script STR_VAR script = ~eefixpack/files/tph/infravision.tph~ END // correcting animations subject to infravision
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ids_sync.tph~ END // sync race.ids, class.ids
+LAF include_script STR_VAR script = ~eefixpack/files/tph/splprot_workaround.tph~ END // catches negative resistances for damage types
 
 // install empty RNDTRES.2DA if file doesn't exist in the game
 ACTION_IF (!FILE_EXISTS_IN_GAME ~rndtres.2da~) BEGIN
@@ -84,13 +82,13 @@ END
 // syncing damages.ids header between games (cosmetic)
 COPY_EXISTING ~damages.ids~ ~override~
   REPLACE_TEXTUALLY ~^\(0x0001\)~ ~IDS V1.0%LNL%13%LNL%\1~ // bgee/sod
-  
+
 COPY ~eefixpack/files/2da/entries.2da~ ~override~ // had bg2 references
-  
+
 APPEND ~specific.ids~ ~25 NISHRUU_HAKEASHAR~ // for nishruu/hakeashar fixes
 
 ACTION_IF (game_includes_sod) BEGIN
-  INCLUDE ~eefixpack/files/tph/a7/sod_fogtype.tph~ // apply workaround for buggy FOG_TYPE implementation
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/sod_fogtype.tph~ END // apply workaround for buggy FOG_TYPE implementation
 END
 
 APPEND ~interdia.2da~ ~BAELOTH BDBAELOB~ // missing banter file assignment for baeloth
@@ -101,7 +99,7 @@ APPEND ~itemexcl.2da~ ~clck31 1~ UNLESS ~^clck31[ %TAB%]~ // clck31 available vi
 
 // female body drop/move noise shouldn't be random abela soundclips
 COPY_EXISTING ~itemtype.2da~ ~override~
-  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~ 
+  REPLACE_TEXTUALLY ~^45[ %TAB%].+$~ ~45 FAL_01B GAM_21B -1~
   PRETTY_PRINT_2DA
   BUT_ONLY
 
@@ -124,16 +122,18 @@ COPY_EXISTING ~movidesc.2da~ ~override~ // and then make it pretty
 // effectively disable npclevel.2da - fixes branwen turning back into a statue, imoen's multiple cre files
 COPY_EXISTING ~npclevel.2da~ ~override~
   REPLACE_TEXTUALLY ~\([ %TAB%]\)[A-Za-z]+[0-9]*\([ %TAB%%LNL%%MNL%%WNL%]\)~ ~\1****\2~ // include preceding space to avoid column 1
-  PRETTY_PRINT_2DA  
+  PRETTY_PRINT_2DA
 
 // lock pick xp bonus wrong at level >= 16
-COPY_EXISTING ~xpbonus.2da~ ~override~
-  COUNT_2DA_COLS cols
-  FOR (col = 16 ; col < cols ; ++col) BEGIN
-    SET_2DA_ENTRY 1 col cols 155
-  END
-  PRETTY_PRINT_2DA
-  BUT_ONLY   
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~xpbonus.2da~ ~override~
+    COUNT_2DA_COLS cols
+    FOR (col = 16 ; col < cols ; ++col) BEGIN
+      SET_2DA_ENTRY 1 col cols 155
+    END
+    PRETTY_PRINT_2DA
+    BUT_ONLY
+END
 
 // tbd, cam
 // dupe text for wild surges: https://forums.beamdog.com/discussion/comment/1169266/#Comment_1169266
@@ -190,8 +190,8 @@ WITH_SCOPE BEGIN
     "2921" => "WIZARD_IMPROVED_ALACRITY" // alternate symbolic name
     "2931" => "SUCCUBUS_TELEPORT"
     "2985" => "RED_HOLY_MIGHT"
-    
-    // Innate   
+
+    // Innate
     "3101" => "INNATE_CURE_LIGHT_WOUNDS"
     "3102" => "INNATE_SLOW_POISON"
     "3103" => "INNATE_DRAW_UPON_HOLY_MIGHT"
@@ -243,7 +243,7 @@ END
 // tbd, cam
 // sync bgee/bg2ee spell.ids entries with extra sod spells
 ACTION_IF ((!FILE_EXISTS_IN_GAME ~sppr116.spl~) OR (!FILE_EXISTS_IN_GAME ~spwi126.spl~) OR(!FILE_EXISTS_IN_GAME ~spwi228.spl~)) BEGIN
-  INCLUDE ~eefixpack/files/tph/tbd_missing_spells.tph~
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_missing_spells.tph~ END
 END
 
 LAM "SPELL_IDS" // relaunch so as to take into account the BG2 entries
@@ -264,11 +264,14 @@ COPY ~eefixpack/files/2da/clabmo02.2da~ ~override~ // tbd, cam: borked kit abili
      ~eefixpack/files/2da/spwi417.2da~  ~override~ // tbd, cam: allow enchant weapon to be cast via contingency
 
 // archer table lacks last bumps; do as separate copy since files are slightly different
-OUTER_SPRINT tracking ~****      ~ OUTER_SPRINT archthac ~AP_SPCL122~
-COPY ~eefixpack/files/2da/clabrn02.2da~ ~override~ EVALUATE_BUFFER // tbd, cam: table isn't borked, but does lack the last +1 missile bump
+WITH_SCOPE BEGIN
+  OUTER_SPRINT tracking ~****      ~
+  OUTER_SPRINT archthac ~AP_SPCL122~
+  COPY ~eefixpack/files/2da/clabrn02.2da~ ~override~ EVALUATE_BUFFER // tbd, cam: table isn't borked, but does lack the last +1 missile bump
+END
 
-// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, tanari, wyvern (plus shadow); monk paperdoll; 
-// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook); 
+// cumulative BAM fixes: item shadows; merged 4-frame animations: demogorgon, tanari, wyvern (plus shadow); monk paperdoll;
+// unholy blight portrait icon; removing vamp shadows; fixed silver dragon breath; fixed chant icon (spellbook);
 //  missing short flaming sword bams (f2); shocking grasp icons; updated spell BAMs; death knight anim touchups
 COPY ~eefixpack/files/bam/copy/bgee~             ~override~
      ~eefixpack/files/bam/copy/bgee_bg2ee~       ~override~
@@ -277,24 +280,27 @@ COPY ~eefixpack/files/bam/copy/bgee~             ~override~
 
 DISABLE_FROM_KEY ~guiwdb20.bam~ // incomplete resource; only referenced by unused CHU file
 
-ACTION_IF !game_includes_sod BEGIN
+WITH_SCOPE BEGIN
+  ACTION_IF !game_includes_sod BEGIN
 
-  COPY ~eefixpack/files/bam/copy/bgee_no_sod~ ~override~ // adding cornugon animation for albert/rufie change
-  COPY ~eefixpack/files/bmp/copy/bgee_no_sod~ ~override~ // Improve portrait placeholder images, missing tanarri skins
-  COPY ~eefixpack/files/wav/copy/bgee_no_sod~ ~override~ // missing audio for multiple animations
-     
- END ELSE BEGIN      
+    COPY ~eefixpack/files/bam/copy/bgee_no_sod~ ~override~ // adding cornugon animation for albert/rufie change
+    COPY ~eefixpack/files/bmp/copy/bgee_no_sod~ ~override~ // Improve portrait placeholder images, missing tanarri skins
+    COPY ~eefixpack/files/wav/copy/bgee_no_sod~ ~override~ // missing audio for multiple animations
 
-  // cumulative BAM fixes: item shadows; merged 4-frame animations: dragon (red); fix loading bar animation; 
-  // fix logo animation; m'khiin's missing getting-up animation; merging multi-part area animations to eliminate issues
-  COPY ~eefixpack/files/bam/copy/sod~             ~override~
-       ~eefixpack/files/bam/copy/sod_bg2ee~       ~override~
-       ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~ ~override~
+  END ELSE BEGIN
 
-  // installing BAM V2 resources
-  INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
-  ACTION_FOR_EACH bam_resref IN cbdhel09 BEGIN
-    LAF install_bam_v2 STR_VAR bam_resref END
+    // cumulative BAM fixes: item shadows; merged 4-frame animations: dragon (red); fix loading bar animation;
+    // fix logo animation; m'khiin's missing getting-up animation; merging multi-part area animations to eliminate issues
+    COPY ~eefixpack/files/bam/copy/sod~             ~override~
+         ~eefixpack/files/bam/copy/sod_bg2ee~       ~override~
+         ~eefixpack/files/bam/copy/sod_bg2ee_iwdee~ ~override~
+
+    // installing BAM V2 resources
+    INCLUDE ~eefixpack/files/tph/install_bam_v2.tph~
+    ACTION_FOR_EACH bam_resref IN cbdhel09 BEGIN
+      LAF install_bam_v2 STR_VAR bam_resref END
+    END
+
   END
 END
 
@@ -304,18 +310,18 @@ END
 
 // BGCS-3460, cam
 // death tyrant animation fixes
-INCLUDE ~eefixpack/files/tph/b3460_death_tyrant.tph~ // BGCS-3460, cam: death tyrant animation fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/b3460_death_tyrant.tph~ END // BGCS-3460, cam: death tyrant animation fixes
 
 // bgcs-3397, cam
 // revenant animation fixes
-INCLUDE ~eefixpack/files/tph/b3397_revenant.tph~ // bgcs-3397, cam: revenant animation fixes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/b3397_revenant.tph~ END // bgcs-3397, cam: revenant animation fixes
 
 // tbd, cam
 // charmed dialogue fixes: https://www.gibberlings3.net/forums/topic/36173-bg-a-casual-200ish-dialogue-fixes/
-INCLUDE ~eefixpack/files/tph/tbd_bgee_charm_dlg_fixes.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bgee_charm_dlg_fixes.tph~ END
 
-INCLUDE ~eefixpack/files/tph/charged_items.tph~ // fix for overcharged items in areas/creatures/stores
-INCLUDE ~eefixpack/files/tph/missing_items.tph~ // fixes missing item errors in areas/creatures
+LAF include_script STR_VAR script = ~eefixpack/files/tph/charged_items.tph~ END // fix for overcharged items in areas/creatures/stores
+LAF include_script STR_VAR script = ~eefixpack/files/tph/missing_items.tph~ END // fixes missing item errors in areas/creatures
 
 /////                                                  \\\\\
 ///// mechanics fixes / overhauls                      \\\\\
@@ -335,7 +341,7 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/wing_buffet_vs_mr.tph"
-  LAUNCH_ACTION_FUNCTION "WING_BUFFET_VS_MR" END
+  LAF "WING_BUFFET_VS_MR" END
 END
 
 // argent77
@@ -343,9 +349,9 @@ WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/a7/improved_troll_regeneration.tph"
 END
 
-ACTION_IF game_includes_sod BEGIN 
-  INCLUDE ~eefixpack/files/tph/sod_mkhiin_animations.tph~
-END 
+ACTION_IF game_includes_sod BEGIN
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/sod_mkhiin_animations.tph~ END
+END
 
 /////                                                  \\\\\
 ///// dialogue fixes                                   \\\\\
@@ -363,19 +369,19 @@ COMPILE ~eefixpack/files/d/bgee_tbd_nothing_to_say.d~ // nothing to say fixes fo
 ///// script fixes                                     \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_dopples_fixes.tph~ // tbd, cam (from k4thos/eet): gorion/teth/elminster dopples breaks if one is one-shot; also prevents disguised dopples from trying to shift if already dead
-INCLUDE ~eefixpack/files/tph/aldeth_dopple.tph~     // more dopple fixes, this time for aldeth's quest
-INCLUDE ~eefixpack/files/tph/ground_lightning.tph~  // certain projectiles from ground traps cause crashes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_dopples_fixes.tph~ END // tbd, cam (from k4thos/eet): gorion/teth/elminster dopples breaks if one is one-shot; also prevents disguised dopples from trying to shift if already dead
+LAF include_script STR_VAR script = ~eefixpack/files/tph/aldeth_dopple.tph~ END     // more dopple fixes, this time for aldeth's quest
+LAF include_script STR_VAR script = ~eefixpack/files/tph/ground_lightning.tph~ END  // certain projectiles from ground traps cause crashes
 
 ACTION_IF game_includes_sod BEGIN
-  INCLUDE ~eefixpack/files/tph/bdjoinxp.tph~ // fix random XP gains on NPC dual-classes and other events
+  LAF include_script STR_VAR script = ~eefixpack/files/tph/bdjoinxp.tph~ END // fix random XP gains on NPC dual-classes and other events
 END
 
 // potential script loop for irlentree
 COPY_EXISTING ~ar0127.bcs~ ~override~ // area script for Merchant League, ground floor (Irlentree)
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(Global("RemoveIrelentre","GLOBAL",1)\)~ ~\1 Exists("Irlentre")~ // check for existance before destroySelf
-  END  
+  END
 
 // tbd, cam (from k4thos/eet)
 // if you lure aec'letec out of the basement, much of the cultist scripting breaks
@@ -402,16 +408,16 @@ COPY_EXISTING ~ar4900.bcs~ ~override~
 
 // tarom should not purge breakable items when updating his store (don't reset depreciation)
 COPY_EXISTING ~baldur.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
+  DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~RemoveStoreItem("taerum","[^"]+",0)~ ~~
   END
-  BUT_ONLY  
-  
+  BUT_ONLY
+
 ACTION_IF game_includes_sod BEGIN
 
   // checking wrong var for dead safana
   COPY_EXISTING ~bd0101.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN 
+    DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(InPartyAllowDead("safana")[ %TAB%%LNL%%MNL%%WNL%]+\)Global("BD_SAFANA_DIED_IN_BG","GLOBAL",0)~ ~\1Global("BD_SAFANA_DIED_IN_BG","GLOBAL",1)~
     END
     BUT_ONLY
@@ -425,7 +431,7 @@ ACTION_IF game_includes_sod BEGIN
       APPEND_FILE ~eefixpack/files/baf/fall_of_sarevok.baf~
     END
     BUT_ONLY
-    
+
   EXTEND_TOP ~bd0120.bcs~ ~eefixpack/files/baf/bd0120_bpring.baf~ // remove slave rings if BP characters are imported directly to SoD
 
   // tbd, cam
@@ -490,15 +496,15 @@ ACTION_IF game_includes_sod BEGIN
       REPLACE_TEXTUALLY ~"bdcorwin"~ ~"corwin"~
     END
     BUT_ONLY
-    
-  EXTEND_BOTTOM ~bdbartle.bcs~ ~eefixpack/files/baf/bdbartle.baf~  
+
+  EXTEND_BOTTOM ~bdbartle.bcs~ ~eefixpack/files/baf/bdbartle.baf~
 
   // tsolak's messenger shouldn't spawn in scrying cutscenes
   COPY_EXISTING ~bdbaldur.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN 
+    DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(GlobalTimerExpired("bd_123_messenger_timer","global")\)~ ~\1 !AreaCheck("BD0070") !AreaCheck("BD0071") !AreaCheck("BD0118")~
     END
-    BUT_ONLY   
+    BUT_ONLY
 
   // tbd, cam (from k4thos/eet)
   //Dead NPCs stays in party in chapter 13
@@ -510,14 +516,14 @@ ACTION_IF game_includes_sod BEGIN
 
   // edwin shouldn't lament chance to kill vichand if he wasn't there when you spoke to him originally (see also bdvichan.dlg)
   COPY_EXISTING ~bdedwin.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN 
+    DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(Global("bd_vichand_talk","bd2000",1)\)~ ~\1 Global("cd_edwin_vichand_met","bd2000",1)~
     END
-    BUT_ONLY   
+    BUT_ONLY
 
   // correctly count monsters where you have to kill a specific number of them (see also bdwe1str.bcs et al)
-  COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff). 
-                ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals. 
+  COPY_EXISTING ~bdffdop1.bcs~ ~override~ // Result: Continuously creates inventory items on the ground (lots of valuable stuff).
+                ~bdhelp.bcs~   ~override~ // Result: An endless stream of new animals are continuously summoned if you petrify or freeze one of the animals.
     DECOMPILE_AND_PATCH BEGIN
       REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)~ ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0)~
       REPLACE_TEXTUALLY ~\(GiveItemCreate("misc07",Myself,250,0,0)\)~ ~SetGlobal("cd_dead_do_once","LOCALS",1) \1~ // bdffdop1
@@ -527,14 +533,16 @@ ACTION_IF game_includes_sod BEGIN
 
   // tbd, cam
   // sod menhir quest fix: menhirs which spawn enemies on failure are checking/setting the wrong variable
-  ACTION_FOR_EACH script IN 1 4 BEGIN
+  WITH_SCOPE BEGIN
+    ACTION_FOR_EACH script IN 1 4 BEGIN
 
-    COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
-      DECOMPILE_AND_PATCH BEGIN
-        REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
-      END
-      BUT_ONLY
+      COPY_EXISTING ~bdmenhi%script%.bcs~ ~override~
+        DECOMPILE_AND_PATCH BEGIN
+          REPLACE_TEXTUALLY ~Global("activated","LOCALS"~ ~Global("BDMENHI%script%_Rune","GLOBAL"~
+        END
+        BUT_ONLY
 
+    END
   END
 
   // tbd, cam
@@ -595,8 +603,8 @@ ACTION_IF game_includes_sod BEGIN
   // tbd, cam
   // don't tell shadow to kill bugbears if they're already dead (see also bdshadow.dlg)
   EXTEND_TOP ~bdshadow.bcs~ ~eefixpack/files/baf/bdshadow.baf~
-  
-END 
+
+END
 
 // shaman summon script errors - fix for bgee, bg2ee, iwdee
 COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
@@ -604,7 +612,7 @@ COPY_EXISTING ~bdshunsu.bcs~ ~override~ // chaman summun AI script
     REPLACE_TEXTUALLY ~!\(Detect(\[PC\.0\.0\.SHAMAN\])[ %TAB%%LNL%%MNL%]+CombatCounter(0)\)~ // have to include extra line to avoid other blocks
     	~\1~ // should be detect, not !detect (sod only)
     REPLACE_TEXTUALLY ~\(MoveToObject(\[PC\.0\.0\.SHAMAN])\)~ ~\1 Continue()~ // don't block item bonuses with infinite Move commands
-  END   
+  END
 
 // tbd, cam (from jmerry)
 // bp: hogarl not using the right potion when he's hurt
@@ -620,17 +628,17 @@ EXTEND_TOP ~bpplot.bcs~ ~eefixpack/files/baf/bpplotpatch.baf~ // BP script remov
 
 // correctly count monsters where you have to kill a specific number of them (see also bdffdop1.bcs et al)
 COPY_EXISTING ~bdwe1str.bcs~ ~override~
-              ~dopald.bcs~   ~override~ // Result: Aldeth thanks you prematurely for killing all doppelgangers (ALDETH.DLG). Other dialogs may be affected as well (e.g. Brandilar or Scar). 
-              ~gnolldr.bcs~  ~override~ // Result: Drizzt does not respond when you try to talk to him after all gnolls have been defeated (DRIZZT.DLG). 
-              ~negoblin.bcs~ ~override~ // Result: The ranger Magreb doesn't recogize that you've killed all the goblins (NEMAGREB.DLG). 
-              ~ogres.bcs~    ~override~ // Result: Sarhedra doesn't acknowledge that you defeated the ogres; quest cannot be completed (SARHED.DLG). 
+              ~dopald.bcs~   ~override~ // Result: Aldeth thanks you prematurely for killing all doppelgangers (ALDETH.DLG). Other dialogs may be affected as well (e.g. Brandilar or Scar).
+              ~gnolldr.bcs~  ~override~ // Result: Drizzt does not respond when you try to talk to him after all gnolls have been defeated (DRIZZT.DLG).
+              ~negoblin.bcs~ ~override~ // Result: The ranger Magreb doesn't recogize that you've killed all the goblins (NEMAGREB.DLG).
+              ~ogres.bcs~    ~override~ // Result: Sarhedra doesn't acknowledge that you defeated the ogres; quest cannot be completed (SARHED.DLG).
               ~zombiew.bcs~  ~override~ // zombie farm count
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\)\([ %TAB%%LNL%%MNL%%WNL%]+\)\(AreaCheck("OH2010")\)~ ~\3\2\1~ // invert negoblin triggers so we can use the same patch below
     REPLACE_TEXTUALLY ~\(StateCheck(Myself,STATE_REALLY_DEAD)\|Die()\)\([ %TAB%%LNL%%MNL%%WNL%]+THEN[ %TAB%%LNL%%MNL%%WNL%]+RESPONSE #[0-9]+[ %TAB%%LNL%%MNL%%WNL%]+\)\(IncrementGlobal("[^"]+","[^"]+",1)\)~
       ~StateCheck(Myself,STATE_DEAD) Global("cd_dead_do_once","LOCALS",0) \2 SetInterrupt(FALSE) SetGlobal("cd_dead_do_once","LOCALS",1) \3 SetInterrupt(TRUE)~
   END
-  BUT_ONLY IF_EXISTS // bdwe1str is SoD 
+  BUT_ONLY IF_EXISTS // bdwe1str is SoD
 
 // tbd, cam
 // sod imoen missing xp-matching scripting, among other things
@@ -796,7 +804,7 @@ COPY_EXISTING ~bddefai.bcs~  ~override~
 
 COPY_EXISTING ~davaeorn.bcs~ ~override~ // davaeorn not going hostile if attacked while silenced
   DECOMPILE_AND_PATCH BEGIN
-    REPLACE_TEXTUALLY ~\(NumberOfTimesTalkedTo(0)\)~ ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~ 
+    REPLACE_TEXTUALLY ~\(NumberOfTimesTalkedTo(0)\)~ ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~
   END
   BUT_ONLY
 
@@ -838,12 +846,12 @@ COPY_EXISTING ~netrig1.bcs~  ~override~ // trigger to bury rilsa should stop onc
 
 // neera shouldn't initiate dialogue afer initial red wizard ambush if panicked
 COPY_EXISTING ~neera.bcs~ ~override~
-  DECOMPILE_AND_PATCH BEGIN 
-    REPLACE_TEXTUALLY ~\(Global("RedWizards","AR3300",3)[ %TAB%%LNL%%MNL%]+!ActuallyInCombat()\)~ 
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~\(Global("RedWizards","AR3300",3)[ %TAB%%LNL%%MNL%]+!ActuallyInCombat()\)~
       ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~
-    REPLACE_TEXTUALLY ~\([ %TAB%]Global("RedWizards","AR3300",4)\)~ 
+    REPLACE_TEXTUALLY ~\([ %TAB%]Global("RedWizards","AR3300",4)\)~
       ~\1 !StateCheck(Myself,CD_STATE_NOTVALID)~
-  END  
+  END
 
 INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscenes
 
@@ -851,15 +859,17 @@ INCLUDE ~eefixpack/files/tph/ending_cutscenes.tph~ // tightening end of cutscene
 ///// area fixes                                       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/assign_area_scripts.tph~ // assign/correct area scripts to areas
-INCLUDE ~eefixpack/files/tph/region_cursors.tph~ // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
+LAF include_script STR_VAR script = ~eefixpack/files/tph/assign_area_scripts.tph~ END // assign/correct area scripts to areas
+LAF include_script STR_VAR script = ~eefixpack/files/tph/region_cursors.tph~ END // 'Show Triggers On Tab' lua option exposes some hidden regions and traps
 
 // bgcs-3454, cam
 // lady's house lacks its normal music
-COPY_EXISTING ~ar0132.are~ ~override~
-  READ_LONG 0xbc song_off
-  WRITE_LONG song_off 11
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ar0132.are~ ~override~
+    READ_LONG 0xbc song_off
+    WRITE_LONG song_off 11
+    BUT_ONLY
+END
 
 // tbd, cam
 // actors on impassable terrain: https://www.gibberlings3.net/forums/topic/34875-bug-report-ee-content-bugs/page/9/#comment-315538
@@ -869,28 +879,32 @@ LAF cd_move_actor INT_VAR old_x = 3953 old_y = 2018 new_x = 3967 new_y = 1992 ST
 
 // tbd, cam (from k4thos/eet)
 //junk in BG1801.ARE Rest Spawn entries (harmless but annoying during save update)
-COPY_EXISTING ~ar1801.are~ ~override~
-  READ_LONG  0xc0 "rest_off" ELSE 0
-  READ_SHORT rest_off + 0x98 cre_num
-  FOR (index = cre_num ; index < 10 ; ++index) BEGIN
-    WRITE_ASCII (rest_off + 0x48 + (0x08 * index)) ~~ #8 // blank any entry beyond the valid number of creatures
-  END
-  BUT_ONLY
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ar1801.are~ ~override~
+    READ_LONG  0xc0 "rest_off" ELSE 0
+    READ_SHORT rest_off + 0x98 cre_num
+    FOR (index = cre_num ; index < 10 ; ++index) BEGIN
+      WRITE_ASCII (rest_off + 0x48 + (0x08 * index)) ~~ #8 // blank any entry beyond the valid number of creatures
+    END
+    BUT_ONLY
+END
 
 // tbd, cam
 // ambient blocks footstep sounds
-COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
-              ~tu0018.are~ ~override~ // Baldur's Gate Estate Cellar (Tutorial area)
-  READ_SHORT 0x82 amb_num // inactive ambient
-  READ_LONG  0x84 amb_off
-  FOR (index = 0 ; index < amb_num ; ++index) BEGIN
-    READ_ASCII (amb_off + 0x30 + (index * 0xd4)) sound1
-    PATCH_IF ("%sound1%" STRING_COMPARE_CASE "gacavm02" = 0) BEGIN // main ambient
-      WRITE_LONG (amb_off + 0x90 + (index * 0xd4)) (THIS BOR BIT1) // adds looping flag
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bd0116.are~ ~override~ // Ducal Palace, Basement
+                ~tu0018.are~ ~override~ // Baldur's Gate Estate Cellar (Tutorial area)
+    READ_SHORT 0x82 amb_num // inactive ambient
+    READ_LONG  0x84 amb_off
+    FOR (index = 0 ; index < amb_num ; ++index) BEGIN
+      READ_ASCII (amb_off + 0x30 + (index * 0xd4)) sound1
+      PATCH_IF ("%sound1%" STRING_COMPARE_CASE "gacavm02" = 0) BEGIN // main ambient
+        WRITE_LONG (amb_off + 0x90 + (index * 0xd4)) (THIS BOR BIT1) // adds looping flag
+      END
     END
-  END
-  BUT_ONLY IF_EXISTS // bd0116 is sod
-  
+    BUT_ONLY IF_EXISTS // bd0116 is sod
+END
+
 // quantity for random treasure is incorrect
 COPY_EXISTING ~bd0130.are~ ~override~
   LPF ALTER_AREA_ITEM INT_VAR charge1 = 1 STR_VAR match_item = rndtri03 END
@@ -900,35 +914,37 @@ COPY_EXISTING ~bd0130.are~ ~override~
 ///// creature file fixes                              \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_cre_fixes_bgee.tph~ // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_cre_fixes_bgee.tph~ END // bulk general changes
 
-INCLUDE ~eefixpack/files/tph/alignment_changes_bgee.tph~ // bulk alignment changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/alignment_changes_bgee.tph~ END // bulk alignment changes
 
-INCLUDE ~eefixpack/files/tph/tbd_elemental_summons.tph~ // tbd, cam: elemental prince summons shouldn't grant XP
-INCLUDE ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
-INCLUDE ~eefixpack/files/tph/cre_spells.tph~ // wraiths, mists, shadows and shades all have leftover memorized and known spells
-INCLUDE ~eefixpack/files/tph/creature_profs.tph~ // provide bas profs to creatures to avoind non-prof thac0 penalties
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_elemental_summons.tph~ END // tbd, cam: elemental prince summons shouldn't grant XP
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_conjure_animals_bearposu.tph~ END // tbd, cam: bears summoned by conjure animals should used summoned scripts, not bear scripts
+LAF include_script STR_VAR script = ~eefixpack/files/tph/cre_spells.tph~ END // wraiths, mists, shadows and shades all have leftover memorized and known spells
+LAF include_script STR_VAR script = ~eefixpack/files/tph/creature_profs.tph~ END // provide bas profs to creatures to avoind non-prof thac0 penalties
 
-INCLUDE ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ // fixes translucency issues with type E000 creature animations
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/animation_translucency_fix.tph~ END // fixes translucency issues with type E000 creature animations
 
 // tbd, cam (from scs)
 // make gretek and friends go hostile more reliably (see also gretek.baf, gretek.dlg)
-COPY_EXISTING ~arlin.cre~  ~override~
-              ~catura.cre~ ~override~
-              ~gretek.cre~ ~override~
-              ~nader.cre~  ~override~
-              ~pargus.cre~ ~override~
-              ~wilf.cre~   ~override~
-  FOR (index = 0x248 ; index < 0x270 ; index += 8) BEGIN
-    READ_ASCII index script
-    PATCH_IF (("%script%" STRING_COMPARE_CASE "" = 0) OR ("%script%" STRING_COMPARE_CASE "none" = 0)) BEGIN
-      WRITE_ASCII index ~gretek~ #8
-      SET index = 0x270
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~arlin.cre~  ~override~
+                ~catura.cre~ ~override~
+                ~gretek.cre~ ~override~
+                ~nader.cre~  ~override~
+                ~pargus.cre~ ~override~
+                ~wilf.cre~   ~override~
+    FOR (index = 0x248 ; index < 0x270 ; index += 8) BEGIN
+      READ_ASCII index script
+      PATCH_IF (("%script%" STRING_COMPARE_CASE "" = 0) OR ("%script%" STRING_COMPARE_CASE "none" = 0)) BEGIN
+        WRITE_ASCII index ~gretek~ #8
+        SET index = 0x270
+      END
     END
-  END
-  BUT_ONLY
-  
-INCLUDE ~eefixpack/files/tph/edwin_amulet.tph~ // move edwin's bonus spells from his amulet to creature file
+    BUT_ONLY
+END
+
+LAF include_script STR_VAR script = ~eefixpack/files/tph/edwin_amulet.tph~ END // move edwin's bonus spells from his amulet to creature file
 
 // tbd, cam (originally from jmerry)
 // Nonstandard wand of missiles on Imoen and Mordaine replaced
@@ -942,11 +958,11 @@ COPY_EXISTING ~imoen1.cre~ ~override~
 
 // tbd, cam
 // HD too low for most ankhegs; bgee ones also had pickpocketable shells
-INCLUDE ~eefixpack/files/tph/tbd_ankheg.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_ankheg.tph~ END
 
 //tbd, cam
 // poison mists can be summoned but can also spawn as normal creatures, so need both a gender: neither and gender: summoned version
-INCLUDE ~eefixpack/files/tph/tbd_poison_mists.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_poison_mists.tph~ END
 
 // corinth shouldn't have undroppable items, especially since the player can be given them
 COPY_EXISTING ~bdcorint.cre~ ~override~
@@ -954,7 +970,7 @@ COPY_EXISTING ~bdcorint.cre~ ~override~
   LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 0 STR_VAR match_item = sw1h07 END
   BUT_ONLY IF_EXISTS // sod quest
 
-// two militia members using undroppable ashirukuru weapon, which applies translucency - swap for undroppable short sword  
+// two militia members using undroppable ashirukuru weapon, which applies translucency - swap for undroppable short sword
 COPY_EXISTING ~bddagf43.cre~ ~override~ // daggerford militia
               ~bddagf44.cre~ ~override~ // daggerford militia
   LPF ALTER_CREATURE_ITEM INT_VAR flag_undroppable = 1 STR_VAR match_item = sw1h21 item = sw1h07 END
@@ -1031,30 +1047,30 @@ END
 
 // tbd, graion
 // restore SoD ACTION4-ACTION7 lines
-INCLUDE ~eefixpack/files/tph/tbd_sod_action4-7_restoration.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_sod_action4-7_restoration.tph~ END
 
 /////                                                  \\\\\
 ///// item file fixes                                  \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_itm_fixes_bgee.tph~ // bulk general changes
-INCLUDE ~eefixpack/files/tph/bulk_spl_cowleds_fixes_bgee.tph~ // bulk changes for items that trigger the Cowled Wizards
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_itm_fixes_bgee.tph~ END // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bulk_spl_cowleds_fixes_bgee.tph~ END // bulk changes for items that trigger the Cowled Wizards
 
-INCLUDE ~eefixpack/files/tph/tbd_bgee_146.tph~ // tbd, cam: fixes items that cast spells
-INCLUDE ~eefixpack/files/tph/tbd_energy_blades.tph~ // tbd, cam: per descript, energy blades should do missile damage, not slashing
-INCLUDE ~eefixpack/files/tph/usability_arrow_bolt.tph~ // monks using arrows/bolts
-INCLUDE ~eefixpack/files/tph/multi_target_sporadic_items.tph~ // fixes for drain effects not synced between wilder and target
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bgee_146.tph~ END // tbd, cam: fixes items that cast spells
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_energy_blades.tph~ END // tbd, cam: per descript, energy blades should do missile damage, not slashing
+LAF include_script STR_VAR script = ~eefixpack/files/tph/usability_arrow_bolt.tph~ END // monks using arrows/bolts
+LAF include_script STR_VAR script = ~eefixpack/files/tph/multi_target_sporadic_items.tph~ END // fixes for drain effects not synced between wilder and target
 
 ACTION_IF game_includes_sod BEGIN
-      
+
   COPY_EXISTING ~b3-24.itm~ ~override/b3-12.itm~ // needed for bdmimic
-    LPF ALTER_HEADER INT_VAR dicesize = 4 END 
+    LPF ALTER_HEADER INT_VAR dicesize = 4 END
 
   // fix (null} damage display bug by adding a 0% damage opcode (see also bdhamm02.itm, bdsw1h06.itm)
   COPY_EXISTING ~bdarow02.itm~ ~override~ // Void-tipped Arrow +3: has 0d0+0 type 2 ability, has damage but not as first effect
                 ~bdbull02.itm~ ~override~ // Bullet of Darkness +3: has 0d0+0 type 2 ability, has damage but not as first effect
-    LPF CLONE_EFFECT INT_VAR header_type = 2 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
-    BUT_ONLY 
+    LPF CLONE_EFFECT INT_VAR header_type = 2 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END
+    BUT_ONLY
 
   COPY_EXISTING ~bdax1h04.itm~ ~override~ // Throwing Axe +1
     LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 7 END // change projectile to not be blocked by pfnm
@@ -1066,13 +1082,13 @@ ACTION_IF game_includes_sod BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode = 146 END
     LPF ALTER_EFFECT INT_VAR match_opcode = 400 opcode = 146 END
     LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 25 parameter1 = 3 END // weapon for 'stronger' belhifet has weaker poison
- 
+
   // belgifet immue to arcae lightning bolt, but not avenger ot sotrmlord versions
   COPY_EXISTING ~bdbelhia.itm~ ~override~
-    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spdr301 END 
-    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spcl722 END 
-    BUT_ONLY IF_EXISTS 
-  
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spdr301 END
+    LPF CLONE_EFFECT INT_VAR match_opcode = 206 STR_VAR match_resource = spwi308 resource = spcl722 END
+    BUT_ONLY IF_EXISTS
+
   COPY_EXISTING ~bddagg04.itm~ ~override~ // Throwing Dagger +1
                 ~bddagg07.itm~ ~override~ // Throwing Dagger +1
     LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 30 END // change projectile to not be blocked by pfnm
@@ -1080,8 +1096,8 @@ ACTION_IF game_includes_sod BEGIN
   // fix (null} damage display bug by adding a 0% damage opcode (see also bdarow02.itm, bdbull02.itm)
   COPY_EXISTING ~bdhamm02.itm~ ~override~ // Voidhammer +3: has 0d0+0 type 1 ability, has damage but not as first effect
                 ~bdsw1h06.itm~ ~override~ // Voidsword +3: has 0d0+0 type 1 ability, has damage but not as first effect
-    LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END 
-    BUT_ONLY 
+    LPF CLONE_EFFECT INT_VAR header_type = 1 check_globals = 0 multi_match = 1 match_opcode = 12 probability2 = 100 STR_VAR insert = first END
+    BUT_ONLY
 
   // poison resistance blocking *gulp*
   COPY_EXISTING ~bdpotn02.itm~ ~override~ // (itm) Viper's Venom - causes poison
@@ -1102,7 +1118,7 @@ ACTION_IF game_includes_sod BEGIN
 
 END
 
-// melee weapons using projectiles - bgee version 
+// melee weapons using projectiles - bgee version
 COPY_EXISTING ~ax1h05.itm~   ~override~ // Throwing Axe +2 - ability 1 uses 10
               ~ax1h06.itm~   ~override~ // Rhyte's Last Arrow +2 - ability 1 uses 10
               ~ax1h16.itm~   ~override~ // K'logarath +4 - ability 1 uses 10
@@ -1110,7 +1126,7 @@ COPY_EXISTING ~ax1h05.itm~   ~override~ // Throwing Axe +2 - ability 1 uses 10
               ~bdax1h05.itm~ ~override~ // Grubdoubler's Axe +1 - ability 1 uses 10
   LPF ALTER_HEADER INT_VAR match_type = 1 projectile = 1 END // remove projectile from melee header
   IF_EXISTS // sod asset(s)
-  
+
 // tie otyugh slow icon to slow-via-disease effect so it gets cleared by curing disease
 // add ability drain icon to strength-drain-via-disease for bddraggh.itm (already has general disease icon)
 COPY_EXISTING ~bddraggh.itm~ ~override~ // (itm) Attack - causes disease level drain
@@ -1128,51 +1144,55 @@ COPY_EXISTING ~bdotyg01.itm~ ~override~ // (itm) Attack - causes disease - portr
   IF_EXISTS // sod asset(s)
 
 // fixing waterdeep books (fix also used for bg2ee)
-INCLUDE ~eefixpack/files/tph/waterdeep_books.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/waterdeep_books.tph~ END
 
-COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron crisis in black pits
-  LPF ALTER_EFFECT INT_VAR match_opcode = 206 target = 4 END // fix one target
-  PATCH_FOR_EACH spell IN ax1h01 blun02 blun04 blun06 blun08 dagg01 dagg06 dagg07 halb01 sper01 BEGIN
-    LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 206 STR_VAR match_resource = sw1h01 resource = EVAL ~%spell%~ insert = below END
-  END
-  BUT_ONLY   
-  
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bprng1.itm~ ~override~ // non-swords can still break due to iron crisis in black pits
+    LPF ALTER_EFFECT INT_VAR match_opcode = 206 target = 4 END // fix one target
+    PATCH_FOR_EACH spell IN ax1h01 blun02 blun04 blun06 blun08 dagg01 dagg06 dagg07 halb01 sper01 BEGIN
+      LPF CLONE_EFFECT INT_VAR check_headers = 0 match_opcode = 206 STR_VAR match_resource = sw1h01 resource = EVAL ~%spell%~ insert = below END
+    END
+    BUT_ONLY
+END
+
 COPY_EXISTING ~bull07.itm~ ~override~ // Bullet of Fire +1
   LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 18 END // change projectile to not be blocked by pfnm
-  
+
 COPY_EXISTING ~bull08.itm~ ~override~ // Bullet of Ice +1
   LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 17 END // change projectile to not be blocked by pfnm
-  
+
 COPY_EXISTING ~bull09.itm~ ~override~ // Bullet of Electricity +1
   LPF ALTER_HEADER INT_VAR match_type = 2 projectile = 21 END // change projectile to not be blocked by pfnm
-  
+
 // poison effect and icon have different MR/dispellability
 COPY_EXISTING ~dart04.itm~ ~override~ // darts of wounding
   LPF DELETE_EFFECT INT_VAR match_opcode = 142 END // delete icon
   LPF ALTER_EFFECT INT_VAR match_opcode = 25 special = 6 END // and attach to poison directly
-  
+
 // moving demogorgon's broken regen from his cre to his weapon (see also demogor2, ohb5bhal.cre)
 COPY_EXISTING ~demogorg.itm~ ~override~
-  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END 
+  LPF ADD_ITEM_EQEFFECT INT_VAR opcode = 98 target = 1 parameter1 = 6 parameter2 = 2 timing = 2 END
 
 // elven charm immunity can block level drain and other effects
-OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
-COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
-  LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
-  LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
-  PATCH_FOR_EACH op IN 5 215 142 BEGIN
-    LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
-    LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
-  END
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
-  LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+WITH_SCOPE BEGIN
+  OUTER_SET charm_immunity = IDS_OF_SYMBOL (~splstate~ ~CHARM_IMMUNITY~)
+  COPY_EXISTING ~gorwom1.itm~  ~override~ // Nalmissra's attack
+    LPF DELETE_EFFECT INT_VAR match_opcode = 324 END // delete existing 324s
+    LPF ALTER_EFFECT INT_VAR match_opcode = 142 match_parameter2 = 1 probability1 = 50 END // charm is 50%, but icon is 100%
+    PATCH_FOR_EACH op IN 5 215 142 BEGIN
+      LPF CLONE_EFFECT  INT_VAR match_opcode = op match_probability1 = 50 STR_VAR insert = last END
+      LPF DELETE_EFFECT INT_VAR match_opcode = op match_probability1 = 50 multi_match = 1 END
+    END
+    LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = charm_immunity parameter2 = 110 END // charm immunity
+    LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 19 probability1 = 15 END // half-elf immunity
+    LPF CLONE_EFFECT INT_VAR match_opcode = 5 opcode = 324 timing = 0 duration = 0 resist_dispel = 0 savingthrow = 0 savebonus = 0 parameter1 = 0 parameter2 = 15 probability1 = 45 END // elf immunity
+END
 
 COPY_EXISTING ~hamm13.itm~ ~override~ // hammer of dawn's portrait effect has a save
-  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 142 savingthrow = 0 END 
-  
+  LPF ALTER_EFFECT INT_VAR check_headers = 0 match_opcode = 142 savingthrow = 0 END
+
 COPY_EXISTING ~helm14.itm~ ~override~ // don't leave a bunch of op23's laying around on the creature
-  LPF ALTER_EFFECT INT_VAR match_opcode = 23 special = 0 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 23 special = 0 END
 
 // displaying null string instead of 'devour brain'; many other parameters also wrong
 COPY_EXISTING ~mindflay.itm~ ~override~
@@ -1205,8 +1225,8 @@ COPY_EXISTING ~potn48.itm~ ~override~ // Vial of Mysterious Liquid - causes pois
   LPF DELETE_EFFECT INT_VAR multi_match = 1 match_opcode = 25 END
 
 COPY_EXISTING ~potn99.itm~ ~override~ // blinding powder lacks description, minor fixes
-  SAY 0x50 @107 
-  SAY 0x54 @107 
+  SAY 0x50 @107
+  SAY 0x54 @107
   LPF ALTER_EFFECT INT_VAR power = 0 END // flesh out effects below
   LPF ALTER_EFFECT INT_VAR match_opcode = 139 timing = 1 resist_dispel = 1 END // flesh out effects below
   IF_EXISTS // sod item
@@ -1235,7 +1255,7 @@ COPY_EXISTING ~sirine.itm~   ~override~ // Ghoul hand - causes feeblemind - unkn
 COPY_EXISTING ~sw1h21.itm~ ~override~ // special ashirukuru weapon shouldn't break
   LPF DELETE_EFFECT INT_VAR match_opcode = 146 END
 
-INCLUDE ~eefixpack/files/tph/burning_earth.tph~ // sw1h24, fix burning earth bonuses
+LAF include_script STR_VAR script = ~eefixpack/files/tph/burning_earth.tph~ END // sw1h24, fix burning earth bonuses
 
 // viper's edge poison immunity block poorly placed
 COPY_EXISTING ~sw1p01.itm~ ~override~
@@ -1259,7 +1279,7 @@ COPY_EXISTING ~wand12.itm~ ~override~ // wand of missiles
 // Mis-indexed effects
 WITH_SCOPE BEGIN
   COPY_EXISTING ~ption41.itm~ ~override~ // Potion of Power
-    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+    LPF ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1274,8 +1294,8 @@ WITH_SCOPE BEGIN
     /* Header */
     WRITE_LONG 0x4C 0
     /* Feature blocks */
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 45 ~duration~ = 30 END
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~savingthrow~ = BIT2 ~resist_dispel~ = 0 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 45 ~duration~ = 30 END
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~savingthrow~ = BIT2 ~resist_dispel~ = 0 END
   BUT_ONLY IF_EXISTS // sod
 END
 
@@ -1285,8 +1305,8 @@ END
 //// – This isn't implemented properly since the two op12 effects share the same probability range... Also, while we're at it, make sure it's 10% chance and not 11% chance...
 WITH_SCOPE BEGIN
   COPY_EXISTING ~stafn1.itm~ ~override~ // Neera's Staff +1
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 4 END // 5% chance (target)
-    LAUNCH_PATCH_FUNCTION ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 5 ~probability1~ = 9 END // 10% chance (wielder)
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~multi_match~ = 1 ~match_opcode~ = 12 ~probability1~ = 4 END // 5% chance (target)
+    LPF ~ALTER_EFFECT~ INT_VAR ~check_globals~ = 0 ~match_opcode~ = 12 ~match_probability1~ = 10 ~probability2~ = 5 ~probability1~ = 9 END // 10% chance (wielder)
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1294,8 +1314,8 @@ END
 // Chill Touch – better feedback for the player when attacking Golems or Undead
 WITH_SCOPE BEGIN
   COPY_EXISTING "chillt.itm" "override"
-    LAUNCH_PATCH_FUNCTION ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 177 END
-    LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~insert_point~ = 0 ~type~ = 1 ~target~ = 2 ~opcode~ = 324 ~parameter2~ = 55 STR_VAR ~resource~ = ~%DEST_RES%~ END // Immunity to resource and message
+    LPF ~DELETE_EFFECT~ INT_VAR ~match_opcode~ = 177 END
+    LPF ~ADD_ITEM_EFFECT~ INT_VAR ~insert_point~ = 0 ~type~ = 1 ~target~ = 2 ~opcode~ = 324 ~parameter2~ = 55 STR_VAR ~resource~ = ~%DEST_RES%~ END // Immunity to resource and message
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1309,7 +1329,7 @@ luke
 */
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/shocking_grasp.tph"
-  LAUNCH_ACTION_FUNCTION "WIZARD_SHOCKING_GRASP" END
+  LAF "WIZARD_SHOCKING_GRASP" END
 END
 
 /*
@@ -1328,7 +1348,7 @@ WITH_SCOPE BEGIN
     "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
   BEGIN
     INCLUDE "eefixpack/files/tph/luke/black_blade_of_disaster.tph"
-    LAUNCH_ACTION_FUNCTION "WIZARD_BLACK_BLADE_OF_DISASTER" END
+    LAF "WIZARD_BLACK_BLADE_OF_DISASTER" END
   END
 END
 
@@ -1338,7 +1358,7 @@ END
 // - recode from scratch so as to use `op326` effects instead of messy `op177` effects
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/searing_orb.tph"
-  LAUNCH_ACTION_FUNCTION ~CLERIC_SOL_SEARING_ORB~ END
+  LAF ~CLERIC_SOL_SEARING_ORB~ END
 END
 
 /*
@@ -1353,7 +1373,7 @@ WITH_SCOPE BEGIN
     "eefixpack/languages/%LANGUAGE%/luke/shared.tra"
   BEGIN
     INCLUDE "eefixpack/files/tph/luke/magical_weapon_slot.tph"
-    LAUNCH_ACTION_FUNCTION "MAGICAL_WEAPON_SLOT" END
+    LAF "MAGICAL_WEAPON_SLOT" END
   END
 END
 
@@ -1403,12 +1423,12 @@ WITH_SCOPE BEGIN
               /* Feature blocks */
               LPF "ADD_SPELL_EFFECT" INT_VAR "opcode" = 146 "target" = 9 "parameter2" = 1 STR_VAR "resource" = "%spl%" END // cast spell
           END
-          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "ohdsw4" END // apply effects list
+          LPF ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "ohdsw4" END // apply effects list
         END
         DEFAULT
-          LAUNCH_PATCH_FUNCTION ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "%spl%" END // apply effects list
+          LPF ~ADD_ITEM_EFFECT~ INT_VAR ~type~ = 1 "opcode" = 326 "target" = 2 "parameter2" = 103 "parameter1" = 3 STR_VAR "resource" = "%spl%" END // apply effects list
       END
-      LAUNCH_PATCH_FUNCTION "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 232 STR_VAR "match_resource" = "%spl%" END // no longer needed
+      LPF "DELETE_EFFECT" INT_VAR "check_headers" = 0 "match_opcode" = 232 STR_VAR "match_resource" = "%spl%" END // no longer needed
     BUT_ONLY_IF_IT_CHANGES IF_EXISTS
   END
 END
@@ -1417,19 +1437,19 @@ END
 ///// spell fixes                                      \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ // bulk general changes
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bulk_spl_fixes_bgee.tph~ END // bulk general changes
 
-INCLUDE ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~     // spell fixes in common between bg, bg2
-INCLUDE ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ // spell fixes in common between bg, bg2, and iwd
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg_bg2_common_spell_fixes.tph~ END     // spell fixes in common between bg, bg2
+LAF include_script STR_VAR script = ~eefixpack/files/tph/bg_bg2_iwd_common_spell_fixes.tph~ END // spell fixes in common between bg, bg2, and iwd
 
-INCLUDE ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_324_traps_bgee.tph~ END // tbd, cam - game can crash if a spell-via-trap uses 318/324 vs. a spell without a name
 
-INCLUDE ~eefixpack/files/tph/a7/snares_autonotes_fix.tph~ // fixes adding an automap note to the area when a snare is set
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/snares_autonotes_fix.tph~ END // fixes adding an automap note to the area when a snare is set
 
 // tbd, cam
 // misindexed effects (only wrong with SoD, but harmless to run on BGEE)
 COPY_EXISTING ~spin558.spl~   ~override~
-  LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+  LPF ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY
 
 // expiry sound has wrong duration
@@ -1457,12 +1477,12 @@ COPY_EXISTING ~bdshriek.spl~ ~override~ // Piercing Shriek - causes confusion de
 
 // change survivable shoal kiss to use magic damage, not acid
 COPY_EXISTING ~shoal.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 12 opcode = 55 parameter1 = 0 parameter2 = BIT2 END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 opcode = 55 parameter1 = 0 parameter2 = BIT2 END
   LPF CLONE_EFFECT INT_VAR match_opcode = 55 opcode = 324 parameter1 = 3 parameter2 = 113 STR_VAR resource = shoal insert = below END
 
 // change survivable shoal kiss to use magic damage, not acid
 COPY_EXISTING ~shoal1.spl~ ~override~
-  LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END 
+  LPF ALTER_EFFECT INT_VAR match_opcode = 12 parameter2 = (1 + (64 << 16)) END
 
 // change "Flame Strike" damage of "Ring of Fire Control" to match item description
 COPY_EXISTING ~ring27f.spl~ ~override~
@@ -1501,7 +1521,7 @@ COPY_EXISTING ~spin938.spl~ ~override~ // mephit flame fan
 // Mis-indexed effects
 WITH_SCOPE BEGIN
   COPY_EXISTING ~%ERINYES_CHARM%.spl~ ~override~ // Charm Person spin558
-    LAUNCH_PATCH_FUNCTION ~FJ_SPL_ITM_REINDEX~ END
+    LPF ~FJ_SPL_ITM_REINDEX~ END
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1518,7 +1538,7 @@ WITH_SCOPE BEGIN
     WRITE_BYTE 0x27 0 // Secondary type: NONE
     // Feature blocks
     LPF "ADD_SPELL_EFFECT" INT_VAR "insert_point" = 0 "opcode" = 321 "target" = 1 "timing" = 1 STR_VAR "resource" = "%DEST_RES%" END // Remove effects by resource
-    LAUNCH_PATCH_FUNCTION "ALTER_EFFECT" INT_VAR "match_opcode" = 54 "duration" = 13 END // Base THAC0 bonus => Some random duration value strictly greater than 200 ticks...
+    LPF "ALTER_EFFECT" INT_VAR "match_opcode" = 54 "duration" = 13 END // Base THAC0 bonus => Some random duration value strictly greater than 200 ticks...
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1530,7 +1550,7 @@ END
 //// as far as I know, there's no way to suppress it only when hit out of range...
 WITH_SCOPE BEGIN
   COPY_EXISTING "bdbarbde.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR "range" = 0x7FFF "projectile" = IDS_OF_SYMBOL ("MISSILE" "OneTarget_Range_10") END
+    LPF ~ALTER_SPELL_HEADER~ INT_VAR "range" = 0x7FFF "projectile" = IDS_OF_SYMBOL ("MISSILE" "OneTarget_Range_10") END
   BUT_ONLY IF_EXISTS // sod
 END
 
@@ -1540,7 +1560,7 @@ END
 // 2) Set subspell's projectile to either "RANGE05", "RANGE07" or "RANGE10". The second one is the most appropriate IMHO (given it's a player-usable item + all player animations have the same selection circle)...
 WITH_SCOPE BEGIN
   COPY_EXISTING "bdshld02.spl" "override"
-    LAUNCH_PATCH_FUNCTION ~ALTER_SPELL_HEADER~ INT_VAR "range" = 0x7FFF "projectile" = IDS_OF_SYMBOL ("MISSILE" "OneTarget_Range_07") END
+    LPF ~ALTER_SPELL_HEADER~ INT_VAR "range" = 0x7FFF "projectile" = IDS_OF_SYMBOL ("MISSILE" "OneTarget_Range_07") END
   BUT_ONLY IF_EXISTS // sod
 END
 
@@ -1602,7 +1622,7 @@ END
 // cam note: could be in joint bg/bg2 fixes except that it needs  different string
 WITH_SCOPE BEGIN
   COPY_EXISTING "%WIZARD_ENERGY_DRAIN%.spl" "override" // spwi914
-    LAUNCH_PATCH_FUNCTION ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 25803 STR_VAR ~insert~ = ~below~ END // Display string
+    LPF ~CLONE_EFFECT~ INT_VAR ~match_opcode~ = 216 ~opcode~ = 139 ~parameter1~ = 25803 STR_VAR ~insert~ = ~below~ END // Display string
   BUT_ONLY_IF_IT_CHANGES
 END
 
@@ -1657,7 +1677,7 @@ COPY_EXISTING ~dragblck.pro~ ~override~
   WRITE_SHORT 0x210 8
   IF_EXISTS // draggree is a sod file, but rest are there
 
-// grease projectiles created in spell section since vars needed 
+// grease projectiles created in spell section since vars needed
 
 // luke
 // Ice Storm should last 4 rounds (not 3)
@@ -1683,25 +1703,26 @@ END
 /////                                                  \\\\\
 
 COPY_EXISTING ~bdbeleg3.sto~ ~override~ // (Quartermaster): Duplicate item RESTORE.ITM (Greater Restoration) at slots 51 and 147
-  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 10 STR_VAR item = restore END 
+  LPF cd_purge_sale_dupes INT_VAR keep = 2 quantity = 10 STR_VAR item = restore END
   BUT_ONLY IF_EXISTS // sod asset
 
 // tbd, cam
 // Frair Tajik is only merchant that takes helmets but not hats (peacock hat)
-COPY_EXISTING ~bdfrair.sto~ ~override~
-  READ_LONG 0x2c buy_off   ELSE 0
-  READ_LONG 0x30 buy_num   ELSE 0
-  INSERT_BYTES buy_off 0x04
-  WRITE_LONG buy_off 72
-  WRITE_LONG 0x30 (buy_num + 1)
-  PATCH_FOR_EACH offset IN 0x34 0x4c 0x70 BEGIN // adjust offsets if needed, thankfully the same in v9, v1, and v1.1
-    READ_LONG offset off
-    PATCH_IF off > buy_off BEGIN
-      WRITE_LONG offset (off + 0x04)
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~bdfrair.sto~ ~override~
+    READ_LONG 0x2c buy_off   ELSE 0
+    READ_LONG 0x30 buy_num   ELSE 0
+    INSERT_BYTES buy_off 0x04
+    WRITE_LONG buy_off 72
+    WRITE_LONG 0x30 (buy_num + 1)
+    PATCH_FOR_EACH offset IN 0x34 0x4c 0x70 BEGIN // adjust offsets if needed, thankfully the same in v9, v1, and v1.1
+      READ_LONG offset off
+      PATCH_IF off > buy_off BEGIN
+        WRITE_LONG offset (off + 0x04)
+      END
     END
-  END
-  BUT_ONLY IF_EXISTS // sod asset
-
+    BUT_ONLY IF_EXISTS // sod asset
+END
 // tbd, cam (from jmerry)
 // Correct number of charges on the Sandthief's Ring at tier 3
 COPY_EXISTING ~bpxith03.sto~ ~override~
@@ -1713,10 +1734,10 @@ COPY_EXISTING ~bpxith03.sto~ ~override~
 /////                                                  \\\\\
 
 // illusionary creatures shouldn't save when dispelled
-INCLUDE ~eefixpack/files/tph/illusionary_die.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/illusionary_die.tph~ END
 
 // fixing creature animations without ranged animation sequences
-INCLUDE ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~ END
 
 ACTION_IF game_includes_sod BEGIN // bonus damage from Pritchard's Family Stiletto +2 should be piercing, not fire
   COPY_EXISTING ~bdsw1h7d.eff~ ~override~
@@ -1724,78 +1745,79 @@ ACTION_IF game_includes_sod BEGIN // bonus damage from Pritchard's Family Stilet
 END
 
 // corrupted wed fixes
-COPY_EXISTING ~ar1000.wed~ ~override~
-              ~oh2010.wed~ ~override~
-  SET overlay_delta = 3 // oh2010
-  PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_CASE "ar1000" = 0) BEGIN SET overlay_delta = 1 END // ar1000
-  READ_LONG  0x08 overlay_num
-  READ_LONG  0x10 overlay_off
-  READ_LONG  0x14 2hdr_off
-  SET del1_length = (overlay_delta * 0x18)
-  SET del1_offset = (2hdr_off - del1_length)
-  READ_LONG (overlay_off + 0x14 + ((overlay_num - 1) * 0x18)) del2_offset
-  SET del2_length = (overlay_delta * 0x0c)
-  DELETE_BYTES del2_offset del2_length // delete unused bytes
-  DELETE_BYTES del1_offset del1_length // delete unused overlay
-  SET overlay_num -= overlay_delta
-  WRITE_LONG  0x08 overlay_num // update overlay count
-  PATCH_FOR_EACH offset IN 0x10 0x14 0x18 0x1c BEGIN
-    SET adj = 0
-    READ_LONG offset val
-    PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
-    PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
-    WRITE_LONG offset (val - adj)
-  END 
-  READ_LONG  0x14 2hdr_off // re-rad since it hss changed
-  PATCH_FOR_EACH offset IN 0x04 0x08 0x0c 0x10 BEGIN // second header offsets  
-    SET adj = 0
-    READ_LONG (offset + 2hdr_off) val
-    PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
-    PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
-    WRITE_LONG (offset + 2hdr_off) (val - adj)
-  END 
-  FOR (index = 0 ; index < overlay_num ; ++index) BEGIN
-    PATCH_FOR_EACH offset IN 0x10 0x14 BEGIN 
+WITH_SCOPE BEGIN
+  COPY_EXISTING ~ar1000.wed~ ~override~
+                ~oh2010.wed~ ~override~
+    SET overlay_delta = 3 // oh2010
+    PATCH_IF ("%SOURCE_RES%" STRING_COMPARE_CASE "ar1000" = 0) BEGIN SET overlay_delta = 1 END // ar1000
+    READ_LONG  0x08 overlay_num
+    READ_LONG  0x10 overlay_off
+    READ_LONG  0x14 2hdr_off
+    SET del1_length = (overlay_delta * 0x18)
+    SET del1_offset = (2hdr_off - del1_length)
+    READ_LONG (overlay_off + 0x14 + ((overlay_num - 1) * 0x18)) del2_offset
+    SET del2_length = (overlay_delta * 0x0c)
+    DELETE_BYTES del2_offset del2_length // delete unused bytes
+    DELETE_BYTES del1_offset del1_length // delete unused overlay
+    SET overlay_num -= overlay_delta
+    WRITE_LONG  0x08 overlay_num // update overlay count
+    PATCH_FOR_EACH offset IN 0x10 0x14 0x18 0x1c BEGIN
       SET adj = 0
-      READ_LONG (offset + overlay_off + (index * 0x18)) val
-      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
-      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
-      WRITE_LONG (offset + overlay_off + (index * 0x18)) (val - adj)
+      READ_LONG offset val
+      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END
+      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END
+      WRITE_LONG offset (val - adj)
     END
-  END   
-  READ_LONG 0x0c door_num
-  READ_LONG 0x18 door_off
-  FOR (index = 0 ; index < door_num ; ++index) BEGIN
-    PATCH_FOR_EACH offset IN 0x12 0x16 BEGIN 
+    READ_LONG  0x14 2hdr_off // re-rad since it hss changed
+    PATCH_FOR_EACH offset IN 0x04 0x08 0x0c 0x10 BEGIN // second header offsets
       SET adj = 0
-      READ_LONG (offset + door_off + (index * 0x1a)) val
-      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END 
-      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END 
-      WRITE_LONG (offset + door_off + (index * 0x1a)) (val - adj)
+      READ_LONG (offset + 2hdr_off) val
+      PATCH_IF val > del1_offset BEGIN SET adj += del1_length END
+      PATCH_IF val > del2_offset BEGIN SET adj += del2_length END
+      WRITE_LONG (offset + 2hdr_off) (val - adj)
     END
-  END   
-  BUT_ONLY  
+    FOR (index = 0 ; index < overlay_num ; ++index) BEGIN
+      PATCH_FOR_EACH offset IN 0x10 0x14 BEGIN
+        SET adj = 0
+        READ_LONG (offset + overlay_off + (index * 0x18)) val
+        PATCH_IF val > del1_offset BEGIN SET adj += del1_length END
+        PATCH_IF val > del2_offset BEGIN SET adj += del2_length END
+        WRITE_LONG (offset + overlay_off + (index * 0x18)) (val - adj)
+      END
+    END
+    READ_LONG 0x0c door_num
+    READ_LONG 0x18 door_off
+    FOR (index = 0 ; index < door_num ; ++index) BEGIN
+      PATCH_FOR_EACH offset IN 0x12 0x16 BEGIN
+        SET adj = 0
+        READ_LONG (offset + door_off + (index * 0x1a)) val
+        PATCH_IF val > del1_offset BEGIN SET adj += del1_length END
+        PATCH_IF val > del2_offset BEGIN SET adj += del2_length END
+        WRITE_LONG (offset + door_off + (index * 0x1a)) (val - adj)
+      END
+    END
+    BUT_ONLY
+END
 
 /////                                                  \\\\\
 ///// final batch of INCLUDEs and cross-patching       \\\\\
 /////                                                  \\\\\
 
-INCLUDE ~eefixpack/files/tph/scripting_states.tph~ // cleans up scripting states
+LAF include_script STR_VAR script = ~eefixpack/files/tph/scripting_states.tph~ END // cleans up scripting states
 
 // prevent spell called via op232 from interrupting caster sounds
-INCLUDE ~eefixpack/files/tph/noisy_fireshields.tph~
+LAF include_script STR_VAR script = ~eefixpack/files/tph/noisy_fireshields.tph~ END
 
-INCLUDE ~eefixpack/files/tph/free_action.tph~ // free action swap from 126 > 337
+LAF include_script STR_VAR script = ~eefixpack/files/tph/free_action.tph~ END // free action swap from 126 > 337
 
-INCLUDE ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ // tbd, cam: probability fixes
-INCLUDE "%MOD_FOLDER%/files/tph/dw_fixes.tph" // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_bgee_probabilities.tph~ END // tbd, cam: probability fixes
+LAF include_script STR_VAR script = "%MOD_FOLDER%/files/tph/dw_fixes.tph" END // tbd, davidw:  318/324 immunity, 109/175/185 disentanglement, and more
 
 WITH_SCOPE BEGIN
   INCLUDE "eefixpack/files/tph/luke/redundant_effects.tph"
   LAF "remove_redundant_effects" END
 END
 
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_functions.tpa~         // function for effect batches
-INCLUDE ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ // array definitions for effect batches
-INCLUDE ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~                  // use effect batches to remove vfx from effects which have been removed
-
+LAF include_script STR_VAR script = ~eefixpack/files/lib/cd_effect_batches_functions.tpa~ END         // function for effect batches
+LAF include_script STR_VAR script = ~eefixpack/files/lib/cd_effect_batches_arrays_bg_bg2_iwd.tpa~ END // array definitions for effect batches
+LAF include_script STR_VAR script = ~eefixpack/files/tph/tbd_vfx_removal_bg.tph~ END                  // use effect batches to remove vfx from effects which have been removed

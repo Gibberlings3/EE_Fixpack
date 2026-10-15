@@ -1,7 +1,5 @@
 // Fixes slightly off position and coloring of the illuminated version of the light gem in the Shadow Temple
 
-WITH_SCOPE BEGIN
-
 // finding free pvrz slot for AR1401.TIS
 OUTER_SET pvrz_index = "-1"
 OUTER_SPRINT pvrz_resref ~~
@@ -75,5 +73,3 @@ COPY_EXISTING ~ar1401.tis~ ~override~
     END
   END
 BUT_ONLY
-
-END
