@@ -1,0 +1,54 @@
+// File and folder names in the "music" folder of the game must not contain upper-case letters.
+// Otherwise, they are not detected if the game is installed on a case-sensitive filesystem on Linux.
+
+DEFINE_ACTION_FUNCTION a7#path_to_lower
+STR_VAR
+  path = ~~ // path of the file or folder to lowercase
+RET
+  result    // returns 1 if the file or folder was renamed, 0 otherwise
+BEGIN
+  OUTER_SET result = 0
+  LAF FILE_OF_FILESPEC STR_VAR filespec = EVAL ~%path%~ RET file END
+  ACTION_IF (INDEX(CASE_SENSITIVE EVALUATE_REGEXP ~[A-Z]~ ~%file%~) >= 0) BEGIN
+    OUTER_SPRINT DATA_FOLDER ~weidu_external/data/eefixpack~
+    LAF DIRECTORY_OF_FILESPEC STR_VAR filespec = EVAL ~%path%~ RET directory END
+    ACTION_IF (~%directory%~ STR_EQ ~~) BEGIN OUTER_SPRINT directory ~.~ END  // prevent creating absolute path
+    OUTER_SPRINT file_lower ~%file%~
+    ACTION_TO_LOWER ~file_lower~
+
+    // renaming is performed in several steps to prevent WeiDU from triggering warnings or errors
+    ACTION_IF (DIRECTORY_EXISTS ~%path%~) BEGIN
+      MKDIR ~%DATA_FOLDER%/%directory%/%file%~
+      MOVE ~%directory%/%file%~ ~%DATA_FOLDER%/%directory%/%file%~
+      DELETE ~%directory%/%file%~
+      MKDIR ~%directory%/%file_lower%~
+      MOVE ~%DATA_FOLDER%/%directory%/%file%~ ~%directory%/%file_lower%~
+    END ELSE BEGIN
+      MKDIR ~%DATA_FOLDER%/%directory%~
+      MOVE ~%directory%/%file%~ ~%DATA_FOLDER%/%directory%/%file%~
+      MOVE ~%DATA_FOLDER%/%directory%/%file%~ ~%directory%/%file_lower%~
+    END
+
+    OUTER_SET result = 1
+  END
+END
+
+// processing MUS files
+GET_FILE_ARRAY mus_files ~music~ ~.+\.[mM][uU][sS]$~
+ACTION_PHP_EACH mus_files AS _ => mus_file BEGIN
+  LAF a7#path_to_lower STR_VAR path = EVAL ~%mus_file%~ RET result END
+END
+
+// processing ACM folders
+GET_DIRECTORY_ARRAY acm_folders ~music~ ~[^.][^.].*~
+ACTION_PHP_EACH acm_folders AS _ => acm_folder BEGIN
+  // handling folder content
+  ACTION_CLEAR_ARRAY ~acm_files~
+  GET_FILE_ARRAY acm_files ~%acm_folder%~ ~.+\.[aA][cC][mM]$~
+  ACTION_PHP_EACH acm_files AS _ => acm_file BEGIN
+    LAF a7#path_to_lower STR_VAR path = EVAL ~%acm_file%~ RET result END
+  END
+
+  // handling folder name
+  LAF a7#path_to_lower STR_VAR path = EVAL ~%acm_folder%~ RET result END
+END

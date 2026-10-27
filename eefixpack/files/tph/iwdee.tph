@@ -1379,6 +1379,9 @@ LAF include_script STR_VAR script = ~eefixpack/files/tph/illusionary_die.tph~ EN
 // fixing creature animations without ranged animation sequences
 LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/cre_anim_missing_seq_fix.tph~ END
 
+// Music file and folder names should not contain upper-case letters on Linux
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/music_case_fix.tph~ END
+
 // Fix reference to non-existing ACM sound resource
 COPY ~music/bm2.mus~ ~music/bm2.mus~
   REPLACE_TEXTUALLY ~^N2\b~ ~N1~ UNLESS ~^N1\b~

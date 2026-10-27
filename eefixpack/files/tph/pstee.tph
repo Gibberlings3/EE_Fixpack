@@ -212,6 +212,9 @@ DISABLE_FROM_KEY ~.bcs~
 
 LAF include_script STR_VAR script = ~eefixpack/files/tph/pst_bam_fixes.tph~ END // BAM-specific fixes
 
+// Music file and folder names should not contain upper-case letters on Linux
+LAF include_script STR_VAR script = ~eefixpack/files/tph/a7/music_case_fix.tph~ END
+
 // tbd, cam
 // this works fine, just doing some cleanup
 COPY_EXISTING ~ar0502.ini~ ~override~
