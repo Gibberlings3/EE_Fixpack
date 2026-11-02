@@ -1,0 +1,20 @@
+@100 = ~*Usa una bacchetta*~
+@101 = ~Trappola~
+@102 = ~Divora Cervello~
+
+// Espressioni regolari: il codice è invariato; sono localizzate solo le etichette testuali.
+@103 = ~^\( *Fattore-velocità:? *\)[0-9]+~
+@104 = ~^\( *Peso:? *\)[0-9]+~
+@105 = ~^\( *THAC[0O]:? *\+? *\)[0-9]+\( *[Bb]onus\)?~
+
+@106 = ~Questo oggetto può essere utilizzato soltanto da M'Khiin.~
+@107 = ~La polvere accecante è in genere una miscela di vetro finemente macinato, sabbia o limatura di metallo e altri composti reattivi, sigillata in un piccolo contenitore facile da rompere. Una volta esposta all'aria, questa sostanza acceca temporaneamente il bersaglio.
+
+STATISTICHE:
+Speciale: Il bersaglio resta accecato per 10 secondi (un tiro-salvezza contro Veleno effettuato con successo nega l'effetto)
+
+Peso: 1~
+
+@108 = ~(proiettile)~
+@109 = ~\(Danno: \+[0-9]+\)~
+@110 = ~Tipo di Danno: Proiettile~

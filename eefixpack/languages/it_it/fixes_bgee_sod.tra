@@ -1,0 +1,37 @@
+// Traduzione italiana Core Fixes - Siege of Dragonspear.
+
+@46138 = ~Quella in cui ci troviamo è una situazione disdicevole, Ajantis Ilvastarr. A volte, dobbiamo compiere delle azioni che troviamo... sgradevoli... per garantire il successo di un'impresa.~
+
+@51969 = ~L'artigianato dei drow, delicato ma resistente, crea oggetti belli a vedersi, ma anche molto utili. Tra questi è famosa la cotta di maglia elfica, talmente leggera da poter essere indossata sotto i vestiti senza essere vista. Grazie a ciò, può essere indossata anche dai ladri e dai maghi guerrieri senza alcuna restrizione.
+
+Questo oggetto, come gran parte degli oggetti dei drow, è costruito in adamantite, una lega metallica che si trasforma rapidamente in polvere se esposta alla luce del sole.
+
+STATISTICHE:
+
+Abilità durante l'uso:
+- Scassinare Serrature: -5%
+- Scoprire Trappole: -5%
+- Svuotare Tasche: -20%
+- Muoversi Silenziosamente: -10%
+- Il lancio degli incantesimi non viene disattivato
+
+Classe Armatura: 0 (4 contro danno contundente)
+
+Richiede:
+Forza 5
+
+Peso: 12~
+
+@52365 = ~Ogni bersaglio colpito da questo quadrello deve effettuare con successo un tiro-salvezza o restare paralizzato per 5 round.
+
+STATISTICHE:
+
+Abilità in combattimento:
+- Il bersaglio resta stordito per 5 round (un tiro-salvezza contro Paralisi effettuato con successo nega l'effetto)
+
+Danno: 1d10 (proiettile)
+Dispositivo: Balestra
+
+Peso: 0~
+
+@67456 = ~[movie]Imboscata~
