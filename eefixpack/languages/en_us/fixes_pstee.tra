@@ -2,6 +2,36 @@
 // the corresponding string in the tlk. Remember to comment why a string is being updated. Once you have legitimate
 // strings to replace, rename this file WITHOUT the underscore at the beginning. 
 
+// adds minimum stat requirements
+@128 = ~MAD SPLINTER
+Damage: 2-5 Piercing
+Enchanted: +1
+Special:
+   Poisons Target
+   Fragile, Breakable
+THAC0: +1
+Speed: 2
+Weight: 1
+Proficiency: Edged
+Not usable by Priests
+Requires:
+   12 Intelligence
+   12 Wisdom
+
+This is a dagger-shaped fragment of stone taken from the statue of Gangroighydon. It bears a powerful enchantment - each time someone is stabbed by the splinter, they have a chance of being Cursed. It is most likely that the fell curse trapped upon Gangroighydon's lips has soaked into the very stone of his petrified form, and "poisons" those the splinter stabs with his malicious magic.~
+
+// adds minimum stat requirements
+@1902 = ~DHALL'S QUILL PEN
+Special: Permanent +1 to Lore Skill
+Weight: 0
+Usable only by Mages
+Requires:
+   12 Wisdom
+
+Examination of the quill pen reveals that the feather is from a Vrock, one of the many races of tanar'ri that fill the Abyss. The Vrock resemble huge vultures, and they are often used as scouts for the tanar'ri forces in the Blood War.
+
+Dhall used this quill pen all of his life, and as such, it carries some of his experiences and memories inside it. By snapping it, you will absorb a portion of his knowledge, giving you a permanent bonus to your Lore skill.~
+
 // proficency Clubs -> Hammers 
 @4845 = ~POOR QUALITY SLEDGEHAMMER
 Damage: 2-7 Crushing
