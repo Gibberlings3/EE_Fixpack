@@ -249,6 +249,24 @@ ACTION_FOR_EACH lang IN cs_cz de_de en_us es_es fr_fr hu_hu it_it ja_jp ko_kr nb
 
   END
 
+  // removing duplicate tra entries to avoid overwriting previously updated game strings
+  ACTION_FOR_EACH tra_file IN bgee bgee_sod bg2ee iwdee pstee BEGIN
+
+    LAUNCH_ACTION_FUNCTION cd_exclude_duplicate_from_string_set
+      INT_VAR include_extra = 0   // no conditional block for duplicate tra entries needed
+      STR_VAR src_tph = EVAL ~eefixpack/languages/%lang%/bd_tool_%tra_file%.tph~  // tph with STRING_SETs to scan for duplicates
+              dst_tph = EVAL ~eefixpack/languages/%lang%/gtu_%tra_file%.tph~      // tph with STRING_SETs to remove duplicates from
+    END
+
+    LAUNCH_ACTION_FUNCTION cd_exclude_duplicate_from_string_set
+      INT_VAR include_extra = 1   // add conditional block with duplicate tra entries
+              extra_component = 0 // conditional block checks for "Core Fixes" component
+      STR_VAR src_tph = EVAL ~eefixpack/languages/%lang%/fixes_%tra_file%.tph~    // tph with STRING_SETs to scan for duplicates
+              dst_tph = EVAL ~eefixpack/languages/%lang%/gtu_%tra_file%.tph~      // tph with STRING_SETs to remove duplicates from
+    END
+
+  END
+
 END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
