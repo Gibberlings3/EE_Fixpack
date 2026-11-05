@@ -9,6 +9,6 @@
   @7 = ~检测到博德之门Ⅰ增强版及龙矛围攻。~
   @8 = ~检测到博德之门Ⅱ增强版。~
   @9 = ~检测到冰风谷Ⅰ增强版。~
- @10 = ~检测到异域镇魂曲增强版。~
- 
+  @10 = ~检测到异域镇魂曲增强版。~
+  @11 = ~EE Fixpack不能直接安装在EET上。它应当安装在*BGEE和BG2EE两者*上，并且要在将它们合并为EET游戏*之前*完成安装。~
 // translators, feel free to put your weidu command prompt strings here (e.g. @-1000 et al)
